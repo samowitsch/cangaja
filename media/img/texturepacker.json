@@ -1,0 +1,140 @@
+{"frames": [
+
+{
+	"filename": "ballon.png",
+	"frame": {"x":204,"y":2,"w":170,"h":216},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":216},
+	"sourceSize": {"w":170,"h":216}
+},
+{
+	"filename": "basketball-25.png",
+	"frame": {"x":734,"y":160,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":25},
+	"sourceSize": {"w":25,"h":25}
+},
+{
+	"filename": "btn-back-color.png",
+	"frame": {"x":494,"y":175,"w":200,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":40},
+	"sourceSize": {"w":200,"h":40}
+},
+{
+	"filename": "btn-back.png",
+	"frame": {"x":498,"y":133,"w":200,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":40},
+	"sourceSize": {"w":200,"h":40}
+},
+{
+	"filename": "gem.png",
+	"frame": {"x":376,"y":154,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "glowball-50.png",
+	"frame": {"x":705,"y":108,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "little-smoke.png",
+	"frame": {"x":2,"y":204,"w":13,"h":13},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":13},
+	"sourceSize": {"w":13,"h":13}
+},
+{
+	"filename": "littlestar.png",
+	"frame": {"x":696,"y":194,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "powerstar75.png",
+	"frame": {"x":628,"y":56,"w":75,"h":75},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":75,"h":75},
+	"sourceSize": {"w":75,"h":75}
+},
+{
+	"filename": "raindrop.png",
+	"frame": {"x":700,"y":160,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "rocket.png",
+	"frame": {"x":498,"y":2,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+{
+	"filename": "rocket2.png",
+	"frame": {"x":376,"y":2,"w":120,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":150},
+	"sourceSize": {"w":120,"h":150}
+},
+{
+	"filename": "smoke50.png",
+	"frame": {"x":705,"y":56,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "sonne-50.png",
+	"frame": {"x":442,"y":154,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "sonne.png",
+	"frame": {"x":2,"y":2,"w":200,"h":200},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":200},
+	"sourceSize": {"w":200,"h":200}
+},
+{
+	"filename": "splash.png",
+	"frame": {"x":628,"y":2,"w":125,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":125,"h":52},
+	"sourceSize": {"w":125,"h":52}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "texturepacker.png",
+	"format": "RGBA5555",
+	"size": {"w":761,"h":220},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2a6ae5746251fc44e41d11ed0e77ace9$"
+}
+}

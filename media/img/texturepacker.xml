@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:ee418aaf7d8c0e9c5e33b60a7f0c416c$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="texturepacker.png" width="494" height="238">
+    <sprite n="ballon.png" x="2" y="2" w="170" h="216"/>
+    <sprite n="basketball-25.png" x="410" y="198" w="25" h="25"/>
+    <sprite n="btn-back-color.png" x="174" y="196" w="200" h="40"/>
+    <sprite n="btn-back.png" x="174" y="154" w="200" h="40"/>
+    <sprite n="gem.png" x="376" y="132" w="64" h="64"/>
+    <sprite n="glowball-50.png" x="442" y="181" w="50" h="50"/>
+    <sprite n="little-smoke.png" x="20" y="220" w="13" h="13"/>
+    <sprite n="littlestar.png" x="2" y="220" w="16" h="16"/>
+    <sprite n="raindrop.png" x="376" y="198" w="32" h="32"/>
+    <sprite n="rocket.png" x="296" y="2" w="128" h="128"/>
+    <sprite n="rocket2.png" x="174" y="2" w="120" h="150"/>
+    <sprite n="sonne-50.png" x="442" y="129" w="50" h="50"/>
+    <sprite n="splash.png" x="426" y="2" w="52" h="125" r="y"/>
+</TextureAtlas>

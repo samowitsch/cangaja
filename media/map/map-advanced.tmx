@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="20" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="schreck" tilewidth="32" tileheight="32">
+  <image source="map.png" trans="ff00ff" width="512" height="512"/>
+  <tile id="1">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="name" value="ground"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="name" value="ground"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="name" value="ground"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="name" value="roof"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="56">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="57">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="68">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="69">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="70">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="71">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="72">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="73">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="74">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="75">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="76">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="77">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="78">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="85">
+   <properties>
+    <property name="name" value="ramp"/>
+   </properties>
+  </tile>
+  <tile id="89">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="90">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="91">
+   <properties>
+    <property name="name" value="ladder"/>
+   </properties>
+  </tile>
+  <tile id="103">
+   <properties>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="104">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="105">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="106">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="107">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="108">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="109">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="110">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="111">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="120">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="121">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="122">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="123">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="125">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="126">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="127">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="back"/>
+   </properties>
+  </tile>
+  <tile id="144">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="find"/>
+   </properties>
+  </tile>
+  <tile id="145">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="find"/>
+   </properties>
+  </tile>
+  <tile id="146">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="find"/>
+   </properties>
+  </tile>
+  <tile id="147">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="3"/>
+    <property name="name" value="find"/>
+   </properties>
+  </tile>
+  <tile id="160">
+   <properties>
+    <property name="name" value="activate"/>
+   </properties>
+  </tile>
+  <tile id="161">
+   <properties>
+    <property name="name" value="activate"/>
+   </properties>
+  </tile>
+  <tile id="176">
+   <properties>
+    <property name="name" value="activate"/>
+   </properties>
+  </tile>
+  <tile id="177">
+   <properties>
+    <property name="name" value="activate"/>
+   </properties>
+  </tile>
+  <tile id="192">
+   <properties>
+    <property name="name" value="ready"/>
+   </properties>
+  </tile>
+  <tile id="193">
+   <properties>
+    <property name="name" value="ready"/>
+   </properties>
+  </tile>
+  <tile id="208">
+   <properties>
+    <property name="name" value="ready"/>
+   </properties>
+  </tile>
+  <tile id="209">
+   <properties>
+    <property name="name" value="ready"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="name" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="225">
+   <properties>
+    <property name="name" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="226">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="powerup"/>
+   </properties>
+  </tile>
+  <tile id="227">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="powerup"/>
+   </properties>
+  </tile>
+  <tile id="228">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="powerup"/>
+   </properties>
+  </tile>
+  <tile id="229">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="230">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="231">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="232">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="233">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="234">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="235">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="236">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="240">
+   <properties>
+    <property name="name" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="241">
+   <properties>
+    <property name="name" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="242">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="key"/>
+   </properties>
+  </tile>
+  <tile id="243">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="1"/>
+    <property name="name" value="key"/>
+   </properties>
+  </tile>
+  <tile id="244">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="key"/>
+   </properties>
+  </tile>
+  <tile id="245">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="246">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="247">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="248">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="249">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="250">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="1"/>
+    <property name="anim_next" value="2"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="251">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+  <tile id="252">
+   <properties>
+    <property name="anim_delay" value="2000"/>
+    <property name="anim_direction" value="-1"/>
+    <property name="anim_next" value="6"/>
+    <property name="name" value="beam"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="leveldesign" width="20" height="16">
+  <properties>
+   <property name="name" value="leveldesign"/>
+  </properties>
+  <data>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="20" height="16">
+  <object name="b1" type="enemies" x="32" y="160" width="256" height="128">
+   <properties>
+    <property name="objects" value="enemy"/>
+   </properties>
+  </object>
+  <object name="b3" x="32" y="320" width="256" height="128"/>
+  <object name="coin" type="coin" gid="147" x="320" y="160">
+   <properties>
+    <property name="event" value="message, etc."/>
+    <property name="message" value="Hinweistext laber schwätz"/>
+    <property name="next" value="goto Level XY"/>
+    <property name="type" value="event"/>
+   </properties>
+  </object>
+  <object name="coin" type="coin" gid="147" x="320" y="352">
+   <properties>
+    <property name="event" value="message, etc."/>
+    <property name="message" value="Hinweistext laber schwätz"/>
+    <property name="next" value="goto Level XY"/>
+    <property name="type" value="event"/>
+   </properties>
+  </object>
+  <object name="b4" x="352" y="320" width="256" height="128"/>
+  <object name="b2" x="352" y="160" width="256" height="128"/>
+  <object name="coin" type="coin" gid="147" x="320" y="224">
+   <properties>
+    <property name="event" value="message, etc."/>
+    <property name="message" value="Hinweistext laber schwätz"/>
+    <property name="next" value="goto Level XY"/>
+    <property name="type" value="event"/>
+   </properties>
+  </object>
+  <object name="coin" type="coin" gid="147" x="320" y="416">
+   <properties>
+    <property name="event" value="message, etc."/>
+    <property name="message" value="Hinweistext laber schwätz"/>
+    <property name="next" value="goto Level XY"/>
+    <property name="type" value="event"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

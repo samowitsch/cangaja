@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="60" height="30" tilewidth="20" tileheight="20">
+ <tileset firstgid="1" name="tileslostgarden" tilewidth="20" tileheight="20">
+  <image source="map-diddy.png" width="560" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+WYyW7UQBCGe5CAA9xYJEJYAs/AEiDhMRLuwAPkUQYO7MuwHIEDO1kGJC7AgX0HCV4AbiwShG+Ubk2l1G27x21PRhw+2W7brfpdv6uXKWPMFMw1Fo7/K+0c/Vu4vxVGBvg7HYPjcEK1H/Jo2kvbPhgbQL1Oz3W4ATcLvDPBO5NwIENvE47A0YrjPwNn4Vzke0/hGTz33HP+DXn4oKftClyFawm1nYcWXBBtd+EeTEf29Qf+wjwY4m/AMqvD+TfGw4/gMTxJqHcGZmFOtL2GN/A2sq8N6BiCjTAMm2BzY7F/tYd9ea2Sd/AePiToawex74RdsBtGYc8A1qNUHA5oD7VncRJOweklpCOLsj6+BbfhToW6fLVNM2t1NM3isSTmm7i6J5lXz7yAl/CqQr2+2haizFjSqXvLOa6wrDQLNbDXuHsdX2NqW+xYchEuwWWrd4TjNsv2knpjxteQh129SOWdNtyHBxXojRlfQx529SKV3o/wCT5bvWMcxy37S+pN4WFXL2L7a4m4tXdcnXoIo5avpjum16E3hPSz1BBTh7V3Onl1Oh115TWPon6W30LPEbR33PzsyxLQq70n/Sxz2grE13mm6BxB5rlferX38uqzT3fROYLLs++/HbJrkpS586G9V7Y+6zlAyBd15K4IofpctF71usZ2lFkvZM2b5Lyn7HeVOYxdY2sPV7VeaJvuvCfruaapZ69J+yv1ekHOe7Ke0+sDvZ+Tleu6vlvMP/ADfsIv+C2u3X29PtD7OUWpYo/OkfcPfIPv9nwNca+FdbC+0b0O9d3rfk4Ve3SOvH9gFbGuzolX+jZ0njrufiJ9Gzrvd4wpkb4Nnfc7xpT8A5RcA2ggHAAA
+  </data>
+ </layer>
+ <layer name="Kachelebene 2" width="60" height="30" opacity="0.4">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3TwQ2AIBBE0aUKbQL70La1D+xDDoxXEo4Cwn/JXOa0m82aAQDQF+/MNtd6inp27XpMtC/mcipX1o3840G5s26EHy/d7FFi9Wm+V7rZom79+S0BAAAAAHgl9x5REyAcAAA=
+  </data>
+ </layer>
+</map>
