@@ -9,7 +9,7 @@
  * @param {integer} z the z position
  */
 CG.Point.extend('Vector', {
-    init: function (x, y, z) {
+    init:function (x, y, z) {
         this._super(this, x, y)
         this.z = z || 0
     }

@@ -4,8 +4,8 @@
  *  @constructor
  */
 CG.Class.extend('TexturePacker', {
-    init: function (){
-        if(typeof(ejecta) == 'undefined'){
+    init:function () {
+        if (typeof(ejecta) == 'undefined') {
             this.xml = ''
             this.xmlDoc = ''
             this.parser = new DOMParser() || {}
@@ -18,14 +18,13 @@ CG.Class.extend('TexturePacker', {
         return this
     },
     /**
-    * @description load a xml file from texturepacker
-    *
-    * @param {string/object} xmlfile path or mediaasset object with data of texturepacker xml
-    */
-    loadXml: function(xmlfile){
+     * @description load a xml file from texturepacker
+     *
+     * @param {string/object} xmlfile path or mediaasset object with data of texturepacker xml
+     */
+    loadXml:function (xmlfile) {
         //from asset
-        if ( typeof xmlfile == 'string' )
-        {
+        if (typeof xmlfile == 'string') {
             this.xml = loadString(xmlfile)
         } else {
             this.xml = xmlfile.data
@@ -38,17 +37,15 @@ CG.Class.extend('TexturePacker', {
         this.height = parseInt(this.xmlDoc.getElementsByTagName('TextureAtlas')[0].getAttribute('height'))
 
         var sprites = this.xmlDoc.getElementsByTagName('sprite')
-        for ( var i=0, l=sprites.length; i<l; i++ )
-        {
+        for (var i = 0, l = sprites.length; i < l; i++) {
             tpimage = new CG.TPImage(
                 sprites[i].getAttribute('n'),
                 parseInt(sprites[i].getAttribute('x')),
                 parseInt(sprites[i].getAttribute('y')),
                 parseInt(sprites[i].getAttribute('w')),
                 parseInt(sprites[i].getAttribute('h'))
-                )
-            if ( sprites[i].getAttribute('r') == 'y' )
-            {
+            )
+            if (sprites[i].getAttribute('r') == 'y') {
                 tpimage.rotation = 90
             }
             tpimage.atlasimage = this.imagename
@@ -61,14 +58,13 @@ CG.Class.extend('TexturePacker', {
     },
 
     /**
-    * @description load a json file from texturepacker
-    *
-    * @param {string/object} jsonfile path or mediaasset object with data of texturepacker json
-    */
-    loadJson: function(jsonfile){
+     * @description load a json file from texturepacker
+     *
+     * @param {string/object} jsonfile path or mediaasset object with data of texturepacker json
+     */
+    loadJson:function (jsonfile) {
         //from asset
-        if (typeof jsonfile == 'string')
-        {
+        if (typeof jsonfile == 'string') {
             this.json = JSON.parse(loadString(jsonfile))
         } else {
             this.json = jsonfile.data
@@ -79,8 +75,7 @@ CG.Class.extend('TexturePacker', {
         this.height = this.json.meta.size.h
 
         //loop thru all images
-        for ( var i=0, l=this.json.frames.length; i<l; i++ )
-        {
+        for (var i = 0, l = this.json.frames.length; i < l; i++) {
             var image = this.json.frames[i]
             var tpimage = new CG.TPImage(
                 image.filename,
@@ -88,12 +83,11 @@ CG.Class.extend('TexturePacker', {
                 image.frame.y,
                 image.frame.w,
                 image.frame.h
-                )
-            if ( image.rotated === true )
-            {
+            )
+            if (image.rotated === true) {
                 tpimage.rotation = 90
-            //            tpimage.width = this.json.frames[i].frame.w,
-            //            tpimage.height = this.json.frames[i].frame.h
+                //            tpimage.width = this.json.frames[i].frame.w,
+                //            tpimage.height = this.json.frames[i].frame.h
             }
             tpimage.atlasimage = this.imagename
             tpimage.source = 'json'
@@ -105,11 +99,11 @@ CG.Class.extend('TexturePacker', {
     },
 
     /**
-    * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-    *
-    * @return {array} returns all tpimages of texturepacker file to use with Game.asset
-    */
-    getTPImages: function(){
+     * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
+     *
+     * @return {array} returns all tpimages of texturepacker file to use with Game.asset
+     */
+    getTPImages:function () {
         return this.tpimages
     }
 })

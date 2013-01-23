@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -12,7 +12,7 @@ var bm
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -22,7 +22,7 @@ window.onload = function() {
     document.body.appendChild(can)
 
     //mouse move
-    can.addEventListener('mousemove', function(evt) {
+    can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
         mousex = evt.clientX - canvas.offsetLeft;
         mousey = evt.clientY - canvas.offsetTop;
@@ -32,20 +32,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -57,15 +57,15 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/back3.jpg','cover')
-            .addImage('media/img/back2.jpg','back')
-            .addImage('media/img/crosshair.png','crosshair')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/back3.jpg', 'cover')
+                .addImage('media/img/back2.jpg', 'back')
+                .addImage('media/img/crosshair.png', 'crosshair')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             // font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
@@ -84,13 +84,13 @@ Game = (function(){
             mainlayer.addElement(back)
 
             //a bitmap that hides the background sprite
-            bitmap = new CG.Bitmap(Game.width,Game.height)
+            bitmap = new CG.Bitmap(Game.width, Game.height)
             bitmap.loadImage(Game.asset.getImageByName('cover'))
             mainlayer.addElement(bitmap)
 
             //do something with the bitmap
-            bitmap.clearCircle(100,150,50)
-            bitmap.clearRect(480,120,100,100)
+            bitmap.clearCircle(100, 150, 50)
+            bitmap.clearRect(480, 120, 100, 100)
 
             //a crosshair that follows the mouse pointer
             crosshair = new CG.Sprite(Game.asset.getImageByName('crosshair'), new CG.Point(Game.width2, Game.height2))
@@ -109,17 +109,17 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
 
@@ -129,7 +129,7 @@ Game = (function(){
 
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -146,44 +146,52 @@ Game = (function(){
 
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
             hammer = new Hammer(canvas);
-            hammer.ontap = function(ev) {
+            hammer.ontap = function (ev) {
                 mousedown = true
                 mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
                 clicked()
             };
-            hammer.ondragstart = function(ev) {};
-            hammer.ondrag = function(ev) {
+            hammer.ondragstart = function (ev) {
+            };
+            hammer.ondrag = function (ev) {
                 mousex = ev.position.x
                 mousey = ev.position.y
             };
-            hammer.ondragend = function(ev) {};
-            hammer.onswipe = function(ev) {};
+            hammer.ondragend = function (ev) {
+            };
+            hammer.onswipe = function (ev) {
+            };
 
-            hammer.ondoubletap = function(ev) {};
-            hammer.onhold = function(ev) {};
+            hammer.ondoubletap = function (ev) {
+            };
+            hammer.onhold = function (ev) {
+            };
 
-            hammer.ontransformstart = function(ev) {};
-            hammer.ontransform = function(ev) {};
-            hammer.ontransformend = function(ev) {};
+            hammer.ontransformstart = function (ev) {
+            };
+            hammer.ontransform = function (ev) {
+            };
+            hammer.ontransformend = function (ev) {
+            };
 
-            hammer.onrelease = function(ev) {
+            hammer.onrelease = function (ev) {
 
             };
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 
     return Game
 }())
 
-function clicked () {
-   if ( mousex > Game.width2 ) {
-       bitmap.clearRect(mousex - 30, mousey - 30, 60, 60)
-   } else {
-       bitmap.clearCircle(mousex, mousey, 30)
-   }
+function clicked() {
+    if (mousex > Game.width2) {
+        bitmap.clearRect(mousex - 30, mousey - 30, 60, 60)
+    } else {
+        bitmap.clearCircle(mousex, mousey, 30)
+    }
 }

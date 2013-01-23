@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -9,7 +9,7 @@ var tp = new CG.TexturePacker()
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -22,20 +22,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -47,23 +47,23 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/glowball-50.png','glowball')
-            .addImage('media/img/ballon.png','ballon')
-            .addImage('media/img/hunter.png','hunter')
-            
-            //tiled map
-            .addXml('media/map/map-advanced.tmx','map1')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/ballon.png', 'ballon')
+                .addImage('media/img/hunter.png', 'hunter')
 
-            //texturepacker
-            .addImage('media/img/texturepacker.png','texturepacker')
-            .addJson('media/img/texturepacker.json','texturepacker-json')
-            
-            .startPreLoad()
+                //tiled map
+                .addXml('media/map/map-advanced.tmx', 'map1')
+
+                //texturepacker
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+
+                .startPreLoad()
         },
-        create: function() {
-            
+        create:function () {
+
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
 
@@ -79,7 +79,7 @@ Game = (function(){
             mainlayer = new CG.Layer('mainlayer')
 
             //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))            
+            Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
             //create tilemap
             map = new CG.Map(640, 480)
@@ -87,16 +87,16 @@ Game = (function(){
 
             //get position points from object layer of tiled
             pointstest = map.getPointsByName('coin')
-            
+
             //create for every point a sprite and add it to the mainlayer
-            for ( var i = 0, l = pointstest.length; i < l; i++ ) {
-                
+            for (var i = 0, l = pointstest.length; i < l; i++) {
+
                 diamond = new CG.Sprite(Game.asset.getImageByName('gem'), pointstest[i].position)
                 diamond.name = 'diamond'
                 diamond.boundingradius = 80
                 mainlayer.addElement(diamond)
             }
-            
+
             //assign sprite to group object b1 of tiled map
             ballon1 = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
             ballon1.name = 'ballon1'
@@ -151,22 +151,22 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.anim1();
             }
         },
-        anim1: function() {
+        anim1:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -190,21 +190,21 @@ Game = (function(){
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
-            
+
             // clear the Game.b_canvas
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-    
+
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 
     return Game
 }())
 
-function callbackMapCollision () {
-    
+function callbackMapCollision() {
+
 }

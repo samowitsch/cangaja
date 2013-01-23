@@ -12,7 +12,7 @@ var renderStats, updateStats
 var hammer
 var mySound
 var myShoot
-var angl,xs = 0,ys = 0
+var angl, xs = 0, ys = 0
 var ri = 0
 
 var sliderx = 0
@@ -56,16 +56,15 @@ var screen8 = new CG.Screen('bitmap')
 var layerbitmap = new CG.Layer('bitmap')
 
 
-
 var colmsg = ''
 
-var asset,circle,circlesmoke,tween,squence,button,font,font2,menu,mapcol=0,mapcollisiontext=''
+var asset, circle, circlesmoke, tween, squence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
 var morph = new CG.Morph('sinus', 0.25, 1, 1)
 var map = new CG.Map(640, 480)
 var tp = new CG.TexturePacker()
 
 
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -75,7 +74,7 @@ window.onload = function() {
     document.body.appendChild(can)
 
     //mouse move
-    can.addEventListener('mousemove', function(evt) {
+    can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
         mousex = evt.clientX - canvas.offsetLeft;
         mousey = evt.clientY - canvas.offsetTop;
@@ -85,20 +84,20 @@ window.onload = function() {
 };
 
 
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -111,51 +110,51 @@ Game = (function(){
 
             //preload images
             Game.asset.addImage('media/img/rocket.png', 'rocket')
-            .addImage('media/img/rocket2.png', 'rocket2')
-            .addImage('media/img/btn-back.png','button')
-            .addImage('media/img/exp1.png','exp1')
-            .addImage('media/img/exp2.png','exp2')
-            .addImage('media/img/exp3.png','exp3')
-            .addImage('media/img/exp4.png','exp4')
-            .addImage('media/img/exp5.png','exp5')
-            .addImage('media/img/ballon.png','ballon')
-            .addImage('media/img/sonne.png','sun')
-            .addImage('media/img/sonne-50.png','sun50')
-            .addImage('media/img/powerstar75.png','powerstar75')
-            .addImage('media/img/smoke50.png','smoke')
-            .addImage('media/img/cloud.png','cloud')
-            .addImage('media/img/raindrop.png','raindrop-old')
-            .addImage('media/img/rainbow_256.png','rainbow')
-            .addImage('media/img/glowball.png','glowball')
-            .addImage('media/img/glowball-50.png','glowball50')
-            .addImage('media/img/basketball.png','basketball')
-            .addImage('media/img/basketball-25.png','basketball25')
-            .addImage('media/img/hunter.png','hunter')
-            .addImage('media/img/crosshair.png','crosshair')
-            .addImage('media/img/expbig1.png','bigexplosion')
-            .addImage('media/img/burst.png','burst')
-            //font
-            .addFont('media/font/small.txt','small','small')
-            .addFont('media/font/heiti.txt','heiti')
-            .addFont('media/font/gill.txt','gill')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            //tilemaps
-            .addXml('media/map/map-diddy-csv.tmx','map-diddy-csv')
-            .addXml('media/map/map.tmx','map1')
-            .addXml('media/map/map2.tmx','map2')
-            .addXml('media/map/othermap.tmx','othermap')
-            .addXml('media/map/isometric_grass_and_water.tmx','iso')
-            .addXml('media/map/sewers.tmx','sewers')
-            //texturepacker
-            .addImage('media/img/texturepacker.png','texturepacker')
-            .addXml('media/img/texturepacker.xml','texturepacker-xml')
-            //jsons
-            .addJson('media/img/texturepacker.json','texturepacker-json')
-            .addJson('media/map/map.json','map-json')
+                .addImage('media/img/rocket2.png', 'rocket2')
+                .addImage('media/img/btn-back.png', 'button')
+                .addImage('media/img/exp1.png', 'exp1')
+                .addImage('media/img/exp2.png', 'exp2')
+                .addImage('media/img/exp3.png', 'exp3')
+                .addImage('media/img/exp4.png', 'exp4')
+                .addImage('media/img/exp5.png', 'exp5')
+                .addImage('media/img/ballon.png', 'ballon')
+                .addImage('media/img/sonne.png', 'sun')
+                .addImage('media/img/sonne-50.png', 'sun50')
+                .addImage('media/img/powerstar75.png', 'powerstar75')
+                .addImage('media/img/smoke50.png', 'smoke')
+                .addImage('media/img/cloud.png', 'cloud')
+                .addImage('media/img/raindrop.png', 'raindrop-old')
+                .addImage('media/img/rainbow_256.png', 'rainbow')
+                .addImage('media/img/glowball.png', 'glowball')
+                .addImage('media/img/glowball-50.png', 'glowball50')
+                .addImage('media/img/basketball.png', 'basketball')
+                .addImage('media/img/basketball-25.png', 'basketball25')
+                .addImage('media/img/hunter.png', 'hunter')
+                .addImage('media/img/crosshair.png', 'crosshair')
+                .addImage('media/img/expbig1.png', 'bigexplosion')
+                .addImage('media/img/burst.png', 'burst')
+                //font
+                .addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/heiti.txt', 'heiti')
+                .addFont('media/font/gill.txt', 'gill')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                //tilemaps
+                .addXml('media/map/map-diddy-csv.tmx', 'map-diddy-csv')
+                .addXml('media/map/map.tmx', 'map1')
+                .addXml('media/map/map2.tmx', 'map2')
+                .addXml('media/map/othermap.tmx', 'othermap')
+                .addXml('media/map/isometric_grass_and_water.tmx', 'iso')
+                .addXml('media/map/sewers.tmx', 'sewers')
+                //texturepacker
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addXml('media/img/texturepacker.xml', 'texturepacker-xml')
+                //jsons
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+                .addJson('media/map/map.json', 'map-json')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
             //tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
@@ -164,15 +163,15 @@ Game = (function(){
 
             //sfx
             mySound = new buzz.sound("media/sfx/serious", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload: true,
-                autoplay: false,
-                loop: true
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                autoplay:false,
+                loop:true
             });
             myShoot = new buzz.sound("media/sfx/laser", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload: true,
-                loop: false
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                loop:false
             });
 
             //mySound.play()
@@ -199,32 +198,31 @@ Game = (function(){
 
 
             //experimental key handler
-            document.onkeydown = function(evt){
+            document.onkeydown = function (evt) {
                 console.log(evt)
             };
             console.log('create: experimental key handler')
 
 
-
             Game.director
-            .addScreen(screen.addLayer(layerback).addLayer(layermiddle).addLayer(layerfront))
-            .addScreen(screen2.addLayer(layeremitter))
-            .addScreen(screen3.addLayer(layersprites))
-            .addScreen(screen4.addLayer(layerfollowersmoke).addLayer(layerfollower).addLayer(layerrunner))
-            .addScreen(screen5.addLayer(layeranimationsmoke).addLayer(layeranimation))
-            .addScreen(screen6.addLayer(layermap))
-            .addScreen(screen7.addLayer(layermenu))
-            .addScreen(screen8.addLayer(layerbitmap))
+                .addScreen(screen.addLayer(layerback).addLayer(layermiddle).addLayer(layerfront))
+                .addScreen(screen2.addLayer(layeremitter))
+                .addScreen(screen3.addLayer(layersprites))
+                .addScreen(screen4.addLayer(layerfollowersmoke).addLayer(layerfollower).addLayer(layerrunner))
+                .addScreen(screen5.addLayer(layeranimationsmoke).addLayer(layeranimation))
+                .addScreen(screen6.addLayer(layermap))
+                .addScreen(screen7.addLayer(layermenu))
+                .addScreen(screen8.addLayer(layerbitmap))
             console.log('create: director')
 
 
-            if(loadjson){
+            if (loadjson) {
                 map.loadMapJson(Game.asset.getJsonByName('map-json'))
-                .addElement(screen4.getLayerByName('layerrunner').getElementByName('rocket'))
+                    .addElement(screen4.getLayerByName('layerrunner').getElementByName('rocket'))
                 console.log('create: map => json source')
-            }else{
+            } else {
                 map.loadMapXml(Game.asset.getXmlByName('map1'))
-                .addElement(screen4.getLayerByName('layerrunner').getElementByName('rocket'))
+                    .addElement(screen4.getLayerByName('layerrunner').getElementByName('rocket'))
                 console.log('create: map => xml source')
             }
             map.visible = false
@@ -236,19 +234,19 @@ Game = (function(){
             createMapElements()
 
 
-            circle = new CG.Translate().initOval(layersprites.elements[layersprites.elements.length-1], new CG.Point(320, 30), 15, 15, 0 , 5)
-            circlesmoke = new CG.Translate().initOval(layeremitter.getElementByName('smokey'), new CG.Point(320, 240), 250, 0, 1 , 1.5)
+            circle = new CG.Translate().initOval(layersprites.elements[layersprites.elements.length - 1], new CG.Point(320, 30), 15, 15, 0, 5)
+            circlesmoke = new CG.Translate().initOval(layeremitter.getElementByName('smokey'), new CG.Point(320, 240), 250, 0, 1, 1.5)
             console.log('create: circle translate')
 
 
             sequence = new CG.Sequence()
             sequence.loop = true
             sequence.addTranslation(
-                new CG.Translate().initBezier(layersprites.elements[layersprites.elements.length-2],200,new CG.Point(500,450),new CG.Point(100,100),new CG.Point(-600,600), new CG.Point(1200,-300)))
-            .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length-2], 200, new CG.Point(100, 100), new CG.Point(550, 150)))
-            .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length-2], 150, new CG.Point(550, 150), new CG.Point(100, 400)))
-            .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length-2], 100, new CG.Point(100, 400), new CG.Point(550, 450))
-                )
+                new CG.Translate().initBezier(layersprites.elements[layersprites.elements.length - 2], 200, new CG.Point(500, 450), new CG.Point(100, 100), new CG.Point(-600, 600), new CG.Point(1200, -300)))
+                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 200, new CG.Point(100, 100), new CG.Point(550, 150)))
+                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 150, new CG.Point(550, 150), new CG.Point(100, 400)))
+                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 100, new CG.Point(100, 400), new CG.Point(550, 450))
+            )
             console.log('create: sequence')
 
             Game.touchinit()
@@ -258,10 +256,10 @@ Game = (function(){
             console.log('create: jump into loop')
 
         },
-        loop: function(){
+        loop:function () {
             Game.delta.update()
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 var last = new Date()
                 //    delta = (now - then) / (1000 / Game.fps)
                 Game.run();
@@ -269,25 +267,25 @@ Game = (function(){
                 delta = (new Date() - last) / 1000
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
 
             //experimental key handler
-            document.onkeydown = function(evt){
+            document.onkeydown = function (evt) {
 
-                if(evt.keyIdentifier == 'Up'){
+                if (evt.keyIdentifier == 'Up') {
                     mousey = mousey - 20
                 }
-                if(evt.keyIdentifier == 'Down'){
+                if (evt.keyIdentifier == 'Down') {
                     mousey = mousey + 20
                 }
-                if(evt.keyIdentifier == 'Left'){
+                if (evt.keyIdentifier == 'Left') {
                     mousex = mousex - 20
                 }
-                if(evt.keyIdentifier == 'Right'){
+                if (evt.keyIdentifier == 'Right') {
                     mousex = mousex + 20
                 }
                 layerrunner.getElementByName('rocket').x = mousex
@@ -298,9 +296,9 @@ Game = (function(){
 
             //experimental rocket movement
             var rocky = layerrunner.getElementByName('rocket')
-            ri +=0.007
-            rocky.position.x = Game.bound.width/2+(Game.bound.width/3*Math.cos(ri*3-Math.cos(ri))) >> 0
-            rocky.position.y = Game.bound.height/2+(Game.bound.height/2*-Math.sin(ri*2.3-Math.cos(ri))) >> 0
+            ri += 0.007
+            rocky.position.x = Game.bound.width / 2 + (Game.bound.width / 3 * Math.cos(ri * 3 - Math.cos(ri))) >> 0
+            rocky.position.y = Game.bound.height / 2 + (Game.bound.height / 2 * -Math.sin(ri * 2.3 - Math.cos(ri))) >> 0
 
             mapcollisiontext = ''
 
@@ -331,9 +329,9 @@ Game = (function(){
             updateStats.update()
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            map.drawMap(0, 0, mousex*2>>0, mousey*2>>0, Game.bound.width, Game.bound.height, callbackMapCollision)
+            map.drawMap(0, 0, mousex * 2 >> 0, mousey * 2 >> 0, Game.bound.width, Game.bound.height, callbackMapCollision)
             //        map.drawMap()
             //        map.draw()
 
@@ -342,15 +340,15 @@ Game = (function(){
 
             Game.director.draw()
 
-            if(Game.director.getActiveScreenName() == 'follower'){
-                font.draw('Spritecollision: ' + colmsg, 10, ytext+=70)
-                font.draw('Map Tile Collision: ' + mapcollisiontext, 10, ytext+=20)
+            if (Game.director.getActiveScreenName() == 'follower') {
+                font.draw('Spritecollision: ' + colmsg, 10, ytext += 70)
+                font.draw('Map Tile Collision: ' + mapcollisiontext, 10, ytext += 20)
             }
 
-            if(Game.director.getActiveScreenName() == 'bitmap'){
-                if( mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height){
+            if (Game.director.getActiveScreenName() == 'bitmap') {
+                if (mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height) {
                     data = bm.getPixel(mousex, mousey).data
-                    font.draw('Bitmap pixeldata: ' + data[0] + '/' + data[1] + '/' + data[2] + '/' + data[3], 10, ytext+=250)
+                    font.draw('Bitmap pixeldata: ' + data[0] + '/' + data[1] + '/' + data[2] + '/' + data[3], 10, ytext += 250)
                 }
             }
 
@@ -358,43 +356,51 @@ Game = (function(){
             colmsg = ''
 
 
-
             ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
             hammer = new Hammer(canvas);
-            hammer.ontap = function(ev) {
+            hammer.ontap = function (ev) {
                 mousedown = true
                 mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
                 clicked()
 
             };
-            hammer.ondragstart = function(ev) {};
-            hammer.ondrag = function(ev) {
+            hammer.ondragstart = function (ev) {
+            };
+            hammer.ondrag = function (ev) {
                 mousex = ev.position.x
                 mousey = ev.position.y
 
 
-            //log = document.getElementById('log')
-            //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
+                //log = document.getElementById('log')
+                //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
 
             };
-            hammer.ondragend = function(ev) {};
-            hammer.onswipe = function(ev) {};
+            hammer.ondragend = function (ev) {
+            };
+            hammer.onswipe = function (ev) {
+            };
 
-            hammer.ondoubletap = function(ev) {};
-            hammer.onhold = function(ev) {};
+            hammer.ondoubletap = function (ev) {
+            };
+            hammer.onhold = function (ev) {
+            };
 
-            hammer.ontransformstart = function(ev) {};
-            hammer.ontransform = function(ev) {};
-            hammer.ontransformend = function(ev) {};
+            hammer.ontransformstart = function (ev) {
+            };
+            hammer.ontransform = function (ev) {
+            };
+            hammer.ontransformend = function (ev) {
+            };
 
-            hammer.onrelease = function(ev) {};
+            hammer.onrelease = function (ev) {
+            };
         },
-        touchhandler: function(){
+        touchhandler:function () {
             mousedown = false
         }
     }
@@ -403,11 +409,11 @@ Game = (function(){
 }())
 
 
-function createMapElements(){
+function createMapElements() {
 
     pointstest = map.getPointsByName('coin')
 
-    for ( var i = 0, l = pointstest.length; i < l; i++ ) {
+    for (var i = 0, l = pointstest.length; i < l; i++) {
         diamond = new CG.Sprite(Game.asset.getImageByName('gem'), pointstest[i].position)
         diamond.name = 'diamond'
         diamond.boundingradius = 80
@@ -477,7 +483,6 @@ function createMapElements(){
     layerfollower.addElement(sun)
 
 
-
     areastest3 = map.getAreasByName('anim-ver')[0]
 
     run = new CG.Animation(Game.asset.getImageByName('hunter'), false, 8, 14, 56, 64)
@@ -533,17 +538,16 @@ function createMapElements(){
     layerfollower.addElement(run)
 
 
-
 }
 
 
 function createElements() {
 
-    bm = new CG.Bitmap(300,300)
+    bm = new CG.Bitmap(300, 300)
     bm.loadImage(Game.asset.getImageByName('texturepacker'))
     layerbitmap.addElement(bm)
-    bm.clearCircle(50,50,50)
-    bm.clearRect(120,120,50,50)
+    bm.clearCircle(50, 50, 50)
+    bm.clearRect(120, 120, 50, 50)
 
     crosshair = new CG.Sprite(Game.asset.getImageByName('crosshair'), new CG.Point(320, 240))
     crosshair.name = 'crosshair'
@@ -555,14 +559,14 @@ function createElements() {
         .setGravity(-0.02)
         .initAsPoint(Game.asset.getImageByName('little-smoke'))
         //        .setEmitterPosition(new CG.Point(50, 50))
-        )
+    )
 
     run1 = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(280, Game.height2), 1, 7, 56, 64)
     run1.name = 'runner1'
     run1.delay = 6
     run1.attachObject(layeranimationsmoke.getElementByName('animationsmoke'))
-    .setAttachedOffsetX(20)
-    .setAttachedOffsetY(-25)
+        .setAttachedOffsetX(20)
+        .setAttachedOffsetY(-25)
 
 
     layeranimation.addElement(run1)
@@ -599,7 +603,7 @@ function createElements() {
         .setGravity(-0.01)
         .initAsPoint(Game.asset.getImageByName('little-smoke'))
         //        .setEmitterPosition(new CG.Point(50, 50))
-        )
+    )
 
     layerfollowersmoke.addElement(new CG.Emitter(new CG.Point(100, 50))
         .setName('smoke2')
@@ -609,7 +613,7 @@ function createElements() {
         .setGravity(-0.01)
         .initAsPoint(Game.asset.getImageByName('little-smoke'))
         //        .setEmitterPosition(new CG.Point(100, 50))
-        )
+    )
 
 
     hunter = new CG.Sprite(Game.asset.getImageByName('rocket2'), new CG.Point(Game.width2, Game.height2))
@@ -638,7 +642,7 @@ function createElements() {
 
     //Test emitter
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2,Game.height2))
+    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
         .setName('splashi')
         .setParticleSpeed(0)
         .setPLifetime(15)
@@ -647,7 +651,7 @@ function createElements() {
         .setProtation(0)
         //        .setEmitterPosition(new CG.Point(320,240))
         .activateFadeout()
-        )
+    )
 
     layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height + 20))
         .setName('sunny')
@@ -657,20 +661,20 @@ function createElements() {
         .setProtation(2)
         //        .setEmitterPosition(new CG.Point(320,500))
         .activateFadeout()
-        )
+    )
 
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2,-20))
+    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, -20))
         .setName('rainy')
         .setParticleSpeed(2)
         .setGravity(0.03)
         .initAsLine(Game.asset.getImageByName('raindrop'), Game.height, DOWN)
         //        .setEmitterPosition(new CG.Point(320,-20))
         .activateFadeout()
-        )
+    )
 
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(-25,Game.height2))
+    layeremitter.addElement(new CG.Emitter(new CG.Point(-25, Game.height2))
         .setName('glowy')
         .setGravity(0)
         .setParticleSpeed(2)
@@ -678,9 +682,9 @@ function createElements() {
         .initAsLine(Game.asset.getImageByName('glowball50'), 40, RIGHT)
         //        .setEmitterPosition(new CG.Point(-25,240))
         .activateFadeout()
-        )
+    )
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width + 15,Game.height2))
+    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width + 15, Game.height2))
         .setName('bally')
         .setParticleSpeed(2)
         .setProtation(-1)
@@ -688,7 +692,7 @@ function createElements() {
         .initAsLine(Game.asset.getImageByName('basketball-25'), 40, LEFT)
         //        .setEmitterPosition(new CG.Point(655,240))
         .activateFadeout()
-        )
+    )
 
     layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
         .setName('explodi-stars')
@@ -697,7 +701,7 @@ function createElements() {
         .setGravity(0)
         .initAsExplosion(Game.asset.getImageByName('powerstar75'), -2, 2)
         //        .setEmitterPosition(new CG.Point(320, 240))
-        )
+    )
 
     layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
         .setName('smokey')
@@ -705,7 +709,7 @@ function createElements() {
         .setGravity(-0.05)
         .initAsPoint(Game.asset.getImageByName('smoke'))
         //        .setEmitterPosition(new CG.Point(320, 240))
-        )
+    )
 
 
     layeremitter.addElement(new CG.Emitter(new CG.Point(160, 120))
@@ -719,12 +723,11 @@ function createElements() {
         .setCreationTime(10)
         .initAsCorona(Game.asset.getImageByName('littlestar'), 100)
         //        .setEmitterPosition(new CG.Point(160, 120))
-        )
+    )
 
 
     //    layerback.addElement(new CG.Emitter().setName('emmi').initAsExplosion(Game.asset.getImageByName('sun50'), -3, 3).setEmitterPosition(160,360).activateFadeout())
     //    layerback.addElement(new CG.Emitter().setName('emmi').initAsPoint(Game.asset.getImageByName('sun50')).setEmitterPosition(160,360).activateFadeout())
-
 
 
     sun = new CG.Sprite(Game.asset.getImageByName('sun'), new CG.Point(480, 100))
@@ -747,7 +750,7 @@ function createElements() {
     layersprites.addElement(cloud)
 
 
-    cloud = new CG.Sprite(Game.asset.getImageByName('cloud') , new CG.Point(250, 200))
+    cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(250, 200))
     cloud.name = 'cloud'
     cloud.xscale = 0.75
     cloud.yscale = 0.75
@@ -757,7 +760,6 @@ function createElements() {
     layersprites.addElement(cloud)
 
 
-
     rainbow = new CG.Sprite(Game.asset.getImageByName('rainbow'), new CG.Point(125, 200))
     rainbow.name = 'rainbow'
     rainbow.xspeed = -0.1
@@ -765,8 +767,8 @@ function createElements() {
     layersprites.addElement(rainbow)
 
 
-    for(i=0;i<10;i++){
-        cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(300 + (10 * i), 200 + (5 * i) ))
+    for (i = 0; i < 10; i++) {
+        cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(300 + (10 * i), 200 + (5 * i)))
         cloud.name = 'cloud'
         cloud.alpha = 0.4
         cloud.xscale = 0.5
@@ -832,7 +834,7 @@ function createElements() {
     basketball.xscale = 0.25
     basketball.yscale = 0.25
     basketball.alpha = 0.5
-    basketball.setBound(new CG.Bound (50,50,200,200))  //setting the bound of the sprite
+    basketball.setBound(new CG.Bound(50, 50, 200, 200))  //setting the bound of the sprite
     layersprites.addElement(basketball)
     delete basketball
 
@@ -842,32 +844,30 @@ function createElements() {
     button1.name = 'emitter'
     layerfront.addElement(button1)
 
-    button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Sprite&Translation', font, cbToSpritedemo)
+    button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Sprite&Translation', font, cbToSpritedemo)
     button2.name = 'sprite'
     layerfront.addElement(button2)
 
-    button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Animation', font, cbToAnimationdemo)
+    button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Animation', font, cbToAnimationdemo)
     button3.name = 'animation'
     layerfront.addElement(button3)
 
 
-    button4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Follower&Coll.(Sprite&Map)', font, cbToFollowerdemo)
+    button4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Follower&Coll.(Sprite&Map)', font, cbToFollowerdemo)
     button4.name = 'collision'
     layerfront.addElement(button4)
 
-    button5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Map Demo', font, cbToMapdemo)
+    button5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Map Demo', font, cbToMapdemo)
     button5.name = 'map'
     layerfront.addElement(button5)
 
-    button6 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Menu&Callback Demo', font, cbToMenudemo)
+    button6 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Menu&Callback Demo', font, cbToMenudemo)
     button6.name = 'menu'
     layerfront.addElement(button6)
 
-    button7 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Bitmap Demo', font, cbToBitmapdemo)
+    button7 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Bitmap Demo', font, cbToBitmapdemo)
     button7.name = 'menu'
     layerfront.addElement(button7)
-
-
 
 
     back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, Game.height - 30), 'back to Main', font, cbBackToMain)
@@ -887,23 +887,21 @@ function createElements() {
     mbutton1.name = 'map1'
     layermap.addElement(mbutton1)
 
-    mbutton2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Map 2 mit Anim.', font, cbToMapChange)
+    mbutton2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Map 2 mit Anim.', font, cbToMapChange)
     mbutton2.name = 'map2'
     layermap.addElement(mbutton2)
 
-    mbutton3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Iso Demo', font, cbToMapChange)
+    mbutton3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Iso Demo', font, cbToMapChange)
     mbutton3.name = 'iso'
     layermap.addElement(mbutton3)
 
-    mbutton4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Sewers Demo', font, cbToMapChange)
+    mbutton4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Sewers Demo', font, cbToMapChange)
     mbutton4.name = 'sewers'
     layermap.addElement(mbutton4)
 
-    mbutton5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton+=50), 'Othermap ;o)', font, cbToMapChange)
+    mbutton5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Othermap ;o)', font, cbToMapChange)
     mbutton5.name = 'othermap'
     layermap.addElement(mbutton5)
-
-
 
 
     menu = new CG.Menu(320, 100, 10)
@@ -937,54 +935,54 @@ function createElements() {
 }
 
 
-function cbToEmitterdemo(){
-    Game.director.nextScreen('emitter',50)
+function cbToEmitterdemo() {
+    Game.director.nextScreen('emitter', 50)
 }
-function cbToSpritedemo(){
-    Game.director.nextScreen('sprites',50)
+function cbToSpritedemo() {
+    Game.director.nextScreen('sprites', 50)
 }
-function cbToAnimationdemo(){
-    Game.director.nextScreen('animation',50)
+function cbToAnimationdemo() {
+    Game.director.nextScreen('animation', 50)
 }
-function cbToFollowerdemo(){
+function cbToFollowerdemo() {
     map.visible = true
 
-    Game.director.nextScreen('follower',50)
+    Game.director.nextScreen('follower', 50)
 }
-function cbToMapdemo(){
+function cbToMapdemo() {
     map.visible = true
-    Game.director.nextScreen('map',50)
+    Game.director.nextScreen('map', 50)
 }
-function cbToMenudemo(){
-    Game.director.nextScreen('menu',50)
+function cbToMenudemo() {
+    Game.director.nextScreen('menu', 50)
 }
-function cbToBitmapdemo(){
-    Game.director.nextScreen('bitmap',50)
+function cbToBitmapdemo() {
+    Game.director.nextScreen('bitmap', 50)
 }
-function cbToMapChange(){
+function cbToMapChange() {
     map.loadMapXml(Game.asset.getXmlByName(this.name))
     //    map.loadMapJson(Game.asset.getJsonByName(this.name))
     console.log('cbToMapChange')
 }
 
 
-function cbBackToMain(){
+function cbBackToMain() {
     map.visible = false
     Game.director.nextScreen('menuscreen', 5)
 }
 
 
-function callbackTest(obj){
-    console.log(['clicked & execute callback',obj])
+function callbackTest(obj) {
+    console.log(['clicked & execute callback', obj])
 }
-function callbackCollisionTest(obj1, obj2){
+function callbackCollisionTest(obj1, obj2) {
     //console.log(obj2.name)
     layerrunner.getElementByName('rocket').alpha = 0.3
     colmsg = 'Rocket collision!'
 }
-function callbackMapCollision(sprite,tile){
+function callbackMapCollision(sprite, tile) {
     mapcol += 1
-    if(tile instanceof MapTileProperties){
+    if (tile instanceof MapTileProperties) {
         mapcollisiontext = sprite.name + ' hits ' + tile.name
     }
 }
@@ -993,8 +991,8 @@ function callbackMapCollision(sprite,tile){
 function clicked() {
 
 
-    if(Game.director.getActiveScreenName() == 'bitmap'){
-        if( mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height){
+    if (Game.director.getActiveScreenName() == 'bitmap') {
+        if (mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height) {
             bm.clearCircle(mousex, mousey, 10)
         }
     } else {

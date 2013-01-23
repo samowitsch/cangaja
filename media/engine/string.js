@@ -11,18 +11,18 @@ function loadString(path) {
 }
 
 
-String.prototype.ltrim = function(clist) {
+String.prototype.ltrim = function (clist) {
     if (clist) return this.replace(new RegExp('^[' + clist + ']+'), '')
     return this.replace(/^\s+/, '')
 }
-String.prototype.rtrim = function(clist) {
+String.prototype.rtrim = function (clist) {
     if (clist) return this.replace(new RegExp('[' + clist + ']+$'), '')
     return this.replace(/\s+$/, '')
 }
-String.prototype.trim = function(clist) {
+String.prototype.trim = function (clist) {
     if (clist) return this.ltrim(clist).rtrim(clist);
     return this.ltrim().rtrim();
 }
-String.prototype.startsWith = function(str) {
+String.prototype.startsWith = function (str) {
     return !this.indexOf(str);
 }

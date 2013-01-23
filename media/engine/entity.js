@@ -5,36 +5,35 @@
 
 
 /**
- * @description entity the baseclass
+ * @description entity the base class
  * @constructor
  */
 
 CG.Class.extend('Entity', {
-    init: function(name){
-        this.name = name || ''
+    init:function (name) {
+        this.name = name || ''
         this.visible = true
     },
-    update: function() {
+    update:function () {
         throw {
-            name: 'Entity Error',
-            message: 'Subclass has no update method.'
+            name:'Entity Error',
+            message:'Subclass has no update method.'
         }
     },
-    draw: function() {
+    draw:function () {
         throw {
-            name: 'Entity Error',
-            message: 'Subclass has no draw method.'
+            name:'Entity Error',
+            message:'Subclass has no draw method.'
         }
     },
     /**
-     * @description inizialising image for object. for now => sprite, particle, buffer, bitmap and button use it
+     * @description initialize image for object. for now => sprite, particle, buffer, bitmap and button use it
      *
      * @param {image} image image path, image or tpimage
      */
-    setImage: function(image){
+    setImage:function (image) {
         this.atlasimage = false
-        if ( image instanceof CG.TPImage )
-        {
+        if (image instanceof CG.TPImage) {
             //TPImage from MediaAsset
             this.image = Game.asset.getImageByName(image.atlasname)
             this.imagerotation = image.rotation //|| 0
@@ -43,16 +42,14 @@ CG.Class.extend('Entity', {
             this.width = image.width
             this.height = image.height
             this.atlasimage = true
-            if ( this.imagerotation !== 0 )
-            {
+            if (this.imagerotation !== 0) {
                 this.cutwidth = image.height
                 this.cutheight = image.width
             } else {
                 this.cutwidth = image.width
                 this.cutheight = image.height
             }
-        } else if ( typeof image == 'string' )
-{
+        } else if (typeof image == 'string') {
             //path to image
             this.image = new Image()
             this.image.src = image

@@ -1,7 +1,6 @@
 var CG = CG || {
-    VERSION: 1
+    VERSION:1
 };
-
 
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -10,63 +9,64 @@ var CG = CG || {
 // requestAnimationFrame polyfill by Erik M??ller
 // fixes from Paul Irish and Tino Zijdel
 
-(function() {
+(function () {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-        || window[vendors[x]+'CancelRequestAnimationFrame'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+            || window[vendors[x] + 'CancelRequestAnimationFrame'];
     }
 
     if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function(callback, element) {
+        window.requestAnimationFrame = function (callback, element) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() {
-                callback(currTime + timeToCall);
-            },
-            timeToCall);
+            var id = window.setTimeout(function () {
+                    callback(currTime + timeToCall);
+                },
+                timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
 
     if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function(id) {
+        window.cancelAnimationFrame = function (id) {
             clearTimeout(id);
         };
 }());
 
 
 /* Simple JavaScript Inheritance
-   * By John Resig http://ejohn.org/
-   * MIT Licensed.
-   *
-   * Inspired by base2 and Prototype
-   */
-(function(){
+ * By John Resig http://ejohn.org/
+ * MIT Licensed.
+ *
+ * Inspired by base2 and Prototype
+ */
+(function () {
     var initializing = false,
-    fnTest = /xyz/.test(function(){
-        var xyz;
-    }) ? /\b_super\b/ : /.*/;
+        fnTest = /xyz/.test(function () {
+            var xyz;
+        }) ? /\b_super\b/ : /.*/;
     /* The base Class implementation (does nothing) */
-    CG.Class = function(){};
+    CG.Class = function () {
+    };
 
     // See if a object is a specific class
-    CG.Class.prototype.isA = function(className) {
+    CG.Class.prototype.isA = function (className) {
         return this.className === className;
     };
 
     /* Create a new Class that inherits from this class */
-    CG.Class.extend = function(className, prop, classMethods) {
+    CG.Class.extend = function (className, prop, classMethods) {
         /* No name, don't add onto Q */
-        if(!typeof className === "string") {
+        if (!typeof className === "string") {
             classMethods = prop;
             prop = className;
             className = null;
         }
         var _super = this.prototype,
-        ThisClass = this;
+            ThisClass = this;
 
         /* Instantiate a base class (but only create the instance, */
         /* don't run the init constructor) */
@@ -74,8 +74,8 @@ var CG = CG || {
         var prototype = new ThisClass();
         initializing = false;
 
-        function _superFactory(name,fn) {
-            return function() {
+        function _superFactory(name, fn) {
+            return function () {
                 var tmp = this._super;
 
                 /* Add a new ._super() method that is the same method */
@@ -95,16 +95,16 @@ var CG = CG || {
         for (var name in prop) {
             /* Check if we're overwriting an existing function */
             prototype[name] = typeof prop[name] === "function" &&
-            typeof _super[name] === "function" &&
-            fnTest.test(prop[name]) ?
-            _superFactory(name,prop[name]) :
-            prop[name];
+                typeof _super[name] === "function" &&
+                fnTest.test(prop[name]) ?
+                _superFactory(name, prop[name]) :
+                prop[name];
         }
 
         /* The dummy class constructor */
         function Class() {
             /* All construction is actually done in the init method */
-            if ( !initializing && this.init ) {
+            if (!initializing && this.init) {
                 this.init.apply(this, arguments);
             }
         }
@@ -118,11 +118,11 @@ var CG = CG || {
         Class.extend = CG.Class.extend;
 
         /* If there are class-level Methods, add them to the class */
-        if(classMethods) {
-            CG._extend(Class,classMethods);
+        if (classMethods) {
+            CG._extend(Class, classMethods);
         }
 
-        if(className) {
+        if (className) {
             /* Save the class onto Q */
             CG[className] = Class;
 
@@ -134,7 +134,6 @@ var CG = CG || {
         return Class;
     };
 }())
-
 
 
 ////Class example, how to start from scratch

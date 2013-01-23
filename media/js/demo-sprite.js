@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -9,7 +9,7 @@ var mouseup
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -22,20 +22,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -47,13 +47,13 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/glowball-50.png','glowball')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/glowball-50.png', 'glowball')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
@@ -64,21 +64,20 @@ Game = (function(){
             mainlayer = new CG.Layer('mainlayer')
 
             //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))            
+            Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
             //sprite 1
             spr1 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 100))
             spr1.name = 'spr1'
             mainlayer.addElement(spr1)
-            
+
             //sprite 2
             spr2 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(200, 100))
             spr2.rotationspeed = 1
             spr2.name = 'spr2'
             mainlayer.addElement(spr2)
-            
-            
-            
+
+
             //sprite 3
             spr3 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(400, 100))
             spr3.alpha = 0.5
@@ -86,14 +85,14 @@ Game = (function(){
             spr3.yscale = 0.5
             spr3.name = 'spr3'
             mainlayer.addElement(spr3)
-            
+
             //sprite 4
             spr4 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 200))
             spr4.xspeed = 2
             spr4.boundsMode = 'bounce'
             spr4.name = 'spr4'
             mainlayer.addElement(spr4)
-            
+
             //sprite 5
             spr5 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 300))
             spr5.xspeed = 2
@@ -105,11 +104,11 @@ Game = (function(){
             spr6 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 300))
             spr6.xspeed = 1
             spr6.yspeed = 1
-            spr6.bound = new CG.Bound(0,400, 640, 80)
+            spr6.bound = new CG.Bound(0, 400, 640, 80)
             spr6.boundsMode = 'bounce'
             spr6.name = 'spr6'
             mainlayer.addElement(spr6)
-            
+
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
@@ -118,22 +117,22 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -154,12 +153,12 @@ Game = (function(){
 
             ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-    
+
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 

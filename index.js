@@ -9,44 +9,45 @@ b_canvas.height = h;
 var b_ctx = canvas.getContext('2d');
 
 //hammer not working in ejecta
-//ejecta.require('media/engine/lib/hammer.js');
+//ejecta.include('media/engine/lib/hammer.js');
 
 //buzz not working with ejecta
-//ejecta.require('media/engine/lib/buzz.js');
+//ejecta.include('media/engine/lib/buzz.js');
 
-ejecta.require('media/engine/requestAnimationFrame.js');
+//ejecta.include('media/engine/requestAnimationFrame.js');
 
-ejecta.require('media/engine/constants.js');
-ejecta.require('media/engine/string.js');
-ejecta.require('media/engine/delta.js');
-ejecta.require('media/engine/entity.js');
-ejecta.require('media/engine/point.js');
-ejecta.require('media/engine/vector.js');
-ejecta.require('media/engine/rectangle.js');
-ejecta.require('media/engine/bound.js');
-ejecta.require('media/engine/buffer.js');
-ejecta.require('media/engine/sprite.js');
-ejecta.require('media/engine/tpimage.js');
-ejecta.require('media/engine/texturepacker.js');
-ejecta.require('media/engine/animation.js');
-ejecta.require('media/engine/bitmap.js');
-ejecta.require('media/engine/button.js');
-ejecta.require('media/engine/menu.js');
-ejecta.require('media/engine/mediaasset.js');
-ejecta.require('media/engine/font.js');
-ejecta.require('media/engine/director.js');
-ejecta.require('media/engine/screen.js');
-ejecta.require('media/engine/layer.js');
-ejecta.require('media/engine/maptilelayer.js');
-ejecta.require('media/engine/maptileproperties.js');
-ejecta.require('media/engine/mappoint.js');
-ejecta.require('media/engine/maparea.js');
-ejecta.require('media/engine/map.js');
-ejecta.require('media/engine/sequence.js');
-ejecta.require('media/engine/translate.js');
-ejecta.require('media/engine/morph.js');
-ejecta.require('media/engine/particle.js');
-ejecta.require('media/engine/emitter.js');
+ejecta.include('media/engine/cangaja.js');
+ejecta.include('media/engine/constants.js');
+ejecta.include('media/engine/string.js');
+ejecta.include('media/engine/delta.js');
+ejecta.include('media/engine/entity.js');
+ejecta.include('media/engine/point.js');
+ejecta.include('media/engine/vector.js');
+ejecta.include('media/engine/rectangle.js');
+ejecta.include('media/engine/bound.js');
+ejecta.include('media/engine/buffer.js');
+ejecta.include('media/engine/sprite.js');
+ejecta.include('media/engine/tpimage.js');
+ejecta.include('media/engine/texturepacker.js');
+ejecta.include('media/engine/animation.js');
+ejecta.include('media/engine/bitmap.js');
+ejecta.include('media/engine/button.js');
+ejecta.include('media/engine/menu.js');
+ejecta.include('media/engine/mediaasset.js');
+ejecta.include('media/engine/font.js');
+ejecta.include('media/engine/director.js');
+ejecta.include('media/engine/screen.js');
+ejecta.include('media/engine/layer.js');
+ejecta.include('media/engine/maptilelayer.js');
+ejecta.include('media/engine/maptileproperties.js');
+ejecta.include('media/engine/mappoint.js');
+ejecta.include('media/engine/maparea.js');
+ejecta.include('media/engine/map.js');
+ejecta.include('media/engine/sequence.js');
+ejecta.include('media/engine/translate.js');
+ejecta.include('media/engine/morph.js');
+ejecta.include('media/engine/particle.js');
+ejecta.include('media/engine/emitter.js');
 
 
 

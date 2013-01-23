@@ -7,7 +7,7 @@
  * @param {point} position of emitter
  */
 CG.Entity.extend('Emitter', {
-    init: function (position){
+    init:function (position) {
         this._super()
         this.particles = []     //Particle pool delegated by emitter
         this.maxparticles = 50
@@ -21,7 +21,7 @@ CG.Entity.extend('Emitter', {
         this.image = null       //Image of the particle
         this.type = ''          //point, corona, plate
 
-        this.position = position || new CG.Point(0,0)
+        this.position = position || new CG.Point(0, 0)
         this.position._x = this.position.x
         this.position._y = this.position.y
 
@@ -40,16 +40,16 @@ CG.Entity.extend('Emitter', {
         return this
     },
     /*
-    * Objective-C style initialisation of all emitter types
-    */
+     * Objective-C style initialisation of all emitter types
+     */
 
     /**
-    * @description initAsPoint
-    *
-    * @param {mixed} image path, image or tpimage to use for the particle
-    */
+     * @description initAsPoint
+     *
+     * @param {mixed} image path, image or tpimage to use for the particle
+     */
 
-    initAsPoint: function(image){
+    initAsPoint:function (image) {
         this.image = image
         this.type = 'point'
         return this
@@ -57,13 +57,13 @@ CG.Entity.extend('Emitter', {
 
 
     /**
-    * @description initAsExplosion
-    *
-    * @param {mixed} image path, image or tpimage to use for the particle
-    * @param {integer} min value for particle speed
-    * @param {integer} max value for particle speed
-    */
-    initAsExplosion: function(image, min, max){
+     * @description initAsExplosion
+     *
+     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {integer} min value for particle speed
+     * @param {integer} max value for particle speed
+     */
+    initAsExplosion:function (image, min, max) {
         this.image = image
         this.type = 'explosion'
         this.min = min
@@ -72,12 +72,12 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-    * @description initAsCorona
-    *
-    * @param {mixed} image path, image or tpimage to use for the particle
-    * @param {integer} radius of the corona emitter
-    */
-    initAsCorona: function(image, radius){
+     * @description initAsCorona
+     *
+     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {integer} radius of the corona emitter
+     */
+    initAsCorona:function (image, radius) {
         this.image = image
         this.type = 'corona'
         this.radius = radius || 0
@@ -85,13 +85,13 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-    * @description initAsLine
-    *
-    * @param {mixed} image path, image or tpimage to use for the particle
-    * @param {integer} width of the plate emitter
-    * @param {integer} direction (defined constants) of the plate emitter
-    */
-    initAsLine: function(image, width, direction){
+     * @description initAsLine
+     *
+     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {integer} width of the plate emitter
+     * @param {integer} direction (defined constants) of the plate emitter
+     */
+    initAsLine:function (image, width, direction) {
         this.image = image
         this.width = width || 200
         this.pdirection = direction || UP
@@ -100,34 +100,33 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-    * @description initAsRectangle
-    *
-    * @param {mixed} image path, image or tpimage to use for the particle
-    * @param {integer} width of the plate emitter
-    * @param {integer} direction (defined constants) of the plate emitter
-    */
-    initAsRectangle: function(image, width, height){
+     * @description initAsRectangle
+     *
+     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {integer} width of the plate emitter
+     * @param {integer} direction (defined constants) of the plate emitter
+     */
+    initAsRectangle:function (image, width, height) {
         this.image = image
         this.width = width || 200
-        this.height = height || 200
+        this.height = height || 200
         this.type = 'rectangle'
         return this
     },
 
 
-
-    createParticle: function(){
+    createParticle:function () {
         particle = new CG.Particle(this.image)
         return particle
     },
 
     /**
-    * @description initParticle
-    *
-    * @param {particle} initialize particle object
-    */
-    initParticle: function(particle){
-        if ( this.pfadeout ) {
+     * @description initParticle
+     *
+     * @param {particle} initialize particle object
+     */
+    initParticle:function (particle) {
+        if (this.pfadeout) {
             particle.fadeout = true
         }
         particle.gravity = this.gravity     //set particle gravity to emitter gravity
@@ -136,8 +135,7 @@ CG.Entity.extend('Emitter', {
         particle.lifetime = this.plifetime  //reset lifetime
         particle.currtime = this.plifetime
         particle.rotationspeed = this.protation
-        switch ( this.type )
-        {
+        switch (this.type) {
             case 'corona':
                 //TODO corona like emitter
                 var rad = this.getRandom(0, 359) * Const_PI_180
@@ -167,8 +165,7 @@ CG.Entity.extend('Emitter', {
                 rnd = this.getRandom(this.width / 2 * -1, this.width / 2)
 
                 //handle directions of line emitter
-                switch ( this.pdirection )
-                {
+                switch (this.pdirection) {
                     default:
                     case UP:
                         particle.xspeed = 0
@@ -183,7 +180,7 @@ CG.Entity.extend('Emitter', {
                         particle.position.y = this.position._y
                         break
                     case LEFT:
-                        particle.xspeed = this.pspeed * - 1
+                        particle.xspeed = this.pspeed * -1
                         particle.yspeed = 0
                         particle.position.x = this.position._x
                         particle.position.y = rnd + this.getY()
@@ -214,48 +211,46 @@ CG.Entity.extend('Emitter', {
         return particle
     },
 
-    update: function(){
-        if(this.visible){
+    update:function () {
+        if (this.visible) {
             this.currenttime += this.creationspeed
             //particle lifetime
-            if(this.currenttime >= this.creationtime){
+            if (this.currenttime >= this.creationtime) {
                 this.currenttime = 0
-                if ( this.particles.length < this.maxparticles )
-                {
+                if (this.particles.length < this.maxparticles) {
                     this.particles.push(this.initParticle(this.createParticle()))
                 }
-                else
-                {
+                else {
                     particle = this.searchInvisibleParticle()   //search inactive particle in 'pool''
                     this.initParticle(particle)
-                    this.particles.sort(function(obj1, obj2){
-                        return obj1.currtime - obj2.currtime
-                    }
+                    this.particles.sort(function (obj1, obj2) {
+                            return obj1.currtime - obj2.currtime
+                        }
                     )
                 }
             }
 
 
-            for(var i=0, l=this.particles.length; i < l; i++){
+            for (var i = 0, l = this.particles.length; i < l; i++) {
                 this.particles[i].update()
             }
             return this
         }
     },
-    draw: function(){
-        if(this.visible){
-            for(var i=0, l=this.particles.length; i < l; i++){
+    draw:function () {
+        if (this.visible) {
+            for (var i = 0, l = this.particles.length; i < l; i++) {
                 this.particles[i].draw()
             }
             return this
         }
     },
     /**
-    * @description Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle
-    */
-    searchInvisibleParticle: function(){
-        for(var i=0, l=this.particles.length; i < l; i++){
-            if(this.particles[i].visible == false){
+     * @description Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle
+     */
+    searchInvisibleParticle:function () {
+        for (var i = 0, l = this.particles.length; i < l; i++) {
+            if (this.particles[i].visible == false) {
                 return this.particles[i]
             }
         }
@@ -263,11 +258,11 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-    * @description setEmitterPosition
-    *
-    * @param {point} position of the emitter
-    */
-    setEmitterPosition: function(position){
+     * @description setEmitterPosition
+     *
+     * @param {point} position of the emitter
+     */
+    setEmitterPosition:function (position) {
         this.position = position
         //    this._x = x
         //    this._y = y
@@ -275,109 +270,109 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-    * @description  setName
-    *
-    * @param {string} name of the object for search with layerobject.getElementByName(name)
-    */
-    setName: function (name){
+     * @description  setName
+     *
+     * @param {string} name of the object for search with layerobject.getElementByName(name)
+     */
+    setName:function (name) {
         this.name = name
         return this
     },
 
     /**
-    * @description setCreationTime
-    *
-    * @param {integer} creationtime
-    */
-    setCreationTime: function (creationtime){
+     * @description setCreationTime
+     *
+     * @param {integer} creationtime
+     */
+    setCreationTime:function (creationtime) {
         this.creationtime = creationtime
         return this
     },
     /**
-    * @description setMaxParticles
-    *
-    * @param {integer} maxparticle
-    */
-    setMaxParticles: function (maxparticle){
+     * @description setMaxParticles
+     *
+     * @param {integer} maxparticle
+     */
+    setMaxParticles:function (maxparticle) {
         this.maxparticles = maxparticle
         return this
     },
     /**
-    * @description setGravity
-    *
-    * @param {float} gravity for all emitter controlled particles
-    */
-    setGravity: function(gravity){
+     * @description setGravity
+     *
+     * @param {float} gravity for all emitter controlled particles
+     */
+    setGravity:function (gravity) {
         this.gravity = gravity
         return this
     },
 
     /*
-    * Class Emitter method setParticleSpeed
-    * @param {integer} speed set the speed of the particles
-    */
-    setParticleSpeed: function(speed){
+     * Class Emitter method setParticleSpeed
+     * @param {integer} speed set the speed of the particles
+     */
+    setParticleSpeed:function (speed) {
         this.pspeed = speed
         return this
     },
 
     /**
-    * @description setProtation
-    *
-    * @param {mixed} rotation set the rotation of the particles
-    */
-    setProtation: function(rotation){
+     * @description setProtation
+     *
+     * @param {mixed} rotation set the rotation of the particles
+     */
+    setProtation:function (rotation) {
         this.protation = rotation
         return this
     },
 
     /**
-    * @description setPLifetime
-    *
-    * @param {integer} plifetime set the lifetime of the particles
-    */
-    setPLifetime: function(plifetime){
+     * @description setPLifetime
+     *
+     * @param {integer} plifetime set the lifetime of the particles
+     */
+    setPLifetime:function (plifetime) {
         this.plifetime = plifetime
         return this
     },
 
     /**
-    * @description activateFadeout - Activate fadeout of the particles depending on lifetime
-    */
-    activateFadeout: function(){
+     * @description activateFadeout - Activate fadeout of the particles depending on lifetime
+     */
+    activateFadeout:function () {
         this.pfadeout = true
         return this
     },
 
     /**
-    * @description deactivateFadeout - Deactivate fadeout of the particles depending on lifetime
-    */
-    deactivateFadeout: function(){
+     * @description deactivateFadeout - Deactivate fadeout of the particles depending on lifetime
+     */
+    deactivateFadeout:function () {
         this.pfadeout = false
         return this
     },
 
     /**
-    * @description getRandom
-    *
-    * @param {mixed} min value for random number
-    * @param {mixed} max value for random number
-    */
-    getRandom: function(min, max){
+     * @description getRandom
+     *
+     * @param {mixed} min value for random number
+     * @param {mixed} max value for random number
+     */
+    getRandom:function (min, max) {
         return Math.random() * (max - min + 1) + min >> 0
     },
 
     /**
-    * @description getX - get x position
-    */
-    getX: function(){
+     * @description getX - get x position
+     */
+    getX:function () {
         return this.position._x
     },
 
     /**
-    * @description getY - Get y position
-    */
-    getY: function(){
+     * @description getY - Get y position
+     */
+    getY:function () {
         return this.position._y
     }
 })

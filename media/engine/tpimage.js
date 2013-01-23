@@ -10,7 +10,7 @@
  * @param {integer} height of image in atlas file
  */
 CG.Class.extend('TPImage', {
-    init: function (image, xoffset, yoffset, width, height) {
+    init:function (image, xoffset, yoffset, width, height) {
         this.source = ''
         this.atlasimage = ''
         this.atlasname = ''

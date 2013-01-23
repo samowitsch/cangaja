@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -12,7 +12,7 @@ var mapcollisiontext = ''
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -25,20 +25,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -50,17 +50,17 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/hunter.png','hunter')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/hunter.png', 'hunter')
 
-            //texturepacker
-            .addImage('media/img/texturepacker.png','texturepacker')
-            .addJson('media/img/texturepacker.json','texturepacker-json')
+                //texturepacker
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
@@ -79,8 +79,8 @@ Game = (function(){
 
             //add screen to Director
             Game.director
-            .addScreen(mainscreen.addLayer(mainlayer))
-            .addScreen(mainscreen.addLayer(followerlayer))
+                .addScreen(mainscreen.addLayer(mainlayer))
+                .addScreen(mainscreen.addLayer(followerlayer))
 
             //
             rocket = new CG.Sprite(Game.asset.getImageByName('rocket'), new CG.Point(Game.width2, Game.height2))
@@ -89,7 +89,7 @@ Game = (function(){
             rocket.xscale = 0.5
             rocket.yscale = 0.5
             mainlayer.addElement(rocket)
-            
+
             //this sprite follows the rocket with a fixed speed
             hunter1 = new CG.Sprite(Game.asset.getImageByName('rocket2'), new CG.Point(Game.width2, Game.height2))
             hunter1.name = 'rockethunter-1'
@@ -99,7 +99,7 @@ Game = (function(){
             hunter1.followspeed = 2
             hunter1.followobject = rocket
             followerlayer.addElement(hunter1)
-            
+
             //this sprite follows the rocket with a fixed step rate
             hunter2 = new CG.Sprite(Game.asset.getImageByName('rocket2'), new CG.Point(Game.width2, Game.height2))
             hunter2.name = 'rockethunter-2'
@@ -109,7 +109,7 @@ Game = (function(){
             hunter2.followsteps = 40
             hunter2.followobject = rocket
             followerlayer.addElement(hunter2)
-            
+
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
@@ -118,17 +118,17 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.anim1();
             }
         },
-        anim1: function() {
+        anim1:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             //update here what ever you want
             updateStats.update()
 
@@ -136,13 +136,13 @@ Game = (function(){
             mapcollisiontext = ''
 
             var rocky = mainlayer.getElementByName('rocket')
-            ri +=0.007
-            rocky.position.x = Game.bound.width/2+(Game.bound.width/3*Math.cos(ri*3-Math.cos(ri))) >> 0
-            rocky.position.y = Game.bound.height/2+(Game.bound.height/2*-Math.sin(ri*2.3-Math.cos(ri))) >> 0
+            ri += 0.007
+            rocky.position.x = Game.bound.width / 2 + (Game.bound.width / 3 * Math.cos(ri * 3 - Math.cos(ri))) >> 0
+            rocky.position.y = Game.bound.height / 2 + (Game.bound.height / 2 * -Math.sin(ri * 2.3 - Math.cos(ri))) >> 0
 
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -164,9 +164,9 @@ Game = (function(){
 
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 
@@ -177,8 +177,8 @@ Game = (function(){
  * callback for map collision detection.
  * for the moment the map object sends the depending sprite and the tile as arguments
  */
-function callbackMapCollision(sprite,tile){
-    if(tile instanceof MapTileProperties){
+function callbackMapCollision(sprite, tile) {
+    if (tile instanceof MapTileProperties) {
         mapcollisiontext = 'Collision: ' + sprite.name + ' hits ' + tile.name
     }
 }

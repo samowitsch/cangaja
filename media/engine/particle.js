@@ -8,29 +8,25 @@
  */
 
 CG.Sprite.extend('Particle', {
-    init: function(image){
+    init:function (image) {
         this._super(image, new CG.Point(0, 0))
         this.lifetime = 100
         this.currtime = this.lifetime
-        this.aging  = 1
+        this.aging = 1
         this.fadeout = false
-        this.alpha  = 1
+        this.alpha = 1
         this.gravity = 0
     },
-    update: function(){
-        if ( this.visible )
-        {
-            if ( this.fadeout )
-            {
+    update:function () {
+        if (this.visible) {
+            if (this.fadeout) {
                 this.alpha = this.currtime / this.lifetime
-                if ( this.alpha <= 0 )
-                {
+                if (this.alpha <= 0) {
                     this.visible = false
                 }
             }
             this.currtime -= this.aging
-            if ( this.currtime < 0 )
-            {
+            if (this.currtime < 0) {
                 this.visible = false
             }
 
@@ -40,18 +36,16 @@ CG.Sprite.extend('Particle', {
             this.rotation += this.rotationspeed
         }
     },
-    draw: function(){
-        if ( this.visible )
-        {
+    draw:function () {
+        if (this.visible) {
             Game.b_ctx.save()
             Game.b_ctx.globalAlpha = this.alpha
             Game.b_ctx.translate(this.position.x, this.position.y)
-            if ( this.atlasimage )
-            {
+            if (this.atlasimage) {
                 Game.b_ctx.rotate((this.rotation - this.imagerotation) * Const_PI_180)
                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
                 Game.b_ctx.rotate((this.rotation + this.imagerotation) * Const_PI_180)
-            }else{
+            } else {
                 Game.b_ctx.rotate(this.rotation * Const_PI_180)
                 Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
             }

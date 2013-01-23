@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -9,7 +9,7 @@ var mouseup
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -22,20 +22,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -47,15 +47,15 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/glowball-50.png','glowball')
-            .addImage('media/img/hunter.png','hunter')
-            .addXml('media/map/map-ortho.tmx','map1')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/hunter.png', 'hunter')
+                .addXml('media/map/map-ortho.tmx', 'map1')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
@@ -73,7 +73,6 @@ Game = (function(){
             map.loadMapXml(Game.asset.getXmlByName('map1'))
 
 
-
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
             updateStats = new Stats()
@@ -81,22 +80,22 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.anim1();
             }
         },
-        anim1: function() {
+        anim1:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -105,7 +104,6 @@ Game = (function(){
 
 
             Game.director.draw()
-
 
 
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
@@ -125,15 +123,15 @@ Game = (function(){
 
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 
     return Game
 }())
 
-function callbackMapCollision () {
+function callbackMapCollision() {
 
 }

@@ -8,7 +8,7 @@
  * @param {integer} y the y position
  */
 CG.Entity.extend('Point', {
-    init: function (x, y) {
+    init:function (x, y) {
         this.x = x || 0
         this.y = y || 0
     }

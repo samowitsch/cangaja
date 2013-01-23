@@ -1,7 +1,7 @@
 var renderStats, updateStats
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -14,20 +14,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -39,13 +39,13 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/heiti.txt','heiti')
-            .addFont('media/font/gill.txt','gill')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .startPreLoad()
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/heiti.txt', 'heiti')
+                .addFont('media/font/gill.txt', 'gill')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             heiti = new CG.Font().loadFont(Game.asset.getFontByName('heiti'))
@@ -60,25 +60,25 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
-            
+
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.draw('This is a little font class demo!', xpos, ypos + 50)
             small.draw('With different fonts generated with Glyphdesigner.', xpos, ypos + 120)
@@ -89,12 +89,12 @@ Game = (function(){
 
             ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-    
+
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 

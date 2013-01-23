@@ -12,12 +12,11 @@
  * @param {number} frameheight height of frame to cut
  */
 CG.Sprite.extend('Animation', {
-    init: function (image, position, startframe, endframe, framewidth, frameheight) {
+    init:function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
 
         //from asset?
-        if ( typeof image == 'string' )
-        {
+        if (typeof image == 'string') {
             this.image = new Image()
             this.image.src = image
         } else {
@@ -33,8 +32,7 @@ CG.Sprite.extend('Animation', {
         this.width = framewidth
         this.height = frameheight
 
-        if ( this.startframe === undefined && this.endframe === undefined )
-        {
+        if (this.startframe === undefined && this.endframe === undefined) {
             this.frames = 1
             this.startframe = 0
             this.endframe = 0
@@ -51,21 +49,16 @@ CG.Sprite.extend('Animation', {
 
         return this
     },
-    update: function() {
+    update:function () {
         //animation specific stuff
-        if ( this.status == 0 )
-        {
+        if (this.status == 0) {
             this.tempdelay += 1
-            if ( this.tempdelay >= this.delay )
-            {
+            if (this.tempdelay >= this.delay) {
                 this.tempdelay = 0
-                if ( this.frames > 1 )
-                {
+                if (this.frames > 1) {
                     this.currentframe += 1
-                    if ( (this.currentframe - this.startframe) >= this.frames )
-                    {
-                        if ( this.loop === false )
-                        {
+                    if ((this.currentframe - this.startframe) >= this.frames) {
+                        if (this.loop === false) {
                             this.status = 1 //time to say good by, elements would be deleted at the moment
                         } else {
                             this.currentframe = this.startframe
@@ -77,22 +70,19 @@ CG.Sprite.extend('Animation', {
         //update all other stuff in the parent class
         this._super()
     },
-    draw: function() {
+    draw:function () {
         this.updateDiff()
 
         Game.b_ctx.save()
         Game.b_ctx.globalAlpha = this.alpha
         Game.b_ctx.translate(this.position.x, this.position.y)
-        if ( this.frames == 1 )
-        {
+        if (this.frames == 1) {
             Game.b_ctx.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.xscale, this.image.height * this.yscale)
         }
-        else
-        {
+        else {
             this.fx = this.currentframe * this.width
 
-            if ( (this.fx / this.image.width) > 0 )
-            {
+            if ((this.fx / this.image.width) > 0) {
                 this.fx = this.fx % this.image.width
             }
             this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
@@ -107,4 +97,3 @@ CG.Sprite.extend('Animation', {
         Game.b_ctx.restore()
     }
 })
-

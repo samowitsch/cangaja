@@ -9,7 +9,7 @@
  * @param {false/string} type of area for collision detection or what ever ;o)
  */
 CG.Class.extend('MapArea', {
-    init: function  (bound, mapoffset, name, type) {
+    init:function (bound, mapoffset, name, type) {
         //initial values
         this.initbound = bound || new CG.Bound(0, 0, 0, 0)
         this.mapoffset = mapoffset || new CG.Point(0, 0)
@@ -21,7 +21,7 @@ CG.Class.extend('MapArea', {
         return this
     },
 
-    update: function () {
+    update:function () {
         this.bound.x = this.initbound.x - this.mapoffset.x
         this.bound.y = this.initbound.y - this.mapoffset.y
     }

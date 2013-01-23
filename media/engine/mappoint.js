@@ -9,7 +9,7 @@
  * @param {integer} gid number of tilemap editor
  */
 CG.Class.extend('MapPoint', {
-    init: function ( position, mapoffset, name, gid ) {
+    init:function (position, mapoffset, name, gid) {
         //initial values
         this.initposition = position || new CG.Point(0, 0)
         this.mapoffset = mapoffset || new CG.Point(0, 0)
@@ -21,7 +21,7 @@ CG.Class.extend('MapPoint', {
         return this
     },
 
-    update: function () {
+    update:function () {
         this.position.x = this.initposition.x - this.mapoffset.x
         this.position.y = this.initposition.y - this.mapoffset.y
     }

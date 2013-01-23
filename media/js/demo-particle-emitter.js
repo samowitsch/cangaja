@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -10,7 +10,7 @@ var tp = new CG.TexturePacker()
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -23,20 +23,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -48,16 +48,16 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            .addFont('media/font/abadi_ez.txt','abadi')
-            .addImage('media/img/glowball-50.png','glowball')
-            //texturepacker
-            .addImage('media/img/texturepacker.png','texturepacker')
-            .addJson('media/img/texturepacker.json','texturepacker-json')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/glowball-50.png', 'glowball')
+                //texturepacker
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
 
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
@@ -74,12 +74,10 @@ Game = (function(){
             mainlayer = new CG.Layer('mainlayer')
 
             //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))            
-
-            
+            Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
 
-            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2,Game.height2))
+            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
                 .setName('splashi')
                 .setParticleSpeed(0)
                 .setPLifetime(15)
@@ -88,7 +86,7 @@ Game = (function(){
                 .setProtation(0)
                 //        .setEmitterPosition(new CG.Point(320,240))
                 .activateFadeout()
-                )
+            )
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height + 20))
                 .setName('sunny')
@@ -98,20 +96,20 @@ Game = (function(){
                 .setProtation(2)
                 //        .setEmitterPosition(new CG.Point(320,500))
                 .activateFadeout()
-                )
+            )
 
 
-            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2,-20))
+            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, -20))
                 .setName('rainy')
                 .setParticleSpeed(2)
                 .setGravity(0.03)
                 .initAsLine(Game.asset.getImageByName('raindrop'), Game.height, DOWN)
                 //        .setEmitterPosition(new CG.Point(320,-20))
                 .activateFadeout()
-                )
+            )
 
 
-            mainlayer.addElement(new CG.Emitter(new CG.Point(-25,Game.height2))
+            mainlayer.addElement(new CG.Emitter(new CG.Point(-25, Game.height2))
                 .setName('glowy')
                 .setGravity(0)
                 .setParticleSpeed(2)
@@ -119,9 +117,9 @@ Game = (function(){
                 .initAsLine(Game.asset.getImageByName('glowball-50'), 40, RIGHT)
                 //        .setEmitterPosition(new CG.Point(-25,240))
                 .activateFadeout()
-                )
+            )
 
-            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width + 15,Game.height2))
+            mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width + 15, Game.height2))
                 .setName('bally')
                 .setParticleSpeed(2)
                 .setProtation(-1)
@@ -129,7 +127,7 @@ Game = (function(){
                 .initAsLine(Game.asset.getImageByName('basketball-25'), 40, LEFT)
                 //        .setEmitterPosition(new CG.Point(655,240))
                 .activateFadeout()
-                )
+            )
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
                 .setName('explodi-stars')
@@ -138,7 +136,7 @@ Game = (function(){
                 .setGravity(0)
                 .initAsExplosion(Game.asset.getImageByName('powerstar75'), -2, 2)
                 //        .setEmitterPosition(new CG.Point(320, 240))
-                )
+            )
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
                 .setName('smokey')
@@ -146,7 +144,7 @@ Game = (function(){
                 .setGravity(-0.05)
                 .initAsPoint(Game.asset.getImageByName('smoke50'))
                 //        .setEmitterPosition(new CG.Point(320, 240))
-                )
+            )
 
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(160, 120))
@@ -160,10 +158,7 @@ Game = (function(){
                 .setCreationTime(10)
                 .initAsCorona(Game.asset.getImageByName('littlestar'), 100)
                 //        .setEmitterPosition(new CG.Point(160, 120))
-                )
-
-
-
+            )
 
 
             renderStats = new Stats()
@@ -173,22 +168,22 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -209,12 +204,12 @@ Game = (function(){
 
             ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-    
+
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 

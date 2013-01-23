@@ -1,6 +1,6 @@
 var renderStats, updateStats
 
-var mainscreen,mainlayer
+var mainscreen, mainlayer
 
 var mousex = 0
 var mousey = 0
@@ -9,7 +9,7 @@ var tp = new CG.TexturePacker()
 
 
 //waiting to get started ;o)
-window.onload = function() {
+window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
@@ -22,20 +22,20 @@ window.onload = function() {
 };
 
 // the Game object
-Game = (function(){
+Game = (function () {
     var Game = {
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0,0,640,480).setName('game'),
-        b_canvas: false,
-        b_ctx: false,
-        asset: new CG.MediaAsset('media/img/splash3.jpg'),     //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function(){
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        b_canvas:false,
+        b_ctx:false,
+        asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")
@@ -47,25 +47,25 @@ Game = (function(){
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt','small','small')
-            //add glyphdesigner file
-            .addFont('media/font/abadi_ez.txt','abadi')
-            //add single image
-            .addImage('media/img/glowball-50.png','glowball')
-            .addImage('media/img/back1.jpg','back1')
-            .addImage('media/img/back2.jpg','back2')
-            .addImage('media/img/back3.jpg','back3')
-            //add image for texturepacker file
-            .addImage('media/img/texturepacker.png','texturepacker')
-            //add texturepacker file
-            .addXml('media/img/texturepacker.xml','texturepacker-xml')
-            //texturepacker json is also supported
-            .addJson('media/img/texturepacker.json','texturepacker-json')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                //add glyphdesigner file
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                //add single image
+                .addImage('media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/back1.jpg', 'back1')
+                .addImage('media/img/back2.jpg', 'back2')
+                .addImage('media/img/back3.jpg', 'back3')
+                //add image for texturepacker file
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                //add texturepacker file
+                .addXml('media/img/texturepacker.xml', 'texturepacker-xml')
+                //texturepacker json is also supported
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
 
-            .startPreLoad()
+                .startPreLoad()
         },
-        create: function() {
+        create:function () {
             //initialize Touch/Click handling with hammer.js
             Game.touchinit()
 
@@ -114,15 +114,13 @@ Game = (function(){
             settingslayer.addElement(spr1)
 
 
-
-
             //add screen and layers to Director
             Game.director.addScreen(mainscreen.addLayer(mainlayer))
-            .addScreen(gamescreen.addLayer(gamelayer))
-            .addScreen(settingsscreen.addLayer(settingslayer))
+                .addScreen(gamescreen.addLayer(gamelayer))
+                .addScreen(settingsscreen.addLayer(settingslayer))
 
-            //define the director fademode
-            .setFadeMode('scale')
+                //define the director fademode
+                .setFadeMode('scale')
 
             //Simple Button
             back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 300), 'BACK TO MAIN SCREEN', small, backToMainCallback)
@@ -142,8 +140,6 @@ Game = (function(){
             mainlayer.addElement(menu)
 
 
-
-
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
             updateStats = new Stats()
@@ -151,22 +147,22 @@ Game = (function(){
 
             Game.loop()
         },
-        loop: function(){
+        loop:function () {
             requestAnimationFrame(Game.loop);
-            if(Game.asset.ready==true){
+            if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function() {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function() {
+        update:function () {
             updateStats.update()
             //update here what ever you want
             Game.director.update()
         },
-        draw: function() {
+        draw:function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -184,52 +180,60 @@ Game = (function(){
 
             renderStats.update();
         },
-        touchinit: function() {
+        touchinit:function () {
             hammer = new Hammer(canvas);
-            hammer.ontap = function(ev) {
+            hammer.ontap = function (ev) {
                 mousedown = true
                 mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
             };
-            hammer.ondragstart = function(ev) {};
-            hammer.ondrag = function(ev) {
+            hammer.ondragstart = function (ev) {
+            };
+            hammer.ondrag = function (ev) {
                 mousex = ev.position.x
                 mousey = ev.position.y
 
 
-            //log = document.getElementById('log')
-            //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
+                //log = document.getElementById('log')
+                //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
 
             };
-            hammer.ondragend = function(ev) {};
-            hammer.onswipe = function(ev) {};
+            hammer.ondragend = function (ev) {
+            };
+            hammer.onswipe = function (ev) {
+            };
 
-            hammer.ondoubletap = function(ev) {};
-            hammer.onhold = function(ev) {};
+            hammer.ondoubletap = function (ev) {
+            };
+            hammer.onhold = function (ev) {
+            };
 
-            hammer.ontransformstart = function(ev) {};
-            hammer.ontransform = function(ev) {};
-            hammer.ontransformend = function(ev) {};
+            hammer.ontransformstart = function (ev) {
+            };
+            hammer.ontransform = function (ev) {
+            };
+            hammer.ontransformend = function (ev) {
+            };
 
-            hammer.onrelease = function(ev) {
+            hammer.onrelease = function (ev) {
 
             };
         },
-        touchhandler: function(){
+        touchhandler:function () {
         }
     }
 
     return Game
 }())
 
-function backToMainCallback(obj){
+function backToMainCallback(obj) {
     Game.director.nextScreen('mainscreen', 10)
 }
-function gameCallback(obj){
+function gameCallback(obj) {
     Game.director.setFadeMode('scale')
     Game.director.nextScreen('gamescreen', 10)
 }
-function settingsCallback(obj){
+function settingsCallback(obj) {
     Game.director.setFadeMode('fade')
     Game.director.nextScreen('settingsscreen', 10)
 }

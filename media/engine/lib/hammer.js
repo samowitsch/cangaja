@@ -1,6 +1,6 @@
 /*
  * Hammer.JS
- * version 0.6.1
+ * version 0.6.4
  * author: Eight Media
  * https://github.com/EightMedia/hammer.js
  * Licensed under the MIT license.
@@ -9,25 +9,25 @@ function Hammer(element, options, undefined)
 {
     var self = this;
 
-    var defaults = {
+    var defaults = mergeObject({
         // prevent the default event or not... might be buggy when false
         prevent_default    : false,
         css_hacks          : true,
 
         swipe              : true,
-        swipe_time         : 200,   // ms
-        swipe_min_distance : 20, // pixels
+        swipe_time         : 500,   // ms
+        swipe_min_distance : 20,   // pixels
 
         drag               : true,
         drag_vertical      : true,
         drag_horizontal    : true,
         // minimum distance before the drag event starts
-        drag_min_distance  : 20, // pixels
+        drag_min_distance  : 20,    // pixels
 
         // pinch zoom and rotation
         transform          : true,
         scale_treshold     : 0.1,
-        rotation_treshold  : 15, // degrees
+        rotation_treshold  : 15,    // degrees
 
         tap                : true,
         tap_double         : true,
@@ -37,7 +37,7 @@ function Hammer(element, options, undefined)
 
         hold               : true,
         hold_timeout       : 500
-    };
+    }, Hammer.defaults || {});
     options = mergeObject(defaults, options);
 
     // some css hacks
@@ -50,6 +50,7 @@ function Hammer(element, options, undefined)
         var css_props = {
             "userSelect": "none",
             "touchCallout": "none",
+            "touchAction": "none",
             "userDrag": "none",
             "tapHighlightColor": "rgba(0,0,0,0)"
         };
@@ -72,7 +73,7 @@ function Hammer(element, options, undefined)
     // holds the exact angle that has been moved
     var _angle = 0;
 
-    // holds the diraction that has been moved
+    // holds the direction that has been moved
     var _direction = 0;
 
     // holds position movement for sliding
@@ -103,6 +104,8 @@ function Hammer(element, options, undefined)
 
     var _has_touch = ('ontouchstart' in window);
 
+    var _can_tap = false;
+
 
     /**
      * option setter/getter
@@ -111,7 +114,7 @@ function Hammer(element, options, undefined)
      * @return  mixed   value
      */
     this.option = function(key, val) {
-        if(val != undefined) {
+        if(val !== undefined) {
             options[key] = val;
         }
 
@@ -144,7 +147,7 @@ function Hammer(element, options, undefined)
 
 
     /**
-     * destory events
+     * destroy events
      * @return  void
      */
     this.destroy = function() {
@@ -338,7 +341,7 @@ function Hammer(element, options, undefined)
         // fired on touchend
         swipe : function(event)
         {
-            if(!_pos.move) {
+            if (!_pos.move || _gesture === "transform") {
                 return;
             }
 
@@ -351,7 +354,7 @@ function Hammer(element, options, undefined)
             var now = new Date().getTime();
             var touch_time = now - _touch_start_time;
 
-            if(options.swipe && (options.swipe_time > touch_time) && (_distance > options.swipe_min_distance)) {
+            if(options.swipe && (options.swipe_time >= touch_time) && (_distance >= options.swipe_min_distance)) {
                 // calculate the angle
                 _angle = getAngle(_pos.start[0], _pos.move[0]);
                 _direction = self.getDirectionFromAngle(_angle);
@@ -395,8 +398,8 @@ function Hammer(element, options, undefined)
 
                 // check the movement and stop if we go in the wrong direction
                 var is_vertical = (_direction == 'up' || _direction == 'down');
-                if(((is_vertical && !options.drag_vertical) || (!is_vertical && !options.drag_horizontal))
-                    && (_distance > options.drag_min_distance)) {
+
+                if(((is_vertical && !options.drag_vertical) || (!is_vertical && !options.drag_horizontal)) && (_distance > options.drag_min_distance)) {
                     return;
                 }
 
@@ -435,29 +438,43 @@ function Hammer(element, options, undefined)
         transform : function(event)
         {
             if(options.transform) {
-                if(countFingers(event) != 2) {
+                var count = countFingers(event);
+                if (count !== 2) {
                     return false;
                 }
 
                 var rotation = calculateRotation(_pos.start, _pos.move);
                 var scale = calculateScale(_pos.start, _pos.move);
 
-                if(_gesture != 'drag' &&
-                    (_gesture == 'transform' || Math.abs(1-scale) > options.scale_treshold || Math.abs(rotation) > options.rotation_treshold)) {
-                    _gesture = 'transform';
+                if (_gesture === 'transform' ||
+                    Math.abs(1 - scale) > options.scale_treshold ||
+                    Math.abs(rotation) > options.rotation_treshold) {
 
-                    _pos.center = {  x: ((_pos.move[0].x + _pos.move[1].x) / 2) - _offset.left,
-                        y: ((_pos.move[0].y + _pos.move[1].y) / 2) - _offset.top };
+                    _gesture = 'transform';
+                    _pos.center = {
+                        x: ((_pos.move[0].x + _pos.move[1].x) / 2) - _offset.left,
+                        y: ((_pos.move[0].y + _pos.move[1].y) / 2) - _offset.top
+                    };
+
+                    if(_first)
+                        _pos.startCenter = _pos.center;
+
+                    var _distance_x = _pos.center.x - _pos.startCenter.x;
+                    var _distance_y = _pos.center.y - _pos.startCenter.y;
+                    _distance = Math.sqrt(_distance_x*_distance_x + _distance_y*_distance_y);
 
                     var event_obj = {
                         originalEvent   : event,
                         position        : _pos.center,
                         scale           : scale,
-                        rotation        : rotation
+                        rotation        : rotation,
+                        distance        : _distance,
+                        distanceX       : _distance_x,
+                        distanceY       : _distance_y
                     };
 
                     // on the first time trigger the start event
-                    if(_first) {
+                    if (_first) {
                         triggerEvent("transformstart", event_obj);
                         _first = false;
                     }
@@ -492,6 +509,7 @@ function Hammer(element, options, undefined)
                 if (_prev_tap_pos &&
                     options.tap_double &&
                     _prev_gesture == 'tap' &&
+                    _pos.start &&
                     (_touch_start_time - _prev_tap_end_time) < options.tap_max_interval)
                 {
                     var x_distance = Math.abs(_prev_tap_pos[0].x - _pos.start[0].x);
@@ -532,40 +550,33 @@ function Hammer(element, options, undefined)
                     }
                 }
             }
-
         }
-
     };
 
 
     function handleEvents(event)
     {
+        var count;
         switch(event.type)
         {
             case 'mousedown':
             case 'touchstart':
-                _pos.start = getXYfromEvent(event);
-                _touch_start_time = new Date().getTime();
-                _fingers = countFingers(event);
-                _first = true;
-                _event_start = event;
+                count = countFingers(event);
+                _can_tap = count === 1;
 
-                // borrowed from jquery offset https://github.com/jquery/jquery/blob/master/src/offset.js
-                var box = element.getBoundingClientRect();
-                var clientTop  = element.clientTop  || document.body.clientTop  || 0;
-                var clientLeft = element.clientLeft || document.body.clientLeft || 0;
-                var scrollTop  = window.pageYOffset || element.scrollTop  || document.body.scrollTop;
-                var scrollLeft = window.pageXOffset || element.scrollLeft || document.body.scrollLeft;
+                //We were dragging and now we are zooming.
+                if (count === 2 && _gesture === "drag") {
 
-                _offset = {
-                    top: box.top + scrollTop - clientTop,
-                    left: box.left + scrollLeft - clientLeft
-                };
-
-                _mousedown = true;
-
-                // hold gesture
-                gestures.hold(event);
+                    //The user needs to have the dragend to be fired to ensure that
+                    //there is proper cleanup from the drag and move onto transforming.
+                    triggerEvent("dragend", {
+                        originalEvent   : event,
+                        direction       : _direction,
+                        distance        : _distance,
+                        angle           : _angle
+                    });
+                }
+                _setup();
 
                 if(options.prevent_default) {
                     cancelEvent(event);
@@ -574,9 +585,20 @@ function Hammer(element, options, undefined)
 
             case 'mousemove':
             case 'touchmove':
-                if(!_mousedown) {
+                count = countFingers(event);
+
+                //The user has gone from transforming to dragging.  The
+                //user needs to have the proper cleanup of the state and
+                //setup with the new "start" points.
+                if (!_mousedown && count === 1) {
                     return false;
+                } else if (!_mousedown && count === 2) {
+                    _can_tap = false;
+
+                    reset();
+                    _setup();
                 }
+
                 _event_move = event;
                 _pos.move = getXYfromEvent(event);
 
@@ -589,17 +611,13 @@ function Hammer(element, options, undefined)
             case 'mouseout':
             case 'touchcancel':
             case 'touchend':
-                if(!_mousedown || (_gesture != 'transform' && event.touches && event.touches.length > 0)) {
-                    return false;
-                }
+                var callReset = true;
 
                 _mousedown = false;
                 _event_end = event;
 
-
                 // swipe gesture
                 gestures.swipe(event);
-
 
                 // drag gesture
                 // dragstart is triggered, so dragend is possible
@@ -615,28 +633,78 @@ function Hammer(element, options, undefined)
                 // transform
                 // transformstart is triggered, so transformed is possible
                 else if(_gesture == 'transform') {
+                    // define the transform distance
+                    var _distance_x = _pos.center.x - _pos.startCenter.x;
+                    var _distance_y = _pos.center.y - _pos.startCenter.y;
+                    
                     triggerEvent("transformend", {
                         originalEvent   : event,
                         position        : _pos.center,
                         scale           : calculateScale(_pos.start, _pos.move),
-                        rotation        : calculateRotation(_pos.start, _pos.move)
+                        rotation        : calculateRotation(_pos.start, _pos.move),
+                        distance        : _distance,
+                        distanceX       : _distance_x,
+                        distanceY       : _distance_y
                     });
-                }
-                else {
+
+                    //If the user goes from transformation to drag there needs to be a
+                    //state reset so that way a dragstart/drag/dragend will be properly
+                    //fired.
+                    if (countFingers(event) === 1) {
+                        reset();
+                        _setup();
+                        callReset = false;
+                    }
+                } else if (_can_tap) {
                     gestures.tap(_event_start);
                 }
 
                 _prev_gesture = _gesture;
 
                 // trigger release event
+                // "release" by default doesn't return the co-ords where your
+                // finger was released. "position" will return "the last touched co-ords"
+
                 triggerEvent("release", {
                     originalEvent   : event,
-                    gesture         : _gesture
+                    gesture         : _gesture,
+                    position        : _pos.move || _pos.start
                 });
 
-                // reset vars
-                reset();
+                // reset vars if this was not a transform->drag touch end operation.
+                if (callReset) {
+                    reset();
+                }
                 break;
+        } // end switch
+
+        /**
+         * Performs a blank setup.
+         * @private
+         */
+        function _setup() {
+            _pos.start = getXYfromEvent(event);
+            _touch_start_time = new Date().getTime();
+            _fingers = countFingers(event);
+            _first = true;
+            _event_start = event;
+
+            // borrowed from jquery offset https://github.com/jquery/jquery/blob/master/src/offset.js
+            var box = element.getBoundingClientRect();
+            var clientTop  = element.clientTop  || document.body.clientTop  || 0;
+            var clientLeft = element.clientLeft || document.body.clientLeft || 0;
+            var scrollTop  = window.pageYOffset || element.scrollTop  || document.body.scrollTop;
+            var scrollLeft = window.pageXOffset || element.scrollLeft || document.body.scrollLeft;
+
+            _offset = {
+                top: box.top + scrollTop - clientTop,
+                left: box.left + scrollLeft - clientLeft
+            };
+
+            _mousedown = true;
+
+            // hold gesture
+            gestures.hold(event);
         }
     }
 
@@ -682,7 +750,7 @@ function Hammer(element, options, undefined)
             while(node !== null){
                 if(node === parent){
                     return true;
-                };
+                }
                 node = node.parentNode;
             }
         }
