@@ -38,7 +38,7 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
-* Tilemap => decition what to prefer => xml or json fromat?
+* Tilemap => decition what to prefer => xml or json format?
 * bugfixing Tilemap with tmx csv format is not animating correctly (tmx with xml and tilemap exported as json works!)
 * fix missing rotation when follower sprite using TPImage
 * add support for additional [Tiled Map Editor] features like object positioning, object path and object group
@@ -61,6 +61,8 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2012-01-24 [added] - Sprite to MapArea collision
+* 2012-01-23 [misc] - purchased Webstorm JavaScript IDE, thats what i call a JS IDE!
 * 2012-01-22 [change] - now finally rewritten for simple inheritance with no way back ;o)
 * 2012-01-19 [added] - added a new scale transition mode between screens in Director class
 * 2012-01-10 [change/bugfix] - rewrite of class Animation for more "inheritance style" and bugfix for correct midhandle

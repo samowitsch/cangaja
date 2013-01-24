@@ -1,12 +1,12 @@
 /**
- * @description  class MapArea. Support now for name and the bound values. No tilemap properties at the moment.
+ * @description  class MapArea. Support now for name and the bound values.
  *
  * @constructor
  *
  * @param {bound} bound of area
  * @param {point} mapoffset reference to the current map position
  * @param {string} name of the group
- * @param {false/string} type of area for collision detection or what ever ;o)
+ * @param {false/string} type (a property) of area for collision detection or what ever ;o)
  */
 CG.Class.extend('MapArea', {
     init:function (bound, mapoffset, name, type) {

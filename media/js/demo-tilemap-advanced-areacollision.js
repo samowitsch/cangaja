@@ -18,6 +18,13 @@ window.onload = function () {
     can.id = 'canvas'
     document.body.appendChild(can)
 
+    //mouse move
+    can.addEventListener('mousemove', function (evt) {
+        var rect = can.getBoundingClientRect(), root = document.documentElement;
+        mousex = evt.clientX - canvas.offsetLeft;
+        mousey = evt.clientY - canvas.offsetTop;
+    }, false);
+
     Game.preload()
 };
 
@@ -87,7 +94,7 @@ Game = (function () {
             map.loadMapJson(Game.asset.getJsonByName('map1'))
 
             //assign sprite to group object b2 of tiled map
-            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(Game.width2, Game.height2))
+            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(mousex, Game.mousey))
             ballon.name = 'ballon'
             ballon.boundsMode = 'bounce'
             ballon.xspeed = 1
@@ -120,6 +127,11 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
+            //ballon.position.x = mousex
+            //ballon.position.y = mousey
+            ballon.alpha = 1
+            ballon.checkCollision(map.areas, callbackMapAreaCollision)
+
 //            map.checkAreasCollision([ballon], callbackAreasCollision)
 
             Game.director.update()
@@ -141,7 +153,7 @@ Game = (function () {
             //            small.draw('The Tiled mapeditor has a object layer with different object types.', xpos, ypos + 56 + small.getLineHeight())
             //            small.draw('The object group is used for bound (ballons) and the tile object is used', xpos, ypos + 56 + (small.getLineHeight() * 2))
             //            small.draw('as a point (diamonds). Tilemap collision detection is also possible.', xpos, ypos + 56 + (small.getLineHeight() * 3))
-            small.draw('Bound b1 of map', ballon.position.x - 40, ballon.position.y + 20)
+            small.draw('Check mapareas of tilemap', ballon.position.x - 40, ballon.position.y + 20)
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
@@ -160,9 +172,14 @@ Game = (function () {
     return Game
 }())
 
+function callbackMapAreaCollision(obj, maparea) {
+    obj.alpha = 0.5
+}
+
 function callbackMapCollision() {
 
 }
+
 
 function callbackAreasCollision(obj, area) {
     console.log([obj, area])

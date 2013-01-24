@@ -90,17 +90,30 @@ CG.Entity.extend('Rectangle', {
     /**
      * @description checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
      *
-     * @param {array} objects a array of objects to check for collision
+     * @param {array} objects a array of objects to check for collision => Sprites, Animations, MapAreas
      * @param {callback} callback what to do after collision?
      */
     checkCollision:function (objects, callback) {
         objects.forEach(function (obj, index) {
-            if (this.boundingradius > 0 && obj.boundingradius > 0) {
+            if (obj.className == 'MapArea') {
+                //TODO collision check for MapArea object???
+                //if boundingradius is 0, fallback to bounding collision
+                if ((this.position.y + this.AABB().bh / 2) >= obj.bound.y &&
+                    this.position.y - this.AABB().bh / 2 <= (obj.bound.y + obj.bound.height) &&
+                    (this.position.x + this.AABB().bw / 2) >= obj.bound.x &&
+                    this.position.x - this.AABB().bw / 2 <= (obj.bound.x + obj.bound.width )) {
+                    if (obj.type === 'outer') {
+                        //TODO return collision offset to callback?
+                        callback(this, obj)
+                    }
+                }
+            } else if (this.boundingradius > 0 && obj.boundingradius > 0) {
                 //check boundingradius for circuar collision
                 distx = this.position.x - obj.position.x
                 disty = this.position.y - obj.position.y
                 dist = Math.sqrt((distx * distx) + (disty * disty))
                 if (dist <= (this.boundingradius / 2 * this.xscale + obj.boundingradius / 2 * obj.yscale)) {
+                    //TODO return collision offset to callback?
                     callback(this, obj)
                 }
             } else {
@@ -109,11 +122,12 @@ CG.Entity.extend('Rectangle', {
                     this.position.y - this.AABB().bh / 2 <= (obj.position.y + obj.AABB().bh / 2) &&
                     (this.position.x + this.AABB().bw / 2) >= obj.position.x - obj.AABB().bw / 2 &&
                     this.position.x - this.AABB().bw / 2 <= (obj.position.x + obj.AABB().bw / 2)) {
+                    //TODO return collision offset to callback?
                     callback(this, obj)
                 }
-
             }
         }, this)
+        return this
     }
 
 })
