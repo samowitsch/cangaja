@@ -6,6 +6,7 @@ var mousex = 0
 var mousey = 0
 var mousedown = false
 var tp = new CG.TexturePacker()
+var offsettest = {x:0, y:0}
 
 
 //waiting to get started ;o)
@@ -97,8 +98,8 @@ Game = (function () {
             ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(mousex, Game.mousey))
             ballon.name = 'ballon'
             ballon.boundsMode = 'bounce'
-            ballon.xspeed = 1
-            ballon.yspeed = 2
+//            ballon.xspeed = 0.5
+//            ballon.yspeed = 0.5
             ballon.bound = map.getAreasByName('bound1')[0].bound
             ballon.xscale = 0.2
             ballon.yscale = 0.2
@@ -127,8 +128,8 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
-            //ballon.position.x = mousex
-            //ballon.position.y = mousey
+            ballon.position.x = mousex
+            ballon.position.y = mousey
             ballon.alpha = 1
             ballon.checkCollision(map.areas, callbackMapAreaCollision)
 
@@ -150,9 +151,9 @@ Game = (function () {
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.draw('Map class example.', xpos, ypos + 56)
-            //            small.draw('The Tiled mapeditor has a object layer with different object types.', xpos, ypos + 56 + small.getLineHeight())
-            //            small.draw('The object group is used for bound (ballons) and the tile object is used', xpos, ypos + 56 + (small.getLineHeight() * 2))
-            //            small.draw('as a point (diamonds). Tilemap collision detection is also possible.', xpos, ypos + 56 + (small.getLineHeight() * 3))
+            small.draw('Use areamaps instead of single tiles for collision check.', xpos, ypos + 56 + small.getLineHeight())
+            small.draw('Collision offsettest: ' + offsettest.x + ' : ' + offsettest.y   , xpos, ypos + 56 + (small.getLineHeight() * 2))
+            small.draw('Use the mouse to move the balloon ;o)', xpos, ypos + 56 + (small.getLineHeight() * 3))
             small.draw('Check mapareas of tilemap', ballon.position.x - 40, ballon.position.y + 20)
 
             // draw Game.b_canvas to the canvas
@@ -172,8 +173,9 @@ Game = (function () {
     return Game
 }())
 
-function callbackMapAreaCollision(obj, maparea) {
+function callbackMapAreaCollision(obj, maparea, offset) {
     obj.alpha = 0.5
+    offsettest = offset
 }
 
 function callbackMapCollision() {

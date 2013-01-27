@@ -723,20 +723,16 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description checks if a external object collides
-     * with the areas of the tiled map
+     * @description checks if a external object(s) collides
+     * with the areas of the tiled map. this can be elements from an layer or the map itself.
      *
      * @param {objarray} objarray to check for a areas collision
      * @param {calback} callback what should happen
      */
-    checkAreasCollision:function (objarray, callback) {
+    checkElementsToAreasCollision:function (objarray, callback) {
         for (var o = 0, ol = objarray.length; o < ol; o++) {
-            for (var a = 0, al = this.areas.length; a < al; a++) {
-                obj = objarray[o]
-                area = this.areas[a]
-                //TODO collision handling
-                //compare area bound with sprite bound?
-            }
+
+            obj = objarray[o].checkCollision(this.areas, callback)
         }
         return this
     },

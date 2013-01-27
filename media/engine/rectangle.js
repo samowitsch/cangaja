@@ -103,8 +103,13 @@ CG.Entity.extend('Rectangle', {
                     (this.position.x + this.AABB().bw / 2) >= obj.bound.x &&
                     this.position.x - this.AABB().bw / 2 <= (obj.bound.x + obj.bound.width )) {
                     if (obj.type === 'outer') {
-                        //TODO return collision offset to callback?
-                        callback(this, obj)
+                        //TODO return collision offset to callback? experimantal, comparing both objects midhandle
+                        offset = {
+                            x: 0 - (this.position.x - (obj.bound.width / 2 + obj.bound.x)),
+                            y: 0 - (this.position.y - (obj.bound.height / 2 + obj.bound.y))
+                        }
+                        //callback arguments: this => the sprite, obj => the maparea if needed, offset => collision offset
+                        callback(this, obj, offset)
                     }
                 }
             } else if (this.boundingradius > 0 && obj.boundingradius > 0) {
