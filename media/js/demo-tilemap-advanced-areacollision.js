@@ -6,7 +6,7 @@ var mousex = 0
 var mousey = 0
 var mousedown = false
 var tp = new CG.TexturePacker()
-var offsettest = {x:0, y:0}
+var collision = {direction: '', overlap: 0}
 
 
 //waiting to get started ;o)
@@ -98,11 +98,12 @@ Game = (function () {
             ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(mousex, Game.mousey))
             ballon.name = 'ballon'
             ballon.boundsMode = 'bounce'
-//            ballon.xspeed = 0.5
-//            ballon.yspeed = 0.5
+            ballon.xspeed = 2
+            ballon.yspeed = -2
+            ballon.rotationspeed = 5
             ballon.bound = map.getAreasByName('bound1')[0].bound
-            ballon.xscale = 0.2
-            ballon.yscale = 0.2
+            ballon.xscale = 0.1
+            ballon.yscale = 0.1
             mainlayer.addElement(ballon)
 
             map.addElement(ballon)
@@ -128,8 +129,8 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
-            ballon.position.x = mousex
-            ballon.position.y = mousey
+            //ballon.position.x = mousex
+            //ballon.position.y = mousey
             ballon.alpha = 1
             ballon.checkCollision(map.areas, callbackMapAreaCollision)
 
@@ -152,9 +153,9 @@ Game = (function () {
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.draw('Map class example.', xpos, ypos + 56)
             small.draw('Use areamaps instead of single tiles for collision check.', xpos, ypos + 56 + small.getLineHeight())
-            small.draw('Collision offsettest: ' + offsettest.x + ' : ' + offsettest.y   , xpos, ypos + 56 + (small.getLineHeight() * 2))
-            small.draw('Use the mouse to move the balloon ;o)', xpos, ypos + 56 + (small.getLineHeight() * 3))
-            small.draw('Check mapareas of tilemap', ballon.position.x - 40, ballon.position.y + 20)
+            small.draw('Collision from ' + collision.direction + " with overlap of " + collision.overlap + "", xpos, ypos + 56 + (small.getLineHeight() * 2))
+            //small.draw('Use the mouse to move the balloon ;o)', xpos, ypos + 56 + (small.getLineHeight() * 3))
+            small.draw('Collision to maparea', ballon.position.x - 40, ballon.position.y + 20)
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
@@ -173,9 +174,18 @@ Game = (function () {
     return Game
 }())
 
-function callbackMapAreaCollision(obj, maparea, offset) {
+function callbackMapAreaCollision(obj, maparea, coll) {
     obj.alpha = 0.5
-    offsettest = offset
+    if (coll.direction == "top" || coll.direction == 'bottom') {
+        obj.position.y -= coll.overlap
+        obj.yspeed = obj.yspeed * -1
+    } else {
+        obj.position.x -= coll.overlap
+        obj.xspeed = obj.xspeed * -1
+    }
+    obj.rotationspeed *= -1
+
+    collision = coll
 }
 
 function callbackMapCollision() {
