@@ -103,7 +103,6 @@ CG.Entity.extend('Rectangle', {
                         if (obj.type === 'outer') {
                             //TODO return collision offset to callback? experimantal, comparing both objects midhandle
 
-
                             w = 0.5 * (this.width + obj.bound.width)
                             h = 0.5 * (this.height + obj.bound.height)
                             dx = this.position.x - (obj.bound.width / 2 + obj.bound.x)
@@ -133,7 +132,6 @@ CG.Entity.extend('Rectangle', {
                                 }
                             }
 
-
                             collision = {
                                 overlap:overlap,
                                 direction:direction
@@ -150,7 +148,8 @@ CG.Entity.extend('Rectangle', {
                     dist = Math.sqrt((distx * distx) + (disty * disty))
                     if (dist <= (this.boundingradius / 2 * this.xscale + obj.boundingradius / 2 * obj.yscale)) {
                         //TODO return collision offset to callback?
-                        callback(this, obj)
+                        collision = false //dummy
+                        callback(this, obj, collision)
                     }
                 }
                 else {
@@ -160,7 +159,42 @@ CG.Entity.extend('Rectangle', {
                         (this.position.x + this.AABB().bw / 2) >= obj.position.x - obj.AABB().bw / 2 &&
                         this.position.x - this.AABB().bw / 2 <= (obj.position.x + obj.AABB().bw / 2)) {
                         //TODO return collision offset to callback?
-                        callback(this, obj)
+
+                        w = 0.5 * (this.width + obj.width)
+                        h = 0.5 * (this.height + obj.height)
+                        dx = this.position.x - obj.position.x
+                        dy = this.position.y - obj.position.y
+
+                        if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+                            /* collision! */
+                            wy = w * dy;
+                            hx = h * dx;
+
+                            if (wy > hx) {
+                                if (wy > -hx) {
+                                    direction = 'bottom'
+                                    overlap = ((this.position.y - this.AABB().bh / 2) - (obj.position.y - obj.AABB().bh / 2)) >> 0
+                                } else {
+                                    direction = 'left'
+                                    overlap = ((this.position.x + this.AABB().bw / 2) - (obj.position.x + obj.AABB().bw / 2)) >> 0
+                                }
+                            } else {
+                                if (wy > -hx) {
+                                    direction = 'right'
+                                    overlap = ((this.position.x - this.AABB().bw / 2) - (obj.position.x - obj.AABB().bw / 2)) >> 0
+                                } else {
+                                    direction = 'top'
+                                    overlap = ((this.position.y + this.AABB().bh / 2) - (obj.position.y + obj.AABB().bh / 2)) >> 0
+                                }
+                            }
+                        }
+
+                        collision = {
+                            overlap:overlap,
+                            direction:direction
+                        }
+
+                        callback(this, obj, collision)
                     }
                 }
             },

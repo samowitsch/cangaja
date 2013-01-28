@@ -6,7 +6,7 @@ var mousex = 0
 var mousey = 0
 var mousedown = false
 var tp = new CG.TexturePacker()
-var collision = {direction: '', overlap: 0}
+var collision = {direction:'', overlap:0}
 
 
 //waiting to get started ;o)
@@ -95,18 +95,18 @@ Game = (function () {
             map.loadMapJson(Game.asset.getJsonByName('map1'))
 
             //assign sprite to group object b2 of tiled map
-            glowball = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(mousex, Game.mousey))
+            glowball = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(100, 450))
             glowball.name = 'ballon'
             glowball.boundsMode = 'bounce'
             glowball.xspeed = -1
-            glowball.yspeed = 1.5
+            glowball.yspeed = 2
             glowball.rotationspeed = 5
             glowball.bound = map.getAreasByName('bound1')[0].bound
             glowball.xscale = 0.5
             glowball.yscale = 0.5
             mainlayer.addElement(glowball)
 
-            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(mousex, Game.mousey))
+            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(100, 250))
             ballon.name = 'ballon'
             ballon.boundsMode = 'bounce'
             ballon.xspeed = 3
@@ -140,6 +140,8 @@ Game = (function () {
         update:function () {
             updateStats.update()
             //update here what ever you want
+
+            ballon.checkCollision([glowball], callbackCollision)
 
             ballon.checkCollision(map.areas, callbackMapAreaCollision)
             glowball.checkCollision(map.areas, callbackMapAreaCollision)
@@ -190,8 +192,30 @@ Game = (function () {
     return Game
 }())
 
+//example collision callback sprite to sprite
+function callbackCollision(ballon, glowball, coll) {
+    if (coll.direction == 'top') {
+        ballon.position.y -= coll.overlap
+        ballon.yspeed = ballon.yspeed * -1
+        glowball.yspeed = glowball.yspeed * -1
+    } else if (coll.direction == 'bottom') {
+        ballon.position.y += coll.overlap
+        ballon.yspeed = ballon.yspeed * -1
+        glowball.yspeed = glowball.yspeed * -1
+    } else if (coll.direction == 'left') {
+        ballon.position.x -= coll.overlap
+        ballon.xspeed = ballon.xspeed * -1
+        glowball.xspeed = glowball.xspeed * -1
+    } else if (coll.direction == 'right') {
+        ballon.position.x += coll.overlap
+        ballon.xspeed = ballon.xspeed * -1
+        glowball.xspeed = glowball.xspeed * -1
+    }
+}
+
+//example collision callback sprite to area maps
 function callbackMapAreaCollision(obj, maparea, coll) {
-    if (coll.direction == "top" || coll.direction == 'bottom') {
+    if (coll.direction == 'top' || coll.direction == 'bottom') {
         obj.position.y -= coll.overlap
         obj.yspeed = obj.yspeed * -1
     } else {
