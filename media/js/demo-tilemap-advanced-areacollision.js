@@ -95,16 +95,28 @@ Game = (function () {
             map.loadMapJson(Game.asset.getJsonByName('map1'))
 
             //assign sprite to group object b2 of tiled map
+            glowball = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(mousex, Game.mousey))
+            glowball.name = 'ballon'
+            glowball.boundsMode = 'bounce'
+            glowball.xspeed = -1
+            glowball.yspeed = 1.5
+            glowball.rotationspeed = 5
+            glowball.bound = map.getAreasByName('bound1')[0].bound
+            glowball.xscale = 0.5
+            glowball.yscale = 0.5
+            mainlayer.addElement(glowball)
+
             ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(mousex, Game.mousey))
             ballon.name = 'ballon'
             ballon.boundsMode = 'bounce'
-            ballon.xspeed = 2
-            ballon.yspeed = -2
+            ballon.xspeed = 3
+            ballon.yspeed = -1
             ballon.rotationspeed = 5
             ballon.bound = map.getAreasByName('bound1')[0].bound
             ballon.xscale = 0.1
             ballon.yscale = 0.1
             mainlayer.addElement(ballon)
+
 
             map.addElement(ballon)
 
@@ -129,10 +141,8 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
-            //ballon.position.x = mousex
-            //ballon.position.y = mousey
-            ballon.alpha = 1
             ballon.checkCollision(map.areas, callbackMapAreaCollision)
+            glowball.checkCollision(map.areas, callbackMapAreaCollision)
 
 //            map.checkAreasCollision([ballon], callbackAreasCollision)
 
@@ -144,10 +154,16 @@ Game = (function () {
             var ypos = 10
 
             //draw the map in the background
+            map.renderlayer = 0
             map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
 
             //draw all elements that the director has
             Game.director.draw()
+
+            //draw the map in the foreground
+            map.renderlayer = 1
+            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
+
 
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
@@ -175,7 +191,6 @@ Game = (function () {
 }())
 
 function callbackMapAreaCollision(obj, maparea, coll) {
-    obj.alpha = 0.5
     if (coll.direction == "top" || coll.direction == 'bottom') {
         obj.position.y -= coll.overlap
         obj.yspeed = obj.yspeed * -1
