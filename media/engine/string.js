@@ -26,3 +26,5 @@ String.prototype.trim = function (clist) {
 String.prototype.startsWith = function (str) {
     return !this.indexOf(str);
 }
+
+

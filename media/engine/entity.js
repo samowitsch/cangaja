@@ -64,3 +64,5 @@ CG.Class.extend('Entity', {
         }
     }
 })
+
+

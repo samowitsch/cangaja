@@ -13,3 +13,5 @@ CG.Class.extend('MapTileProperties', {
         return this
     }
 })
+
+

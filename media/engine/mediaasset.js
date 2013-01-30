@@ -210,3 +210,6 @@ CG.Class.extend('MediaAsset', {
 function MediaAssetException(message) {
     this.message = message
 }
+
+
+

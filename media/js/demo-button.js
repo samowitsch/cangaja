@@ -152,7 +152,7 @@ Game = (function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
                 mousedown = true
-                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
+                mousex = ev.position[0].x - canvas.offsetCG.LEFT //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
             };
             hammer.ondragstart = function (ev) {

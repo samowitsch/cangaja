@@ -23,3 +23,5 @@ CG.Entity.extend('Buffer', {
         return this
     }
 })
+
+

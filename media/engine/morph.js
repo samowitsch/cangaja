@@ -22,7 +22,7 @@ CG.Entity.extend('Morph', {
     update:function () {
         switch (this.mode) {
             case 'sinus':
-                var rad = this.angle * Const_PI_180
+                var rad = this.angle * CG.Const_PI_180
                 this.val = this.rad * Math.sin(rad)
                 if (this.val < 0) {
                     this.val = this.val * -1
@@ -48,3 +48,6 @@ CG.Entity.extend('Morph', {
         return this.val
     }
 })
+
+
+

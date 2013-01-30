@@ -330,7 +330,7 @@ var Game = {
             if(evt.keyIdentifier == 'Down'){
                 mousey = mousey + 1
             }
-            if(evt.keyIdentifier == 'Left'){
+            if(evt.keyIdentifier == 'CG.LEFT'){
                 mousex = mousex - 1
             }
             if(evt.keyIdentifier == 'Right'){
@@ -561,7 +561,7 @@ function createElements() {
         .setParticleSpeed(2)
         .setProtation(-1)
         .setGravity(0)
-        .initAsLine(Game.asset.getImageByName('basketball-25'), 40, LEFT)
+        .initAsLine(Game.asset.getImageByName('basketball-25'), 40, CG.LEFT)
 //        .setEmitterPosition(new CG.Point(655,240))
         .activateFadeout()
     )

@@ -76,7 +76,7 @@ window.onload = function () {
     //mouse move
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
+        mousex = evt.clientX - canvas.offsetCG.LEFT;
         mousey = evt.clientY - canvas.offsetTop;
     }, false);
 
@@ -282,7 +282,7 @@ Game = (function () {
                 if (evt.keyIdentifier == 'Down') {
                     mousey = mousey + 20
                 }
-                if (evt.keyIdentifier == 'Left') {
+                if (evt.keyIdentifier == 'CG.LEFT') {
                     mousex = mousex - 20
                 }
                 if (evt.keyIdentifier == 'Right') {
@@ -364,7 +364,7 @@ Game = (function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
                 mousedown = true
-                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
+                mousex = ev.position[0].x - canvas.offsetCG.LEFT //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
                 clicked()
 
@@ -689,7 +689,7 @@ function createElements() {
         .setParticleSpeed(2)
         .setProtation(-1)
         .setGravity(0)
-        .initAsLine(Game.asset.getImageByName('basketball-25'), 40, LEFT)
+        .initAsLine(Game.asset.getImageByName('basketball-25'), 40, CG.LEFT)
         //        .setEmitterPosition(new CG.Point(655,240))
         .activateFadeout()
     )

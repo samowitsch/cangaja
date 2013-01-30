@@ -13,3 +13,5 @@ CG.Entity.extend('Point', {
         this.y = y || 0
     }
 })
+
+

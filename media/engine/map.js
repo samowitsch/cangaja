@@ -6,7 +6,7 @@
  *
  * Supported types of the object layer are:
  * - object/group (rectangle?)
- * - tile element, reference point is bottom/left
+ * - tile element, reference point is bottom/CG.LEFT
  *
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
@@ -371,10 +371,10 @@ CG.Entity.extend('Map', {
     /**
      * @description drawMap - draws the map
      *
-     * @param {integer} sx top left coord for canvas drawing
-     * @param {integer} sy top left coord for canvas drawing
-     * @param {integer} bx top left x coord of bound in tilemap
-     * @param {integer} by top left y coord of bound in tilemap
+     * @param {integer} sx top CG.LEFT coord for canvas drawing
+     * @param {integer} sy top CG.LEFT coord for canvas drawing
+     * @param {integer} bx top CG.LEFT x coord of bound in tilemap
+     * @param {integer} by top CG.LEFT y coord of bound in tilemap
      * @param {integer} bw width of bound in tilemap
      * @param {integer} bh height of bound in tilemap
      * @param {callback} callback for collision handling - callback(obj,maptileproperties)
@@ -754,3 +754,5 @@ CG.Entity.extend('Map', {
         return this
     }
 })
+
+

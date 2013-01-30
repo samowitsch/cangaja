@@ -87,7 +87,7 @@ CG.Sprite.extend('Animation', {
             }
             this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
 
-            Game.b_ctx.rotate(this.rotation * Const_PI_180)
+            Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
             try {
                 Game.b_ctx.drawImage(this.image, this.fx, this.fy, this.width, this.height, 0 - this.xhandle, 0 - this.yhandle, this.width * this.xscale, this.height * this.yscale)
             } catch (e) {
@@ -97,3 +97,4 @@ CG.Sprite.extend('Animation', {
         Game.b_ctx.restore()
     }
 })
+

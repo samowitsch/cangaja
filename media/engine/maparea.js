@@ -26,3 +26,5 @@ CG.Class.extend('MapArea', {
         this.bound.y = this.initbound.y - this.mapoffset.y
     }
 })
+
+

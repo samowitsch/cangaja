@@ -111,3 +111,5 @@ CG.Entity.extend('Bitmap', {
         return this.bitmap_ctx.getImageData(x, y, width, height)
     }
 })
+
+

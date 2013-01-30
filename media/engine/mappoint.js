@@ -26,3 +26,5 @@ CG.Class.extend('MapPoint', {
         this.position.y = this.initposition.y - this.mapoffset.y
     }
 })
+
+

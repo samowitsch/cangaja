@@ -1,7 +1,7 @@
 /*
  * don't change this constants
  */
-
+/*
 //math constants
 const Const_PI_180 = Math.PI / 180
 const Const_180_PI = 180 / Math.PI
@@ -11,6 +11,9 @@ const LEFT = 1
 const RIGHT = 2
 const UP = 3
 const DOWN = 4
+
+
+
 
 //canvas stuff
 var canvas
@@ -38,3 +41,5 @@ var Game = {
     touchinit: function(){},
     touchhandler: function(){}
 }
+
+*/

@@ -154,7 +154,7 @@ CG.Entity.extend('Translate', {
                 }
                 break
             case 'oval':
-                var rad = this.startangle * Const_PI_180
+                var rad = this.startangle * CG.Const_PI_180
                 this.tx = this.x1 - (this.r1 * Math.cos(rad))
                 this.ty = this.y1 - (this.r2 * Math.sin(rad))
                 this.startangle += this.speed
@@ -225,3 +225,5 @@ CG.Entity.extend('Translate', {
  return pos;
  }
  */
+
+

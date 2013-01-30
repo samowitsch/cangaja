@@ -66,10 +66,10 @@ CG.Rectangle.extend('Sprite', {
         Game.b_ctx.globalAlpha = this.alpha
         Game.b_ctx.translate(this.position.x, this.position.y)
         if (this.atlasimage) {
-            Game.b_ctx.rotate((this.rotation - this.imagerotation) * Const_PI_180)
+            Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
             Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
         } else {
-            Game.b_ctx.rotate(this.rotation * Const_PI_180)
+            Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
             Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
         }
         Game.b_ctx.restore()
@@ -136,9 +136,9 @@ CG.Rectangle.extend('Sprite', {
     follow:function () {
         if (this.followspeed) {
             //constant follow speed between objects
-            angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * Const_180_PI
-            xs = this.followspeed * Math.sin(angl * Const_PI_180)
-            ys = this.followspeed * Math.cos(angl * Const_PI_180)
+            angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * CG.Const_180_PI
+            xs = this.followspeed * Math.sin(angl * CG.Const_PI_180)
+            ys = this.followspeed * Math.cos(angl * CG.Const_PI_180)
 
             this.xspeed = xs
             this.yspeed = ys
@@ -146,7 +146,7 @@ CG.Rectangle.extend('Sprite', {
 
         } else if (this.followsteps) {
             //constant steps between objetcs
-            angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * Const_180_PI
+            angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * CG.Const_180_PI
             this.rotation = angl * -1
             if (this.followobject.position.x != this.position.x) {
                 distx = this.followobject.position.x - this.position.x
@@ -216,3 +216,6 @@ CG.Rectangle.extend('Sprite', {
         return this
     }
 })
+
+
+

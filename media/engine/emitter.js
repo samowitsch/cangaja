@@ -33,7 +33,7 @@ CG.Entity.extend('Emitter', {
 
         this.pspeed = 10        //particle speed
         this.protation = 0
-        this.pdirection = 0     //particle direction UP, DOWN, LEFT, RIGHT
+        this.pdirection = 0     //particle direction UP, DOWN, CG.LEFT, RIGHT
         this.plifetime = 100    //particle lifetime
         this.paging = 1         //particle aging
         this.pfadeout = false   //particle fadeout
@@ -94,7 +94,7 @@ CG.Entity.extend('Emitter', {
     initAsLine:function (image, width, direction) {
         this.image = image
         this.width = width || 200
-        this.pdirection = direction || UP
+        this.pdirection = direction || CG.UP
         this.type = 'line'
         return this
     },
@@ -138,15 +138,15 @@ CG.Entity.extend('Emitter', {
         switch (this.type) {
             case 'corona':
                 //TODO corona like emitter
-                var rad = this.getRandom(0, 359) * Const_PI_180
+                var rad = this.getRandom(0, 359) * CG.Const_PI_180
 
                 particle.position.x = this.getX() - (this.radius * Math.cos(rad))
                 particle.position.y = this.getY() - (this.radius * Math.sin(rad))
 
-                angl = Math.atan2(particle.position.x - this.getX(), particle.position.y - this.getY()) * Const_180_PI
+                angl = Math.atan2(particle.position.x - this.getX(), particle.position.y - this.getY()) * CG.Const_180_PI
 
-                particle.xspeed = this.pspeed * Math.sin(angl * Const_PI_180)
-                particle.yspeed = this.pspeed * Math.cos(angl * Const_PI_180)
+                particle.xspeed = this.pspeed * Math.sin(angl * CG.Const_PI_180)
+                particle.yspeed = this.pspeed * Math.cos(angl * CG.Const_PI_180)
 
                 break
             case 'rectangle':
@@ -167,25 +167,25 @@ CG.Entity.extend('Emitter', {
                 //handle directions of line emitter
                 switch (this.pdirection) {
                     default:
-                    case UP:
+                    case CG.UP:
                         particle.xspeed = 0
                         particle.yspeed = this.pspeed * -1
                         particle.position.x = rnd + this.getX()
                         particle.position.y = this.position._y
                         break
-                    case DOWN:
+                    case CG.DOWN:
                         particle.xspeed = 0
                         particle.yspeed = this.pspeed
                         particle.position.x = rnd + this.getX()
                         particle.position.y = this.position._y
                         break
-                    case LEFT:
+                    case CG.LEFT:
                         particle.xspeed = this.pspeed * -1
                         particle.yspeed = 0
                         particle.position.x = this.position._x
                         particle.position.y = rnd + this.getY()
                         break
-                    case RIGHT:
+                    case CG.RIGHT:
                         particle.xspeed = this.pspeed
                         particle.yspeed = 0
                         particle.position.x = this.position._x
@@ -376,3 +376,5 @@ CG.Entity.extend('Emitter', {
         return this.position._y
     }
 })
+
+

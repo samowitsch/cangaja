@@ -23,3 +23,4 @@ CG.Class.extend('TPImage', {
         this.rotation = 0
     }
 })
+

@@ -33,7 +33,7 @@ CG.Entity.extend('Rectangle', {
      */
     AABB:function () {
         //http://willperone.net/Code/coderr.php
-        a = this.rotation * Const_PI_180
+        a = this.rotation * CG.Const_PI_180
         s = Math.sin(a);
         c = Math.cos(a);
         if (s < 0) s = -s;
@@ -54,7 +54,7 @@ CG.Entity.extend('Rectangle', {
                 dy = mousey - this.position.y
             var h1 = Math.sqrt(dx * dx + dy * dy)
             var currA = Math.atan2(dy, dx)
-            var newA = currA - (this.rotation * Const_PI_180);
+            var newA = currA - (this.rotation * CG.Const_PI_180);
             var x2 = Math.cos(newA) * h1
             var y2 = Math.sin(newA) * h1
             if (x2 > -0.5 * (this.width * this.xscale) &&
@@ -75,7 +75,7 @@ CG.Entity.extend('Rectangle', {
             dy = mousey - this.position.y
         var h1 = Math.sqrt(dx * dx + dy * dy)
         var currA = Math.atan2(dy, dx)
-        var newA = currA - (this.rotation * Const_PI_180)
+        var newA = currA - (this.rotation * CG.Const_PI_180)
         var x2 = Math.cos(newA) * h1
         var y2 = Math.sin(newA) * h1
         if (x2 > -0.5 * (this.width * this.xscale) &&
@@ -118,7 +118,7 @@ CG.Entity.extend('Rectangle', {
                                         direction = 'bottom'
                                         overlap = ((this.position.y - this.AABB().bh / 2) - (obj.bound.y + obj.bound.height)) >> 0
                                     } else {
-                                        direction = 'left'
+                                        direction = 'CG.LEFT'
                                         overlap = ((this.position.x + this.AABB().bw / 2) - obj.bound.x) >> 0
                                     }
                                 } else {
@@ -175,7 +175,7 @@ CG.Entity.extend('Rectangle', {
                                     direction = 'bottom'
                                     overlap = ((this.position.y - this.AABB().bh / 2) - (obj.position.y - obj.AABB().bh / 2)) >> 0
                                 } else {
-                                    direction = 'left'
+                                    direction = 'CG.LEFT'
                                     overlap = ((this.position.x + this.AABB().bw / 2) - (obj.position.x + obj.AABB().bw / 2)) >> 0
                                 }
                             } else {
@@ -204,3 +204,5 @@ CG.Entity.extend('Rectangle', {
     }
 
 })
+
+

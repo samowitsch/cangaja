@@ -322,7 +322,7 @@ window.onload = function() {
     //mouse move handler
     can.addEventListener('mousemove', function(evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
+        mousex = evt.clientX - canvas.offsetCG.LEFT;
         mousey = evt.clientY - canvas.offsetTop;
     }, false);
 
@@ -454,7 +454,7 @@ var Game = {
         hammer = new Hammer(canvas);
         hammer.ontap = function(ev) {
             mousedown = true
-            mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
+            mousex = ev.position[0].x - canvas.offsetCG.LEFT //correct ontap value x
             mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
 
         };
