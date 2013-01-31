@@ -22,7 +22,7 @@ window.onload = function () {
     //mouse move
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetCG.LEFT;
+        mousex = evt.clientX - canvas.offsetLeft;
         mousey = evt.clientY - canvas.offsetTop;
     }, false);
 
@@ -86,39 +86,16 @@ Game = (function () {
             mainscreen = new CG.Screen('mainscreen')
             mainlayer = new CG.Layer('mainlayer')
 
+            //create Box2D World
+            b2world = new CG.B2DWorld('box2d-world')
+
+            b2world.createBox(Game.asset.getImageByName('glowball'), 0, 0, 1, false)
+
+            //add it to a CGLayer
+            mainlayer.addElement(b2world)
+
             //add screen to Director
             Game.director.addScreen(mainscreen.addLayer(mainlayer))
-
-
-            //create tilemap
-            map = new CG.Map(640, 480)
-            map.loadMapJson(Game.asset.getJsonByName('map1'))
-
-            //assign sprite to group object b2 of tiled map
-            glowball = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(100, 450))
-            glowball.name = 'ballon'
-            glowball.boundsMode = 'bounce'
-            glowball.xspeed = -1
-            glowball.yspeed = 2
-            glowball.rotationspeed = 5
-            glowball.bound = map.getAreasByName('bound1')[0].bound
-            glowball.xscale = 0.5
-            glowball.yscale = 0.5
-            mainlayer.addElement(glowball)
-
-            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(100, 250))
-            ballon.name = 'ballon'
-            ballon.boundsMode = 'bounce'
-            ballon.xspeed = 3
-            ballon.yspeed = -1
-            ballon.rotationspeed = 5
-            ballon.bound = map.getAreasByName('bound1')[0].bound
-            ballon.xscale = 0.1
-            ballon.yscale = 0.1
-            mainlayer.addElement(ballon)
-
-
-            map.addElement(ballon)
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
@@ -141,13 +118,6 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
-            ballon.checkCollision([glowball], callbackCollision)
-
-            ballon.checkCollision(map.areas, callbackMapAreaCollision)
-            glowball.checkCollision(map.areas, callbackMapAreaCollision)
-
-//            map.checkAreasCollision([ballon], callbackAreasCollision)
-
             Game.director.update()
         },
         draw:function () {
@@ -155,25 +125,13 @@ Game = (function () {
             var xpos = 10
             var ypos = 10
 
-            //draw the map in the background
-            map.renderlayer = 0
-            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
-
             //draw all elements that the director has
             Game.director.draw()
-
-            //draw the map in the foreground
-            map.renderlayer = 1
-            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
 
 
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.draw('Map class example.', xpos, ypos + 56)
-            small.draw('Use areamaps instead of single tiles for collision check.', xpos, ypos + 56 + small.getLineHeight())
-            small.draw('Collision from ' + collision.direction + " with overlap of " + collision.overlap + "", xpos, ypos + 56 + (small.getLineHeight() * 2))
-            //small.draw('Use the mouse to move the balloon ;o)', xpos, ypos + 56 + (small.getLineHeight() * 3))
-            small.draw('Collision to maparea', ballon.position.x - 40, ballon.position.y + 20)
+            small.draw('Box2D example.', xpos, ypos + 56)
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
@@ -191,47 +149,3 @@ Game = (function () {
 
     return Game
 }())
-
-//example collision callback sprite to sprite
-function callbackCollision(ballon, glowball, coll) {
-    if (coll.direction == 'top') {
-        ballon.position.y -= coll.overlap
-        ballon.yspeed = ballon.yspeed * -1
-        glowball.yspeed = glowball.yspeed * -1
-    } else if (coll.direction == 'bottom') {
-        ballon.position.y += coll.overlap
-        ballon.yspeed = ballon.yspeed * -1
-        glowball.yspeed = glowball.yspeed * -1
-    } else if (coll.direction == 'CG.LEFT') {
-        ballon.position.x -= coll.overlap
-        ballon.xspeed = ballon.xspeed * -1
-        glowball.xspeed = glowball.xspeed * -1
-    } else if (coll.direction == 'right') {
-        ballon.position.x += coll.overlap
-        ballon.xspeed = ballon.xspeed * -1
-        glowball.xspeed = glowball.xspeed * -1
-    }
-}
-
-//example collision callback sprite to area maps
-function callbackMapAreaCollision(obj, maparea, coll) {
-    if (coll.direction == 'top' || coll.direction == 'bottom') {
-        obj.position.y -= coll.overlap
-        obj.yspeed = obj.yspeed * -1
-    } else {
-        obj.position.x -= coll.overlap
-        obj.xspeed = obj.xspeed * -1
-    }
-    obj.rotationspeed *= -1
-
-    collision = coll
-}
-
-function callbackMapCollision() {
-
-}
-
-
-function callbackAreasCollision(obj, area) {
-    console.log([obj, area])
-}
