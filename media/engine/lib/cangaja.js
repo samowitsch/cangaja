@@ -14516,20 +14516,68 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
 CG.Entity.extend('B2DEntity', {
     init:function (name) {
         this._super(name)
+        this.atlasimage = false
+        this.scale = 0
+        this.alpha = 1
+
+        this.body = {}
+
+        this.bodyDef = new b2BodyDef
 
         this.fixDef = new b2FixtureDef
+        this.fixDef.density = 1.0
+        this.fixDef.friction = 0.5
+        this.fixDef.restitution = 0.5
 
-        this.bodyDef = new b2FixtureDef
+        return this
     },
     createBox:function (world, image, x, y, scale, stat) {
         this.world = world
-        this.image = image
+        this.setImage(image)
+        this.scale = scale
         this.x = x
         this.y = y
-        this.scale = scale
         this.stat = stat
+
+        //create dynamic circle object
+        if (this.stat) {
+            this.bodyDef.type = b2Body.b2_staticBody
+        } else {
+            this.bodyDef.type = b2Body.b2_dynamicBody
+        }
+
+        this.fixDef.shape = new b2PolygonShape
+        this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
+        this.bodyDef.position.x = this.x / this.scale
+        this.bodyDef.position.y = this.y / this.scale
+        this.body = this.world.CreateBody(this.bodyDef)
+        this.body.CreateFixture(this.fixDef)
+
+
     },
-    createSphere:function () {
+    createCircle:function (world, image, radius, x, y, scale, stat) {
+        this.world = world
+        this.scale = scale
+        this.setImage(image)
+
+        this.radius = this.width / 2
+        this.x = x
+        this.y = y
+        this.stat = stat || false
+
+
+        //create dynamic circle object
+        if (this.stat) {
+            this.bodyDef.type = b2Body.b2_staticBody
+        } else {
+            this.bodyDef.type = b2Body.b2_dynamicBody
+        }
+        this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
+        this.bodyDef.position.x = this.x / this.scale
+        this.bodyDef.position.y = this.y / this.scale
+
+        this.body = this.world.CreateBody(this.bodyDef)
+        this.body.CreateFixture(this.fixDef)
 
     },
     createPolyBody:function () {
@@ -14542,8 +14590,21 @@ CG.Entity.extend('B2DEntity', {
 
     },
     update:function () {
+        this.xhandle = (this.width / 2)
+        this.yhandle = (this.height / 2)
     },
     draw:function () {
+        Game.b_ctx.save()
+        Game.b_ctx.globalAlpha = this.alpha
+        Game.b_ctx.translate(this.body.GetPosition().x * this.scale, this.body.GetPosition().y * this.scale)
+        if (this.atlasimage) {
+            Game.b_ctx.rotate((this.body.GetAngle() - this.imagerotation)) // * CG.Const_PI_180)
+            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
+        } else {
+            Game.b_ctx.rotate(this.body.GetAngle()) // * CG.Const_PI_180)
+            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
+        }
+        Game.b_ctx.restore()
     }
 })
 
@@ -14589,6 +14650,7 @@ CG.Layer.extend('B2DLayer', {
 CG.Layer.extend('B2DWorld', {
     init:function (name) {
         this.name = name || ''
+        this.debug = false
 
         this.elements = []
 
@@ -14639,27 +14701,6 @@ CG.Layer.extend('B2DWorld', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        for (var i = 0; i < 10; i++) {
-            //create dynamic circle object
-            bodyDef.type = b2Body.b2_dynamicBody
-            fixDef.shape = new b2CircleShape(
-                Math.random() + 0.1 //radius
-            );
-            bodyDef.position.x = Math.random() * 5
-            bodyDef.position.y = Math.random() * 10
-            this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-        }
-
-        // create dynamic polygon object
-        bodyDef.type = b2Body.b2_dynamicBody
-        fixDef.shape = new b2PolygonShape
-        fixDef.shape.SetAsBox(
-            Math.random() + 0.1 //half width
-            , Math.random() + 0.1 //half height
-        );
-        bodyDef.position.x = Math.random() * 5
-        bodyDef.position.y = Math.random() * 10
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
         //setup debug draw
         var debugDraw = new b2DebugDraw()
@@ -14677,26 +14718,34 @@ CG.Layer.extend('B2DWorld', {
             1 / 60   //frame-rate
             , 10       //velocity iterations
             , 10       //position iterations
-        );
+        )
+
+        this.elements.forEach(function (element) {
+            element.update()
+        }, this)
+
 
     },
     draw:function () {
-        this.world.DrawDebugData()
-        this.world.ClearForces()
+
+        if (this.debug) {
+            this.world.DrawDebugData()
+            this.world.ClearForces()
+        }
+        this.elements.forEach(function (element) {
+            element.draw()
+        }, this)
+
     },
     createBox:function (image, x, y, scale, stat) {
         var entity = new CG.B2DEntity()
-        entity.createBox({
-            world:this.world,
-            image:image,
-            x:0,
-            y:0,
-            scale:1,
-            stat: false})
+        entity.createBox(this.world, image, x, y, scale, false)
         this.elements.push(entity)
     },
-    createSphere:function () {
-
+    createCircle:function (image, radius, x, y, scale, stat) {
+        var entity = new CG.B2DEntity()
+        entity.createCircle(this.world, image, radius, x, y, scale, stat)
+        this.elements.push(entity)
     },
     createPolyBody:function () {
 

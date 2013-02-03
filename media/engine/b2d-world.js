@@ -13,6 +13,7 @@
 CG.Layer.extend('B2DWorld', {
     init:function (name) {
         this.name = name || ''
+        this.debug = false
 
         this.elements = []
 
@@ -63,27 +64,6 @@ CG.Layer.extend('B2DWorld', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        for (var i = 0; i < 10; i++) {
-            //create dynamic circle object
-            bodyDef.type = b2Body.b2_dynamicBody
-            fixDef.shape = new b2CircleShape(
-                Math.random() + 0.1 //radius
-            );
-            bodyDef.position.x = Math.random() * 5
-            bodyDef.position.y = Math.random() * 10
-            this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-        }
-
-        // create dynamic polygon object
-        bodyDef.type = b2Body.b2_dynamicBody
-        fixDef.shape = new b2PolygonShape
-        fixDef.shape.SetAsBox(
-            Math.random() + 0.1 //half width
-            , Math.random() + 0.1 //half height
-        );
-        bodyDef.position.x = Math.random() * 5
-        bodyDef.position.y = Math.random() * 10
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
         //setup debug draw
         var debugDraw = new b2DebugDraw()
@@ -101,21 +81,33 @@ CG.Layer.extend('B2DWorld', {
             1 / 60   //frame-rate
             , 10       //velocity iterations
             , 10       //position iterations
-        );
+        )
+
+        this.elements.forEach(function (element) {
+            element.update()
+        }, this)
+
 
     },
     draw:function () {
-        this.world.DrawDebugData()
-        this.world.ClearForces()
+
+        if (this.debug) {
+            this.world.DrawDebugData()
+            this.world.ClearForces()
+        }
+        this.elements.forEach(function (element) {
+            element.draw()
+        }, this)
+
     },
     createBox:function (image, x, y, scale, stat) {
         var entity = new CG.B2DEntity()
-        entity.createBox(this.world, image, 0, 0, 1, false)
+        entity.createBox(this.world, image, x, y, scale, false)
         this.elements.push(entity)
     },
-    createSphere:function () {
+    createCircle:function (image, radius, x, y, scale, stat) {
         var entity = new CG.B2DEntity()
-        entity.createBox(this.world, image, 10, 0, 0, 1, false)
+        entity.createCircle(this.world, image, radius, x, y, scale, stat)
         this.elements.push(entity)
     },
     createPolyBody:function () {
