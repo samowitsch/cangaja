@@ -157,6 +157,7 @@
             <filename>sonne.png</filename>
             <filename>powerstar75.png</filename>
             <filename>smoke50.png</filename>
+            <filename>rainbow_256.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

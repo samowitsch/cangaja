@@ -66,6 +66,11 @@ Game = (function () {
                 //tiled map
                 .addJson('media/map/map-advanced-inner-outer.json', 'map1')
 
+                //physics engine
+                .addJson('media/img/ballon.json', 'ballon')
+                .addJson('media/img/rainbow_256.json', 'rainbow_256')
+                .addJson('media/img/powerstar75.json', 'powerstar75')
+
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
                 .addJson('media/img/texturepacker.json', 'texturepacker-json')
@@ -88,22 +93,24 @@ Game = (function () {
             mainscreen = new CG.Screen('mainscreen')
             mainlayer = new CG.Layer('mainlayer')
 
-
             back3 = new CG.Sprite(Game.asset.getImageByName('back3'), new CG.Point(320, 240))
             back3.name = 'back3'
             mainlayer.addElement(back3)
 
-
             //create Box2D World
             b2world = new CG.B2DWorld('box2d-world')
+            b2world.debug = 0
 
             //create circle element with image
             b2world.createCircle(Game.asset.getImageByName('glowball'), 40, 310, -200, b2world.scale, false)
-            b2world.createCircle(Game.asset.getImageByName('basketball-25'), 25, 150, 10, b2world.scale, false)
 
             //create box element with image
-            b2world.createBox(Game.asset.getImageByName('ballon'), 230, -100, b2world.scale, false)
-            b2world.createBox(Game.asset.getImageByName('powerstar75'), 420, 10, b2world.scale, false)
+            b2world.createBox(Game.asset.getImageByName('btn-back'), 420, -500, b2world.scale, false)
+
+            //create polybody with image
+            b2world.createPolyBody(Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, b2world.scale, false, false)
+            b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, b2world.scale, false, false)
+            b2world.createPolyBody(Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, b2world.scale, false, false)
 
             //add it to a CGLayer
             mainlayer.addElement(b2world)

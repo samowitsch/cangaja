@@ -101,17 +101,16 @@ CG.Layer.extend('B2DWorld', {
 
     },
     createBox:function (image, x, y, scale, stat) {
-        var entity = new CG.B2DEntity()
-        entity.createBox(this.world, image, x, y, scale, false)
+        var entity = new CG.B2DRectangle(this.world, image, x, y, scale, false)
         this.elements.push(entity)
     },
     createCircle:function (image, radius, x, y, scale, stat) {
-        var entity = new CG.B2DEntity()
-        entity.createCircle(this.world, image, radius, x, y, scale, stat)
+        var entity = new CG.B2DCircle(this.world, image, radius, x, y, scale, stat)
         this.elements.push(entity)
     },
-    createPolyBody:function () {
-
+    createPolyBody:function (image, jsonpoly, x, y, scale, stat, bullet) {
+        var entity = new CG.B2DPolygon(this.world, image, jsonpoly, x, y, scale, stat, bullet)
+        this.elements.push(entity)
     },
     createBridge:function () {
 
