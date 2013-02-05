@@ -76,7 +76,7 @@ window.onload = function () {
     //mouse move
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetCG.LEFT;
+        mousex = evt.clientX - canvas.offsetLeft;
         mousey = evt.clientY - canvas.offsetTop;
     }, false);
 
@@ -364,7 +364,7 @@ Game = (function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
                 mousedown = true
-                mousex = ev.position[0].x - canvas.offsetCG.LEFT //correct ontap value x
+                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
                 mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
                 clicked()
 
@@ -657,7 +657,7 @@ function createElements() {
         .setName('sunny')
         .setParticleSpeed(2)
         .setGravity(0.02)
-        .initAsLine(Game.asset.getImageByName('sun50'), Game.height, UP)
+        .initAsLine(Game.asset.getImageByName('sun50'), Game.height, CG.UP)
         .setProtation(2)
         //        .setEmitterPosition(new CG.Point(320,500))
         .activateFadeout()
@@ -668,7 +668,7 @@ function createElements() {
         .setName('rainy')
         .setParticleSpeed(2)
         .setGravity(0.03)
-        .initAsLine(Game.asset.getImageByName('raindrop'), Game.height, DOWN)
+        .initAsLine(Game.asset.getImageByName('raindrop'), Game.height, CG.DOWN)
         //        .setEmitterPosition(new CG.Point(320,-20))
         .activateFadeout()
     )
@@ -679,7 +679,7 @@ function createElements() {
         .setGravity(0)
         .setParticleSpeed(2)
         .setProtation(1)
-        .initAsLine(Game.asset.getImageByName('glowball50'), 40, RIGHT)
+        .initAsLine(Game.asset.getImageByName('glowball50'), 40, CG.RIGHT)
         //        .setEmitterPosition(new CG.Point(-25,240))
         .activateFadeout()
     )
