@@ -22,11 +22,11 @@ window.onload = function () {
     //mouse move
 
 
-    can.addEventListener("mousedown", function(e) {
+    can.addEventListener("mousedown", function (e) {
         mousedown = true;
     }, true);
 
-    can.addEventListener("mouseup", function() {
+    can.addEventListener("mouseup", function () {
         mousedown = false;
     }, true);
 
@@ -151,13 +151,19 @@ Game = (function () {
 
 
             document.onkeydown = function (evt) {
-
-                if (evt.keyCode == 83) {
+                if (evt.keyCode == 82) { //r
+                    b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
+                }
+                if (evt.keyCode == 83) { //s
                     b2world.createPolyBody(Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, b2world.scale, false, false)
                 }
-                if (evt.keyCode == 66) {
+                if (evt.keyCode == 66) { //b
                     b2world.createCircle(Game.asset.getImageByName('glowball'), 40, mousex, mousey, b2world.scale, false)
                 }
+                if (evt.keyCode == 68) { //d
+                    body = b2world.deleteBodyAt(mousex / 40, mousey / 40)
+                }
+                console.log(evt.keyCode)
             };
 
 
@@ -174,8 +180,8 @@ Game = (function () {
 
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.draw('Box2D example. Press s for new star, b for new glowball.', xpos, ypos + 56)
-            small.draw('Try moving the elements with the mouse ;-)', xpos, ypos + 56 + small.getLineHeight())
+            small.draw('Box2D example. Press s for new star, b for new glowball, r for new rainbow.', xpos, ypos + 56)
+            small.draw('Try moving the elements with the mouse;-) Press d to delete an element;-(', xpos, ypos + 56 + small.getLineHeight())
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

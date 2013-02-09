@@ -14799,7 +14799,7 @@ CG.Layer.extend('B2DWorld', {
         )
 
         if (mousedown) {
-            this.mouseDownAt(mousex / this.scale,  mousey / this.scale);
+            this.mouseDownAt(mousex / this.scale, mousey / this.scale);
         } else if (this.isMouseDown()) {
             this.mouseUp();
         }
@@ -14880,8 +14880,25 @@ CG.Layer.extend('B2DWorld', {
         }, aabb);
         return selectedBody;
     },
+    deleteBodyAt:function (x, y) {
+        body = this.getBodyAt(x, y)
+        if (body) {
+            for (var i = 0, l = this.elements.length; i < l; i++) {
+                //if b2entity found delete entity and b2body
+                if (this.elements[i].body.m_islandIndex == body.m_islandIndex) {
+                    this.removeElementByIndex(i)
+                    this.world.DestroyBody(body)
+                    return true
+                }
+            }
+        }
+        return false
+    },
     isMouseDown:function () {
         return (this.mouseJoint != null);
+    },
+    removeElementByIndex:function (index) {
+        this.elements.splice(index, 1);
     }
 
 })
