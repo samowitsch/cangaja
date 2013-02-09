@@ -83,6 +83,12 @@ CG.Layer.extend('B2DWorld', {
             , 10       //position iterations
         )
 
+        if (mousedown) {
+            this.mouseDownAt(mousex / this.scale,  mousey / this.scale);
+        } else if (this.isMouseDown()) {
+            this.mouseUp();
+        }
+
         this.elements.forEach(function (element) {
             element.update()
         }, this)
@@ -117,6 +123,50 @@ CG.Layer.extend('B2DWorld', {
     },
     createRope:function () {
 
+    },
+    mouseDownAt:function (x, y) {
+        if (!this.mouseJoint) {
+            var body = this.getBodyAt(x, y)
+            if (body) {
+                var md = new b2MouseJointDef()
+                md.bodyA = this.world.GetGroundBody()
+                md.bodyB = body
+                md.target.Set(x, y)
+                md.collideConnected = true
+                md.maxForce = 300.0 * body.GetMass()
+                this.mouseJoint = this.world.CreateJoint(md)
+                body.SetAwake(true);
+            }
+        } else {
+            this.mouseJoint.SetTarget(new b2Vec2(x, y))
+        }
+    },
+    mouseUp:function () {
+        this.world.DestroyJoint(this.mouseJoint);
+        this.mouseJoint = null;
+    },
+    getBodyAt:function (x, y) {
+        var mousePVec = new b2Vec2(x, y);
+        var aabb = new b2AABB();
+        aabb.lowerBound.Set(x - 0.001, y - 0.001);
+        aabb.upperBound.Set(x + 0.001, y + 0.001);
+
+        // Query the world for overlapping shapes.
+
+        var selectedBody = null;
+        this.world.QueryAABB(function (fixture) {
+            if (fixture.GetBody().GetType() != b2Body.b2_staticBody) {
+                if (fixture.GetShape().TestPoint(fixture.GetBody().GetTransform(), mousePVec)) {
+                    selectedBody = fixture.GetBody();
+                    return false;
+                }
+            }
+            return true;
+        }, aabb);
+        return selectedBody;
+    },
+    isMouseDown:function () {
+        return (this.mouseJoint != null);
     }
 
 })

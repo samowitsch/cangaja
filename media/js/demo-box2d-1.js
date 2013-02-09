@@ -20,6 +20,16 @@ window.onload = function () {
     document.body.appendChild(can)
 
     //mouse move
+
+
+    can.addEventListener("mousedown", function(e) {
+        mousedown = true;
+    }, true);
+
+    can.addEventListener("mouseup", function() {
+        mousedown = false;
+    }, true);
+
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
         mousex = evt.clientX - canvas.offsetLeft;
@@ -139,6 +149,18 @@ Game = (function () {
             updateStats.update()
             //update here what ever you want
 
+
+            document.onkeydown = function (evt) {
+
+                if (evt.keyCode == 83) {
+                    b2world.createPolyBody(Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, b2world.scale, false, false)
+                }
+                if (evt.keyCode == 66) {
+                    b2world.createCircle(Game.asset.getImageByName('glowball'), 40, mousex, mousey, b2world.scale, false)
+                }
+            };
+
+
             Game.director.update()
         },
         draw:function () {
@@ -152,7 +174,8 @@ Game = (function () {
 
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.draw('Box2D example.', xpos, ypos + 56)
+            small.draw('Box2D example. Press s for new star, b for new glowball.', xpos, ypos + 56)
+            small.draw('Try moving the elements with the mouse ;-)', xpos, ypos + 56 + small.getLineHeight())
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

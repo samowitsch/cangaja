@@ -14493,6 +14493,7 @@ Box2D.postDefs = [];
 var i;
 for (i = 0; i < Box2D.postDefs.length; ++i) Box2D.postDefs[i]();
 delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
+    b2AABB = Box2D.Collision.b2AABB,
     b2BodyDef = Box2D.Dynamics.b2BodyDef,
     b2Body = Box2D.Dynamics.b2Body,
     b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
@@ -14501,7 +14502,10 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2MassData = Box2D.Collision.Shapes.b2MassData,
     b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
     b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
-    b2DebugDraw = Box2D.Dynamics.b2DebugDraw/**
+    b2DebugDraw = Box2D.Dynamics.b2DebugDraw,
+    b2RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef,
+    b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef
+/**
  *  © 2012 by Christian Sonntag <info@motions-media.de>
  *  simple experimental Canvas Game JavaScript Framework
  */
@@ -14641,7 +14645,9 @@ CG.B2DEntity.extend('B2DRectangle', {
 
 
 /**
- * @description B2DPolygon
+ * @description B2DPolygon - uses PhysicsEditor export Lime + Corona (json)
+ * supported options are friction, density and bounce
+ *
  * @augments B2DEntity
  * @constructor
  */
@@ -14792,6 +14798,12 @@ CG.Layer.extend('B2DWorld', {
             , 10       //position iterations
         )
 
+        if (mousedown) {
+            this.mouseDownAt(mousex / this.scale,  mousey / this.scale);
+        } else if (this.isMouseDown()) {
+            this.mouseUp();
+        }
+
         this.elements.forEach(function (element) {
             element.update()
         }, this)
@@ -14826,6 +14838,50 @@ CG.Layer.extend('B2DWorld', {
     },
     createRope:function () {
 
+    },
+    mouseDownAt:function (x, y) {
+        if (!this.mouseJoint) {
+            var body = this.getBodyAt(x, y)
+            if (body) {
+                var md = new b2MouseJointDef()
+                md.bodyA = this.world.GetGroundBody()
+                md.bodyB = body
+                md.target.Set(x, y)
+                md.collideConnected = true
+                md.maxForce = 300.0 * body.GetMass()
+                this.mouseJoint = this.world.CreateJoint(md)
+                body.SetAwake(true);
+            }
+        } else {
+            this.mouseJoint.SetTarget(new b2Vec2(x, y))
+        }
+    },
+    mouseUp:function () {
+        this.world.DestroyJoint(this.mouseJoint);
+        this.mouseJoint = null;
+    },
+    getBodyAt:function (x, y) {
+        var mousePVec = new b2Vec2(x, y);
+        var aabb = new b2AABB();
+        aabb.lowerBound.Set(x - 0.001, y - 0.001);
+        aabb.upperBound.Set(x + 0.001, y + 0.001);
+
+        // Query the world for overlapping shapes.
+
+        var selectedBody = null;
+        this.world.QueryAABB(function (fixture) {
+            if (fixture.GetBody().GetType() != b2Body.b2_staticBody) {
+                if (fixture.GetShape().TestPoint(fixture.GetBody().GetTransform(), mousePVec)) {
+                    selectedBody = fixture.GetBody();
+                    return false;
+                }
+            }
+            return true;
+        }, aabb);
+        return selectedBody;
+    },
+    isMouseDown:function () {
+        return (this.mouseJoint != null);
     }
 
 })
