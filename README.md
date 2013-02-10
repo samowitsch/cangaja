@@ -40,6 +40,8 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
+* Box2D entity bridge
+* Box2D entity rope
 * Tilemap => decition what to prefer => xml or json format?
 * bugfixing Tilemap with tmx csv format is not animating correctly (tmx with xml and tilemap exported as json works!)
 * fix missing rotation when follower sprite using TPImage
@@ -63,6 +65,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2012-02-10 [added] - dragging, deleting and apply impulse of/to Box2D objects
 * 2012-02-05 [added] - first simple Box2D Wrapper with basic shapes: circle, rectangle and polybody
 * 2012-01-24 [added] - Sprite to MapArea collision
 * 2012-01-23 [misc] - purchased Webstorm JavaScript IDE, thats what i call a JS IDE!

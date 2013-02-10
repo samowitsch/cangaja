@@ -153,7 +153,7 @@ Game = (function () {
             document.onkeydown = function (evt) {
                 if (evt.keyCode == 73) { //i
                     body = b2world.getBodyAt(mousex / 40, mousey / 40)
-                    b2world.applyImpulse(body, 0, 100)
+                    b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
                     b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
@@ -185,7 +185,8 @@ Game = (function () {
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.draw('Box2D example. Press s for new star, b for new glowball, r for new rainbow.', xpos, ypos + 56)
-            small.draw('Try moving the elements with the mouse;-) Press d to delete an element;-(', xpos, ypos + 56 + small.getLineHeight())
+            small.draw('Try moving the elements with the mouse;-)', xpos, ypos + 56 + small.getLineHeight())
+            small.draw('Press d to delete an element, i for apply impulse to object below mouse pointer', xpos, ypos + 56 + (2 * small.getLineHeight()))
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
