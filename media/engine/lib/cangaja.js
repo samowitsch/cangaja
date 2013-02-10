@@ -14901,9 +14901,11 @@ CG.Layer.extend('B2DWorld', {
         this.elements.splice(index, 1);
     },
     applyImpulse:function (body, degrees, power) {
-        body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
-            Math.sin(degrees * (Math.PI / 180)) * power),
-            body.GetWorldCenter());
+        if (body) {
+            body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
+                Math.sin(degrees * (Math.PI / 180)) * power),
+                body.GetWorldCenter());
+        }
     }
 
 })

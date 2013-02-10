@@ -167,7 +167,6 @@ Game = (function () {
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex / 40, mousey / 40)
                 }
-                console.log(evt.keyCode)
             };
 
 
