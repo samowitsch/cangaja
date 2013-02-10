@@ -107,12 +107,17 @@ This is a very early version of it.
 
 + Director
 + Entity
+  + B2DEntity
+    + B2DCircle
+    + B2DRectangle
+    + B2DPolygon
   + Bitmap
   + Bound
   + Buffer
   + Emitter
   + Font
   + Layer
+    + B2DWorld
   + Map
   + Menu
   + Morph
@@ -147,6 +152,10 @@ This is a very early version of it.
         + Map
         + Menu => TODO
         + Sprite
+      + B2DWorld
+        + B2DCircle
+        + B2DRectangle
+        + B2DPolygon
 
 # Examples #
 

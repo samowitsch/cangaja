@@ -37,6 +37,7 @@ CG.Layer.extend('B2DWorld', {
         // positions the center of the object (not upper left!)
         bodyDef.position.x = Game.width2 / this.scale
         bodyDef.position.y = (Game.height / this.scale) - 1
+        bodyDef.userData = 'ground'
         fixDef.shape = new b2PolygonShape
         // half width, half height. eg actual height here is 1 unit
         fixDef.shape.SetAsBox((Game.width / this.scale) / 2, 0.5 / 2)
@@ -48,6 +49,7 @@ CG.Layer.extend('B2DWorld', {
         // positions the center of the object (not upper left!)
         bodyDef.position.x = 10 / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
+        bodyDef.userData = 'wall left'
         fixDef.shape = new b2PolygonShape;
         // half width, half height. eg actual height here is 1 unit
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
@@ -59,6 +61,7 @@ CG.Layer.extend('B2DWorld', {
         // positions the center of the object (not upper left!)
         bodyDef.position.x = (Game.width - 10) / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
+        bodyDef.userData = 'wall right'
         fixDef.shape = new b2PolygonShape
         // half width, half height. eg actual height here is 1 unit
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
