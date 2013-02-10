@@ -106,16 +106,16 @@ CG.Layer.extend('B2DWorld', {
         }, this)
 
     },
-    createBox:function (image, x, y, scale, stat) {
-        var entity = new CG.B2DRectangle(this.world, image, x, y, scale, false)
+    createBox:function (id, image, x, y, scale, stat) {
+        var entity = new CG.B2DRectangle(this.world, id, image, x, y, scale, false)
         this.elements.push(entity)
     },
-    createCircle:function (image, radius, x, y, scale, stat) {
-        var entity = new CG.B2DCircle(this.world, image, radius, x, y, scale, stat)
+    createCircle:function (id, image, radius, x, y, scale, stat) {
+        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, scale, stat)
         this.elements.push(entity)
     },
-    createPolyBody:function (image, jsonpoly, x, y, scale, stat, bullet) {
-        var entity = new CG.B2DPolygon(this.world, image, jsonpoly, x, y, scale, stat, bullet)
+    createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
+        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, scale, stat, bullet)
         this.elements.push(entity)
     },
     createBridge:function () {
@@ -191,6 +191,26 @@ CG.Layer.extend('B2DWorld', {
                 Math.sin(degrees * (Math.PI / 180)) * power),
                 body.GetWorldCenter());
         }
+    },
+    addContactListener:function (callbacks) {
+        var listener = new Box2D.Dynamics.b2ContactListener;
+        if (callbacks.BeginContact) listener.BeginContact = function (contact) {
+            callbacks.BeginContact(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData());
+        }
+        if (callbacks.EndContact) listener.EndContact = function (contact) {
+            callbacks.EndContact(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData());
+        }
+        if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
+            callbacks.PostSolve(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData(),
+                impulse.normalImpulses[0]);
+        }
+        this.world.SetContactListener(listener);
+    },
+    getBodySpec:function (b) {
+        return {x:b.GetPosition().x, y:b.GetPosition().y, a:b.GetAngle(), c:{x:b.GetWorldCenter().x, y:b.GetWorldCenter().y}};
     }
 
 })

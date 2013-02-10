@@ -11,7 +11,7 @@
  */
 
 CG.B2DEntity.extend('B2DCircle', {
-    init:function (world, image, radius, x, y, scale, stat) {
+    init:function (world, id, image, radius, x, y, scale, stat) {
         this._super()
         this.world = world
         this.setImage(image)
@@ -32,6 +32,7 @@ CG.B2DEntity.extend('B2DCircle', {
         this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
+        this.bodyDef.userData = id
 
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)

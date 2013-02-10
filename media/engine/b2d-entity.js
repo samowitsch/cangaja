@@ -15,6 +15,8 @@ CG.Entity.extend('B2DEntity', {
 
         this.body = {}
 
+        this.id = ''
+
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true
         this.bodyDef.awake = true
@@ -24,7 +26,20 @@ CG.Entity.extend('B2DEntity', {
         this.fixDef.friction = 0.5
         this.fixDef.restitution = 0.5
 
+        this.isHit = false;
+        this.strength = 100;
+        this.dead = false;
+
         return this
+    },
+    hit:function (impulse, source) {
+        this.isHit = true;
+        if (this.strength) {
+            this.strength -= impulse;
+            if (this.strength <= 0) {
+                this.dead = true
+            }
+        }
     },
     update:function () {
     },

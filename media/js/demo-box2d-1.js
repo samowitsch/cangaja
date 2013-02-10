@@ -107,20 +107,38 @@ Game = (function () {
             back3.name = 'back3'
             mainlayer.addElement(back3)
 
+
+
             //create Box2D World
             b2world = new CG.B2DWorld('box2d-world')
             b2world.debug = 0
 
             //create circle element with image
-            b2world.createCircle(Game.asset.getImageByName('glowball'), 40, 310, -200, b2world.scale, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, b2world.scale, false)
 
             //create box element with image
-            b2world.createBox(Game.asset.getImageByName('btn-back'), 420, -500, b2world.scale, false)
+            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, b2world.scale, false)
 
             //create polybody with image
-            b2world.createPolyBody(Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, b2world.scale, false, false)
-            b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, b2world.scale, false, false)
-            b2world.createPolyBody(Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, b2world.scale, false, false)
+            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, b2world.scale, false, false)
+            b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, b2world.scale, false, false)
+            b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, b2world.scale, false, false)
+
+
+            b2world.addContactListener({
+                BeginContact:function (idA, idB) {
+                    console.log('BeginContact');
+                },
+
+                PostSolve:function (idA, idB, impulse) {
+                    console.log(['PostSolve', idA, idB, impulse]);
+//                    if (impulse < 0.1) return;
+//                    var entityA = world[idA];
+//                    var entityB = world[idB];
+//                    entityA.hit(impulse, entityB);
+//                    entityB.hit(impulse, entityA);
+                }
+            });
 
             //add it to a CGLayer
             mainlayer.addElement(b2world)
@@ -130,8 +148,6 @@ Game = (function () {
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
-            updateStats = new Stats()
-            document.body.appendChild(updateStats.domElement)
 
             Game.loop()
         },
@@ -146,7 +162,6 @@ Game = (function () {
             Game.draw()
         },
         update:function () {
-            updateStats.update()
             //update here what ever you want
 
 
@@ -156,13 +171,13 @@ Game = (function () {
                     b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
+                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
                 }
                 if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody(Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, b2world.scale, false, false)
+                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, b2world.scale, false, false)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle(Game.asset.getImageByName('glowball'), 40, mousex, mousey, b2world.scale, false)
+                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, b2world.scale, false)
                 }
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex / 40, mousey / 40)

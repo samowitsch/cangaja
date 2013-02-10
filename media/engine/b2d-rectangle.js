@@ -11,7 +11,7 @@
  */
 
 CG.B2DEntity.extend('B2DRectangle', {
-    init:function (world, image, x, y, scale, stat) {
+    init:function (world, id, image, x, y, scale, stat) {
         this._super()
         this.world = world
         this.setImage(image)
@@ -33,6 +33,7 @@ CG.B2DEntity.extend('B2DRectangle', {
         this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
+        this.bodyDef.userData = id
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 

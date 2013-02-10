@@ -14522,6 +14522,8 @@ CG.Entity.extend('B2DEntity', {
 
         this.body = {}
 
+        this.id = ''
+
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true
         this.bodyDef.awake = true
@@ -14531,7 +14533,20 @@ CG.Entity.extend('B2DEntity', {
         this.fixDef.friction = 0.5
         this.fixDef.restitution = 0.5
 
+        this.isHit = false;
+        this.strength = 100;
+        this.dead = false;
+
         return this
+    },
+    hit:function (impulse, source) {
+        this.isHit = true;
+        if (this.strength) {
+            this.strength -= impulse;
+            if (this.strength <= 0) {
+                this.dead = true
+            }
+        }
     },
     update:function () {
     },
@@ -14564,7 +14579,7 @@ CG.Entity.extend('B2DEntity', {
  */
 
 CG.B2DEntity.extend('B2DCircle', {
-    init:function (world, image, radius, x, y, scale, stat) {
+    init:function (world, id, image, radius, x, y, scale, stat) {
         this._super()
         this.world = world
         this.setImage(image)
@@ -14585,6 +14600,7 @@ CG.B2DEntity.extend('B2DCircle', {
         this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
+        this.bodyDef.userData = id
 
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
@@ -14608,7 +14624,7 @@ CG.B2DEntity.extend('B2DCircle', {
  */
 
 CG.B2DEntity.extend('B2DRectangle', {
-    init:function (world, image, x, y, scale, stat) {
+    init:function (world, id, image, x, y, scale, stat) {
         this._super()
         this.world = world
         this.setImage(image)
@@ -14630,6 +14646,7 @@ CG.B2DEntity.extend('B2DRectangle', {
         this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
+        this.bodyDef.userData = id
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 
@@ -14653,7 +14670,7 @@ CG.B2DEntity.extend('B2DRectangle', {
  */
 
 CG.B2DEntity.extend('B2DPolygon', {
-    init:function (world, image, jsonpoly, x, y, scale, stat, bullet) {
+    init:function (world, id, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super()
         this.world = world
         this.setImage(image)
@@ -14681,6 +14698,7 @@ CG.B2DEntity.extend('B2DPolygon', {
         }
 
         this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.userData = id
         this.bodyDef.bullet = this.bullet
         this.body = this.world.CreateBody(this.bodyDef)
 
@@ -14821,16 +14839,16 @@ CG.Layer.extend('B2DWorld', {
         }, this)
 
     },
-    createBox:function (image, x, y, scale, stat) {
-        var entity = new CG.B2DRectangle(this.world, image, x, y, scale, false)
+    createBox:function (id, image, x, y, scale, stat) {
+        var entity = new CG.B2DRectangle(this.world, id, image, x, y, scale, false)
         this.elements.push(entity)
     },
-    createCircle:function (image, radius, x, y, scale, stat) {
-        var entity = new CG.B2DCircle(this.world, image, radius, x, y, scale, stat)
+    createCircle:function (id, image, radius, x, y, scale, stat) {
+        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, scale, stat)
         this.elements.push(entity)
     },
-    createPolyBody:function (image, jsonpoly, x, y, scale, stat, bullet) {
-        var entity = new CG.B2DPolygon(this.world, image, jsonpoly, x, y, scale, stat, bullet)
+    createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
+        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, scale, stat, bullet)
         this.elements.push(entity)
     },
     createBridge:function () {
@@ -14906,6 +14924,26 @@ CG.Layer.extend('B2DWorld', {
                 Math.sin(degrees * (Math.PI / 180)) * power),
                 body.GetWorldCenter());
         }
+    },
+    addContactListener:function (callbacks) {
+        var listener = new Box2D.Dynamics.b2ContactListener;
+        if (callbacks.BeginContact) listener.BeginContact = function (contact) {
+            callbacks.BeginContact(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData());
+        }
+        if (callbacks.EndContact) listener.EndContact = function (contact) {
+            callbacks.EndContact(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData());
+        }
+        if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
+            callbacks.PostSolve(contact.GetFixtureA().GetBody().GetUserData(),
+                contact.GetFixtureB().GetBody().GetUserData(),
+                impulse.normalImpulses[0]);
+        }
+        this.world.SetContactListener(listener);
+    },
+    getBodySpec:function (b) {
+        return {x:b.GetPosition().x, y:b.GetPosition().y, a:b.GetAngle(), c:{x:b.GetWorldCenter().x, y:b.GetWorldCenter().y}};
     }
 
 })
