@@ -151,6 +151,10 @@ Game = (function () {
 
 
             document.onkeydown = function (evt) {
+                if (evt.keyCode == 73) { //i
+                    body = b2world.getBodyAt(mousex / 40, mousey / 40)
+                    b2world.applyImpulse(body, 0, 100)
+                }
                 if (evt.keyCode == 82) { //r
                     b2world.createPolyBody(Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
                 }
