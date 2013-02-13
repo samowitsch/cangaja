@@ -40,6 +40,7 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
+* MapPolyLine and MapPolygon for use as b2ChainShape in Box2D Wrapper => oh, no! b2ChainShape not exists in box2dweb 2.1.x
 * Box2D entity bridge
 * Box2D entity rope
 * Tilemap => decition what to prefer => xml or json format?
@@ -65,6 +66,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2012-02-13 [bugfix] - Box2D warpper => added name and uid to each object for correct deleting of objects
 * 2012-02-10 [added] - dragging, deleting and apply impulse of/to Box2D objects
 * 2012-02-05 [added] - first simple Box2D Wrapper with basic shapes: circle, rectangle and polybody
 * 2012-01-24 [added] - Sprite to MapArea collision

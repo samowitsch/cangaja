@@ -22,8 +22,12 @@ CG.Layer.extend('B2DWorld', {
             true                 //allow sleep
         )
 
+        this.uid = 0 //uid counter for elements
 
         this.scale = 40
+
+
+        //TODO remove the static ground and walls from this class
 
         var fixDef = new b2FixtureDef
         fixDef.density = 1.0
@@ -66,6 +70,9 @@ CG.Layer.extend('B2DWorld', {
         // half width, half height. eg actual height here is 1 unit
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+
+        //TODO remove the static ground and walls from this class
+
 
 
         //setup debug draw
@@ -110,15 +117,21 @@ CG.Layer.extend('B2DWorld', {
 
     },
     createBox:function (id, image, x, y, scale, stat) {
+        this.uid = this.uid +1
         var entity = new CG.B2DRectangle(this.world, id, image, x, y, scale, false)
+        entity.id.uid = this.uid
         this.elements.push(entity)
     },
     createCircle:function (id, image, radius, x, y, scale, stat) {
+        this.uid = this.uid +1
         var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, scale, stat)
+        entity.id.uid = this.uid
         this.elements.push(entity)
     },
     createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
+        this.uid = this.uid +1
         var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, scale, stat, bullet)
+        entity.id.uid = this.uid
         this.elements.push(entity)
     },
     createBridge:function () {
@@ -173,7 +186,7 @@ CG.Layer.extend('B2DWorld', {
         if (body) {
             for (var i = 0, l = this.elements.length; i < l; i++) {
                 //if b2entity found delete entity and b2body
-                if (this.elements[i].body.m_islandIndex == body.m_islandIndex) {
+                if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
                     this.removeElementByIndex(i)
                     this.world.DestroyBody(body)
                     return true

@@ -127,11 +127,11 @@ Game = (function () {
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {
-                    console.log('BeginContact');
+                    //console.log('BeginContact');
                 },
 
                 PostSolve:function (idA, idB, impulse) {
-                    console.log(['PostSolve', idA, idB, impulse]);
+                    //console.log(['PostSolve', idA, idB, impulse]);
 //                    if (impulse < 0.1) return;
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
@@ -166,6 +166,10 @@ Game = (function () {
 
 
             document.onkeydown = function (evt) {
+                if (evt.keyCode == 71) { //g
+                    b = b2world.getBodyAt(mousex / 40, mousey / 40)
+                    console.log([b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
+                }
                 if (evt.keyCode == 73) { //i
                     body = b2world.getBodyAt(mousex / 40, mousey / 40)
                     b2world.applyImpulse(body, 270, 25)

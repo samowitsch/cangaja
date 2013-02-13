@@ -12,10 +12,10 @@
 
 CG.Entity.extend('B2DEntity', {
     init:function () {
-
+        this._super()
         this.body = {}
 
-        this.id = ''
+        this.uid = 0
 
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true

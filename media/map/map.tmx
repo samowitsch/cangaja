@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="126" height="63" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="schreck" tilewidth="32" tileheight="32">
   <image source="map.png" trans="ff00ff" width="512" height="512"/>
@@ -16639,7 +16638,7 @@
     <property name="objects" value="enemy"/>
    </properties>
   </object>
-  <object name="polygon object" x="1152" y="0">
+  <object name="polygon object" x="1056" y="32">
    <polygon points="0,0 64,32 64,128 -32,128 -128,64 0,0"/>
   </object>
   <object name="enemies-ver" x="192" y="288" width="256" height="160"/>

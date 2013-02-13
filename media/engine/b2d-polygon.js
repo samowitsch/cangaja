@@ -13,9 +13,12 @@
  */
 
 CG.B2DEntity.extend('B2DPolygon', {
-    init:function (world, id, image, jsonpoly, x, y, scale, stat, bullet) {
+    init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super()
         this.world = world
+
+        this.id = {name:name, uid:0}
+
         this.setImage(image)
         this.x = x
         this.y = y
@@ -41,7 +44,7 @@ CG.B2DEntity.extend('B2DPolygon', {
         }
 
         this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
-        this.bodyDef.userData = id
+        this.bodyDef.userData = this.id
         this.bodyDef.bullet = this.bullet
         this.body = this.world.CreateBody(this.bodyDef)
 
