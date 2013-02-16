@@ -135,10 +135,10 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     createBridge:function () {
-
+        //TODO
     },
     createRope:function () {
-
+        //TODO
     },
     mouseDownAt:function (x, y) {
         if (!this.mouseJoint) {
