@@ -134,8 +134,11 @@ CG.Layer.extend('B2DWorld', {
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createBridge:function () {
-        //TODO
+    createBridge:function (id, image, x, y, length, segments, segmentHeight, scale) {
+        this.uid = this.uid +1
+        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, scale)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
     },
     createRope:function () {
         //TODO

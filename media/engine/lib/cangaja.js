@@ -14787,6 +14787,67 @@ CG.B2DEntity.extend('B2DRope', {
 //        return this
 
     },
+
+/*
+
+ Method CreateRope:Void(world:b2World, img:Image, x:Float, y:Float, length:Float, segments:Int, segHeight:float, physScale:Float)
+     Self.physScale = physScale
+     Self.entityType="rope"
+     Self.img = img
+     If img <> Null
+     Self.img.SetHandle(Self.img.Width() / 2, Self.img.Height() / 2)
+     Endif
+
+     Local anchor:b2Vec2	= New b2Vec2()
+     Local prevBody:b2Body
+     Local segWidth:Float = ((length-x)/segments)/2
+
+     '// RopeStart
+     Self.fixtureDef		= New b2FixtureDef()
+     Self.bodyShapeCircle= New b2CircleShape()
+     Self.bodyDef		= New b2BodyDef()
+     Self.bodyShapeCircle.m_radius= segHeight / physScale
+     Self.fixtureDef.density 	= 1.0
+     Self.fixtureDef.restitution = 0.2
+     Self.fixtureDef.friction 	= 0.2
+     Self.fixtureDef.shape=Self.bodyShapeCircle
+     Self.bodyDef.position.Set(x / physScale, y / physScale)
+     Self.bodyGroup[0] = world.CreateBody(bodyDef)
+     Self.bodyGroup[0].CreateFixture(fixtureDef)
+     prevBody = Self.bodyGroup[0]
+
+     '// RopeSegments
+     Self.fixtureDef		= New b2FixtureDef()
+     Self.bodyShapePoly	= New b2PolygonShape()
+     Self.bodyDef		= New b2BodyDef()
+     Self.bodyShapePoly.SetAsBox(segWidth / physScale, segHeight / physScale)
+     Self.bodyDef.type 	= b2Body.b2_Body
+     Self.fixtureDef.shape 	= bodyShapePoly
+     Self.fixtureDef.density = 1.0
+     Self.fixtureDef.restitution = 0.2
+     Self.fixtureDef.friction= 0.2
+     Self.jointDef 		= New b2RevoluteJointDef()
+     Self.jointDef.lowerAngle = -25 / (180/Constants.PI)
+     Self.jointDef.upperAngle = 25 / (180/Constants.PI)
+     Self.jointDef.enableLimit = True
+
+     For Local i:Int = 0 To segments-1
+     bodyDef.position.Set(((x+segWidth) + (segWidth*2) * i) / physScale, y / physScale)
+     Self.bodyGroup[i+1] = world.CreateBody(bodyDef)
+     Self.bodyGroup[i+1].CreateFixture(fixtureDef)
+     anchor.Set((x + (segWidth*2) * i)/ physScale, y / physScale)
+     jointDef.Initialize(prevBody, Self.bodyGroup[i+1], anchor)
+     world.CreateJoint(jointDef)
+     prevBody = Self.bodyGroup[i+1]
+     Self.bodyCount = i+1
+     Next
+ End
+
+
+*/
+
+
+
     draw:function () {
         //TODO rewrite for rope
 
@@ -14802,6 +14863,64 @@ CG.B2DEntity.extend('B2DRope', {
 //        }
 //        Game.b_ctx.restore()
     }
+
+
+/*
+
+ Method Draw:Void(ratio:Float = 1.0)
+     Local f :b2Fixture
+     Local s :b2Shape
+     Local xf :b2Transform
+
+     If Self.debugDraw = True
+     If Self.bodyCount > 0 'Draw MultiBody
+     For Local i:Int=0 to Self.bodyCount
+     xf = Self.bodyGroup[i].m_xf
+     f = Self.bodyGroup[i].GetFixtureList()
+     While ( f <> Null )
+     s = f.GetShape()
+     DrawShape(s, xf, Self.debugColor)
+     f = f.m_next
+     End
+     Next
+     Else
+     xf = Self.body.m_xf
+     f = Self.body.GetFixtureList()
+     While ( f <> Null )
+     s = f.GetShape()
+     DrawShape(s, xf, Self.debugColor)
+     f = f.m_next
+     End
+     Endif
+     SetColor(255,255,255)
+     ElseIf Self.img <> Null
+     If Self.bodyCount > 0
+     If Self.entityType="bridge" 'Draw Bridge
+     For Local i:Int=2 to Self.bodyCount
+     Local x:Float = Self.bodyGroup[i].GetPosition().x
+     Local y:Float = Self.bodyGroup[i].GetPosition().y
+     Local r:Float	= RadToDeg(Self.bodyGroup[i].GetAngle()) * -1
+     DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
+     Next
+     EndIf
+     If Self.entityType="rope" 'Draw Rope
+     For Local i:Int=1 to Self.bodyCount
+     Local x:Float = Self.bodyGroup[i].GetPosition().x
+     Local y:Float = Self.bodyGroup[i].GetPosition().y
+     Local r:Float	= RadToDeg(Self.bodyGroup[i].GetAngle()) * -1
+     DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
+     Next
+     EndIf
+     Else
+     Local x:Float	= Self.body.GetPosition().x
+     Local y:Float	= Self.body.GetPosition().y
+     Local r:Float	= RadToDeg(Self.body.GetAngle()) * -1
+     DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
+     EndIf
+     Endif
+ End
+
+*/
 
 })
 
@@ -14819,55 +14938,124 @@ CG.B2DEntity.extend('B2DRope', {
  */
 
 CG.B2DEntity.extend('B2DBridge', {
-    init:function (world, name, image, radius, x, y, scale, stat) {
+    init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super()
         this.world = world
 
-        //TODO rewrite for rope
+        this.id = {name:name, uid:0}
 
-//        this.id = {name:name, uid:0}
-//
-//        this.setImage(image)
-//        this.x = x
-//        this.y = y
-//        this.scale = scale
-//        this.stat = stat
-//
-//        this.xhandle = (this.width / 2)
-//        this.yhandle = (this.height / 2)
-//
-//        if (this.stat) {
-//            this.bodyDef.type = b2Body.b2_staticBody
-//        } else {
-//            this.bodyDef.type = b2Body.b2_dynamicBody
-//        }
-//
-//        this.fixDef.shape = new b2PolygonShape
-//        this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
-//        this.bodyDef.position.x = this.x / this.scale
-//        this.bodyDef.position.y = this.y / this.scale
-//        this.bodyDef.userData = this.id
-//        this.body = this.world.CreateBody(this.bodyDef)
-//        this.body.CreateFixture(this.fixDef)
-//
-//        return this
+        this.setImage(image)
+        this.x = x
+        this.y = y
+        this.scale = scale
+        this.length = length
+        this.segments = segments
+        this.segmentHeight = segmentHeight
+        this.segmentWidth = ((this.length - this.x) / this.segments) / 2
+        this.anchor = new b2Vec2()
+        this.prevBody = {}
 
+        this.bodyGroup = []
+        this.bodyCount = 0
+
+        this.xhandle = (this.width / 2)
+        this.yhandle = (this.height / 2)
+
+
+        // BridgeStart
+        this.fixtureDef = new b2FixtureDef()
+        this.bodyShapeCircle = new b2CircleShape()
+        this.bodyDef = new b2BodyDef()
+        this.bodyDef.userData = this.id
+        this.bodyShapeCircle.m_radius = this.segmentHeight / this.scale
+        this.fixtureDef.density = 20.0
+        this.fixtureDef.restitution = 0.2
+        this.fixtureDef.friction = 0.2
+        this.fixtureDef.shape = this.bodyShapeCircle
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
+        this.bodyGroup[0].CreateFixture(this.fixtureDef)
+        this.prevBody = this.bodyGroup[0]
+
+        // BridgeEnd
+        this.bodyDef.position.Set(this.length / this.scale, this.y / this.scale)
+        this.bodyDef.userData = this.id
+        this.bodyGroup[1] = this.world.CreateBody(this.bodyDef)
+        this.bodyGroup[1].CreateFixture(this.fixtureDef)
+
+        // bridge elements
+        this.fixtureDef = new b2FixtureDef()
+        this.bodyShapePoly = new b2PolygonShape()
+        this.bodyDef = new b2BodyDef()
+        this.bodyDef.userData = this.id
+        this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
+        this.bodyDef.type = b2Body.b2_dynamicBody
+        this.fixtureDef.shape = this.bodyShapePoly
+        this.fixtureDef.density = 20.0
+        this.fixtureDef.restitution = 0.2
+        this.fixtureDef.friction = 0.2
+        this.jointDef = new b2RevoluteJointDef()
+        this.jointDef.lowerAngle = -25 / (180 / Math.PI)
+        this.jointDef.upperAngle = 25 / (180 / Math.PI)
+        this.jointDef.enableLimit = true
+
+        for (var i = 0, l = this.segments; i < l; i++) {
+            this.bodyDef.position.Set(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.bodyGroup[i + 2] = this.world.CreateBody(this.bodyDef)
+            this.bodyGroup[i + 2].CreateFixture(this.fixtureDef)
+            this.anchor.Set((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 2], this.anchor)
+            this.world.CreateJoint(this.jointDef)
+            this.prevBody = this.bodyGroup[i + 2]
+            this.bodyCount = i + 2
+        }
+
+
+        this.anchor.Set((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
+        this.jointDef.Initialize(this.prevBody, this.bodyGroup[1], this.anchor)
+        this.world.CreateJoint(this.jointDef)
+
+
+        return this
     },
     draw:function () {
-        //TODO rewrite for rope
+        //TODO rewrite for bridge
 
-//        Game.b_ctx.save()
-//        Game.b_ctx.globalAlpha = this.alpha
-//        Game.b_ctx.translate(this.body.GetPosition().x * this.scale, this.body.GetPosition().y * this.scale)
-//        if (this.atlasimage) {
-//            Game.b_ctx.rotate((this.body.GetAngle() - this.imagerotation)) // * CG.Const_PI_180)
-//            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-//        } else {
-//            Game.b_ctx.rotate(this.body.GetAngle()) // * CG.Const_PI_180)
-//            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-//        }
-//        Game.b_ctx.restore()
+
+        for (var i = 2; i <= this.bodyCount; i++) {
+            var x = this.bodyGroup[i].GetPosition().x
+            var y = this.bodyGroup[i].GetPosition().y
+            var r = this.bodyGroup[i].GetAngle()
+            Game.b_ctx.save()
+            Game.b_ctx.globalAlpha = this.alpha
+            Game.b_ctx.translate(x * this.scale, y * this.scale)
+            if (this.atlasimage) {
+                Game.b_ctx.rotate(r - this.imagerotation) // * CG.Const_PI_180)
+                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
+            } else {
+                Game.b_ctx.rotate(r) // * CG.Const_PI_180)
+                Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
+            }
+            Game.b_ctx.restore()
+        }
+
     }
+
+    /*
+
+     Method Draw:Void(ratio:Float = 1.0)
+
+
+     For Local i:Int=2 to Self.bodyCount
+     Local x:Float = Self.bodyGroup[i].GetPosition().x
+     Local y:Float = Self.bodyGroup[i].GetPosition().y
+     Local r:Float	= RadToDeg(Self.bodyGroup[i].GetAngle()) * -1
+     DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
+     Next
+
+
+     */
+
 
 })
 
@@ -15008,8 +15196,11 @@ CG.Layer.extend('B2DWorld', {
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createBridge:function () {
-        //TODO
+    createBridge:function (id, image, x, y, length, segments, segmentHeight, scale) {
+        this.uid = this.uid +1
+        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, scale)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
     },
     createRope:function () {
         //TODO

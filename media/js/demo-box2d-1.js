@@ -124,6 +124,10 @@ Game = (function () {
             b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, b2world.scale, false, false)
             b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, b2world.scale, false, false)
 
+            // bridge test
+            // world, name, image, x, y, length, segments, segmentHeight, scale
+            b2world.createBridge('chain', Game.asset.getImageByName('chain'), 20, 250, 620, 27, 3, b2world.scale)
+
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {

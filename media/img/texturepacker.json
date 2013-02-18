@@ -33,6 +33,14 @@
 	"sourceSize": {"w":200,"h":40}
 },
 {
+	"filename": "chain.png",
+	"frame": {"x":189,"y":204,"w":25,"h":5},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":5},
+	"sourceSize": {"w":25,"h":5}
+},
+{
 	"filename": "gem.png",
 	"frame": {"x":376,"y":154,"w":64,"h":64},
 	"rotated": false,
@@ -143,6 +151,6 @@
 	"format": "RGBA5555",
 	"size": {"w":963,"h":220},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:fab8e4d8c20aacc335ccd619ad123f4d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4b9783559ae97f14e362f0c4adea80f7$"
 }
 }
