@@ -66,6 +66,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2012-02-18 [added] - added working B2DBridge class
 * 2012-02-13 [bugfix] - Box2D warpper => added name and uid to each object for correct deleting of objects
 * 2012-02-10 [added] - dragging, deleting and apply impulse of/to Box2D objects
 * 2012-02-05 [added] - first simple Box2D Wrapper with basic shapes: circle, rectangle and polybody

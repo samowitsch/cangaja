@@ -111,23 +111,26 @@ Game = (function () {
 
             //create Box2D World
             b2world = new CG.B2DWorld('box2d-world')
-            b2world.debug = 0
+            b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, b2world.scale, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
 
             //create box element with image
-            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, b2world.scale, false)
+            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, false)
 
             //create polybody with image
-            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, b2world.scale, false, false)
-            b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, b2world.scale, false, false)
-            b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, b2world.scale, false, false)
+            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
+            b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, false, false)
+            b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, false, false)
 
             // bridge test
-            // world, name, image, x, y, length, segments, segmentHeight, scale
-            b2world.createBridge('chain', Game.asset.getImageByName('chain'), 20, 250, 620, 27, 3, b2world.scale)
+            // name, image, x, y, length, segments, segmentHeight, scale
+            b2world.createBridge('chain', Game.asset.getImageByName('chain'), 20, 280, 620, 27, 3)
 
+            // rope test
+            // name, image, x, y, length, segments, segmentHeight, scale
+            b2world.createRope('chain-v', Game.asset.getImageByName('chain-v'), 320, 50, 250, 20, 3)
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {
@@ -179,13 +182,13 @@ Game = (function () {
                     b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, b2world.scale, false, false)
+                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
                 }
                 if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, b2world.scale, false, false)
+                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, b2world.scale, false)
+                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
                 }
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex / 40, mousey / 40)

@@ -12,20 +12,11 @@
 
 CG.B2DEntity.extend('B2DCircle', {
     init:function (world, name, image, radius, x, y, scale, stat) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.scale = scale
         this.radius = this.width / 2
-        this.x = x
-        this.y = y
-        this.stat = stat || false
 
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
+        this.stat = stat || false
 
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody

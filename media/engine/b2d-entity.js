@@ -11,11 +11,19 @@
  */
 
 CG.Entity.extend('B2DEntity', {
-    init:function () {
+    init:function (name, image, world, x, y, scale) {
         this._super()
         this.body = {}
 
-        this.uid = 0
+        this.x = x
+        this.y = y
+        this.scale = scale
+
+        this.id = {name:name, uid:0}
+        this.world = world
+        this.setImage(image)
+        this.xhandle = (this.width / 2)
+        this.yhandle = (this.height / 2)
 
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true

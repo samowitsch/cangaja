@@ -12,15 +12,8 @@
 
 CG.B2DEntity.extend('B2DBridge', {
     init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.length = length
         this.segments = segments
         this.segmentHeight = segmentHeight
@@ -30,10 +23,6 @@ CG.B2DEntity.extend('B2DBridge', {
 
         this.bodyGroup = []
         this.bodyCount = 0
-
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
-
 
         // BridgeStart
         this.fixtureDef = new b2FixtureDef()

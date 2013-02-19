@@ -159,6 +159,7 @@
             <filename>smoke50.png</filename>
             <filename>rainbow_256.png</filename>
             <filename>chain.png</filename>
+            <filename>chain-v.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

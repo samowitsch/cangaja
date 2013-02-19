@@ -74,7 +74,6 @@ CG.Layer.extend('B2DWorld', {
         //TODO remove the static ground and walls from this class
 
 
-
         //setup debug draw
         var debugDraw = new b2DebugDraw()
         debugDraw.SetSprite(Game.b_ctx)
@@ -116,32 +115,35 @@ CG.Layer.extend('B2DWorld', {
         }, this)
 
     },
-    createBox:function (id, image, x, y, scale, stat) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DRectangle(this.world, id, image, x, y, scale, false)
+    createBox:function (id, image, x, y, stat) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createCircle:function (id, image, radius, x, y, scale, stat) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, scale, stat)
+    createCircle:function (id, image, radius, x, y, stat) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
     createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, scale, stat, bullet)
+        this.uid = this.uid + 1
+        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createBridge:function (id, image, x, y, length, segments, segmentHeight, scale) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, scale)
+    createBridge:function (id, image, x, y, length, segments, segmentHeight) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createRope:function () {
-        //TODO
+    createRope:function (id, image, x, y, length, segments, segmentHeight) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
     },
     mouseDownAt:function (x, y) {
         if (!this.mouseJoint) {

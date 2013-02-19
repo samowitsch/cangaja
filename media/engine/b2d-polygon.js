@@ -14,15 +14,8 @@
 
 CG.B2DEntity.extend('B2DPolygon', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.stat = stat || false
         this.bullet = bullet || false
 
@@ -30,10 +23,8 @@ CG.B2DEntity.extend('B2DPolygon', {
         this.vecs = new Array()
         this.jsondata = jsonpoly.data[jsonpoly.name]
 
-
         this.xhandle = 0
         this.yhandle = 0
-
 
         this.vecs = this.createVecs(jsonpoly) // build grouped b2vecs from physicseditor
 

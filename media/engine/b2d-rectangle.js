@@ -12,19 +12,9 @@
 
 CG.B2DEntity.extend('B2DRectangle', {
     init:function (world, name, image, x, y, scale, stat) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.stat = stat
-
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
 
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody

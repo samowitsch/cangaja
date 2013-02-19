@@ -33,6 +33,14 @@
 	"sourceSize": {"w":200,"h":40}
 },
 {
+	"filename": "chain-v.png",
+	"frame": {"x":956,"y":163,"w":5,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":5,"h":25},
+	"sourceSize": {"w":5,"h":25}
+},
+{
 	"filename": "chain.png",
 	"frame": {"x":189,"y":204,"w":25,"h":5},
 	"rotated": false,
@@ -151,6 +159,6 @@
 	"format": "RGBA5555",
 	"size": {"w":963,"h":220},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4b9783559ae97f14e362f0c4adea80f7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:04cd52f0e83a5c59280aa529d5b3c4a1$"
 }
 }

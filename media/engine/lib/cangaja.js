@@ -14518,11 +14518,19 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
  */
 
 CG.Entity.extend('B2DEntity', {
-    init:function () {
+    init:function (name, image, world, x, y, scale) {
         this._super()
         this.body = {}
 
-        this.uid = 0
+        this.x = x
+        this.y = y
+        this.scale = scale
+
+        this.id = {name:name, uid:0}
+        this.world = world
+        this.setImage(image)
+        this.xhandle = (this.width / 2)
+        this.yhandle = (this.height / 2)
 
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true
@@ -14580,20 +14588,11 @@ CG.Entity.extend('B2DEntity', {
 
 CG.B2DEntity.extend('B2DCircle', {
     init:function (world, name, image, radius, x, y, scale, stat) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.scale = scale
         this.radius = this.width / 2
-        this.x = x
-        this.y = y
-        this.stat = stat || false
 
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
+        this.stat = stat || false
 
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
@@ -14628,19 +14627,9 @@ CG.B2DEntity.extend('B2DCircle', {
 
 CG.B2DEntity.extend('B2DRectangle', {
     init:function (world, name, image, x, y, scale, stat) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.stat = stat
-
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
 
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
@@ -14677,15 +14666,8 @@ CG.B2DEntity.extend('B2DRectangle', {
 
 CG.B2DEntity.extend('B2DPolygon', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.stat = stat || false
         this.bullet = bullet || false
 
@@ -14693,10 +14675,8 @@ CG.B2DEntity.extend('B2DPolygon', {
         this.vecs = new Array()
         this.jsondata = jsonpoly.data[jsonpoly.name]
 
-
         this.xhandle = 0
         this.yhandle = 0
-
 
         this.vecs = this.createVecs(jsonpoly) // build grouped b2vecs from physicseditor
 
@@ -14753,100 +14733,65 @@ CG.B2DEntity.extend('B2DPolygon', {
  */
 
 CG.B2DEntity.extend('B2DRope', {
-    init:function (world, name, image, radius, x, y, scale, stat) {
-        this._super()
-        this.world = world
+    init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
+        this._super(name, image, world, x, y, scale)
 
-        //TODO rewrite for rope
+        this.length = length
+        this.segments = segments
+        this.segmentHeight = ((this.length - this.y) / this.segments) / 2
+        this.segmentWidth = segmentWidth
+        this.anchor = new b2Vec2()
+        this.prevBody = {}
 
-//        this.id = {name:name, uid:0}
-//
-//        this.setImage(image)
-//        this.scale = scale
-//        this.radius = this.width / 2
-//        this.x = x
-//        this.y = y
-//        this.stat = stat || false
-//
-//        this.xhandle = (this.width / 2)
-//        this.yhandle = (this.height / 2)
-//
-//        if (this.stat) {
-//            this.bodyDef.type = b2Body.b2_staticBody
-//        } else {
-//            this.bodyDef.type = b2Body.b2_dynamicBody
-//        }
-//        this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
-//        this.bodyDef.position.x = this.x / this.scale
-//        this.bodyDef.position.y = this.y / this.scale
-//        this.bodyDef.userData = this.id
-//
-//        this.body = this.world.CreateBody(this.bodyDef)
-//        this.body.CreateFixture(this.fixDef)
-//
-//        return this
+        this.bodyGroup = []
+        this.bodyCount = 0
+
+        // RopeStart
+        this.fixtureDef = new b2FixtureDef()
+        this.bodyShapeCircle = new b2CircleShape()
+        this.bodyDef = new b2BodyDef()
+        this.bodyDef.userData = this.id
+        this.bodyShapeCircle.m_radius = this.segmentWidth / this.scale
+        this.fixtureDef.density = 1.0
+        this.fixtureDef.restitution = 0.2
+        this.fixtureDef.friction = 0.2
+        this.fixtureDef.shape = this.bodyShapeCircle
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
+        this.bodyGroup[0].CreateFixture(this.fixtureDef)
+        this.prevBody = this.bodyGroup[0]
+
+        // RopeSegments
+        this.fixtureDef = new b2FixtureDef()
+        this.bodyShapePoly = new b2PolygonShape()
+        this.bodyDef = new b2BodyDef()
+        this.bodyDef.userData = this.id
+        this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
+        this.bodyDef.type = b2Body.b2_dynamicBody
+        this.fixtureDef.shape = this.bodyShapePoly
+        this.fixtureDef.density = 20.0
+        this.fixtureDef.restitution = 0.2
+        this.fixtureDef.friction = 0.2
+        this.jointDef = new b2RevoluteJointDef()
+        this.jointDef.lowerAngle = -25 / (180 / Math.PI)
+        this.jointDef.upperAngle = 25 / (180 / Math.PI)
+        this.jointDef.enableLimit = true
+
+
+        for (var i = 0, l = this.segments; i < l; i++) {
+            this.bodyDef.position.Set(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.bodyGroup[i + 1] = this.world.CreateBody(this.bodyDef)
+            this.bodyGroup[i + 1].CreateFixture(this.fixtureDef)
+            this.anchor.Set((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 1], this.anchor)
+            this.world.CreateJoint(this.jointDef)
+            this.prevBody = this.bodyGroup[i + 1]
+            this.bodyCount = i + 1
+        }
+
+        return this
 
     },
-
-/*
-
- Method CreateRope:Void(world:b2World, img:Image, x:Float, y:Float, length:Float, segments:Int, segHeight:float, physScale:Float)
-     Self.physScale = physScale
-     Self.entityType="rope"
-     Self.img = img
-     If img <> Null
-     Self.img.SetHandle(Self.img.Width() / 2, Self.img.Height() / 2)
-     Endif
-
-     Local anchor:b2Vec2	= New b2Vec2()
-     Local prevBody:b2Body
-     Local segWidth:Float = ((length-x)/segments)/2
-
-     '// RopeStart
-     Self.fixtureDef		= New b2FixtureDef()
-     Self.bodyShapeCircle= New b2CircleShape()
-     Self.bodyDef		= New b2BodyDef()
-     Self.bodyShapeCircle.m_radius= segHeight / physScale
-     Self.fixtureDef.density 	= 1.0
-     Self.fixtureDef.restitution = 0.2
-     Self.fixtureDef.friction 	= 0.2
-     Self.fixtureDef.shape=Self.bodyShapeCircle
-     Self.bodyDef.position.Set(x / physScale, y / physScale)
-     Self.bodyGroup[0] = world.CreateBody(bodyDef)
-     Self.bodyGroup[0].CreateFixture(fixtureDef)
-     prevBody = Self.bodyGroup[0]
-
-     '// RopeSegments
-     Self.fixtureDef		= New b2FixtureDef()
-     Self.bodyShapePoly	= New b2PolygonShape()
-     Self.bodyDef		= New b2BodyDef()
-     Self.bodyShapePoly.SetAsBox(segWidth / physScale, segHeight / physScale)
-     Self.bodyDef.type 	= b2Body.b2_Body
-     Self.fixtureDef.shape 	= bodyShapePoly
-     Self.fixtureDef.density = 1.0
-     Self.fixtureDef.restitution = 0.2
-     Self.fixtureDef.friction= 0.2
-     Self.jointDef 		= New b2RevoluteJointDef()
-     Self.jointDef.lowerAngle = -25 / (180/Constants.PI)
-     Self.jointDef.upperAngle = 25 / (180/Constants.PI)
-     Self.jointDef.enableLimit = True
-
-     For Local i:Int = 0 To segments-1
-     bodyDef.position.Set(((x+segWidth) + (segWidth*2) * i) / physScale, y / physScale)
-     Self.bodyGroup[i+1] = world.CreateBody(bodyDef)
-     Self.bodyGroup[i+1].CreateFixture(fixtureDef)
-     anchor.Set((x + (segWidth*2) * i)/ physScale, y / physScale)
-     jointDef.Initialize(prevBody, Self.bodyGroup[i+1], anchor)
-     world.CreateJoint(jointDef)
-     prevBody = Self.bodyGroup[i+1]
-     Self.bodyCount = i+1
-     Next
- End
-
-
-*/
-
-
 
     draw:function () {
         //TODO rewrite for rope
@@ -14865,9 +14810,9 @@ CG.B2DEntity.extend('B2DRope', {
     }
 
 
-/*
+    /*
 
- Method Draw:Void(ratio:Float = 1.0)
+     Method Draw:Void(ratio:Float = 1.0)
      Local f :b2Fixture
      Local s :b2Shape
      Local xf :b2Transform
@@ -14918,9 +14863,9 @@ CG.B2DEntity.extend('B2DRope', {
      DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
      EndIf
      Endif
- End
+     End
 
-*/
+     */
 
 })
 
@@ -14939,15 +14884,8 @@ CG.B2DEntity.extend('B2DRope', {
 
 CG.B2DEntity.extend('B2DBridge', {
     init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
-        this._super()
-        this.world = world
+        this._super(name, image, world, x, y, scale)
 
-        this.id = {name:name, uid:0}
-
-        this.setImage(image)
-        this.x = x
-        this.y = y
-        this.scale = scale
         this.length = length
         this.segments = segments
         this.segmentHeight = segmentHeight
@@ -14957,10 +14895,6 @@ CG.B2DEntity.extend('B2DBridge', {
 
         this.bodyGroup = []
         this.bodyCount = 0
-
-        this.xhandle = (this.width / 2)
-        this.yhandle = (this.height / 2)
-
 
         // BridgeStart
         this.fixtureDef = new b2FixtureDef()
@@ -15136,7 +15070,6 @@ CG.Layer.extend('B2DWorld', {
         //TODO remove the static ground and walls from this class
 
 
-
         //setup debug draw
         var debugDraw = new b2DebugDraw()
         debugDraw.SetSprite(Game.b_ctx)
@@ -15178,32 +15111,35 @@ CG.Layer.extend('B2DWorld', {
         }, this)
 
     },
-    createBox:function (id, image, x, y, scale, stat) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DRectangle(this.world, id, image, x, y, scale, false)
+    createBox:function (id, image, x, y, stat) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createCircle:function (id, image, radius, x, y, scale, stat) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, scale, stat)
+    createCircle:function (id, image, radius, x, y, stat) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
     createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, scale, stat, bullet)
+        this.uid = this.uid + 1
+        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createBridge:function (id, image, x, y, length, segments, segmentHeight, scale) {
-        this.uid = this.uid +1
-        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, scale)
+    createBridge:function (id, image, x, y, length, segments, segmentHeight) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createRope:function () {
-        //TODO
+    createRope:function (id, image, x, y, length, segments, segmentHeight) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
     },
     mouseDownAt:function (x, y) {
         if (!this.mouseJoint) {
