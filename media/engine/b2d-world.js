@@ -15,6 +15,9 @@ CG.Layer.extend('B2DWorld', {
         this.name = name || ''
         this.debug = false
 
+        this.x = 0
+        this.y = 0
+
         this.elements = []
 
         this.world = new b2World(
@@ -93,7 +96,7 @@ CG.Layer.extend('B2DWorld', {
         )
 
         if (mousedown) {
-            this.mouseDownAt(mousex / this.scale, mousey / this.scale);
+            this.mouseDownAt(mousex, mousey);
         } else if (this.isMouseDown()) {
             this.mouseUp();
         }
@@ -105,7 +108,8 @@ CG.Layer.extend('B2DWorld', {
 
     },
     draw:function () {
-
+        Game.b_ctx.save()
+        Game.b_ctx.translate(this.x, this.y)
         if (this.debug) {
             this.world.DrawDebugData()
             this.world.ClearForces()
@@ -113,7 +117,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.forEach(function (element) {
             element.draw()
         }, this)
-
+        Game.b_ctx.restore()
     },
     /**
      *
@@ -201,14 +205,14 @@ CG.Layer.extend('B2DWorld', {
                 var md = new b2MouseJointDef()
                 md.bodyA = this.world.GetGroundBody()
                 md.bodyB = body
-                md.target.Set(x, y)
+                md.target.Set((x - this.x) / this.scale, (y - this.y) / this.scale)
                 md.collideConnected = true
                 md.maxForce = 300.0 * body.GetMass()
                 this.mouseJoint = this.world.CreateJoint(md)
                 body.SetAwake(true);
             }
         } else {
-            this.mouseJoint.SetTarget(new b2Vec2(x, y))
+            this.mouseJoint.SetTarget(new b2Vec2((x - this.x) / this.scale, (y - this.y) / this.scale))
         }
     },
     mouseUp:function () {
@@ -216,10 +220,13 @@ CG.Layer.extend('B2DWorld', {
         this.mouseJoint = null;
     },
     getBodyAt:function (x, y) {
-        var mousePVec = new b2Vec2(x, y);
-        var aabb = new b2AABB();
-        aabb.lowerBound.Set(x - 0.001, y - 0.001);
-        aabb.upperBound.Set(x + 0.001, y + 0.001);
+        var worldx = (x - this.x) / this.scale;
+        var worldy = (y - this.y) / this.scale
+
+        var mousePVec = new b2Vec2(worldx, worldy)  //b2world offset for x and y!!!
+        var aabb = new b2AABB()
+        aabb.lowerBound.Set(worldx - 0.001, worldy - 0.001)
+        aabb.upperBound.Set(worldx + 0.001, worldy + 0.001)
 
         // Query the world for overlapping shapes.
 

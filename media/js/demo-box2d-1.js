@@ -174,11 +174,11 @@ Game = (function () {
 
             document.onkeydown = function (evt) {
                 if (evt.keyCode == 71) { //g
-                    b = b2world.getBodyAt(mousex / 40, mousey / 40)
+                    b = b2world.getBodyAt(mousex, mousey)
                     console.log([b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
                 }
                 if (evt.keyCode == 73) { //i
-                    body = b2world.getBodyAt(mousex / 40, mousey / 40)
+                    body = b2world.getBodyAt(mousex, mousey)
                     b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
@@ -191,7 +191,7 @@ Game = (function () {
                     b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
                 }
                 if (evt.keyCode == 68) { //d
-                    body = b2world.deleteBodyAt(mousex / 40, mousey / 40)
+                    body = b2world.deleteBodyAt(mousex, mousey)
                 }
             };
 
