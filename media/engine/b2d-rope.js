@@ -11,6 +11,19 @@
  */
 
 CG.B2DEntity.extend('B2DRope', {
+    /**
+     *
+     * @param world         object      reference to world of B2DWorld
+     * @param name          string      id or name to identify
+     * @param image         mixed       path to image, image or tpimage from asset
+     * @param x             integer     the x position
+     * @param y             integer     the y position
+     * @param length        integer     the length/width of the bridge
+     * @param segments      integer     segments of the bridge
+     * @param segmentWidth  integer     width of a segment
+     * @param scale         integer     the world scale of B2DWorld
+     * @return {*}
+     */
     init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
         this._super(name, image, world, x, y, scale)
 

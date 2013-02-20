@@ -11,6 +11,17 @@
  */
 
 CG.B2DEntity.extend('B2DRectangle', {
+    /**
+     *
+     * @param world     object      reference to world of B2DWorld
+     * @param name      string      id or name to identify
+     * @param image     mixed       path to image, image or tpimage from asset
+     * @param x         integer     the x position
+     * @param y         integer     the y position
+     * @param scale     integer     the world scale of B2DWorld
+     * @param stat      boolean     is the body static or dynamic
+     * @return {*}
+     */
     init:function (world, name, image, x, y, scale, stat) {
         this._super(name, image, world, x, y, scale)
 

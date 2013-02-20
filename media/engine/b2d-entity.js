@@ -11,6 +11,17 @@
  */
 
 CG.Entity.extend('B2DEntity', {
+    /**
+     *
+     * @param name      string      id or name to identify
+     * @param image     mixed       path to image, image or tpimage from asset
+     * @param world     object      reference to world of B2DWorld
+     * @param x         integer     the x position
+     * @param y         integer     the y position
+     * @param scale     integer     the world scale of B2DWorld
+     * @return {*}
+     */
+
     init:function (name, image, world, x, y, scale) {
         this._super()
         this.body = {}

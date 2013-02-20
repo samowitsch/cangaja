@@ -40,10 +40,9 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
+* additional options argument for Box2D wrapper classes for detailed configuration?
 * MapPolyLine and MapPolygon for use as b2ChainShape in Box2D Wrapper => oh, no! b2ChainShape not exists in box2dweb 2.1.x
-* Box2D entity bridge
-* Box2D entity rope
-* Tilemap => decition what to prefer => xml or json format?
+* Tilemap => decision what to prefer => xml or json format?
 * bugfixing Tilemap with tmx csv format is not animating correctly (tmx with xml and tilemap exported as json works!)
 * fix missing rotation when follower sprite using TPImage
 * add support for additional [Tiled Map Editor] features like object positioning, object path and object group
@@ -53,7 +52,7 @@ This is a very early version of it.
 * object pooling for all elements like sprites and so on...
 * better code documentation and what license to use?
 * clean up demo code ;o)
-* z-index for objects usefull?
+* z-index for objects useful?
 * class bitmap method clearcircle is not working with Ejecta ;o(
 * class font => textblock, alignment, textticker, textscroller features
 * [ParticleDesigner] support?

@@ -115,30 +115,79 @@ CG.Layer.extend('B2DWorld', {
         }, this)
 
     },
+    /**
+     *
+     * @param id      string      id or name to identify
+     * @param image   mixed       path to image, image or tpimage from asset
+     * @param x       integer     the x position
+     * @param y       integer     the y position
+     * @param stat    boolean     is the body static or dynamic
+     */
     createBox:function (id, image, x, y, stat) {
         this.uid = this.uid + 1
         var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
+    /**
+     *
+     * @param id      string      id or name to identify
+     * @param image   mixed       path to image, image or tpimage from asset
+     * @param radius  integer     the radius
+     * @param x       integer     the x position
+     * @param y       integer     the y position
+     * @param stat    boolean     is the body static or dynamic
+     */
     createCircle:function (id, image, radius, x, y, stat) {
         this.uid = this.uid + 1
         var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
-    createPolyBody:function (id, image, jsonpoly, x, y, scale, stat, bullet) {
+    /**
+     *
+     * @param id        string      id or name to identify
+     * @param image     mixed       path to image, image or tpimage from asset
+     * @param jsonpoly  string      json file from PhysicsEditor from asset
+     * @param x         integer     the x position
+     * @param y         integer     the y position
+     * @param stat      boolean     is the body static or dynamic
+     * @param bullet    boolean     bullet option
+     */
+    createPolyBody:function (id, image, jsonpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
         var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
+    /**
+     *
+     * @param id          string      id or name to identify
+     * @param image         mixed       path to image, image or tpimage from asset
+     * @param x             integer     the x position
+     * @param y             integer     the y position
+     * @param length        integer     the length/width of the bridge
+     * @param segments      integer     segments of the bridge
+     * @param segmentHeight integer     height of a segment
+     * @return {*}
+     */
     createBridge:function (id, image, x, y, length, segments, segmentHeight) {
         this.uid = this.uid + 1
         var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
+    /**
+     *
+     * @param id            string      id or name to identify
+     * @param image         mixed       path to image, image or tpimage from asset
+     * @param x             integer     the x position
+     * @param y             integer     the y position
+     * @param length        integer     the length/width of the bridge
+     * @param segments      integer     segments of the bridge
+     * @param segmentHeight integer     height of a segment
+     * @return {*}
+     */
     createRope:function (id, image, x, y, length, segments, segmentHeight) {
         this.uid = this.uid + 1
         var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)

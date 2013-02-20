@@ -15270,3 +15270,1693 @@ CG.Layer.extend('B2DWorld', {
 })
 
 
+// ----------------------------------------------------------------------------
+// Buzz, a Javascript HTML5 Audio library
+// v 1.0.6
+// Licensed under the MIT license.
+// http://buzz.jaysalvat.com/
+// ----------------------------------------------------------------------------
+// Copyright (C) 2013 Jay Salvat
+// http://jaysalvat.com/
+// ----------------------------------------------------------------------------
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files ( the "Software" ), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+// ----------------------------------------------------------------------------
+
+var buzz = {
+    defaults: {
+        autoplay: false,
+        duration: 5000,
+        formats: [],
+        loop: false,
+        placeholder: '--',
+        preload: 'metadata',
+        volume: 80
+    },
+    types: {
+        'mp3': 'audio/mpeg',
+        'ogg': 'audio/ogg',
+        'wav': 'audio/wav',
+        'aac': 'audio/aac',
+        'm4a': 'audio/x-m4a'
+    },
+    sounds: [],
+    el: document.createElement( 'audio' ),
+
+    sound: function( src, options ) {
+        options = options || {};
+
+        var pid = 0,
+            events = [],
+            eventsOnce = {},
+            supported = buzz.isSupported();
+
+        // publics
+        this.load = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.load();
+            return this;
+        };
+
+        this.play = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.play();
+            return this;
+        };
+
+        this.togglePlay = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            if ( this.sound.paused ) {
+                this.sound.play();
+            } else {
+                this.sound.pause();
+            }
+            return this;
+        };
+
+        this.pause = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.pause();
+            return this;
+        };
+
+        this.isPaused = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.paused;
+        };
+
+        this.stop = function() {
+            if ( !supported  ) {
+              return this;
+            }
+
+            this.setTime( 0 );
+            this.sound.pause();
+            return this;
+        };
+
+        this.isEnded = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.ended;
+        };
+
+        this.loop = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.loop = 'loop';
+            this.bind( 'ended.buzzloop', function() {
+                this.currentTime = 0;
+                this.play();
+            });
+            return this;
+        };
+
+        this.unloop = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.removeAttribute( 'loop' );
+            this.unbind( 'ended.buzzloop' );
+            return this;
+        };
+
+        this.mute = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.muted = true;
+            return this;
+        };
+
+        this.unmute = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.muted = false;
+            return this;
+        };
+
+        this.toggleMute = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound.muted = !this.sound.muted;
+            return this;
+        };
+
+        this.isMuted = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.muted;
+        };
+
+        this.setVolume = function( volume ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            if ( volume < 0 ) {
+              volume = 0;
+            }
+            if ( volume > 100 ) {
+              volume = 100;
+            }
+          
+            this.volume = volume;
+            this.sound.volume = volume / 100;
+            return this;
+        };
+      
+        this.getVolume = function() {
+            if ( !supported ) {
+              return this;
+            }
+
+            return this.volume;
+        };
+
+        this.increaseVolume = function( value ) {
+            return this.setVolume( this.volume + ( value || 1 ) );
+        };
+
+        this.decreaseVolume = function( value ) {
+            return this.setVolume( this.volume - ( value || 1 ) );
+        };
+
+        this.setTime = function( time ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.whenReady( function() {
+                this.sound.currentTime = time;
+            });
+            return this;
+        };
+
+        this.getTime = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+            var time = Math.round( this.sound.currentTime * 100 ) / 100;
+            return isNaN( time ) ? buzz.defaults.placeholder : time;
+        };
+
+        this.setPercent = function( percent ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            return this.setTime( buzz.fromPercent( percent, this.sound.duration ) );
+        };
+
+        this.getPercent = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+			var percent = Math.round( buzz.toPercent( this.sound.currentTime, this.sound.duration ) );
+            return isNaN( percent ) ? buzz.defaults.placeholder : percent;
+        };
+
+        this.setSpeed = function( duration ) {
+			if ( !supported ) {
+              return this;
+            }
+
+            this.sound.playbackRate = duration;
+        };
+
+        this.getSpeed = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.playbackRate;
+        };
+
+        this.getDuration = function() {
+            if ( !supported ) {
+              return null;
+            }
+
+            var duration = Math.round( this.sound.duration * 100 ) / 100;
+            return isNaN( duration ) ? buzz.defaults.placeholder : duration;
+        };
+
+        this.getPlayed = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return timerangeToArray( this.sound.played );
+        };
+
+        this.getBuffered = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return timerangeToArray( this.sound.buffered );
+        };
+
+        this.getSeekable = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return timerangeToArray( this.sound.seekable );
+        };
+
+        this.getErrorCode = function() {
+            if ( supported && this.sound.error ) {
+                return this.sound.error.code;
+            }
+            return 0;
+        };
+
+        this.getErrorMessage = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            switch( this.getErrorCode() ) {
+                case 1:
+                    return 'MEDIA_ERR_ABORTED';
+                case 2:
+                    return 'MEDIA_ERR_NETWORK';
+                case 3:
+                    return 'MEDIA_ERR_DECODE';
+                case 4:
+                    return 'MEDIA_ERR_SRC_NOT_SUPPORTED';
+                default:
+                    return null;
+            }
+        };
+
+        this.getStateCode = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.readyState;
+        };
+
+        this.getStateMessage = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            switch( this.getStateCode() ) {
+                case 0:
+                    return 'HAVE_NOTHING';
+                case 1:
+                    return 'HAVE_METADATA';
+                case 2:
+                    return 'HAVE_CURRENT_DATA';
+                case 3:
+                    return 'HAVE_FUTURE_DATA';
+                case 4:
+                    return 'HAVE_ENOUGH_DATA';
+                default:
+                    return null;
+            }
+        };
+
+        this.getNetworkStateCode = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            return this.sound.networkState;
+        };
+
+        this.getNetworkStateMessage = function() {
+			if ( !supported ) {
+              return null;
+            }
+
+            switch( this.getNetworkStateCode() ) {
+                case 0:
+                    return 'NETWORK_EMPTY';
+                case 1:
+                    return 'NETWORK_IDLE';
+                case 2:
+                    return 'NETWORK_LOADING';
+                case 3:
+                    return 'NETWORK_NO_SOURCE';
+                default:
+                    return null;
+            }
+        };
+
+        this.set = function( key, value ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.sound[ key ] = value;
+            return this;
+        };
+
+        this.get = function( key ) {
+            if ( !supported ) {
+              return null;
+            }
+
+            return key ? this.sound[ key ] : this.sound;
+        };
+
+        this.bind = function( types, func ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            types = types.split( ' ' );
+
+            var that = this,
+				efunc = function( e ) { func.call( that, e ); };
+
+            for( var t = 0; t < types.length; t++ ) {
+                var type = types[ t ],
+                    idx = type;
+                    type = idx.split( '.' )[ 0 ];
+
+                    events.push( { idx: idx, func: efunc } );
+                    this.sound.addEventListener( type, efunc, true );
+            }
+            return this;
+        };
+
+        this.unbind = function( types ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            types = types.split( ' ' );
+
+            for( var t = 0; t < types.length; t++ ) {
+                var idx = types[ t ],
+                    type = idx.split( '.' )[ 0 ];
+
+                for( var i = 0; i < events.length; i++ ) {
+                    var namespace = events[ i ].idx.split( '.' );
+                    if ( events[ i ].idx == idx || ( namespace[ 1 ] && namespace[ 1 ] == idx.replace( '.', '' ) ) ) {
+                        this.sound.removeEventListener( type, events[ i ].func, true );
+                        // remove event
+                        events.splice(i, 1);
+                    }
+                }
+            }
+            return this;
+        };
+
+        this.bindOnce = function( type, func ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            var that = this;
+
+            eventsOnce[ pid++ ] = false;
+            this.bind( type + '.' + pid, function() {
+               if ( !eventsOnce[ pid ] ) {
+                   eventsOnce[ pid ] = true;
+                   func.call( that );
+               }
+               that.unbind( type + '.' + pid );
+            });
+        };
+
+        this.trigger = function( types ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            types = types.split( ' ' );
+
+            for( var t = 0; t < types.length; t++ ) {
+                var idx = types[ t ];
+
+                for( var i = 0; i < events.length; i++ ) {
+                    var eventType = events[ i ].idx.split( '.' );
+                    if ( events[ i ].idx == idx || ( eventType[ 0 ] && eventType[ 0 ] == idx.replace( '.', '' ) ) ) {
+                        var evt = document.createEvent('HTMLEvents');
+                        evt.initEvent( eventType[ 0 ], false, true );
+                        this.sound.dispatchEvent( evt );
+                    }
+                }
+            }
+            return this;
+        };
+
+        this.fadeTo = function( to, duration, callback ) {
+			if ( !supported ) {
+              return this;
+            }
+
+            if ( duration instanceof Function ) {
+                callback = duration;
+                duration = buzz.defaults.duration;
+            } else {
+                duration = duration || buzz.defaults.duration;
+            }
+
+            var from = this.volume,
+				delay = duration / Math.abs( from - to ),
+                that = this;
+            this.play();
+
+            function doFade() {
+                setTimeout( function() {
+                    if ( from < to && that.volume < to ) {
+                        that.setVolume( that.volume += 1 );
+                        doFade();
+                    } else if ( from > to && that.volume > to ) {
+                        that.setVolume( that.volume -= 1 );
+                        doFade();
+                    } else if ( callback instanceof Function ) {
+                        callback.apply( that );
+                    }
+                }, delay );
+            }
+            this.whenReady( function() {
+                doFade();
+            });
+
+            return this;
+        };
+
+        this.fadeIn = function( duration, callback ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            return this.setVolume(0).fadeTo( 100, duration, callback );
+        };
+
+        this.fadeOut = function( duration, callback ) {
+			if ( !supported ) {
+              return this;
+            }
+
+            return this.fadeTo( 0, duration, callback );
+        };
+
+        this.fadeWith = function( sound, duration ) {
+            if ( !supported ) {
+              return this;
+            }
+
+            this.fadeOut( duration, function() {
+                this.stop();
+            });
+
+            sound.play().fadeIn( duration );
+
+            return this;
+        };
+
+        this.whenReady = function( func ) {
+            if ( !supported ) {
+              return null;
+            }
+
+            var that = this;
+            if ( this.sound.readyState === 0 ) {
+                this.bind( 'canplay.buzzwhenready', function() {
+                    func.call( that );
+                });
+            } else {
+                func.call( that );
+            }
+        };
+
+        // privates
+        function timerangeToArray( timeRange ) {
+            var array = [],
+                length = timeRange.length - 1;
+
+            for( var i = 0; i <= length; i++ ) {
+                array.push({
+                    start: timeRange.start( length ),
+                    end: timeRange.end( length )
+                });
+            }
+            return array;
+        }
+
+        function getExt( filename ) {
+            return filename.split('.').pop();
+        }
+        
+        function addSource( sound, src ) {
+            var source = document.createElement( 'source' );
+            source.src = src;
+            if ( buzz.types[ getExt( src ) ] ) {
+                source.type = buzz.types[ getExt( src ) ];
+            }
+            sound.appendChild( source );
+        }
+
+        // init
+        if ( supported && src ) {
+          
+            for(var i in buzz.defaults ) {
+              if(buzz.defaults.hasOwnProperty(i)) {
+                options[ i ] = options[ i ] || buzz.defaults[ i ];
+              }
+            }
+
+            this.sound = document.createElement( 'audio' );
+
+            if ( src instanceof Array ) {
+                for( var j in src ) {
+                  if(src.hasOwnProperty(j)) {
+                    addSource( this.sound, src[ j ] );
+                  }
+                }
+            } else if ( options.formats.length ) {
+                for( var k in options.formats ) {
+                  if(options.formats.hasOwnProperty(k)) {
+                    addSource( this.sound, src + '.' + options.formats[ k ] );
+                  }
+                }
+            } else {
+                addSource( this.sound, src );
+            }
+
+            if ( options.loop ) {
+                this.loop();
+            }
+
+            if ( options.autoplay ) {
+                this.sound.autoplay = 'autoplay';
+            }
+
+            if ( options.preload === true ) {
+                this.sound.preload = 'auto';
+            } else if ( options.preload === false ) {
+                this.sound.preload = 'none';
+            } else {
+                this.sound.preload = options.preload;
+            }
+
+            this.setVolume( options.volume );
+
+            buzz.sounds.push( this );
+        }
+    },
+
+    group: function( sounds ) {
+        sounds = argsToArray( sounds, arguments );
+
+        // publics
+        this.getSounds = function() {
+            return sounds;
+        };
+
+        this.add = function( soundArray ) {
+            soundArray = argsToArray( soundArray, arguments );
+            for( var a = 0; a < soundArray.length; a++ ) {
+                sounds.push( soundArray[ a ] );
+            }
+        };
+
+        this.remove = function( soundArray ) {
+            soundArray = argsToArray( soundArray, arguments );
+            for( var a = 0; a < soundArray.length; a++ ) {
+                for( var i = 0; i < sounds.length; i++ ) {
+                    if ( sounds[ i ] == soundArray[ a ] ) {
+                        sounds.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+
+        this.load = function() {
+            fn( 'load' );
+            return this;
+        };
+
+        this.play = function() {
+            fn( 'play' );
+            return this;
+        };
+
+        this.togglePlay = function( ) {
+            fn( 'togglePlay' );
+            return this;
+        };
+
+        this.pause = function( time ) {
+            fn( 'pause', time );
+            return this;
+        };
+
+        this.stop = function() {
+            fn( 'stop' );
+            return this;
+        };
+
+        this.mute = function() {
+            fn( 'mute' );
+            return this;
+        };
+
+        this.unmute = function() {
+            fn( 'unmute' );
+            return this;
+        };
+
+        this.toggleMute = function() {
+            fn( 'toggleMute' );
+            return this;
+        };
+
+        this.setVolume = function( volume ) {
+            fn( 'setVolume', volume );
+            return this;
+        };
+
+        this.increaseVolume = function( value ) {
+            fn( 'increaseVolume', value );
+            return this;
+        };
+
+        this.decreaseVolume = function( value ) {
+            fn( 'decreaseVolume', value );
+            return this;
+        };
+
+        this.loop = function() {
+            fn( 'loop' );
+            return this;
+        };
+
+        this.unloop = function() {
+            fn( 'unloop' );
+            return this;
+        };
+
+        this.setTime = function( time ) {
+            fn( 'setTime', time );
+            return this;
+        };
+
+        this.set = function( key, value ) {
+            fn( 'set', key, value );
+            return this;
+        };
+
+        this.bind = function( type, func ) {
+            fn( 'bind', type, func );
+            return this;
+        };
+
+        this.unbind = function( type ) {
+            fn( 'unbind', type );
+            return this;
+        };
+
+        this.bindOnce = function( type, func ) {
+            fn( 'bindOnce', type, func );
+            return this;
+        };
+
+        this.trigger = function( type ) {
+            fn( 'trigger', type );
+            return this;
+        };
+
+        this.fade = function( from, to, duration, callback ) {
+            fn( 'fade', from, to, duration, callback );
+            return this;
+        };
+
+        this.fadeIn = function( duration, callback ) {
+            fn( 'fadeIn', duration, callback );
+            return this;
+        };
+
+        this.fadeOut = function( duration, callback ) {
+            fn( 'fadeOut', duration, callback );
+            return this;
+        };
+
+        // privates
+        function fn() {
+            var args = argsToArray( null, arguments ),
+                func = args.shift();
+
+            for( var i = 0; i < sounds.length; i++ ) {
+                sounds[ i ][ func ].apply( sounds[ i ], args );
+            }
+        }
+
+        function argsToArray( array, args ) {
+            return ( array instanceof Array ) ? array : Array.prototype.slice.call( args );
+        }
+    },
+
+    all: function() {
+      return new buzz.group( buzz.sounds );
+    },
+
+    isSupported: function() {
+        return !!buzz.el.canPlayType;
+    },
+
+    isOGGSupported: function() {
+        return !!buzz.el.canPlayType && buzz.el.canPlayType( 'audio/ogg; codecs="vorbis"' );
+    },
+
+    isWAVSupported: function() {
+        return !!buzz.el.canPlayType && buzz.el.canPlayType( 'audio/wav; codecs="1"' );
+    },
+
+    isMP3Supported: function() {
+        return !!buzz.el.canPlayType && buzz.el.canPlayType( 'audio/mpeg;' );
+    },
+
+    isAACSupported: function() {
+        return !!buzz.el.canPlayType && ( buzz.el.canPlayType( 'audio/x-m4a;' ) || buzz.el.canPlayType( 'audio/aac;' ) );
+    },
+
+    toTimer: function( time, withHours ) {
+        var h, m, s;
+        h = Math.floor( time / 3600 );
+        h = isNaN( h ) ? '--' : ( h >= 10 ) ? h : '0' + h;
+        m = withHours ? Math.floor( time / 60 % 60 ) : Math.floor( time / 60 );
+        m = isNaN( m ) ? '--' : ( m >= 10 ) ? m : '0' + m;
+        s = Math.floor( time % 60 );
+        s = isNaN( s ) ? '--' : ( s >= 10 ) ? s : '0' + s;
+        return withHours ? h + ':' + m + ':' + s : m + ':' + s;
+    },
+
+    fromTimer: function( time ) {
+        var splits = time.toString().split( ':' );
+        if ( splits && splits.length == 3 ) {
+            time = ( parseInt( splits[ 0 ], 10 ) * 3600 ) + ( parseInt(splits[ 1 ], 10 ) * 60 ) + parseInt( splits[ 2 ], 10 );
+        }
+        if ( splits && splits.length == 2 ) {
+            time = ( parseInt( splits[ 0 ], 10 ) * 60 ) + parseInt( splits[ 1 ], 10 );
+        }
+        return time;
+    },
+
+    toPercent: function( value, total, decimal ) {
+		var r = Math.pow( 10, decimal || 0 );
+
+		return Math.round( ( ( value * 100 ) / total ) * r ) / r;
+    },
+
+    fromPercent: function( percent, total, decimal ) {
+		var r = Math.pow( 10, decimal || 0 );
+
+        return  Math.round( ( ( total / 100 ) * percent ) * r ) / r;
+    }
+};
+/*
+ * Hammer.JS
+ * version 0.6.4
+ * author: Eight Media
+ * https://github.com/EightMedia/hammer.js
+ * Licensed under the MIT license.
+ */
+function Hammer(element, options, undefined)
+{
+    var self = this;
+
+    var defaults = mergeObject({
+        // prevent the default event or not... might be buggy when false
+        prevent_default    : false,
+        css_hacks          : true,
+
+        swipe              : true,
+        swipe_time         : 500,   // ms
+        swipe_min_distance : 20,   // pixels
+
+        drag               : true,
+        drag_vertical      : true,
+        drag_horizontal    : true,
+        // minimum distance before the drag event starts
+        drag_min_distance  : 20,    // pixels
+
+        // pinch zoom and rotation
+        transform          : true,
+        scale_treshold     : 0.1,
+        rotation_treshold  : 15,    // degrees
+
+        tap                : true,
+        tap_double         : true,
+        tap_max_interval   : 300,
+        tap_max_distance   : 10,
+        tap_double_distance: 20,
+
+        hold               : true,
+        hold_timeout       : 500
+    }, Hammer.defaults || {});
+    options = mergeObject(defaults, options);
+
+    // some css hacks
+    (function() {
+        if(!options.css_hacks) {
+            return false;
+        }
+
+        var vendors = ['webkit','moz','ms','o',''];
+        var css_props = {
+            "userSelect": "none",
+            "touchCallout": "none",
+            "touchAction": "none",
+            "userDrag": "none",
+            "tapHighlightColor": "rgba(0,0,0,0)"
+        };
+
+        var prop = '';
+        for(var i = 0; i < vendors.length; i++) {
+            for(var p in css_props) {
+                prop = p;
+                if(vendors[i]) {
+                    prop = vendors[i] + prop.substring(0, 1).toUpperCase() + prop.substring(1);
+                }
+                element.style[ prop ] = css_props[p];
+            }
+        }
+    })();
+
+    // holds the distance that has been moved
+    var _distance = 0;
+
+    // holds the exact angle that has been moved
+    var _angle = 0;
+
+    // holds the direction that has been moved
+    var _direction = 0;
+
+    // holds position movement for sliding
+    var _pos = { };
+
+    // how many fingers are on the screen
+    var _fingers = 0;
+
+    var _first = false;
+
+    var _gesture = null;
+    var _prev_gesture = null;
+
+    var _touch_start_time = null;
+    var _prev_tap_pos = {x: 0, y: 0};
+    var _prev_tap_end_time = null;
+
+    var _hold_timer = null;
+
+    var _offset = {};
+
+    // keep track of the mouse status
+    var _mousedown = false;
+
+    var _event_start;
+    var _event_move;
+    var _event_end;
+
+    var _has_touch = ('ontouchstart' in window);
+
+    var _can_tap = false;
+
+
+    /**
+     * option setter/getter
+     * @param   string  key
+     * @param   mixed   value
+     * @return  mixed   value
+     */
+    this.option = function(key, val) {
+        if(val !== undefined) {
+            options[key] = val;
+        }
+
+        return options[key];
+    };
+
+
+    /**
+     * angle to direction define
+     * @param  float    angle
+     * @return string   direction
+     */
+    this.getDirectionFromAngle = function( angle ) {
+        var directions = {
+            down: angle >= 45 && angle < 135, //90
+            left: angle >= 135 || angle <= -135, //180
+            up: angle < -45 && angle > -135, //270
+            right: angle >= -45 && angle <= 45 //0
+        };
+
+        var direction, key;
+        for(key in directions){
+            if(directions[key]){
+                direction = key;
+                break;
+            }
+        }
+        return direction;
+    };
+
+
+    /**
+     * destroy events
+     * @return  void
+     */
+    this.destroy = function() {
+        if(_has_touch) {
+            removeEvent(element, "touchstart touchmove touchend touchcancel", handleEvents);
+        }
+        // for non-touch
+        else {
+            removeEvent(element, "mouseup mousedown mousemove", handleEvents);
+            removeEvent(element, "mouseout", handleMouseOut);
+        }
+    };
+
+
+    /**
+     * count the number of fingers in the event
+     * when no fingers are detected, one finger is returned (mouse pointer)
+     * @param  event
+     * @return int  fingers
+     */
+    function countFingers( event )
+    {
+        // there is a bug on android (until v4?) that touches is always 1,
+        // so no multitouch is supported, e.g. no, zoom and rotation...
+        return event.touches ? event.touches.length : 1;
+    }
+
+
+    /**
+     * get the x and y positions from the event object
+     * @param  event
+     * @return array  [{ x: int, y: int }]
+     */
+    function getXYfromEvent( event )
+    {
+        event = event || window.event;
+
+        // no touches, use the event pageX and pageY
+        if(!_has_touch) {
+            var doc = document,
+                body = doc.body;
+
+            return [{
+                x: event.pageX || event.clientX + ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) - ( doc && doc.clientLeft || body && doc.clientLeft || 0 ),
+                y: event.pageY || event.clientY + ( doc && doc.scrollTop || body && body.scrollTop || 0 ) - ( doc && doc.clientTop || body && doc.clientTop || 0 )
+            }];
+        }
+        // multitouch, return array with positions
+        else {
+            var pos = [], src;
+            for(var t=0, len=event.touches.length; t<len; t++) {
+                src = event.touches[t];
+                pos.push({ x: src.pageX, y: src.pageY });
+            }
+            return pos;
+        }
+    }
+
+
+    /**
+     * calculate the angle between two points
+     * @param   object  pos1 { x: int, y: int }
+     * @param   object  pos2 { x: int, y: int }
+     */
+    function getAngle( pos1, pos2 )
+    {
+        return Math.atan2(pos2.y - pos1.y, pos2.x - pos1.x) * 180 / Math.PI;
+    }
+
+    /**
+     * calculate the distance between two points
+     * @param   object  pos1 { x: int, y: int }
+     * @param   object  pos2 { x: int, y: int }
+     */
+    function getDistance( pos1, pos2 )
+    {
+        var x = pos2.x - pos1.x, y = pos2.y - pos1.y;
+        return Math.sqrt((x * x) + (y * y));
+    }
+
+
+    /**
+     * calculate the scale size between two fingers
+     * @param   object  pos_start
+     * @param   object  pos_move
+     * @return  float   scale
+     */
+    function calculateScale(pos_start, pos_move)
+    {
+        if(pos_start.length == 2 && pos_move.length == 2) {
+            var start_distance = getDistance(pos_start[0], pos_start[1]);
+            var end_distance = getDistance(pos_move[0], pos_move[1]);
+            return end_distance / start_distance;
+        }
+
+        return 0;
+    }
+
+
+    /**
+     * calculate the rotation degrees between two fingers
+     * @param   object  pos_start
+     * @param   object  pos_move
+     * @return  float   rotation
+     */
+    function calculateRotation(pos_start, pos_move)
+    {
+        if(pos_start.length == 2 && pos_move.length == 2) {
+            var start_rotation = getAngle(pos_start[1], pos_start[0]);
+            var end_rotation = getAngle(pos_move[1], pos_move[0]);
+            return end_rotation - start_rotation;
+        }
+
+        return 0;
+    }
+
+
+    /**
+     * trigger an event/callback by name with params
+     * @param string name
+     * @param array  params
+     */
+    function triggerEvent( eventName, params )
+    {
+        // return touches object
+        params.touches = getXYfromEvent(params.originalEvent);
+        params.type = eventName;
+
+        // trigger callback
+        if(isFunction(self["on"+ eventName])) {
+            self["on"+ eventName].call(self, params);
+        }
+    }
+
+
+    /**
+     * cancel event
+     * @param   object  event
+     * @return  void
+     */
+
+    function cancelEvent(event)
+    {
+        event = event || window.event;
+        if(event.preventDefault){
+            event.preventDefault();
+            event.stopPropagation();
+        }else{
+            event.returnValue = false;
+            event.cancelBubble = true;
+        }
+    }
+
+
+    /**
+     * reset the internal vars to the start values
+     */
+    function reset()
+    {
+        _pos = {};
+        _first = false;
+        _fingers = 0;
+        _distance = 0;
+        _angle = 0;
+        _gesture = null;
+    }
+
+
+    var gestures = {
+        // hold gesture
+        // fired on touchstart
+        hold : function(event)
+        {
+            // only when one finger is on the screen
+            if(options.hold) {
+                _gesture = 'hold';
+                clearTimeout(_hold_timer);
+
+                _hold_timer = setTimeout(function() {
+                    if(_gesture == 'hold') {
+                        triggerEvent("hold", {
+                            originalEvent   : event,
+                            position        : _pos.start
+                        });
+                    }
+                }, options.hold_timeout);
+            }
+        },
+
+        // swipe gesture
+        // fired on touchend
+        swipe : function(event)
+        {
+            if (!_pos.move || _gesture === "transform") {
+                return;
+            }
+
+            // get the distance we moved
+            var _distance_x = _pos.move[0].x - _pos.start[0].x;
+            var _distance_y = _pos.move[0].y - _pos.start[0].y;
+            _distance = Math.sqrt(_distance_x*_distance_x + _distance_y*_distance_y);
+
+            // compare the kind of gesture by time
+            var now = new Date().getTime();
+            var touch_time = now - _touch_start_time;
+
+            if(options.swipe && (options.swipe_time >= touch_time) && (_distance >= options.swipe_min_distance)) {
+                // calculate the angle
+                _angle = getAngle(_pos.start[0], _pos.move[0]);
+                _direction = self.getDirectionFromAngle(_angle);
+
+                _gesture = 'swipe';
+
+                var position = { x: _pos.move[0].x - _offset.left,
+                    y: _pos.move[0].y - _offset.top };
+
+                var event_obj = {
+                    originalEvent   : event,
+                    position        : position,
+                    direction       : _direction,
+                    distance        : _distance,
+                    distanceX       : _distance_x,
+                    distanceY       : _distance_y,
+                    angle           : _angle
+                };
+
+                // normal slide event
+                triggerEvent("swipe", event_obj);
+            }
+        },
+
+
+        // drag gesture
+        // fired on mousemove
+        drag : function(event)
+        {
+            // get the distance we moved
+            var _distance_x = _pos.move[0].x - _pos.start[0].x;
+            var _distance_y = _pos.move[0].y - _pos.start[0].y;
+            _distance = Math.sqrt(_distance_x * _distance_x + _distance_y * _distance_y);
+
+            // drag
+            // minimal movement required
+            if(options.drag && (_distance > options.drag_min_distance) || _gesture == 'drag') {
+                // calculate the angle
+                _angle = getAngle(_pos.start[0], _pos.move[0]);
+                _direction = self.getDirectionFromAngle(_angle);
+
+                // check the movement and stop if we go in the wrong direction
+                var is_vertical = (_direction == 'up' || _direction == 'down');
+
+                if(((is_vertical && !options.drag_vertical) || (!is_vertical && !options.drag_horizontal)) && (_distance > options.drag_min_distance)) {
+                    return;
+                }
+
+                _gesture = 'drag';
+
+                var position = { x: _pos.move[0].x - _offset.left,
+                    y: _pos.move[0].y - _offset.top };
+
+                var event_obj = {
+                    originalEvent   : event,
+                    position        : position,
+                    direction       : _direction,
+                    distance        : _distance,
+                    distanceX       : _distance_x,
+                    distanceY       : _distance_y,
+                    angle           : _angle
+                };
+
+                // on the first time trigger the start event
+                if(_first) {
+                    triggerEvent("dragstart", event_obj);
+
+                    _first = false;
+                }
+
+                // normal slide event
+                triggerEvent("drag", event_obj);
+
+                cancelEvent(event);
+            }
+        },
+
+
+        // transform gesture
+        // fired on touchmove
+        transform : function(event)
+        {
+            if(options.transform) {
+                var count = countFingers(event);
+                if (count !== 2) {
+                    return false;
+                }
+
+                var rotation = calculateRotation(_pos.start, _pos.move);
+                var scale = calculateScale(_pos.start, _pos.move);
+
+                if (_gesture === 'transform' ||
+                    Math.abs(1 - scale) > options.scale_treshold ||
+                    Math.abs(rotation) > options.rotation_treshold) {
+
+                    _gesture = 'transform';
+                    _pos.center = {
+                        x: ((_pos.move[0].x + _pos.move[1].x) / 2) - _offset.left,
+                        y: ((_pos.move[0].y + _pos.move[1].y) / 2) - _offset.top
+                    };
+
+                    if(_first)
+                        _pos.startCenter = _pos.center;
+
+                    var _distance_x = _pos.center.x - _pos.startCenter.x;
+                    var _distance_y = _pos.center.y - _pos.startCenter.y;
+                    _distance = Math.sqrt(_distance_x*_distance_x + _distance_y*_distance_y);
+
+                    var event_obj = {
+                        originalEvent   : event,
+                        position        : _pos.center,
+                        scale           : scale,
+                        rotation        : rotation,
+                        distance        : _distance,
+                        distanceX       : _distance_x,
+                        distanceY       : _distance_y
+                    };
+
+                    // on the first time trigger the start event
+                    if (_first) {
+                        triggerEvent("transformstart", event_obj);
+                        _first = false;
+                    }
+
+                    triggerEvent("transform", event_obj);
+
+                    cancelEvent(event);
+
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+
+        // tap and double tap gesture
+        // fired on touchend
+        tap : function(event)
+        {
+            // compare the kind of gesture by time
+            var now = new Date().getTime();
+            var touch_time = now - _touch_start_time;
+
+            // dont fire when hold is fired
+            if(options.hold && !(options.hold && options.hold_timeout > touch_time)) {
+                return;
+            }
+
+            // when previous event was tap and the tap was max_interval ms ago
+            var is_double_tap = (function(){
+                if (_prev_tap_pos &&
+                    options.tap_double &&
+                    _prev_gesture == 'tap' &&
+                    _pos.start &&
+                    (_touch_start_time - _prev_tap_end_time) < options.tap_max_interval)
+                {
+                    var x_distance = Math.abs(_prev_tap_pos[0].x - _pos.start[0].x);
+                    var y_distance = Math.abs(_prev_tap_pos[0].y - _pos.start[0].y);
+                    return (_prev_tap_pos && _pos.start && Math.max(x_distance, y_distance) < options.tap_double_distance);
+                }
+                return false;
+            })();
+
+            if(is_double_tap) {
+                _gesture = 'double_tap';
+                _prev_tap_end_time = null;
+
+                triggerEvent("doubletap", {
+                    originalEvent   : event,
+                    position        : _pos.start
+                });
+                cancelEvent(event);
+            }
+
+            // single tap is single touch
+            else {
+                var x_distance = (_pos.move) ? Math.abs(_pos.move[0].x - _pos.start[0].x) : 0;
+                var y_distance =  (_pos.move) ? Math.abs(_pos.move[0].y - _pos.start[0].y) : 0;
+                _distance = Math.max(x_distance, y_distance);
+
+                if(_distance < options.tap_max_distance) {
+                    _gesture = 'tap';
+                    _prev_tap_end_time = now;
+                    _prev_tap_pos = _pos.start;
+
+                    if(options.tap) {
+                        triggerEvent("tap", {
+                            originalEvent   : event,
+                            position        : _pos.start
+                        });
+                        cancelEvent(event);
+                    }
+                }
+            }
+        }
+    };
+
+
+    function handleEvents(event)
+    {
+        var count;
+        switch(event.type)
+        {
+            case 'mousedown':
+            case 'touchstart':
+                count = countFingers(event);
+                _can_tap = count === 1;
+
+                //We were dragging and now we are zooming.
+                if (count === 2 && _gesture === "drag") {
+
+                    //The user needs to have the dragend to be fired to ensure that
+                    //there is proper cleanup from the drag and move onto transforming.
+                    triggerEvent("dragend", {
+                        originalEvent   : event,
+                        direction       : _direction,
+                        distance        : _distance,
+                        angle           : _angle
+                    });
+                }
+                _setup();
+
+                if(options.prevent_default) {
+                    cancelEvent(event);
+                }
+                break;
+
+            case 'mousemove':
+            case 'touchmove':
+                count = countFingers(event);
+
+                //The user has gone from transforming to dragging.  The
+                //user needs to have the proper cleanup of the state and
+                //setup with the new "start" points.
+                if (!_mousedown && count === 1) {
+                    return false;
+                } else if (!_mousedown && count === 2) {
+                    _can_tap = false;
+
+                    reset();
+                    _setup();
+                }
+
+                _event_move = event;
+                _pos.move = getXYfromEvent(event);
+
+                if(!gestures.transform(event)) {
+                    gestures.drag(event);
+                }
+                break;
+
+            case 'mouseup':
+            case 'mouseout':
+            case 'touchcancel':
+            case 'touchend':
+                var callReset = true;
+
+                _mousedown = false;
+                _event_end = event;
+
+                // swipe gesture
+                gestures.swipe(event);
+
+                // drag gesture
+                // dragstart is triggered, so dragend is possible
+                if(_gesture == 'drag') {
+                    triggerEvent("dragend", {
+                        originalEvent   : event,
+                        direction       : _direction,
+                        distance        : _distance,
+                        angle           : _angle
+                    });
+                }
+
+                // transform
+                // transformstart is triggered, so transformed is possible
+                else if(_gesture == 'transform') {
+                    // define the transform distance
+                    var _distance_x = _pos.center.x - _pos.startCenter.x;
+                    var _distance_y = _pos.center.y - _pos.startCenter.y;
+                    
+                    triggerEvent("transformend", {
+                        originalEvent   : event,
+                        position        : _pos.center,
+                        scale           : calculateScale(_pos.start, _pos.move),
+                        rotation        : calculateRotation(_pos.start, _pos.move),
+                        distance        : _distance,
+                        distanceX       : _distance_x,
+                        distanceY       : _distance_y
+                    });
+
+                    //If the user goes from transformation to drag there needs to be a
+                    //state reset so that way a dragstart/drag/dragend will be properly
+                    //fired.
+                    if (countFingers(event) === 1) {
+                        reset();
+                        _setup();
+                        callReset = false;
+                    }
+                } else if (_can_tap) {
+                    gestures.tap(_event_start);
+                }
+
+                _prev_gesture = _gesture;
+
+                // trigger release event
+                // "release" by default doesn't return the co-ords where your
+                // finger was released. "position" will return "the last touched co-ords"
+
+                triggerEvent("release", {
+                    originalEvent   : event,
+                    gesture         : _gesture,
+                    position        : _pos.move || _pos.start
+                });
+
+                // reset vars if this was not a transform->drag touch end operation.
+                if (callReset) {
+                    reset();
+                }
+                break;
+        } // end switch
+
+        /**
+         * Performs a blank setup.
+         * @private
+         */
+        function _setup() {
+            _pos.start = getXYfromEvent(event);
+            _touch_start_time = new Date().getTime();
+            _fingers = countFingers(event);
+            _first = true;
+            _event_start = event;
+
+            // borrowed from jquery offset https://github.com/jquery/jquery/blob/master/src/offset.js
+            var box = element.getBoundingClientRect();
+            var clientTop  = element.clientTop  || document.body.clientTop  || 0;
+            var clientLeft = element.clientLeft || document.body.clientLeft || 0;
+            var scrollTop  = window.pageYOffset || element.scrollTop  || document.body.scrollTop;
+            var scrollLeft = window.pageXOffset || element.scrollLeft || document.body.scrollLeft;
+
+            _offset = {
+                top: box.top + scrollTop - clientTop,
+                left: box.left + scrollLeft - clientLeft
+            };
+
+            _mousedown = true;
+
+            // hold gesture
+            gestures.hold(event);
+        }
+    }
+
+
+    function handleMouseOut(event) {
+        if(!isInsideHammer(element, event.relatedTarget)) {
+            handleEvents(event);
+        }
+    }
+
+
+    // bind events for touch devices
+    // except for windows phone 7.5, it doesnt support touch events..!
+    if(_has_touch) {
+        addEvent(element, "touchstart touchmove touchend touchcancel", handleEvents);
+    }
+    // for non-touch
+    else {
+        addEvent(element, "mouseup mousedown mousemove", handleEvents);
+        addEvent(element, "mouseout", handleMouseOut);
+    }
+
+
+    /**
+     * find if element is (inside) given parent element
+     * @param   object  element
+     * @param   object  parent
+     * @return  bool    inside
+     */
+    function isInsideHammer(parent, child) {
+        // get related target for IE
+        if(!child && window.event && window.event.toElement){
+            child = window.event.toElement;
+        }
+
+        if(parent === child){
+            return true;
+        }
+
+        // loop over parentNodes of child until we find hammer element
+        if(child){
+            var node = child.parentNode;
+            while(node !== null){
+                if(node === parent){
+                    return true;
+                }
+                node = node.parentNode;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * merge 2 objects into a new object
+     * @param   object  obj1
+     * @param   object  obj2
+     * @return  object  merged object
+     */
+    function mergeObject(obj1, obj2) {
+        var output = {};
+
+        if(!obj2) {
+            return obj1;
+        }
+
+        for (var prop in obj1) {
+            if (prop in obj2) {
+                output[prop] = obj2[prop];
+            } else {
+                output[prop] = obj1[prop];
+            }
+        }
+        return output;
+    }
+
+
+    /**
+     * check if object is a function
+     * @param   object  obj
+     * @return  bool    is function
+     */
+    function isFunction( obj ){
+        return Object.prototype.toString.call( obj ) == "[object Function]";
+    }
+
+
+    /**
+     * attach event
+     * @param   node    element
+     * @param   string  types
+     * @param   object  callback
+     */
+    function addEvent(element, types, callback) {
+        types = types.split(" ");
+        for(var t= 0,len=types.length; t<len; t++) {
+            if(element.addEventListener){
+                element.addEventListener(types[t], callback, false);
+            }
+            else if(document.attachEvent){
+                element.attachEvent("on"+ types[t], callback);
+            }
+        }
+    }
+
+
+    /**
+     * detach event
+     * @param   node    element
+     * @param   string  types
+     * @param   object  callback
+     */
+    function removeEvent(element, types, callback) {
+        types = types.split(" ");
+        for(var t= 0,len=types.length; t<len; t++) {
+            if(element.removeEventListener){
+                element.removeEventListener(types[t], callback, false);
+            }
+            else if(document.detachEvent){
+                element.detachEvent("on"+ types[t], callback);
+            }
+        }
+    }
+}
+// stats.js r5 - http://github.com/mrdoob/stats.js
+var Stats=function(){function w(d,K,n){var u,f,c;for(f=0;f<30;f++)for(u=0;u<73;u++){c=(u+f*74)*4;d[c]=d[c+4];d[c+1]=d[c+5];d[c+2]=d[c+6]}for(f=0;f<30;f++){c=(73+f*74)*4;if(f<K){d[c]=b[n].bg.r;d[c+1]=b[n].bg.g;d[c+2]=b[n].bg.b}else{d[c]=b[n].fg.r;d[c+1]=b[n].fg.g;d[c+2]=b[n].fg.b}}}var v=0,x=2,e,y=0,l=(new Date).getTime(),J=l,z=l,o=0,A=1E3,B=0,m,g,a,p,C,q=0,D=1E3,E=0,h,i,r,F,s=0,G=1E3,H=0,j,k,t,I,b={fps:{bg:{r:16,g:16,b:48},fg:{r:0,g:255,b:255}},ms:{bg:{r:16,g:48,b:16},fg:{r:0,g:255,b:0}},mem:{bg:{r:48,
+g:16,b:26},fg:{r:255,g:0,b:128}}};e=document.createElement("div");e.style.cursor="pointer";e.style.width="80px";e.style.opacity="0.9";e.style.zIndex="10001";e.addEventListener("click",function(){v++;v==x&&(v=0);m.style.display="none";h.style.display="none";j.style.display="none";switch(v){case 0:m.style.display="block";break;case 1:h.style.display="block";break;case 2:j.style.display="block"}},false);m=document.createElement("div");m.style.backgroundColor="rgb("+Math.floor(b.fps.bg.r/2)+","+Math.floor(b.fps.bg.g/
+2)+","+Math.floor(b.fps.bg.b/2)+")";m.style.padding="2px 0px 3px 0px";e.appendChild(m);g=document.createElement("div");g.style.fontFamily="Helvetica, Arial, sans-serif";g.style.textAlign="left";g.style.fontSize="9px";g.style.color="rgb("+b.fps.fg.r+","+b.fps.fg.g+","+b.fps.fg.b+")";g.style.margin="0px 0px 1px 3px";g.innerHTML='<span style="font-weight:bold">FPS</span>';m.appendChild(g);a=document.createElement("canvas");a.width=74;a.height=30;a.style.display="block";a.style.marginLeft="3px";m.appendChild(a);
+p=a.getContext("2d");p.fillStyle="rgb("+b.fps.bg.r+","+b.fps.bg.g+","+b.fps.bg.b+")";p.fillRect(0,0,a.width,a.height);C=p.getImageData(0,0,a.width,a.height);h=document.createElement("div");h.style.backgroundColor="rgb("+Math.floor(b.ms.bg.r/2)+","+Math.floor(b.ms.bg.g/2)+","+Math.floor(b.ms.bg.b/2)+")";h.style.padding="2px 0px 3px 0px";h.style.display="none";e.appendChild(h);i=document.createElement("div");i.style.fontFamily="Helvetica, Arial, sans-serif";i.style.textAlign="left";i.style.fontSize=
+"9px";i.style.color="rgb("+b.ms.fg.r+","+b.ms.fg.g+","+b.ms.fg.b+")";i.style.margin="0px 0px 1px 3px";i.innerHTML='<span style="font-weight:bold">MS</span>';h.appendChild(i);a=document.createElement("canvas");a.width=74;a.height=30;a.style.display="block";a.style.marginLeft="3px";h.appendChild(a);r=a.getContext("2d");r.fillStyle="rgb("+b.ms.bg.r+","+b.ms.bg.g+","+b.ms.bg.b+")";r.fillRect(0,0,a.width,a.height);F=r.getImageData(0,0,a.width,a.height);try{if(webkitPerformance&&webkitPerformance.memory.totalJSHeapSize)x=
+3}catch(L){}j=document.createElement("div");j.style.backgroundColor="rgb("+Math.floor(b.mem.bg.r/2)+","+Math.floor(b.mem.bg.g/2)+","+Math.floor(b.mem.bg.b/2)+")";j.style.padding="2px 0px 3px 0px";j.style.display="none";e.appendChild(j);k=document.createElement("div");k.style.fontFamily="Helvetica, Arial, sans-serif";k.style.textAlign="left";k.style.fontSize="9px";k.style.color="rgb("+b.mem.fg.r+","+b.mem.fg.g+","+b.mem.fg.b+")";k.style.margin="0px 0px 1px 3px";k.innerHTML='<span style="font-weight:bold">MEM</span>';
+j.appendChild(k);a=document.createElement("canvas");a.width=74;a.height=30;a.style.display="block";a.style.marginLeft="3px";j.appendChild(a);t=a.getContext("2d");t.fillStyle="#301010";t.fillRect(0,0,a.width,a.height);I=t.getImageData(0,0,a.width,a.height);return{domElement:e,update:function(){y++;l=(new Date).getTime();q=l-J;D=Math.min(D,q);E=Math.max(E,q);w(F.data,Math.min(30,30-q/200*30),"ms");i.innerHTML='<span style="font-weight:bold">'+q+" MS</span> ("+D+"-"+E+")";r.putImageData(F,0,0);J=l;if(l>
+z+1E3){o=Math.round(y*1E3/(l-z));A=Math.min(A,o);B=Math.max(B,o);w(C.data,Math.min(30,30-o/100*30),"fps");g.innerHTML='<span style="font-weight:bold">'+o+" FPS</span> ("+A+"-"+B+")";p.putImageData(C,0,0);if(x==3){s=webkitPerformance.memory.usedJSHeapSize*9.54E-7;G=Math.min(G,s);H=Math.max(H,s);w(I.data,Math.min(30,30-s/2),"mem");k.innerHTML='<span style="font-weight:bold">'+Math.round(s)+" MEM</span> ("+Math.round(G)+"-"+Math.round(H)+")";t.putImageData(I,0,0)}z=l;y=0}}}};
