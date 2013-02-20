@@ -138,7 +138,6 @@ CG.Entity.extend('Translate', {
         return this
     },
     draw:function () {
-        //TODO layer integration ;o)
     },
     update:function () {
         var obj = this.theobj

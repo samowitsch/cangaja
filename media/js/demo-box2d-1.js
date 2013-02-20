@@ -130,7 +130,7 @@ Game = (function () {
 
             // rope test
             // name, image, x, y, length, segments, segmentHeight, scale
-            b2world.createRope('chain-v', Game.asset.getImageByName('chain-v'), 320, 50, 250, 20, 3)
+            b2world.createRope('chain-v', Game.asset.getImageByName('chain-v'), 580, 0, 200, 8, 3)
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {

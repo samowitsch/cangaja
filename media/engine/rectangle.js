@@ -101,7 +101,6 @@ CG.Entity.extend('Rectangle', {
                         (this.position.x + this.AABB().bw / 2) >= obj.bound.x &&
                         this.position.x - this.AABB().bw / 2 <= (obj.bound.x + obj.bound.width )) {
                         if (obj.type === 'outer') {
-                            //TODO return collision offset to callback? experimantal, comparing both objects midhandle
 
                             w = 0.5 * (this.width + obj.bound.width)
                             h = 0.5 * (this.height + obj.bound.height)
@@ -147,7 +146,6 @@ CG.Entity.extend('Rectangle', {
                     disty = this.position.y - obj.position.y
                     dist = Math.sqrt((distx * distx) + (disty * disty))
                     if (dist <= (this.boundingradius / 2 * this.xscale + obj.boundingradius / 2 * obj.yscale)) {
-                        //TODO return collision offset to callback?
                         collision = false //dummy
                         callback(this, obj, collision)
                     }
@@ -158,7 +156,6 @@ CG.Entity.extend('Rectangle', {
                         this.position.y - this.AABB().bh / 2 <= (obj.position.y + obj.AABB().bh / 2) &&
                         (this.position.x + this.AABB().bw / 2) >= obj.position.x - obj.AABB().bw / 2 &&
                         this.position.x - this.AABB().bw / 2 <= (obj.position.x + obj.AABB().bw / 2)) {
-                        //TODO return collision offset to callback?
 
                         w = 0.5 * (this.width + obj.width)
                         h = 0.5 * (this.height + obj.height)

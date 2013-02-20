@@ -72,18 +72,13 @@ CG.B2DEntity.extend('B2DBridge', {
             this.bodyCount = i + 2
         }
 
-
         this.anchor.Set((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
         this.jointDef.Initialize(this.prevBody, this.bodyGroup[1], this.anchor)
         this.world.CreateJoint(this.jointDef)
 
-
         return this
     },
     draw:function () {
-        //TODO rewrite for bridge
-
-
         for (var i = 2; i <= this.bodyCount; i++) {
             var x = this.bodyGroup[i].GetPosition().x
             var y = this.bodyGroup[i].GetPosition().y
@@ -100,25 +95,7 @@ CG.B2DEntity.extend('B2DBridge', {
             }
             Game.b_ctx.restore()
         }
-
     }
-
-    /*
-
-     Method Draw:Void(ratio:Float = 1.0)
-
-
-     For Local i:Int=2 to Self.bodyCount
-     Local x:Float = Self.bodyGroup[i].GetPosition().x
-     Local y:Float = Self.bodyGroup[i].GetPosition().y
-     Local r:Float	= RadToDeg(Self.bodyGroup[i].GetAngle()) * -1
-     DrawImage(Self.img, x * Self.physScale, y * Self.physScale, r, 1.0, 1.0, 0)
-     Next
-
-
-     */
-
-
 })
 
 

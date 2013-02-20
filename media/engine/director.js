@@ -18,7 +18,6 @@ CG.Class.extend('Director', {
         //handle screen fading
         switch (this.fademode) {
             case 'scale':
-                //TODO modify code for scaling
                 if (this.nextscreen != this.activescreen) {
                     this.screens[this.activescreen].xscale -= 0.4 / this.duration
                     this.screens[this.activescreen].yscale -= 0.4 / this.duration

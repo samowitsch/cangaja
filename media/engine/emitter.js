@@ -137,7 +137,6 @@ CG.Entity.extend('Emitter', {
         particle.rotationspeed = this.protation
         switch (this.type) {
             case 'corona':
-                //TODO corona like emitter
                 var rad = this.getRandom(0, 359) * CG.Const_PI_180
 
                 particle.position.x = this.getX() - (this.radius * Math.cos(rad))
