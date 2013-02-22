@@ -267,34 +267,35 @@ CG.Class.extend('Entity', {
      */
     setImage:function (image) {
         this.atlasimage = false
-        if (image instanceof CG.TPImage) {
-            //TPImage from MediaAsset
-            this.image = Game.asset.getImageByName(image.atlasname)
-            this.imagerotation = image.rotation //|| 0
-            this.xoffset = image.xoffset
-            this.yoffset = image.yoffset
-            this.width = image.width
-            this.height = image.height
-            this.atlasimage = true
-            if (this.imagerotation !== 0) {
-                this.cutwidth = image.height
-                this.cutheight = image.width
+        if (image) {
+            if (image instanceof CG.TPImage) {
+                //TPImage from MediaAsset
+                this.image = Game.asset.getImageByName(image.atlasname)
+                this.imagerotation = image.rotation //|| 0
+                this.xoffset = image.xoffset
+                this.yoffset = image.yoffset
+                this.width = image.width
+                this.height = image.height
+                this.atlasimage = true
+                if (this.imagerotation !== 0) {
+                    this.cutwidth = image.height
+                    this.cutheight = image.width
+                } else {
+                    this.cutwidth = image.width
+                    this.cutheight = image.height
+                }
+            } else if (typeof image == 'string' && image != '') {
+                //path to image
+                this.image = new Image()
+                this.image.src = image
+                this.width = this.image.width
+                this.height = this.image.height
             } else {
-                this.cutwidth = image.width
-                this.cutheight = image.height
+                //image from MediaAsset
+                this.image = image
+                this.width = this.image.width
+                this.height = this.image.height
             }
-        } else if (typeof image == 'string') {
-            //path to image
-            this.image = new Image()
-            this.image.src = image
-            this.width = this.image.width
-            this.height = this.image.height
-
-        } else {
-            //image from MediaAsset
-            this.image = image
-            this.width = this.image.width
-            this.height = this.image.height
         }
     }
 })
@@ -14637,6 +14638,59 @@ CG.B2DEntity.extend('B2DCircle', {
 
 
 /**
+ * @description B2DLine
+ *
+ * @augments B2DEntity
+ * @constructor
+ */
+
+CG.B2DEntity.extend('B2DLine', {
+    /**
+     *
+     * @param world     object      reference to world of B2DWorld
+     * @param name      string      id or name to identify
+     * @param start     b2Vec2      start of line
+     * @param end       b2Vec2      end of line
+     * @param scale     integer     the world scale of B2DWorld
+     * @return {*}
+     */
+    init:function (world, name, start, end, scale) {
+        this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
+
+        this.start = start
+        this.end = end
+
+        this.xhandle = 0
+        this.yhandle = 0
+
+        this.fixDef.shape = new b2PolygonShape
+        this.fixDef.shape.SetAsArray([this.start, this.end], 2)
+
+        this.bodyDef.type = b2Body.b2_staticBody
+        this.bodyDef.position.Set(0 / this.scale, 0 / this.scale)
+        this.bodyDef.userData = this.id
+
+        this.body = this.world.CreateBody(this.bodyDef)
+        this.body.CreateFixture(this.fixDef)
+
+        return this
+    },
+    update:function () {
+
+    },
+    draw:function () {
+
+    }
+})
+
+
+/**
+ *  © 2012 by Christian Sonntag <info@motions-media.de>
+ *  simple experimental Canvas Game JavaScript Framework
+ */
+
+
+/**
  * @description B2DRectangle
  * @augments B2DEntity
  * @constructor
@@ -14667,9 +14721,11 @@ CG.B2DEntity.extend('B2DRectangle', {
 
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
+
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
         this.bodyDef.userData = this.id
+
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 
@@ -15114,6 +15170,18 @@ CG.Layer.extend('B2DWorld', {
     createBox:function (id, image, x, y, stat) {
         this.uid = this.uid + 1
         var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
+    },
+    /**
+     *
+     * @param id      string    id or name to identify
+     * @param start   CG.Point  start o fline
+     * @param end     CG.Point  end of line
+     */
+    createLine:function (id, start, end) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DLine(this.world, id, new b2Vec2(start.x / this.scale, start.y / this.scale), new b2Vec2(end.x / this.scale, end.y / this.scale), this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },

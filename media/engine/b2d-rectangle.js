@@ -35,9 +35,11 @@ CG.B2DEntity.extend('B2DRectangle', {
 
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
+
         this.bodyDef.position.x = this.x / this.scale
         this.bodyDef.position.y = this.y / this.scale
         this.bodyDef.userData = this.id
+
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 

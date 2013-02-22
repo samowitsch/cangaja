@@ -135,6 +135,18 @@ CG.Layer.extend('B2DWorld', {
     },
     /**
      *
+     * @param id      string    id or name to identify
+     * @param start   CG.Point  start o fline
+     * @param end     CG.Point  end of line
+     */
+    createLine:function (id, start, end) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DLine(this.world, id, new b2Vec2(start.x / this.scale, start.y / this.scale), new b2Vec2(end.x / this.scale, end.y / this.scale), this.scale)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
+    },
+    /**
+     *
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param radius  integer     the radius
