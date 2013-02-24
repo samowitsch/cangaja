@@ -15070,54 +15070,7 @@ CG.Layer.extend('B2DWorld', {
         this.scale = 40
 
 
-        //TODO remove the static ground and walls from this class
-
-        var fixDef = new b2FixtureDef
-        fixDef.density = 1.0
-        fixDef.friction = 0.5
-        fixDef.restitution = 0.5
-
-        var bodyDef = new b2BodyDef
-
-        //create ground
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = Game.width2 / this.scale
-        bodyDef.position.y = (Game.height / this.scale) - 1
-        bodyDef.userData = 'ground'
-        fixDef.shape = new b2PolygonShape
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox((Game.width / this.scale) / 2, 0.5 / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-
-
-        //create wall1
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = 10 / this.scale
-        bodyDef.position.y = (Game.height2 / this.scale) - 1
-        bodyDef.userData = 'wall left'
-        fixDef.shape = new b2PolygonShape;
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-
-
-        //create wall2
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = (Game.width - 10) / this.scale
-        bodyDef.position.y = (Game.height2 / this.scale) - 1
-        bodyDef.userData = 'wall right'
-        fixDef.shape = new b2PolygonShape
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-
-        //TODO remove the static ground and walls from this class
-
-
-        //setup debug draw
+      //setup debug draw
         var debugDraw = new b2DebugDraw()
         debugDraw.SetSprite(Game.b_ctx)
         debugDraw.SetDrawScale(this.scale)

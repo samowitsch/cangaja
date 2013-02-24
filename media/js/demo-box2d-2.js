@@ -39,6 +39,59 @@ window.onload = function () {
     Game.preload()
 };
 
+
+
+
+CG.B2DWorld.extend('B2DTestbed', {
+    init:function (name) {
+        this._super(name)
+
+        var fixDef = new b2FixtureDef
+        fixDef.density = 1.0
+        fixDef.friction = 0.5
+        fixDef.restitution = 0.5
+
+        var bodyDef = new b2BodyDef
+
+        //create ground
+        bodyDef.type = b2Body.b2_staticBody
+        // positions the center of the object (not upper left!)
+        bodyDef.position.x = Game.width2 / this.scale
+        bodyDef.position.y = (Game.height / this.scale) - 1
+        bodyDef.userData = 'ground'
+        fixDef.shape = new b2PolygonShape
+        // half width, half height. eg actual height here is 1 unit
+        fixDef.shape.SetAsBox((Game.width / this.scale) / 2, 0.5 / 2)
+        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+
+
+        //create wall1
+        bodyDef.type = b2Body.b2_staticBody
+        // positions the center of the object (not upper left!)
+        bodyDef.position.x = 10 / this.scale
+        bodyDef.position.y = (Game.height2 / this.scale) - 1
+        bodyDef.userData = 'wall left'
+        fixDef.shape = new b2PolygonShape;
+        // half width, half height. eg actual height here is 1 unit
+        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
+        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+
+
+        //create wall2
+        bodyDef.type = b2Body.b2_staticBody
+        // positions the center of the object (not upper left!)
+        bodyDef.position.x = (Game.width - 10) / this.scale
+        bodyDef.position.y = (Game.height2 / this.scale) - 1
+        bodyDef.userData = 'wall right'
+        fixDef.shape = new b2PolygonShape
+        // half width, half height. eg actual height here is 1 unit
+        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
+        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+
+    }
+})
+
+
 // the Game object
 Game = (function () {
     var Game = {
@@ -110,7 +163,7 @@ Game = (function () {
 
 
             //create Box2D World
-            b2world = new CG.B2DWorld('box2d-world')
+            b2world = new CG.B2DTestbed('box2d-world')
             b2world.debug = 1
 
             //create circle element with image
@@ -184,7 +237,30 @@ Game = (function () {
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex, mousey)
                 }
+                if(evt.keyCode == 37){ //cursor left
+                    velo = b2world.elements[0].body.GetLinearVelocity()
+                    velo.Add(new b2Vec2(-5,0))
+                    b2world.elements[0].body.SetLinearVelocity(velo)
+                    console.log(velo)
+                }
+                if(evt.keyCode == 38){ //cursor up
+                    b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
+                }
+                if(evt.keyCode == 39){ //cursor right
+                    velo = b2world.elements[0].body.GetLinearVelocity()
+                    velo.Add(new b2Vec2(5,0))
+                    b2world.elements[0].body.SetLinearVelocity(velo)
+                    console.log(velo)
+                }
+
+                console.log(evt.keyCode)
             };
+
+
+            //  b2world.elements[0].body.ApplyForce(new b2Vec2(10, 0), b2world.elements[0].body.GetWorldCenter())
+            //  demo = b2world.elements[0].body.GetLinearVelocity()
+            //  demo.Add(velocity)
+            //  b2world.elements[0].body.SetLinearVelocity()
 
 
             Game.director.update()
@@ -201,7 +277,7 @@ Game = (function () {
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.draw('Box2D example. Experimental', xpos, ypos + 56)
-            //small.draw('Try moving the elements with the mouse;-)', xpos, ypos + 56 + small.getLineHeight())
+            small.draw('Use cursor keys to controll one ball ;-)', xpos, ypos + 56 + small.getLineHeight())
             //small.draw('Press d to delete an element, i for apply impulse to object below mouse pointer', xpos, ypos + 56 + (2 * small.getLineHeight()))
 
             // draw Game.b_canvas to the canvas
