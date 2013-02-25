@@ -50,6 +50,12 @@ CG.B2DEntity.extend('B2DPolygon', {
         this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         this.bodyDef.userData = this.id
         this.bodyDef.bullet = this.bullet
+
+        //this.bodyDef.linearDamping = options.linearDamping
+        //this.bodyDef.angularDamping = options.angularDamping
+        this.bodyDef.fixedRotation = true
+
+
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var i = 0, l = this.vecs.length; i < l; i++) {
@@ -58,6 +64,8 @@ CG.B2DEntity.extend('B2DPolygon', {
             this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                //value from physics editor
+            //this.fixDef.restitution = 0
+            //this.fixDef.density = 10
 
             this.fixDef.shape = this.bodyShapePoly
             this.body.CreateFixture(this.fixDef)

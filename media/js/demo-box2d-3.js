@@ -2,7 +2,7 @@ var renderStats, updateStats
 
 var mainscreen, mainlayer
 
-var b2world
+var rightplayer, leftplayer
 
 var mousex = 0
 var mousey = 0
@@ -44,35 +44,105 @@ window.onload = function () {
 };
 
 
-
-
 CG.B2DWorld.extend('B2DTestbed', {
     init:function (name) {
         this._super(name)
 
-        this.createLine('L', new CG.Point(0,-300), new CG.Point(0,Game.height))
-        this.createLine('R', new CG.Point(Game.width,-300), new CG.Point(Game.width,Game.height))
-        this.createLine('G', new CG.Point(0,Game.height), new CG.Point(Game.width,Game.height))
+        this.createLine('L', new CG.Point(0, -300), new CG.Point(0, Game.height))
+        this.createLine('R', new CG.Point(Game.width, -300), new CG.Point(Game.width, Game.height))
+        this.createLine('G', new CG.Point(0, Game.height), new CG.Point(Game.width, Game.height))
 
 
-        this.createLine('N', new CG.Point(Game.width2-10,Game.height2), new CG.Point(Game.width2-10,Game.height))
-        this.createLine('N', new CG.Point(Game.width2+10,Game.height2), new CG.Point(Game.width2+10,Game.height))
+        this.createLine('N', new CG.Point(Game.width2 - 10, Game.height2), new CG.Point(Game.width2 - 10, Game.height))
+        this.createLine('N', new CG.Point(Game.width2 + 10, Game.height2), new CG.Point(Game.width2 + 10, Game.height))
 
     }
 })
 
-CG.B2DPolygon.extend('B2DLeftPlayer', {
+CG.B2DPolygon.extend('B2DPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
-
+        this.jump = false
     },
-    events:function(){
-        document.addEventListener('keydown', function(evt){
+    addVelocity:function (vel) {
+        var b = this.body;
+        var v = b.GetLinearVelocity();
 
-            console.log(this, evt)
+        v.Add(vel);
+
+        //check for max horizontal and vertical velocities and then set
+        if (Math.abs(v.y) > this.max_ver_vel) {
+            v.y = this.max_ver_vel * v.y / Math.abs(v.y);
+        }
+
+        if (Math.abs(v.x) > this.max_hor_vel) {
+            v.x = this.max_hor_vel * v.x / Math.abs(v.x);
+        }
+
+        //set the new velocity
+        b.SetLinearVelocity(v);
+    },
+    applyImpulse:function (degrees, power) {
+        if (this.body) {
+            this.body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
+                Math.sin(degrees * (Math.PI / 180)) * power),
+                this.body.GetWorldCenter());
+        }
+    }
+})
 
 
-        })
+CG.B2DPlayer.extend('B2DLeftPlayer', {
+    init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
+        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+        self = this
+        document.addEventListener('keydown', this.control)
+    },
+    control:function (e) {
+        var keyCode = e.keyCode
+        if (keyCode == 65) { // a - left
+            console.log('PL left')
+            self.addVelocity(new b2Vec2(-3,0))
+        }
+        if (keyCode == 87) { // w - up
+            console.log('PL up')
+            if (self.jump == false) {
+                self.applyImpulse(270, 1500)
+                self.jump = true
+            }
+        }
+        if (keyCode == 68) { // d - right
+            console.log('PL right')
+            self.addVelocity(new b2Vec2(3,0))
+        }
+    }
+})
+
+
+CG.B2DPlayer.extend('B2DRightPlayer', {
+    init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
+        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+        self = this
+        document.addEventListener('keydown', this.control)
+    },
+    control:function (e) {
+        var keyCode = e.keyCode
+        if (keyCode == 37) { //left
+            console.log('PR left')
+            self.addVelocity(new b2Vec2(-3,0))
+
+        }
+        if (keyCode == 38) { //up
+            console.log('PR up')
+            if (self.jump == false) {
+                self.applyImpulse(270, 1500)
+                self.jump = true
+            }
+        }
+        if (keyCode == 39) { //right
+            console.log('PR right')
+            self.addVelocity(new b2Vec2(3,0))
+        }
     }
 })
 
@@ -139,7 +209,6 @@ Game = (function () {
             mainlayer.addElement(back3)
 
 
-
             //create Box2D World
             b2world = new CG.B2DTestbed('box2d-world')
             b2world.debug = 1
@@ -149,8 +218,10 @@ Game = (function () {
 //            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -100, false)
 //            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, false)
 
-            //leftplayer = new CG.B2DLeftPlayer(b2world.world, 'ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
-            //b2world.addCustom(leftplayer)
+            rightplayer = new CG.B2DRightPlayer(b2world.world, 'ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 150, 250, b2world.scale, false, false)
+            b2world.addCustom(rightplayer)
+            leftplayer = new CG.B2DLeftPlayer(b2world.world, 'ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 425, 250, b2world.scale, false, false)
+            b2world.addCustom(leftplayer)
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {
@@ -159,11 +230,11 @@ Game = (function () {
 
                 PostSolve:function (idA, idB, impulse) {
                     //console.log(['PostSolve', idA, idB, impulse]);
-//                    if (impulse < 0.1) return;
+                    if (idA.name == 'ballon' && idB.name == "G") {
+                        b2world.elements[idA.uid-1].jump = false
+                    }
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
-//                    entityA.hit(impulse, entityB);
-//                    entityB.hit(impulse, entityA);
                 }
             });
 
@@ -201,35 +272,25 @@ Game = (function () {
                     body = b2world.getBodyAt(mousex, mousey)
                     b2world.applyImpulse(body, 270, 25)
                 }
-                if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
-                }
-                if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
-                }
-                if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
-                }
-                if (evt.keyCode == 68) { //d
-                    body = b2world.deleteBodyAt(mousex, mousey)
-                }
-                if(evt.keyCode == 37){ //cursor left
-                    velo = b2world.elements[5].body.GetLinearVelocity()
-                    velo.Add(new b2Vec2(-5,0))
-                    b2world.elements[5].body.SetLinearVelocity(velo)
-                    console.log(velo)
-                }
-                if(evt.keyCode == 38){ //cursor up
-                    b2world.elements[5].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[5].body.GetWorldCenter())
-                }
-                if(evt.keyCode == 39){ //cursor right
-                    velo = b2world.elements[5].body.GetLinearVelocity()
-                    velo.Add(new b2Vec2(5,0))
-                    b2world.elements[5].body.SetLinearVelocity(velo)
-                    console.log(velo)
-                }
 
-                console.log(evt.keyCode)
+//                if (evt.keyCode == 68) { //d
+//                    body = b2world.deleteBodyAt(mousex, mousey)
+//                }
+//                if (evt.keyCode == 37) { //cursor left
+//                    velo = b2world.elements[5].body.GetLinearVelocity()
+//                    velo.Add(new b2Vec2(-5, 0))
+//                    b2world.elements[5].body.SetLinearVelocity(velo)
+//                    console.log(velo)
+//                }
+//                if (evt.keyCode == 38) { //cursor up
+//                    b2world.elements[5].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[5].body.GetWorldCenter())
+//                }
+//                if (evt.keyCode == 39) { //cursor right
+//                    velo = b2world.elements[5].body.GetLinearVelocity()
+//                    velo.Add(new b2Vec2(5, 0))
+//                    b2world.elements[5].body.SetLinearVelocity(velo)
+//                    console.log(velo)
+//                }
             };
 
 
