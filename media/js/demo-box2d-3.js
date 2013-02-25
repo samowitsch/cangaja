@@ -2,11 +2,15 @@ var renderStats, updateStats
 
 var mainscreen, mainlayer
 
+var b2world
+
 var mousex = 0
 var mousey = 0
 var mousedown = false
 var tp = new CG.TexturePacker()
 var collision = {direction:'', overlap:0}
+
+var gw = 800, gh = 480
 
 
 //waiting to get started ;o)
@@ -14,8 +18,8 @@ window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
+    can.width = gw
+    can.height = gh
     can.id = 'canvas'
     document.body.appendChild(can)
 
@@ -40,66 +44,48 @@ window.onload = function () {
 };
 
 
+
+
 CG.B2DWorld.extend('B2DTestbed', {
     init:function (name) {
         this._super(name)
 
-        var fixDef = new b2FixtureDef
-        fixDef.density = 1.0
-        fixDef.friction = 0.5
-        fixDef.restitution = 0.5
-
-        var bodyDef = new b2BodyDef
-
-        //create ground
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = Game.width2 / this.scale
-        bodyDef.position.y = (Game.height / this.scale) - 1
-        bodyDef.userData = 'ground'
-        fixDef.shape = new b2PolygonShape
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox((Game.width / this.scale) / 2, 0.5 / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+        this.createLine('L', new CG.Point(0,-300), new CG.Point(0,Game.height))
+        this.createLine('R', new CG.Point(Game.width,-300), new CG.Point(Game.width,Game.height))
+        this.createLine('G', new CG.Point(0,Game.height), new CG.Point(Game.width,Game.height))
 
 
-        //create wall1
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = 10 / this.scale
-        bodyDef.position.y = (Game.height2 / this.scale) - 1
-        bodyDef.userData = 'wall left'
-        fixDef.shape = new b2PolygonShape;
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
-
-
-        //create wall2
-        bodyDef.type = b2Body.b2_staticBody
-        // positions the center of the object (not upper left!)
-        bodyDef.position.x = (Game.width - 10) / this.scale
-        bodyDef.position.y = (Game.height2 / this.scale) - 1
-        bodyDef.userData = 'wall right'
-        fixDef.shape = new b2PolygonShape
-        // half width, half height. eg actual height here is 1 unit
-        fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
-        this.world.CreateBody(bodyDef).CreateFixture(fixDef)
+        this.createLine('N', new CG.Point(Game.width2-10,Game.height2), new CG.Point(Game.width2-10,Game.height))
+        this.createLine('N', new CG.Point(Game.width2+10,Game.height2), new CG.Point(Game.width2+10,Game.height))
 
     }
 })
 
+CG.B2DPolygon.extend('B2DLeftPlayer', {
+    init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
+        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+
+    },
+    events:function(){
+        document.addEventListener('keydown', function(evt){
+
+            console.log(this, evt)
+
+
+        })
+    }
+})
 
 
 // the Game object
 Game = (function () {
     var Game = {
         fps:60,
-        width:640,
-        height:480,
-        width2:640 / 2,
-        height2:480 / 2,
-        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        width:gw,
+        height:gh,
+        width2:gw / 2,
+        height2:gh / 2,
+        bound:new CG.Bound(0, 0, gw, gh).setName('game'),
         b_canvas:false,
         b_ctx:false,
         asset:new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
@@ -120,17 +106,11 @@ Game = (function () {
             Game.asset.addFont('media/font/small.txt', 'small', 'small')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
                 .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/hunter.png', 'hunter')
+                .addImage('media/img/ballon.png', 'ballon')
                 .addImage('media/img/back3.jpg', 'back3')
-
-
-                //tiled map
-                .addJson('media/map/map-advanced-inner-outer.json', 'map1')
 
                 //physics engine
                 .addJson('media/img/ballon.json', 'ballon')
-                .addJson('media/img/rainbow_256.json', 'rainbow_256')
-                .addJson('media/img/powerstar75.json', 'powerstar75')
 
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
@@ -165,23 +145,12 @@ Game = (function () {
             b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
+//            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
+//            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -100, false)
+//            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, false)
 
-            //create box element with image
-            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, false)
-
-            //create polybody with image
-            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
-            b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, false, false)
-            b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, false, false)
-
-            // bridge test
-            // name, image, x, y, length, segments, segmentHeight, scale
-            b2world.createBridge('chain', Game.asset.getImageByName('chain'), 20, 280, 620, 27, 3)
-
-            // rope test
-            // name, image, x, y, length, segments, segmentHeight, scale
-            b2world.createRope('chain-v', Game.asset.getImageByName('chain-v'), 580, 0, 200, 8, 3)
+            //leftplayer = new CG.B2DLeftPlayer(b2world.world, 'ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
+            //b2world.addCustom(leftplayer)
 
             b2world.addContactListener({
                 BeginContact:function (idA, idB) {
@@ -244,7 +213,30 @@ Game = (function () {
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex, mousey)
                 }
+                if(evt.keyCode == 37){ //cursor left
+                    velo = b2world.elements[5].body.GetLinearVelocity()
+                    velo.Add(new b2Vec2(-5,0))
+                    b2world.elements[5].body.SetLinearVelocity(velo)
+                    console.log(velo)
+                }
+                if(evt.keyCode == 38){ //cursor up
+                    b2world.elements[5].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[5].body.GetWorldCenter())
+                }
+                if(evt.keyCode == 39){ //cursor right
+                    velo = b2world.elements[5].body.GetLinearVelocity()
+                    velo.Add(new b2Vec2(5,0))
+                    b2world.elements[5].body.SetLinearVelocity(velo)
+                    console.log(velo)
+                }
+
+                console.log(evt.keyCode)
             };
+
+
+            //  b2world.elements[0].body.ApplyForce(new b2Vec2(10, 0), b2world.elements[0].body.GetWorldCenter())
+            //  demo = b2world.elements[0].body.GetLinearVelocity()
+            //  demo.Add(velocity)
+            //  b2world.elements[0].body.SetLinearVelocity()
 
 
             Game.director.update()
@@ -260,9 +252,9 @@ Game = (function () {
 
             //text stuff
             abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.draw('Box2D example. Press s for new star, b for new glowball, r for new rainbow.', xpos, ypos + 56)
-            small.draw('Try moving the elements with the mouse;-)', xpos, ypos + 56 + small.getLineHeight())
-            small.draw('Press d to delete an element, i for apply impulse to object below mouse pointer', xpos, ypos + 56 + (2 * small.getLineHeight()))
+            small.draw('Box2D example. Experimental', xpos, ypos + 56)
+            small.draw('Use cursor keys to controll one ball ;-)', xpos, ypos + 56 + small.getLineHeight())
+            //small.draw('Press d to delete an element, i for apply impulse to object below mouse pointer', xpos, ypos + 56 + (2 * small.getLineHeight()))
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

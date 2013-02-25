@@ -15114,6 +15114,15 @@ CG.Layer.extend('B2DWorld', {
     },
     /**
      *
+     * @param obj      object    custom B2D object
+     */
+    addCustom:function (obj) {
+        this.uid = this.uid + 1
+        obj.id.uid = this.uid
+        this.elements.push(obj)
+    },
+    /**
+     *
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param x       integer     the x position
