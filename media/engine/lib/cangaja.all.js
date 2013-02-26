@@ -14801,7 +14801,7 @@ CG.B2DEntity.extend('B2DPolygon', {
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                //value from physics editor
             //this.fixDef.restitution = 0
-            this.fixDef.density = 10
+            //this.fixDef.density = 10
 
             this.fixDef.shape = this.bodyShapePoly
             this.body.CreateFixture(this.fixDef)
@@ -15059,7 +15059,7 @@ CG.B2DEntity.extend('B2DBridge', {
  */
 
 CG.Layer.extend('B2DWorld', {
-    init:function (name) {
+    init:function (name, opt) {
         this.name = name || ''
         this.debug = false
 
@@ -15070,7 +15070,7 @@ CG.Layer.extend('B2DWorld', {
 
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
-            true                 //allow sleep
+            opt.sleep || true        //allow sleep
         )
 
         this.uid = 0 //uid counter for elements

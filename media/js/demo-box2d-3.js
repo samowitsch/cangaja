@@ -45,8 +45,8 @@ window.onload = function () {
 
 
 CG.B2DWorld.extend('B2DTestbed', {
-    init:function (name) {
-        this._super(name)
+    init:function (name, opt) {
+        this._super(name, opt)
 
         this.createLine('L', new CG.Point(0, -300), new CG.Point(0, Game.height))
         this.createLine('R', new CG.Point(Game.width, -300), new CG.Point(Game.width, Game.height))
@@ -63,6 +63,9 @@ CG.B2DPolygon.extend('B2DPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
         this.jump = false
+        this.max_hor_vel = 4
+        this.max_ver_vel = 7
+        this.hor_impulse = 225
     },
     addVelocity:function (vel) {
         var b = this.body;
@@ -96,24 +99,25 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
         self = this
-        document.addEventListener('keydown', this.control)
+        document.addEventListener('keydown', self.control)
     },
     control:function (e) {
         var keyCode = e.keyCode
         if (keyCode == 65) { // a - left
             console.log('PL left')
-            self.addVelocity(new b2Vec2(-3,0))
+            self.addVelocity(new b2Vec2(-3, 0))
         }
         if (keyCode == 87) { // w - up
             console.log('PL up')
             if (self.jump == false) {
-                self.applyImpulse(270, 1500)
-                self.jump = true
+                //self.applyImpulse(270, self.hor_impulse)
+                self.addVelocity(new b2Vec2(0, -6))
             }
+            self.jump = true
         }
         if (keyCode == 68) { // d - right
             console.log('PL right')
-            self.addVelocity(new b2Vec2(3,0))
+            self.addVelocity(new b2Vec2(3, 0))
         }
     }
 })
@@ -123,25 +127,26 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
         self = this
-        document.addEventListener('keydown', this.control)
+        document.addEventListener('keydown', self.control)
     },
     control:function (e) {
         var keyCode = e.keyCode
         if (keyCode == 37) { //left
             console.log('PR left')
-            self.addVelocity(new b2Vec2(-3,0))
+            self.addVelocity(new b2Vec2(-3, 0))
 
         }
         if (keyCode == 38) { //up
             console.log('PR up')
             if (self.jump == false) {
-                self.applyImpulse(270, 1500)
-                self.jump = true
+                //self.applyImpulse(270, self.hor_impulse)
+                self.addVelocity(new b2Vec2(0, -6))
             }
+            self.jump = true
         }
         if (keyCode == 39) { //right
             console.log('PR right')
-            self.addVelocity(new b2Vec2(3,0))
+            self.addVelocity(new b2Vec2(3, 0))
         }
     }
 })
@@ -209,8 +214,9 @@ Game = (function () {
             mainlayer.addElement(back3)
 
 
+            var opt = {sleep:false}
             //create Box2D World
-            b2world = new CG.B2DTestbed('box2d-world')
+            b2world = new CG.B2DTestbed('box2d-world', opt)
             b2world.debug = 1
 
             //create circle element with image
@@ -231,7 +237,7 @@ Game = (function () {
                 PostSolve:function (idA, idB, impulse) {
                     //console.log(['PostSolve', idA, idB, impulse]);
                     if (idA.name == 'ballon' && idB.name == "G") {
-                        b2world.elements[idA.uid-1].jump = false
+                        b2world.elements[idA.uid - 1].jump = false
                     }
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];

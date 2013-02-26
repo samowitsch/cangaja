@@ -11,7 +11,7 @@
  */
 
 CG.Layer.extend('B2DWorld', {
-    init:function (name) {
+    init:function (name, opt) {
         this.name = name || ''
         this.debug = false
 
@@ -22,7 +22,7 @@ CG.Layer.extend('B2DWorld', {
 
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
-            true                 //allow sleep
+            opt.sleep || true        //allow sleep
         )
 
         this.uid = 0 //uid counter for elements
