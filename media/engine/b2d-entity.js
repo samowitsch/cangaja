@@ -35,15 +35,18 @@ CG.Entity.extend('B2DEntity', {
         this.setImage(image)
         this.xhandle = (this.width / 2)
         this.yhandle = (this.height / 2)
+        if(!this.bodyDef){
+            this.bodyDef = new b2BodyDef
+            this.bodyDef.allowSleep = true
+            this.bodyDef.awake = true
+        }
 
-        this.bodyDef = new b2BodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = true
-
-        this.fixDef = new b2FixtureDef
-        this.fixDef.density = 1.0
-        this.fixDef.friction = 0.5
-        this.fixDef.restitution = 0.5
+        if(!this.fixDef) {
+            this.fixDef = new b2FixtureDef
+            this.fixDef.density = 1.0
+            this.fixDef.friction = 0.5
+            this.fixDef.restitution = 0.5
+        }
 
         this.isHit = false;
         this.strength = 100;

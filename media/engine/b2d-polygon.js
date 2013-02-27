@@ -53,7 +53,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         //this.bodyDef.linearDamping = options.linearDamping
         //this.bodyDef.angularDamping = options.angularDamping
-        this.bodyDef.fixedRotation = true
+        //this.bodyDef.fixedRotation = true
 
 
         this.body = this.world.CreateBody(this.bodyDef)

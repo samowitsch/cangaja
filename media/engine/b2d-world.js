@@ -12,6 +12,9 @@
 
 CG.Layer.extend('B2DWorld', {
     init:function (name, opt) {
+
+        opt = opt || {}
+
         this.name = name || ''
         this.debug = false
 

@@ -14499,7 +14499,18 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
     b2DebugDraw = Box2D.Dynamics.b2DebugDraw,
     b2RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef,
-    b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef
+    b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef,
+    b2Shape = Box2D.Collision.Shapes.b2Shape,
+    b2Joint = Box2D.Dynamics.Joints.b2Joint,
+    b2PrismaticJointDef = Box2D.Dynamics.Joints.b2PrismaticJointDef,
+    b2ContactListener = Box2D.Dynamics.b2ContactListener,
+    b2Settings = Box2D.Common.b2Settings,
+    b2Mat22 = Box2D.Common.Math.b2Mat22,
+    b2EdgeChainDef = Box2D.Collision.Shapes.b2EdgeChainDef,
+    b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
+    b2WorldManifold = Box2D.Collision.b2WorldManifold
+
+
 /**
  *  © 2012 by Christian Sonntag <info@motions-media.de>
  *  simple experimental Canvas Game JavaScript Framework
@@ -14537,15 +14548,18 @@ CG.Entity.extend('B2DEntity', {
         this.setImage(image)
         this.xhandle = (this.width / 2)
         this.yhandle = (this.height / 2)
+        if(!this.bodyDef){
+            this.bodyDef = new b2BodyDef
+            this.bodyDef.allowSleep = true
+            this.bodyDef.awake = true
+        }
 
-        this.bodyDef = new b2BodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = true
-
-        this.fixDef = new b2FixtureDef
-        this.fixDef.density = 1.0
-        this.fixDef.friction = 0.5
-        this.fixDef.restitution = 0.5
+        if(!this.fixDef) {
+            this.fixDef = new b2FixtureDef
+            this.fixDef.density = 1.0
+            this.fixDef.friction = 0.5
+            this.fixDef.restitution = 0.5
+        }
 
         this.isHit = false;
         this.strength = 100;
@@ -14789,7 +14803,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         //this.bodyDef.linearDamping = options.linearDamping
         //this.bodyDef.angularDamping = options.angularDamping
-        this.bodyDef.fixedRotation = true
+        //this.bodyDef.fixedRotation = true
 
 
         this.body = this.world.CreateBody(this.bodyDef)
@@ -15060,6 +15074,9 @@ CG.B2DEntity.extend('B2DBridge', {
 
 CG.Layer.extend('B2DWorld', {
     init:function (name, opt) {
+
+        opt = opt || {}
+
         this.name = name || ''
         this.debug = false
 
