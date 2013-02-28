@@ -72,7 +72,7 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this.jump = false
-        this.max_hor_vel = 4
+        this.max_hor_vel = 5
         this.max_ver_vel = 7
 
 
@@ -95,9 +95,9 @@ CG.B2DPolygon.extend('B2DPlayer', {
         //set the new velocity
         this.body.SetLinearVelocity(v);
 
-        if (vel.y < 0) {
-            this.jump = true
-        }
+//        if (vel.y < 0) {
+//            this.jump = true
+//        }
     },
     applyImpulse:function (degrees, power) {
         if (this.body) {
@@ -112,25 +112,6 @@ CG.B2DPolygon.extend('B2DPlayer', {
 CG.B2DPlayer.extend('B2DRightPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
-        self = this
-        //document.addEventListener('keydown', self.rightControl, false)
-    },
-    rightControl:function (e) {
-        var keyCode = e.keyCode
-        if (keyCode == 37) { //left
-            self.addVelocity(new b2Vec2(-3, 0))
-
-        }
-        if (keyCode == 38) { //up
-            if (self.jump == false) {
-                //self.applyImpulse(270, self.hor_impulse)
-                self.addVelocity(new b2Vec2(0, -6))
-            }
-            self.jump = true
-        }
-        if (keyCode == 39) { //right
-            self.addVelocity(new b2Vec2(3, 0))
-        }
     }
 })
 
@@ -138,25 +119,17 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
 CG.B2DPlayer.extend('B2DLeftPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
-        self = this
-        //document.addEventListener('keydown', self.leftControl, false)
-    },
-    leftControl:function (e) {
-        var keyCode = e.keyCode
-        if (keyCode == 65) { // a - left
-            self.addVelocity(new b2Vec2(-3, 0))
-        }
-        if (keyCode == 87) { // w - up
-            if (self.jump == false) {
-                //self.applyImpulse(270, self.hor_impulse)
-                self.addVelocity(new b2Vec2(0, -6))
-            }
-            self.jump = true
-        }
-        if (keyCode == 68) { // d - right
-            self.addVelocity(new b2Vec2(3, 0))
-        }
     }
+})
+
+CG.B2DCircle.extend('B2DBall', {
+    init:function (world, name, image, radius, x, y, scale, stat) {
+        this._super(world, name, image, radius, x, y, scale, stat)
+    }
+//    draw:function () {
+//        this._super()
+//        //TODO draw pointer/hud for ball
+//    }
 })
 
 
@@ -191,6 +164,7 @@ Game = (function () {
                 .addImage('media/img/glowball-50.png', 'glowball')
                 .addImage('media/img/ballon.png', 'ballon')
                 .addImage('media/img/back3.jpg', 'back3')
+                .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
 
                 //physics engine
                 .addJson('media/img/ballon.json', 'ballon')
@@ -227,6 +201,9 @@ Game = (function () {
             b2world = new CG.B2DTestbed('box2d-world', opt)
             b2world.debug = 1
 
+
+            ball = new CG.B2DBall(b2world.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, b2world.scale, false)
+            b2world.addCustom(ball)
 
             rightplayer = new CG.B2DRightPlayer(b2world.world, 'right', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 425, 200, b2world.scale, false, false)
             b2world.addCustom(rightplayer)
@@ -277,6 +254,7 @@ Game = (function () {
                     if (leftplayer.jump == false) {
                         //self.applyImpulse(270, self.hor_impulse)
                         leftplayer.addVelocity(new b2Vec2(0, -6))
+                        leftplayer.jump = true
                     }
                 }
                 if (keyCode == 68) { // d - right
@@ -292,6 +270,7 @@ Game = (function () {
                     if (rightplayer.jump == false) {
                         //self.applyImpulse(270, self.hor_impulse)
                         rightplayer.addVelocity(new b2Vec2(0, -6))
+                        rightplayer.jump = true
                     }
                 }
                 if (keyCode == 39) { //right
