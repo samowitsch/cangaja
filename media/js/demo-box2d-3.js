@@ -72,8 +72,10 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this.jump = false
-        this.max_hor_vel = 5
-        this.max_ver_vel = 7
+        this.max_hor_vel = 8
+        this.max_ver_vel = 9
+
+        this.ballcontacts = 0
 
 
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
@@ -125,11 +127,17 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
 CG.B2DCircle.extend('B2DBall', {
     init:function (world, name, image, radius, x, y, scale, stat) {
         this._super(world, name, image, radius, x, y, scale, stat)
+
+
+        this.arrow = new CG.Sprite(Game.asset.getImageByName('arrow'), new CG.Point(this.body.GetPosition().x * this.scale, 15))
+        this.arrow.name = 'arrow'
+        mainlayer.addElement(this.arrow)
+
+    },
+    update:function () {
+        this._super()
+        this.arrow.position.x = this.body.GetPosition().x * this.scale
     }
-//    draw:function () {
-//        this._super()
-//        //TODO draw pointer/hud for ball
-//    }
 })
 
 
@@ -160,14 +168,14 @@ Game = (function () {
 
             //Asset preloading font files
             Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
                 .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/ballon.png', 'ballon')
-                .addImage('media/img/back3.jpg', 'back3')
+                .addImage('media/img/blobby-egg.png', 'blobby-egg')
+                .addImage('media/img/blobby-back.png', 'blobby-back')
+                .addImage('media/img/arrow-25.png', 'arrow')
                 .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
 
                 //physics engine
-                .addJson('media/img/ballon.json', 'ballon')
+                .addJson('media/img/blobby-egg.json', 'blobby-egg')
 
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
@@ -183,31 +191,29 @@ Game = (function () {
             //put the texturepacker TPImages to the asset
             Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
             //screen and layer
             mainscreen = new CG.Screen('mainscreen')
             mainlayer = new CG.Layer('mainlayer')
 
-            back3 = new CG.Sprite(Game.asset.getImageByName('back3'), new CG.Point(320, 240))
-            back3.name = 'back3'
-            mainlayer.addElement(back3)
+            back = new CG.Sprite(Game.asset.getImageByName('blobby-back'), new CG.Point(400, 240))
+            back.name = 'back'
+            mainlayer.addElement(back)
 
 
             var opt = {sleep:false}
             //create Box2D World
             b2world = new CG.B2DTestbed('box2d-world', opt)
-            b2world.debug = 1
+            b2world.debug = 0
 
 
             ball = new CG.B2DBall(b2world.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, b2world.scale, false)
             b2world.addCustom(ball)
 
-            rightplayer = new CG.B2DRightPlayer(b2world.world, 'right', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 425, 200, b2world.scale, false, false)
+            rightplayer = new CG.B2DRightPlayer(b2world.world, 'right', Game.asset.getImageByName('blobby-egg'), Game.asset.getJsonByName('blobby-egg'), 425, 200, b2world.scale, false, false)
             b2world.addCustom(rightplayer)
-            leftplayer = new CG.B2DLeftPlayer(b2world.world, 'left', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 150, 200, b2world.scale, false, false)
+            leftplayer = new CG.B2DLeftPlayer(b2world.world, 'left', Game.asset.getImageByName('blobby-egg'), Game.asset.getJsonByName('blobby-egg'), 150, 200, b2world.scale, false, false)
             b2world.addCustom(leftplayer)
 
             b2world.addContactListener({
@@ -307,10 +313,7 @@ Game = (function () {
 
 
             //text stuff
-            abadi.draw('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.draw('Box2D example. Experimental', xpos, ypos + 56)
-            small.draw('Use cursor keys to controll one ball ;-)', xpos, ypos + 56 + small.getLineHeight())
-            //small.draw('Press d to delete an element, i for apply impulse to object below mouse pointer', xpos, ypos + 56 + (2 * small.getLineHeight()))
+            small.draw('Tribute to blobby ;o)', xpos, ypos)
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)
