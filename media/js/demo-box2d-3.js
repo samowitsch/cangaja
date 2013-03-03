@@ -48,13 +48,19 @@ CG.B2DWorld.extend('B2DTestbed', {
     init:function (name, opt) {
         this._super(name, opt)
 
-        this.createLine('L', new CG.Point(0, -300), new CG.Point(0, Game.height))
-        this.createLine('R', new CG.Point(Game.width, -300), new CG.Point(Game.width, Game.height))
+        this.createLine('L', new CG.Point(0, -400), new CG.Point(0, Game.height))
+        this.createLine('R', new CG.Point(Game.width, -400), new CG.Point(Game.width, Game.height))
         this.createLine('G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50))
-
-
         this.createLine('N', new CG.Point(Game.width2 - 10, Game.height2 - 50), new CG.Point(Game.width2 - 10, Game.height))
         this.createLine('N', new CG.Point(Game.width2 + 10, Game.height2 - 50), new CG.Point(Game.width2 + 10, Game.height))
+
+
+//        this.addCustom(new CG.B2DBlobbyLine(this.world, 'L', new CG.Point(0, -400), new CG.Point(0, Game.height), this.scale))
+//        this.addCustom(new CG.B2DBlobbyLine(this.world, 'R', new CG.Point(Game.width, -400), new CG.Point(Game.width, Game.height), this.scale))
+//        this.addCustom(new CG.B2DBlobbyLine(this.world, 'G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50), this.scale))
+//        this.addCustom(new CG.B2DBlobbyLine(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 50), new CG.Point(Game.width2 - 10, Game.height), this.scale))
+//        this.addCustom(new CG.B2DBlobbyLine(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 50), new CG.Point(Game.width2 + 10, Game.height), this.scale))
+
 
     }
 })
@@ -65,6 +71,7 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.bodyDef = new b2BodyDef
         this.bodyDef.fixedRotation = true
         this.bodyDef.allowSleep = false
+        this.bodyDef.bullet = true
 
         this.fixDef = new b2FixtureDef
         this.fixDef.restitution = 0
@@ -72,8 +79,15 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this.jump = false
-        this.max_hor_vel = 8
+        this.max_hor_vel = 9
         this.max_ver_vel = 9
+
+        this.points = 0
+        this.offhor = 20
+        this.offver = 20
+
+        this.font = new CG.Font().loadFont(Game.asset.getFontByName('blobby-points'))
+
 
         this.ballcontacts = 0
 
@@ -110,22 +124,39 @@ CG.B2DPolygon.extend('B2DPlayer', {
     }
 })
 
-
 CG.B2DPlayer.extend('B2DRightPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+    },
+    draw:function () {
+        this._super()
+        this.font.draw('' + this.points, Game.width - this.offhor - this.font.getTextWidth('' + this.points), this.offver)
+
     }
 })
-
 
 CG.B2DPlayer.extend('B2DLeftPlayer', {
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+    },
+    draw:function () {
+        this._super()
+        this.font.draw('' + this.points, this.offhor, this.offver)
+
     }
 })
 
 CG.B2DCircle.extend('B2DBall', {
     init:function (world, name, image, radius, x, y, scale, stat) {
+        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
+        this.bodyDef.allowSleep = true
+        this.bodyDef.awake = true
+
+        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
+        this.fixDef.density = 1.0
+        this.fixDef.friction = 0.2
+        this.fixDef.restitution = 0.5
+
         this._super(world, name, image, radius, x, y, scale, stat)
 
 
@@ -137,6 +168,21 @@ CG.B2DCircle.extend('B2DBall', {
     update:function () {
         this._super()
         this.arrow.position.x = this.body.GetPosition().x * this.scale
+    }
+})
+
+CG.B2DLine.extend('B2DBlobbyLine', {
+    init:function (world, name, start, end, scale) {
+        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
+        this.bodyDef.allowSleep = true
+        this.bodyDef.awake = false
+
+        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
+        this.fixDef.density = 1.0
+        this.fixDef.friction = 0.2
+        this.fixDef.restitution = 0.5
+
+        this._super(world, name, start, end, scale)
     }
 })
 
@@ -173,6 +219,9 @@ Game = (function () {
                 .addImage('media/img/blobby-back.png', 'blobby-back')
                 .addImage('media/img/arrow-25.png', 'arrow')
                 .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
+                .addImage('media/font/blobby-points.png', 'blobby-points')
+                .addFont('media/font/blobby-points.txt', 'blobby-points')
+
 
                 //physics engine
                 .addJson('media/img/blobby-egg.json', 'blobby-egg')
@@ -222,10 +271,16 @@ Game = (function () {
                 },
 
                 PostSolve:function (idA, idB, impulse) {
-                    //console.log(['PostSolve', idA, idB, impulse]);
                     if ((idA.name == 'left' || idA.name == 'right') && idB.name == "G") {
                         b2world.elements[idA.uid - 1].jump = false
                     }
+
+
+                    if ((idA.name == 'left' || idA.name == 'right') && idB.name == "beachvolleyball") {
+                        //console.log(['PostSolve', idA, idB, impulse]);
+                        b2world.elements[idA.uid - 1].points += 1
+                    }
+
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
                 }
@@ -313,7 +368,8 @@ Game = (function () {
 
 
             //text stuff
-            small.draw('Tribute to blobby ;o)', xpos, ypos)
+            var dummytext = 'Tribute to blobby ;o)'
+            small.draw(dummytext, Game.width2 - (small.getTextWidth(dummytext) / 2), ypos)
 
             // draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

@@ -10,7 +10,7 @@ CG.Entity.extend('Font', {
         this.atlas = new Image()
         this.fieldname = ''
         this.initText = ''
-        this.chars = new Array(256) //?
+        this.chars = new Array(256)
         this.x = new Array(256)
         this.y = new Array(256)
         this.width = new Array(256)
@@ -77,7 +77,7 @@ CG.Entity.extend('Font', {
      * @param {string} text
      * @return {integer} textwidth
      */
-    getLength:function (text) {
+    getTextWidth:function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i < l; i++) {

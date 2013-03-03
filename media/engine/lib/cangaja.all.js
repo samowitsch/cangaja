@@ -1221,7 +1221,7 @@ CG.Sprite.extend('Button', {
             Game.b_ctx.rotate(r * CG.Const_PI_180)
             Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
         }
-        this.font.draw(this.text, 0 - (this.font.getLength(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+        this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
         Game.b_ctx.restore()
     }
 })
@@ -1501,7 +1501,7 @@ CG.Entity.extend('Font', {
         this.atlas = new Image()
         this.fieldname = ''
         this.initText = ''
-        this.chars = new Array(256) //?
+        this.chars = new Array(256)
         this.x = new Array(256)
         this.y = new Array(256)
         this.width = new Array(256)
@@ -1568,7 +1568,7 @@ CG.Entity.extend('Font', {
      * @param {string} text
      * @return {integer} textwidth
      */
-    getLength:function (text) {
+    getTextWidth:function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i < l; i++) {
