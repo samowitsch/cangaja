@@ -2,7 +2,7 @@
  * @description MapTileProperties
  *
  * @class CG.MapTileProperties
- * @extend Class
+ * @extends Class
  */
 CG.Class.extend('MapTileProperties', {
     /**

@@ -2,7 +2,7 @@
  * @description Emitter class that handles . . . particles.
  *
  * @class CG.Emitter
- * @extend CG.Entity
+ * @extends CG.Entity
  *
  * @param {point} position of emitter
  */

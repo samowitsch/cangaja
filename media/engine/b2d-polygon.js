@@ -9,7 +9,7 @@
  * supported options are friction, density and bounce
  *
  * @class CG.B2DPolygon
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DPolygon', {

@@ -7,6 +7,7 @@
 /**
  * @description class Entity the base class of cangaja
  * @class CG.Entity
+ * @extends CG.Class
  */
 
 CG.Class.extend('Entity', {

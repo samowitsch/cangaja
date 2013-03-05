@@ -1,16 +1,52 @@
 /**
- * @description Director the top instance for screens and so on in the control hierarchy
+ * @description
  *
- * @constructor
+ * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
+ *
+ * @class CG.Director
+ * @extends Class
  */
 CG.Class.extend('Director', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
+        /**
+         * @property screens
+         * @type {Array}
+         */
         this.screens = []
+        /**
+         * @property activescreen
+         * @type {Number}
+         */
         this.activescreen = 0
+        /**
+         * @description nextscreen
+         * @type {Number}
+         */
         this.nextscreen = 0
+        /**
+         * @property duration
+         * @type {Number}
+         */
         this.duration = 20
+        /**
+         * @description alpha
+         * @type {Number}
+         */
         this.alpha = 0
+        /**
+         * @description fademode
+         * @type {String}
+         */
         this.fademode = 'fade'      //fade or scale
+        /**
+         * @property color
+         * @type {String}
+         */
         this.color = 'rgb(0,0,0)'
         return this
     },
@@ -68,7 +104,7 @@ CG.Class.extend('Director', {
         }
     },
     /**
-     * @description addScreen
+     * @method addScreen
      *
      * @param {screen} screen to add to the screen list
      */
@@ -77,7 +113,7 @@ CG.Class.extend('Director', {
         return this
     },
     /**
-     * @description  nextScreen
+     * @method nextScreen
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -90,7 +126,7 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getScreenByName
+     * @method getScreenByName
      *
      * @param {string} screenname to find screen by name
      * @return {false/screen} returns false or the screen object
@@ -105,7 +141,7 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getIndexOfScreen
+     * @method getIndexOfScreen
      *
      * @param {string} screenname to find index of screen in screen array
      * @return {false/integer} return false or index number of the screen
@@ -120,7 +156,7 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getActiveScreenName
+     * @method getActiveScreenName
      *
      * @return {string} the name of the active screen
      */
@@ -129,7 +165,7 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  setFadeMode
+     * @method setFadeMode
      *
      * @return {string} fademode for screen transitions => fade or scale
      */

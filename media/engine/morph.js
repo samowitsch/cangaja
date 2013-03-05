@@ -1,15 +1,21 @@
 /**
- * @description class Morph to manipulate objects in size and so on
+ * @description
  *
- * @constructor
- * @augments Entity
+ * class Morph to manipulate objects in size and so on
  *
- * @param {string} mode type of the morph object
- * @param {Number} min min value
- * @param {Number} max max value
- * @param {Number} speed speed value
+ * @class CG.Morph
+ * @extends CG.Entity
+ *
  */
 CG.Entity.extend('Morph', {
+    /**
+     * @method init
+     * @constructor
+     * @param mode {string} mode type of the morph object
+     * @param min {Number} min min value
+     * @param max {Number} max max value
+     * @param speed {Number} speed speed value
+     */
     init:function (mode, min, max, speed) {
         this.mode = mode
         this.min = min
@@ -40,7 +46,7 @@ CG.Entity.extend('Morph', {
 
     },
     /**
-     * @description get the current value
+     * @method getVal
      *
      * @return {float}
      */

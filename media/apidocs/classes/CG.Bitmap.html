@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.MediaAsset - Cangaja API</title>
+    <title>CG.Bitmap - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -154,19 +154,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.MediaAsset Class</h1>
+                        <h1>CG.Bitmap Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends Class
+            Extends <a href="../classes/CG.Entity.html" class="crosslink">CG.Entity</a>
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l1"><code>engine&#x2F;mediaasset.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l1"><code>engine&#x2F;bitmap.js:1</code></a>
         </div>
     
 
@@ -178,7 +178,7 @@
 
 
 <div class="box intro">
-    <p>MediaAsset preloader.</p>
+    <p>Class Bitmap extends Class Buffer</p>
 </div>
 
 
@@ -190,6 +190,8 @@
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -206,69 +208,48 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
-                                <a href="#method_addFont">addFont</a>
+                                <a href="#method_clearBuffer">clearBuffer</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_addImage">addImage</a>
+                                <a href="#method_clearCircle">clearCircle</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_addJson">addJson</a>
+                                <a href="#method_clearRect">clearRect</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_addXml">addXml</a>
+                                <a href="#method_drawImageToBuffer">drawImageToBuffer</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getFontByName">getFontByName</a>
+                                <a href="#method_getPixel">getPixel</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getImageByName">getImageByName</a>
+                                <a href="#method_getPixels">getPixels</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_getImagesByName">getImagesByName</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getJsonByName">getJsonByName</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getXmlByName">getXmlByName</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_init">init</a>
 
                                 
@@ -276,7 +257,38 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_startPreLoad">startPreLoad</a>
+                                <a href="#method_loadImage">loadImage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_setImage">setImage</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_name">name</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_visible">visible</a>
 
                                 
                                 
@@ -289,8 +301,6 @@
             
 
             
-
-            
         </div>
 
         
@@ -298,8 +308,62 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_addFont" class="method item">
-    <h3 class="name"><code>addFont</code></h3>
+                    <div id="method_clearBuffer" class="method item">
+    <h3 class="name"><code>clearBuffer</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l50"><code>engine&#x2F;bitmap.js:50</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_clearCircle" class="method item">
+    <h3 class="name"><code>clearCircle</code></h3>
 
     
         <div class="args">
@@ -307,13 +371,346 @@
             
                 <li class="arg">
                     
-                        <code>path</code>
+                        <code>x</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>name</code>
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>radius</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l82"><code>engine&#x2F;bitmap.js:82</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the x position for clearCircle</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the y position for clearCircle</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">radius</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the radius for clearCircle</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_clearRect" class="method item">
+    <h3 class="name"><code>clearRect</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l67"><code>engine&#x2F;bitmap.js:67</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the x position for clearRect</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the y position for clearRect</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">width</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the width for clearRect</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the height for clearRect</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_drawImageToBuffer" class="method item">
+    <h3 class="name"><code>drawImageToBuffer</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l58"><code>engine&#x2F;bitmap.js:58</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_getPixel" class="method item">
+    <h3 class="name"><code>getPixel</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>y</code>
                     
                 </li>
             
@@ -323,7 +720,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type">Imagedata</span>
         </span>
     
 
@@ -350,7 +747,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l72"><code>engine&#x2F;mediaasset.js:72</code></a>
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l99"><code>engine&#x2F;bitmap.js:99</code></a>
         
         </p>
 
@@ -372,14 +769,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">path</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>the x position for getPixel</p>
                     </div>
 
                     
@@ -387,14 +784,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>the y position for getPixel</p>
                     </div>
 
                     
@@ -411,8 +808,9 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"></span>:
+                        <span class="type">Imagedata</span>:
                     
+                    data from canvas
                 
             </div>
         </div>
@@ -422,8 +820,8 @@
 </div>
 
                 
-                    <div id="method_addImage" class="method item">
-    <h3 class="name"><code>addImage</code></h3>
+                    <div id="method_getPixels" class="method item">
+    <h3 class="name"><code>getPixels</code></h3>
 
     
         <div class="args">
@@ -431,13 +829,25 @@
             
                 <li class="arg">
                     
-                        <code>path</code>
+                        <code>x</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>name</code>
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
                     
                 </li>
             
@@ -447,7 +857,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type">Imagedata</span>
         </span>
     
 
@@ -474,7 +884,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l57"><code>engine&#x2F;mediaasset.js:57</code></a>
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l110"><code>engine&#x2F;bitmap.js:110</code></a>
         
         </p>
 
@@ -496,14 +906,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">path</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>the x position for getPixels</p>
                     </div>
 
                     
@@ -511,14 +921,44 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>the y position for getPixels</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">width</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>for getPixels</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>for getPixels</p>
                     </div>
 
                     
@@ -535,771 +975,9 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"></span>:
+                        <span class="type">Imagedata</span>:
                     
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_addJson" class="method item">
-    <h3 class="name"><code>addJson</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>path</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l102"><code>engine&#x2F;mediaasset.js:102</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">path</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_addXml" class="method item">
-    <h3 class="name"><code>addXml</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>path</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l87"><code>engine&#x2F;mediaasset.js:87</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">path</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getFontByName" class="method item">
-    <h3 class="name"><code>getFontByName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l155"><code>engine&#x2F;mediaasset.js:155</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getImageByName" class="method item">
-    <h3 class="name"><code>getImageByName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l117"><code>engine&#x2F;mediaasset.js:117</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getImagesByName" class="method item">
-    <h3 class="name"><code>getImagesByName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l134"><code>engine&#x2F;mediaasset.js:134</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getJsonByName" class="method item">
-    <h3 class="name"><code>getJsonByName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l181"><code>engine&#x2F;mediaasset.js:181</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getXmlByName" class="method item">
-    <h3 class="name"><code>getXmlByName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l168"><code>engine&#x2F;mediaasset.js:168</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
+                    data from canvas
                 
             </div>
         </div>
@@ -1311,6 +989,217 @@
                 
                     <div id="method_init" class="method item">
     <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_init">
+                CG.Entity
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l9"><code>engine&#x2F;bitmap.js:9</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">width</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>width the width for the buffer</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>height the height for the buffer</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_loadImage" class="method item">
+    <h3 class="name"><code>loadImage</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>imgpath,</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_bitmap.js.html#l26"><code>engine&#x2F;bitmap.js:26</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Loads an image and draws it to the buffer</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">imgpath,</code>
+                        <span class="type">String, image, tpimage</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>image object or tpimage object to use</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setImage" class="method item inherited">
+    <h3 class="name"><code>setImage</code></h3>
 
     
         <div class="args">
@@ -1343,15 +1232,12 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_setImage">CG.Entity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l12"><code>engine&#x2F;mediaasset.js:12</code></a>
+        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l41"><code>engine&#x2F;entity.js:41</code></a>
         
         </p>
 
@@ -1362,7 +1248,7 @@
     </div>
 
     <div class="description">
-        
+        <p>initialize image for object. for now => sprite, particle, buffer, bitmap and button use it</p>
     </div>
 
     
@@ -1374,13 +1260,13 @@
                 <li class="param">
                     
                         <code class="param-name">image</code>
-                        <span class="type">String</span>
+                        <span class="type">Image</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>image path to background image of preloader</p>
+                        <p>image path, image or tpimage</p>
                     </div>
 
                     
@@ -1396,18 +1282,17 @@
 </div>
 
                 
-                    <div id="method_startPreLoad" class="method item">
-    <h3 class="name"><code>startPreLoad</code></h3>
+            </div>
+        
 
-    
-        <span class="paren">()</span>
-    
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
 
-    
-
-    
-
-    
+                
+                    <div id="property_name" class="property item inherited">
+    <h3 class="name"><code>name</code></h3>
+    <span class="type">String</span>
 
     
 
@@ -1420,18 +1305,55 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_name">CG.Entity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_mediaasset.js.html#l194"><code>engine&#x2F;mediaasset.js:194</code></a>
+        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l20"><code>engine&#x2F;entity.js:20</code></a>
         
         </p>
 
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_visible" class="property item inherited">
+    <h3 class="name"><code>visible</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_visible">CG.Entity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l24"><code>engine&#x2F;entity.js:24</code></a>
+        
+        </p>
 
         
 
@@ -1451,8 +1373,6 @@
 
                 
             </div>
-        
-
         
 
         

@@ -1,13 +1,18 @@
 /**
  * @description Class Bitmap extends Class Buffer
  *
- * @constructor
- * @augments Entity
+ * @class CG.Bitmap
+ * @extends CG.Entity
  *
- * @param {Number} width the width for the buffer
- * @param {Number} height the height for the buffer
  */
 CG.Entity.extend('Bitmap', {
+    /**
+     * @method init
+     * @constructor
+     * @param width {Number} width the width for the buffer
+     * @param height {Number} height the height for the buffer
+     * @return {*}
+     */
     init:function (width, height) {
         this._super(this)
         this.x = 0
@@ -19,7 +24,11 @@ CG.Entity.extend('Bitmap', {
         return this
     },
     /**
-     * @description loads image and draws it to the buffer
+     * @description
+     *
+     * Loads an image and draws it to the buffer
+     *
+     * @method loadImage
      *
      * @param {string, image, tpimage} imgpath, image object or tpimage object to use
      */
@@ -39,7 +48,7 @@ CG.Entity.extend('Bitmap', {
 
 
     /**
-     * @description clearBuffer
+     * @method clearBuffer
      */
     clearBuffer:function () {
         this.bitmap_ctx.clearRect(0, 0, this.bitmap_canvas.width, this.bitmap_canvas.height)
@@ -47,7 +56,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description drawImageToBuffer
+     * @method drawImageToBuffer
      */
     drawImageToBuffer:function () {
         this.bitmap_ctx.drawImage(this.image, 0, 0)
@@ -56,7 +65,7 @@ CG.Entity.extend('Bitmap', {
 
 
     /**
-     * @description clearRect
+     * @method clearRect
      *
      * @param {Number} x the x position for clearRect
      * @param {Number} y the y position for clearRect
@@ -71,7 +80,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description clearCircle
+     * @method clearCircle
      *
      * @param {Number} x the x position for clearCircle
      * @param {Number} y the y position for clearCircle
@@ -88,7 +97,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description getPixel
+     * @method getPixel
      *
      * @param {Number} x the x position for getPixel
      * @param {Number} y the y position for getPixel
@@ -99,7 +108,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description getPixels
+     * @method getPixels
      *
      * @param {Number} x the x position for getPixels
      * @param {Number} y the y position for getPixels

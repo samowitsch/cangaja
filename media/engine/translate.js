@@ -2,7 +2,7 @@
  * @description class Translate moving a object
  *
  * @class CG.Translate
- * @extend CG.Entity
+ * @extends CG.Entity
  */
 CG.Entity.extend('Translate', {
     /**

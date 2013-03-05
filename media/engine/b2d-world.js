@@ -5,7 +5,13 @@
 
 
 /**
- * @description B2DWorld
+ * @description
+ *
+ * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
+ * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extend
+ * one of the basic B2D objects can added to the B2DWorld with the addCustom method.
+ * The CG.B2DWorld can attached to an CG.Screen object as layer.
+ *
  * @class CG.B2DWorld
  * @xtend CG.Layer
  */
@@ -14,7 +20,7 @@ CG.Layer.extend('B2DWorld', {
     /**
      * @method init
      * @constructor
-     * @param name {string} name of the b2dworld
+     * @param name {String} name of the b2dworld
      * @param opt {object} additional options
      */
     init:function (name, opt) {
@@ -23,11 +29,11 @@ CG.Layer.extend('B2DWorld', {
          * @property opt
          * @type {object}
          */
-        opt = opt || {}
+        opt = opt || {}
 
         /**
          * @property name
-         * @type {string}
+         * @type {String}
          */
         this.name = name || ''
         /**
@@ -71,7 +77,7 @@ CG.Layer.extend('B2DWorld', {
         this.scale = 40
 
 
-      //setup debug draw
+        //setup debug draw
         var debugDraw = new b2DebugDraw()
         debugDraw.SetSprite(Game.b_ctx)
         debugDraw.SetDrawScale(this.scale)
@@ -114,6 +120,10 @@ CG.Layer.extend('B2DWorld', {
         Game.b_ctx.restore()
     },
     /**
+     * @description
+     *
+     * Custom extended objects can be added to the B2DWork with this method.
+     *
      * @method addCustom
      * @param obj      object    custom B2D object
      */
@@ -123,12 +133,16 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(obj)
     },
     /**
+     * @description
+     *
+     * createBox creates a basic Box2D rectangle with some default settings.
+     *
      * @method createBox
-     * @param id      string      id or name to identify
-     * @param image   mixed       path to image, image or tpimage from asset
-     * @param x       integer     the x position
-     * @param y       integer     the y position
-     * @param stat    boolean     is the body static or dynamic
+     * @param id      {String}      id or name to identify
+     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param x       {Number}     the x position
+     * @param y       {Number}     the y position
+     * @param stat    {Boolean}     is the body static or dynamic
      */
     createBox:function (id, image, x, y, stat) {
         this.uid = this.uid + 1
@@ -137,10 +151,14 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createLine creates a basic Box2D line with some default settings.
+     *
      * @method createLine
-     * @param id      string    id or name to identify
-     * @param start   CG.Point  start o fline
-     * @param end     CG.Point  end of line
+     * @param id      {String}    id or name to identify
+     * @param start   {CG.Point}  start o fline
+     * @param end     {CG.Point}  end of line
      */
     createLine:function (id, start, end) {
         this.uid = this.uid + 1
@@ -149,13 +167,17 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createCircle creates a basic Box2D circle with some default settings
+     *
      * @method createCircle
-     * @param id      string      id or name to identify
-     * @param image   mixed       path to image, image or tpimage from asset
-     * @param radius  integer     the radius
-     * @param x       integer     the x position
-     * @param y       integer     the y position
-     * @param stat    boolean     is the body static or dynamic
+     * @param id      {String}      id or name to identify
+     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param radius  {Number}     the radius
+     * @param x       {Number}     the x position
+     * @param y       {Number}     the y position
+     * @param stat    {Boolean}     is the body static or dynamic
      */
     createCircle:function (id, image, radius, x, y, stat) {
         this.uid = this.uid + 1
@@ -164,14 +186,20 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
+     * Box2D object. The polygonshape and some settings like density, bounce and friction are
+     * taken from the json file at the moment.
+     *
      * @method createPolyBody
-     * @param id        string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param jsonpoly  string      json file from PhysicsEditor from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param stat      boolean     is the body static or dynamic
-     * @param bullet    boolean     bullet option
+     * @param id        {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param jsonpoly  {String}      json file from PhysicsEditor from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
      */
     createPolyBody:function (id, image, jsonpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
@@ -180,14 +208,18 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * This method creates a B2D bridge. Just play with the params to get a good result!
+     *
      * @method createBridge
-     * @param id          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
+     * @param id          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
      * @return {*}
      */
     createBridge:function (id, image, x, y, length, segments, segmentHeight) {
@@ -197,14 +229,18 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * This method creates a B2D rope. Just play with the params to get a good result!
+     *
      * @method createRope
-     * @param id            string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
+     * @param id            {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
      * @return {*}
      */
     createRope:function (id, image, x, y, length, segments, segmentHeight) {
@@ -213,6 +249,15 @@ CG.Layer.extend('B2DWorld', {
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
+    /**
+     * @description
+     * 
+     * Enables dragging B2D objects with the mouse.
+     * 
+     * @method mouseDownAt
+     * @param x {Number}
+     * @param y {Number}
+     */
     mouseDownAt:function (x, y) {
         if (!this.mouseJoint) {
             var body = this.getBodyAt(x, y)
@@ -238,9 +283,13 @@ CG.Layer.extend('B2DWorld', {
         this.mouseJoint = null;
     },
     /**
+     * @description
+     *
+     * Get a B2D body at the give x, y position.
+     *
      * @method getBodyAt
-     * @param x
-     * @param y
+     * @param x {Number}
+     * @param y {Number}
      * @return {*}
      */
     getBodyAt:function (x, y) {
@@ -267,9 +316,13 @@ CG.Layer.extend('B2DWorld', {
         return selectedBody;
     },
     /**
+     * @description
+     *
+     * Deletes a B2D body at the given x, y position
+     *
      * @method deleteBodyAt
-     * @param x
-     * @param y
+     * @param x {Number}
+     * @param y (Number)
      * @return {Boolean}
      */
     deleteBodyAt:function (x, y) {

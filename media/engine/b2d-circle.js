@@ -7,7 +7,7 @@
 /**
  * @description B2DCircle
  * @class CG.B2DCirlce
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DCircle', {

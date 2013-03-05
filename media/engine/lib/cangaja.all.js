@@ -209,7 +209,7 @@ String.prototype.startsWith = function (str) {
  * @description class CG.Delta not really used at the moment ;o)
  *
  * @class CG.Delta
- * @extend Class
+ * @extends Class
  *
  */
 
@@ -1014,7 +1014,7 @@ CG.Rectangle.extend('Sprite', {
  * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.TPImage
- * @extend Class
+ * @extends Class
  */
 CG.Class.extend('TPImage', {
     /**
@@ -1593,7 +1593,7 @@ CG.Entity.extend('Menu', {
  * @description MediaAsset
  *
  * @class CG.MediaAsset
- * @extend Class
+ * @extends Class
  *
  */
 
@@ -2509,7 +2509,7 @@ CG.Class.extend('MapTileLayer', {
  * @description MapTileProperties
  *
  * @class CG.MapTileProperties
- * @extend Class
+ * @extends Class
  */
 CG.Class.extend('MapTileProperties', {
     /**
@@ -2644,7 +2644,7 @@ CG.Class.extend('MapArea', {
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
  * @class CG.Map
- * @extend CG.Entity
+ * @extends CG.Entity
  *
  * TODO spacing and margin ?
  * TODO own buffer for drawing => split screen possible?
@@ -3640,7 +3640,7 @@ CG.Entity.extend('Sequence', {
  * @description class Translate moving a object
  *
  * @class CG.Translate
- * @extend CG.Entity
+ * @extends CG.Entity
  */
 CG.Entity.extend('Translate', {
     /**
@@ -4083,7 +4083,7 @@ CG.Sprite.extend('Particle', {
  * @description Emitter class that handles . . . particles.
  *
  * @class CG.Emitter
- * @extend CG.Entity
+ * @extends CG.Entity
  *
  * @param {point} position of emitter
  */
@@ -15435,7 +15435,7 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
 /**
  * @description B2DEntity
  * @class CG.B2DEntity
- * @extend CG.Entity
+ * @extends CG.Entity
  */
 
 CG.Entity.extend('B2DEntity', {
@@ -15593,7 +15593,7 @@ CG.Entity.extend('B2DEntity', {
 /**
  * @description B2DCircle
  * @class CG.B2DCirlce
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DCircle', {
@@ -15676,7 +15676,7 @@ CG.B2DEntity.extend('B2DCircle', {
  * @description B2DLine
  *
  * @class CG.B2DLine
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DLine', {
@@ -15759,7 +15759,7 @@ CG.B2DEntity.extend('B2DLine', {
 /**
  * @description B2DRectangle
  * @class CG.B2DRectangle
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRectangle', {
@@ -15835,7 +15835,7 @@ CG.B2DEntity.extend('B2DRectangle', {
  * supported options are friction, density and bounce
  *
  * @class CG.B2DPolygon
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DPolygon', {
@@ -15970,7 +15970,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 /**
  * @description B2DRope - creates a rope with segments
  * @class CG.B2DRope
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRope', {
@@ -16108,7 +16108,7 @@ CG.B2DEntity.extend('B2DRope', {
 /**
  * @description B2DBridge - creates a bridge with segments
  * @class CG.B2DBridge
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DBridge', {

@@ -1,24 +1,49 @@
 /**
- * @description class Menu
+ * @description Menu
  *
- * @constructor
- * @augments Entity
+ * @class CG.Menu
+ * @extends CG.Entity
  *
- * @param {Number} x the x position
- * @param {Number} y the y position
- * @param {Number} margin the margin between the menu buttons
  */
 CG.Entity.extend('Menu', {
+    /**
+     * @method init
+     * @constructor
+     * @param x {Number} x the x position
+     * @param y {Number} y the y position
+     * @param margin {Number} margin the margin between the menu buttons
+     * @return {*}
+     */
     init:function (x, y, margin) {
+        /**
+         * @property x
+         * @type {Number}
+         */
         this.x = x
+        /**
+         * @property y
+         * @type {Number}
+         */
         this.y = y
+        /**
+         * @proerty margin
+         * @type {Number}
+         */
         this.margin = margin
+        /**
+         * @property step
+         * @type {*}
+         */
         this.step = this.y
+        /**
+         * @property buttons
+         * @type {Array}
+         */
         this.buttons = []
         return this
     },
     /**
-     * @description add a button to the menu
+     * @method addButton
      *
      * @param {button} button
      */

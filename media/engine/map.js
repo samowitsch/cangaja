@@ -11,7 +11,7 @@
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
  * @class CG.Map
- * @extend CG.Entity
+ * @extends CG.Entity
  *
  * TODO spacing and margin ?
  * TODO own buffer for drawing => split screen possible?
@@ -225,9 +225,12 @@ CG.Entity.extend('Map', {
         return this
     },
     /**
-     * @method loadMapXml
-     * @description load and parse an xml tilemap file
+     * @description
      *
+     * Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.
+     * All other formats are not supported!
+     *
+     * @method loadMapXml
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml:function (xmlfile) {
@@ -402,11 +405,12 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @method loadMapJson
      * @description
      *
-     * load and parse an tilemap json file
+     * Load and parse an tilemap json file. Use the tiled json export.
+     * Hopefully the json format has the same functionality as the xml loader ;o)
      *
+     * @method loadMapJson
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson:function (jsonfile) {
@@ -515,12 +519,16 @@ CG.Entity.extend('Map', {
 
 
     /**
+     * @description
+     *
+     * This is the main method for map drawing.
+     *
      * @method drawMap
      *
-     * @param sx {Number} sx top CG.LEFT coord for canvas drawing
-     * @param sy {Number} sy top CG.LEFT coord for canvas drawing
-     * @param bx {Number} bx top CG.LEFT x coord of bound in tilemap
-     * @param by {Number} by top CG.LEFT y coord of bound in tilemap
+     * @param sx {Number} sx top left coord for canvas drawing
+     * @param sy {Number} sy top left coord for canvas drawing
+     * @param bx {Number} bx top left x coord of bound in tilemap
+     * @param by {Number} by top left y coord of bound in tilemap
      * @param bw {Number} bw width of bound in tilemap
      * @param bh {Number} bh height of bound in tilemap
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)

@@ -8,7 +8,7 @@
  * @description B2DLine
  *
  * @class CG.B2DLine
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DLine', {

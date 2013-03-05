@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Bound - Cangaja API</title>
+    <title>CG.Director - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -154,19 +154,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Bound Class</h1>
+                        <h1>CG.Director Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends <a href="../classes/CG.Entity.html" class="crosslink">CG.Entity</a>
+            Extends Class
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;engine_bound.js.html#l1"><code>engine&#x2F;bound.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;engine_director.js.html#l1"><code>engine&#x2F;director.js:1</code></a>
         </div>
     
 
@@ -178,7 +178,7 @@
 
 
 <div class="box intro">
-    <p>Class Bound extends Class Entity</p>
+    <p>Director the top instance for screens, layers, sprites and so on in the control hierarchy.</p>
 </div>
 
 
@@ -207,22 +207,50 @@
 
                     <ul class="index-list methods extends">
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_init">init</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method inherited">
-                                <a href="#method_setImage">setImage</a>
+                            <li class="index-item method">
+                                <a href="#method_addScreen">addScreen</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setName">setName</a>
+                                <a href="#method_getActiveScreenName">getActiveScreenName</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getIndexOfScreen">getIndexOfScreen</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getScreenByName">getScreenByName</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_nextScreen">nextScreen</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setFadeMode">setFadeMode</a>
 
                                 
                                 
@@ -239,42 +267,28 @@
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
-                                <a href="#property_height">height</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property inherited">
-                                <a href="#property_name">name</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property inherited">
-                                <a href="#property_visible">visible</a>
+                                <a href="#property_activescreen">activescreen</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_width">width</a>
+                                <a href="#property_color">color</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_x">x</a>
+                                <a href="#property_duration">duration</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_y">y</a>
+                                <a href="#property_screens">screens</a>
 
                                 
                                 
@@ -294,8 +308,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
+                    <div id="method_addScreen" class="method item">
+    <h3 class="name"><code>addScreen</code></h3>
 
     
         <div class="args">
@@ -303,25 +317,7 @@
             
                 <li class="arg">
                     
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>width</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>height</code>
+                        <code>screen</code>
                     
                 </li>
             
@@ -330,8 +326,85 @@
     
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l106"><code>engine&#x2F;director.js:106</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">screen</code>
+                        <span class="type">Screen</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>to add to the screen list</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_getActiveScreenName" class="method item">
+    <h3 class="name"><code>getActiveScreenName</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type">String</span>
         </span>
     
 
@@ -349,16 +422,16 @@
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_init">
-                CG.Entity
-            </a>
             
-            but overwritten in
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l9"><code>engine&#x2F;bound.js:9</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l158"><code>engine&#x2F;director.js:158</code></a>
         
         </p>
 
@@ -373,74 +446,6 @@
     </div>
 
     
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>x the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>y the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">width</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>width the width of bound</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">height</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height the height of bound</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
 
     
         <div class="returns">
@@ -449,8 +454,9 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"></span>:
+                        <span class="type">String</span>:
                     
+                    the name of the active screen
                 
             </div>
         </div>
@@ -460,8 +466,8 @@
 </div>
 
                 
-                    <div id="method_setImage" class="method item inherited">
-    <h3 class="name"><code>setImage</code></h3>
+                    <div id="method_getIndexOfScreen" class="method item">
+    <h3 class="name"><code>getIndexOfScreen</code></h3>
 
     
         <div class="args">
@@ -469,7 +475,7 @@
             
                 <li class="arg">
                     
-                        <code>image</code>
+                        <code>screenname</code>
                     
                 </li>
             
@@ -477,6 +483,10 @@
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">False/integer</span>
+        </span>
     
 
     
@@ -494,12 +504,15 @@
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_setImage">CG.Entity</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l41"><code>engine&#x2F;entity.js:41</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l143"><code>engine&#x2F;director.js:143</code></a>
         
         </p>
 
@@ -510,7 +523,7 @@
     </div>
 
     <div class="description">
-        <p>initialize image for object. for now => sprite, particle, buffer, bitmap and button use it</p>
+        
     </div>
 
     
@@ -521,14 +534,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">image</code>
-                        <span class="type">Image</span>
+                        <code class="param-name">screenname</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>image path, image or tpimage</p>
+                        <p>to find index of screen in screen array</p>
                     </div>
 
                     
@@ -539,13 +552,26 @@
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">False/integer</span>:
+                    
+                    return false or index number of the screen
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_setName" class="method item">
-    <h3 class="name"><code>setName</code></h3>
+                    <div id="method_getScreenByName" class="method item">
+    <h3 class="name"><code>getScreenByName</code></h3>
 
     
         <div class="args">
@@ -553,12 +579,106 @@
             
                 <li class="arg">
                     
-                        <code>name</code>
+                        <code>screenname</code>
                     
                 </li>
             
             </ul><span class="paren">)</span>
         </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">False/screen</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l128"><code>engine&#x2F;director.js:128</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">screenname</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>to find screen by name</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">False/screen</span>:
+                    
+                    returns false or the screen object
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <span class="paren">()</span>
     
 
     
@@ -590,7 +710,89 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l43"><code>engine&#x2F;bound.js:43</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l10"><code>engine&#x2F;director.js:10</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_nextScreen" class="method item">
+    <h3 class="name"><code>nextScreen</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>screenname</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>duration</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l115"><code>engine&#x2F;director.js:115</code></a>
         
         </p>
 
@@ -612,14 +814,29 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
+                        <code class="param-name">screenname</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>of the bounding box</p>
+                        <p>to define nextscreen for fading</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">duration</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the duration for fading</p>
                     </div>
 
                     
@@ -630,14 +847,73 @@
     
 
     
+
+    
+</div>
+
+                
+                    <div id="method_setFadeMode" class="method item">
+    <h3 class="name"><code>setFadeMode</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l167"><code>engine&#x2F;director.js:167</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
         <div class="returns">
             <h4>Returns:</h4>
 
             <div class="returns-description">
                 
                     
-                        <span class="type"></span>:
+                        <span class="type">String</span>:
                     
+                    fademode for screen transitions => fade or scale
                 
             </div>
         </div>
@@ -655,8 +931,8 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_height" class="property item">
-    <h3 class="name"><code>height</code></h3>
+                    <div id="property_activescreen" class="property item">
+    <h3 class="name"><code>activescreen</code></h3>
     <span class="type">Number</span>
 
     
@@ -678,7 +954,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l35"><code>engine&#x2F;bound.js:35</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l21"><code>engine&#x2F;director.js:21</code></a>
         
         </p>
 
@@ -699,8 +975,8 @@
 </div>
 
                 
-                    <div id="property_name" class="property item inherited">
-    <h3 class="name"><code>name</code></h3>
+                    <div id="property_color" class="property item">
+    <h3 class="name"><code>color</code></h3>
     <span class="type">String</span>
 
     
@@ -714,12 +990,15 @@
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_name">CG.Entity</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l20"><code>engine&#x2F;entity.js:20</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l46"><code>engine&#x2F;director.js:46</code></a>
         
         </p>
 
@@ -740,49 +1019,8 @@
 </div>
 
                 
-                    <div id="property_visible" class="property item inherited">
-    <h3 class="name"><code>visible</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_visible">CG.Entity</a>:
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l24"><code>engine&#x2F;entity.js:24</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_width" class="property item">
-    <h3 class="name"><code>width</code></h3>
+                    <div id="property_duration" class="property item">
+    <h3 class="name"><code>duration</code></h3>
     <span class="type">Number</span>
 
     
@@ -804,7 +1042,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l30"><code>engine&#x2F;bound.js:30</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l31"><code>engine&#x2F;director.js:31</code></a>
         
         </p>
 
@@ -825,9 +1063,9 @@
 </div>
 
                 
-                    <div id="property_x" class="property item">
-    <h3 class="name"><code>x</code></h3>
-    <span class="type">Number</span>
+                    <div id="property_screens" class="property item">
+    <h3 class="name"><code>screens</code></h3>
+    <span class="type">Array</span>
 
     
 
@@ -848,51 +1086,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l20"><code>engine&#x2F;bound.js:20</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_y" class="property item">
-    <h3 class="name"><code>y</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_bound.js.html#l25"><code>engine&#x2F;bound.js:25</code></a>
+        <a href="..&#x2F;files&#x2F;engine_director.js.html#l16"><code>engine&#x2F;director.js:16</code></a>
         
         </p>
 

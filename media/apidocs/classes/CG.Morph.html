@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Entity - Cangaja API</title>
+    <title>CG.Morph - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -154,19 +154,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Entity Class</h1>
+                        <h1>CG.Morph Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends CG.Class
+            Extends <a href="../classes/CG.Entity.html" class="crosslink">CG.Entity</a>
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;engine_entity.js.html#l7"><code>engine&#x2F;entity.js:7</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;engine_morph.js.html#l1"><code>engine&#x2F;morph.js:1</code></a>
         </div>
     
 
@@ -178,7 +178,7 @@
 
 
 <div class="box intro">
-    <p>class Entity the base class of cangaja</p>
+    <p>class Morph to manipulate objects in size and so on</p>
 </div>
 
 
@@ -208,13 +208,20 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
+                                <a href="#method_getVal">getVal</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
                                 <a href="#method_init">init</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_setImage">setImage</a>
 
                                 
@@ -231,14 +238,14 @@
 
                     <ul class="index-list properties extends">
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_name">name</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
                                 <a href="#property_visible">visible</a>
 
                                 
@@ -259,23 +266,17 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
+                    <div id="method_getVal" class="method item">
+    <h3 class="name"><code>getVal</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Float</span>
+        </span>
     
 
     
@@ -301,7 +302,101 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l14"><code>engine&#x2F;entity.js:14</code></a>
+        <a href="..&#x2F;files&#x2F;engine_morph.js.html#l48"><code>engine&#x2F;morph.js:48</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Float</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>mode</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>min</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>max</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>speed</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_init">
+                CG.Entity
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_morph.js.html#l11"><code>engine&#x2F;morph.js:11</code></a>
         
         </p>
 
@@ -323,14 +418,59 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
+                        <code class="param-name">mode</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the name of the Entity</p>
+                        <p>mode type of the morph object</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">min</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>min min value</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">max</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>max max value</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">speed</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>speed speed value</p>
                     </div>
 
                     
@@ -346,7 +486,7 @@
 </div>
 
                 
-                    <div id="method_setImage" class="method item">
+                    <div id="method_setImage" class="method item inherited">
     <h3 class="name"><code>setImage</code></h3>
 
     
@@ -380,11 +520,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_setImage">CG.Entity</a>:
             
         
         
@@ -441,7 +578,7 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_name" class="property item">
+                    <div id="property_name" class="property item inherited">
     <h3 class="name"><code>name</code></h3>
     <span class="type">String</span>
 
@@ -456,11 +593,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_name">CG.Entity</a>:
             
         
         
@@ -485,7 +619,7 @@
 </div>
 
                 
-                    <div id="property_visible" class="property item">
+                    <div id="property_visible" class="property item inherited">
     <h3 class="name"><code>visible</code></h3>
     <span class="type">Boolean</span>
 
@@ -500,11 +634,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_visible">CG.Entity</a>:
             
         
         

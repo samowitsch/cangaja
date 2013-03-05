@@ -1,8 +1,10 @@
 /**
- * @description MediaAsset
+ * @description
+ *
+ * MediaAsset preloader.
  *
  * @class CG.MediaAsset
- * @extend Class
+ * @extends Class
  *
  */
 

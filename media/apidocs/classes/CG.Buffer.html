@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Entity - Cangaja API</title>
+    <title>CG.Buffer - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -154,19 +154,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Entity Class</h1>
+                        <h1>CG.Buffer Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends CG.Class
+            Extends <a href="../classes/CG.Entity.html" class="crosslink">CG.Entity</a>
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;engine_entity.js.html#l7"><code>engine&#x2F;entity.js:7</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l1"><code>engine&#x2F;buffer.js:1</code></a>
         </div>
     
 
@@ -178,7 +178,7 @@
 
 
 <div class="box intro">
-    <p>class Entity the base class of cangaja</p>
+    <p>Class Buffer for separate canvas rendering/buffering</p>
 </div>
 
 
@@ -207,14 +207,14 @@
 
                     <ul class="index-list methods extends">
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_init">init</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
+                            <li class="index-item method inherited">
                                 <a href="#method_setImage">setImage</a>
 
                                 
@@ -232,13 +232,41 @@
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
-                                <a href="#property_name">name</a>
+                                <a href="#property_b_canvas">b_canvas</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_b_canvas.height">b_canvas.height</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_b_canvas.width">b_canvas.width</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_b_ctx">b_ctx</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_name">name</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
                                 <a href="#property_visible">visible</a>
 
                                 
@@ -268,7 +296,19 @@
             
                 <li class="arg">
                     
-                        <code>name</code>
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>buffername</code>
                     
                 </li>
             
@@ -276,6 +316,10 @@
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
     
 
     
@@ -292,16 +336,16 @@
 
     <div class="meta">
         
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_init">
+                CG.Entity
+            </a>
             
-                
-                <p>
-                
-                Defined in
-                
+            but overwritten in
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_entity.js.html#l14"><code>engine&#x2F;entity.js:14</code></a>
+        <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l9"><code>engine&#x2F;buffer.js:9</code></a>
         
         </p>
 
@@ -323,14 +367,44 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
+                        <code class="param-name">width</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>width of the buffer</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>height of the buffer</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">buffername</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the name of the Entity</p>
+                        <p>buffername</p>
                     </div>
 
                     
@@ -341,12 +415,24 @@
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"></span>:
+                    
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_setImage" class="method item">
+                    <div id="method_setImage" class="method item inherited">
     <h3 class="name"><code>setImage</code></h3>
 
     
@@ -380,11 +466,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_setImage">CG.Entity</a>:
             
         
         
@@ -441,9 +524,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_name" class="property item">
-    <h3 class="name"><code>name</code></h3>
-    <span class="type">String</span>
+                    <div id="property_b_canvas" class="property item">
+    <h3 class="name"><code>b_canvas</code></h3>
+    <span class="type">HTMLElement</span>
 
     
 
@@ -461,6 +544,179 @@
                 
                 Defined in
                 
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l19"><code>engine&#x2F;buffer.js:19</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_b_canvas.height" class="property item">
+    <h3 class="name"><code>b_canvas.height</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l34"><code>engine&#x2F;buffer.js:34</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_b_canvas.width" class="property item">
+    <h3 class="name"><code>b_canvas.width</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l29"><code>engine&#x2F;buffer.js:29</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_b_ctx" class="property item">
+    <h3 class="name"><code>b_ctx</code></h3>
+    <span class="type">CanvasRenderingContext2D</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_buffer.js.html#l41"><code>engine&#x2F;buffer.js:41</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_name" class="property item inherited">
+    <h3 class="name"><code>name</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_name">CG.Entity</a>:
             
         
         
@@ -485,7 +741,7 @@
 </div>
 
                 
-                    <div id="property_visible" class="property item">
+                    <div id="property_visible" class="property item inherited">
     <h3 class="name"><code>visible</code></h3>
     <span class="type">Boolean</span>
 
@@ -500,11 +756,8 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_visible">CG.Entity</a>:
             
         
         

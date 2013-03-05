@@ -7,7 +7,7 @@
 /**
  * @description B2DEntity
  * @class CG.B2DEntity
- * @extend CG.Entity
+ * @extends CG.Entity
  */
 
 CG.Entity.extend('B2DEntity', {

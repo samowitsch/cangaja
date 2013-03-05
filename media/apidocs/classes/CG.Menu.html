@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.B2DEntity - Cangaja API</title>
+    <title>CG.Menu - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -154,7 +154,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.B2DEntity Class</h1>
+                        <h1>CG.Menu Class</h1>
 <div class="box meta">
     
 
@@ -166,7 +166,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l7"><code>engine&#x2F;b2d-entity.js:7</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;engine_menu.js.html#l1"><code>engine&#x2F;menu.js:1</code></a>
         </div>
     
 
@@ -178,7 +178,7 @@
 
 
 <div class="box intro">
-    <p>B2DEntity</p>
+    <p>Menu</p>
 </div>
 
 
@@ -208,7 +208,7 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
-                                <a href="#method_hit">hit</a>
+                                <a href="#method_addButton">addButton</a>
 
                                 
                                 
@@ -239,77 +239,7 @@
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
-                                <a href="#property_body">body</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bodyDef">bodyDef</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bodyDef.alowSleep">bodyDef.alowSleep</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bodyDef.awake">bodyDef.awake</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_dead">dead</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_fixDef">fixDef</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_fixDef.density">fixDef.density</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_fixDef.friction">fixDef.friction</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_fixDef.restitution">fixDef.restitution</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_id">id</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_isHit">isHit</a>
+                                <a href="#property_buttons">buttons</a>
 
                                 
                                 
@@ -323,14 +253,7 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_scale">scale</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_strength">strength</a>
+                                <a href="#property_step">step</a>
 
                                 
                                 
@@ -344,13 +267,6 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_world">world</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
                                 <a href="#property_x">x</a>
 
                                 
@@ -358,21 +274,7 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_xhandle">xhandle</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
                                 <a href="#property_y">y</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_yhandle">yhandle</a>
 
                                 
                                 
@@ -392,8 +294,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_hit" class="method item">
-    <h3 class="name"><code>hit</code></h3>
+                    <div id="method_addButton" class="method item">
+    <h3 class="name"><code>addButton</code></h3>
 
     
         <div class="args">
@@ -401,13 +303,7 @@
             
                 <li class="arg">
                     
-                        <code>impulse</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>source</code>
+                        <code>button</code>
                     
                 </li>
             
@@ -440,7 +336,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l127"><code>engine&#x2F;b2d-entity.js:127</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l45"><code>engine&#x2F;menu.js:45</code></a>
         
         </p>
 
@@ -462,23 +358,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">impulse</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">source</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">button</code>
+                        <span class="type">Button</span>
                     
 
                     
@@ -509,24 +390,6 @@
             
                 <li class="arg">
                     
-                        <code>name</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>world</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
                         <code>x</code>
                     
                 </li>
@@ -539,7 +402,7 @@
             
                 <li class="arg">
                     
-                        <code>scale</code>
+                        <code>margin</code>
                     
                 </li>
             
@@ -576,7 +439,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l14"><code>engine&#x2F;b2d-entity.js:14</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l9"><code>engine&#x2F;menu.js:9</code></a>
         
         </p>
 
@@ -598,51 +461,6 @@
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or tpimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">world</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>reference to world of B2DWorld</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
                         <code class="param-name">x</code>
                         <span class="type">Number</span>
                     
@@ -650,7 +468,7 @@
                     
 
                     <div class="param-description">
-                        <p>the x position</p>
+                        <p>x the x position</p>
                     </div>
 
                     
@@ -665,7 +483,7 @@
                     
 
                     <div class="param-description">
-                        <p>the y position</p>
+                        <p>y the y position</p>
                     </div>
 
                     
@@ -673,14 +491,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">scale</code>
+                        <code class="param-name">margin</code>
                         <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the world scale of B2DWorld</p>
+                        <p>margin the margin between the menu buttons</p>
                     </div>
 
                     
@@ -800,9 +618,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_body" class="property item">
-    <h3 class="name"><code>body</code></h3>
-    <span class="type">B2Body</span>
+                    <div id="property_buttons" class="property item">
+    <h3 class="name"><code>buttons</code></h3>
+    <span class="type">Array</span>
 
     
 
@@ -823,447 +641,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l29"><code>engine&#x2F;b2d-entity.js:29</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef" class="property item">
-    <h3 class="name"><code>bodyDef</code></h3>
-    <span class="type">B2BodyDef</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l70"><code>engine&#x2F;b2d-entity.js:70</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.alowSleep" class="property item">
-    <h3 class="name"><code>bodyDef.alowSleep</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l75"><code>engine&#x2F;b2d-entity.js:75</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.awake" class="property item">
-    <h3 class="name"><code>bodyDef.awake</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l80"><code>engine&#x2F;b2d-entity.js:80</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_dead" class="property item">
-    <h3 class="name"><code>dead</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l119"><code>engine&#x2F;b2d-entity.js:119</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_fixDef" class="property item">
-    <h3 class="name"><code>fixDef</code></h3>
-    <span class="type">B2FixtureDef</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l88"><code>engine&#x2F;b2d-entity.js:88</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_fixDef.density" class="property item">
-    <h3 class="name"><code>fixDef.density</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l93"><code>engine&#x2F;b2d-entity.js:93</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_fixDef.friction" class="property item">
-    <h3 class="name"><code>fixDef.friction</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l98"><code>engine&#x2F;b2d-entity.js:98</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_fixDef.restitution" class="property item">
-    <h3 class="name"><code>fixDef.restitution</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l103"><code>engine&#x2F;b2d-entity.js:103</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_id" class="property item">
-    <h3 class="name"><code>id</code></h3>
-    <span class="type">Object</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l49"><code>engine&#x2F;b2d-entity.js:49</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_isHit" class="property item">
-    <h3 class="name"><code>isHit</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l109"><code>engine&#x2F;b2d-entity.js:109</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l38"><code>engine&#x2F;menu.js:38</code></a>
         
         </p>
 
@@ -1325,9 +703,9 @@
 </div>
 
                 
-                    <div id="property_scale" class="property item">
-    <h3 class="name"><code>scale</code></h3>
-    <span class="type">Number</span>
+                    <div id="property_step" class="property item">
+    <h3 class="name"><code>step</code></h3>
+    <span class="type"></span>
 
     
 
@@ -1348,51 +726,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l44"><code>engine&#x2F;b2d-entity.js:44</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_strength" class="property item">
-    <h3 class="name"><code>strength</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l114"><code>engine&#x2F;b2d-entity.js:114</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l33"><code>engine&#x2F;menu.js:33</code></a>
         
         </p>
 
@@ -1454,50 +788,6 @@
 </div>
 
                 
-                    <div id="property_world" class="property item">
-    <h3 class="name"><code>world</code></h3>
-    <span class="type">B2World</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l54"><code>engine&#x2F;b2d-entity.js:54</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="property_x" class="property item">
     <h3 class="name"><code>x</code></h3>
     <span class="type">Number</span>
@@ -1521,51 +811,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l34"><code>engine&#x2F;b2d-entity.js:34</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_xhandle" class="property item">
-    <h3 class="name"><code>xhandle</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l59"><code>engine&#x2F;b2d-entity.js:59</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l18"><code>engine&#x2F;menu.js:18</code></a>
         
         </p>
 
@@ -1609,51 +855,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l39"><code>engine&#x2F;b2d-entity.js:39</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_yhandle" class="property item">
-    <h3 class="name"><code>yhandle</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;engine_b2d-entity.js.html#l64"><code>engine&#x2F;b2d-entity.js:64</code></a>
+        <a href="..&#x2F;files&#x2F;engine_menu.js.html#l23"><code>engine&#x2F;menu.js:23</code></a>
         
         </p>
 

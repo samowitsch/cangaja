@@ -2,7 +2,7 @@
  * @description class CG.Delta not really used at the moment ;o)
  *
  * @class CG.Delta
- * @extend Class
+ * @extends Class
  *
  */
 

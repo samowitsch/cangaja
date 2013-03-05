@@ -59,11 +59,17 @@
             
                 <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Bitmap.html">CG.Bitmap</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Buffer.html">CG.Buffer</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
             
@@ -77,11 +83,17 @@
             
                 <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
             
+                <li><a href="..&#x2F;classes/CG.MapPoint.html">CG.MapPoint</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
             
                 <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
             
                 <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Menu.html">CG.Menu</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Morph.html">CG.Morph</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
             
@@ -149,13 +161,18 @@
 &#x2F;**
  * @description Class Bitmap extends Class Buffer
  *
- * @constructor
- * @augments Entity
+ * @class CG.Bitmap
+ * @extends CG.Entity
  *
- * @param {Number} width the width for the buffer
- * @param {Number} height the height for the buffer
  *&#x2F;
 CG.Entity.extend(&#x27;Bitmap&#x27;, {
+    &#x2F;**
+     * @method init
+     * @constructor
+     * @param width {Number} width the width for the buffer
+     * @param height {Number} height the height for the buffer
+     * @return {*}
+     *&#x2F;
     init:function (width, height) {
         this._super(this)
         this.x = 0
@@ -167,7 +184,11 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
         return this
     },
     &#x2F;**
-     * @description loads image and draws it to the buffer
+     * @description
+     *
+     * Loads an image and draws it to the buffer
+     *
+     * @method loadImage
      *
      * @param {string, image, tpimage} imgpath, image object or tpimage object to use
      *&#x2F;
@@ -187,7 +208,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
 
 
     &#x2F;**
-     * @description clearBuffer
+     * @method clearBuffer
      *&#x2F;
     clearBuffer:function () {
         this.bitmap_ctx.clearRect(0, 0, this.bitmap_canvas.width, this.bitmap_canvas.height)
@@ -195,7 +216,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     },
 
     &#x2F;**
-     * @description drawImageToBuffer
+     * @method drawImageToBuffer
      *&#x2F;
     drawImageToBuffer:function () {
         this.bitmap_ctx.drawImage(this.image, 0, 0)
@@ -204,7 +225,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
 
 
     &#x2F;**
-     * @description clearRect
+     * @method clearRect
      *
      * @param {Number} x the x position for clearRect
      * @param {Number} y the y position for clearRect
@@ -219,7 +240,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     },
 
     &#x2F;**
-     * @description clearCircle
+     * @method clearCircle
      *
      * @param {Number} x the x position for clearCircle
      * @param {Number} y the y position for clearCircle
@@ -236,7 +257,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     },
 
     &#x2F;**
-     * @description getPixel
+     * @method getPixel
      *
      * @param {Number} x the x position for getPixel
      * @param {Number} y the y position for getPixel
@@ -247,7 +268,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     },
 
     &#x2F;**
-     * @description getPixels
+     * @method getPixels
      *
      * @param {Number} x the x position for getPixels
      * @param {Number} y the y position for getPixels

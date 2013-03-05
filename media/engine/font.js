@@ -136,8 +136,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the width of the given text
-     * @method getTextWidth {string} the string to calculate the width
-     * @param text {string}
+     * @method getTextWidth
+     * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      */
     getTextWidth:function (text) {

@@ -90,7 +90,9 @@
         "engine/bitmap.js": {
             "name": "engine/bitmap.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.Bitmap": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -106,7 +108,9 @@
         "engine/buffer.js": {
             "name": "engine/buffer.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.Buffer": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -131,7 +135,9 @@
         "engine/director.js": {
             "name": "engine/director.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.Director": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -199,7 +205,9 @@
         "engine/mappoint.js": {
             "name": "engine/mappoint.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.MapPoint": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -233,14 +241,18 @@
         "engine/menu.js": {
             "name": "engine/menu.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.Menu": 1
+            },
             "fors": {},
             "namespaces": {}
         },
         "engine/morph.js": {
             "name": "engine/morph.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CG.Morph": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -479,8 +491,21 @@
             "extension_for": [],
             "file": "engine/b2d-world.js",
             "line": 7,
-            "description": "B2DWorld",
+            "description": "B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like\nlines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extend\none of the basic B2D objects can added to the B2DWorld with the addCustom method.\nThe CG.B2DWorld can attached to an CG.Screen object as layer.",
             "xtend": "CG.Layer"
+        },
+        "CG.Bitmap": {
+            "name": "CG.Bitmap",
+            "shortname": "CG.Bitmap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/bitmap.js",
+            "line": 1,
+            "description": "Class Bitmap extends Class Buffer",
+            "extends": "CG.Entity"
         },
         "CG.Bound": {
             "name": "CG.Bound",
@@ -493,6 +518,19 @@
             "file": "engine/bound.js",
             "line": 1,
             "description": "Class Bound extends Class Entity",
+            "extends": "CG.Entity"
+        },
+        "CG.Buffer": {
+            "name": "CG.Buffer",
+            "shortname": "CG.Buffer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/buffer.js",
+            "line": 1,
+            "description": "Class Buffer for separate canvas rendering/buffering",
             "extends": "CG.Entity"
         },
         "CG.Button": {
@@ -519,6 +557,19 @@
             "file": "engine/delta.js",
             "line": 1,
             "description": "class CG.Delta not really used at the moment ;o)",
+            "extends": "Class"
+        },
+        "CG.Director": {
+            "name": "CG.Director",
+            "shortname": "CG.Director",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/director.js",
+            "line": 1,
+            "description": "Director the top instance for screens, layers, sprites and so on in the control hierarchy.",
             "extends": "Class"
         },
         "CG.Emitter": {
@@ -551,7 +602,8 @@
             "extension_for": [],
             "file": "engine/entity.js",
             "line": 7,
-            "description": "class Entity the base class of cangaja"
+            "description": "class Entity the base class of cangaja",
+            "extends": "CG.Class"
         },
         "CG.Font": {
             "name": "CG.Font",
@@ -605,6 +657,19 @@
             "description": "class MapArea. Support now for name and the bound values.",
             "extends": "Class"
         },
+        "CG.MapPoint": {
+            "name": "CG.MapPoint",
+            "shortname": "CG.MapPoint",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/mappoint.js",
+            "line": 1,
+            "description": "class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.",
+            "extends": "Class"
+        },
         "CG.MapTileLayer": {
             "name": "CG.MapTileLayer",
             "shortname": "CG.MapTileLayer",
@@ -641,8 +706,34 @@
             "extension_for": [],
             "file": "engine/mediaasset.js",
             "line": 1,
-            "description": "MediaAsset",
+            "description": "MediaAsset preloader.",
             "extends": "Class"
+        },
+        "CG.Menu": {
+            "name": "CG.Menu",
+            "shortname": "CG.Menu",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/menu.js",
+            "line": 1,
+            "description": "Menu",
+            "extends": "CG.Entity"
+        },
+        "CG.Morph": {
+            "name": "CG.Morph",
+            "shortname": "CG.Morph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "engine/morph.js",
+            "line": 1,
+            "description": "class Morph to manipulate objects in size and so on",
+            "extends": "CG.Entity"
         },
         "CG.Particle": {
             "name": "CG.Particle",
@@ -931,7 +1022,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 14,
+            "line": 17,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -990,7 +1081,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 30,
+            "line": 33,
             "itemtype": "property",
             "name": "length",
             "type": "{Number}",
@@ -998,7 +1089,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 35,
+            "line": 38,
             "itemtype": "property",
             "name": "segments",
             "type": "{Number}",
@@ -1006,7 +1097,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 40,
+            "line": 43,
             "itemtype": "property",
             "name": "segmentHeight",
             "type": "{Number}",
@@ -1014,7 +1105,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 45,
+            "line": 48,
             "itemtype": "property",
             "name": "segmentWidth",
             "type": "{Number}",
@@ -1022,7 +1113,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 50,
+            "line": 53,
             "itemtype": "property",
             "name": "anchor",
             "type": "{b2Vec2}",
@@ -1030,7 +1121,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 55,
+            "line": 58,
             "itemtype": "property",
             "name": "prevBodf",
             "type": "{Object}",
@@ -1038,7 +1129,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 60,
+            "line": 63,
             "itemtype": "property",
             "name": "bodyGroup",
             "type": "{Array}",
@@ -1046,7 +1137,7 @@
         },
         {
             "file": "engine/b2d-bridge.js",
-            "line": 65,
+            "line": 68,
             "itemtype": "property",
             "name": "bodyCount",
             "type": "{Number}",
@@ -1920,7 +2011,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 14,
+            "line": 20,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -1940,7 +2031,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 22,
+            "line": 28,
             "itemtype": "property",
             "name": "opt",
             "type": "{object}",
@@ -1948,15 +2039,15 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 28,
+            "line": 34,
             "itemtype": "property",
             "name": "name",
-            "type": "{string}",
+            "type": "{String}",
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 33,
+            "line": 39,
             "itemtype": "property",
             "name": "debug",
             "type": "{Boolean}",
@@ -1964,7 +2055,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 38,
+            "line": 44,
             "itemtype": "property",
             "name": "x",
             "type": "{Number}",
@@ -1972,7 +2063,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 43,
+            "line": 49,
             "itemtype": "property",
             "name": "y",
             "type": "{Number}",
@@ -1980,7 +2071,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 48,
+            "line": 54,
             "itemtype": "property",
             "name": "elements",
             "type": "{Array}",
@@ -1988,7 +2079,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 54,
+            "line": 60,
             "itemtype": "property",
             "name": "world",
             "type": "{b2World}",
@@ -1996,7 +2087,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 62,
+            "line": 68,
             "itemtype": "property",
             "name": "uid",
             "type": "{Number}",
@@ -2004,7 +2095,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 67,
+            "line": 73,
             "itemtype": "property",
             "name": "scale",
             "type": "{Number}",
@@ -2012,7 +2103,8 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 116,
+            "line": 122,
+            "description": "Custom extended objects can be added to the B2DWork with this method.",
             "itemtype": "method",
             "name": "addCustom",
             "params": [
@@ -2025,157 +2117,190 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 125,
+            "line": 135,
+            "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
             "params": [
                 {
                     "name": "id",
-                    "description": "string      id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "image",
-                    "description": "mixed       path to image, image or tpimage from asset"
+                    "description": "path to image, image or tpimage from asset",
+                    "type": "Mixed"
                 },
                 {
                     "name": "x",
-                    "description": "integer     the x position"
+                    "description": "the x position",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "integer     the y position"
+                    "description": "the y position",
+                    "type": "Number"
                 },
                 {
                     "name": "stat",
-                    "description": "boolean     is the body static or dynamic"
+                    "description": "is the body static or dynamic",
+                    "type": "Boolean"
                 }
             ],
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 139,
+            "line": 153,
+            "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
             "params": [
                 {
                     "name": "id",
-                    "description": "string    id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "start",
-                    "description": "CG.Point  start o fline"
+                    "description": "start o fline",
+                    "type": "CG.Point"
                 },
                 {
                     "name": "end",
-                    "description": "CG.Point  end of line"
+                    "description": "end of line",
+                    "type": "CG.Point"
                 }
             ],
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 151,
+            "line": 169,
+            "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
             "params": [
                 {
                     "name": "id",
-                    "description": "string      id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "image",
-                    "description": "mixed       path to image, image or tpimage from asset"
+                    "description": "path to image, image or tpimage from asset",
+                    "type": "Mixed"
                 },
                 {
                     "name": "radius",
-                    "description": "integer     the radius"
+                    "description": "the radius",
+                    "type": "Number"
                 },
                 {
                     "name": "x",
-                    "description": "integer     the x position"
+                    "description": "the x position",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "integer     the y position"
+                    "description": "the y position",
+                    "type": "Number"
                 },
                 {
                     "name": "stat",
-                    "description": "boolean     is the body static or dynamic"
+                    "description": "is the body static or dynamic",
+                    "type": "Boolean"
                 }
             ],
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 166,
+            "line": 188,
+            "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
             "params": [
                 {
                     "name": "id",
-                    "description": "string      id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "image",
-                    "description": "mixed       path to image, image or tpimage from asset"
+                    "description": "path to image, image or tpimage from asset",
+                    "type": "Mixed"
                 },
                 {
                     "name": "jsonpoly",
-                    "description": "string      json file from PhysicsEditor from asset"
+                    "description": "json file from PhysicsEditor from asset",
+                    "type": "String"
                 },
                 {
                     "name": "x",
-                    "description": "integer     the x position"
+                    "description": "the x position",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "integer     the y position"
+                    "description": "the y position",
+                    "type": "Number"
                 },
                 {
                     "name": "stat",
-                    "description": "boolean     is the body static or dynamic"
+                    "description": "is the body static or dynamic",
+                    "type": "Boolean"
                 },
                 {
                     "name": "bullet",
-                    "description": "boolean     bullet option"
+                    "description": "bullet option",
+                    "type": "Boolean"
                 }
             ],
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 182,
+            "line": 210,
+            "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
             "params": [
                 {
                     "name": "id",
-                    "description": "string      id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "image",
-                    "description": "mixed       path to image, image or tpimage from asset"
+                    "description": "path to image, image or tpimage from asset",
+                    "type": "Mixed"
                 },
                 {
                     "name": "x",
-                    "description": "integer     the x position"
+                    "description": "the x position",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "integer     the y position"
+                    "description": "the y position",
+                    "type": "Number"
                 },
                 {
                     "name": "length",
-                    "description": "integer     the length/width of the bridge"
+                    "description": "the length/width of the bridge",
+                    "type": "Number"
                 },
                 {
                     "name": "segments",
-                    "description": "integer     segments of the bridge"
+                    "description": "segments of the bridge",
+                    "type": "Number"
                 },
                 {
                     "name": "segmentHeight",
-                    "description": "integer     height of a segment"
+                    "description": "height of a segment",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -2186,37 +2311,45 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 199,
+            "line": 231,
+            "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
             "params": [
                 {
                     "name": "id",
-                    "description": "string      id or name to identify"
+                    "description": "id or name to identify",
+                    "type": "String"
                 },
                 {
                     "name": "image",
-                    "description": "mixed       path to image, image or tpimage from asset"
+                    "description": "path to image, image or tpimage from asset",
+                    "type": "Mixed"
                 },
                 {
                     "name": "x",
-                    "description": "integer     the x position"
+                    "description": "the x position",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "integer     the y position"
+                    "description": "the y position",
+                    "type": "Number"
                 },
                 {
                     "name": "length",
-                    "description": "integer     the length/width of the bridge"
+                    "description": "the length/width of the bridge",
+                    "type": "Number"
                 },
                 {
                     "name": "segments",
-                    "description": "integer     segments of the bridge"
+                    "description": "segments of the bridge",
+                    "type": "Number"
                 },
                 {
                     "name": "segmentHeight",
-                    "description": "integer     height of a segment"
+                    "description": "height of a segment",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -2227,24 +2360,47 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 233,
+            "line": 252,
+            "description": "Enables dragging B2D objects with the mouse.",
+            "itemtype": "method",
+            "name": "mouseDownAt",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "CG.B2DWorld"
+        },
+        {
+            "file": "engine/b2d-world.js",
+            "line": 278,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 240,
+            "line": 285,
+            "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
             "params": [
                 {
                     "name": "x",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 }
             ],
             "return": {
@@ -2255,17 +2411,19 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 269,
+            "line": 318,
+            "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
             "params": [
                 {
                     "name": "x",
-                    "description": ""
+                    "description": "",
+                    "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": ""
+                    "description": "(Number)"
                 }
             ],
             "return": {
@@ -2276,7 +2434,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 289,
+            "line": 342,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -2287,7 +2445,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 296,
+            "line": 349,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -2300,7 +2458,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 303,
+            "line": 356,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -2321,7 +2479,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 316,
+            "line": 369,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -2334,7 +2492,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 337,
+            "line": 390,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -2351,30 +2509,34 @@
         },
         {
             "file": "engine/bitmap.js",
-            "line": 1,
-            "description": "Class Bitmap extends Class Buffer",
+            "line": 9,
+            "itemtype": "method",
+            "name": "init",
             "is_constructor": 1,
-            "uses": [
-                "Entity"
-            ],
             "params": [
                 {
                     "name": "width",
-                    "description": "the width for the buffer",
+                    "description": "width the width for the buffer",
                     "type": "Number"
                 },
                 {
                     "name": "height",
-                    "description": "the height for the buffer",
+                    "description": "height the height for the buffer",
                     "type": "Number"
                 }
             ],
-            "class": "CG.Bound"
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
-            "line": 21,
-            "description": "loads image and draws it to the buffer",
+            "line": 26,
+            "description": "Loads an image and draws it to the buffer",
+            "itemtype": "method",
+            "name": "loadImage",
             "params": [
                 {
                     "name": "imgpath,",
@@ -2382,24 +2544,27 @@
                     "type": "String, image, tpimage"
                 }
             ],
-            "class": "CG.Bound"
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
-            "line": 41,
-            "description": "clearBuffer",
-            "class": "CG.Bound"
-        },
-        {
-            "file": "engine/bitmap.js",
-            "line": 49,
-            "description": "drawImageToBuffer",
-            "class": "CG.Bound"
+            "line": 50,
+            "itemtype": "method",
+            "name": "clearBuffer",
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
             "line": 58,
-            "description": "clearRect",
+            "itemtype": "method",
+            "name": "drawImageToBuffer",
+            "class": "CG.Bitmap"
+        },
+        {
+            "file": "engine/bitmap.js",
+            "line": 67,
+            "itemtype": "method",
+            "name": "clearRect",
             "params": [
                 {
                     "name": "x",
@@ -2422,12 +2587,13 @@
                     "type": "Number"
                 }
             ],
-            "class": "CG.Bound"
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
-            "line": 73,
-            "description": "clearCircle",
+            "line": 82,
+            "itemtype": "method",
+            "name": "clearCircle",
             "params": [
                 {
                     "name": "x",
@@ -2445,12 +2611,13 @@
                     "type": "Number"
                 }
             ],
-            "class": "CG.Bound"
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
-            "line": 90,
-            "description": "getPixel",
+            "line": 99,
+            "itemtype": "method",
+            "name": "getPixel",
             "params": [
                 {
                     "name": "x",
@@ -2467,12 +2634,13 @@
                 "description": "data from canvas",
                 "type": "Imagedata"
             },
-            "class": "CG.Bound"
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bitmap.js",
-            "line": 101,
-            "description": "getPixels",
+            "line": 110,
+            "itemtype": "method",
+            "name": "getPixels",
             "params": [
                 {
                     "name": "x",
@@ -2499,7 +2667,7 @@
                 "description": "data from canvas",
                 "type": "Imagedata"
             },
-            "class": "CG.Bound"
+            "class": "CG.Bitmap"
         },
         {
             "file": "engine/bound.js",
@@ -2587,30 +2755,64 @@
         },
         {
             "file": "engine/buffer.js",
-            "line": 1,
-            "description": "Class Buffer for separate canvas rendering/buffering",
+            "line": 9,
             "is_constructor": 1,
-            "uses": [
-                "Entity"
-            ],
+            "itemtype": "method",
+            "name": "init",
             "params": [
                 {
                     "name": "width",
-                    "description": "of the buffer",
+                    "description": "width of the buffer",
                     "type": "Number"
                 },
                 {
                     "name": "height",
-                    "description": "of the buffer",
+                    "description": "height of the buffer",
                     "type": "Number"
                 },
                 {
                     "name": "buffername",
-                    "description": "",
+                    "description": "buffername",
                     "type": "String"
                 }
             ],
-            "class": "CG.Button"
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Buffer"
+        },
+        {
+            "file": "engine/buffer.js",
+            "line": 19,
+            "itemtype": "property",
+            "name": "b_canvas",
+            "type": "{HTMLElement}",
+            "class": "CG.Buffer"
+        },
+        {
+            "file": "engine/buffer.js",
+            "line": 29,
+            "itemtype": "property",
+            "name": "b_canvas.width",
+            "type": "{*}",
+            "class": "CG.Buffer"
+        },
+        {
+            "file": "engine/buffer.js",
+            "line": 34,
+            "itemtype": "property",
+            "name": "b_canvas.height",
+            "type": "{*}",
+            "class": "CG.Buffer"
+        },
+        {
+            "file": "engine/buffer.js",
+            "line": 41,
+            "itemtype": "property",
+            "name": "b_ctx",
+            "type": "{CanvasRenderingContext2D}",
+            "class": "CG.Buffer"
         },
         {
             "file": "engine/button.js",
@@ -2748,15 +2950,74 @@
         },
         {
             "file": "engine/director.js",
-            "line": 1,
-            "description": "Director the top instance for screens and so on in the control hierarchy",
+            "line": 10,
+            "itemtype": "method",
+            "name": "init",
             "is_constructor": 1,
-            "class": "CG.Emitter"
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 70,
-            "description": "addScreen",
+            "line": 16,
+            "itemtype": "property",
+            "name": "screens",
+            "type": "{Array}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 21,
+            "itemtype": "property",
+            "name": "activescreen",
+            "type": "{Number}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 26,
+            "description": "nextscreen",
+            "type": "{Number}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 31,
+            "itemtype": "property",
+            "name": "duration",
+            "type": "{Number}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 36,
+            "description": "alpha",
+            "type": "{Number}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 41,
+            "description": "fademode",
+            "type": "{String}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 46,
+            "itemtype": "property",
+            "name": "color",
+            "type": "{String}",
+            "class": "CG.Director"
+        },
+        {
+            "file": "engine/director.js",
+            "line": 106,
+            "itemtype": "method",
+            "name": "addScreen",
             "params": [
                 {
                     "name": "screen",
@@ -2764,12 +3025,13 @@
                     "type": "Screen"
                 }
             ],
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 79,
-            "description": "nextScreen",
+            "line": 115,
+            "itemtype": "method",
+            "name": "nextScreen",
             "params": [
                 {
                     "name": "screenname",
@@ -2782,12 +3044,13 @@
                     "type": "Number"
                 }
             ],
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 92,
-            "description": "getScreenByName",
+            "line": 128,
+            "itemtype": "method",
+            "name": "getScreenByName",
             "params": [
                 {
                     "name": "screenname",
@@ -2799,12 +3062,13 @@
                 "description": "returns false or the screen object",
                 "type": "False/screen"
             },
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 107,
-            "description": "getIndexOfScreen",
+            "line": 143,
+            "itemtype": "method",
+            "name": "getIndexOfScreen",
             "params": [
                 {
                     "name": "screenname",
@@ -2816,27 +3080,29 @@
                 "description": "return false or index number of the screen",
                 "type": "False/integer"
             },
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 122,
-            "description": "getActiveScreenName",
+            "line": 158,
+            "itemtype": "method",
+            "name": "getActiveScreenName",
             "return": {
                 "description": "the name of the active screen",
                 "type": "String"
             },
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/director.js",
-            "line": 131,
-            "description": "setFadeMode",
+            "line": 167,
+            "itemtype": "method",
+            "name": "setFadeMode",
             "return": {
                 "description": "fademode for screen transitions => fade or scale",
                 "type": "String"
             },
-            "class": "CG.Emitter"
+            "class": "CG.Director"
         },
         {
             "file": "engine/emitter.js",
@@ -3301,7 +3567,7 @@
         },
         {
             "file": "engine/entity.js",
-            "line": 13,
+            "line": 14,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -3316,7 +3582,7 @@
         },
         {
             "file": "engine/entity.js",
-            "line": 19,
+            "line": 20,
             "itemtype": "property",
             "name": "name",
             "type": "String",
@@ -3324,7 +3590,7 @@
         },
         {
             "file": "engine/entity.js",
-            "line": 23,
+            "line": 24,
             "itemtype": "property",
             "name": "visible",
             "type": "Boolean",
@@ -3332,7 +3598,7 @@
         },
         {
             "file": "engine/entity.js",
-            "line": 40,
+            "line": 41,
             "description": "initialize image for object. for now => sprite, particle, buffer, bitmap and button use it",
             "itemtype": "method",
             "name": "setImage",
@@ -3562,12 +3828,11 @@
             "line": 137,
             "description": "get the width of the given text",
             "itemtype": "method",
-            "name": "getTextWidth  the string to calculate the width",
-            "type": "String",
+            "name": "getTextWidth",
             "params": [
                 {
                     "name": "text",
-                    "description": "",
+                    "description": "the string to calculate the width",
                     "type": "String"
                 }
             ],
@@ -3963,9 +4228,9 @@
         {
             "file": "engine/map.js",
             "line": 227,
+            "description": "Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.\nAll other formats are not supported!",
             "itemtype": "method",
             "name": "loadMapXml",
-            "description": "load and parse an xml tilemap file",
             "params": [
                 {
                     "name": "xmlfile",
@@ -3977,10 +4242,10 @@
         },
         {
             "file": "engine/map.js",
-            "line": 404,
+            "line": 407,
+            "description": "Load and parse an tilemap json file. Use the tiled json export.\nHopefully the json format has the same functionality as the xml loader ;o)",
             "itemtype": "method",
             "name": "loadMapJson",
-            "description": "load and parse an tilemap json file",
             "params": [
                 {
                     "name": "jsonfile",
@@ -3992,28 +4257,29 @@
         },
         {
             "file": "engine/map.js",
-            "line": 517,
+            "line": 521,
+            "description": "This is the main method for map drawing.",
             "itemtype": "method",
             "name": "drawMap",
             "params": [
                 {
                     "name": "sx",
-                    "description": "sx top CG.LEFT coord for canvas drawing",
+                    "description": "sx top left coord for canvas drawing",
                     "type": "Number"
                 },
                 {
                     "name": "sy",
-                    "description": "sy top CG.LEFT coord for canvas drawing",
+                    "description": "sy top left coord for canvas drawing",
                     "type": "Number"
                 },
                 {
                     "name": "bx",
-                    "description": "bx top CG.LEFT x coord of bound in tilemap",
+                    "description": "bx top left x coord of bound in tilemap",
                     "type": "Number"
                 },
                 {
                     "name": "by",
-                    "description": "by top CG.LEFT y coord of bound in tilemap",
+                    "description": "by top left y coord of bound in tilemap",
                     "type": "Number"
                 },
                 {
@@ -4036,7 +4302,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 679,
+            "line": 687,
             "description": "Update all areas and points elements.",
             "itemtype": "method",
             "name": "updatePointsAndAreas",
@@ -4044,7 +4310,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 696,
+            "line": 704,
             "description": "Get all point(s) with the given name in the points",
             "itemtype": "method",
             "name": "getPointsByName",
@@ -4063,7 +4329,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 719,
+            "line": 727,
             "description": "getAreasByName - get all areas with the given name",
             "itemtype": "method",
             "name": "getAreasByName",
@@ -4082,7 +4348,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 740,
+            "line": 748,
             "description": "Defines layer drawing, See property options",
             "itemtype": "method",
             "name": "setLayerToRender",
@@ -4097,7 +4363,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 754,
+            "line": 762,
             "description": "The update method is not complete yet and only experimental.\nAt the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!\nThen also a map class can be added to a layer as an element for auto update/draw from Game.director!",
             "itemtype": "method",
             "name": "update",
@@ -4105,13 +4371,13 @@
         },
         {
             "file": "engine/map.js",
-            "line": 782,
+            "line": 790,
             "description": "yust calls drawMap ;o)",
             "class": "CG.Map"
         },
         {
             "file": "engine/map.js",
-            "line": 790,
+            "line": 798,
             "description": "getBounds - get the bounds of the map",
             "itemtype": "method",
             "name": "getBounds",
@@ -4119,7 +4385,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 801,
+            "line": 809,
             "description": "Updates the tilemap properties of the map.\n\nSupported custom tiled map properties for now are (see also tilemap examples):\nanim_delay       => time to used to display an switch to next tile\nanim_direction   => direction for next tile 1 = jump forward, -1 = jump back\nanim_next        => defines the offset\n\nWith this tile properties it is possible to define tilemap animations.\nThese must be defined in the tilemap property window with key/value pairs",
             "itemtype": "method",
             "name": "updateAnimation",
@@ -4127,7 +4393,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 852,
+            "line": 860,
             "description": "Adds a object to the element array, used at the moment for collision detection to tilemap.",
             "itemtype": "method",
             "name": "addElement",
@@ -4142,7 +4408,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 866,
+            "line": 874,
             "description": "Checks if the attached element collides with an tile of the tilemap",
             "itemtype": "method",
             "name": "checkMapCollision",
@@ -4171,7 +4437,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 898,
+            "line": 906,
             "description": "Checks if a external object(s) collides with the areas of the tiled map.\nThis can be elements from an layer or the map itself.",
             "params": [
                 {
@@ -4189,7 +4455,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 915,
+            "line": 923,
             "description": "removes the json data of the map object",
             "itemtype": "method",
             "name": "removeJsonData",
@@ -4197,7 +4463,7 @@
         },
         {
             "file": "engine/map.js",
-            "line": 923,
+            "line": 931,
             "description": "removes the xml data of the map object",
             "itemtype": "method",
             "name": "removeXmlData",
@@ -4279,32 +4545,76 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 1,
-            "description": "class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.",
+            "line": 9,
+            "itemtype": "method",
+            "name": "init",
             "is_constructor": 1,
             "params": [
                 {
                     "name": "position",
-                    "description": "point",
+                    "description": "position point",
                     "type": "Point"
                 },
                 {
                     "name": "mapoffset",
-                    "description": "reference to the current map position",
+                    "description": "mapoffset reference to the current map position",
                     "type": "Point"
                 },
                 {
                     "name": "name",
-                    "description": "of the tile",
+                    "description": "name of the tile",
                     "type": "String"
                 },
                 {
                     "name": "gid",
-                    "description": "number of tilemap editor",
+                    "description": "gid number of tilemap editor",
                     "type": "Number"
                 }
             ],
-            "class": "CG.MapTileLayer"
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.MapPoint"
+        },
+        {
+            "file": "engine/mappoint.js",
+            "line": 19,
+            "itemtype": "property",
+            "name": "initposition",
+            "type": "{CG.Point}",
+            "class": "CG.MapPoint"
+        },
+        {
+            "file": "engine/mappoint.js",
+            "line": 24,
+            "itemtype": "property",
+            "name": "mapoffset",
+            "type": "{CG.Point}",
+            "class": "CG.MapPoint"
+        },
+        {
+            "file": "engine/mappoint.js",
+            "line": 29,
+            "description": "gid",
+            "type": "{Number}",
+            "class": "CG.MapPoint"
+        },
+        {
+            "file": "engine/mappoint.js",
+            "line": 34,
+            "itemtype": "property",
+            "name": "name",
+            "type": "{*}",
+            "class": "CG.MapPoint"
+        },
+        {
+            "file": "engine/mappoint.js",
+            "line": 39,
+            "itemtype": "property",
+            "name": "position",
+            "type": "{CG.Point}",
+            "class": "CG.MapPoint"
         },
         {
             "file": "engine/maptilelayer.js",
@@ -4412,7 +4722,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 10,
+            "line": 12,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -4427,7 +4737,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 55,
+            "line": 57,
             "itemtype": "method",
             "name": "addImage",
             "params": [
@@ -4448,7 +4758,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 70,
+            "line": 72,
             "itemtype": "method",
             "name": "addFont",
             "params": [
@@ -4469,7 +4779,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 85,
+            "line": 87,
             "itemtype": "method",
             "name": "addXml",
             "params": [
@@ -4490,7 +4800,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 100,
+            "line": 102,
             "itemtype": "method",
             "name": "addJson",
             "params": [
@@ -4511,7 +4821,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 115,
+            "line": 117,
             "itemtype": "method",
             "name": "getImageByName",
             "params": [
@@ -4528,7 +4838,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 132,
+            "line": 134,
             "itemtype": "method",
             "name": "getImagesByName",
             "params": [
@@ -4545,7 +4855,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 153,
+            "line": 155,
             "itemtype": "method",
             "name": "getFontByName",
             "params": [
@@ -4562,7 +4872,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 166,
+            "line": 168,
             "itemtype": "method",
             "name": "getXmlByName",
             "params": [
@@ -4579,7 +4889,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 179,
+            "line": 181,
             "itemtype": "method",
             "name": "getJsonByName",
             "params": [
@@ -4596,42 +4906,84 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 192,
+            "line": 194,
             "itemtype": "method",
             "name": "startPreLoad",
             "class": "CG.MediaAsset"
         },
         {
             "file": "engine/menu.js",
-            "line": 1,
-            "description": "class Menu",
+            "line": 9,
+            "itemtype": "method",
+            "name": "init",
             "is_constructor": 1,
-            "uses": [
-                "Entity"
-            ],
             "params": [
                 {
                     "name": "x",
-                    "description": "the x position",
+                    "description": "x the x position",
                     "type": "Number"
                 },
                 {
                     "name": "y",
-                    "description": "the y position",
+                    "description": "y the y position",
                     "type": "Number"
                 },
                 {
                     "name": "margin",
-                    "description": "the margin between the menu buttons",
+                    "description": "margin the margin between the menu buttons",
                     "type": "Number"
                 }
             ],
-            "class": "CG.Particle"
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Menu"
         },
         {
             "file": "engine/menu.js",
-            "line": 20,
-            "description": "add a button to the menu",
+            "line": 18,
+            "itemtype": "property",
+            "name": "x",
+            "type": "{Number}",
+            "class": "CG.Menu"
+        },
+        {
+            "file": "engine/menu.js",
+            "line": 23,
+            "itemtype": "property",
+            "name": "y",
+            "type": "{Number}",
+            "class": "CG.Menu"
+        },
+        {
+            "file": "engine/menu.js",
+            "line": 28,
+            "proerty": "margin",
+            "type": "{Number}",
+            "class": "CG.Menu"
+        },
+        {
+            "file": "engine/menu.js",
+            "line": 33,
+            "itemtype": "property",
+            "name": "step",
+            "type": "{*}",
+            "class": "CG.Menu"
+        },
+        {
+            "file": "engine/menu.js",
+            "line": 38,
+            "itemtype": "property",
+            "name": "buttons",
+            "type": "{Array}",
+            "class": "CG.Menu"
+        },
+        {
+            "file": "engine/menu.js",
+            "line": 45,
+            "itemtype": "method",
+            "name": "addButton",
             "params": [
                 {
                     "name": "button",
@@ -4639,49 +4991,48 @@
                     "type": "Button"
                 }
             ],
-            "class": "CG.Particle"
+            "class": "CG.Menu"
         },
         {
             "file": "engine/morph.js",
-            "line": 1,
-            "description": "class Morph to manipulate objects in size and so on",
+            "line": 11,
+            "itemtype": "method",
+            "name": "init",
             "is_constructor": 1,
-            "uses": [
-                "Entity"
-            ],
             "params": [
                 {
                     "name": "mode",
-                    "description": "type of the morph object",
+                    "description": "mode type of the morph object",
                     "type": "String"
                 },
                 {
                     "name": "min",
-                    "description": "min value",
+                    "description": "min min value",
                     "type": "Number"
                 },
                 {
                     "name": "max",
-                    "description": "max value",
+                    "description": "max max value",
                     "type": "Number"
                 },
                 {
                     "name": "speed",
-                    "description": "speed value",
+                    "description": "speed speed value",
                     "type": "Number"
                 }
             ],
-            "class": "CG.Particle"
+            "class": "CG.Morph"
         },
         {
             "file": "engine/morph.js",
-            "line": 42,
-            "description": "get the current value",
+            "line": 48,
+            "itemtype": "method",
+            "name": "getVal",
             "return": {
                 "description": "",
                 "type": "Float"
             },
-            "class": "CG.Particle"
+            "class": "CG.Morph"
         },
         {
             "file": "engine/particle.js",
@@ -5910,92 +6261,24 @@
     ],
     "warnings": [
         {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-bridge.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-circle.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-entity.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-line.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-polygon.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-rectangle.js:7"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/b2d-rope.js:7"
-        },
-        {
             "message": "unknown tag: xtend",
             "line": " engine/b2d-world.js:7"
         },
         {
-            "message": "replacing incorrect tag: augments with uses",
-            "line": " engine/bitmap.js:1"
+            "message": "replacing incorrect tag: returns with return",
+            "line": " engine/bitmap.js:99"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " engine/bitmap.js:90"
+            "line": " engine/bitmap.js:110"
         },
         {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " engine/bitmap.js:101"
-        },
-        {
-            "message": "replacing incorrect tag: augments with uses",
-            "line": " engine/buffer.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/delta.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/emitter.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/map.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/maptileproperties.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/mediaasset.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: augments with uses",
-            "line": " engine/menu.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: augments with uses",
-            "line": " engine/morph.js:1"
+            "message": "unknown tag: proerty",
+            "line": " engine/menu.js:28"
         },
         {
             "message": "unknown tag: descriptiom",
             "line": " engine/particle.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/tpimage.js:1"
-        },
-        {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " engine/translate.js:1"
         },
         {
             "message": "unknown tag: init",
@@ -6042,68 +6325,16 @@
             "line": " engine/b2d-world.js:1"
         },
         {
-            "message": "Missing item type\nClass Bitmap extends Class Buffer",
-            "line": " engine/bitmap.js:1"
+            "message": "Missing item type\nnextscreen",
+            "line": " engine/director.js:26"
         },
         {
-            "message": "Missing item type\nloads image and draws it to the buffer",
-            "line": " engine/bitmap.js:21"
+            "message": "Missing item type\nalpha",
+            "line": " engine/director.js:36"
         },
         {
-            "message": "Missing item type\nclearBuffer",
-            "line": " engine/bitmap.js:41"
-        },
-        {
-            "message": "Missing item type\ndrawImageToBuffer",
-            "line": " engine/bitmap.js:49"
-        },
-        {
-            "message": "Missing item type\nclearRect",
-            "line": " engine/bitmap.js:58"
-        },
-        {
-            "message": "Missing item type\nclearCircle",
-            "line": " engine/bitmap.js:73"
-        },
-        {
-            "message": "Missing item type\ngetPixel",
-            "line": " engine/bitmap.js:90"
-        },
-        {
-            "message": "Missing item type\ngetPixels",
-            "line": " engine/bitmap.js:101"
-        },
-        {
-            "message": "Missing item type\nClass Buffer for separate canvas rendering/buffering",
-            "line": " engine/buffer.js:1"
-        },
-        {
-            "message": "Missing item type\nDirector the top instance for screens and so on in the control hierarchy",
-            "line": " engine/director.js:1"
-        },
-        {
-            "message": "Missing item type\naddScreen",
-            "line": " engine/director.js:70"
-        },
-        {
-            "message": "Missing item type\nnextScreen",
-            "line": " engine/director.js:79"
-        },
-        {
-            "message": "Missing item type\ngetScreenByName",
-            "line": " engine/director.js:92"
-        },
-        {
-            "message": "Missing item type\ngetIndexOfScreen",
-            "line": " engine/director.js:107"
-        },
-        {
-            "message": "Missing item type\ngetActiveScreenName",
-            "line": " engine/director.js:122"
-        },
-        {
-            "message": "Missing item type\nsetFadeMode",
-            "line": " engine/director.js:131"
+            "message": "Missing item type\nfademode",
+            "line": " engine/director.js:41"
         },
         {
             "message": "Missing item type\ninitAsPoint",
@@ -6119,31 +6350,19 @@
         },
         {
             "message": "Missing item type\nyust calls drawMap ;o)",
-            "line": " engine/map.js:782"
+            "line": " engine/map.js:790"
         },
         {
             "message": "Missing item type\nChecks if a external object(s) collides with the areas of the tiled map.\nThis can be elements from an layer or the map itself.",
-            "line": " engine/map.js:898"
+            "line": " engine/map.js:906"
         },
         {
-            "message": "Missing item type\nclass MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.",
-            "line": " engine/mappoint.js:1"
+            "message": "Missing item type\ngid",
+            "line": " engine/mappoint.js:29"
         },
         {
-            "message": "Missing item type\nclass Menu",
-            "line": " engine/menu.js:1"
-        },
-        {
-            "message": "Missing item type\nadd a button to the menu",
-            "line": " engine/menu.js:20"
-        },
-        {
-            "message": "Missing item type\nclass Morph to manipulate objects in size and so on",
-            "line": " engine/morph.js:1"
-        },
-        {
-            "message": "Missing item type\nget the current value",
-            "line": " engine/morph.js:42"
+            "message": "Missing item type",
+            "line": " engine/menu.js:28"
         },
         {
             "message": "Missing item type\nstring functions",

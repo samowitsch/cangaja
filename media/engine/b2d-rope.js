@@ -7,7 +7,7 @@
 /**
  * @description B2DRope - creates a rope with segments
  * @class CG.B2DRope
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRope', {

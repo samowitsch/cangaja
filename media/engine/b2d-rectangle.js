@@ -7,7 +7,7 @@
 /**
  * @description B2DRectangle
  * @class CG.B2DRectangle
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRectangle', {

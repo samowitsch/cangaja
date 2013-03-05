@@ -2,7 +2,7 @@
  * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.TPImage
- * @extend Class
+ * @extends Class
  */
 CG.Class.extend('TPImage', {
     /**

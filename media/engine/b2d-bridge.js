@@ -5,9 +5,12 @@
 
 
 /**
- * @description B2DBridge - creates a bridge with segments
+ * @description
+ *
+ * B2DBridge - creates a bridge with segments
+ *
  * @class CG.B2DBridge
- * @extend CG.B2DEntity
+ * @extends CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DBridge', {
