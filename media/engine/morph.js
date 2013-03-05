@@ -5,9 +5,9 @@
  * @augments Entity
  *
  * @param {string} mode type of the morph object
- * @param {integer} min min value
- * @param {integer} max max value
- * @param {integer} speed speed value
+ * @param {Number} min min value
+ * @param {Number} max max value
+ * @param {Number} speed speed value
  */
 CG.Entity.extend('Morph', {
     init:function (mode, min, max, speed) {

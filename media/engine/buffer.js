@@ -4,8 +4,8 @@
  * @constructor
  * @augments Entity
  *
- * @param {integer} width of the buffer
- * @param {integer} height of the buffer
+ * @param {Number} width of the buffer
+ * @param {Number} height of the buffer
  * @param {string} buffername
  */
 CG.Entity.extend('Buffer', {

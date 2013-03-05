@@ -10,54 +10,168 @@
  *
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
- * @constructor
- * @augments Entity
+ * @class CG.Map
+ * @extend CG.Entity
  *
  * TODO spacing and margin ?
  * TODO own buffer for drawing => split screen possible?
  * TODO update & draw method 50%
  *
- * @param {integer} width of the map
- * @param {integer} height of the map
- * @param {string} mapname
  */
 CG.Entity.extend('Map', {
+    /**
+     * @method init
+     * @constructor
+     * @param width {Number} width of the map
+     * @param height {Number} height of the map
+     * @param mapname {string} mapname
+     * @return {*}
+     */
     init:function (width, height, mapname) {
         this._super(mapname)
 
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = [] //how handle elements in maps? experimental collision detection at the moment with only one
         //point and areas from tilemap editor
         //using as references for external objects in layers?
         //how to handle the relative position to the position of the map?
+
+        /**
+         * @property points
+         * @type {Array}
+         */
         this.points = [] // position points (tiles) of tilemap editor => position point and type?
+        /**
+         * @property areas
+         * @type {Array}
+         */
         this.areas = [] // group objects e.g. area for objects of tilemap editor => bound and type?
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
         this.position = new CG.Point(0, 0) // needed as relative point for points and areas
+        /**
+         * @property changemap
+         * @type {String}
+         */
         this.changemap = ''
-
-        this.animated = false //perfromance eater if true ;o(
+        /**
+         * @description
+         *
+         * If set to true the map is being updated with method updateAnimation.
+         * See also method description of updateAnimation!
+         *
+         * @property animated
+         * @type {Boolean}
+         */
+        this.animated = false //performance eater if true ;o(
+        /**
+         * @property animDelayFactor
+         * @type {Number}
+         */
         this.animDelayFactor = 20
-
+        /**
+         * @property atlas
+         * @type {Image}
+         */
         this.atlas = new Image()
+        /**
+         * @property atlaswidth
+         * @type {Number}
+         */
         this.atlaswidth = 0
+        /**
+         * @property atlasheight
+         * @type {Number}
+         */
         this.atlasheight = 0
+        /**
+         * @property atlastranscol
+         * @type {String}
+         */
         this.atlastranscol = '' //
         //ejecta has no DOMParser!
         if (typeof(ejecta) == 'undefined') {
+            /**
+             * @property xml
+             * @type {String}
+             */
             this.xml = ''
+            /**
+             * @property parser
+             * @type {DOMParser}
+             */
             this.parser = new DOMParser()
+            /**
+             * @property xmlDoc
+             * @type {String}
+             */
             this.xmlDoc = ''
         }
-
+        /**
+         * @property json
+         * @type {Object}
+         */
         this.json = {}
-
+        /**
+         * @description
+         *
+         * The tiled layer are parsed into separate layers
+         *
+         * @property layers
+         * @type {Array}
+         */
         this.layers = [] //can contain maptilelayer or objectlayer
+        /**
+         * @description
+         *
+         * Defines the layer to draw:
+         * all - for all layers
+         * name - the name of layer to draw
+         * index - array index of layer
+         *
+         * @property renderlayer
+         * @type {String}
+         */
         this.renderlayer = 'all' //render layer: all for all layers, name of layer or array index for example 0 ;o)
+        /**
+         * @property tileproperties
+         * @type {Array}
+         */
         this.tileproperties = [] //properties of the tiles
+        /**
+         * @property orientation
+         * @type {String}
+         */
         this.orientation = ''
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 0
+        /**
+         * @property tilewidth
+         * @type {Number}
+         */
         this.tilewidth = 0
+        /**
+         * @property tileheight
+         * @type {Number}
+         */
         this.tileheight = 0
+        /**
+         * @property tileset
+         * @type {Object}
+         */
         this.tileset = {
             tilewidth:0,
             tileheight:0,
@@ -66,26 +180,55 @@ CG.Entity.extend('Map', {
             spacing:0,
             margin:0
         }
-
+        /**
+         * @property xspeed
+         * @type {Number}
+         */
         this.xspeed = 0
+        /**
+         * @property yspeed
+         * @type {Number}
+         */
         this.yspeed = 0
-
-
+        /**
+         * @property xscale
+         * @type {Number}
+         */
         this.xscale = 1
+        /**
+         * @property yscale
+         * @type {Number}
+         */
         this.yscale = 1
+        /**
+         * @property alpha
+         * @type {Number}
+         */
         this.alpha = 1
-
+        /**
+         * @property wrapX
+         * @deprecated
+         * @type {Boolean}
+         */
         this.wrapX = false //stuff from diddy?
+        /**
+         * @property wrapY
+         * @deprecated
+         * @type {Boolean}
+         */
         this.wrapY = false //stuff from diddy?
-        //collision detection
-        //this.elements = [] //if not empty elements would checked with checkMapCollision
+        /**
+         * @property layertocheck
+         * @type {Number}
+         */
         this.layertocheck = 0 //as default use layer 0 for collision detection
         return this
     },
     /**
-     * @description loadMapXml - load and parse an xml tilemap file
+     * @method loadMapXml
+     * @description load and parse an xml tilemap file
      *
-     * @param {string/object} xmlfile path or mediaasset object with data of tiled map xml
+     * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml:function (xmlfile) {
         this.changemap = ''
@@ -259,9 +402,12 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description loadMapJson - load and parse an tilemap json file
+     * @method loadMapJson
+     * @description
      *
-     * @param {string/object} jsonfile path or mediaasset object with data of tiled map xml
+     * load and parse an tilemap json file
+     *
+     * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson:function (jsonfile) {
         this.changemap = ''
@@ -369,15 +515,15 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description drawMap - draws the map
+     * @method drawMap
      *
-     * @param {integer} sx top CG.LEFT coord for canvas drawing
-     * @param {integer} sy top CG.LEFT coord for canvas drawing
-     * @param {integer} bx top CG.LEFT x coord of bound in tilemap
-     * @param {integer} by top CG.LEFT y coord of bound in tilemap
-     * @param {integer} bw width of bound in tilemap
-     * @param {integer} bh height of bound in tilemap
-     * @param {callback} callback for collision handling - callback(obj,maptileproperties)
+     * @param sx {Number} sx top CG.LEFT coord for canvas drawing
+     * @param sy {Number} sy top CG.LEFT coord for canvas drawing
+     * @param bx {Number} bx top CG.LEFT x coord of bound in tilemap
+     * @param by {Number} by top CG.LEFT y coord of bound in tilemap
+     * @param bw {Number} bw width of bound in tilemap
+     * @param bh {Number} bh height of bound in tilemap
+     * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
     drawMap:function (sx, sy, bx, by, bw, bh, callback) {
         this.position.x = bx
@@ -531,7 +677,11 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description update all areas and points
+     * @description
+     *
+     * Update all areas and points elements.
+     *
+     * @method updatePointsAndAreas
      */
     updatePointsAndAreas:function () {
         this.points.forEach(function (point, index) {
@@ -544,9 +694,13 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description getPointsByName - get all point(s) with the given name
+     * @description
      *
-     * @param {string} name of the points to return
+     * Get all point(s) with the given name in the points
+     *
+     * @method getPointsByName
+     *
+     * @param name {string} name of the points to return
      * @return {false/array} returns false or an array with point(s)
      */
     getPointsByName:function (name) {
@@ -564,8 +718,9 @@ CG.Entity.extend('Map', {
 
     /**
      * @description getAreasByName - get all areas with the given name
+     * @method getAreasByName
      *
-     * @param {string} name of the area(s) to return
+     * @param name {string} name of the area(s) to return
      * @return {false/array} returns false or an array with area(s)
      */
     getAreasByName:function (name) {
@@ -583,9 +738,13 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description setLayerToRender - defines layer drawing, see param options
+     * @description
      *
-     * @param {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
+     * Defines layer drawing, See property options
+     *
+     * @method setLayerToRender
+     *
+     * @param mixed {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
      */
     setLayerToRender:function (mixed) {
         this.renderlayer = mixed
@@ -593,9 +752,13 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description the update method is not complete yet and only experimental
-     * at the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!
+     * @description
+     *
+     * The update method is not complete yet and only experimental.
+     * At the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!
      * Then also a map class can be added to a layer as an element for auto update/draw from Game.director!
+     *
+     * @method update
      */
     update:function () {
         //TODO automatic movement of map or other stuff?
@@ -626,6 +789,7 @@ CG.Entity.extend('Map', {
 
     /**
      * @description getBounds - get the bounds of the map
+     * @method getBounds
      */
     getBounds:function () {
         return {
@@ -635,15 +799,18 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description updateAnimation - updates the map
+     * @description
+     * Updates the tilemap properties of the map.
      *
      * Supported custom tiled map properties for now are (see also tilemap examples):
      * anim_delay       => time to used to display an switch to next tile
      * anim_direction   => direction for next tile 1 = jump forward, -1 = jump back
      * anim_next        => defines the offset
      *
-     * With this tile properties it is possible to define tilemap animations. These must be defined in the tilemap property window
-     * with key/value pairs
+     * With this tile properties it is possible to define tilemap animations.
+     * These must be defined in the tilemap property window with key/value pairs
+     *
+     * @method updateAnimation
      */
     updateAnimation:function () {
         // update if map is visible
@@ -683,7 +850,11 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description addElement - adds a object to the element array, used at the moment for collision detection to tilemap
+     * @description
+     *
+     * Adds a object to the element array, used at the moment for collision detection to tilemap.
+     *
+     * @method addElement
      *
      * @param {obj} element to to add to elements array
      */
@@ -693,12 +864,14 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description checkMapCollision - checks if the attached element
-     * collides with an tile of the tilemap
+     * @description
+     * Checks if the attached element collides with an tile of the tilemap
+     *
+     * @method checkMapCollision
      *
      * @param {obj} element to check for
-     * @param {integer} rx current rx of rendermap method
-     * @param {integer} ry current ry of rendermap method
+     * @param {Number} rx current rx of rendermap method
+     * @param {Number} ry current ry of rendermap method
      *
      * @return {boolean} returns true or false
      */
@@ -723,11 +896,13 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description checks if a external object(s) collides
-     * with the areas of the tiled map. this can be elements from an layer or the map itself.
+     * @description
      *
-     * @param {objarray} objarray to check for a areas collision
-     * @param {calback} callback what should happen
+     * Checks if a external object(s) collides with the areas of the tiled map.
+     * This can be elements from an layer or the map itself.
+     *
+     * @param {Array} objarray to check for a areas collision
+     * @param {Callback} callback what should happen
      */
     checkElementsToAreasCollision:function (objarray, callback) {
         for (var o = 0, ol = objarray.length; o < ol; o++) {
@@ -739,6 +914,7 @@ CG.Entity.extend('Map', {
 
     /**
      * @description removes the json data of the map object
+     * @method removeJsonData
      */
     removeJsonData:function () {
         this.json = {}
@@ -746,6 +922,7 @@ CG.Entity.extend('Map', {
     },
     /**
      * @description removes the xml data of the map object
+     * @method removeXmlData
      */
     removeXmlData:function () {
         this.xml = ''

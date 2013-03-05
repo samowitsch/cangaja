@@ -1,17 +1,34 @@
 /**
- * @description class Screen container to collect/group Layers
+ * @description class Screen container to collect/group CG.Layers and/or CG.B2DWorld
  *
- * @constructor
- * @augments Entity
+ * @class CG.Screen
+ * @extends Entity
  *
  * @param {string} screenname the name of the screen
  */
 CG.Entity.extend('Screen', {
+    /**
+     * @constructor
+     * @method init
+     * @param screenname
+     * @return {*}
+     */
     init:function (screenname) {
         this._super(screenname)
+        /**
+         * @property xscale
+         * @type {Number}
+         */
         this.xscale = 1
+        /**
+         * @property yscale
+         * @type {Number}
+         */
         this.yscale = 1
-        var self = this
+        /**
+         * @property layers
+         * @type {Array}
+         */
         this.layers = []
         return this
     },
@@ -38,7 +55,7 @@ CG.Entity.extend('Screen', {
 
     /**
      * @description add a layer object to the layer array
-     *
+     * @method addLayer
      * @param {layer} layer to add
      */
     addLayer:function (layer) {
@@ -48,7 +65,7 @@ CG.Entity.extend('Screen', {
 
     /**
      * @description find layer by name
-     *
+     * @method getLayerByName
      * @param {string} layername find layer by name
      * @return {false/layer}
      */

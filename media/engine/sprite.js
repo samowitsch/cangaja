@@ -1,42 +1,104 @@
 /**
  * @description the Sprite class
  *
- * @constructor
- * @auguments Rectangle
- *
- * @param {string, image, tpimage} imgpath, image object or tpimage object to use
- * @param {point} position object
+ * @class CG.Sprite
+ * @extends CG.Rectangle
  */
 CG.Rectangle.extend('Sprite', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {image}  imgpath, image object or tpimage object to use
+     * @param position {CG.Point}  position object
+     * @return {*}
+     */
     init:function (image, position) {
         this._super(position, 0, 0)
 
+        /**
+         @property atlasimage {boolean}
+         */
         this.atlasimage = false
         this.setImage(image)
 
+        /**
+         @property bound {CG.Bound}
+         */
         this.bound = Game.bound     //global bounds of game
+        /**
+         @property diffpoint {CG.Point}
+         */
         this.diffpoint = new CG.Point(this.bound.x, this.bound.y)  //store diffpoint if bound is moving
 
-        //    this.x = x
-        this.xspeed = 0
+        /**
+         @property xspeed {Number}
+         */
+        this.xspeed = 0 //xspeed of the sprite
+        /**
+         @property xscale {Number}
+         */
         this.xscale = 1
+        /**
+         @property xhandle {Number}
+         */
         this.xhandle = 0
-        //    this.y = y
+        /**
+         @property yspeed {Number}
+         */
         this.yspeed = 0
+        /**
+         @property yscale {Number}
+         */
         this.yscale = 1
+        /**
+         @property yhandle {Number}
+         */
         this.yhandle = 0
+        /**
+         @property boundsMode {false/string}
+         */
         this.boundsMode = false // false, bounce or slide
+        /**
+         @property rotation {integer/float}
+         */
         this.rotation = 0
+        /**
+         @property rotationspeed {integer/float}
+         */
         this.rotationspeed = 0
+        /**
+         @property alpha {float}
+         */
         this.alpha = 1
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
 
+        /**
+         @property followobject {boolean/object}
+         */
         this.followobject = false   //object to follow
-        this.followspeed = false    //followspeed for follower in pixel, has prio ober followsteps
+        /**
+         @property followspeed {boolean/integer}
+         */
+        this.followspeed = false    //followspeed for follower in pixel, has prio over followsteps
+        /**
+         @property followsteps {boolean/integer}
+         */
         this.followsteps = false    //followsteps between follower and target
 
+        /**
+         @property attachedobject {boolean}
+         */
         this.attachedobject = false //attached object
+        /**
+         @property offsetx {Number}
+         */
         this.offsetx = 0            //offset x for attached object
+        /**
+         @property offsety {Number}
+         */
         this.offsety = 0            //offset y for attached object
         return this
     },
@@ -76,7 +138,8 @@ CG.Rectangle.extend('Sprite', {
     },
 
     /**
-     * Checks the bound if a boundMode (bounce or slide) is set
+     * @description Checks the bound if a boundMode (bounce or slide) is set
+     * @method checkBound
      */
     checkBound:function () {
         switch (this.boundsMode) {
@@ -119,6 +182,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description calculate offset if bound is moving
+     * @method updateDiff
      */
     updateDiff:function () {
         if (this.diffpoint.x !== this.bound.x) {
@@ -132,6 +196,7 @@ CG.Rectangle.extend('Sprite', {
     },
     /**
      * @description is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different
+     * @method follow
      */
     follow:function () {
         if (this.followspeed) {
@@ -165,8 +230,8 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the bound of the sprite
-     *
-     * @param {bound} bound the bound
+     * @method setBound
+     * @param bound {CG.Bound} the bound
      */
     setBound:function (bound) {
         this.bound = bound
@@ -176,6 +241,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description if there is a attached object get its position
+     * @method ifAttached
      */
     ifAttached:function () {
         if (this.attachedobject != false) {
@@ -186,6 +252,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description attach a reference of the given object to this object
+     * @method attachObject
      */
     attachObject:function (obj) {
         this.attachedobject = obj
@@ -194,6 +261,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description removes the attached object reference
+     * @method removeAttachedObject
      */
     removeAttachedObject:function () {
         this.attachedobject = false
@@ -202,6 +270,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the x offset of the attached object to this object
+     * @method setAttachedOffsetX
      */
     setAttachedOffsetX:function (offsetx) {
         this.offsetx = offsetx
@@ -210,6 +279,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the y offset of the attached object to this object
+     * @method setAttachedOffsetY
      */
     setAttachedOffsetY:function (offsety) {
         this.offsety = offsety

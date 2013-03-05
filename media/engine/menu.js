@@ -4,9 +4,9 @@
  * @constructor
  * @augments Entity
  *
- * @param {integer} x the x position
- * @param {integer} y the y position
- * @param {integer} margin the margin between the menu buttons
+ * @param {Number} x the x position
+ * @param {Number} y the y position
+ * @param {Number} margin the margin between the menu buttons
  */
 CG.Entity.extend('Menu', {
     init:function (x, y, margin) {

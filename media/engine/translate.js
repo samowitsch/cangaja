@@ -1,46 +1,121 @@
 /**
  * @description class Translate moving a object
  *
- * @constructor
- * @augments Entity
+ * @class CG.Translate
+ * @extend CG.Entity
  */
 CG.Entity.extend('Translate', {
+    /**
+     * @init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
         this._super()
+        /**
+         * @property type
+         * @type {String}
+         */
         this.type = ''
-
+        /**
+         * @property tx
+         * @type {Number}
+         */
         this.tx = 0 //translated x value for the object
+        /**
+         * @property ty
+         * @type {Number}
+         */
         this.ty = 0 //translated y value for the object
-
+        /**
+         * @properzty x1
+         * @type {Number}
+         */
         this.x1 = 0
+        /**
+         * @property y1
+         * @type {Number}
+         */
         this.y1 = 0
+        /**
+         * @property x2
+         * @type {Number}
+         */
         this.x2 = 0
+        /**
+         * @property y2
+         * @type {Number}
+         */
         this.y2 = 0
-
+        /**
+         * @property bx
+         * @type {Number}
+         */
         this.bx = 0 //bézier x
+        /**
+         * @property by
+         * @type {Number}
+         */
         this.by = 0 //bézier y
-
+        /**
+         * @property theobj
+         * @type {Object}
+         */
         this.theobj = {}
-
+        /**
+         * @property r1
+         * @type {Number}
+         */
         this.r1 = 0
+        /**
+         * @property r2
+         * @type {Number}
+         */
         this.r2 = 0
+        /**
+         * @property startangle
+         * @type {Number}
+         */
         this.startangle = 0
+        /**
+         * @property angle
+         * @type {Number}
+         */
         this.angle = 0
+        /**
+         * @property speed
+         * @type {Number}
+         */
         this.speed = 0
-
+        /**
+         * @property steps
+         * @type {Number}
+         */
         this.steps = 0
+        /**
+         * @property step
+         * @type {Number}
+         */
         this.step = 0
+        /**
+         * @property positions
+         * @type {Array}
+         */
         this.positions = []
+        /**
+         * @property finished
+         * @type {Boolean}
+         */
         this.finished = false
         return this
     },
     /**
-     * @description initTween
+     * @method initTween
      *
-     * @param {obj} obj object to move
-     * @param {integer} steps of tween
-     * @param {point} startpoint of tween
-     * @param {point} endpoint of tween
+     * @param obj {Object} object to move
+     * @param steps {Number} steps of tween
+     * @param startpoint {point} startpoint of tween
+     * @param endpoint {point} endpoint of tween
      * @return {this}
      */
     initTween:function (obj, steps, startpoint, endpoint) {
@@ -66,13 +141,13 @@ CG.Entity.extend('Translate', {
     },
 
     /**
-     * @description initOval
-     * @param {obj} obj object to move
-     * @param {point} centerpoint
-     * @param {integer} radius1
-     * @param {integer} radius2
-     * @param {integer} startangle
-     * @param {integer} rotation
+     * @method initOval
+     * @param obj {Object} obj object to move
+     * @param centerpoint {point} centerpoint
+     * @param radius1 {Number} radius1
+     * @param radius2 {Number} radius2
+     * @param startangle {Number} startangle
+     * @param rotation {Number} rotation
      * @return {this}
      */
     initOval:function (obj, centerpoint, radius1, radius2, startangle, rotation) {
@@ -92,12 +167,14 @@ CG.Entity.extend('Translate', {
      * @description initBezier
      * http://13thparallel.com/archive/bezier-curves/
      *
-     * @param {obj} obj object to move
-     * @param {integer} steps of bézier curve
-     * @param {point} startpoint startpoint of bézier
-     * @param {point} endpoint endpoint of bézier
-     * @param {point} control1 point for bézier calculation (optional)
-     * @param {point} control2 point for bézier calculation (optional)
+     * @method initBezier
+     *
+     * @param obj {Object} obj object to move
+     * @param steps {Number} steps of bézier curve
+     * @param startpoint {CG.Point} startpoint startpoint of bézier
+     * @param endpoint {CG.Point} endpoint endpoint of bézier
+     * @param control1 {CG.Point} control1 point for bézier calculation (optional)
+     * @param control2 {CG.Point} control2 point for bézier calculation (optional)
      * @return {this}
      */
     initBezier:function (obj, steps, startpoint, endpoint, control1, control2) {

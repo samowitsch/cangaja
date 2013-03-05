@@ -1,44 +1,107 @@
 /**
  * @description class Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer, (Hiero works also but need some modifications of the exportet files)
  *
- * @constructor
- * @augments Entity
+ * @class CG.Font
+ * @extends CG.Entity
  */
 CG.Entity.extend('Font', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
-        //    Entity.call(this)
+        /**
+         @property atlas {Image}
+         */
         this.atlas = new Image()
-        this.fieldname = ''
+        /**
+         @property initText {string}
+         */
         this.initText = ''
+        /**
+         @property chars {Array}
+         */
         this.chars = new Array(256)
+        /**
+         @property x {Array}
+         */
         this.x = new Array(256)
+        /**
+         @property y {Array}
+         */
         this.y = new Array(256)
+        /**
+         @property width {Array}
+         */
         this.width = new Array(256)
+        /**
+         @property height {Array}
+         */
         this.height = new Array(256)
+        /**
+         @property xoff {Array}
+         */
         this.xoff = new Array(256)
+        /**
+         @property yoff {Array}
+         */
         this.yoff = new Array(256)
+        /**
+         @property xadv {Array}
+         */
         this.xadv = new Array(256)
+        /**
+         @property lineHeight {Number}
+         */
         this.lineHeight = 0
-
-        //info
+        /**
+         @property face {string}
+         */
         this.face = ''
+        /**
+         @property size {Number}
+         */
         this.size = 0
+        /**
+         @property bold {Number}
+         */
         this.bold = 0
+        /**
+         @property italic {Number}
+         */
         this.italic = 0
 
+        /**
+         @property base {Number}
+         */
         this.base = 0
+        /**
+         @property scaleW {Number}
+         */
         this.scaleW = 0
+        /**
+         @property scaleH {Number}
+         */
         this.scaleH = 0
         return this
     },
-
+    /**
+     * @method update
+     */
     update:function () {
         throw {
             name:'Font Error',
             message:'TODO, not defined yet.'
         }
     },
-
+    /**
+     * @description draw the given text to the canvas
+     * @method draw
+     * @param text {string} the text to draw
+     * @param xpos {Number} the x position
+     * @param ypos {Number} the y position
+     */
     draw:function (text, xpos, ypos) {
         currx = 0
         curry = 0
@@ -55,8 +118,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the line height of the current font
-     *
-     * @return {integer} lineheight
+     * @method getLineHeight
+     * @return lineheight {Number}
      */
     getLineHeight:function () {
         return this.lineHeight
@@ -64,8 +127,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the font size of the current font
-     *
-     * @return {integer} size - font size
+     * @method getFontSize
+     * @return size {Number} font size
      */
     getFontSize:function () {
         return this.size
@@ -73,9 +136,9 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the width of the given text
-     *
-     * @param {string} text
-     * @return {integer} textwidth
+     * @method getTextWidth {string} the string to calculate the width
+     * @param text {string}
+     * @return textwidth {Number}
      */
     getTextWidth:function (text) {
         var textwidth = 0
@@ -88,7 +151,7 @@ CG.Entity.extend('Font', {
 
     /**
      * @description loadFont - load and parse the given fontfile
-     *
+     * @method loadFont
      * @param {string/object} fontfile path or mediaasset object with data
      */
     loadFont:function (fontfile) {

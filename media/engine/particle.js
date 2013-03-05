@@ -1,20 +1,48 @@
 /**
  * @descriptiom class Particle
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Particle
+ * @extends CG.Sprite
  *
- * @param {mixed} image imgpath, image object or tpimage object to use for the particle
  */
 
 CG.Sprite.extend('Particle', {
+    /**
+     * @constructor
+     * @method init
+     * @param image {mixed} image imgpath, image object or tpimage object to use for the particle
+     */
     init:function (image) {
         this._super(image, new CG.Point(0, 0))
+        /**
+         * @property lifetime
+         * @type {Number}
+         */
         this.lifetime = 100
+        /**
+         * @property currtime
+         * @type {Number}
+         */
         this.currtime = this.lifetime
+        /**
+         * @property aging
+         * @type {Number}
+         */
         this.aging = 1
+        /**
+         * @property fadeout
+         * @type {Boolean}
+         */
         this.fadeout = false
+        /**
+         * @property alpha
+         * @type {Number}
+         */
         this.alpha = 1
+        /**
+         * @property gravity
+         * @type {Number}
+         */
         this.gravity = 0
     },
     update:function () {

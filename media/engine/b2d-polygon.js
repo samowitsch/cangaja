@@ -8,54 +8,96 @@
  * @description B2DPolygon - uses PhysicsEditor export Lime + Corona (json)
  * supported options are friction, density and bounce
  *
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DPolygon
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DPolygon', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param jsonpoly  string      json file from PhysicsEditor from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param scale     integer     the world scale of B2DWorld
-     * @param stat      boolean     is the body static or dynamic
-     * @param bullet    boolean     bullet option
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param jsonpoly  {string}      json file from PhysicsEditor from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
      * @return {*}
      */
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property stat
+         * @type {*}
+         */
         this.stat = stat || false
-        this.bullet = bullet || false
-
+        /**
+         * @property polys
+         * @type {Array}
+         */
         this.polys = new Array()
-        this.vecs = new Array()
+        /**
+         * @property jsondata
+         * @type {*}
+         */
         this.jsondata = jsonpoly.data[jsonpoly.name]
-
+        /**
+         * @property xhandle
+          * @type {Number}
+         */
         this.xhandle = 0
+        /**
+         * @property yhandle
+         * @type {Number}
+         */
         this.yhandle = 0
-
+        /**
+         * @property vecs
+         * @type {Array}
+         */
+        this.vecs = new Array()
         this.vecs = this.createVecs(jsonpoly) // build grouped b2vecs from physicseditor
 
+        /**
+         * @property bodyDef.type
+         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         */
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
         } else {
             this.bodyDef.type = b2Body.b2_dynamicBody
         }
-
+        /**
+         * @property bodyDef.position
+         */
         this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        /**
+         * @property bodyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
+        /**
+         * @property bullet
+         * @type {*}
+         */
+        this.bullet = bullet || false
+        /**
+         * @property bodyDef.bullet
+         * @type {*}
+         */
         this.bodyDef.bullet = this.bullet
 
         //this.bodyDef.linearDamping = options.linearDamping
         //this.bodyDef.angularDamping = options.angularDamping
         //this.bodyDef.fixedRotation = true
 
-
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var i = 0, l = this.vecs.length; i < l; i++) {
@@ -73,6 +115,10 @@ CG.B2DEntity.extend('B2DPolygon', {
         return this
 
     },
+    /**
+     * @method createVecs
+     * @return {Array}
+     */
     createVecs:function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i < l; i++) {

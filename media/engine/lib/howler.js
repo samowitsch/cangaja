@@ -468,8 +468,8 @@
     /**
      * Get/set sound sprite definition.
      * @param  {Object} sprite Example: {spriteName: [offset, duration]}
-     *                @param {Integer} offset Where to begin playback in milliseconds
-     *                @param {Integer} duration How long to play in milliseconds
+     *                @param {Number} offset Where to begin playback in milliseconds
+     *                @param {Number} duration How long to play in milliseconds
      * @return {Object}        Returns current sprite sheet or self.
      */
     sprite: function(sprite) {

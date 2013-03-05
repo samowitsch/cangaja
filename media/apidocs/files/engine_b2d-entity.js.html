@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>engine&#x2F;b2d-entity.js - Cangaja API</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Cangaja API"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Entity.html">CG.Entity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: engine&#x2F;b2d-entity.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ *  © 2012 by Christian Sonntag &lt;info@motions-media.de&gt;
+ *  simple experimental Canvas Game JavaScript Framework
+ *&#x2F;
+
+
+&#x2F;**
+ * @description B2DEntity
+ * @class CG.B2DEntity
+ * @extend CG.Entity
+ *&#x2F;
+
+CG.Entity.extend(&#x27;B2DEntity&#x27;, {
+    &#x2F;**
+     * @method init
+     * @constructor
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param world     {object}      reference to world of B2DWorld
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @return {*}
+     *&#x2F;
+
+    init:function (name, image, world, x, y, scale) {
+        this._super()
+        this.setImage(image)
+        &#x2F;**
+         * @property body
+         * @type {b2Body}
+         *&#x2F;
+        this.body = {}
+        &#x2F;**
+         * @property x
+         * @type {Number}
+         *&#x2F;
+        this.x = x
+        &#x2F;**
+         * @property y
+         * @type {Number}
+         *&#x2F;
+        this.y = y
+        &#x2F;**
+         * @property scale
+         * @type {Number}
+         *&#x2F;
+        this.scale = scale
+        &#x2F;**
+         * @property id
+         * @type {Object}
+         *&#x2F;
+        this.id = {name:name, uid:0}
+        &#x2F;**
+         * @property world
+         * @type {b2World}
+         *&#x2F;
+        this.world = world
+        &#x2F;**
+         * @property xhandle
+         * @type {Number}
+         *&#x2F;
+        this.xhandle = (this.width &#x2F; 2)
+        &#x2F;**
+         * @property yhandle
+         * @type {Number}
+         *&#x2F;
+        this.yhandle = (this.height &#x2F; 2)
+        if(!this.bodyDef){
+            &#x2F;**
+             * @property bodyDef
+             * @type {b2BodyDef}
+             *&#x2F;
+            this.bodyDef = new b2BodyDef
+            &#x2F;**
+             * @property bodyDef.alowSleep
+             * @type {Boolean}
+             *&#x2F;
+            this.bodyDef.allowSleep = true
+            &#x2F;**
+             * @property bodyDef.awake
+             * @type {Boolean}
+             *&#x2F;
+            this.bodyDef.awake = true
+        }
+
+        if(!this.fixDef) {
+            &#x2F;**
+             * @property fixDef
+             * @type {b2FixtureDef}
+             *&#x2F;
+            this.fixDef = new b2FixtureDef
+            &#x2F;**
+             * @property fixDef.density
+             * @type {Number}
+             *&#x2F;
+            this.fixDef.density = 1.0
+            &#x2F;**
+             * @property fixDef.friction
+             * @type {Number}
+             *&#x2F;
+            this.fixDef.friction = 0.5
+            &#x2F;**
+             * @property fixDef.restitution
+             * @type {Number}
+             *&#x2F;
+            this.fixDef.restitution = 0.5
+        }
+        &#x2F;**
+         * @property isHit
+         * @type {Boolean}
+         *&#x2F;
+        this.isHit = false;
+        &#x2F;**
+         * @property strength
+         * @type {Number}
+         *&#x2F;
+        this.strength = 100;
+        &#x2F;**
+         * @property dead
+         * @type {Boolean}
+         *&#x2F;
+        this.dead = false;
+
+        return this
+    },
+    &#x2F;**
+     * @method hit
+     * @param impulse
+     * @param source
+     *&#x2F;
+    hit:function (impulse, source) {
+        this.isHit = true;
+        if (this.strength) {
+            this.strength -= impulse;
+            if (this.strength &lt;= 0) {
+                this.dead = true
+            }
+        }
+    },
+    update:function () {
+    },
+    draw:function () {
+        Game.b_ctx.save()
+        Game.b_ctx.globalAlpha = this.alpha
+        Game.b_ctx.translate(this.body.GetPosition().x * this.scale, this.body.GetPosition().y * this.scale)
+        if (this.atlasimage) {
+            Game.b_ctx.rotate((this.body.GetAngle() - this.imagerotation)) &#x2F;&#x2F; * CG.Const_PI_180)
+            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
+        } else {
+            Game.b_ctx.rotate(this.body.GetAngle()) &#x2F;&#x2F; * CG.Const_PI_180)
+            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
+        }
+        Game.b_ctx.restore()
+    }
+})
+
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

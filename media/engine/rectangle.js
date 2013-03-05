@@ -1,34 +1,75 @@
 /**
  * @description class Rectangle for click and mouseover handling, collision detection and AABB function
  *
- * @constructor
- * @augments Entity
+ * @class CG.Rectangle
+ * @extends CG.Entity
  *
- * @param {point} position point
- * @param {integer} width the width of rectangle
- * @param {integer} height the height of rectangle
  */
 CG.Entity.extend('Rectangle', {
+    /**
+     * @constructor
+     * @method init
+     * @param position {CG.Point} position point
+     * @param width {Number} width the width of rectangle
+     * @param height {Number} height the height of rectangle
+     * @return {*}
+     */
     init:function (position, width, height) {
+        /**
+         @property position {CG.Point}
+         */
         this.position = position || new CG.Point(0, 0)
+        /**
+         @property width {Number}
+         */
         this.width = width || 0
+        /**
+         @property height {Number}
+         */
         this.height = height || 0
+        /**
+         @property clickable {boolean}
+         */
         this.clickable = false
+        /**
+         @property dragable {boolean}
+         */
         this.dragable = false
+        /**
+         @property rotation {Number}
+         */
         this.rotation = 0
+        /**
+         @property xscale {Number}
+         */
         this.xscale = 1
+        /**
+         @property yscale {Number}
+         */
         this.yscale = 1
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
+        /**
+         @property hover {boolean}
+         */
         this.hover = false
 
+        /**
+         @property boundingradius {Number}
+         */
         this.boundingradius = 0     //radius for circular collision bounds
+        /**
+         @property mapcollision {boolean}
+         */
         this.mapcollision = false
 
         return this
     },
     /**
      * @description returns the bounds of rotated rectangle
-     *
+     * @method AABB
      * @return {object} returns the calculated bounds
      */
     AABB:function () {
@@ -45,7 +86,7 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks click inside of the rectangle, supports rotation
-     *
+     * @method ifClicked
      * @return {true/false}
      */
     ifClicked:function () {
@@ -69,6 +110,7 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks if the mouse/pointer is over the rectangle
+     * @method ifMouseOver
      */
     ifMouseOver:function () {
         var dx = mousex - this.position.x,
@@ -89,9 +131,9 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
-     *
-     * @param {array} objects a array of objects to check for collision => Sprites, Animations, MapAreas
-     * @param {callback} callback what to do after collision?
+     * @method checkCollision
+     * @param objects {array} a array of objects to check for collision => Sprites, Animations, MapAreas
+     * @param callback {callback} what to do after collision?
      */
     checkCollision:function (objects, callback) {
         objects.forEach(function (obj, index) {

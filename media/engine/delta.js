@@ -1,15 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @description class CG.Delta not really used at the moment ;o)
+ *
+ * @class CG.Delta
+ * @extend Class
+ *
  */
 
 
 CG.Class.extend('Delta', {
+    /**
+     * @method init
+     * @constructor
+     * @param fps {Number}
+     */
     init:function (fps) {
+        /**
+         * @property targetfps
+         * @type {Number}
+         */
         this.targetfps = fps
+        /**
+         * @property currentticks
+         * @type {Number}
+         */
         this.currentticks = 0
+        /**
+         * @property lastticks
+         * @type {Date}
+         */
         this.lastticks = Date.now()
+        /**
+         * @property frametime
+         * @type {Number}
+         */
         this.frametime = 0
+        /**
+         * @property delta
+         * @type {Number}
+         */
         this.delta = 0
     },
 

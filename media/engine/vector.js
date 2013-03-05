@@ -1,16 +1,22 @@
 /**
  * @description class Vector
  *
- * @constructor
- * @augments Point
- *
- * @param {integer} x the x position
- * @param {integer} y the y position
- * @param {integer} z the z position
+ * @class CG.Vector
+ * @extends CG.Point
  */
 CG.Point.extend('Vector', {
+    /**
+     * @constructor
+     * @method init
+     * @param x {Number} the x position
+     * @param y {Number} the y position
+     * @param z {Number} the z position
+     */
     init:function (x, y, z) {
         this._super(this, x, y)
+        /**
+         @property z {Number}
+         */
         this.z = z || 0
     }
 })

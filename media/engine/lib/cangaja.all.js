@@ -205,18 +205,46 @@ String.prototype.startsWith = function (str) {
 }
 
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @description class CG.Delta not really used at the moment ;o)
+ *
+ * @class CG.Delta
+ * @extend Class
+ *
  */
 
 
 CG.Class.extend('Delta', {
+    /**
+     * @method init
+     * @constructor
+     * @param fps {Number}
+     */
     init:function (fps) {
+        /**
+         * @property targetfps
+         * @type {Number}
+         */
         this.targetfps = fps
+        /**
+         * @property currentticks
+         * @type {Number}
+         */
         this.currentticks = 0
+        /**
+         * @property lastticks
+         * @type {Date}
+         */
         this.lastticks = Date.now()
+        /**
+         * @property frametime
+         * @type {Number}
+         */
         this.frametime = 0
+        /**
+         * @property delta
+         * @type {Number}
+         */
         this.delta = 0
     },
 
@@ -239,13 +267,24 @@ CG.Class.extend('Delta', {
 
 
 /**
- * @description entity the base class
- * @constructor
+ * @description class Entity the base class of cangaja
+ * @class CG.Entity
  */
 
 CG.Class.extend('Entity', {
+    /**
+     * @constructor
+     * @method init
+     * @param name {string} the name of the Entity
+     */
     init:function (name) {
+        /**
+         @property name {string}
+         */
         this.name = name || ''
+        /**
+         @property visible {boolean}
+         */
         this.visible = true
     },
     update:function () {
@@ -262,7 +301,7 @@ CG.Class.extend('Entity', {
     },
     /**
      * @description initialize image for object. for now => sprite, particle, buffer, bitmap and button use it
-     *
+     * @method setImage
      * @param {image} image image path, image or tpimage
      */
     setImage:function (image) {
@@ -304,15 +343,24 @@ CG.Class.extend('Entity', {
 /**
  * @description class Point
  *
- * @constructor
- * @augments Entity
- *
- * @param {integer} x the x position
- * @param {integer} y the y position
+ * @class CG.Point
+ * @extends CG.Entity
  */
 CG.Entity.extend('Point', {
+    /**
+     * @constructor
+     * @method init
+     * @param x {Number} the x value of the point
+     * @param y {Number} the y value of the point
+     */
     init:function (x, y) {
+        /**
+         @property x {Number}
+         */
         this.x = x || 0
+        /**
+         @property y {Number}
+         */
         this.y = y || 0
     }
 })
@@ -321,16 +369,22 @@ CG.Entity.extend('Point', {
 /**
  * @description class Vector
  *
- * @constructor
- * @augments Point
- *
- * @param {integer} x the x position
- * @param {integer} y the y position
- * @param {integer} z the z position
+ * @class CG.Vector
+ * @extends CG.Point
  */
 CG.Point.extend('Vector', {
+    /**
+     * @constructor
+     * @method init
+     * @param x {Number} the x position
+     * @param y {Number} the y position
+     * @param z {Number} the z position
+     */
     init:function (x, y, z) {
         this._super(this, x, y)
+        /**
+         @property z {Number}
+         */
         this.z = z || 0
     }
 })
@@ -340,34 +394,75 @@ CG.Point.extend('Vector', {
 /**
  * @description class Rectangle for click and mouseover handling, collision detection and AABB function
  *
- * @constructor
- * @augments Entity
+ * @class CG.Rectangle
+ * @extends CG.Entity
  *
- * @param {point} position point
- * @param {integer} width the width of rectangle
- * @param {integer} height the height of rectangle
  */
 CG.Entity.extend('Rectangle', {
+    /**
+     * @constructor
+     * @method init
+     * @param position {CG.Point} position point
+     * @param width {Number} width the width of rectangle
+     * @param height {Number} height the height of rectangle
+     * @return {*}
+     */
     init:function (position, width, height) {
+        /**
+         @property position {CG.Point}
+         */
         this.position = position || new CG.Point(0, 0)
+        /**
+         @property width {Number}
+         */
         this.width = width || 0
+        /**
+         @property height {Number}
+         */
         this.height = height || 0
+        /**
+         @property clickable {boolean}
+         */
         this.clickable = false
+        /**
+         @property dragable {boolean}
+         */
         this.dragable = false
+        /**
+         @property rotation {Number}
+         */
         this.rotation = 0
+        /**
+         @property xscale {Number}
+         */
         this.xscale = 1
+        /**
+         @property yscale {Number}
+         */
         this.yscale = 1
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
+        /**
+         @property hover {boolean}
+         */
         this.hover = false
 
+        /**
+         @property boundingradius {Number}
+         */
         this.boundingradius = 0     //radius for circular collision bounds
+        /**
+         @property mapcollision {boolean}
+         */
         this.mapcollision = false
 
         return this
     },
     /**
      * @description returns the bounds of rotated rectangle
-     *
+     * @method AABB
      * @return {object} returns the calculated bounds
      */
     AABB:function () {
@@ -384,7 +479,7 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks click inside of the rectangle, supports rotation
-     *
+     * @method ifClicked
      * @return {true/false}
      */
     ifClicked:function () {
@@ -408,6 +503,7 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks if the mouse/pointer is over the rectangle
+     * @method ifMouseOver
      */
     ifMouseOver:function () {
         var dx = mousex - this.position.x,
@@ -428,9 +524,9 @@ CG.Entity.extend('Rectangle', {
     },
     /**
      * @description checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
-     *
-     * @param {array} objects a array of objects to check for collision => Sprites, Animations, MapAreas
-     * @param {callback} callback what to do after collision?
+     * @method checkCollision
+     * @param objects {array} a array of objects to check for collision => Sprites, Animations, MapAreas
+     * @param callback {callback} what to do after collision?
      */
     checkCollision:function (objects, callback) {
         objects.forEach(function (obj, index) {
@@ -545,26 +641,49 @@ CG.Entity.extend('Rectangle', {
 /**
  * @description Class Bound extends Class Entity
  *
- * @constructor
- * @augments Entity
+ * @class CG.Bound
+ * @extends CG.Entity
  *
- * @param {number} x the x position
- * @param {number} y the y position
- * @param {number} width the width of bound
- * @param {number} height the height of bound
  */
 CG.Entity.extend('Bound', {
+    /**
+     * @constructor
+     * @method init
+     * @param x {number} x the x position
+     * @param y {number} y the y position
+     * @param width {number} width the width of bound
+     * @param height {number} height the height of bound
+     * @return {*}
+     */
     init:function (x, y, width, height) {
         this._super()
+        /**
+         * @property x
+         * @type {Number}
+         */
         this.x = x
+        /**
+         * @property y
+         * @type {Number}
+         */
         this.y = y
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = width
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = height
         return this
     },
 
     /**
+     * @method setName
      * @param {string} name of the bounding box
+     * @return {*}
      */
     setName:function (name) {
         this.name = name
@@ -579,8 +698,8 @@ CG.Entity.extend('Bound', {
  * @constructor
  * @augments Entity
  *
- * @param {integer} width of the buffer
- * @param {integer} height of the buffer
+ * @param {Number} width of the buffer
+ * @param {Number} height of the buffer
  * @param {string} buffername
  */
 CG.Entity.extend('Buffer', {
@@ -603,42 +722,104 @@ CG.Entity.extend('Buffer', {
 /**
  * @description the Sprite class
  *
- * @constructor
- * @auguments Rectangle
- *
- * @param {string, image, tpimage} imgpath, image object or tpimage object to use
- * @param {point} position object
+ * @class CG.Sprite
+ * @extends CG.Rectangle
  */
 CG.Rectangle.extend('Sprite', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {image}  imgpath, image object or tpimage object to use
+     * @param position {CG.Point}  position object
+     * @return {*}
+     */
     init:function (image, position) {
         this._super(position, 0, 0)
 
+        /**
+         @property atlasimage {boolean}
+         */
         this.atlasimage = false
         this.setImage(image)
 
+        /**
+         @property bound {CG.Bound}
+         */
         this.bound = Game.bound     //global bounds of game
+        /**
+         @property diffpoint {CG.Point}
+         */
         this.diffpoint = new CG.Point(this.bound.x, this.bound.y)  //store diffpoint if bound is moving
 
-        //    this.x = x
-        this.xspeed = 0
+        /**
+         @property xspeed {Number}
+         */
+        this.xspeed = 0 //xspeed of the sprite
+        /**
+         @property xscale {Number}
+         */
         this.xscale = 1
+        /**
+         @property xhandle {Number}
+         */
         this.xhandle = 0
-        //    this.y = y
+        /**
+         @property yspeed {Number}
+         */
         this.yspeed = 0
+        /**
+         @property yscale {Number}
+         */
         this.yscale = 1
+        /**
+         @property yhandle {Number}
+         */
         this.yhandle = 0
+        /**
+         @property boundsMode {false/string}
+         */
         this.boundsMode = false // false, bounce or slide
+        /**
+         @property rotation {integer/float}
+         */
         this.rotation = 0
+        /**
+         @property rotationspeed {integer/float}
+         */
         this.rotationspeed = 0
+        /**
+         @property alpha {float}
+         */
         this.alpha = 1
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
 
+        /**
+         @property followobject {boolean/object}
+         */
         this.followobject = false   //object to follow
-        this.followspeed = false    //followspeed for follower in pixel, has prio ober followsteps
+        /**
+         @property followspeed {boolean/integer}
+         */
+        this.followspeed = false    //followspeed for follower in pixel, has prio over followsteps
+        /**
+         @property followsteps {boolean/integer}
+         */
         this.followsteps = false    //followsteps between follower and target
 
+        /**
+         @property attachedobject {boolean}
+         */
         this.attachedobject = false //attached object
+        /**
+         @property offsetx {Number}
+         */
         this.offsetx = 0            //offset x for attached object
+        /**
+         @property offsety {Number}
+         */
         this.offsety = 0            //offset y for attached object
         return this
     },
@@ -678,7 +859,8 @@ CG.Rectangle.extend('Sprite', {
     },
 
     /**
-     * Checks the bound if a boundMode (bounce or slide) is set
+     * @description Checks the bound if a boundMode (bounce or slide) is set
+     * @method checkBound
      */
     checkBound:function () {
         switch (this.boundsMode) {
@@ -721,6 +903,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description calculate offset if bound is moving
+     * @method updateDiff
      */
     updateDiff:function () {
         if (this.diffpoint.x !== this.bound.x) {
@@ -734,6 +917,7 @@ CG.Rectangle.extend('Sprite', {
     },
     /**
      * @description is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different
+     * @method follow
      */
     follow:function () {
         if (this.followspeed) {
@@ -767,8 +951,8 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the bound of the sprite
-     *
-     * @param {bound} bound the bound
+     * @method setBound
+     * @param bound {CG.Bound} the bound
      */
     setBound:function (bound) {
         this.bound = bound
@@ -778,6 +962,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description if there is a attached object get its position
+     * @method ifAttached
      */
     ifAttached:function () {
         if (this.attachedobject != false) {
@@ -788,6 +973,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description attach a reference of the given object to this object
+     * @method attachObject
      */
     attachObject:function (obj) {
         this.attachedobject = obj
@@ -796,6 +982,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description removes the attached object reference
+     * @method removeAttachedObject
      */
     removeAttachedObject:function () {
         this.attachedobject = false
@@ -804,6 +991,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the x offset of the attached object to this object
+     * @method setAttachedOffsetX
      */
     setAttachedOffsetX:function (offsetx) {
         this.offsetx = offsetx
@@ -812,6 +1000,7 @@ CG.Rectangle.extend('Sprite', {
 
     /**
      * @description set the y offset of the attached object to this object
+     * @method setAttachedOffsetY
      */
     setAttachedOffsetY:function (offsety) {
         this.offsety = offsety
@@ -822,54 +1011,118 @@ CG.Rectangle.extend('Sprite', {
 
 
 /**
- * @description texturepacker TPImage class
+ * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
  *
- * @constructor
- *
- * @param {image} image imgpath, image object or tpimage object to use
- * @param {integer} xoffset of image in atlas file
- * @param {integer} yoffset of image in atlas file
- * @param {integer} width of image in atlas file
- * @param {integer} height of image in atlas file
+ * @class CG.TPImage
+ * @extend Class
  */
 CG.Class.extend('TPImage', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {image} imgpath, image object or tpimage object to use
+     * @param xoffset {Number} xoffset of image in atlas file
+     * @param yoffset {Number} yoffset of image in atlas file
+     * @param width {Number} width of image in atlas file
+     * @param height {Number} height of image in atlas file
+     */
     init:function (image, xoffset, yoffset, width, height) {
+        /**
+         * @property source
+         * @type {String}
+         */
         this.source = ''
+        /**
+         * @property atlasimage
+         * @type {String}
+         */
         this.atlasimage = ''
+        /**
+         * @property atlasname
+         * @type {String}
+         */
         this.atlasname = ''
+        /**
+         * @property image
+         * @type {*}
+         */
         this.image = image || ''    //imagepath
+        /**
+         * @property name
+         * @type {String}
+         */
         this.name = image.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
+        /**
+         * @property xoffset
+         * @type {Number}
+         */
         this.xoffset = xoffset || 0
+        /**
+         * @property yoffset
+         * @type {*}
+         */
         this.yoffset = yoffset || 0
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = width || 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = height || 0
+        /**
+         * @property rotation
+         * @type {Number}
+         */
         this.rotation = 0
     }
-})
-
-/**
+})/**
  *  @description TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.
  *
- *  @constructor
+ *  @class CG.TexturePacker
+ *  @extends Class
  */
 CG.Class.extend('TexturePacker', {
+    /**
+     * @constructor
+     * @method init
+     * @return {*}
+     */
     init:function () {
         if (typeof(ejecta) == 'undefined') {
             this.xml = ''
             this.xmlDoc = ''
             this.parser = new DOMParser() || {}
         }
+        /**
+         * @property imagename
+         * @type {String}
+         */
         this.imagename = ''
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 0
-
+        /**
+         * @property tpimages
+         * @type {Array}
+         */
         this.tpimages = []
         return this
     },
     /**
      * @description load a xml file from texturepacker
-     *
+     * @method loadXml
      * @param {string/object} xmlfile path or mediaasset object with data of texturepacker xml
+     * @return {*}
      */
     loadXml:function (xmlfile) {
         //from asset
@@ -908,8 +1161,9 @@ CG.Class.extend('TexturePacker', {
 
     /**
      * @description load a json file from texturepacker
-     *
+     * @method loadJson
      * @param {string/object} jsonfile path or mediaasset object with data of texturepacker json
+     * @return {*}
      */
     loadJson:function (jsonfile) {
         //from asset
@@ -949,7 +1203,7 @@ CG.Class.extend('TexturePacker', {
 
     /**
      * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     *
+     * @method getTPImages
      * @return {array} returns all tpimages of texturepacker file to use with Game.asset
      */
     getTPImages:function () {
@@ -961,17 +1215,22 @@ CG.Class.extend('TexturePacker', {
 /**
  * @description Class Animation extends class Sprite and add support for animation ;o) needs atlas files with fixed framesizes and with following animation frames
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Animation
+ * @extends CG.Sprite
  *
- * @param {string, image} image imagepath or image object
- * @param {point} position object
- * @param {number} startframe startframe of atlas image
- * @param {number} endframe endframe of atlas image
- * @param {number} framewidth width of frame to cut
- * @param {number} frameheight height of frame to cut
  */
 CG.Sprite.extend('Animation', {
+    /**
+     * @constructor
+     * @method init
+     * @param image {string, image} image imagepath or image object
+     * @param position {point} position object
+     * @param startframe {number} startframe startframe of atlas image
+     * @param endframe {number} endframe endframe of atlas image
+     * @param framewidth {number} framewidth width of frame to cut
+     * @param frameheight {number} frameheight height of frame to cut
+     * @return {*}
+     */
     init:function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
 
@@ -983,13 +1242,37 @@ CG.Sprite.extend('Animation', {
             this.image = image
         }
 
+        /**
+         @property loop {boolean}
+         */
         this.loop = true
+        /**
+         @property status {Number}
+         */
         this.status = 0
-
+        /**
+         @property currentframe {Number}
+         */
         this.currentframe = 0
+        /**
+         @property frames {Number}
+         */
+        this.frames = 0
+        /**
+         @property startframe {Number}
+         */
         this.startframe = startframe - 1
+        /**
+         @property endframe {Number}
+         */
         this.endframe = endframe - 1
+        /**
+         @property width {Number}
+         */
         this.width = framewidth
+        /**
+         @property height {Number}
+         */
         this.height = frameheight
 
         if (this.startframe === undefined && this.endframe === undefined) {
@@ -1001,10 +1284,22 @@ CG.Sprite.extend('Animation', {
             this.frames = this.endframe - this.startframe + 1
         }
 
+        /**
+         @property fx {Number}
+         */
         this.fx = 0
+        /**
+         @property fy {Number}
+         */
         this.fy = 0
 
+        /**
+         @property delay {Number}
+         */
         this.delay = 0
+        /**
+         @property tempdelay {Number}
+         */
         this.tempdelay = 0
 
         return this
@@ -1064,8 +1359,8 @@ CG.Sprite.extend('Animation', {
  * @constructor
  * @augments Entity
  *
- * @param {integer} width the width for the buffer
- * @param {integer} height the height for the buffer
+ * @param {Number} width the width for the buffer
+ * @param {Number} height the height for the buffer
  */
 CG.Entity.extend('Bitmap', {
     init:function (width, height) {
@@ -1118,10 +1413,10 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description clearRect
      *
-     * @param {integer} x the x position for clearRect
-     * @param {integer} y the y position for clearRect
-     * @param {integer} width the width for clearRect
-     * @param {integer} height the height for clearRect
+     * @param {Number} x the x position for clearRect
+     * @param {Number} y the y position for clearRect
+     * @param {Number} width the width for clearRect
+     * @param {Number} height the height for clearRect
      */
     clearRect:function (x, y, width, height) {
         this.bitmap_ctx.save()
@@ -1133,9 +1428,9 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description clearCircle
      *
-     * @param {integer} x the x position for clearCircle
-     * @param {integer} y the y position for clearCircle
-     * @param {integer} radius the radius for clearCircle
+     * @param {Number} x the x position for clearCircle
+     * @param {Number} y the y position for clearCircle
+     * @param {Number} radius the radius for clearCircle
      */
     clearCircle:function (x, y, radius) {
         this.bitmap_ctx.save()
@@ -1150,8 +1445,8 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description getPixel
      *
-     * @param {integer} x the x position for getPixel
-     * @param {integer} y the y position for getPixel
+     * @param {Number} x the x position for getPixel
+     * @param {Number} y the y position for getPixel
      * @returns {imagedata} data from canvas
      */
     getPixel:function (x, y) {
@@ -1161,10 +1456,10 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description getPixels
      *
-     * @param {integer} x the x position for getPixels
-     * @param {integer} y the y position for getPixels
-     * @param {integer} width for getPixels
-     * @param {integer} height for getPixels
+     * @param {Number} x the x position for getPixels
+     * @param {Number} y the y position for getPixels
+     * @param {Number} width for getPixels
+     * @param {Number} height for getPixels
      * @returns {imagedata} data from canvas
      */
     getPixels:function (x, y, width, height) {
@@ -1176,24 +1471,44 @@ CG.Entity.extend('Bitmap', {
 /**
  * @description button class, can handle click and mouseover.
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Button
+ * @extends CG.Sprite
  *
- * @param {string, image, tpimage} imgpath, image object or tpimage object to use
- * @param {point} position object
- * @param {string} text the text for the button label
- * @param {Font} font Font object for text drawing
- * @param {callback} callback callback function for click event
  */
 CG.Sprite.extend('Button', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {image} image image path, image or tpimage
+     * @param position {CG.Point} position point
+     * @param text {string} the button text
+     * @param font {CG.Font} a CG.Font object for text rendering
+     * @param clickedCallback {callback} callback function for click handling
+     * @return {*}
+     */
     init:function (image, position, text, font, clickedCallback) {
         this._super(image, position)
 
+        /**
+         @property font {CG.Font}
+         */
         this.font = font
+        /**
+         @property clickedCallback {callback}
+         */
         this.clickedCallback = clickedCallback
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
+        /**
+         @property clickable {boolean}
+         */
         this.clickable = true
 
+        /**
+         @property text {string}
+         */
         this.text = text
         return this
     },
@@ -1233,9 +1548,9 @@ CG.Sprite.extend('Button', {
  * @constructor
  * @augments Entity
  *
- * @param {integer} x the x position
- * @param {integer} y the y position
- * @param {integer} margin the margin between the menu buttons
+ * @param {Number} x the x position
+ * @param {Number} y the y position
+ * @param {Number} margin the margin between the menu buttons
  */
 CG.Entity.extend('Menu', {
     init:function (x, y, margin) {
@@ -1274,12 +1589,20 @@ CG.Entity.extend('Menu', {
 })
 
 
-/*
- * Class MediaAsset
- * @param {string} image path to background image of preloader
+/**
+ * @description MediaAsset
+ *
+ * @class CG.MediaAsset
+ * @extend Class
+ *
  */
 
 CG.Class.extend('MediaAsset', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {string} image path to background image of preloader
+     */
     init:function (image) {
         if (image) {
             this.image = new Image()
@@ -1320,6 +1643,12 @@ CG.Class.extend('MediaAsset', {
 
 //return this
     },
+    /**
+     * @method addImage
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addImage:function (path, name) {
         this.assetcount += 1
         this.images.push({
@@ -1329,6 +1658,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addFont
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addFont:function (path, name) {
         this.assetcount += 1
         this.fonts.push({
@@ -1338,6 +1673,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addXml
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addXml:function (path, name) {
         this.assetcount += 1
         this.xmls.push({
@@ -1347,6 +1688,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addJson
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addJson:function (path, name) {
         this.assetcount += 1
         this.jsons.push({
@@ -1356,6 +1703,11 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method getImageByName
+     * @param name
+     * @return {*}
+     */
     getImageByName:function (name) {
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
@@ -1368,6 +1720,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No image with this name in asset.')
     },
+    /**
+     * @method getImagesByName
+     * @param name
+     * @return {*}
+     */
     getImagesByName:function (name) {
         names = []
         for (var i = 0, l = this.images.length; i < l; i++) {
@@ -1384,6 +1741,11 @@ CG.Class.extend('MediaAsset', {
         }
         return names
     },
+    /**
+     * @method getFontByName
+     * @param name
+     * @return {*}
+     */
     getFontByName:function (name) {
         for (var i = 0, l = this.fonts.length; i < l; i++) {
             if (this.fonts[i].name == name) {
@@ -1392,6 +1754,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No font with this name in asset.')
     },
+    /**
+     * @method getXmlByName
+     * @param name
+     * @return {*}
+     */
     getXmlByName:function (name) {
         for (var i = 0, l = this.xmls.length; i < l; i++) {
             if (this.xmls[i].name == name) {
@@ -1400,6 +1767,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No XML with this name in asset.')
     },
+    /**
+     * @method getJsonByName
+     * @param name
+     * @return {*}
+     */
     getJsonByName:function (name) {
         for (var i = 0, l = this.jsons.length; i < l; i++) {
             if (this.jsons[i].name == name) {
@@ -1408,6 +1780,9 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No JSON with this name in asset.')
     },
+    /**
+     * @method startPreLoad
+     */
     startPreLoad:function () {
 
         progress = 100 / this.assetcount * this.assetcurrent
@@ -1492,44 +1867,107 @@ function MediaAssetException(message) {
 /**
  * @description class Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer, (Hiero works also but need some modifications of the exportet files)
  *
- * @constructor
- * @augments Entity
+ * @class CG.Font
+ * @extends CG.Entity
  */
 CG.Entity.extend('Font', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
-        //    Entity.call(this)
+        /**
+         @property atlas {Image}
+         */
         this.atlas = new Image()
-        this.fieldname = ''
+        /**
+         @property initText {string}
+         */
         this.initText = ''
+        /**
+         @property chars {Array}
+         */
         this.chars = new Array(256)
+        /**
+         @property x {Array}
+         */
         this.x = new Array(256)
+        /**
+         @property y {Array}
+         */
         this.y = new Array(256)
+        /**
+         @property width {Array}
+         */
         this.width = new Array(256)
+        /**
+         @property height {Array}
+         */
         this.height = new Array(256)
+        /**
+         @property xoff {Array}
+         */
         this.xoff = new Array(256)
+        /**
+         @property yoff {Array}
+         */
         this.yoff = new Array(256)
+        /**
+         @property xadv {Array}
+         */
         this.xadv = new Array(256)
+        /**
+         @property lineHeight {Number}
+         */
         this.lineHeight = 0
-
-        //info
+        /**
+         @property face {string}
+         */
         this.face = ''
+        /**
+         @property size {Number}
+         */
         this.size = 0
+        /**
+         @property bold {Number}
+         */
         this.bold = 0
+        /**
+         @property italic {Number}
+         */
         this.italic = 0
 
+        /**
+         @property base {Number}
+         */
         this.base = 0
+        /**
+         @property scaleW {Number}
+         */
         this.scaleW = 0
+        /**
+         @property scaleH {Number}
+         */
         this.scaleH = 0
         return this
     },
-
+    /**
+     * @method update
+     */
     update:function () {
         throw {
             name:'Font Error',
             message:'TODO, not defined yet.'
         }
     },
-
+    /**
+     * @description draw the given text to the canvas
+     * @method draw
+     * @param text {string} the text to draw
+     * @param xpos {Number} the x position
+     * @param ypos {Number} the y position
+     */
     draw:function (text, xpos, ypos) {
         currx = 0
         curry = 0
@@ -1546,8 +1984,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the line height of the current font
-     *
-     * @return {integer} lineheight
+     * @method getLineHeight
+     * @return lineheight {Number}
      */
     getLineHeight:function () {
         return this.lineHeight
@@ -1555,8 +1993,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the font size of the current font
-     *
-     * @return {integer} size - font size
+     * @method getFontSize
+     * @return size {Number} font size
      */
     getFontSize:function () {
         return this.size
@@ -1564,9 +2002,9 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the width of the given text
-     *
-     * @param {string} text
-     * @return {integer} textwidth
+     * @method getTextWidth {string} the string to calculate the width
+     * @param text {string}
+     * @return textwidth {Number}
      */
     getTextWidth:function (text) {
         var textwidth = 0
@@ -1579,7 +2017,7 @@ CG.Entity.extend('Font', {
 
     /**
      * @description loadFont - load and parse the given fontfile
-     *
+     * @method loadFont
      * @param {string/object} fontfile path or mediaasset object with data
      */
     loadFont:function (fontfile) {
@@ -1781,7 +2219,7 @@ CG.Class.extend('Director', {
      * @description  nextScreen
      *
      * @param {string} screenname to define nextscreen for fading
-     * @param {integer} duration the duration for fading
+     * @param {Number} duration the duration for fading
      */
     nextScreen:function (screenname, duration) {
         if (this.getIndexOfScreen(screenname) != this.activescreen) {
@@ -1847,19 +2285,36 @@ CG.Class.extend('Director', {
 
 
 /**
- * @description class Screen container to collect/group Layers
+ * @description class Screen container to collect/group CG.Layers and/or CG.B2DWorld
  *
- * @constructor
- * @augments Entity
+ * @class CG.Screen
+ * @extends Entity
  *
  * @param {string} screenname the name of the screen
  */
 CG.Entity.extend('Screen', {
+    /**
+     * @constructor
+     * @method init
+     * @param screenname
+     * @return {*}
+     */
     init:function (screenname) {
         this._super(screenname)
+        /**
+         * @property xscale
+         * @type {Number}
+         */
         this.xscale = 1
+        /**
+         * @property yscale
+         * @type {Number}
+         */
         this.yscale = 1
-        var self = this
+        /**
+         * @property layers
+         * @type {Array}
+         */
         this.layers = []
         return this
     },
@@ -1886,7 +2341,7 @@ CG.Entity.extend('Screen', {
 
     /**
      * @description add a layer object to the layer array
-     *
+     * @method addLayer
      * @param {layer} layer to add
      */
     addLayer:function (layer) {
@@ -1896,7 +2351,7 @@ CG.Entity.extend('Screen', {
 
     /**
      * @description find layer by name
-     *
+     * @method getLayerByName
      * @param {string} layername find layer by name
      * @return {false/layer}
      */
@@ -1914,12 +2369,17 @@ CG.Entity.extend('Screen', {
 /**
  * @description class Layer container to collect/group sprites, buttons, menus, emitters and animations
  *
- * @constructor
- * @augments Entity
+ * @class CG.Layer
+ * @extends CG.Entity
  *
- * @param {string} layername the name of the layer
  */
 CG.Entity.extend('Layer', {
+    /**
+     * @constructor
+     * @method init
+     * @param layername {string} the name of the layer
+     * @return {*}
+     */
     init:function (layername) {
         this._super(layername)
 
@@ -1959,8 +2419,8 @@ CG.Entity.extend('Layer', {
     },
 
     /**
-     * @description addElement
-     *
+     * @description addElement to the layer
+     * @method addElement
      * @param {obj} element to add to elements array
      */
     addElement:function (element) {
@@ -1970,7 +2430,7 @@ CG.Entity.extend('Layer', {
 
     /**
      * @description getElementByName
-     *
+     * @method getElementByName
      * @param {string} elementname name of element to find in element array
      * @return {false/object} returns false or the searched object
      */
@@ -1985,7 +2445,7 @@ CG.Entity.extend('Layer', {
 
     /**
      * @description getElementsByName
-     *
+     * @method getElementsByName
      * @param {string} elementname name of element to find in element array
      * @return {array} returns a array of objects
      */
@@ -2005,14 +2465,40 @@ CG.Entity.extend('Layer', {
 /**
  * @description MapTileLayer
  *
- * @constructor
+ * @class CG.MapTileLayer
+ * @extends Class
  */
 CG.Class.extend('MapTileLayer', {
+    /**
+     * @constructor
+     * @method init
+     * @return {*}
+     */
     init:function () {
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 0
+        /**
+         * @property visible
+         * @type {Boolean}
+         */
         this.visible = true
+        /**
+         * @property opacity
+         * @type {Number}
+         */
         this.opacity = 1
+        /**
+         * @property tiles
+         * @type {Array}
+         */
         this.tiles = []
         return this
     }
@@ -2022,14 +2508,40 @@ CG.Class.extend('MapTileLayer', {
 /**
  * @description MapTileProperties
  *
- * @constructor
+ * @class CG.MapTileProperties
+ * @extend Class
  */
 CG.Class.extend('MapTileProperties', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
+        /**
+         * @property animated
+         * @type {Boolean}
+         */
         this.animated = false
+        /**
+         * @property animDelay
+         * @type {Number}
+         */
         this.animDelay = 0
+        /**
+         * @property animDirection
+         * @type {Number}
+         */
         this.animDirection = 0 // >0 = forward, <0 = backward, 0 = paused
+        /**
+         * @property animNext
+         * @type {Number}
+         */
         this.animNext = 0
+        /**
+         * @property delayTimer
+         * @type {Number}
+         */
         this.delayTimer = 0
         return this
     }
@@ -2044,7 +2556,7 @@ CG.Class.extend('MapTileProperties', {
  * @param {point} position point
  * @param {point} mapoffset reference to the current map position
  * @param {string} name of the tile
- * @param {integer} gid number of tilemap editor
+ * @param {Number} gid number of tilemap editor
  */
 CG.Class.extend('MapPoint', {
     init:function (position, mapoffset, name, gid) {
@@ -2069,22 +2581,45 @@ CG.Class.extend('MapPoint', {
 /**
  * @description  class MapArea. Support now for name and the bound values.
  *
- * @constructor
- *
- * @param {bound} bound of area
- * @param {point} mapoffset reference to the current map position
- * @param {string} name of the group
- * @param {false/string} type (a property) of area for collision detection or what ever ;o)
+ * @class CG.MapArea
+ * @extends Class
  */
 CG.Class.extend('MapArea', {
+    /**
+     * @constructor
+     * @method init
+     * @param bound {CG.Bound} bound of area
+     * @param mapoffset {CG.Point} mapoffset reference to the current map position
+     * @param name {string} name of the group
+     * @param type {false/string} type (a property) of area for collision detection or what ever ;o)
+     * @return {*}
+     */
     init:function (bound, mapoffset, name, type) {
-        //initial values
+        /**
+         * @property initbound
+         * @type {CG.Bound}
+         */
         this.initbound = bound || new CG.Bound(0, 0, 0, 0)
+        /**
+         * @property mapoffset
+         * @type {CG.Point}
+         */
         this.mapoffset = mapoffset || new CG.Point(0, 0)
+        /**
+         * @property name
+         * @type {String}
+         */
         this.name = name
+        /**
+         * @property type
+         * @type {String}
+         */
         this.type = type || false       //false, inner or outer
 
-        //for reference use
+        /**
+         * @property bound
+         * @type {CG.Bound}
+         */
         this.bound = new CG.Bound(bound.x, bound.y, bound.width, bound.height)
         return this
     },
@@ -2108,54 +2643,168 @@ CG.Class.extend('MapArea', {
  *
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
- * @constructor
- * @augments Entity
+ * @class CG.Map
+ * @extend CG.Entity
  *
  * TODO spacing and margin ?
  * TODO own buffer for drawing => split screen possible?
  * TODO update & draw method 50%
  *
- * @param {integer} width of the map
- * @param {integer} height of the map
- * @param {string} mapname
  */
 CG.Entity.extend('Map', {
+    /**
+     * @method init
+     * @constructor
+     * @param width {Number} width of the map
+     * @param height {Number} height of the map
+     * @param mapname {string} mapname
+     * @return {*}
+     */
     init:function (width, height, mapname) {
         this._super(mapname)
 
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = [] //how handle elements in maps? experimental collision detection at the moment with only one
         //point and areas from tilemap editor
         //using as references for external objects in layers?
         //how to handle the relative position to the position of the map?
+
+        /**
+         * @property points
+         * @type {Array}
+         */
         this.points = [] // position points (tiles) of tilemap editor => position point and type?
+        /**
+         * @property areas
+         * @type {Array}
+         */
         this.areas = [] // group objects e.g. area for objects of tilemap editor => bound and type?
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
         this.position = new CG.Point(0, 0) // needed as relative point for points and areas
+        /**
+         * @property changemap
+         * @type {String}
+         */
         this.changemap = ''
-
-        this.animated = false //perfromance eater if true ;o(
+        /**
+         * @description
+         *
+         * If set to true the map is being updated with method updateAnimation.
+         * See also method description of updateAnimation!
+         *
+         * @property animated
+         * @type {Boolean}
+         */
+        this.animated = false //performance eater if true ;o(
+        /**
+         * @property animDelayFactor
+         * @type {Number}
+         */
         this.animDelayFactor = 20
-
+        /**
+         * @property atlas
+         * @type {Image}
+         */
         this.atlas = new Image()
+        /**
+         * @property atlaswidth
+         * @type {Number}
+         */
         this.atlaswidth = 0
+        /**
+         * @property atlasheight
+         * @type {Number}
+         */
         this.atlasheight = 0
+        /**
+         * @property atlastranscol
+         * @type {String}
+         */
         this.atlastranscol = '' //
         //ejecta has no DOMParser!
         if (typeof(ejecta) == 'undefined') {
+            /**
+             * @property xml
+             * @type {String}
+             */
             this.xml = ''
+            /**
+             * @property parser
+             * @type {DOMParser}
+             */
             this.parser = new DOMParser()
+            /**
+             * @property xmlDoc
+             * @type {String}
+             */
             this.xmlDoc = ''
         }
-
+        /**
+         * @property json
+         * @type {Object}
+         */
         this.json = {}
-
+        /**
+         * @description
+         *
+         * The tiled layer are parsed into separate layers
+         *
+         * @property layers
+         * @type {Array}
+         */
         this.layers = [] //can contain maptilelayer or objectlayer
+        /**
+         * @description
+         *
+         * Defines the layer to draw:
+         * all - for all layers
+         * name - the name of layer to draw
+         * index - array index of layer
+         *
+         * @property renderlayer
+         * @type {String}
+         */
         this.renderlayer = 'all' //render layer: all for all layers, name of layer or array index for example 0 ;o)
+        /**
+         * @property tileproperties
+         * @type {Array}
+         */
         this.tileproperties = [] //properties of the tiles
+        /**
+         * @property orientation
+         * @type {String}
+         */
         this.orientation = ''
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 0
+        /**
+         * @property tilewidth
+         * @type {Number}
+         */
         this.tilewidth = 0
+        /**
+         * @property tileheight
+         * @type {Number}
+         */
         this.tileheight = 0
+        /**
+         * @property tileset
+         * @type {Object}
+         */
         this.tileset = {
             tilewidth:0,
             tileheight:0,
@@ -2164,26 +2813,55 @@ CG.Entity.extend('Map', {
             spacing:0,
             margin:0
         }
-
+        /**
+         * @property xspeed
+         * @type {Number}
+         */
         this.xspeed = 0
+        /**
+         * @property yspeed
+         * @type {Number}
+         */
         this.yspeed = 0
-
-
+        /**
+         * @property xscale
+         * @type {Number}
+         */
         this.xscale = 1
+        /**
+         * @property yscale
+         * @type {Number}
+         */
         this.yscale = 1
+        /**
+         * @property alpha
+         * @type {Number}
+         */
         this.alpha = 1
-
+        /**
+         * @property wrapX
+         * @deprecated
+         * @type {Boolean}
+         */
         this.wrapX = false //stuff from diddy?
+        /**
+         * @property wrapY
+         * @deprecated
+         * @type {Boolean}
+         */
         this.wrapY = false //stuff from diddy?
-        //collision detection
-        //this.elements = [] //if not empty elements would checked with checkMapCollision
+        /**
+         * @property layertocheck
+         * @type {Number}
+         */
         this.layertocheck = 0 //as default use layer 0 for collision detection
         return this
     },
     /**
-     * @description loadMapXml - load and parse an xml tilemap file
+     * @method loadMapXml
+     * @description load and parse an xml tilemap file
      *
-     * @param {string/object} xmlfile path or mediaasset object with data of tiled map xml
+     * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml:function (xmlfile) {
         this.changemap = ''
@@ -2357,9 +3035,12 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description loadMapJson - load and parse an tilemap json file
+     * @method loadMapJson
+     * @description
      *
-     * @param {string/object} jsonfile path or mediaasset object with data of tiled map xml
+     * load and parse an tilemap json file
+     *
+     * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson:function (jsonfile) {
         this.changemap = ''
@@ -2467,15 +3148,15 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description drawMap - draws the map
+     * @method drawMap
      *
-     * @param {integer} sx top CG.LEFT coord for canvas drawing
-     * @param {integer} sy top CG.LEFT coord for canvas drawing
-     * @param {integer} bx top CG.LEFT x coord of bound in tilemap
-     * @param {integer} by top CG.LEFT y coord of bound in tilemap
-     * @param {integer} bw width of bound in tilemap
-     * @param {integer} bh height of bound in tilemap
-     * @param {callback} callback for collision handling - callback(obj,maptileproperties)
+     * @param sx {Number} sx top CG.LEFT coord for canvas drawing
+     * @param sy {Number} sy top CG.LEFT coord for canvas drawing
+     * @param bx {Number} bx top CG.LEFT x coord of bound in tilemap
+     * @param by {Number} by top CG.LEFT y coord of bound in tilemap
+     * @param bw {Number} bw width of bound in tilemap
+     * @param bh {Number} bh height of bound in tilemap
+     * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
     drawMap:function (sx, sy, bx, by, bw, bh, callback) {
         this.position.x = bx
@@ -2629,7 +3310,11 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description update all areas and points
+     * @description
+     *
+     * Update all areas and points elements.
+     *
+     * @method updatePointsAndAreas
      */
     updatePointsAndAreas:function () {
         this.points.forEach(function (point, index) {
@@ -2642,9 +3327,13 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description getPointsByName - get all point(s) with the given name
+     * @description
      *
-     * @param {string} name of the points to return
+     * Get all point(s) with the given name in the points
+     *
+     * @method getPointsByName
+     *
+     * @param name {string} name of the points to return
      * @return {false/array} returns false or an array with point(s)
      */
     getPointsByName:function (name) {
@@ -2662,8 +3351,9 @@ CG.Entity.extend('Map', {
 
     /**
      * @description getAreasByName - get all areas with the given name
+     * @method getAreasByName
      *
-     * @param {string} name of the area(s) to return
+     * @param name {string} name of the area(s) to return
      * @return {false/array} returns false or an array with area(s)
      */
     getAreasByName:function (name) {
@@ -2681,9 +3371,13 @@ CG.Entity.extend('Map', {
 
 
     /**
-     * @description setLayerToRender - defines layer drawing, see param options
+     * @description
      *
-     * @param {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
+     * Defines layer drawing, See property options
+     *
+     * @method setLayerToRender
+     *
+     * @param mixed {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
      */
     setLayerToRender:function (mixed) {
         this.renderlayer = mixed
@@ -2691,9 +3385,13 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description the update method is not complete yet and only experimental
-     * at the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!
+     * @description
+     *
+     * The update method is not complete yet and only experimental.
+     * At the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!
      * Then also a map class can be added to a layer as an element for auto update/draw from Game.director!
+     *
+     * @method update
      */
     update:function () {
         //TODO automatic movement of map or other stuff?
@@ -2724,6 +3422,7 @@ CG.Entity.extend('Map', {
 
     /**
      * @description getBounds - get the bounds of the map
+     * @method getBounds
      */
     getBounds:function () {
         return {
@@ -2733,15 +3432,18 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description updateAnimation - updates the map
+     * @description
+     * Updates the tilemap properties of the map.
      *
      * Supported custom tiled map properties for now are (see also tilemap examples):
      * anim_delay       => time to used to display an switch to next tile
      * anim_direction   => direction for next tile 1 = jump forward, -1 = jump back
      * anim_next        => defines the offset
      *
-     * With this tile properties it is possible to define tilemap animations. These must be defined in the tilemap property window
-     * with key/value pairs
+     * With this tile properties it is possible to define tilemap animations.
+     * These must be defined in the tilemap property window with key/value pairs
+     *
+     * @method updateAnimation
      */
     updateAnimation:function () {
         // update if map is visible
@@ -2781,7 +3483,11 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description addElement - adds a object to the element array, used at the moment for collision detection to tilemap
+     * @description
+     *
+     * Adds a object to the element array, used at the moment for collision detection to tilemap.
+     *
+     * @method addElement
      *
      * @param {obj} element to to add to elements array
      */
@@ -2791,12 +3497,14 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description checkMapCollision - checks if the attached element
-     * collides with an tile of the tilemap
+     * @description
+     * Checks if the attached element collides with an tile of the tilemap
+     *
+     * @method checkMapCollision
      *
      * @param {obj} element to check for
-     * @param {integer} rx current rx of rendermap method
-     * @param {integer} ry current ry of rendermap method
+     * @param {Number} rx current rx of rendermap method
+     * @param {Number} ry current ry of rendermap method
      *
      * @return {boolean} returns true or false
      */
@@ -2821,11 +3529,13 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description checks if a external object(s) collides
-     * with the areas of the tiled map. this can be elements from an layer or the map itself.
+     * @description
      *
-     * @param {objarray} objarray to check for a areas collision
-     * @param {calback} callback what should happen
+     * Checks if a external object(s) collides with the areas of the tiled map.
+     * This can be elements from an layer or the map itself.
+     *
+     * @param {Array} objarray to check for a areas collision
+     * @param {Callback} callback what should happen
      */
     checkElementsToAreasCollision:function (objarray, callback) {
         for (var o = 0, ol = objarray.length; o < ol; o++) {
@@ -2837,6 +3547,7 @@ CG.Entity.extend('Map', {
 
     /**
      * @description removes the json data of the map object
+     * @method removeJsonData
      */
     removeJsonData:function () {
         this.json = {}
@@ -2844,6 +3555,7 @@ CG.Entity.extend('Map', {
     },
     /**
      * @description removes the xml data of the map object
+     * @method removeXmlData
      */
     removeXmlData:function () {
         this.xml = ''
@@ -2855,23 +3567,42 @@ CG.Entity.extend('Map', {
 
 
 /**
- * @description class Sequence container to collect/group Translations
+ * @description class Sequence container to collect/group CG.Translation objects
  *
- * @constructor
- * @augments Entity
+ * @class CG.Sequence
+ * @extends Entity
  */
 CG.Entity.extend('Sequence', {
+    /**
+     * @constructor
+     * @method init
+     * @param sequencename
+     * @return {*}
+     */
     init:function (sequencename) {
         this._super(sequencename)
+        /**
+         * @property current
+         * @type {Number}
+         */
         this.current = 0
+        /**
+         * @property loop
+         * @type {Boolean}
+         */
         this.loop = false
+        /**
+         * @property translations
+         * @type {Array}
+         */
         this.translations = []
         return this
     },
     /**
      * @description add a translation object to the sequence array
-     *
-     * @param {translation} the translation object to add
+     * @method addTranslation
+     * @param translationobj {translation} the translation object to add
+     * @return {*}
      */
     addTranslation:function (translationobj) {
         this.translations.push(translationobj)
@@ -2908,46 +3639,121 @@ CG.Entity.extend('Sequence', {
 /**
  * @description class Translate moving a object
  *
- * @constructor
- * @augments Entity
+ * @class CG.Translate
+ * @extend CG.Entity
  */
 CG.Entity.extend('Translate', {
+    /**
+     * @init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
         this._super()
+        /**
+         * @property type
+         * @type {String}
+         */
         this.type = ''
-
+        /**
+         * @property tx
+         * @type {Number}
+         */
         this.tx = 0 //translated x value for the object
+        /**
+         * @property ty
+         * @type {Number}
+         */
         this.ty = 0 //translated y value for the object
-
+        /**
+         * @properzty x1
+         * @type {Number}
+         */
         this.x1 = 0
+        /**
+         * @property y1
+         * @type {Number}
+         */
         this.y1 = 0
+        /**
+         * @property x2
+         * @type {Number}
+         */
         this.x2 = 0
+        /**
+         * @property y2
+         * @type {Number}
+         */
         this.y2 = 0
-
+        /**
+         * @property bx
+         * @type {Number}
+         */
         this.bx = 0 //bézier x
+        /**
+         * @property by
+         * @type {Number}
+         */
         this.by = 0 //bézier y
-
+        /**
+         * @property theobj
+         * @type {Object}
+         */
         this.theobj = {}
-
+        /**
+         * @property r1
+         * @type {Number}
+         */
         this.r1 = 0
+        /**
+         * @property r2
+         * @type {Number}
+         */
         this.r2 = 0
+        /**
+         * @property startangle
+         * @type {Number}
+         */
         this.startangle = 0
+        /**
+         * @property angle
+         * @type {Number}
+         */
         this.angle = 0
+        /**
+         * @property speed
+         * @type {Number}
+         */
         this.speed = 0
-
+        /**
+         * @property steps
+         * @type {Number}
+         */
         this.steps = 0
+        /**
+         * @property step
+         * @type {Number}
+         */
         this.step = 0
+        /**
+         * @property positions
+         * @type {Array}
+         */
         this.positions = []
+        /**
+         * @property finished
+         * @type {Boolean}
+         */
         this.finished = false
         return this
     },
     /**
-     * @description initTween
+     * @method initTween
      *
-     * @param {obj} obj object to move
-     * @param {integer} steps of tween
-     * @param {point} startpoint of tween
-     * @param {point} endpoint of tween
+     * @param obj {Object} object to move
+     * @param steps {Number} steps of tween
+     * @param startpoint {point} startpoint of tween
+     * @param endpoint {point} endpoint of tween
      * @return {this}
      */
     initTween:function (obj, steps, startpoint, endpoint) {
@@ -2973,13 +3779,13 @@ CG.Entity.extend('Translate', {
     },
 
     /**
-     * @description initOval
-     * @param {obj} obj object to move
-     * @param {point} centerpoint
-     * @param {integer} radius1
-     * @param {integer} radius2
-     * @param {integer} startangle
-     * @param {integer} rotation
+     * @method initOval
+     * @param obj {Object} obj object to move
+     * @param centerpoint {point} centerpoint
+     * @param radius1 {Number} radius1
+     * @param radius2 {Number} radius2
+     * @param startangle {Number} startangle
+     * @param rotation {Number} rotation
      * @return {this}
      */
     initOval:function (obj, centerpoint, radius1, radius2, startangle, rotation) {
@@ -2999,12 +3805,14 @@ CG.Entity.extend('Translate', {
      * @description initBezier
      * http://13thparallel.com/archive/bezier-curves/
      *
-     * @param {obj} obj object to move
-     * @param {integer} steps of bézier curve
-     * @param {point} startpoint startpoint of bézier
-     * @param {point} endpoint endpoint of bézier
-     * @param {point} control1 point for bézier calculation (optional)
-     * @param {point} control2 point for bézier calculation (optional)
+     * @method initBezier
+     *
+     * @param obj {Object} obj object to move
+     * @param steps {Number} steps of bézier curve
+     * @param startpoint {CG.Point} startpoint startpoint of bézier
+     * @param endpoint {CG.Point} endpoint endpoint of bézier
+     * @param control1 {CG.Point} control1 point for bézier calculation (optional)
+     * @param control2 {CG.Point} control2 point for bézier calculation (optional)
      * @return {this}
      */
     initBezier:function (obj, steps, startpoint, endpoint, control1, control2) {
@@ -3140,9 +3948,9 @@ CG.Entity.extend('Translate', {
  * @augments Entity
  *
  * @param {string} mode type of the morph object
- * @param {integer} min min value
- * @param {integer} max max value
- * @param {integer} speed speed value
+ * @param {Number} min min value
+ * @param {Number} max max value
+ * @param {Number} speed speed value
  */
 CG.Entity.extend('Morph', {
     init:function (mode, min, max, speed) {
@@ -3189,20 +3997,48 @@ CG.Entity.extend('Morph', {
 /**
  * @descriptiom class Particle
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Particle
+ * @extends CG.Sprite
  *
- * @param {mixed} image imgpath, image object or tpimage object to use for the particle
  */
 
 CG.Sprite.extend('Particle', {
+    /**
+     * @constructor
+     * @method init
+     * @param image {mixed} image imgpath, image object or tpimage object to use for the particle
+     */
     init:function (image) {
         this._super(image, new CG.Point(0, 0))
+        /**
+         * @property lifetime
+         * @type {Number}
+         */
         this.lifetime = 100
+        /**
+         * @property currtime
+         * @type {Number}
+         */
         this.currtime = this.lifetime
+        /**
+         * @property aging
+         * @type {Number}
+         */
         this.aging = 1
+        /**
+         * @property fadeout
+         * @type {Boolean}
+         */
         this.fadeout = false
+        /**
+         * @property alpha
+         * @type {Number}
+         */
         this.alpha = 1
+        /**
+         * @property gravity
+         * @type {Number}
+         */
         this.gravity = 0
     },
     update:function () {
@@ -3244,43 +4080,118 @@ CG.Sprite.extend('Particle', {
 
 
 /**
- * @description Emitter class that handles particles
+ * @description Emitter class that handles . . . particles.
  *
- * @constructor
- * @augments Entity
+ * @class CG.Emitter
+ * @extend CG.Entity
  *
  * @param {point} position of emitter
  */
 CG.Entity.extend('Emitter', {
+    /**
+     * @method init
+     * @constructor
+     * @param position {CG.Point}
+     * @return {*}
+     */
     init:function (position) {
         this._super()
+        /**
+         * @property particle
+         * @type {Array}
+         */
         this.particles = []     //Particle pool delegated by emitter
+        /**
+         * @property maxparticles
+         * @type {Number}
+         */
         this.maxparticles = 50
-
+        /**
+         * @property creationtime
+         * @type {Number}
+         */
         this.creationtime = 100 //time when next particle would be generated/reanimated
+        /**
+         * @property currenttime
+         * @type {Number}
+         */
         this.currenttime = 0    //current counter
+        /**
+         * @property creationspeed
+         * @type {Number}
+         */
         this.creationspeed = 50 //increase for currenttime
-
+        /**
+         * @property gravity
+         * @type {Number}
+         */
         this.gravity = 0.05
-
+        /**
+         * @property image
+         * @type {null}
+         */
         this.image = null       //Image of the particle
+        /**
+         * @property type
+         * @type {String}
+         */
         this.type = ''          //point, corona, plate
-
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
         this.position = position || new CG.Point(0, 0)
         this.position._x = this.position.x
         this.position._y = this.position.y
-
+        /**
+         * @property rotation
+         * @type {Number}
+         */
         this.rotation = 0       //rotation of plate emitter
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 200        //width of line and rectangle emitter
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 200       //width of rectangle emitter
-
+        /**
+         * @property radius
+         * @type {Number}
+         */
         this.radius = 0         //radius for corona emitter
-
+        /**
+         * @property pspeed
+         * @type {Number}
+         */
         this.pspeed = 10        //particle speed
+        /**
+         * @property protation
+         * @type {Number}
+         */
         this.protation = 0
+        /**
+         * @property pdirection
+         * @type {Number}
+         */
         this.pdirection = 0     //particle direction UP, DOWN, CG.LEFT, RIGHT
+        /**
+         * @property plifetime
+         * @type {Number}
+         */
         this.plifetime = 100    //particle lifetime
+        /**
+         * @property paging
+         * @type {Number}
+         */
         this.paging = 1         //particle aging
+        /**
+         * @property pfadeout
+         * @type {Boolean}
+         */
         this.pfadeout = false   //particle fadeout
         return this
     },
@@ -3302,11 +4213,11 @@ CG.Entity.extend('Emitter', {
 
 
     /**
-     * @description initAsExplosion
+     * @method initAsExplosion
      *
      * @param {mixed} image path, image or tpimage to use for the particle
-     * @param {integer} min value for particle speed
-     * @param {integer} max value for particle speed
+     * @param {Number} min value for particle speed
+     * @param {Number} max value for particle speed
      */
     initAsExplosion:function (image, min, max) {
         this.image = image
@@ -3317,10 +4228,10 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description initAsCorona
+     * @method initAsCorona
      *
      * @param {mixed} image path, image or tpimage to use for the particle
-     * @param {integer} radius of the corona emitter
+     * @param {Number} radius of the corona emitter
      */
     initAsCorona:function (image, radius) {
         this.image = image
@@ -3330,11 +4241,11 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description initAsLine
+     * @method initAsLine
      *
      * @param {mixed} image path, image or tpimage to use for the particle
-     * @param {integer} width of the plate emitter
-     * @param {integer} direction (defined constants) of the plate emitter
+     * @param {Number} width of the plate emitter
+     * @param {Number} direction (defined constants) of the plate emitter
      */
     initAsLine:function (image, width, direction) {
         this.image = image
@@ -3345,11 +4256,11 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description initAsRectangle
+     * @method initAsRectangle
      *
      * @param {mixed} image path, image or tpimage to use for the particle
-     * @param {integer} width of the plate emitter
-     * @param {integer} direction (defined constants) of the plate emitter
+     * @param {Number} width of the plate emitter
+     * @param {Number} height (defined constants) of the plate emitter
      */
     initAsRectangle:function (image, width, height) {
         this.image = image
@@ -3358,17 +4269,19 @@ CG.Entity.extend('Emitter', {
         this.type = 'rectangle'
         return this
     },
-
-
+    /**
+     * @method createParticle
+     * @return {*}
+     */
     createParticle:function () {
         particle = new CG.Particle(this.image)
         return particle
     },
 
     /**
-     * @description initParticle
+     * @method initParticle
      *
-     * @param {particle} initialize particle object
+     * @param {particle} particle particle object
      */
     initParticle:function (particle) {
         if (this.pfadeout) {
@@ -3491,6 +4404,7 @@ CG.Entity.extend('Emitter', {
     },
     /**
      * @description Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle
+     * @method searchInvisibleParticle
      */
     searchInvisibleParticle:function () {
         for (var i = 0, l = this.particles.length; i < l; i++) {
@@ -3502,19 +4416,17 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description setEmitterPosition
+     * @method setEmitterPosition
      *
-     * @param {point} position of the emitter
+     * @param {CG.Point} position of the emitter
      */
     setEmitterPosition:function (position) {
         this.position = position
-        //    this._x = x
-        //    this._y = y
         return this
     },
 
     /**
-     * @description  setName
+     * @method  setName
      *
      * @param {string} name of the object for search with layerobject.getElementByName(name)
      */
@@ -3524,25 +4436,25 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description setCreationTime
+     * @method setCreationTime
      *
-     * @param {integer} creationtime
+     * @param {Number} creationtime
      */
     setCreationTime:function (creationtime) {
         this.creationtime = creationtime
         return this
     },
     /**
-     * @description setMaxParticles
+     * @method setMaxParticles
      *
-     * @param {integer} maxparticle
+     * @param {Number} maxparticle
      */
     setMaxParticles:function (maxparticle) {
         this.maxparticles = maxparticle
         return this
     },
     /**
-     * @description setGravity
+     * @method setGravity
      *
      * @param {float} gravity for all emitter controlled particles
      */
@@ -3552,8 +4464,9 @@ CG.Entity.extend('Emitter', {
     },
 
     /*
-     * Class Emitter method setParticleSpeed
-     * @param {integer} speed set the speed of the particles
+     * @method setParticleSpeed
+     *
+     * @param {Number} speed set the speed of the particles
      */
     setParticleSpeed:function (speed) {
         this.pspeed = speed
@@ -3561,7 +4474,7 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description setProtation
+     * @method setProtation
      *
      * @param {mixed} rotation set the rotation of the particles
      */
@@ -3571,9 +4484,9 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description setPLifetime
+     * @method setPLifetime
      *
-     * @param {integer} plifetime set the lifetime of the particles
+     * @param {Number} plifetime set the lifetime of the particles
      */
     setPLifetime:function (plifetime) {
         this.plifetime = plifetime
@@ -3581,7 +4494,8 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description activateFadeout - Activate fadeout of the particles depending on lifetime
+     * @method activateFadeout
+     * @description Activate fadeout of the particles depending on lifetime
      */
     activateFadeout:function () {
         this.pfadeout = true
@@ -3589,7 +4503,8 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description deactivateFadeout - Deactivate fadeout of the particles depending on lifetime
+     * @method deactivateFadeout
+     * @description Deactivate fadeout of the particles depending on lifetime
      */
     deactivateFadeout:function () {
         this.pfadeout = false
@@ -3597,7 +4512,7 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description getRandom
+     * @method getRandom
      *
      * @param {mixed} min value for random number
      * @param {mixed} max value for random number
@@ -3607,14 +4522,14 @@ CG.Entity.extend('Emitter', {
     },
 
     /**
-     * @description getX - get x position
+     * @method getX
      */
     getX:function () {
         return this.position._x
     },
 
     /**
-     * @description getY - Get y position
+     * @method getY
      */
     getY:function () {
         return this.position._y
@@ -14519,54 +15434,129 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
 
 /**
  * @description B2DEntity
- * @augments Entity
- * @constructor
+ * @class CG.B2DEntity
+ * @extend CG.Entity
  */
 
 CG.Entity.extend('B2DEntity', {
     /**
-     *
-     * @param name      string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param world     object      reference to world of B2DWorld
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param scale     integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param world     {object}      reference to world of B2DWorld
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
      * @return {*}
      */
 
     init:function (name, image, world, x, y, scale) {
         this._super()
-        this.body = {}
-
-        this.x = x
-        this.y = y
-        this.scale = scale
-
-        this.id = {name:name, uid:0}
-        this.world = world
         this.setImage(image)
+        /**
+         * @property body
+         * @type {b2Body}
+         */
+        this.body = {}
+        /**
+         * @property x
+         * @type {Number}
+         */
+        this.x = x
+        /**
+         * @property y
+         * @type {Number}
+         */
+        this.y = y
+        /**
+         * @property scale
+         * @type {Number}
+         */
+        this.scale = scale
+        /**
+         * @property id
+         * @type {Object}
+         */
+        this.id = {name:name, uid:0}
+        /**
+         * @property world
+         * @type {b2World}
+         */
+        this.world = world
+        /**
+         * @property xhandle
+         * @type {Number}
+         */
         this.xhandle = (this.width / 2)
+        /**
+         * @property yhandle
+         * @type {Number}
+         */
         this.yhandle = (this.height / 2)
         if(!this.bodyDef){
+            /**
+             * @property bodyDef
+             * @type {b2BodyDef}
+             */
             this.bodyDef = new b2BodyDef
+            /**
+             * @property bodyDef.alowSleep
+             * @type {Boolean}
+             */
             this.bodyDef.allowSleep = true
+            /**
+             * @property bodyDef.awake
+             * @type {Boolean}
+             */
             this.bodyDef.awake = true
         }
 
         if(!this.fixDef) {
+            /**
+             * @property fixDef
+             * @type {b2FixtureDef}
+             */
             this.fixDef = new b2FixtureDef
+            /**
+             * @property fixDef.density
+             * @type {Number}
+             */
             this.fixDef.density = 1.0
+            /**
+             * @property fixDef.friction
+             * @type {Number}
+             */
             this.fixDef.friction = 0.5
+            /**
+             * @property fixDef.restitution
+             * @type {Number}
+             */
             this.fixDef.restitution = 0.5
         }
-
+        /**
+         * @property isHit
+         * @type {Boolean}
+         */
         this.isHit = false;
+        /**
+         * @property strength
+         * @type {Number}
+         */
         this.strength = 100;
+        /**
+         * @property dead
+         * @type {Boolean}
+         */
         this.dead = false;
 
         return this
     },
+    /**
+     * @method hit
+     * @param impulse
+     * @param source
+     */
     hit:function (impulse, source) {
         this.isHit = true;
         if (this.strength) {
@@ -14602,40 +15592,71 @@ CG.Entity.extend('B2DEntity', {
 
 /**
  * @description B2DCircle
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DCirlce
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DCircle', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param radius    integer     json file from PhysicsEditor from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param scale     integer     the world scale of B2DWorld
-     * @param stat      boolean     is the body static or dynamic
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param radius    {Number}     json file from PhysicsEditor from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @param stat      {Boolean}     is the body static or dynamic
      * @return {*}
      */
     init:function (world, name, image, radius, x, y, scale, stat) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property radius
+         * @type {Number}
+         */
         this.radius = this.width / 2
-
+        /**
+         * @property stat
+         * @type {*}
+         */
         this.stat = stat || false
 
+        /**
+         * @property bodyDef.type
+         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         */
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
         } else {
             this.bodyDef.type = b2Body.b2_dynamicBody
         }
+        /**
+         * @property fixDef.shape
+         * @type {b2CircleShape}
+         */
         this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
+        /**
+         * @property bodyDef.position.x
+         * @type {Number}
+         */
         this.bodyDef.position.x = this.x / this.scale
+        /**
+         * @property bodyDef.position.y
+         * @type {Number}
+         */
         this.bodyDef.position.y = this.y / this.scale
+        /**
+         * @property bdyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
 
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 
@@ -14654,36 +15675,67 @@ CG.B2DEntity.extend('B2DCircle', {
 /**
  * @description B2DLine
  *
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DLine
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DLine', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param start     b2Vec2      start of line
-     * @param end       b2Vec2      end of line
-     * @param scale     integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param start     {b2Vec2}      start of line
+     * @param end       {b2Vec2}      end of line
+     * @param scale     {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, start, end, scale) {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
-
+        /**
+         * @property start
+         * @type {Number}
+         */
         this.start = start
+        /**
+         * @property end
+         * @type {Number}
+         */
         this.end = end
-
+        /**
+         * @property xhandle
+         * @type {Number}
+         */
         this.xhandle = 0
+        /**
+         * @property yhandle
+         * @type {Number}
+         */
         this.yhandle = 0
-
+        /**
+         * @property fixDef.shape
+         * @type {b2PolygonShape}
+         */
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsArray([this.start, this.end], 2)
-
+        /**
+         * @property bodyDef.type
+         * @type {Number}
+         */
         this.bodyDef.type = b2Body.b2_staticBody
+        /**
+         * @property bodyDef.position
+         */
         this.bodyDef.position.Set(0 / this.scale, 0 / this.scale)
+        /**
+         * @property bodyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
-
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 
@@ -14706,40 +15758,64 @@ CG.B2DEntity.extend('B2DLine', {
 
 /**
  * @description B2DRectangle
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DRectangle
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRectangle', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param scale     integer     the world scale of B2DWorld
-     * @param stat      boolean     is the body static or dynamic
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}     path to image, image or tpimage from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @param stat      {Boolean}     is the body static or dynamic
      * @return {*}
      */
     init:function (world, name, image, x, y, scale, stat) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @πroperty stat
+         * @type {*}
+         */
         this.stat = stat
-
+        /**
+         * @property bodyDef.stat
+         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         */
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
         } else {
             this.bodyDef.type = b2Body.b2_dynamicBody
         }
-
+        /**
+         * @property fixDef.shape
+         * @type {b2PolygonShape}
+         */
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
-
+        /**
+         * @property bodyDef.position.x
+         * @type {Number}
+         */
         this.bodyDef.position.x = this.x / this.scale
+        /**
+         * @property bodyDef.position.y
+         * @type {Number}
+         */
         this.bodyDef.position.y = this.y / this.scale
+        /**
+         * @property bodyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
-
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 
@@ -14758,54 +15834,96 @@ CG.B2DEntity.extend('B2DRectangle', {
  * @description B2DPolygon - uses PhysicsEditor export Lime + Corona (json)
  * supported options are friction, density and bounce
  *
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DPolygon
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DPolygon', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param jsonpoly  string      json file from PhysicsEditor from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param scale     integer     the world scale of B2DWorld
-     * @param stat      boolean     is the body static or dynamic
-     * @param bullet    boolean     bullet option
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param jsonpoly  {string}      json file from PhysicsEditor from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
      * @return {*}
      */
     init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property stat
+         * @type {*}
+         */
         this.stat = stat || false
-        this.bullet = bullet || false
-
+        /**
+         * @property polys
+         * @type {Array}
+         */
         this.polys = new Array()
-        this.vecs = new Array()
+        /**
+         * @property jsondata
+         * @type {*}
+         */
         this.jsondata = jsonpoly.data[jsonpoly.name]
-
+        /**
+         * @property xhandle
+          * @type {Number}
+         */
         this.xhandle = 0
+        /**
+         * @property yhandle
+         * @type {Number}
+         */
         this.yhandle = 0
-
+        /**
+         * @property vecs
+         * @type {Array}
+         */
+        this.vecs = new Array()
         this.vecs = this.createVecs(jsonpoly) // build grouped b2vecs from physicseditor
 
+        /**
+         * @property bodyDef.type
+         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         */
         if (this.stat) {
             this.bodyDef.type = b2Body.b2_staticBody
         } else {
             this.bodyDef.type = b2Body.b2_dynamicBody
         }
-
+        /**
+         * @property bodyDef.position
+         */
         this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        /**
+         * @property bodyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
+        /**
+         * @property bullet
+         * @type {*}
+         */
+        this.bullet = bullet || false
+        /**
+         * @property bodyDef.bullet
+         * @type {*}
+         */
         this.bodyDef.bullet = this.bullet
 
         //this.bodyDef.linearDamping = options.linearDamping
         //this.bodyDef.angularDamping = options.angularDamping
         //this.bodyDef.fixedRotation = true
 
-
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var i = 0, l = this.vecs.length; i < l; i++) {
@@ -14823,6 +15941,10 @@ CG.B2DEntity.extend('B2DPolygon', {
         return this
 
     },
+    /**
+     * @method createVecs
+     * @return {Array}
+     */
     createVecs:function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i < l; i++) {
@@ -14846,36 +15968,67 @@ CG.B2DEntity.extend('B2DPolygon', {
 
 
 /**
- * @description B2DRope
- * @augments B2DEntity
- * @constructor
+ * @description B2DRope - creates a rope with segments
+ * @class CG.B2DRope
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRope', {
     /**
-     *
-     * @param world         object      reference to world of B2DWorld
-     * @param name          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentWidth  integer     width of a segment
-     * @param scale         integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world         {Object}      reference to world of B2DWorld
+     * @param name          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentWidth  {Number}     width of a segment
+     * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property length
+         * @type {Number}
+         */
         this.length = length
+        /**
+         * @property segments
+         * @type {Number}
+         */
         this.segments = segments
+        /**
+         * @property segmentHeight
+         * @type {Number}
+         */
         this.segmentHeight = ((this.length - this.y) / this.segments) / 2
+        /**
+         * @property segmentWidth
+         * @type {*}
+         */
         this.segmentWidth = segmentWidth
+        /**
+         * @property anchor
+         * @type {b2Vec2}
+         */
         this.anchor = new b2Vec2()
+        /**
+         * @property prevBody
+         * @type {Object}
+         */
         this.prevBody = {}
-
+        /**
+         * @property bodyGroup
+         * @type {Array}
+         */
         this.bodyGroup = []
+        /**
+         * @property bodyCount
+         * @type {Number}
+         */
         this.bodyCount = 0
 
         // RopeStart
@@ -14953,39 +16106,71 @@ CG.B2DEntity.extend('B2DRope', {
 
 
 /**
- * @description B2DBridge
- * @augments B2DEntity
- * @constructor
+ * @description B2DBridge - creates a bridge with segments
+ * @class CG.B2DBridge
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DBridge', {
     /**
-     *
-     * @param world         object      reference to world of B2DWorld
-     * @param name          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
-     * @param scale         integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world         {Object}      reference to world of B2DWorld
+     * @param name          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
+     * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property length
+         * @type {Number}
+         */
         this.length = length
+        /**
+         * @property segments
+         * @type {Number}
+         */
         this.segments = segments
+        /**
+         * @property segmentHeight
+         * @type {Number}
+         */
         this.segmentHeight = segmentHeight
+        /**
+         * @property segmentWidth
+         * @type {Number}
+         */
         this.segmentWidth = ((this.length - this.x) / this.segments) / 2
+        /**
+         * @property anchor
+         * @type {b2Vec2}
+         */
         this.anchor = new b2Vec2()
+        /**
+         * @property prevBodf
+         * @type {Object}
+         */
         this.prevBody = {}
-
+        /**
+         * @property bodyGroup
+         * @type {Array}
+         */
         this.bodyGroup = []
+        /**
+         * @property bodyCount
+         * @type {Number}
+         */
         this.bodyCount = 0
 
         // BridgeStart
+
         this.fixtureDef = new b2FixtureDef()
         this.bodyShapeCircle = new b2CircleShape()
         this.bodyDef = new b2BodyDef()
@@ -15068,30 +16253,68 @@ CG.B2DEntity.extend('B2DBridge', {
 
 /**
  * @description B2DWorld
- * @augments Layer
- * @constructor
+ * @class CG.B2DWorld
+ * @xtend CG.Layer
  */
 
 CG.Layer.extend('B2DWorld', {
+    /**
+     * @method init
+     * @constructor
+     * @param name {string} name of the b2dworld
+     * @param opt {object} additional options
+     */
     init:function (name, opt) {
 
+        /**
+         * @property opt
+         * @type {object}
+         */
         opt = opt || {}
 
+        /**
+         * @property name
+         * @type {string}
+         */
         this.name = name || ''
+        /**
+         * @property debug
+         * @type {Boolean}
+         */
         this.debug = false
-
+        /**
+         * @property x
+         * @type {Number}
+         */
         this.x = 0
+        /**
+         * @property y
+         * @type {Number}
+         */
         this.y = 0
-
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = []
 
+        /**
+         * @property world
+         * @type {b2World}
+         */
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
             opt.sleep || true        //allow sleep
         )
-
+        /**
+         * @property uid
+         * @type {Number}
+         */
         this.uid = 0 //uid counter for elements
-
+        /**
+         * @property scale
+         * @type {Number}
+         */
         this.scale = 40
 
 
@@ -15138,7 +16361,7 @@ CG.Layer.extend('B2DWorld', {
         Game.b_ctx.restore()
     },
     /**
-     *
+     * @method addCustom
      * @param obj      object    custom B2D object
      */
     addCustom:function (obj) {
@@ -15147,7 +16370,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(obj)
     },
     /**
-     *
+     * @method createBox
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param x       integer     the x position
@@ -15161,7 +16384,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createLine
      * @param id      string    id or name to identify
      * @param start   CG.Point  start o fline
      * @param end     CG.Point  end of line
@@ -15173,7 +16396,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createCircle
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param radius  integer     the radius
@@ -15188,7 +16411,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createPolyBody
      * @param id        string      id or name to identify
      * @param image     mixed       path to image, image or tpimage from asset
      * @param jsonpoly  string      json file from PhysicsEditor from asset
@@ -15204,7 +16427,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createBridge
      * @param id          string      id or name to identify
      * @param image         mixed       path to image, image or tpimage from asset
      * @param x             integer     the x position
@@ -15221,7 +16444,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createRope
      * @param id            string      id or name to identify
      * @param image         mixed       path to image, image or tpimage from asset
      * @param x             integer     the x position
@@ -15254,10 +16477,19 @@ CG.Layer.extend('B2DWorld', {
             this.mouseJoint.SetTarget(new b2Vec2((x - this.x) / this.scale, (y - this.y) / this.scale))
         }
     },
+    /**
+     * @method mouseUp
+     */
     mouseUp:function () {
         this.world.DestroyJoint(this.mouseJoint);
         this.mouseJoint = null;
     },
+    /**
+     * @method getBodyAt
+     * @param x
+     * @param y
+     * @return {*}
+     */
     getBodyAt:function (x, y) {
         var worldx = (x - this.x) / this.scale;
         var worldy = (y - this.y) / this.scale
@@ -15281,6 +16513,12 @@ CG.Layer.extend('B2DWorld', {
         }, aabb);
         return selectedBody;
     },
+    /**
+     * @method deleteBodyAt
+     * @param x
+     * @param y
+     * @return {Boolean}
+     */
     deleteBodyAt:function (x, y) {
         body = this.getBodyAt(x, y)
         if (body) {
@@ -15295,12 +16533,26 @@ CG.Layer.extend('B2DWorld', {
         }
         return false
     },
+    /**
+     * @method isMouseDown
+     * @return {Boolean}
+     */
     isMouseDown:function () {
         return (this.mouseJoint != null);
     },
+    /**
+     * @method removeElementByIndex
+     * @param index
+     */
     removeElementByIndex:function (index) {
         this.elements.splice(index, 1);
     },
+    /**
+     * @method applyImpulse
+     * @param body
+     * @param degrees
+     * @param power
+     */
     applyImpulse:function (body, degrees, power) {
         if (body) {
             body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
@@ -15308,6 +16560,10 @@ CG.Layer.extend('B2DWorld', {
                 body.GetWorldCenter());
         }
     },
+    /**
+     * @method addContactListener
+     * @param callbacks
+     */
     addContactListener:function (callbacks) {
         var listener = new Box2D.Dynamics.b2ContactListener;
         if (callbacks.BeginContact) listener.BeginContact = function (contact) {
@@ -15325,6 +16581,11 @@ CG.Layer.extend('B2DWorld', {
         }
         this.world.SetContactListener(listener);
     },
+    /**
+     * @method getBodySpec
+     * @param b
+     * @return {Object}
+     */
     getBodySpec:function (b) {
         return {x:b.GetPosition().x, y:b.GetPosition().y, a:b.GetAngle(), c:{x:b.GetWorldCenter().x, y:b.GetWorldCenter().y}};
     }

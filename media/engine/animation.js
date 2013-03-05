@@ -1,17 +1,22 @@
 /**
  * @description Class Animation extends class Sprite and add support for animation ;o) needs atlas files with fixed framesizes and with following animation frames
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Animation
+ * @extends CG.Sprite
  *
- * @param {string, image} image imagepath or image object
- * @param {point} position object
- * @param {number} startframe startframe of atlas image
- * @param {number} endframe endframe of atlas image
- * @param {number} framewidth width of frame to cut
- * @param {number} frameheight height of frame to cut
  */
 CG.Sprite.extend('Animation', {
+    /**
+     * @constructor
+     * @method init
+     * @param image {string, image} image imagepath or image object
+     * @param position {point} position object
+     * @param startframe {number} startframe startframe of atlas image
+     * @param endframe {number} endframe endframe of atlas image
+     * @param framewidth {number} framewidth width of frame to cut
+     * @param frameheight {number} frameheight height of frame to cut
+     * @return {*}
+     */
     init:function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
 
@@ -23,13 +28,37 @@ CG.Sprite.extend('Animation', {
             this.image = image
         }
 
+        /**
+         @property loop {boolean}
+         */
         this.loop = true
+        /**
+         @property status {Number}
+         */
         this.status = 0
-
+        /**
+         @property currentframe {Number}
+         */
         this.currentframe = 0
+        /**
+         @property frames {Number}
+         */
+        this.frames = 0
+        /**
+         @property startframe {Number}
+         */
         this.startframe = startframe - 1
+        /**
+         @property endframe {Number}
+         */
         this.endframe = endframe - 1
+        /**
+         @property width {Number}
+         */
         this.width = framewidth
+        /**
+         @property height {Number}
+         */
         this.height = frameheight
 
         if (this.startframe === undefined && this.endframe === undefined) {
@@ -41,10 +70,22 @@ CG.Sprite.extend('Animation', {
             this.frames = this.endframe - this.startframe + 1
         }
 
+        /**
+         @property fx {Number}
+         */
         this.fx = 0
+        /**
+         @property fy {Number}
+         */
         this.fy = 0
 
+        /**
+         @property delay {Number}
+         */
         this.delay = 0
+        /**
+         @property tempdelay {Number}
+         */
         this.tempdelay = 0
 
         return this

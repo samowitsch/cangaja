@@ -7,36 +7,67 @@
 /**
  * @description B2DLine
  *
- * @augments B2DEntity
- * @constructor
+ * @class CG.B2DLine
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DLine', {
     /**
-     *
-     * @param world     object      reference to world of B2DWorld
-     * @param name      string      id or name to identify
-     * @param start     b2Vec2      start of line
-     * @param end       b2Vec2      end of line
-     * @param scale     integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param start     {b2Vec2}      start of line
+     * @param end       {b2Vec2}      end of line
+     * @param scale     {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, start, end, scale) {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
-
+        /**
+         * @property start
+         * @type {Number}
+         */
         this.start = start
+        /**
+         * @property end
+         * @type {Number}
+         */
         this.end = end
-
+        /**
+         * @property xhandle
+         * @type {Number}
+         */
         this.xhandle = 0
+        /**
+         * @property yhandle
+         * @type {Number}
+         */
         this.yhandle = 0
-
+        /**
+         * @property fixDef.shape
+         * @type {b2PolygonShape}
+         */
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsArray([this.start, this.end], 2)
-
+        /**
+         * @property bodyDef.type
+         * @type {Number}
+         */
         this.bodyDef.type = b2Body.b2_staticBody
+        /**
+         * @property bodyDef.position
+         */
         this.bodyDef.position.Set(0 / this.scale, 0 / this.scale)
+        /**
+         * @property bodyDef.userData
+         * @type {*}
+         */
         this.bodyDef.userData = this.id
-
+        /**
+         * @property body
+         * @type {b2Body}
+         */
         this.body = this.world.CreateBody(this.bodyDef)
         this.body.CreateFixture(this.fixDef)
 

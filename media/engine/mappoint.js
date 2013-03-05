@@ -6,7 +6,7 @@
  * @param {point} position point
  * @param {point} mapoffset reference to the current map position
  * @param {string} name of the tile
- * @param {integer} gid number of tilemap editor
+ * @param {Number} gid number of tilemap editor
  */
 CG.Class.extend('MapPoint', {
     init:function (position, mapoffset, name, gid) {

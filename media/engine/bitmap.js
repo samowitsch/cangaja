@@ -4,8 +4,8 @@
  * @constructor
  * @augments Entity
  *
- * @param {integer} width the width for the buffer
- * @param {integer} height the height for the buffer
+ * @param {Number} width the width for the buffer
+ * @param {Number} height the height for the buffer
  */
 CG.Entity.extend('Bitmap', {
     init:function (width, height) {
@@ -58,10 +58,10 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description clearRect
      *
-     * @param {integer} x the x position for clearRect
-     * @param {integer} y the y position for clearRect
-     * @param {integer} width the width for clearRect
-     * @param {integer} height the height for clearRect
+     * @param {Number} x the x position for clearRect
+     * @param {Number} y the y position for clearRect
+     * @param {Number} width the width for clearRect
+     * @param {Number} height the height for clearRect
      */
     clearRect:function (x, y, width, height) {
         this.bitmap_ctx.save()
@@ -73,9 +73,9 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description clearCircle
      *
-     * @param {integer} x the x position for clearCircle
-     * @param {integer} y the y position for clearCircle
-     * @param {integer} radius the radius for clearCircle
+     * @param {Number} x the x position for clearCircle
+     * @param {Number} y the y position for clearCircle
+     * @param {Number} radius the radius for clearCircle
      */
     clearCircle:function (x, y, radius) {
         this.bitmap_ctx.save()
@@ -90,8 +90,8 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description getPixel
      *
-     * @param {integer} x the x position for getPixel
-     * @param {integer} y the y position for getPixel
+     * @param {Number} x the x position for getPixel
+     * @param {Number} y the y position for getPixel
      * @returns {imagedata} data from canvas
      */
     getPixel:function (x, y) {
@@ -101,10 +101,10 @@ CG.Entity.extend('Bitmap', {
     /**
      * @description getPixels
      *
-     * @param {integer} x the x position for getPixels
-     * @param {integer} y the y position for getPixels
-     * @param {integer} width for getPixels
-     * @param {integer} height for getPixels
+     * @param {Number} x the x position for getPixels
+     * @param {Number} y the y position for getPixels
+     * @param {Number} width for getPixels
+     * @param {Number} height for getPixels
      * @returns {imagedata} data from canvas
      */
     getPixels:function (x, y, width, height) {

@@ -1,24 +1,44 @@
 /**
  * @description button class, can handle click and mouseover.
  *
- * @constructor
- * @augments Sprite
+ * @class CG.Button
+ * @extends CG.Sprite
  *
- * @param {string, image, tpimage} imgpath, image object or tpimage object to use
- * @param {point} position object
- * @param {string} text the text for the button label
- * @param {Font} font Font object for text drawing
- * @param {callback} callback callback function for click event
  */
 CG.Sprite.extend('Button', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {image} image image path, image or tpimage
+     * @param position {CG.Point} position point
+     * @param text {string} the button text
+     * @param font {CG.Font} a CG.Font object for text rendering
+     * @param clickedCallback {callback} callback function for click handling
+     * @return {*}
+     */
     init:function (image, position, text, font, clickedCallback) {
         this._super(image, position)
 
+        /**
+         @property font {CG.Font}
+         */
         this.font = font
+        /**
+         @property clickedCallback {callback}
+         */
         this.clickedCallback = clickedCallback
+        /**
+         @property clicked {boolean}
+         */
         this.clicked = false
+        /**
+         @property clickable {boolean}
+         */
         this.clickable = true
 
+        /**
+         @property text {string}
+         */
         this.text = text
         return this
     },

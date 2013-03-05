@@ -1,26 +1,48 @@
 /**
  *  @description TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.
  *
- *  @constructor
+ *  @class CG.TexturePacker
+ *  @extends Class
  */
 CG.Class.extend('TexturePacker', {
+    /**
+     * @constructor
+     * @method init
+     * @return {*}
+     */
     init:function () {
         if (typeof(ejecta) == 'undefined') {
             this.xml = ''
             this.xmlDoc = ''
             this.parser = new DOMParser() || {}
         }
+        /**
+         * @property imagename
+         * @type {String}
+         */
         this.imagename = ''
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 0
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 0
-
+        /**
+         * @property tpimages
+         * @type {Array}
+         */
         this.tpimages = []
         return this
     },
     /**
      * @description load a xml file from texturepacker
-     *
+     * @method loadXml
      * @param {string/object} xmlfile path or mediaasset object with data of texturepacker xml
+     * @return {*}
      */
     loadXml:function (xmlfile) {
         //from asset
@@ -59,8 +81,9 @@ CG.Class.extend('TexturePacker', {
 
     /**
      * @description load a json file from texturepacker
-     *
+     * @method loadJson
      * @param {string/object} jsonfile path or mediaasset object with data of texturepacker json
+     * @return {*}
      */
     loadJson:function (jsonfile) {
         //from asset
@@ -100,7 +123,7 @@ CG.Class.extend('TexturePacker', {
 
     /**
      * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     *
+     * @method getTPImages
      * @return {array} returns all tpimages of texturepacker file to use with Game.asset
      */
     getTPImages:function () {

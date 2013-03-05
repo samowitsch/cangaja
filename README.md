@@ -65,16 +65,17 @@ This is a very early version of it.
 
 ## Changelog:
 
-* 2012-02-20 [added] - added working B2DBridge class
-* 2012-02-18 [added] - added working B2DBridge class
-* 2012-02-13 [bugfix] - Box2D warpper => added name and uid to each object for correct deleting of objects
-* 2012-02-10 [added] - dragging, deleting and apply impulse of/to Box2D objects
-* 2012-02-05 [added] - first simple Box2D Wrapper with basic shapes: circle, rectangle and polybody
-* 2012-01-24 [added] - Sprite to MapArea collision
-* 2012-01-23 [misc] - purchased Webstorm JavaScript IDE, thats what i call a JS IDE!
-* 2012-01-22 [change] - now finally rewritten for simple inheritance with no way back ;o)
-* 2012-01-19 [added] - added a new scale transition mode between screens in Director class
-* 2012-01-10 [change/bugfix] - rewrite of class Animation for more "inheritance style" and bugfix for correct midhandle
+* 2013-03-05 [added] - apidoc generated with yuidoc
+* 2013-02-22 [added] - added B2DLine class
+* 2013-02-20 [added] - added working B2DBridge class
+* 2013-02-13 [bugfix] - Box2D warpper => added name and uid to each object for correct deleting of objects
+* 2013-02-10 [added] - dragging, deleting and apply impulse of/to Box2D objects
+* 2013-02-05 [added] - first simple Box2D Wrapper with basic shapes: circle, rectangle and polybody
+* 2013-01-24 [added] - Sprite to MapArea collision
+* 2013-01-23 [misc] - purchased Webstorm JavaScript IDE, thats what i call a JS IDE!
+* 2013-01-22 [change] - now finally rewritten for simple inheritance with no way back ;o)
+* 2013-01-19 [added] - added a new scale transition mode between screens in Director class
+* 2013-01-10 [change/bugfix] - rewrite of class Animation for more "inheritance style" and bugfix for correct midhandle
 * 2012-12-30 [added] - added MapPoint and MapArea support to the loadMapXml method => this is also a todo for the json part
 * 2012-12-29 [change] - changed comments to jsdoc style
 * 2012-12-27 [bugfix] - found collision bug in AABB() method after rewrite of object positioning
@@ -105,7 +106,6 @@ This is a very early version of it.
 * 2012-09-14 [feature] added type rectangle to the emitter class
 * 2012-09-14 [fix] Mediaasset last image is not preloading => bug in MediaAsset getImageByName()
 
-
 ## Class inheritance
 
 + Director
@@ -114,6 +114,9 @@ This is a very early version of it.
     + B2DCircle
     + B2DRectangle
     + B2DPolygon
+    + B2DLine
+    + B2DBridge
+    + B2DRope
   + Bitmap
   + Bound
   + Buffer

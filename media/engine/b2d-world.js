@@ -6,30 +6,68 @@
 
 /**
  * @description B2DWorld
- * @augments Layer
- * @constructor
+ * @class CG.B2DWorld
+ * @xtend CG.Layer
  */
 
 CG.Layer.extend('B2DWorld', {
+    /**
+     * @method init
+     * @constructor
+     * @param name {string} name of the b2dworld
+     * @param opt {object} additional options
+     */
     init:function (name, opt) {
 
+        /**
+         * @property opt
+         * @type {object}
+         */
         opt = opt || {}
 
+        /**
+         * @property name
+         * @type {string}
+         */
         this.name = name || ''
+        /**
+         * @property debug
+         * @type {Boolean}
+         */
         this.debug = false
-
+        /**
+         * @property x
+         * @type {Number}
+         */
         this.x = 0
+        /**
+         * @property y
+         * @type {Number}
+         */
         this.y = 0
-
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = []
 
+        /**
+         * @property world
+         * @type {b2World}
+         */
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
             opt.sleep || true        //allow sleep
         )
-
+        /**
+         * @property uid
+         * @type {Number}
+         */
         this.uid = 0 //uid counter for elements
-
+        /**
+         * @property scale
+         * @type {Number}
+         */
         this.scale = 40
 
 
@@ -76,7 +114,7 @@ CG.Layer.extend('B2DWorld', {
         Game.b_ctx.restore()
     },
     /**
-     *
+     * @method addCustom
      * @param obj      object    custom B2D object
      */
     addCustom:function (obj) {
@@ -85,7 +123,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(obj)
     },
     /**
-     *
+     * @method createBox
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param x       integer     the x position
@@ -99,7 +137,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createLine
      * @param id      string    id or name to identify
      * @param start   CG.Point  start o fline
      * @param end     CG.Point  end of line
@@ -111,7 +149,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createCircle
      * @param id      string      id or name to identify
      * @param image   mixed       path to image, image or tpimage from asset
      * @param radius  integer     the radius
@@ -126,7 +164,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createPolyBody
      * @param id        string      id or name to identify
      * @param image     mixed       path to image, image or tpimage from asset
      * @param jsonpoly  string      json file from PhysicsEditor from asset
@@ -142,7 +180,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createBridge
      * @param id          string      id or name to identify
      * @param image         mixed       path to image, image or tpimage from asset
      * @param x             integer     the x position
@@ -159,7 +197,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
-     *
+     * @method createRope
      * @param id            string      id or name to identify
      * @param image         mixed       path to image, image or tpimage from asset
      * @param x             integer     the x position
@@ -192,10 +230,19 @@ CG.Layer.extend('B2DWorld', {
             this.mouseJoint.SetTarget(new b2Vec2((x - this.x) / this.scale, (y - this.y) / this.scale))
         }
     },
+    /**
+     * @method mouseUp
+     */
     mouseUp:function () {
         this.world.DestroyJoint(this.mouseJoint);
         this.mouseJoint = null;
     },
+    /**
+     * @method getBodyAt
+     * @param x
+     * @param y
+     * @return {*}
+     */
     getBodyAt:function (x, y) {
         var worldx = (x - this.x) / this.scale;
         var worldy = (y - this.y) / this.scale
@@ -219,6 +266,12 @@ CG.Layer.extend('B2DWorld', {
         }, aabb);
         return selectedBody;
     },
+    /**
+     * @method deleteBodyAt
+     * @param x
+     * @param y
+     * @return {Boolean}
+     */
     deleteBodyAt:function (x, y) {
         body = this.getBodyAt(x, y)
         if (body) {
@@ -233,12 +286,26 @@ CG.Layer.extend('B2DWorld', {
         }
         return false
     },
+    /**
+     * @method isMouseDown
+     * @return {Boolean}
+     */
     isMouseDown:function () {
         return (this.mouseJoint != null);
     },
+    /**
+     * @method removeElementByIndex
+     * @param index
+     */
     removeElementByIndex:function (index) {
         this.elements.splice(index, 1);
     },
+    /**
+     * @method applyImpulse
+     * @param body
+     * @param degrees
+     * @param power
+     */
     applyImpulse:function (body, degrees, power) {
         if (body) {
             body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
@@ -246,6 +313,10 @@ CG.Layer.extend('B2DWorld', {
                 body.GetWorldCenter());
         }
     },
+    /**
+     * @method addContactListener
+     * @param callbacks
+     */
     addContactListener:function (callbacks) {
         var listener = new Box2D.Dynamics.b2ContactListener;
         if (callbacks.BeginContact) listener.BeginContact = function (contact) {
@@ -263,6 +334,11 @@ CG.Layer.extend('B2DWorld', {
         }
         this.world.SetContactListener(listener);
     },
+    /**
+     * @method getBodySpec
+     * @param b
+     * @return {Object}
+     */
     getBodySpec:function (b) {
         return {x:b.GetPosition().x, y:b.GetPosition().y, a:b.GetAngle(), c:{x:b.GetWorldCenter().x, y:b.GetWorldCenter().y}};
     }

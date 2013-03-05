@@ -80,7 +80,7 @@ CG.Class.extend('Director', {
      * @description  nextScreen
      *
      * @param {string} screenname to define nextscreen for fading
-     * @param {integer} duration the duration for fading
+     * @param {Number} duration the duration for fading
      */
     nextScreen:function (screenname, duration) {
         if (this.getIndexOfScreen(screenname) != this.activescreen) {

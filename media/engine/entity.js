@@ -5,13 +5,24 @@
 
 
 /**
- * @description entity the base class
- * @constructor
+ * @description class Entity the base class of cangaja
+ * @class CG.Entity
  */
 
 CG.Class.extend('Entity', {
+    /**
+     * @constructor
+     * @method init
+     * @param name {string} the name of the Entity
+     */
     init:function (name) {
+        /**
+         @property name {string}
+         */
         this.name = name || ''
+        /**
+         @property visible {boolean}
+         */
         this.visible = true
     },
     update:function () {
@@ -28,7 +39,7 @@ CG.Class.extend('Entity', {
     },
     /**
      * @description initialize image for object. for now => sprite, particle, buffer, bitmap and button use it
-     *
+     * @method setImage
      * @param {image} image image path, image or tpimage
      */
     setImage:function (image) {

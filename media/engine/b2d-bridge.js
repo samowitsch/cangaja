@@ -5,39 +5,71 @@
 
 
 /**
- * @description B2DBridge
- * @augments B2DEntity
- * @constructor
+ * @description B2DBridge - creates a bridge with segments
+ * @class CG.B2DBridge
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DBridge', {
     /**
-     *
-     * @param world         object      reference to world of B2DWorld
-     * @param name          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
-     * @param scale         integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world         {Object}      reference to world of B2DWorld
+     * @param name          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
+     * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property length
+         * @type {Number}
+         */
         this.length = length
+        /**
+         * @property segments
+         * @type {Number}
+         */
         this.segments = segments
+        /**
+         * @property segmentHeight
+         * @type {Number}
+         */
         this.segmentHeight = segmentHeight
+        /**
+         * @property segmentWidth
+         * @type {Number}
+         */
         this.segmentWidth = ((this.length - this.x) / this.segments) / 2
+        /**
+         * @property anchor
+         * @type {b2Vec2}
+         */
         this.anchor = new b2Vec2()
+        /**
+         * @property prevBodf
+         * @type {Object}
+         */
         this.prevBody = {}
-
+        /**
+         * @property bodyGroup
+         * @type {Array}
+         */
         this.bodyGroup = []
+        /**
+         * @property bodyCount
+         * @type {Number}
+         */
         this.bodyCount = 0
 
         // BridgeStart
+
         this.fixtureDef = new b2FixtureDef()
         this.bodyShapeCircle = new b2CircleShape()
         this.bodyDef = new b2BodyDef()

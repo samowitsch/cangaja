@@ -1,9 +1,17 @@
-/*
- * Class MediaAsset
- * @param {string} image path to background image of preloader
+/**
+ * @description MediaAsset
+ *
+ * @class CG.MediaAsset
+ * @extend Class
+ *
  */
 
 CG.Class.extend('MediaAsset', {
+    /**
+     * @method init
+     * @constructor
+     * @param image {string} image path to background image of preloader
+     */
     init:function (image) {
         if (image) {
             this.image = new Image()
@@ -44,6 +52,12 @@ CG.Class.extend('MediaAsset', {
 
 //return this
     },
+    /**
+     * @method addImage
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addImage:function (path, name) {
         this.assetcount += 1
         this.images.push({
@@ -53,6 +67,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addFont
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addFont:function (path, name) {
         this.assetcount += 1
         this.fonts.push({
@@ -62,6 +82,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addXml
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addXml:function (path, name) {
         this.assetcount += 1
         this.xmls.push({
@@ -71,6 +97,12 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method addJson
+     * @param path
+     * @param name
+     * @return {*}
+     */
     addJson:function (path, name) {
         this.assetcount += 1
         this.jsons.push({
@@ -80,6 +112,11 @@ CG.Class.extend('MediaAsset', {
         })
         return this
     },
+    /**
+     * @method getImageByName
+     * @param name
+     * @return {*}
+     */
     getImageByName:function (name) {
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
@@ -92,6 +129,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No image with this name in asset.')
     },
+    /**
+     * @method getImagesByName
+     * @param name
+     * @return {*}
+     */
     getImagesByName:function (name) {
         names = []
         for (var i = 0, l = this.images.length; i < l; i++) {
@@ -108,6 +150,11 @@ CG.Class.extend('MediaAsset', {
         }
         return names
     },
+    /**
+     * @method getFontByName
+     * @param name
+     * @return {*}
+     */
     getFontByName:function (name) {
         for (var i = 0, l = this.fonts.length; i < l; i++) {
             if (this.fonts[i].name == name) {
@@ -116,6 +163,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No font with this name in asset.')
     },
+    /**
+     * @method getXmlByName
+     * @param name
+     * @return {*}
+     */
     getXmlByName:function (name) {
         for (var i = 0, l = this.xmls.length; i < l; i++) {
             if (this.xmls[i].name == name) {
@@ -124,6 +176,11 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No XML with this name in asset.')
     },
+    /**
+     * @method getJsonByName
+     * @param name
+     * @return {*}
+     */
     getJsonByName:function (name) {
         for (var i = 0, l = this.jsons.length; i < l; i++) {
             if (this.jsons[i].name == name) {
@@ -132,6 +189,9 @@ CG.Class.extend('MediaAsset', {
         }
         throw new CG.MediaAssetException('No JSON with this name in asset.')
     },
+    /**
+     * @method startPreLoad
+     */
     startPreLoad:function () {
 
         progress = 100 / this.assetcount * this.assetcurrent

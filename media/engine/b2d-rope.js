@@ -5,36 +5,67 @@
 
 
 /**
- * @description B2DRope
- * @augments B2DEntity
- * @constructor
+ * @description B2DRope - creates a rope with segments
+ * @class CG.B2DRope
+ * @extend CG.B2DEntity
  */
 
 CG.B2DEntity.extend('B2DRope', {
     /**
-     *
-     * @param world         object      reference to world of B2DWorld
-     * @param name          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentWidth  integer     width of a segment
-     * @param scale         integer     the world scale of B2DWorld
+     * @method init
+     * @constructor
+     * @param world         {Object}      reference to world of B2DWorld
+     * @param name          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentWidth  {Number}     width of a segment
+     * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
     init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
         this._super(name, image, world, x, y, scale)
-
+        /**
+         * @property length
+         * @type {Number}
+         */
         this.length = length
+        /**
+         * @property segments
+         * @type {Number}
+         */
         this.segments = segments
+        /**
+         * @property segmentHeight
+         * @type {Number}
+         */
         this.segmentHeight = ((this.length - this.y) / this.segments) / 2
+        /**
+         * @property segmentWidth
+         * @type {*}
+         */
         this.segmentWidth = segmentWidth
+        /**
+         * @property anchor
+         * @type {b2Vec2}
+         */
         this.anchor = new b2Vec2()
+        /**
+         * @property prevBody
+         * @type {Object}
+         */
         this.prevBody = {}
-
+        /**
+         * @property bodyGroup
+         * @type {Array}
+         */
         this.bodyGroup = []
+        /**
+         * @property bodyCount
+         * @type {Number}
+         */
         this.bodyCount = 0
 
         // RopeStart

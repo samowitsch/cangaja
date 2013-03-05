@@ -1,12 +1,17 @@
 /**
  * @description class Layer container to collect/group sprites, buttons, menus, emitters and animations
  *
- * @constructor
- * @augments Entity
+ * @class CG.Layer
+ * @extends CG.Entity
  *
- * @param {string} layername the name of the layer
  */
 CG.Entity.extend('Layer', {
+    /**
+     * @constructor
+     * @method init
+     * @param layername {string} the name of the layer
+     * @return {*}
+     */
     init:function (layername) {
         this._super(layername)
 
@@ -46,8 +51,8 @@ CG.Entity.extend('Layer', {
     },
 
     /**
-     * @description addElement
-     *
+     * @description addElement to the layer
+     * @method addElement
      * @param {obj} element to add to elements array
      */
     addElement:function (element) {
@@ -57,7 +62,7 @@ CG.Entity.extend('Layer', {
 
     /**
      * @description getElementByName
-     *
+     * @method getElementByName
      * @param {string} elementname name of element to find in element array
      * @return {false/object} returns false or the searched object
      */
@@ -72,7 +77,7 @@ CG.Entity.extend('Layer', {
 
     /**
      * @description getElementsByName
-     *
+     * @method getElementsByName
      * @param {string} elementname name of element to find in element array
      * @return {array} returns a array of objects
      */
