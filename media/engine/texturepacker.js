@@ -1,5 +1,9 @@
 /**
- *  @description TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.
+ *  @description
+ *
+ *  CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+ *  No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.
+ *  These TPImages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.TexturePacker
  *  @extends Class

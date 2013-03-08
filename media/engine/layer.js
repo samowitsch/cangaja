@@ -1,9 +1,10 @@
 /**
- * @description class Layer container to collect/group sprites, buttons, menus, emitters and animations
+ * @description
+ *
+ * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
  * @class CG.Layer
  * @extends CG.Entity
- *
  */
 CG.Entity.extend('Layer', {
     /**

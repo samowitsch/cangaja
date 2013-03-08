@@ -1,5 +1,7 @@
 /**
- * @description Class Bitmap extends Class Buffer
+ * @description
+ *
+ * CG.Bitmap is a simple bitmap class with basic features for bitmap manipulation at the moment.
  *
  * @class CG.Bitmap
  * @extends CG.Entity

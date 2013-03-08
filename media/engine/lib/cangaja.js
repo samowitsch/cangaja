@@ -1,3 +1,40 @@
+/**
+ * @description
+ *
+ * CG is the base class of the cangaja framework.
+ * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
+ @example
+     //Class example, how to start from scratch with simple inheritance
+     CG.Class.extend("Entity",{
+        init: function(){
+            this.myprop = 'set from constructor'
+        }
+     });
+
+     CG.Entity.extend("Point",{
+        init: function(x, y){
+            this._super()
+            this.x = x
+            this.y = y
+        }
+     });
+
+     CG.Point.extend("Rectangle",{
+        init: function(x, y, w, h){
+            this._super(x, y)
+            this.w = w
+            this.h = h
+        },
+        move: function(){
+
+        }
+     });
+
+
+
+ * @module CG
+ * @main CG
+ */
 var CG = CG || {
     VERSION:1,
 
@@ -141,41 +178,7 @@ var CG = CG || {
 
         return Class;
     };
-}())
-
-
-////Class example, how to start from scratch
-//CG.Class.extend("Entity",{
-//    init: function(){
-//        this.myprop = 'set from constructor'
-//    }
-//});
-//
-//
-////Class example, how to start from scratch
-//CG.Entity.extend("Point",{
-//    init: function(x, y){
-//        this._super()
-//        this.x = x
-//        this.y = y
-//    }
-//});
-//
-//
-////Class example, how to start from scratch
-//CG.Point.extend("Rectangle",{
-//    init: function(x, y, w, h){
-//        this._super(x, y)
-//        this.w = w
-//        this.h = h
-//    },
-//    move: function(){
-//
-//    }
-//});
-
-
-/**
+}())/**
  * string functions
  **/
 
@@ -206,7 +209,9 @@ String.prototype.startsWith = function (str) {
 
 
 /**
- * @description class CG.Delta not really used at the moment ;o)
+ * @description
+ *
+ * CG.Delta not really used at the moment ;o)
  *
  * @class CG.Delta
  * @extends Class
@@ -269,6 +274,7 @@ CG.Class.extend('Delta', {
 /**
  * @description class Entity the base class of cangaja
  * @class CG.Entity
+ * @extends CG.Class
  */
 
 CG.Class.extend('Entity', {
@@ -639,7 +645,9 @@ CG.Entity.extend('Rectangle', {
 
 
 /**
- * @description Class Bound extends Class Entity
+ * @description
+ *
+ * CG.Bound is used at different places in the Cangaja FW.
  *
  * @class CG.Bound
  * @extends CG.Entity
@@ -693,26 +701,51 @@ CG.Entity.extend('Bound', {
 
 
 /**
- * @description Class Buffer for separate canvas rendering/buffering
+ * @description
  *
- * @constructor
- * @augments Entity
+ * CG.Buffer for separate canvas rendering/buffering
  *
- * @param {Number} width of the buffer
- * @param {Number} height of the buffer
- * @param {string} buffername
+ * @class CG.Buffer
+ * @extends CG.Entity
+ *
  */
 CG.Entity.extend('Buffer', {
+    /**
+     * @constructor
+     * @method init
+     * @param width {Number} width of the buffer
+     * @param height {Number} height of the buffer
+     * @param buffername {string} buffername
+     * @return {*}
+     */
     init:function (width, height, buffername) {
         this._super(buffername)
+        /**
+         * @property b_canvas
+         * @type {HTMLElement}
+         */
         this.b_canvas = document.createElement('canvas')
 //    if(typeof(ejecta) !== 'undefined'){
 //        this.b_canvas.width = w
 //        this.b_canvas.height = h
 //    }else{
+
+        /**
+         * @property b_canvas.width
+         * @type {*}
+         */
         this.b_canvas.width = width
+        /**
+         * @property b_canvas.height
+         * @type {*}
+         */
         this.b_canvas.height = height
 //    }
+
+        /**
+         * @property b_ctx
+         * @type {CanvasRenderingContext2D}
+         */
         this.b_ctx = this.b_canvas.getContext('2d')
         return this
     }
@@ -1213,11 +1246,13 @@ CG.Class.extend('TexturePacker', {
 
 
 /**
- * @description Class Animation extends class Sprite and add support for animation ;o) needs atlas files with fixed framesizes and with following animation frames
+ * @description
+ *
+ * CG.Animation extends CG.Sprite and add support for animations ;o) It needs atlas files with fixed framesizes and with following animation frames.
+ * For example you can use Timeline FX generated graphics.
  *
  * @class CG.Animation
  * @extends CG.Sprite
- *
  */
 CG.Sprite.extend('Animation', {
     /**
@@ -1354,15 +1389,22 @@ CG.Sprite.extend('Animation', {
 })
 
 /**
- * @description Class Bitmap extends Class Buffer
+ * @description
  *
- * @constructor
- * @augments Entity
+ * CG.Bitmap is a simple bitmap class with basic features for bitmap manipulation at the moment.
  *
- * @param {Number} width the width for the buffer
- * @param {Number} height the height for the buffer
+ * @class CG.Bitmap
+ * @extends CG.Entity
+ *
  */
 CG.Entity.extend('Bitmap', {
+    /**
+     * @method init
+     * @constructor
+     * @param width {Number} width the width for the buffer
+     * @param height {Number} height the height for the buffer
+     * @return {*}
+     */
     init:function (width, height) {
         this._super(this)
         this.x = 0
@@ -1374,7 +1416,11 @@ CG.Entity.extend('Bitmap', {
         return this
     },
     /**
-     * @description loads image and draws it to the buffer
+     * @description
+     *
+     * Loads an image and draws it to the buffer
+     *
+     * @method loadImage
      *
      * @param {string, image, tpimage} imgpath, image object or tpimage object to use
      */
@@ -1394,7 +1440,7 @@ CG.Entity.extend('Bitmap', {
 
 
     /**
-     * @description clearBuffer
+     * @method clearBuffer
      */
     clearBuffer:function () {
         this.bitmap_ctx.clearRect(0, 0, this.bitmap_canvas.width, this.bitmap_canvas.height)
@@ -1402,7 +1448,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description drawImageToBuffer
+     * @method drawImageToBuffer
      */
     drawImageToBuffer:function () {
         this.bitmap_ctx.drawImage(this.image, 0, 0)
@@ -1411,7 +1457,7 @@ CG.Entity.extend('Bitmap', {
 
 
     /**
-     * @description clearRect
+     * @method clearRect
      *
      * @param {Number} x the x position for clearRect
      * @param {Number} y the y position for clearRect
@@ -1426,7 +1472,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description clearCircle
+     * @method clearCircle
      *
      * @param {Number} x the x position for clearCircle
      * @param {Number} y the y position for clearCircle
@@ -1443,7 +1489,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description getPixel
+     * @method getPixel
      *
      * @param {Number} x the x position for getPixel
      * @param {Number} y the y position for getPixel
@@ -1454,7 +1500,7 @@ CG.Entity.extend('Bitmap', {
     },
 
     /**
-     * @description getPixels
+     * @method getPixels
      *
      * @param {Number} x the x position for getPixels
      * @param {Number} y the y position for getPixels
@@ -1469,7 +1515,9 @@ CG.Entity.extend('Bitmap', {
 
 
 /**
- * @description button class, can handle click and mouseover.
+ * @description
+ *
+ * CG.Button represents a simple button class that can handle click, mouseover and callback functionality.
  *
  * @class CG.Button
  * @extends CG.Sprite
@@ -1543,26 +1591,51 @@ CG.Sprite.extend('Button', {
 
 
 /**
- * @description class Menu
+ * @description Menu
  *
- * @constructor
- * @augments Entity
+ * @class CG.Menu
+ * @extends CG.Entity
  *
- * @param {Number} x the x position
- * @param {Number} y the y position
- * @param {Number} margin the margin between the menu buttons
  */
 CG.Entity.extend('Menu', {
+    /**
+     * @method init
+     * @constructor
+     * @param x {Number} x the x position
+     * @param y {Number} y the y position
+     * @param margin {Number} margin the margin between the menu buttons
+     * @return {*}
+     */
     init:function (x, y, margin) {
+        /**
+         * @property x
+         * @type {Number}
+         */
         this.x = x
+        /**
+         * @property y
+         * @type {Number}
+         */
         this.y = y
+        /**
+         * @proerty margin
+         * @type {Number}
+         */
         this.margin = margin
+        /**
+         * @property step
+         * @type {*}
+         */
         this.step = this.y
+        /**
+         * @property buttons
+         * @type {Array}
+         */
         this.buttons = []
         return this
     },
     /**
-     * @description add a button to the menu
+     * @method addButton
      *
      * @param {button} button
      */
@@ -1590,7 +1663,9 @@ CG.Entity.extend('Menu', {
 
 
 /**
- * @description MediaAsset
+ * @description
+ *
+ * MediaAsset preloader.
  *
  * @class CG.MediaAsset
  * @extends Class
@@ -2002,8 +2077,8 @@ CG.Entity.extend('Font', {
 
     /**
      * @description get the width of the given text
-     * @method getTextWidth {string} the string to calculate the width
-     * @param text {string}
+     * @method getTextWidth
+     * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      */
     getTextWidth:function (text) {
@@ -2138,18 +2213,72 @@ CG.Entity.extend('Font', {
 
 
 /**
- * @description Director the top instance for screens and so on in the control hierarchy
+ * @description
  *
- * @constructor
+ * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
+ @example
+     //create top level CG.Director object
+     var director = new CG.Director()
+
+     //create a CG.Screen
+     var mainscreen = new CG.Screen('mainscreen')
+
+     //create a CG.Layer
+     var mainlayer = new CG.Layer('mainlayer')
+
+     //create a demo CG.Sprite
+     var demosprite = new CG.Sprite(Game.asset.getImageByName('gfx'), new CG.Point(400, 240))
+
+     //add/attach the demo sprite to the layer
+     mainlayer.addElement(back)
+
+     //add/attach mainscreen and mainlayer to the director
+     director.addScreen(mainscreen.addLayer(mainlayer));
+
+ * @class CG.Director
+ * @extends Class
  */
 CG.Class.extend('Director', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
     init:function () {
+        /**
+         * @property screens
+         * @type {Array}
+         */
         this.screens = []
+        /**
+         * @property activescreen
+         * @type {Number}
+         */
         this.activescreen = 0
+        /**
+         * @description nextscreen
+         * @type {Number}
+         */
         this.nextscreen = 0
+        /**
+         * @property duration
+         * @type {Number}
+         */
         this.duration = 20
+        /**
+         * @description alpha
+         * @type {Number}
+         */
         this.alpha = 0
+        /**
+         * @description fademode
+         * @type {String}
+         */
         this.fademode = 'fade'      //fade or scale
+        /**
+         * @property color
+         * @type {String}
+         */
         this.color = 'rgb(0,0,0)'
         return this
     },
@@ -2207,16 +2336,16 @@ CG.Class.extend('Director', {
         }
     },
     /**
-     * @description addScreen
+     * @method addScreen
      *
-     * @param {screen} screen to add to the screen list
+     * @param {CG.Screen} screen to add to the screen list
      */
     addScreen:function (screen) {
         this.screens.push(screen)
         return this
     },
     /**
-     * @description  nextScreen
+     * @method nextScreen
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -2229,10 +2358,10 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getScreenByName
+     * @method getScreenByName
      *
      * @param {string} screenname to find screen by name
-     * @return {false/screen} returns false or the screen object
+     * @return {false/CG.Screen} returns false or the screen object
      */
     getScreenByName:function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
@@ -2244,10 +2373,10 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getIndexOfScreen
+     * @method getIndexOfScreen
      *
      * @param {string} screenname to find index of screen in screen array
-     * @return {false/integer} return false or index number of the screen
+     * @return {false/Number} return false or index number of the screen
      */
     getIndexOfScreen:function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
@@ -2259,7 +2388,7 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  getActiveScreenName
+     * @method getActiveScreenName
      *
      * @return {string} the name of the active screen
      */
@@ -2268,9 +2397,9 @@ CG.Class.extend('Director', {
     },
 
     /**
-     * @description  setFadeMode
+     * @method setFadeMode
      *
-     * @return {string} fademode for screen transitions => fade or scale
+     * @return {String} fademode for screen transitions => fade or scale
      */
     setFadeMode:function (fademode) {
         if (fademode == 'scale') {
@@ -2285,7 +2414,9 @@ CG.Class.extend('Director', {
 
 
 /**
- * @description class Screen container to collect/group CG.Layers and/or CG.B2DWorld
+ * @description
+ *
+ * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
  * @extends Entity
@@ -2367,11 +2498,12 @@ CG.Entity.extend('Screen', {
 
 
 /**
- * @description class Layer container to collect/group sprites, buttons, menus, emitters and animations
+ * @description
+ *
+ * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
  * @class CG.Layer
  * @extends CG.Entity
- *
  */
 CG.Entity.extend('Layer', {
     /**
@@ -2551,23 +2683,46 @@ CG.Class.extend('MapTileProperties', {
 /**
  * @description class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
- * @constructor
+ * @class CG.MapPoint
+ * @extends Class
  *
- * @param {point} position point
- * @param {point} mapoffset reference to the current map position
- * @param {string} name of the tile
- * @param {Number} gid number of tilemap editor
  */
 CG.Class.extend('MapPoint', {
+    /**
+     * @method init
+     * @constructor
+     * @param position {point} position point
+     * @param mapoffset {point} mapoffset reference to the current map position
+     * @param name {string} name of the tile
+     * @param gid {Number} gid number of tilemap editor
+     * @return {*}
+     */
     init:function (position, mapoffset, name, gid) {
-        //initial values
+        /**
+         * @property initposition
+         * @type {CG.Point}
+         */
         this.initposition = position || new CG.Point(0, 0)
+        /**
+         * @property mapoffset
+         * @type {CG.Point}
+         */
         this.mapoffset = mapoffset || new CG.Point(0, 0)
+        /**
+         * @description gid
+         * @type {Number}
+         */
         this.gid = gid
+        /**
+         * @property name
+         * @type {*}
+         */
         this.name = name
-
-        //for reference use
-        this.position = new CG.Point(position.x, position.y)
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
+        this.position = new CG.Point(position.x, position.y) //for reference use
         return this
     },
 
@@ -2858,9 +3013,12 @@ CG.Entity.extend('Map', {
         return this
     },
     /**
-     * @method loadMapXml
-     * @description load and parse an xml tilemap file
+     * @description
      *
+     * Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.
+     * All other formats are not supported!
+     *
+     * @method loadMapXml
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml:function (xmlfile) {
@@ -3035,11 +3193,12 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @method loadMapJson
      * @description
      *
-     * load and parse an tilemap json file
+     * Load and parse an tilemap json file. Use the tiled json export.
+     * Hopefully the json format has the same functionality as the xml loader ;o)
      *
+     * @method loadMapJson
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson:function (jsonfile) {
@@ -3148,12 +3307,16 @@ CG.Entity.extend('Map', {
 
 
     /**
+     * @description
+     *
+     * This is the main method for map drawing.
+     *
      * @method drawMap
      *
-     * @param sx {Number} sx top CG.LEFT coord for canvas drawing
-     * @param sy {Number} sy top CG.LEFT coord for canvas drawing
-     * @param bx {Number} bx top CG.LEFT x coord of bound in tilemap
-     * @param by {Number} by top CG.LEFT y coord of bound in tilemap
+     * @param sx {Number} sx top left coord for canvas drawing
+     * @param sy {Number} sy top left coord for canvas drawing
+     * @param bx {Number} bx top left x coord of bound in tilemap
+     * @param by {Number} by top left y coord of bound in tilemap
      * @param bw {Number} bw width of bound in tilemap
      * @param bh {Number} bh height of bound in tilemap
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
@@ -3942,17 +4105,23 @@ CG.Entity.extend('Translate', {
 
 
 /**
- * @description class Morph to manipulate objects in size and so on
+ * @description
  *
- * @constructor
- * @augments Entity
+ * class Morph to manipulate objects in size and so on
  *
- * @param {string} mode type of the morph object
- * @param {Number} min min value
- * @param {Number} max max value
- * @param {Number} speed speed value
+ * @class CG.Morph
+ * @extends CG.Entity
+ *
  */
 CG.Entity.extend('Morph', {
+    /**
+     * @method init
+     * @constructor
+     * @param mode {string} mode type of the morph object
+     * @param min {Number} min min value
+     * @param max {Number} max max value
+     * @param speed {Number} speed speed value
+     */
     init:function (mode, min, max, speed) {
         this.mode = mode
         this.min = min
@@ -3983,7 +4152,7 @@ CG.Entity.extend('Morph', {
 
     },
     /**
-     * @description get the current value
+     * @method getVal
      *
      * @return {float}
      */
@@ -15433,7 +15602,11 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
 
 
 /**
- * @description B2DEntity
+ * @description
+ *
+ * B2DEntity is the base class with properties for all B2D objects.
+ * This class handles also the drawings for all classes.
+ *
  * @class CG.B2DEntity
  * @extends CG.Entity
  */
@@ -15591,7 +15764,10 @@ CG.Entity.extend('B2DEntity', {
 
 
 /**
- * @description B2DCircle
+ * @description
+ *
+ * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.
+ *
  * @class CG.B2DCirlce
  * @extends CG.B2DEntity
  */
@@ -15673,7 +15849,10 @@ CG.B2DEntity.extend('B2DCircle', {
 
 
 /**
- * @description B2DLine
+ * @description
+ *
+ * B2DLine is a simple b2PolygonShape wrapper. There is no visible drawing
+ * now in the canvas for now. It can be used to build walls, ground,. ,.
  *
  * @class CG.B2DLine
  * @extends CG.B2DEntity
@@ -15757,7 +15936,10 @@ CG.B2DEntity.extend('B2DLine', {
 
 
 /**
- * @description B2DRectangle
+ * @description
+ *
+ * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.
+ *
  * @class CG.B2DRectangle
  * @extends CG.B2DEntity
  */
@@ -15831,8 +16013,11 @@ CG.B2DEntity.extend('B2DRectangle', {
 
 
 /**
- * @description B2DPolygon - uses PhysicsEditor export Lime + Corona (json)
- * supported options are friction, density and bounce
+ * @description
+ *
+ * B2DPolygon  is a simple b2PolygonShape wrapper element with basic physics properties.
+ * It uses PhysicsEditor json files, use export Lime + Corona (json).
+ * Supported options for now are friction, density and bounce and would be set to B2DPolygon.
  *
  * @class CG.B2DPolygon
  * @extends CG.B2DEntity
@@ -15968,7 +16153,11 @@ CG.B2DEntity.extend('B2DPolygon', {
 
 
 /**
- * @description B2DRope - creates a rope with segments
+ * @description
+ *
+ * B2DRope is a simple wrapper that creates a rope with segments.
+ * Just play with the params to get a good result.
+ *
  * @class CG.B2DRope
  * @extends CG.B2DEntity
  */
@@ -16106,7 +16295,11 @@ CG.B2DEntity.extend('B2DRope', {
 
 
 /**
- * @description B2DBridge - creates a bridge with segments
+ * @description
+ *
+ * B2DBridge is a simple wrapper that creates a bridge with segments.
+ * Just play with the params to get a good result.
+ *
  * @class CG.B2DBridge
  * @extends CG.B2DEntity
  */
@@ -16252,7 +16445,14 @@ CG.B2DEntity.extend('B2DBridge', {
 
 
 /**
- * @description B2DWorld
+ * @description
+ *
+ * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
+ * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
+ * one of the basic B2D objects can added to the B2DWorld with the addCustom method.
+ * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
+ * all physics and drawings.
+ *
  * @class CG.B2DWorld
  * @xtend CG.Layer
  */
@@ -16261,7 +16461,7 @@ CG.Layer.extend('B2DWorld', {
     /**
      * @method init
      * @constructor
-     * @param name {string} name of the b2dworld
+     * @param name {String} name of the b2dworld
      * @param opt {object} additional options
      */
     init:function (name, opt) {
@@ -16270,11 +16470,11 @@ CG.Layer.extend('B2DWorld', {
          * @property opt
          * @type {object}
          */
-        opt = opt || {}
+        opt = opt || {}
 
         /**
          * @property name
-         * @type {string}
+         * @type {String}
          */
         this.name = name || ''
         /**
@@ -16318,7 +16518,7 @@ CG.Layer.extend('B2DWorld', {
         this.scale = 40
 
 
-      //setup debug draw
+        //setup debug draw
         var debugDraw = new b2DebugDraw()
         debugDraw.SetSprite(Game.b_ctx)
         debugDraw.SetDrawScale(this.scale)
@@ -16361,6 +16561,10 @@ CG.Layer.extend('B2DWorld', {
         Game.b_ctx.restore()
     },
     /**
+     * @description
+     *
+     * Custom extended objects can be added to the B2DWork with this method.
+     *
      * @method addCustom
      * @param obj      object    custom B2D object
      */
@@ -16370,12 +16574,16 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(obj)
     },
     /**
+     * @description
+     *
+     * createBox creates a basic Box2D rectangle with some default settings.
+     *
      * @method createBox
-     * @param id      string      id or name to identify
-     * @param image   mixed       path to image, image or tpimage from asset
-     * @param x       integer     the x position
-     * @param y       integer     the y position
-     * @param stat    boolean     is the body static or dynamic
+     * @param id      {String}      id or name to identify
+     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param x       {Number}     the x position
+     * @param y       {Number}     the y position
+     * @param stat    {Boolean}     is the body static or dynamic
      */
     createBox:function (id, image, x, y, stat) {
         this.uid = this.uid + 1
@@ -16384,10 +16592,14 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createLine creates a basic Box2D line with some default settings.
+     *
      * @method createLine
-     * @param id      string    id or name to identify
-     * @param start   CG.Point  start o fline
-     * @param end     CG.Point  end of line
+     * @param id      {String}    id or name to identify
+     * @param start   {CG.Point}  start o fline
+     * @param end     {CG.Point}  end of line
      */
     createLine:function (id, start, end) {
         this.uid = this.uid + 1
@@ -16396,13 +16608,17 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createCircle creates a basic Box2D circle with some default settings
+     *
      * @method createCircle
-     * @param id      string      id or name to identify
-     * @param image   mixed       path to image, image or tpimage from asset
-     * @param radius  integer     the radius
-     * @param x       integer     the x position
-     * @param y       integer     the y position
-     * @param stat    boolean     is the body static or dynamic
+     * @param id      {String}      id or name to identify
+     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param radius  {Number}     the radius
+     * @param x       {Number}     the x position
+     * @param y       {Number}     the y position
+     * @param stat    {Boolean}     is the body static or dynamic
      */
     createCircle:function (id, image, radius, x, y, stat) {
         this.uid = this.uid + 1
@@ -16411,14 +16627,20 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
+     * Box2D object. The polygonshape and some settings like density, bounce and friction are
+     * taken from the json file at the moment.
+     *
      * @method createPolyBody
-     * @param id        string      id or name to identify
-     * @param image     mixed       path to image, image or tpimage from asset
-     * @param jsonpoly  string      json file from PhysicsEditor from asset
-     * @param x         integer     the x position
-     * @param y         integer     the y position
-     * @param stat      boolean     is the body static or dynamic
-     * @param bullet    boolean     bullet option
+     * @param id        {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param jsonpoly  {String}      json file from PhysicsEditor from asset
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
      */
     createPolyBody:function (id, image, jsonpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
@@ -16427,14 +16649,18 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * This method creates a B2D bridge. Just play with the params to get a good result!
+     *
      * @method createBridge
-     * @param id          string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
+     * @param id          {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
      * @return {*}
      */
     createBridge:function (id, image, x, y, length, segments, segmentHeight) {
@@ -16444,14 +16670,18 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(entity)
     },
     /**
+     * @description
+     *
+     * This method creates a B2D rope. Just play with the params to get a good result!
+     *
      * @method createRope
-     * @param id            string      id or name to identify
-     * @param image         mixed       path to image, image or tpimage from asset
-     * @param x             integer     the x position
-     * @param y             integer     the y position
-     * @param length        integer     the length/width of the bridge
-     * @param segments      integer     segments of the bridge
-     * @param segmentHeight integer     height of a segment
+     * @param id            {String}      id or name to identify
+     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param x             {Number}     the x position
+     * @param y             {Number}     the y position
+     * @param length        {Number}     the length/width of the bridge
+     * @param segments      {Number}     segments of the bridge
+     * @param segmentHeight {Number}     height of a segment
      * @return {*}
      */
     createRope:function (id, image, x, y, length, segments, segmentHeight) {
@@ -16460,6 +16690,15 @@ CG.Layer.extend('B2DWorld', {
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
+    /**
+     * @description
+     * 
+     * Enables dragging B2D objects with the mouse.
+     * 
+     * @method mouseDownAt
+     * @param x {Number}
+     * @param y {Number}
+     */
     mouseDownAt:function (x, y) {
         if (!this.mouseJoint) {
             var body = this.getBodyAt(x, y)
@@ -16485,9 +16724,13 @@ CG.Layer.extend('B2DWorld', {
         this.mouseJoint = null;
     },
     /**
+     * @description
+     *
+     * Get a B2D body at the give x, y position.
+     *
      * @method getBodyAt
-     * @param x
-     * @param y
+     * @param x {Number}
+     * @param y {Number}
      * @return {*}
      */
     getBodyAt:function (x, y) {
@@ -16514,9 +16757,13 @@ CG.Layer.extend('B2DWorld', {
         return selectedBody;
     },
     /**
+     * @description
+     *
+     * Deletes a B2D body at the given x, y position
+     *
      * @method deleteBodyAt
-     * @param x
-     * @param y
+     * @param x {Number}
+     * @param y (Number)
      * @return {Boolean}
      */
     deleteBodyAt:function (x, y) {

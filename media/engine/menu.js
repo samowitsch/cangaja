@@ -1,5 +1,7 @@
 /**
- * @description Menu
+ * @description
+ *
+ * CG.Menu
  *
  * @class CG.Menu
  * @extends CG.Entity

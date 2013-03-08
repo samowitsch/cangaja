@@ -1,5 +1,7 @@
 /**
- * @description Emitter class that handles . . . particles.
+ * @description
+ *
+ * CG.Emitter that handles . . . particles.
  *
  * @class CG.Emitter
  * @extends CG.Entity

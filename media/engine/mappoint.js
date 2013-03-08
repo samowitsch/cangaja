@@ -1,8 +1,10 @@
 /**
- * @description class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
+ * @description
+ *
+ * CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
  * @class CG.MapPoint
- * @extends Class
+ * @extends CG.Class
  *
  */
 CG.Class.extend('MapPoint', {

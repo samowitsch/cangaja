@@ -1,5 +1,7 @@
 /**
- * @description class Point
+ * @description
+ *
+ * CG.Point
  *
  * @class CG.Point
  * @extends CG.Entity

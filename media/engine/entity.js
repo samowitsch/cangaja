@@ -5,7 +5,10 @@
 
 
 /**
- * @description class Entity the base class of cangaja
+ * @description
+ *
+ * CG.Entity the base class of Cangaja
+ *
  * @class CG.Entity
  * @extends CG.Class
  */

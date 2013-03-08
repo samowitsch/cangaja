@@ -1,5 +1,7 @@
 /**
- * @description class CG.Delta not really used at the moment ;o)
+ * @description
+ *
+ * CG.Delta not really used at the moment ;o)
  *
  * @class CG.Delta
  * @extends Class

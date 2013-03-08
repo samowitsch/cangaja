@@ -5,8 +5,11 @@
 
 
 /**
- * @description B2DPolygon - uses PhysicsEditor export Lime + Corona (json)
- * supported options are friction, density and bounce
+ * @description
+ *
+ * B2DPolygon  is a simple b2PolygonShape wrapper element with basic physics properties.
+ * It uses PhysicsEditor json files, use export Lime + Corona (json).
+ * Supported options for now are friction, density and bounce and would be set to B2DPolygon.
  *
  * @class CG.B2DPolygon
  * @extends CG.B2DEntity

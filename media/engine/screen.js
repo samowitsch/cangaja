@@ -1,8 +1,10 @@
 /**
- * @description class Screen container to collect/group CG.Layers and/or CG.B2DWorld
+ * @description
+ *
+ * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends Entity
+ * @extends CG.Entity
  *
  * @param {string} screenname the name of the screen
  */

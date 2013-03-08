@@ -119,6 +119,8 @@
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
+            
             </ul>
         </div>
     </div>
@@ -161,8 +163,29 @@
 &#x2F;**
  * @description
  *
- * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
+ * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
+ * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
  *
+ *
+ @example
+     &#x2F;&#x2F;create top level CG.Director object
+     var director = new CG.Director()
+
+     &#x2F;&#x2F;create a CG.Screen
+     var mainscreen = new CG.Screen(&#x27;mainscreen&#x27;)
+
+     &#x2F;&#x2F;create a CG.Layer
+     var mainlayer = new CG.Layer(&#x27;mainlayer&#x27;)
+
+     &#x2F;&#x2F;create a demo CG.Sprite
+     var demosprite = new CG.Sprite(Game.asset.getImageByName(&#x27;spritegfx&#x27;), new CG.Point(400, 240))
+
+     &#x2F;&#x2F;add&#x2F;attach the demo sprite to the layer
+     mainlayer.addElement(back)
+
+     &#x2F;&#x2F;add&#x2F;attach mainscreen and mainlayer to the director
+     director.addScreen(mainscreen.addLayer(mainlayer))
+
  * @class CG.Director
  * @extends Class
  *&#x2F;
@@ -266,7 +289,7 @@ CG.Class.extend(&#x27;Director&#x27;, {
     &#x2F;**
      * @method addScreen
      *
-     * @param {screen} screen to add to the screen list
+     * @param {CG.Screen} screen to add to the screen list
      *&#x2F;
     addScreen:function (screen) {
         this.screens.push(screen)
@@ -289,7 +312,7 @@ CG.Class.extend(&#x27;Director&#x27;, {
      * @method getScreenByName
      *
      * @param {string} screenname to find screen by name
-     * @return {false&#x2F;screen} returns false or the screen object
+     * @return {false&#x2F;CG.Screen} returns false or the screen object
      *&#x2F;
     getScreenByName:function (screenname) {
         for (var i = 0, l = this.screens.length; i &lt; l; i++) {
@@ -304,7 +327,7 @@ CG.Class.extend(&#x27;Director&#x27;, {
      * @method getIndexOfScreen
      *
      * @param {string} screenname to find index of screen in screen array
-     * @return {false&#x2F;integer} return false or index number of the screen
+     * @return {false&#x2F;Number} return false or index number of the screen
      *&#x2F;
     getIndexOfScreen:function (screenname) {
         for (var i = 0, l = this.screens.length; i &lt; l; i++) {
@@ -327,7 +350,7 @@ CG.Class.extend(&#x27;Director&#x27;, {
     &#x2F;**
      * @method setFadeMode
      *
-     * @return {string} fademode for screen transitions =&gt; fade or scale
+     * @return {String} fademode for screen transitions =&gt; fade or scale
      *&#x2F;
     setFadeMode:function (fademode) {
         if (fademode == &#x27;scale&#x27;) {

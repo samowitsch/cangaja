@@ -1,3 +1,40 @@
+/**
+ * @description
+ *
+ * CG is the base class of the cangaja framework.
+ * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
+ @example
+     //Class example, how to start from scratch with simple inheritance
+     CG.Class.extend("Entity",{
+        init: function(){
+            this.myprop = 'set from constructor'
+        }
+     });
+
+     CG.Entity.extend("Point",{
+        init: function(x, y){
+            this._super()
+            this.x = x
+            this.y = y
+        }
+     });
+
+     CG.Point.extend("Rectangle",{
+        init: function(x, y, w, h){
+            this._super(x, y)
+            this.w = w
+            this.h = h
+        },
+        move: function(){
+
+        }
+     });
+
+
+
+ * @module CG
+ * @main CG
+ */
 var CG = CG || {
     VERSION:1,
 
@@ -142,36 +179,3 @@ var CG = CG || {
         return Class;
     };
 }())
-
-
-////Class example, how to start from scratch
-//CG.Class.extend("Entity",{
-//    init: function(){
-//        this.myprop = 'set from constructor'
-//    }
-//});
-//
-//
-////Class example, how to start from scratch
-//CG.Entity.extend("Point",{
-//    init: function(x, y){
-//        this._super()
-//        this.x = x
-//        this.y = y
-//    }
-//});
-//
-//
-////Class example, how to start from scratch
-//CG.Point.extend("Rectangle",{
-//    init: function(x, y, w, h){
-//        this._super(x, y)
-//        this.w = w
-//        this.h = h
-//    },
-//    move: function(){
-//
-//    }
-//});
-
-

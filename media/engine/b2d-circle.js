@@ -5,7 +5,10 @@
 
 
 /**
- * @description B2DCircle
+ * @description
+ *
+ * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.
+ *
  * @class CG.B2DCirlce
  * @extends CG.B2DEntity
  */

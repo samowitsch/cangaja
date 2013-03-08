@@ -1,5 +1,7 @@
 /**
- * @description class Translate moving a object
+ * @description
+ *
+ * CG.Translate moving a object
  *
  * @class CG.Translate
  * @extends CG.Entity

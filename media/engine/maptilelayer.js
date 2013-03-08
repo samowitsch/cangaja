@@ -1,5 +1,7 @@
 /**
- * @description MapTileLayer
+ * @description
+ *
+ * CG.MapTileLayer
  *
  * @class CG.MapTileLayer
  * @extends Class

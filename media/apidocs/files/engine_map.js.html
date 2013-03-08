@@ -119,6 +119,8 @@
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
+            
             </ul>
         </div>
     </div>
@@ -160,7 +162,8 @@
     <pre class="code prettyprint linenums">
 &#x2F;**
  * @description
- * class Map supports loading and rendering maps from the editor Tiled.
+ *
+ * CG.Map supports loading and rendering maps from the editor Tiled.
  * XML and JSON file types are supported.
  * XML =&gt; supported tiled encodings are csv and xml (see settings!). base64, base64(gzip) and base64(zlib) are not supported!
  *
@@ -681,7 +684,7 @@ CG.Entity.extend(&#x27;Map&#x27;, {
     &#x2F;**
      * @description
      *
-     * This is the main method for map drawing.
+     * This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.
      *
      * @method drawMap
      *
@@ -885,7 +888,10 @@ CG.Entity.extend(&#x27;Map&#x27;, {
     },
 
     &#x2F;**
-     * @description getAreasByName - get all areas with the given name
+     * @description
+     *
+     * Get all areas with the given name
+     *
      * @method getAreasByName
      *
      * @param name {string} name of the area(s) to return
@@ -956,7 +962,10 @@ CG.Entity.extend(&#x27;Map&#x27;, {
     },
 
     &#x2F;**
-     * @description getBounds - get the bounds of the map
+     * @description
+     *
+     * Get the bounds of the map
+     *
      * @method getBounds
      *&#x2F;
     getBounds:function () {
@@ -968,7 +977,8 @@ CG.Entity.extend(&#x27;Map&#x27;, {
 
     &#x2F;**
      * @description
-     * Updates the tilemap properties of the map.
+     * 
+     * Updates all tilemap properties of the map.
      *
      * Supported custom tiled map properties for now are (see also tilemap examples):
      * anim_delay       =&gt; time to used to display an switch to next tile

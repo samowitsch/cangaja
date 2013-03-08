@@ -8,9 +8,10 @@
  * @description
  *
  * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
- * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extend
+ * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
  * one of the basic B2D objects can added to the B2DWorld with the addCustom method.
- * The CG.B2DWorld can attached to an CG.Screen object as layer.
+ * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
+ * all physics and drawings.
  *
  * @class CG.B2DWorld
  * @xtend CG.Layer

@@ -1,5 +1,7 @@
 /**
- * @descriptiom class Particle
+ * @description
+ *
+ * CG.Particle
  *
  * @class CG.Particle
  * @extends CG.Sprite

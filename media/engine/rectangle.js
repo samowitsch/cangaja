@@ -1,5 +1,7 @@
 /**
- * @description class Rectangle for click and mouseover handling, collision detection and AABB function
+ * @description
+ *
+ * CG.Rectangle for click and mouseover handling, collision detection and AABB function
  *
  * @class CG.Rectangle
  * @extends CG.Entity

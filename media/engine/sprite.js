@@ -1,5 +1,7 @@
 /**
- * @description the Sprite class
+ * @description
+ *
+ * CG.Sprite
  *
  * @class CG.Sprite
  * @extends CG.Rectangle

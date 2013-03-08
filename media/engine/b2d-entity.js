@@ -5,7 +5,11 @@
 
 
 /**
- * @description B2DEntity
+ * @description
+ *
+ * B2DEntity is the base class with properties for all B2D objects.
+ * This class handles also the drawings for all classes.
+ *
  * @class CG.B2DEntity
  * @extends CG.Entity
  */

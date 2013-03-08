@@ -1,8 +1,10 @@
 /**
- * @description  class MapArea. Support now for name and the bound values.
+ * @description
+ *
+ * CG.MapArea. Support now for name and the bound values.
  *
  * @class CG.MapArea
- * @extends Class
+ * @extends CG.Class
  */
 CG.Class.extend('MapArea', {
     /**

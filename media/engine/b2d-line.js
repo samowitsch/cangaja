@@ -5,7 +5,10 @@
 
 
 /**
- * @description B2DLine
+ * @description
+ *
+ * B2DLine is a simple b2PolygonShape wrapper. There is no visible drawing
+ * now in the canvas for now. It can be used to build walls, ground,. ,.
  *
  * @class CG.B2DLine
  * @extends CG.B2DEntity

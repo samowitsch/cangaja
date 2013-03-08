@@ -1,5 +1,7 @@
 /**
- * @description button class, can handle click and mouseover.
+ * @description
+ *
+ * CG.Button represents a simple button class that can handle click, mouseover and callback functionality.
  *
  * @class CG.Button
  * @extends CG.Sprite

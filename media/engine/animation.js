@@ -1,9 +1,11 @@
 /**
- * @description Class Animation extends class Sprite and add support for animation ;o) needs atlas files with fixed framesizes and with following animation frames
+ * @description
+ *
+ * CG.Animation extends CG.Sprite and add support for animations ;o) It needs atlas files with fixed framesizes and with following animation frames.
+ * For example you can use Timeline FX generated graphics.
  *
  * @class CG.Animation
  * @extends CG.Sprite
- *
  */
 CG.Sprite.extend('Animation', {
     /**

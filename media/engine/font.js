@@ -1,5 +1,8 @@
 /**
- * @description class Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer, (Hiero works also but need some modifications of the exportet files)
+ * @description
+ *
+ * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
+ * (Hiero works also but need some modifications of the exported files)
  *
  * @class CG.Font
  * @extends CG.Entity

@@ -1,5 +1,7 @@
 /**
- * @description Class Buffer for separate canvas rendering/buffering
+ * @description
+ *
+ * CG.Buffer for separate canvas rendering/buffering
  *
  * @class CG.Buffer
  * @extends CG.Entity

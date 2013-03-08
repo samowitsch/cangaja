@@ -1,5 +1,7 @@
 /**
- * @description class Sequence container to collect/group CG.Translation objects
+ * @description
+ *
+ * CG.Sequence container to collect/group CG.Translation objects
  *
  * @class CG.Sequence
  * @extends Entity

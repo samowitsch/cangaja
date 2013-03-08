@@ -39,7 +39,15 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Translate",
         "CG.Vector"
     ],
-    "modules": [],
-    "allModules": []
+    "modules": [
+        "CG"
+    ],
+    "allModules": [
+        {
+            "displayName": "CG",
+            "name": "CG",
+            "description": "CG is the base class of the cangaja framework.\nThis file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig."
+        }
+    ]
 } };
 });

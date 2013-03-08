@@ -5,7 +5,10 @@
 
 
 /**
- * @description B2DRectangle
+ * @description
+ *
+ * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.
+ *
  * @class CG.B2DRectangle
  * @extends CG.B2DEntity
  */

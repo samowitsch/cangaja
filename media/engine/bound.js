@@ -1,5 +1,7 @@
 /**
- * @description Class Bound extends Class Entity
+ * @description
+ *
+ * CG.Bound is used at different places in the Cangaja FW.
  *
  * @class CG.Bound
  * @extends CG.Entity

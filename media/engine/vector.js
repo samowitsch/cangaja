@@ -1,5 +1,7 @@
 /**
- * @description class Vector
+ * @description
+ *
+ * CG.Vector
  *
  * @class CG.Vector
  * @extends CG.Point

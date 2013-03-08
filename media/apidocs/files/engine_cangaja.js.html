@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>engine&#x2F;mappoint.js - Cangaja API</title>
+    <title>engine&#x2F;cangaja.js - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -156,64 +156,191 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: engine&#x2F;mappoint.js</h1>
+                        <h1 class="file-heading">File: engine&#x2F;cangaja.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
- * @description class MapPoint. Support now for name, gid and x&#x2F;y-position values. No tilemap properties at the moment.
+ * @description
  *
- * @class CG.MapPoint
- * @extends Class
- *
+ * CG is the base class of the cangaja framework.
+ * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
+ @example
+     &#x2F;&#x2F;Class example, how to start from scratch with simple inheritance
+     CG.Class.extend(&quot;Entity&quot;,{
+        init: function(){
+            this.myprop = &#x27;set from constructor&#x27;
+        }
+     });
+
+     CG.Entity.extend(&quot;Point&quot;,{
+        init: function(x, y){
+            this._super()
+            this.x = x
+            this.y = y
+        }
+     });
+
+     CG.Point.extend(&quot;Rectangle&quot;,{
+        init: function(x, y, w, h){
+            this._super(x, y)
+            this.w = w
+            this.h = h
+        },
+        move: function(){
+
+        }
+     });
+
+
+
+ * @module CG
+ * @main CG
  *&#x2F;
-CG.Class.extend(&#x27;MapPoint&#x27;, {
-    &#x2F;**
-     * @method init
-     * @constructor
-     * @param position {point} position point
-     * @param mapoffset {point} mapoffset reference to the current map position
-     * @param name {string} name of the tile
-     * @param gid {Number} gid number of tilemap editor
-     * @return {*}
-     *&#x2F;
-    init:function (position, mapoffset, name, gid) {
-        &#x2F;**
-         * @property initposition
-         * @type {CG.Point}
-         *&#x2F;
-        this.initposition = position || new CG.Point(0, 0)
-        &#x2F;**
-         * @property mapoffset
-         * @type {CG.Point}
-         *&#x2F;
-        this.mapoffset = mapoffset || new CG.Point(0, 0)
-        &#x2F;**
-         * @description gid
-         * @type {Number}
-         *&#x2F;
-        this.gid = gid
-        &#x2F;**
-         * @property name
-         * @type {*}
-         *&#x2F;
-        this.name = name
-        &#x2F;**
-         * @property position
-         * @type {CG.Point}
-         *&#x2F;
-        this.position = new CG.Point(position.x, position.y) &#x2F;&#x2F;for reference use
-        return this
-    },
+var CG = CG || {
+    VERSION:1,
 
-    update:function () {
-        this.position.x = this.initposition.x - this.mapoffset.x
-        this.position.y = this.initposition.y - this.mapoffset.y
+    &#x2F;&#x2F;constants
+    Const_PI_180:Math.PI &#x2F; 180,
+    Const_180_PI:180 &#x2F; Math.PI,
+    LEFT:1,
+    RIGHT:2,
+    UP:3,
+    DOWN:4
+};
+
+
+&#x2F;&#x2F; http:&#x2F;&#x2F;paulirish.com&#x2F;2011&#x2F;requestanimationframe-for-smart-animating&#x2F;
+&#x2F;&#x2F; http:&#x2F;&#x2F;my.opera.com&#x2F;emoller&#x2F;blog&#x2F;2011&#x2F;12&#x2F;20&#x2F;requestanimationframe-for-smart-er-animating
+
+&#x2F;&#x2F; requestAnimationFrame polyfill by Erik M??ller
+&#x2F;&#x2F; fixes from Paul Irish and Tino Zijdel
+
+(function () {
+    var lastTime = 0;
+    var vendors = [&#x27;ms&#x27;, &#x27;moz&#x27;, &#x27;webkit&#x27;, &#x27;o&#x27;];
+    for (var x = 0; x &lt; vendors.length &amp;&amp; !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + &#x27;RequestAnimationFrame&#x27;];
+        window.cancelAnimationFrame = window[vendors[x] + &#x27;CancelAnimationFrame&#x27;]
+            || window[vendors[x] + &#x27;CancelRequestAnimationFrame&#x27;];
     }
-})
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function (callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function () {
+                    callback(currTime + timeToCall);
+                },
+                timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function (id) {
+            clearTimeout(id);
+        };
+}());
 
 
+&#x2F;* Simple JavaScript Inheritance
+ * By John Resig http:&#x2F;&#x2F;ejohn.org&#x2F;
+ * MIT Licensed.
+ *
+ * Inspired by base2 and Prototype
+ *&#x2F;
+(function () {
+    var initializing = false,
+        fnTest = &#x2F;xyz&#x2F;.test(function () {
+            var xyz;
+        }) ? &#x2F;\b_super\b&#x2F; : &#x2F;.*&#x2F;;
+    &#x2F;* The base Class implementation (does nothing) *&#x2F;
+    CG.Class = function () {
+    };
 
+    &#x2F;&#x2F; See if a object is a specific class
+    CG.Class.prototype.isA = function (className) {
+        return this.className === className;
+    };
+
+    &#x2F;* Create a new Class that inherits from this class *&#x2F;
+    CG.Class.extend = function (className, prop, classMethods) {
+        &#x2F;* No name, don&#x27;t add onto Q *&#x2F;
+        if (!typeof className === &quot;string&quot;) {
+            classMethods = prop;
+            prop = className;
+            className = null;
+        }
+        var _super = this.prototype,
+            ThisClass = this;
+
+        &#x2F;* Instantiate a base class (but only create the instance, *&#x2F;
+        &#x2F;* don&#x27;t run the init constructor) *&#x2F;
+        initializing = true;
+        var prototype = new ThisClass();
+        initializing = false;
+
+        function _superFactory(name, fn) {
+            return function () {
+                var tmp = this._super;
+
+                &#x2F;* Add a new ._super() method that is the same method *&#x2F;
+                &#x2F;* but on the super-class *&#x2F;
+                this._super = _super[name];
+
+                &#x2F;* The method only need to be bound temporarily, so we *&#x2F;
+                &#x2F;* remove it when we&#x27;re done executing *&#x2F;
+                var ret = fn.apply(this, arguments);
+                this._super = tmp;
+
+                return ret;
+            };
+        }
+
+        &#x2F;* Copy the properties over onto the new prototype *&#x2F;
+        for (var name in prop) {
+            &#x2F;* Check if we&#x27;re overwriting an existing function *&#x2F;
+            prototype[name] = typeof prop[name] === &quot;function&quot; &amp;&amp;
+                typeof _super[name] === &quot;function&quot; &amp;&amp;
+                fnTest.test(prop[name]) ?
+                _superFactory(name, prop[name]) :
+                prop[name];
+        }
+
+        &#x2F;* The dummy class constructor *&#x2F;
+        function Class() {
+            &#x2F;* All construction is actually done in the init method *&#x2F;
+            if (!initializing &amp;&amp; this.init) {
+                this.init.apply(this, arguments);
+            }
+        }
+
+        &#x2F;* Populate our constructed prototype object *&#x2F;
+        Class.prototype = prototype;
+
+        &#x2F;* Enforce the constructor to be what we expect *&#x2F;
+        Class.prototype.constructor = Class;
+        &#x2F;* And make this class extendable *&#x2F;
+        Class.extend = CG.Class.extend;
+
+        &#x2F;* If there are class-level Methods, add them to the class *&#x2F;
+        if (classMethods) {
+            CG._extend(Class, classMethods);
+        }
+
+        if (className) {
+            &#x2F;* Save the class onto Q *&#x2F;
+            CG[className] = Class;
+
+            &#x2F;* Let the class know its name *&#x2F;
+            Class.prototype.className = className;
+            Class.className = className;
+        }
+
+        return Class;
+    };
+}())
     </pre>
 </div>
 

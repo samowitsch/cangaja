@@ -1,7 +1,7 @@
 /**
  * @description
  *
- * class Morph to manipulate objects in size and so on
+ * CG.Morph to manipulate objects in size and so on
  *
  * @class CG.Morph
  * @extends CG.Entity

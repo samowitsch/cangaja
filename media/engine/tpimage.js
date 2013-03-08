@@ -1,5 +1,7 @@
 /**
- * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
+ * @description
+ *
+ * CG.TPImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.TPImage
  * @extends Class

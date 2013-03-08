@@ -1,5 +1,7 @@
 /**
- * @description MapTileProperties
+ * @description
+ *
+ * CG.MapTileProperties
  *
  * @class CG.MapTileProperties
  * @extends Class

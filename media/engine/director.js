@@ -1,8 +1,29 @@
 /**
  * @description
  *
- * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
+ * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
+ * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
  *
+ *
+ @example
+     //create top level CG.Director object
+     var director = new CG.Director()
+
+     //create a CG.Screen
+     var mainscreen = new CG.Screen('mainscreen')
+
+     //create a CG.Layer
+     var mainlayer = new CG.Layer('mainlayer')
+
+     //create a demo CG.Sprite
+     var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
+
+     //add/attach the demo sprite to the layer
+     mainlayer.addElement(back)
+
+     //add/attach mainscreen and mainlayer to the director
+     director.addScreen(mainscreen.addLayer(mainlayer))
+
  * @class CG.Director
  * @extends Class
  */
@@ -106,7 +127,7 @@ CG.Class.extend('Director', {
     /**
      * @method addScreen
      *
-     * @param {screen} screen to add to the screen list
+     * @param {CG.Screen} screen to add to the screen list
      */
     addScreen:function (screen) {
         this.screens.push(screen)
@@ -129,7 +150,7 @@ CG.Class.extend('Director', {
      * @method getScreenByName
      *
      * @param {string} screenname to find screen by name
-     * @return {false/screen} returns false or the screen object
+     * @return {false/CG.Screen} returns false or the screen object
      */
     getScreenByName:function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
@@ -144,7 +165,7 @@ CG.Class.extend('Director', {
      * @method getIndexOfScreen
      *
      * @param {string} screenname to find index of screen in screen array
-     * @return {false/integer} return false or index number of the screen
+     * @return {false/Number} return false or index number of the screen
      */
     getIndexOfScreen:function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
@@ -167,7 +188,7 @@ CG.Class.extend('Director', {
     /**
      * @method setFadeMode
      *
-     * @return {string} fademode for screen transitions => fade or scale
+     * @return {String} fademode for screen transitions => fade or scale
      */
     setFadeMode:function (fademode) {
         if (fademode == 'scale') {

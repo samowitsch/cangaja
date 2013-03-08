@@ -5,7 +5,11 @@
 
 
 /**
- * @description B2DRope - creates a rope with segments
+ * @description
+ *
+ * B2DRope is a simple wrapper that creates a rope with segments.
+ * Just play with the params to get a good result.
+ *
  * @class CG.B2DRope
  * @extends CG.B2DEntity
  */
