@@ -46,7 +46,8 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @property jsondata
          * @type {*}
          */
-        this.jsondata = jsonpoly.data[jsonpoly.name]
+//        this.jsondata = jsonpoly.data[jsonpoly.name]
+        this.jsondata = jsonpoly.data[name]
         /**
          * @property xhandle
           * @type {Number}

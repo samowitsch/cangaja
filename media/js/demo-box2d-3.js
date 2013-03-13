@@ -62,9 +62,9 @@ CG.B2DWorld.extend('B2DTestbed', {
         ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, false)
         this.addCustom(ball)
 
-        rightplayer = new CG.B2DRightPlayer(this.world, 'right', Game.asset.getImageByName('blobby-egg'), Game.asset.getJsonByName('blobby-egg'), 425, 200, this.scale, false, false)
+        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), 425, 200, this.scale, false, false)
         this.addCustom(rightplayer)
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'left', Game.asset.getImageByName('blobby-egg'), Game.asset.getJsonByName('blobby-egg'), 150, 200, this.scale, false, false)
+        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 150, 200, this.scale, false, false)
         this.addCustom(leftplayer)
 
         this.addContactListener({
@@ -74,7 +74,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 
             PostSolve: function (idA, idB, impulse) {
                 //players are landing on ground, set jump flag to false
-                if ((idA.name == 'left' || idA.name == 'right') && idB.name == "G") {
+                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "G") {
                     b2world.elements[idA.uid - 1].jump = false
                 }
 
@@ -84,15 +84,15 @@ CG.B2DWorld.extend('B2DTestbed', {
                 }
 
                 //players contact with beachvolleyball
-                if ((idA.name == 'left' || idA.name == 'right') && idB.name == "beachvolleyball") {
+                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "beachvolleyball") {
                     //console.log(['PostSolve', idA, idB, impulse]);
                     b2world.elements[idA.uid - 1].points += 1
-                    if (idA.name == 'right') {
+                    if (idA.name == 'blobby-egg-right') {
                         leftplayer.points = 0
                         if(rightplayer.points > 4){
                             //alert('rightplayer lost to much contacts')
                         }
-                    } else if (idA.name == 'left') {
+                    } else if (idA.name == 'blobby-egg-left') {
                         rightplayer.points = 0
                         if(leftplayer.points > 4){
                             //alert('leftplayer lost to much contacts')
@@ -289,19 +289,24 @@ Game = (function () {
 
             //Asset preloading font files
             Game.asset.addFont('media/font/small.txt', 'small', 'small')
+
+                //physics engine
+                .addJson('media/img/blobbies.json', 'blobbies')
+
                 .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/blobby-egg.png', 'blobby-egg')
+
+                .addImage('media/img/blobby-egg-left.png', 'blobby-egg-left')
+                .addImage('media/img/blobby-egg-right.png', 'blobby-egg-right')
+
                 .addImage('media/img/blobby-back.png', 'blobby-back')
                 .addImage('media/img/blobby-ctrl-right.png', 'ctrl-right')
                 .addImage('media/img/blobby-ctrl-left.png', 'ctrl-left')
                 .addImage('media/img/arrow-25.png', 'arrow')
                 .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
+
+                //font
                 .addImage('media/font/blobby-points.png', 'blobby-points')
                 .addFont('media/font/blobby-points.txt', 'blobby-points')
-
-
-                //physics engine
-                .addJson('media/img/blobby-egg.json', 'blobby-egg')
 
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
