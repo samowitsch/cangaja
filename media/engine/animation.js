@@ -13,7 +13,7 @@ CG.Sprite.extend('Animation', {
      * @method init
      * @param image {string, image} image imagepath or image object
      * @param position {point} position object
-     * @param startframe {number} startframe startframe of atlas image
+     * @param startframe {number} startframe of atlas image
      * @param endframe {number} endframe endframe of atlas image
      * @param framewidth {number} framewidth width of frame to cut
      * @param frameheight {number} frameheight height of frame to cut

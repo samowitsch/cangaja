@@ -29,12 +29,12 @@ CG.B2DEntity.extend('B2DLine', {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
         /**
          * @property start
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.start = start
         /**
          * @property end
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.end = end
         /**

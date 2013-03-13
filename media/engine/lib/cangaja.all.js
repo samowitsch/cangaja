@@ -29,6 +29,9 @@
 
         }
      });
+
+
+
  * @module CG
  * @main CG
  */
@@ -206,165 +209,6 @@ String.prototype.startsWith = function (str) {
 
 
 /**
- * @description
- *
- * A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)
- * How to implement all the different classes....?
- *
- *
- * @class CG.CanvasRenderer
- * @extend CG.Class
- */
-
-
-CG.Class.extend('CanvasRenderer', {
-    /**
-     * @method init
-     * @constructor
-     * @return {*}
-     */
-    init:function(){
-
-        //TODO the renderer recognizes the canvas features WebGL/Canvas
-
-        //TODO the renderer creates the canvas element
-
-        //TODO the renderer handles all drawings from all classes, urgh ;o)
-
-        /*
-
-         //sprite draw method
-
-         draw:function () {
-             this.updateDiff()
-
-             Game.b_ctx.save()
-             Game.b_ctx.globalAlpha = this.alpha
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.atlasimage) {
-                 Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
-             } else {
-                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             Game.b_ctx.restore()
-         },
-
-
-
-
-        //animation draw method
-         draw:function () {
-             this.updateDiff()
-
-             Game.b_ctx.save()
-             Game.b_ctx.globalAlpha = this.alpha
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.frames == 1) {
-                 Game.b_ctx.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             else {
-                 this.fx = this.currentframe * this.width
-
-                 if ((this.fx / this.image.width) > 0) {
-                 this.fx = this.fx % this.image.width
-                 }
-                 this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
-
-                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                 try {
-                 Game.b_ctx.drawImage(this.image, this.fx, this.fy, this.width, this.height, 0 - this.xhandle, 0 - this.yhandle, this.width * this.xscale, this.height * this.yscale)
-                 } catch (e) {
-
-                 }
-             }
-             Game.b_ctx.restore()
-         }
-
-
-
-         //button draw method
-         draw:function () {
-             Game.b_ctx.save()
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.atlasimage) {
-                 var r = this.rotation
-                 Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                 Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
-             } else {
-                 Game.b_ctx.rotate(r * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
-             Game.b_ctx.restore()
-         }
-
-
-        //particle draw method
-         draw:function () {
-             if (this.visible) {
-                 Game.b_ctx.save()
-                 Game.b_ctx.globalAlpha = this.alpha
-                 Game.b_ctx.translate(this.position.x, this.position.y)
-                 if (this.atlasimage) {
-                     Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-                     Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                     Game.b_ctx.rotate((this.rotation + this.imagerotation) * CG.Const_PI_180)
-                 } else {
-                     Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                     Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-                 }
-                 Game.b_ctx.restore()
-             }
-         }
-
-
-
-         //map drawmap part orthogonal
-         Game.b_ctx.save()
-         Game.b_ctx.globalAlpha = this.layers[layer].opacity
-         Game.b_ctx.translate(rx, ry)
-         try {
-            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
-         } catch (e) {
-         }
-         Game.b_ctx.restore()
-
-
-         //map drawmap part isometric
-         Game.b_ctx.save()
-         Game.b_ctx.globalAlpha = this.layers[layer].opacity
-         Game.b_ctx.translate(xpos, ypos)
-         try {
-            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
-         } catch (e) {
-
-         }
-         Game.b_ctx.restore()
-
-
-
-        //font class part draw
-         for (var i = 0, l = text.length; i < l; i++) {
-             Game.b_ctx.drawImage(this.atlas, this.x[text.charCodeAt(i)], this.y[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)], currx, curry + this.yoff[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)])
-             currx += this.xadv[text.charCodeAt(i)]
-         }
-
-
-
-
-
-
-
-
-
-
-         */
-        return this
-    }
-})/**
  * @description
  *
  * CG.Delta not really used at the moment ;o)
@@ -2119,12 +1963,6 @@ function MediaAssetException(message) {
  *
  * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
  * (Hiero works also but need some modifications of the exported files)
- @example
- //create font object
- small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-
- //draw text to canvas
- small.draw('Foo bar!', xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -2135,7 +1973,7 @@ CG.Entity.extend('Font', {
      * @constructor
      * @return {*}
      */
-    init: function () {
+    init:function () {
         /**
          @property atlas {Image}
          */
@@ -2214,10 +2052,10 @@ CG.Entity.extend('Font', {
     /**
      * @method update
      */
-    update: function () {
+    update:function () {
         throw {
-            name: 'Font Error',
-            message: 'TODO, not defined yet.'
+            name:'Font Error',
+            message:'TODO, not defined yet.'
         }
     },
     /**
@@ -2227,7 +2065,7 @@ CG.Entity.extend('Font', {
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      */
-    draw: function (text, xpos, ypos) {
+    draw:function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -2246,7 +2084,7 @@ CG.Entity.extend('Font', {
      * @method getLineHeight
      * @return lineheight {Number}
      */
-    getLineHeight: function () {
+    getLineHeight:function () {
         return this.lineHeight
     },
 
@@ -2255,7 +2093,7 @@ CG.Entity.extend('Font', {
      * @method getFontSize
      * @return size {Number} font size
      */
-    getFontSize: function () {
+    getFontSize:function () {
         return this.size
     },
 
@@ -2265,7 +2103,7 @@ CG.Entity.extend('Font', {
      * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      */
-    getTextWidth: function (text) {
+    getTextWidth:function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i < l; i++) {
@@ -2279,7 +2117,7 @@ CG.Entity.extend('Font', {
      * @method loadFont
      * @param {string/object} fontfile path or mediaasset object with data
      */
-    loadFont: function (fontfile) {
+    loadFont:function (fontfile) {
         idnum = 0
         if (typeof fontfile == 'string') {
             this.initText = loadString(fontfile)
@@ -2401,24 +2239,26 @@ CG.Entity.extend('Font', {
  *
  * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
  * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
-@example
-    //create top level CG.Director object
-    var director = new CG.Director()
+ *
+ *
+ @example
+     //create top level CG.Director object
+     var director = new CG.Director()
 
-    //create a CG.Screen
-    var mainscreen = new CG.Screen('mainscreen')
+     //create a CG.Screen
+     var mainscreen = new CG.Screen('mainscreen')
 
-    //create a CG.Layer
-    var mainlayer = new CG.Layer('mainlayer')
+     //create a CG.Layer
+     var mainlayer = new CG.Layer('mainlayer')
 
-    //create a demo CG.Sprite
-    var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
+     //create a demo CG.Sprite
+     var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
-    //add/attach the demo sprite to the layer
-    mainlayer.addElement(back)
+     //add/attach the demo sprite to the layer
+     mainlayer.addElement(back)
 
-    //add/attach mainscreen and mainlayer to the director
-    director.addScreen(mainscreen.addLayer(mainlayer))
+     //add/attach mainscreen and mainlayer to the director
+     director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -2531,14 +2371,6 @@ CG.Class.extend('Director', {
     },
     /**
      * @method nextScreen
-    @example
-        //tell the director class to fade to next screen with scale mode
-        Game.director.setFadeMode('scale');
-        Game.director.nextScreen('gamescreen', 10);
-
-        //tell the director class to fade to next screen
-        Game.director.setFadeMode('fade');
-        Game.director.nextScreen('settingsscreen', 10);
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -2603,7 +2435,10 @@ CG.Class.extend('Director', {
         }
         return this
     }
-})/**
+})
+
+
+/**
  * @description
  *
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
@@ -3950,7 +3785,7 @@ CG.Entity.extend('Sequence', {
      * @param sequencename
      * @return {*}
      */
-    init:function (sequencename) {
+    init: function (sequencename) {
         this._super(sequencename)
         /**
          * @property current
@@ -3975,11 +3810,11 @@ CG.Entity.extend('Sequence', {
      * @param translationobj {translation} the translation object to add
      * @return {*}
      */
-    addTranslation:function (translationobj) {
+    addTranslation: function (translationobj) {
         this.translations.push(translationobj)
         return this
     },
-    update:function (callback) {
+    update: function (callback) {
         if (this.current < this.translations.length) {
             if (this.translations[this.current].finished === false) {
                 this.translations[this.current].update()
@@ -3994,10 +3829,10 @@ CG.Entity.extend('Sequence', {
             }
         }
     },
-    draw:function () {
+    draw: function () {
 
     },
-    reset:function () {
+    reset: function () {
         for (var i = 0, l = this.translations.length; i < l; i++) {
             this.translations[i].reset()
         }
@@ -15808,7 +15643,6 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
     b2WorldManifold = Box2D.Collision.b2WorldManifold
 
-
 /**
  *  © 2012 by Christian Sonntag <info@motions-media.de>
  *  simple experimental Canvas Game JavaScript Framework
@@ -16087,12 +15921,12 @@ CG.B2DEntity.extend('B2DLine', {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
         /**
          * @property start
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.start = start
         /**
          * @property end
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.end = end
         /**
@@ -16533,7 +16367,7 @@ CG.B2DEntity.extend('B2DBridge', {
      * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
-    init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
+    init: function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
         /**
          * @property length
@@ -16631,7 +16465,7 @@ CG.B2DEntity.extend('B2DBridge', {
 
         return this
     },
-    draw:function () {
+    draw: function () {
         for (var i = 2; i <= this.bodyCount; i++) {
             var x = this.bodyGroup[i].GetPosition().x
             var y = this.bodyGroup[i].GetPosition().y

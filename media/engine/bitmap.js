@@ -32,7 +32,7 @@ CG.Entity.extend('Bitmap', {
      *
      * @method loadImage
      *
-     * @param image {string, image, tpimage} imgpath, image object or tpimage object to use
+     * @param {string, image, tpimage} imgpath, image object or tpimage object to use
      */
     loadImage:function (image) {
         this.setImage(image)
