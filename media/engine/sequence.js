@@ -13,7 +13,7 @@ CG.Entity.extend('Sequence', {
      * @param sequencename
      * @return {*}
      */
-    init:function (sequencename) {
+    init: function (sequencename) {
         this._super(sequencename)
         /**
          * @property current
@@ -38,11 +38,11 @@ CG.Entity.extend('Sequence', {
      * @param translationobj {translation} the translation object to add
      * @return {*}
      */
-    addTranslation:function (translationobj) {
+    addTranslation: function (translationobj) {
         this.translations.push(translationobj)
         return this
     },
-    update:function (callback) {
+    update: function (callback) {
         if (this.current < this.translations.length) {
             if (this.translations[this.current].finished === false) {
                 this.translations[this.current].update()
@@ -57,10 +57,10 @@ CG.Entity.extend('Sequence', {
             }
         }
     },
-    draw:function () {
+    draw: function () {
 
     },
-    reset:function () {
+    reset: function () {
         for (var i = 0, l = this.translations.length; i < l; i++) {
             this.translations[i].reset()
         }

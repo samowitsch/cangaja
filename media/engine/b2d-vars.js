@@ -21,4 +21,3 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
     b2WorldManifold = Box2D.Collision.b2WorldManifold
 
-

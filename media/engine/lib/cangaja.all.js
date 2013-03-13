@@ -272,7 +272,10 @@ CG.Class.extend('Delta', {
 
 
 /**
- * @description class Entity the base class of cangaja
+ * @description
+ *
+ * CG.Entity the base class of Cangaja
+ *
  * @class CG.Entity
  * @extends CG.Class
  */
@@ -347,7 +350,9 @@ CG.Class.extend('Entity', {
 
 
 /**
- * @description class Point
+ * @description
+ *
+ * CG.Point
  *
  * @class CG.Point
  * @extends CG.Entity
@@ -373,7 +378,9 @@ CG.Entity.extend('Point', {
 
 
 /**
- * @description class Vector
+ * @description
+ *
+ * CG.Vector
  *
  * @class CG.Vector
  * @extends CG.Point
@@ -398,7 +405,9 @@ CG.Point.extend('Vector', {
 
 
 /**
- * @description class Rectangle for click and mouseover handling, collision detection and AABB function
+ * @description
+ *
+ * CG.Rectangle for click and mouseover handling, collision detection and AABB function
  *
  * @class CG.Rectangle
  * @extends CG.Entity
@@ -753,7 +762,9 @@ CG.Entity.extend('Buffer', {
 
 
 /**
- * @description the Sprite class
+ * @description
+ *
+ * CG.Sprite
  *
  * @class CG.Sprite
  * @extends CG.Rectangle
@@ -1044,7 +1055,9 @@ CG.Rectangle.extend('Sprite', {
 
 
 /**
- * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
+ * @description
+ *
+ * CG.TPImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.TPImage
  * @extends Class
@@ -1112,7 +1125,11 @@ CG.Class.extend('TPImage', {
         this.rotation = 0
     }
 })/**
- *  @description TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.
+ *  @description
+ *
+ *  CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+ *  No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.
+ *  These TPImages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.TexturePacker
  *  @extends Class
@@ -1422,7 +1439,7 @@ CG.Entity.extend('Bitmap', {
      *
      * @method loadImage
      *
-     * @param {string, image, tpimage} imgpath, image object or tpimage object to use
+     * @param image {string, image, tpimage} imgpath, image object or tpimage object to use
      */
     loadImage:function (image) {
         this.setImage(image)
@@ -1591,7 +1608,9 @@ CG.Sprite.extend('Button', {
 
 
 /**
- * @description Menu
+ * @description
+ *
+ * CG.Menu
  *
  * @class CG.Menu
  * @extends CG.Entity
@@ -1665,7 +1684,7 @@ CG.Entity.extend('Menu', {
 /**
  * @description
  *
- * MediaAsset preloader.
+ * CG.MediaAsset preloader.
  *
  * @class CG.MediaAsset
  * @extends Class
@@ -1940,7 +1959,10 @@ function MediaAssetException(message) {
 
 
 /**
- * @description class Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer, (Hiero works also but need some modifications of the exportet files)
+ * @description
+ *
+ * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
+ * (Hiero works also but need some modifications of the exported files)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -2215,7 +2237,10 @@ CG.Entity.extend('Font', {
 /**
  * @description
  *
- * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
+ * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
+ * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
+ *
+ *
  @example
      //create top level CG.Director object
      var director = new CG.Director()
@@ -2227,13 +2252,13 @@ CG.Entity.extend('Font', {
      var mainlayer = new CG.Layer('mainlayer')
 
      //create a demo CG.Sprite
-     var demosprite = new CG.Sprite(Game.asset.getImageByName('gfx'), new CG.Point(400, 240))
+     var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
      //add/attach the demo sprite to the layer
      mainlayer.addElement(back)
 
      //add/attach mainscreen and mainlayer to the director
-     director.addScreen(mainscreen.addLayer(mainlayer));
+     director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -2419,7 +2444,7 @@ CG.Class.extend('Director', {
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends Entity
+ * @extends CG.Entity
  *
  * @param {string} screenname the name of the screen
  */
@@ -2595,7 +2620,9 @@ CG.Entity.extend('Layer', {
 
 
 /**
- * @description MapTileLayer
+ * @description
+ *
+ * CG.MapTileLayer
  *
  * @class CG.MapTileLayer
  * @extends Class
@@ -2638,7 +2665,9 @@ CG.Class.extend('MapTileLayer', {
 
 
 /**
- * @description MapTileProperties
+ * @description
+ *
+ * CG.MapTileProperties
  *
  * @class CG.MapTileProperties
  * @extends Class
@@ -2681,10 +2710,12 @@ CG.Class.extend('MapTileProperties', {
 
 
 /**
- * @description class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
+ * @description
+ *
+ * CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
  * @class CG.MapPoint
- * @extends Class
+ * @extends CG.Class
  *
  */
 CG.Class.extend('MapPoint', {
@@ -2734,10 +2765,12 @@ CG.Class.extend('MapPoint', {
 
 
 /**
- * @description  class MapArea. Support now for name and the bound values.
+ * @description
+ *
+ * CG.MapArea. Support now for name and the bound values.
  *
  * @class CG.MapArea
- * @extends Class
+ * @extends CG.Class
  */
 CG.Class.extend('MapArea', {
     /**
@@ -2788,7 +2821,8 @@ CG.Class.extend('MapArea', {
 
 /**
  * @description
- * class Map supports loading and rendering maps from the editor Tiled.
+ *
+ * CG.Map supports loading and rendering maps from the editor Tiled.
  * XML and JSON file types are supported.
  * XML => supported tiled encodings are csv and xml (see settings!). base64, base64(gzip) and base64(zlib) are not supported!
  *
@@ -3309,7 +3343,7 @@ CG.Entity.extend('Map', {
     /**
      * @description
      *
-     * This is the main method for map drawing.
+     * This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.
      *
      * @method drawMap
      *
@@ -3513,7 +3547,10 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description getAreasByName - get all areas with the given name
+     * @description
+     *
+     * Get all areas with the given name
+     *
      * @method getAreasByName
      *
      * @param name {string} name of the area(s) to return
@@ -3584,7 +3621,10 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description getBounds - get the bounds of the map
+     * @description
+     *
+     * Get the bounds of the map
+     *
      * @method getBounds
      */
     getBounds:function () {
@@ -3596,7 +3636,8 @@ CG.Entity.extend('Map', {
 
     /**
      * @description
-     * Updates the tilemap properties of the map.
+     *
+     * Updates all tilemap properties of the map.
      *
      * Supported custom tiled map properties for now are (see also tilemap examples):
      * anim_delay       => time to used to display an switch to next tile
@@ -3730,7 +3771,9 @@ CG.Entity.extend('Map', {
 
 
 /**
- * @description class Sequence container to collect/group CG.Translation objects
+ * @description
+ *
+ * CG.Sequence container to collect/group CG.Translation objects
  *
  * @class CG.Sequence
  * @extends Entity
@@ -3742,7 +3785,7 @@ CG.Entity.extend('Sequence', {
      * @param sequencename
      * @return {*}
      */
-    init:function (sequencename) {
+    init: function (sequencename) {
         this._super(sequencename)
         /**
          * @property current
@@ -3767,11 +3810,11 @@ CG.Entity.extend('Sequence', {
      * @param translationobj {translation} the translation object to add
      * @return {*}
      */
-    addTranslation:function (translationobj) {
+    addTranslation: function (translationobj) {
         this.translations.push(translationobj)
         return this
     },
-    update:function (callback) {
+    update: function (callback) {
         if (this.current < this.translations.length) {
             if (this.translations[this.current].finished === false) {
                 this.translations[this.current].update()
@@ -3786,10 +3829,10 @@ CG.Entity.extend('Sequence', {
             }
         }
     },
-    draw:function () {
+    draw: function () {
 
     },
-    reset:function () {
+    reset: function () {
         for (var i = 0, l = this.translations.length; i < l; i++) {
             this.translations[i].reset()
         }
@@ -3800,7 +3843,9 @@ CG.Entity.extend('Sequence', {
 
 
 /**
- * @description class Translate moving a object
+ * @description
+ *
+ * CG.Translate moving a object
  *
  * @class CG.Translate
  * @extends CG.Entity
@@ -4107,7 +4152,7 @@ CG.Entity.extend('Translate', {
 /**
  * @description
  *
- * class Morph to manipulate objects in size and so on
+ * CG.Morph to manipulate objects in size and so on
  *
  * @class CG.Morph
  * @extends CG.Entity
@@ -4164,7 +4209,9 @@ CG.Entity.extend('Morph', {
 
 
 /**
- * @descriptiom class Particle
+ * @description
+ *
+ * CG.Particle
  *
  * @class CG.Particle
  * @extends CG.Sprite
@@ -4249,7 +4296,9 @@ CG.Sprite.extend('Particle', {
 
 
 /**
- * @description Emitter class that handles . . . particles.
+ * @description
+ *
+ * CG.Emitter that handles . . . particles.
  *
  * @class CG.Emitter
  * @extends CG.Entity
@@ -15594,7 +15643,6 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
     b2WorldManifold = Box2D.Collision.b2WorldManifold
 
-
 /**
  *  © 2012 by Christian Sonntag <info@motions-media.de>
  *  simple experimental Canvas Game JavaScript Framework
@@ -15873,12 +15921,12 @@ CG.B2DEntity.extend('B2DLine', {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
         /**
          * @property start
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.start = start
         /**
          * @property end
-         * @type {Number}
+         * @type {b2Vec2}
          */
         this.end = end
         /**
@@ -16319,7 +16367,7 @@ CG.B2DEntity.extend('B2DBridge', {
      * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      */
-    init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
+    init: function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
         /**
          * @property length
@@ -16417,7 +16465,7 @@ CG.B2DEntity.extend('B2DBridge', {
 
         return this
     },
-    draw:function () {
+    draw: function () {
         for (var i = 2; i <= this.bodyCount; i++) {
             var x = this.bodyGroup[i].GetPosition().x
             var y = this.bodyGroup[i].GetPosition().y
