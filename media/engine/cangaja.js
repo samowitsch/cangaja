@@ -29,9 +29,6 @@
 
         }
      });
-
-
-
  * @module CG
  * @main CG
  */

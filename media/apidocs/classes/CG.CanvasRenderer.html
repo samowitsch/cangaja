@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>engine&#x2F;b2d-rectangle.js - Cangaja API</title>
+    <title>CG.CanvasRenderer - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -158,89 +158,164 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: engine&#x2F;b2d-rectangle.js</h1>
+                        <h1>CG.CanvasRenderer Class</h1>
+<div class="box meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&#x2F;**
- *  © 2012 by Christian Sonntag &lt;info@motions-media.de&gt;
- *  simple experimental Canvas Game JavaScript Framework
- *&#x2F;
+    
+        <div class="extends">
+            Extends CG.Class
+        </div>
+    
 
+    
+        <div class="foundat">
+            Defined in: <a href="..&#x2F;files&#x2F;engine_renderer.js.html#l1"><code>engine&#x2F;renderer.js:1</code></a>
+        </div>
+    
 
-&#x2F;**
- * @description
- *
- * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.
- *
- * @class CG.B2DRectangle
- * @extends CG.B2DEntity
- *&#x2F;
+    
+        
+            Module: <a href="../modules/CG.html">CG</a>
+        
+    
 
-CG.B2DEntity.extend(&#x27;B2DRectangle&#x27;, {
-    &#x2F;**
-     * @method init
-     * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}     path to image, image or tpimage from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param stat      {Boolean}     is the body static or dynamic
-     * @return {*}
-     *&#x2F;
-    init:function (world, name, image, x, y, scale, stat) {
-        this._super(name, image, world, x, y, scale)
-        &#x2F;**
-         * @πroperty stat
-         * @type {*}
-         *&#x2F;
-        this.stat = stat
-        &#x2F;**
-         * @property bodyDef.stat
-         * @type {b2Body.b2_staticBody&#x2F;b2Body.b2_dynamicBody}
-         *&#x2F;
-        if (this.stat) {
-            this.bodyDef.type = b2Body.b2_staticBody
-        } else {
-            this.bodyDef.type = b2Body.b2_dynamicBody
-        }
-        &#x2F;**
-         * @property fixDef.shape
-         * @type {b2PolygonShape}
-         *&#x2F;
-        this.fixDef.shape = new b2PolygonShape
-        this.fixDef.shape.SetAsBox(this.width &#x2F; scale * 0.5, this.height &#x2F; scale * 0.5)
-        &#x2F;**
-         * @property bodyDef.position.x
-         * @type {Number}
-         *&#x2F;
-        this.bodyDef.position.x = this.x &#x2F; this.scale
-        &#x2F;**
-         * @property bodyDef.position.y
-         * @type {Number}
-         *&#x2F;
-        this.bodyDef.position.y = this.y &#x2F; this.scale
-        &#x2F;**
-         * @property bodyDef.userData
-         * @type {*}
-         *&#x2F;
-        this.bodyDef.userData = this.id
-        &#x2F;**
-         * @property body
-         * @type {b2Body}
-         *&#x2F;
-        this.body = this.world.CreateBody(this.bodyDef)
-        this.body.CreateFixture(this.fixDef)
-
-        return this
-    }
-})
+    
+</div>
 
 
 
-    </pre>
+<div class="box intro">
+    <p>A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)
+How to implement all the different classes....?</p>
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                        
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;engine_renderer.js.html#l14"><code>engine&#x2F;renderer.js:14</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

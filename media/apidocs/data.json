@@ -292,6 +292,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "engine/renderer.js": {
+            "name": "engine/renderer.js",
+            "modules": {},
+            "classes": {
+                "CG.CanvasRenderer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "engine/screen.js": {
             "name": "engine/screen.js",
             "modules": {},
@@ -419,6 +428,7 @@
                 "CG.Particle": 1,
                 "CG.Point": 1,
                 "CG.Rectangle": 1,
+                "CG.CanvasRenderer": 1,
                 "CG.Screen": 1,
                 "CG.Sequence": 1,
                 "CG.Sprite": 1,
@@ -651,7 +661,7 @@
             "line": 1,
             "description": "CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.\nIts main purpose is to collect CG.Screens under its hood and support some basic screen fading features.",
             "example": [
-                "\n    //create top level CG.Director object\n    var director = new CG.Director()\n\n    //create a CG.Screen\n    var mainscreen = new CG.Screen('mainscreen')\n\n    //create a CG.Layer\n    var mainlayer = new CG.Layer('mainlayer')\n\n    //create a demo CG.Sprite\n    var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))\n\n    //add/attach the demo sprite to the layer\n    mainlayer.addElement(back)\n\n    //add/attach mainscreen and mainlayer to the director\n    director.addScreen(mainscreen.addLayer(mainlayer))"
+                "\n   //create top level CG.Director object\n   var director = new CG.Director()\n\n   //create a CG.Screen\n   var mainscreen = new CG.Screen('mainscreen')\n\n   //create a CG.Layer\n   var mainlayer = new CG.Layer('mainlayer')\n\n   //create a demo CG.Sprite\n   var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))\n\n   //add/attach the demo sprite to the layer\n   mainlayer.addElement(back)\n\n   //add/attach mainscreen and mainlayer to the director\n   director.addScreen(mainscreen.addLayer(mainlayer))"
             ],
             "extends": "Class"
         },
@@ -705,6 +715,9 @@
             "file": "engine/font.js",
             "line": 1,
             "description": "CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,\n(Hiero works also but need some modifications of the exported files)",
+            "example": [
+                "\n//create font object\nsmall = new CG.Font().loadFont(Game.asset.getFontByName('small'))\n\n//draw text to canvas\nsmall.draw('Foo bar!', xpos, ypos)"
+            ],
             "extends": "CG.Entity"
         },
         "CG.Layer": {
@@ -749,8 +762,8 @@
             "namespace": "",
             "file": "engine/maparea.js",
             "line": 1,
-            "description": "class MapArea. Support now for name and the bound values.",
-            "extends": "Class"
+            "description": "CG.MapArea. Support now for name and the bound values.",
+            "extends": "CG.Class"
         },
         "CG.MapPoint": {
             "name": "CG.MapPoint",
@@ -764,8 +777,8 @@
             "namespace": "",
             "file": "engine/mappoint.js",
             "line": 1,
-            "description": "class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.",
-            "extends": "Class"
+            "description": "CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.",
+            "extends": "CG.Class"
         },
         "CG.MapTileLayer": {
             "name": "CG.MapTileLayer",
@@ -779,7 +792,7 @@
             "namespace": "",
             "file": "engine/maptilelayer.js",
             "line": 1,
-            "description": "MapTileLayer",
+            "description": "CG.MapTileLayer",
             "extends": "Class"
         },
         "CG.MapTileProperties": {
@@ -794,7 +807,7 @@
             "namespace": "",
             "file": "engine/maptileproperties.js",
             "line": 1,
-            "description": "MapTileProperties",
+            "description": "CG.MapTileProperties",
             "extends": "Class"
         },
         "CG.MediaAsset": {
@@ -809,7 +822,7 @@
             "namespace": "",
             "file": "engine/mediaasset.js",
             "line": 1,
-            "description": "MediaAsset preloader.",
+            "description": "CG.MediaAsset preloader.",
             "extends": "Class"
         },
         "CG.Menu": {
@@ -824,7 +837,7 @@
             "namespace": "",
             "file": "engine/menu.js",
             "line": 1,
-            "description": "Menu",
+            "description": "CG.Menu",
             "extends": "CG.Entity"
         },
         "CG.Morph": {
@@ -839,7 +852,7 @@
             "namespace": "",
             "file": "engine/morph.js",
             "line": 1,
-            "description": "class Morph to manipulate objects in size and so on",
+            "description": "CG.Morph to manipulate objects in size and so on",
             "extends": "CG.Entity"
         },
         "CG.Particle": {
@@ -854,7 +867,7 @@
             "namespace": "",
             "file": "engine/particle.js",
             "line": 1,
-            "descriptiom": "class Particle",
+            "description": "CG.Particle",
             "extends": "CG.Sprite"
         },
         "CG.Point": {
@@ -869,7 +882,7 @@
             "namespace": "",
             "file": "engine/point.js",
             "line": 1,
-            "description": "class Point",
+            "description": "CG.Point",
             "extends": "CG.Entity"
         },
         "CG.Rectangle": {
@@ -884,8 +897,23 @@
             "namespace": "",
             "file": "engine/rectangle.js",
             "line": 1,
-            "description": "class Rectangle for click and mouseover handling, collision detection and AABB function",
+            "description": "CG.Rectangle for click and mouseover handling, collision detection and AABB function",
             "extends": "CG.Entity"
+        },
+        "CG.CanvasRenderer": {
+            "name": "CG.CanvasRenderer",
+            "shortname": "CG.CanvasRenderer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "engine/renderer.js",
+            "line": 1,
+            "description": "A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)\nHow to implement all the different classes....?",
+            "extends": "CG.Class"
         },
         "CG.Screen": {
             "name": "CG.Screen",
@@ -921,7 +949,7 @@
             "namespace": "",
             "file": "engine/sequence.js",
             "line": 1,
-            "description": "class Sequence container to collect/group CG.Translation objects",
+            "description": "CG.Sequence container to collect/group CG.Translation objects",
             "extends": "Entity"
         },
         "CG.Sprite": {
@@ -936,7 +964,7 @@
             "namespace": "",
             "file": "engine/sprite.js",
             "line": 1,
-            "description": "the Sprite class",
+            "description": "CG.Sprite",
             "extends": "CG.Rectangle"
         },
         "CG.TexturePacker": {
@@ -951,7 +979,7 @@
             "namespace": "",
             "file": "engine/texturepacker.js",
             "line": 1,
-            "description": "TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.",
+            "description": "CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.\nThese TPImages are only handled within Sprite, Particle and Button class.",
             "extends": "Class"
         },
         "CG.TPImage": {
@@ -966,7 +994,7 @@
             "namespace": "",
             "file": "engine/tpimage.js",
             "line": 1,
-            "description": "TexturePacker TPImage class. It is needed when using TexturePacker atlas files.",
+            "description": "CG.TPImage class. It is needed when using TexturePacker atlas files.",
             "extends": "Class"
         },
         "CG.Translate": {
@@ -981,7 +1009,7 @@
             "namespace": "",
             "file": "engine/translate.js",
             "line": 1,
-            "description": "class Translate moving a object",
+            "description": "CG.Translate moving a object",
             "extends": "CG.Entity"
         },
         "CG.Vector": {
@@ -996,7 +1024,7 @@
             "namespace": "",
             "file": "engine/vector.js",
             "line": 1,
-            "description": "class Vector",
+            "description": "CG.Vector",
             "extends": "CG.Point"
         }
     },
@@ -2666,8 +2694,8 @@
             "name": "loadImage",
             "params": [
                 {
-                    "name": "imgpath,",
-                    "description": "image object or tpimage object to use",
+                    "name": "image",
+                    "description": "imgpath, image object or tpimage object to use",
                     "type": "String, image, tpimage"
                 }
             ],
@@ -3083,7 +3111,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 31,
+            "line": 29,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -3096,7 +3124,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 37,
+            "line": 35,
             "itemtype": "property",
             "name": "screens",
             "type": "{Array}",
@@ -3105,7 +3133,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 42,
+            "line": 40,
             "itemtype": "property",
             "name": "activescreen",
             "type": "{Number}",
@@ -3114,7 +3142,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 47,
+            "line": 45,
             "description": "nextscreen",
             "type": "{Number}",
             "class": "CG.Director",
@@ -3122,7 +3150,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 52,
+            "line": 50,
             "itemtype": "property",
             "name": "duration",
             "type": "{Number}",
@@ -3131,7 +3159,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 57,
+            "line": 55,
             "description": "alpha",
             "type": "{Number}",
             "class": "CG.Director",
@@ -3139,7 +3167,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 62,
+            "line": 60,
             "description": "fademode",
             "type": "{String}",
             "class": "CG.Director",
@@ -3147,7 +3175,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 67,
+            "line": 65,
             "itemtype": "property",
             "name": "color",
             "type": "{String}",
@@ -3156,7 +3184,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 127,
+            "line": 125,
             "itemtype": "method",
             "name": "addScreen",
             "params": [
@@ -3171,9 +3199,12 @@
         },
         {
             "file": "engine/director.js",
-            "line": 136,
+            "line": 134,
             "itemtype": "method",
             "name": "nextScreen",
+            "example": [
+                "\n       //tell the director class to fade to next screen with scale mode\n       Game.director.setFadeMode('scale');\n       Game.director.nextScreen('gamescreen', 10);\n\n       //tell the director class to fade to next screen\n       Game.director.setFadeMode('fade');\n       Game.director.nextScreen('settingsscreen', 10);"
+            ],
             "params": [
                 {
                     "name": "screenname",
@@ -3191,7 +3222,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 149,
+            "line": 155,
             "itemtype": "method",
             "name": "getScreenByName",
             "params": [
@@ -3210,7 +3241,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 164,
+            "line": 170,
             "itemtype": "method",
             "name": "getIndexOfScreen",
             "params": [
@@ -3229,7 +3260,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 179,
+            "line": 185,
             "itemtype": "method",
             "name": "getActiveScreenName",
             "return": {
@@ -3241,7 +3272,7 @@
         },
         {
             "file": "engine/director.js",
-            "line": 188,
+            "line": 194,
             "itemtype": "method",
             "name": "setFadeMode",
             "return": {
@@ -3805,7 +3836,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 11,
+            "line": 17,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -3818,7 +3849,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 17,
+            "line": 23,
             "itemtype": "property",
             "name": "atlas",
             "type": "Image",
@@ -3827,7 +3858,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 21,
+            "line": 27,
             "itemtype": "property",
             "name": "initText",
             "type": "String",
@@ -3836,7 +3867,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 25,
+            "line": 31,
             "itemtype": "property",
             "name": "chars",
             "type": "Array",
@@ -3845,7 +3876,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 29,
+            "line": 35,
             "itemtype": "property",
             "name": "x",
             "type": "Array",
@@ -3854,7 +3885,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 33,
+            "line": 39,
             "itemtype": "property",
             "name": "y",
             "type": "Array",
@@ -3863,7 +3894,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 37,
+            "line": 43,
             "itemtype": "property",
             "name": "width",
             "type": "Array",
@@ -3872,7 +3903,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 41,
+            "line": 47,
             "itemtype": "property",
             "name": "height",
             "type": "Array",
@@ -3881,7 +3912,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 45,
+            "line": 51,
             "itemtype": "property",
             "name": "xoff",
             "type": "Array",
@@ -3890,7 +3921,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 49,
+            "line": 55,
             "itemtype": "property",
             "name": "yoff",
             "type": "Array",
@@ -3899,7 +3930,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 53,
+            "line": 59,
             "itemtype": "property",
             "name": "xadv",
             "type": "Array",
@@ -3908,7 +3939,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 57,
+            "line": 63,
             "itemtype": "property",
             "name": "lineHeight",
             "type": "Number",
@@ -3917,7 +3948,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 61,
+            "line": 67,
             "itemtype": "property",
             "name": "face",
             "type": "String",
@@ -3926,7 +3957,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 65,
+            "line": 71,
             "itemtype": "property",
             "name": "size",
             "type": "Number",
@@ -3935,7 +3966,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 69,
+            "line": 75,
             "itemtype": "property",
             "name": "bold",
             "type": "Number",
@@ -3944,7 +3975,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 73,
+            "line": 79,
             "itemtype": "property",
             "name": "italic",
             "type": "Number",
@@ -3953,7 +3984,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 78,
+            "line": 84,
             "itemtype": "property",
             "name": "base",
             "type": "Number",
@@ -3962,7 +3993,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 82,
+            "line": 88,
             "itemtype": "property",
             "name": "scaleW",
             "type": "Number",
@@ -3971,7 +4002,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 86,
+            "line": 92,
             "itemtype": "property",
             "name": "scaleH",
             "type": "Number",
@@ -3980,7 +4011,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 92,
+            "line": 98,
             "itemtype": "method",
             "name": "update",
             "class": "CG.Font",
@@ -3988,7 +4019,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 101,
+            "line": 107,
             "description": "draw the given text to the canvas",
             "itemtype": "method",
             "name": "draw",
@@ -4014,7 +4045,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 122,
+            "line": 128,
             "description": "get the line height of the current font",
             "itemtype": "method",
             "name": "getLineHeight",
@@ -4027,7 +4058,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 131,
+            "line": 137,
             "description": "get the font size of the current font",
             "itemtype": "method",
             "name": "getFontSize",
@@ -4040,7 +4071,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 140,
+            "line": 146,
             "description": "get the width of the given text",
             "itemtype": "method",
             "name": "getTextWidth",
@@ -4060,7 +4091,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 155,
+            "line": 161,
             "description": "loadFont - load and parse the given fontfile",
             "itemtype": "method",
             "name": "loadFont",
@@ -4742,7 +4773,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 8,
+            "line": 10,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -4777,7 +4808,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 18,
+            "line": 20,
             "itemtype": "property",
             "name": "initbound",
             "type": "{CG.Bound}",
@@ -4786,7 +4817,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 23,
+            "line": 25,
             "itemtype": "property",
             "name": "mapoffset",
             "type": "{CG.Point}",
@@ -4795,7 +4826,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 28,
+            "line": 30,
             "itemtype": "property",
             "name": "name",
             "type": "{String}",
@@ -4804,7 +4835,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 33,
+            "line": 35,
             "itemtype": "property",
             "name": "type",
             "type": "{String}",
@@ -4813,7 +4844,7 @@
         },
         {
             "file": "engine/maparea.js",
-            "line": 39,
+            "line": 41,
             "itemtype": "property",
             "name": "bound",
             "type": "{CG.Bound}",
@@ -4822,7 +4853,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 9,
+            "line": 11,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -4857,7 +4888,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 19,
+            "line": 21,
             "itemtype": "property",
             "name": "initposition",
             "type": "{CG.Point}",
@@ -4866,7 +4897,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 24,
+            "line": 26,
             "itemtype": "property",
             "name": "mapoffset",
             "type": "{CG.Point}",
@@ -4875,7 +4906,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 29,
+            "line": 31,
             "description": "gid",
             "type": "{Number}",
             "class": "CG.MapPoint",
@@ -4883,7 +4914,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 34,
+            "line": 36,
             "itemtype": "property",
             "name": "name",
             "type": "{*}",
@@ -4892,7 +4923,7 @@
         },
         {
             "file": "engine/mappoint.js",
-            "line": 39,
+            "line": 41,
             "itemtype": "property",
             "name": "position",
             "type": "{CG.Point}",
@@ -4901,7 +4932,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 8,
+            "line": 10,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -4914,7 +4945,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 14,
+            "line": 16,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -4923,7 +4954,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 19,
+            "line": 21,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -4932,7 +4963,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 24,
+            "line": 26,
             "itemtype": "property",
             "name": "visible",
             "type": "{Boolean}",
@@ -4941,7 +4972,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 29,
+            "line": 31,
             "itemtype": "property",
             "name": "opacity",
             "type": "{Number}",
@@ -4950,7 +4981,7 @@
         },
         {
             "file": "engine/maptilelayer.js",
-            "line": 34,
+            "line": 36,
             "itemtype": "property",
             "name": "tiles",
             "type": "{Array}",
@@ -4959,7 +4990,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 8,
+            "line": 10,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -4972,7 +5003,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 14,
+            "line": 16,
             "itemtype": "property",
             "name": "animated",
             "type": "{Boolean}",
@@ -4981,7 +5012,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 19,
+            "line": 21,
             "itemtype": "property",
             "name": "animDelay",
             "type": "{Number}",
@@ -4990,7 +5021,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 24,
+            "line": 26,
             "itemtype": "property",
             "name": "animDirection",
             "type": "{Number}",
@@ -4999,7 +5030,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 29,
+            "line": 31,
             "itemtype": "property",
             "name": "animNext",
             "type": "{Number}",
@@ -5008,7 +5039,7 @@
         },
         {
             "file": "engine/maptileproperties.js",
-            "line": 34,
+            "line": 36,
             "itemtype": "property",
             "name": "delayTimer",
             "type": "{Number}",
@@ -5219,7 +5250,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 9,
+            "line": 11,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -5249,7 +5280,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 18,
+            "line": 20,
             "itemtype": "property",
             "name": "x",
             "type": "{Number}",
@@ -5258,7 +5289,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 23,
+            "line": 25,
             "itemtype": "property",
             "name": "y",
             "type": "{Number}",
@@ -5267,7 +5298,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 28,
+            "line": 30,
             "proerty": "margin",
             "type": "{Number}",
             "class": "CG.Menu",
@@ -5275,7 +5306,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 33,
+            "line": 35,
             "itemtype": "property",
             "name": "step",
             "type": "{*}",
@@ -5284,7 +5315,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 38,
+            "line": 40,
             "itemtype": "property",
             "name": "buttons",
             "type": "{Array}",
@@ -5293,7 +5324,7 @@
         },
         {
             "file": "engine/menu.js",
-            "line": 45,
+            "line": 47,
             "itemtype": "method",
             "name": "addButton",
             "params": [
@@ -5351,7 +5382,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 10,
+            "line": 12,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -5367,7 +5398,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 17,
+            "line": 19,
             "itemtype": "property",
             "name": "lifetime",
             "type": "{Number}",
@@ -5376,7 +5407,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 22,
+            "line": 24,
             "itemtype": "property",
             "name": "currtime",
             "type": "{Number}",
@@ -5385,7 +5416,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 27,
+            "line": 29,
             "itemtype": "property",
             "name": "aging",
             "type": "{Number}",
@@ -5394,7 +5425,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 32,
+            "line": 34,
             "itemtype": "property",
             "name": "fadeout",
             "type": "{Boolean}",
@@ -5403,7 +5434,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 37,
+            "line": 39,
             "itemtype": "property",
             "name": "alpha",
             "type": "{Number}",
@@ -5412,7 +5443,7 @@
         },
         {
             "file": "engine/particle.js",
-            "line": 42,
+            "line": 44,
             "itemtype": "property",
             "name": "gravity",
             "type": "{Number}",
@@ -5421,7 +5452,7 @@
         },
         {
             "file": "engine/point.js",
-            "line": 8,
+            "line": 10,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -5442,7 +5473,7 @@
         },
         {
             "file": "engine/point.js",
-            "line": 15,
+            "line": 17,
             "itemtype": "property",
             "name": "x",
             "type": "Number",
@@ -5451,7 +5482,7 @@
         },
         {
             "file": "engine/point.js",
-            "line": 19,
+            "line": 21,
             "itemtype": "property",
             "name": "y",
             "type": "Number",
@@ -5460,7 +5491,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 9,
+            "line": 11,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -5490,7 +5521,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 18,
+            "line": 20,
             "itemtype": "property",
             "name": "position",
             "type": "CG.Point",
@@ -5499,7 +5530,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 22,
+            "line": 24,
             "itemtype": "property",
             "name": "width",
             "type": "Number",
@@ -5508,7 +5539,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 26,
+            "line": 28,
             "itemtype": "property",
             "name": "height",
             "type": "Number",
@@ -5517,7 +5548,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 30,
+            "line": 32,
             "itemtype": "property",
             "name": "clickable",
             "type": "Boolean",
@@ -5526,7 +5557,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 34,
+            "line": 36,
             "itemtype": "property",
             "name": "dragable",
             "type": "Boolean",
@@ -5535,7 +5566,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 38,
+            "line": 40,
             "itemtype": "property",
             "name": "rotation",
             "type": "Number",
@@ -5544,7 +5575,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 42,
+            "line": 44,
             "itemtype": "property",
             "name": "xscale",
             "type": "Number",
@@ -5553,7 +5584,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 46,
+            "line": 48,
             "itemtype": "property",
             "name": "yscale",
             "type": "Number",
@@ -5562,7 +5593,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 50,
+            "line": 52,
             "itemtype": "property",
             "name": "clicked",
             "type": "Boolean",
@@ -5571,7 +5602,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 54,
+            "line": 56,
             "itemtype": "property",
             "name": "hover",
             "type": "Boolean",
@@ -5580,7 +5611,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 59,
+            "line": 61,
             "itemtype": "property",
             "name": "boundingradius",
             "type": "Number",
@@ -5589,7 +5620,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 63,
+            "line": 65,
             "itemtype": "property",
             "name": "mapcollision",
             "type": "Boolean",
@@ -5598,7 +5629,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 70,
+            "line": 72,
             "description": "returns the bounds of rotated rectangle",
             "itemtype": "method",
             "name": "AABB",
@@ -5611,7 +5642,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 87,
+            "line": 89,
             "description": "checks click inside of the rectangle, supports rotation",
             "itemtype": "method",
             "name": "ifClicked",
@@ -5624,7 +5655,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 111,
+            "line": 113,
             "description": "checks if the mouse/pointer is over the rectangle",
             "itemtype": "method",
             "name": "ifMouseOver",
@@ -5633,7 +5664,7 @@
         },
         {
             "file": "engine/rectangle.js",
-            "line": 132,
+            "line": 134,
             "description": "checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/",
             "itemtype": "method",
             "name": "checkCollision",
@@ -5650,6 +5681,19 @@
                 }
             ],
             "class": "CG.Rectangle",
+            "module": "CG"
+        },
+        {
+            "file": "engine/renderer.js",
+            "line": 14,
+            "itemtype": "method",
+            "name": "init",
+            "is_constructor": 1,
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.CanvasRenderer",
             "module": "CG"
         },
         {
@@ -5736,7 +5780,7 @@
         },
         {
             "file": "engine/sequence.js",
-            "line": 8,
+            "line": 10,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -5755,7 +5799,7 @@
         },
         {
             "file": "engine/sequence.js",
-            "line": 16,
+            "line": 18,
             "itemtype": "property",
             "name": "current",
             "type": "{Number}",
@@ -5764,7 +5808,7 @@
         },
         {
             "file": "engine/sequence.js",
-            "line": 21,
+            "line": 23,
             "itemtype": "property",
             "name": "loop",
             "type": "{Boolean}",
@@ -5773,7 +5817,7 @@
         },
         {
             "file": "engine/sequence.js",
-            "line": 26,
+            "line": 28,
             "itemtype": "property",
             "name": "translations",
             "type": "{Array}",
@@ -5782,7 +5826,7 @@
         },
         {
             "file": "engine/sequence.js",
-            "line": 33,
+            "line": 35,
             "description": "add a translation object to the sequence array",
             "itemtype": "method",
             "name": "addTranslation",
@@ -5802,7 +5846,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 8,
+            "line": 10,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -5827,7 +5871,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 18,
+            "line": 20,
             "itemtype": "property",
             "name": "atlasimage",
             "type": "Boolean",
@@ -5836,7 +5880,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 24,
+            "line": 26,
             "itemtype": "property",
             "name": "bound",
             "type": "CG.Bound",
@@ -5845,7 +5889,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 28,
+            "line": 30,
             "itemtype": "property",
             "name": "diffpoint",
             "type": "CG.Point",
@@ -5854,7 +5898,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 33,
+            "line": 35,
             "itemtype": "property",
             "name": "xspeed",
             "type": "Number",
@@ -5863,7 +5907,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 37,
+            "line": 39,
             "itemtype": "property",
             "name": "xscale",
             "type": "Number",
@@ -5872,7 +5916,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 41,
+            "line": 43,
             "itemtype": "property",
             "name": "xhandle",
             "type": "Number",
@@ -5881,7 +5925,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 45,
+            "line": 47,
             "itemtype": "property",
             "name": "yspeed",
             "type": "Number",
@@ -5890,7 +5934,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 49,
+            "line": 51,
             "itemtype": "property",
             "name": "yscale",
             "type": "Number",
@@ -5899,7 +5943,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 53,
+            "line": 55,
             "itemtype": "property",
             "name": "yhandle",
             "type": "Number",
@@ -5908,7 +5952,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 57,
+            "line": 59,
             "itemtype": "property",
             "name": "boundsMode",
             "type": "False/string",
@@ -5917,7 +5961,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 61,
+            "line": 63,
             "itemtype": "property",
             "name": "rotation",
             "type": "Integer/float",
@@ -5926,7 +5970,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 65,
+            "line": 67,
             "itemtype": "property",
             "name": "rotationspeed",
             "type": "Integer/float",
@@ -5935,7 +5979,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 69,
+            "line": 71,
             "itemtype": "property",
             "name": "alpha",
             "type": "Float",
@@ -5944,7 +5988,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 73,
+            "line": 75,
             "itemtype": "property",
             "name": "clicked",
             "type": "Boolean",
@@ -5953,7 +5997,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 78,
+            "line": 80,
             "itemtype": "property",
             "name": "followobject",
             "type": "Boolean/object",
@@ -5962,7 +6006,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 82,
+            "line": 84,
             "itemtype": "property",
             "name": "followspeed",
             "type": "Boolean/integer",
@@ -5971,7 +6015,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 86,
+            "line": 88,
             "itemtype": "property",
             "name": "followsteps",
             "type": "Boolean/integer",
@@ -5980,7 +6024,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 91,
+            "line": 93,
             "itemtype": "property",
             "name": "attachedobject",
             "type": "Boolean",
@@ -5989,7 +6033,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 95,
+            "line": 97,
             "itemtype": "property",
             "name": "offsetx",
             "type": "Number",
@@ -5998,7 +6042,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 99,
+            "line": 101,
             "itemtype": "property",
             "name": "offsety",
             "type": "Number",
@@ -6007,7 +6051,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 140,
+            "line": 142,
             "description": "Checks the bound if a boundMode (bounce or slide) is set",
             "itemtype": "method",
             "name": "checkBound",
@@ -6016,7 +6060,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 183,
+            "line": 185,
             "description": "calculate offset if bound is moving",
             "itemtype": "method",
             "name": "updateDiff",
@@ -6025,7 +6069,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 197,
+            "line": 199,
             "description": "is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different",
             "itemtype": "method",
             "name": "follow",
@@ -6034,7 +6078,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 231,
+            "line": 233,
             "description": "set the bound of the sprite",
             "itemtype": "method",
             "name": "setBound",
@@ -6050,7 +6094,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 242,
+            "line": 244,
             "description": "if there is a attached object get its position",
             "itemtype": "method",
             "name": "ifAttached",
@@ -6059,7 +6103,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 253,
+            "line": 255,
             "description": "attach a reference of the given object to this object",
             "itemtype": "method",
             "name": "attachObject",
@@ -6068,7 +6112,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 262,
+            "line": 264,
             "description": "removes the attached object reference",
             "itemtype": "method",
             "name": "removeAttachedObject",
@@ -6077,7 +6121,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 271,
+            "line": 273,
             "description": "set the x offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetX",
@@ -6086,7 +6130,7 @@
         },
         {
             "file": "engine/sprite.js",
-            "line": 280,
+            "line": 282,
             "description": "set the y offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetY",
@@ -6102,7 +6146,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 8,
+            "line": 12,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -6115,7 +6159,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 19,
+            "line": 23,
             "itemtype": "property",
             "name": "imagename",
             "type": "{String}",
@@ -6124,7 +6168,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 24,
+            "line": 28,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -6133,7 +6177,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 29,
+            "line": 33,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -6142,7 +6186,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 34,
+            "line": 38,
             "itemtype": "property",
             "name": "tpimages",
             "type": "{Array}",
@@ -6151,7 +6195,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 41,
+            "line": 45,
             "description": "load a xml file from texturepacker",
             "itemtype": "method",
             "name": "loadXml",
@@ -6171,7 +6215,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 82,
+            "line": 86,
             "description": "load a json file from texturepacker",
             "itemtype": "method",
             "name": "loadJson",
@@ -6191,7 +6235,7 @@
         },
         {
             "file": "engine/texturepacker.js",
-            "line": 124,
+            "line": 128,
             "description": "get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)",
             "itemtype": "method",
             "name": "getTPImages",
@@ -6204,7 +6248,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 8,
+            "line": 10,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -6240,7 +6284,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 18,
+            "line": 20,
             "itemtype": "property",
             "name": "source",
             "type": "{String}",
@@ -6249,7 +6293,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 23,
+            "line": 25,
             "itemtype": "property",
             "name": "atlasimage",
             "type": "{String}",
@@ -6258,7 +6302,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 28,
+            "line": 30,
             "itemtype": "property",
             "name": "atlasname",
             "type": "{String}",
@@ -6267,7 +6311,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 33,
+            "line": 35,
             "itemtype": "property",
             "name": "image",
             "type": "{*}",
@@ -6276,7 +6320,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 38,
+            "line": 40,
             "itemtype": "property",
             "name": "name",
             "type": "{String}",
@@ -6285,7 +6329,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 43,
+            "line": 45,
             "itemtype": "property",
             "name": "xoffset",
             "type": "{Number}",
@@ -6294,7 +6338,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 48,
+            "line": 50,
             "itemtype": "property",
             "name": "yoffset",
             "type": "{*}",
@@ -6303,7 +6347,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 53,
+            "line": 55,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -6312,7 +6356,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 58,
+            "line": 60,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -6321,7 +6365,7 @@
         },
         {
             "file": "engine/tpimage.js",
-            "line": 63,
+            "line": 65,
             "itemtype": "property",
             "name": "rotation",
             "type": "{Number}",
@@ -6330,7 +6374,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 8,
+            "line": 10,
             "init": "",
             "is_constructor": 1,
             "return": {
@@ -6342,7 +6386,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 15,
+            "line": 17,
             "itemtype": "property",
             "name": "type",
             "type": "{String}",
@@ -6351,7 +6395,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 20,
+            "line": 22,
             "itemtype": "property",
             "name": "tx",
             "type": "{Number}",
@@ -6360,7 +6404,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 25,
+            "line": 27,
             "itemtype": "property",
             "name": "ty",
             "type": "{Number}",
@@ -6369,7 +6413,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 30,
+            "line": 32,
             "properzty": "x1",
             "type": "{Number}",
             "class": "CG.Translate",
@@ -6377,7 +6421,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 35,
+            "line": 37,
             "itemtype": "property",
             "name": "y1",
             "type": "{Number}",
@@ -6386,7 +6430,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 40,
+            "line": 42,
             "itemtype": "property",
             "name": "x2",
             "type": "{Number}",
@@ -6395,7 +6439,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 45,
+            "line": 47,
             "itemtype": "property",
             "name": "y2",
             "type": "{Number}",
@@ -6404,7 +6448,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 50,
+            "line": 52,
             "itemtype": "property",
             "name": "bx",
             "type": "{Number}",
@@ -6413,7 +6457,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 55,
+            "line": 57,
             "itemtype": "property",
             "name": "by",
             "type": "{Number}",
@@ -6422,7 +6466,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 60,
+            "line": 62,
             "itemtype": "property",
             "name": "theobj",
             "type": "{Object}",
@@ -6431,7 +6475,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 65,
+            "line": 67,
             "itemtype": "property",
             "name": "r1",
             "type": "{Number}",
@@ -6440,7 +6484,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 70,
+            "line": 72,
             "itemtype": "property",
             "name": "r2",
             "type": "{Number}",
@@ -6449,7 +6493,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 75,
+            "line": 77,
             "itemtype": "property",
             "name": "startangle",
             "type": "{Number}",
@@ -6458,7 +6502,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 80,
+            "line": 82,
             "itemtype": "property",
             "name": "angle",
             "type": "{Number}",
@@ -6467,7 +6511,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 85,
+            "line": 87,
             "itemtype": "property",
             "name": "speed",
             "type": "{Number}",
@@ -6476,7 +6520,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 90,
+            "line": 92,
             "itemtype": "property",
             "name": "steps",
             "type": "{Number}",
@@ -6485,7 +6529,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 95,
+            "line": 97,
             "itemtype": "property",
             "name": "step",
             "type": "{Number}",
@@ -6494,7 +6538,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 100,
+            "line": 102,
             "itemtype": "property",
             "name": "positions",
             "type": "{Array}",
@@ -6503,7 +6547,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 105,
+            "line": 107,
             "itemtype": "property",
             "name": "finished",
             "type": "{Boolean}",
@@ -6512,7 +6556,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 112,
+            "line": 114,
             "itemtype": "method",
             "name": "initTween",
             "params": [
@@ -6546,7 +6590,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 143,
+            "line": 145,
             "itemtype": "method",
             "name": "initOval",
             "params": [
@@ -6590,7 +6634,7 @@
         },
         {
             "file": "engine/translate.js",
-            "line": 166,
+            "line": 168,
             "description": "initBezier\nhttp://13thparallel.com/archive/bezier-curves/",
             "itemtype": "method",
             "name": "initBezier",
@@ -6635,7 +6679,7 @@
         },
         {
             "file": "engine/vector.js",
-            "line": 8,
+            "line": 10,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -6661,7 +6705,7 @@
         },
         {
             "file": "engine/vector.js",
-            "line": 17,
+            "line": 19,
             "itemtype": "property",
             "name": "z",
             "type": "Number",
@@ -6705,19 +6749,19 @@
         },
         {
             "message": "unknown tag: proerty",
-            "line": " engine/menu.js:28"
+            "line": " engine/menu.js:30"
         },
         {
-            "message": "unknown tag: descriptiom",
-            "line": " engine/particle.js:1"
+            "message": "replacing incorrect tag: extend with extends",
+            "line": " engine/renderer.js:1"
         },
         {
             "message": "unknown tag: init",
-            "line": " engine/translate.js:8"
+            "line": " engine/translate.js:10"
         },
         {
             "message": "unknown tag: properzty",
-            "line": " engine/translate.js:30"
+            "line": " engine/translate.js:32"
         },
         {
             "message": "Missing item type\n© 2012 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework",
@@ -6757,15 +6801,15 @@
         },
         {
             "message": "Missing item type\nnextscreen",
-            "line": " engine/director.js:47"
+            "line": " engine/director.js:45"
         },
         {
             "message": "Missing item type\nalpha",
-            "line": " engine/director.js:57"
+            "line": " engine/director.js:55"
         },
         {
             "message": "Missing item type\nfademode",
-            "line": " engine/director.js:62"
+            "line": " engine/director.js:60"
         },
         {
             "message": "Missing item type\ninitAsPoint",
@@ -6789,11 +6833,11 @@
         },
         {
             "message": "Missing item type\ngid",
-            "line": " engine/mappoint.js:29"
+            "line": " engine/mappoint.js:31"
         },
         {
             "message": "Missing item type",
-            "line": " engine/menu.js:28"
+            "line": " engine/menu.js:30"
         },
         {
             "message": "Missing item type\nstring functions",
@@ -6801,11 +6845,11 @@
         },
         {
             "message": "Missing item type",
-            "line": " engine/translate.js:8"
+            "line": " engine/translate.js:10"
         },
         {
             "message": "Missing item type",
-            "line": " engine/translate.js:30"
+            "line": " engine/translate.js:32"
         },
         {
             "message": "Missing item type\ncallback for map collision detection.\nfor the moment the map object sends the depending sprite and the tile as arguments",

@@ -14,6 +14,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Bound",
         "CG.Buffer",
         "CG.Button",
+        "CG.CanvasRenderer",
         "CG.Delta",
         "CG.Director",
         "CG.Emitter",

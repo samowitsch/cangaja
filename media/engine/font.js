@@ -3,6 +3,12 @@
  *
  * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
  * (Hiero works also but need some modifications of the exported files)
+ @example
+ //create font object
+ small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+
+ //draw text to canvas
+ small.draw('Foo bar!', xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -13,7 +19,7 @@ CG.Entity.extend('Font', {
      * @constructor
      * @return {*}
      */
-    init:function () {
+    init: function () {
         /**
          @property atlas {Image}
          */
@@ -92,10 +98,10 @@ CG.Entity.extend('Font', {
     /**
      * @method update
      */
-    update:function () {
+    update: function () {
         throw {
-            name:'Font Error',
-            message:'TODO, not defined yet.'
+            name: 'Font Error',
+            message: 'TODO, not defined yet.'
         }
     },
     /**
@@ -105,7 +111,7 @@ CG.Entity.extend('Font', {
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      */
-    draw:function (text, xpos, ypos) {
+    draw: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -124,7 +130,7 @@ CG.Entity.extend('Font', {
      * @method getLineHeight
      * @return lineheight {Number}
      */
-    getLineHeight:function () {
+    getLineHeight: function () {
         return this.lineHeight
     },
 
@@ -133,7 +139,7 @@ CG.Entity.extend('Font', {
      * @method getFontSize
      * @return size {Number} font size
      */
-    getFontSize:function () {
+    getFontSize: function () {
         return this.size
     },
 
@@ -143,7 +149,7 @@ CG.Entity.extend('Font', {
      * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      */
-    getTextWidth:function (text) {
+    getTextWidth: function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i < l; i++) {
@@ -157,7 +163,7 @@ CG.Entity.extend('Font', {
      * @method loadFont
      * @param {string/object} fontfile path or mediaasset object with data
      */
-    loadFont:function (fontfile) {
+    loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == 'string') {
             this.initText = loadString(fontfile)

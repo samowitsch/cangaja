@@ -67,6 +67,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
             
+                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
@@ -165,6 +167,12 @@
  *
  * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
  * (Hiero works also but need some modifications of the exported files)
+ @example
+ &#x2F;&#x2F;create font object
+ small = new CG.Font().loadFont(Game.asset.getFontByName(&#x27;small&#x27;))
+
+ &#x2F;&#x2F;draw text to canvas
+ small.draw(&#x27;Foo bar!&#x27;, xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -175,7 +183,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @constructor
      * @return {*}
      *&#x2F;
-    init:function () {
+    init: function () {
         &#x2F;**
          @property atlas {Image}
          *&#x2F;
@@ -254,10 +262,10 @@ CG.Entity.extend(&#x27;Font&#x27;, {
     &#x2F;**
      * @method update
      *&#x2F;
-    update:function () {
+    update: function () {
         throw {
-            name:&#x27;Font Error&#x27;,
-            message:&#x27;TODO, not defined yet.&#x27;
+            name: &#x27;Font Error&#x27;,
+            message: &#x27;TODO, not defined yet.&#x27;
         }
     },
     &#x2F;**
@@ -267,7 +275,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      *&#x2F;
-    draw:function (text, xpos, ypos) {
+    draw: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -286,7 +294,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @method getLineHeight
      * @return lineheight {Number}
      *&#x2F;
-    getLineHeight:function () {
+    getLineHeight: function () {
         return this.lineHeight
     },
 
@@ -295,7 +303,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @method getFontSize
      * @return size {Number} font size
      *&#x2F;
-    getFontSize:function () {
+    getFontSize: function () {
         return this.size
     },
 
@@ -305,7 +313,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      *&#x2F;
-    getTextWidth:function (text) {
+    getTextWidth: function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i &lt; l; i++) {
@@ -319,7 +327,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @method loadFont
      * @param {string&#x2F;object} fontfile path or mediaasset object with data
      *&#x2F;
-    loadFont:function (fontfile) {
+    loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == &#x27;string&#x27;) {
             this.initText = loadString(fontfile)

@@ -3,26 +3,24 @@
  *
  * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
  * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
- *
- *
- @example
-     //create top level CG.Director object
-     var director = new CG.Director()
+@example
+    //create top level CG.Director object
+    var director = new CG.Director()
 
-     //create a CG.Screen
-     var mainscreen = new CG.Screen('mainscreen')
+    //create a CG.Screen
+    var mainscreen = new CG.Screen('mainscreen')
 
-     //create a CG.Layer
-     var mainlayer = new CG.Layer('mainlayer')
+    //create a CG.Layer
+    var mainlayer = new CG.Layer('mainlayer')
 
-     //create a demo CG.Sprite
-     var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
+    //create a demo CG.Sprite
+    var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
-     //add/attach the demo sprite to the layer
-     mainlayer.addElement(back)
+    //add/attach the demo sprite to the layer
+    mainlayer.addElement(back)
 
-     //add/attach mainscreen and mainlayer to the director
-     director.addScreen(mainscreen.addLayer(mainlayer))
+    //add/attach mainscreen and mainlayer to the director
+    director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -135,6 +133,14 @@ CG.Class.extend('Director', {
     },
     /**
      * @method nextScreen
+    @example
+        //tell the director class to fade to next screen with scale mode
+        Game.director.setFadeMode('scale');
+        Game.director.nextScreen('gamescreen', 10);
+
+        //tell the director class to fade to next screen
+        Game.director.setFadeMode('fade');
+        Game.director.nextScreen('settingsscreen', 10);
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -200,5 +206,3 @@ CG.Class.extend('Director', {
         return this
     }
 })
-
-

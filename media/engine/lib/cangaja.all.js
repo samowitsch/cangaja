@@ -29,9 +29,6 @@
 
         }
      });
-
-
-
  * @module CG
  * @main CG
  */
@@ -211,6 +208,165 @@ String.prototype.startsWith = function (str) {
 /**
  * @description
  *
+ * A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)
+ * How to implement all the different classes....?
+ *
+ *
+ * @class CG.CanvasRenderer
+ * @extend CG.Class
+ */
+
+
+CG.Class.extend('CanvasRenderer', {
+    /**
+     * @method init
+     * @constructor
+     * @return {*}
+     */
+    init:function(){
+
+        //TODO the renderer recognizes the canvas features WebGL/Canvas
+
+        //TODO the renderer creates the canvas element
+
+        //TODO the renderer handles all drawings from all classes, urgh ;o)
+
+        /*
+
+         //sprite draw method
+
+         draw:function () {
+             this.updateDiff()
+
+             Game.b_ctx.save()
+             Game.b_ctx.globalAlpha = this.alpha
+             Game.b_ctx.translate(this.position.x, this.position.y)
+             if (this.atlasimage) {
+                 Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
+                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
+             } else {
+                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
+                 Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
+             }
+             Game.b_ctx.restore()
+         },
+
+
+
+
+        //animation draw method
+         draw:function () {
+             this.updateDiff()
+
+             Game.b_ctx.save()
+             Game.b_ctx.globalAlpha = this.alpha
+             Game.b_ctx.translate(this.position.x, this.position.y)
+             if (this.frames == 1) {
+                 Game.b_ctx.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.xscale, this.image.height * this.yscale)
+             }
+             else {
+                 this.fx = this.currentframe * this.width
+
+                 if ((this.fx / this.image.width) > 0) {
+                 this.fx = this.fx % this.image.width
+                 }
+                 this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
+
+                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
+                 try {
+                 Game.b_ctx.drawImage(this.image, this.fx, this.fy, this.width, this.height, 0 - this.xhandle, 0 - this.yhandle, this.width * this.xscale, this.height * this.yscale)
+                 } catch (e) {
+
+                 }
+             }
+             Game.b_ctx.restore()
+         }
+
+
+
+         //button draw method
+         draw:function () {
+             Game.b_ctx.save()
+             Game.b_ctx.translate(this.position.x, this.position.y)
+             if (this.atlasimage) {
+                 var r = this.rotation
+                 Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
+                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
+                 Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
+             } else {
+                 Game.b_ctx.rotate(r * CG.Const_PI_180)
+                 Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
+             }
+             this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+             Game.b_ctx.restore()
+         }
+
+
+        //particle draw method
+         draw:function () {
+             if (this.visible) {
+                 Game.b_ctx.save()
+                 Game.b_ctx.globalAlpha = this.alpha
+                 Game.b_ctx.translate(this.position.x, this.position.y)
+                 if (this.atlasimage) {
+                     Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
+                     Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
+                     Game.b_ctx.rotate((this.rotation + this.imagerotation) * CG.Const_PI_180)
+                 } else {
+                     Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
+                     Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
+                 }
+                 Game.b_ctx.restore()
+             }
+         }
+
+
+
+         //map drawmap part orthogonal
+         Game.b_ctx.save()
+         Game.b_ctx.globalAlpha = this.layers[layer].opacity
+         Game.b_ctx.translate(rx, ry)
+         try {
+            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
+         } catch (e) {
+         }
+         Game.b_ctx.restore()
+
+
+         //map drawmap part isometric
+         Game.b_ctx.save()
+         Game.b_ctx.globalAlpha = this.layers[layer].opacity
+         Game.b_ctx.translate(xpos, ypos)
+         try {
+            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
+         } catch (e) {
+
+         }
+         Game.b_ctx.restore()
+
+
+
+        //font class part draw
+         for (var i = 0, l = text.length; i < l; i++) {
+             Game.b_ctx.drawImage(this.atlas, this.x[text.charCodeAt(i)], this.y[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)], currx, curry + this.yoff[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)])
+             currx += this.xadv[text.charCodeAt(i)]
+         }
+
+
+
+
+
+
+
+
+
+
+         */
+        return this
+    }
+})/**
+ * @description
+ *
  * CG.Delta not really used at the moment ;o)
  *
  * @class CG.Delta
@@ -272,7 +428,10 @@ CG.Class.extend('Delta', {
 
 
 /**
- * @description class Entity the base class of cangaja
+ * @description
+ *
+ * CG.Entity the base class of Cangaja
+ *
  * @class CG.Entity
  * @extends CG.Class
  */
@@ -347,7 +506,9 @@ CG.Class.extend('Entity', {
 
 
 /**
- * @description class Point
+ * @description
+ *
+ * CG.Point
  *
  * @class CG.Point
  * @extends CG.Entity
@@ -373,7 +534,9 @@ CG.Entity.extend('Point', {
 
 
 /**
- * @description class Vector
+ * @description
+ *
+ * CG.Vector
  *
  * @class CG.Vector
  * @extends CG.Point
@@ -398,7 +561,9 @@ CG.Point.extend('Vector', {
 
 
 /**
- * @description class Rectangle for click and mouseover handling, collision detection and AABB function
+ * @description
+ *
+ * CG.Rectangle for click and mouseover handling, collision detection and AABB function
  *
  * @class CG.Rectangle
  * @extends CG.Entity
@@ -753,7 +918,9 @@ CG.Entity.extend('Buffer', {
 
 
 /**
- * @description the Sprite class
+ * @description
+ *
+ * CG.Sprite
  *
  * @class CG.Sprite
  * @extends CG.Rectangle
@@ -1044,7 +1211,9 @@ CG.Rectangle.extend('Sprite', {
 
 
 /**
- * @description TexturePacker TPImage class. It is needed when using TexturePacker atlas files.
+ * @description
+ *
+ * CG.TPImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.TPImage
  * @extends Class
@@ -1112,7 +1281,11 @@ CG.Class.extend('TPImage', {
         this.rotation = 0
     }
 })/**
- *  @description TexturePacker class supports loading xml and json files from . . . TexturePacker ;o) No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager. These TPImages are only handled within Sprite, Particle and Button class.
+ *  @description
+ *
+ *  CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+ *  No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.
+ *  These TPImages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.TexturePacker
  *  @extends Class
@@ -1422,7 +1595,7 @@ CG.Entity.extend('Bitmap', {
      *
      * @method loadImage
      *
-     * @param {string, image, tpimage} imgpath, image object or tpimage object to use
+     * @param image {string, image, tpimage} imgpath, image object or tpimage object to use
      */
     loadImage:function (image) {
         this.setImage(image)
@@ -1591,7 +1764,9 @@ CG.Sprite.extend('Button', {
 
 
 /**
- * @description Menu
+ * @description
+ *
+ * CG.Menu
  *
  * @class CG.Menu
  * @extends CG.Entity
@@ -1665,7 +1840,7 @@ CG.Entity.extend('Menu', {
 /**
  * @description
  *
- * MediaAsset preloader.
+ * CG.MediaAsset preloader.
  *
  * @class CG.MediaAsset
  * @extends Class
@@ -1940,7 +2115,16 @@ function MediaAssetException(message) {
 
 
 /**
- * @description class Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer, (Hiero works also but need some modifications of the exportet files)
+ * @description
+ *
+ * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
+ * (Hiero works also but need some modifications of the exported files)
+ @example
+ //create font object
+ small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+
+ //draw text to canvas
+ small.draw('Foo bar!', xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -1951,7 +2135,7 @@ CG.Entity.extend('Font', {
      * @constructor
      * @return {*}
      */
-    init:function () {
+    init: function () {
         /**
          @property atlas {Image}
          */
@@ -2030,10 +2214,10 @@ CG.Entity.extend('Font', {
     /**
      * @method update
      */
-    update:function () {
+    update: function () {
         throw {
-            name:'Font Error',
-            message:'TODO, not defined yet.'
+            name: 'Font Error',
+            message: 'TODO, not defined yet.'
         }
     },
     /**
@@ -2043,7 +2227,7 @@ CG.Entity.extend('Font', {
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      */
-    draw:function (text, xpos, ypos) {
+    draw: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -2062,7 +2246,7 @@ CG.Entity.extend('Font', {
      * @method getLineHeight
      * @return lineheight {Number}
      */
-    getLineHeight:function () {
+    getLineHeight: function () {
         return this.lineHeight
     },
 
@@ -2071,7 +2255,7 @@ CG.Entity.extend('Font', {
      * @method getFontSize
      * @return size {Number} font size
      */
-    getFontSize:function () {
+    getFontSize: function () {
         return this.size
     },
 
@@ -2081,7 +2265,7 @@ CG.Entity.extend('Font', {
      * @param text {string} the string to calculate the width
      * @return textwidth {Number}
      */
-    getTextWidth:function (text) {
+    getTextWidth: function (text) {
         var textwidth = 0
         var c = 0
         for (var i = 0, l = text.length; i < l; i++) {
@@ -2095,7 +2279,7 @@ CG.Entity.extend('Font', {
      * @method loadFont
      * @param {string/object} fontfile path or mediaasset object with data
      */
-    loadFont:function (fontfile) {
+    loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == 'string') {
             this.initText = loadString(fontfile)
@@ -2215,25 +2399,26 @@ CG.Entity.extend('Font', {
 /**
  * @description
  *
- * Director the top instance for screens, layers, sprites and so on in the control hierarchy.
- @example
-     //create top level CG.Director object
-     var director = new CG.Director()
+ * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
+ * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
+@example
+    //create top level CG.Director object
+    var director = new CG.Director()
 
-     //create a CG.Screen
-     var mainscreen = new CG.Screen('mainscreen')
+    //create a CG.Screen
+    var mainscreen = new CG.Screen('mainscreen')
 
-     //create a CG.Layer
-     var mainlayer = new CG.Layer('mainlayer')
+    //create a CG.Layer
+    var mainlayer = new CG.Layer('mainlayer')
 
-     //create a demo CG.Sprite
-     var demosprite = new CG.Sprite(Game.asset.getImageByName('gfx'), new CG.Point(400, 240))
+    //create a demo CG.Sprite
+    var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
-     //add/attach the demo sprite to the layer
-     mainlayer.addElement(back)
+    //add/attach the demo sprite to the layer
+    mainlayer.addElement(back)
 
-     //add/attach mainscreen and mainlayer to the director
-     director.addScreen(mainscreen.addLayer(mainlayer));
+    //add/attach mainscreen and mainlayer to the director
+    director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -2346,6 +2531,14 @@ CG.Class.extend('Director', {
     },
     /**
      * @method nextScreen
+    @example
+        //tell the director class to fade to next screen with scale mode
+        Game.director.setFadeMode('scale');
+        Game.director.nextScreen('gamescreen', 10);
+
+        //tell the director class to fade to next screen
+        Game.director.setFadeMode('fade');
+        Game.director.nextScreen('settingsscreen', 10);
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -2410,16 +2603,13 @@ CG.Class.extend('Director', {
         }
         return this
     }
-})
-
-
-/**
+})/**
  * @description
  *
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends Entity
+ * @extends CG.Entity
  *
  * @param {string} screenname the name of the screen
  */
@@ -2595,7 +2785,9 @@ CG.Entity.extend('Layer', {
 
 
 /**
- * @description MapTileLayer
+ * @description
+ *
+ * CG.MapTileLayer
  *
  * @class CG.MapTileLayer
  * @extends Class
@@ -2638,7 +2830,9 @@ CG.Class.extend('MapTileLayer', {
 
 
 /**
- * @description MapTileProperties
+ * @description
+ *
+ * CG.MapTileProperties
  *
  * @class CG.MapTileProperties
  * @extends Class
@@ -2681,10 +2875,12 @@ CG.Class.extend('MapTileProperties', {
 
 
 /**
- * @description class MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
+ * @description
+ *
+ * CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
  * @class CG.MapPoint
- * @extends Class
+ * @extends CG.Class
  *
  */
 CG.Class.extend('MapPoint', {
@@ -2734,10 +2930,12 @@ CG.Class.extend('MapPoint', {
 
 
 /**
- * @description  class MapArea. Support now for name and the bound values.
+ * @description
+ *
+ * CG.MapArea. Support now for name and the bound values.
  *
  * @class CG.MapArea
- * @extends Class
+ * @extends CG.Class
  */
 CG.Class.extend('MapArea', {
     /**
@@ -2788,7 +2986,8 @@ CG.Class.extend('MapArea', {
 
 /**
  * @description
- * class Map supports loading and rendering maps from the editor Tiled.
+ *
+ * CG.Map supports loading and rendering maps from the editor Tiled.
  * XML and JSON file types are supported.
  * XML => supported tiled encodings are csv and xml (see settings!). base64, base64(gzip) and base64(zlib) are not supported!
  *
@@ -3309,7 +3508,7 @@ CG.Entity.extend('Map', {
     /**
      * @description
      *
-     * This is the main method for map drawing.
+     * This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.
      *
      * @method drawMap
      *
@@ -3513,7 +3712,10 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description getAreasByName - get all areas with the given name
+     * @description
+     *
+     * Get all areas with the given name
+     *
      * @method getAreasByName
      *
      * @param name {string} name of the area(s) to return
@@ -3584,7 +3786,10 @@ CG.Entity.extend('Map', {
     },
 
     /**
-     * @description getBounds - get the bounds of the map
+     * @description
+     *
+     * Get the bounds of the map
+     *
      * @method getBounds
      */
     getBounds:function () {
@@ -3596,7 +3801,8 @@ CG.Entity.extend('Map', {
 
     /**
      * @description
-     * Updates the tilemap properties of the map.
+     *
+     * Updates all tilemap properties of the map.
      *
      * Supported custom tiled map properties for now are (see also tilemap examples):
      * anim_delay       => time to used to display an switch to next tile
@@ -3730,7 +3936,9 @@ CG.Entity.extend('Map', {
 
 
 /**
- * @description class Sequence container to collect/group CG.Translation objects
+ * @description
+ *
+ * CG.Sequence container to collect/group CG.Translation objects
  *
  * @class CG.Sequence
  * @extends Entity
@@ -3800,7 +4008,9 @@ CG.Entity.extend('Sequence', {
 
 
 /**
- * @description class Translate moving a object
+ * @description
+ *
+ * CG.Translate moving a object
  *
  * @class CG.Translate
  * @extends CG.Entity
@@ -4107,7 +4317,7 @@ CG.Entity.extend('Translate', {
 /**
  * @description
  *
- * class Morph to manipulate objects in size and so on
+ * CG.Morph to manipulate objects in size and so on
  *
  * @class CG.Morph
  * @extends CG.Entity
@@ -4164,7 +4374,9 @@ CG.Entity.extend('Morph', {
 
 
 /**
- * @descriptiom class Particle
+ * @description
+ *
+ * CG.Particle
  *
  * @class CG.Particle
  * @extends CG.Sprite
@@ -4249,7 +4461,9 @@ CG.Sprite.extend('Particle', {
 
 
 /**
- * @description Emitter class that handles . . . particles.
+ * @description
+ *
+ * CG.Emitter that handles . . . particles.
  *
  * @class CG.Emitter
  * @extends CG.Entity

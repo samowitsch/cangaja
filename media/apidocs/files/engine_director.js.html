@@ -67,6 +67,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
             
+                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
@@ -165,26 +167,24 @@
  *
  * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
  * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
- *
- *
- @example
-     &#x2F;&#x2F;create top level CG.Director object
-     var director = new CG.Director()
+@example
+    &#x2F;&#x2F;create top level CG.Director object
+    var director = new CG.Director()
 
-     &#x2F;&#x2F;create a CG.Screen
-     var mainscreen = new CG.Screen(&#x27;mainscreen&#x27;)
+    &#x2F;&#x2F;create a CG.Screen
+    var mainscreen = new CG.Screen(&#x27;mainscreen&#x27;)
 
-     &#x2F;&#x2F;create a CG.Layer
-     var mainlayer = new CG.Layer(&#x27;mainlayer&#x27;)
+    &#x2F;&#x2F;create a CG.Layer
+    var mainlayer = new CG.Layer(&#x27;mainlayer&#x27;)
 
-     &#x2F;&#x2F;create a demo CG.Sprite
-     var demosprite = new CG.Sprite(Game.asset.getImageByName(&#x27;spritegfx&#x27;), new CG.Point(400, 240))
+    &#x2F;&#x2F;create a demo CG.Sprite
+    var demosprite = new CG.Sprite(Game.asset.getImageByName(&#x27;spritegfx&#x27;), new CG.Point(400, 240))
 
-     &#x2F;&#x2F;add&#x2F;attach the demo sprite to the layer
-     mainlayer.addElement(back)
+    &#x2F;&#x2F;add&#x2F;attach the demo sprite to the layer
+    mainlayer.addElement(back)
 
-     &#x2F;&#x2F;add&#x2F;attach mainscreen and mainlayer to the director
-     director.addScreen(mainscreen.addLayer(mainlayer))
+    &#x2F;&#x2F;add&#x2F;attach mainscreen and mainlayer to the director
+    director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -297,6 +297,14 @@ CG.Class.extend(&#x27;Director&#x27;, {
     },
     &#x2F;**
      * @method nextScreen
+    @example
+        &#x2F;&#x2F;tell the director class to fade to next screen with scale mode
+        Game.director.setFadeMode(&#x27;scale&#x27;);
+        Game.director.nextScreen(&#x27;gamescreen&#x27;, 10);
+
+        &#x2F;&#x2F;tell the director class to fade to next screen
+        Game.director.setFadeMode(&#x27;fade&#x27;);
+        Game.director.nextScreen(&#x27;settingsscreen&#x27;, 10);
      *
      * @param {string} screenname to define nextscreen for fading
      * @param {Number} duration the duration for fading
@@ -362,9 +370,6 @@ CG.Class.extend(&#x27;Director&#x27;, {
         return this
     }
 })
-
-
-
     </pre>
 </div>
 
