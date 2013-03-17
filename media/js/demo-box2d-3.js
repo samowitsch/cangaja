@@ -56,8 +56,9 @@ CG.B2DWorld.extend('B2DTestbed', {
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'L', new CG.Point(0, -400), new CG.Point(0, Game.height), this.scale))
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'R', new CG.Point(Game.width, -400), new CG.Point(Game.width, Game.height), this.scale))
         this.addCustom(new CG.B2DBlobbyGround(this.world, 'G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 50), new CG.Point(Game.width2 - 10, Game.height), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 50), new CG.Point(Game.width2 + 10, Game.height), this.scale))
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 43), new CG.Point(Game.width2 - 10, Game.height), this.scale))
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))
 
         ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, false)
         this.addCustom(ball)
@@ -161,7 +162,7 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this.jump = false
-        this.max_hor_vel = 9
+        this.max_hor_vel = 10
         this.max_ver_vel = 9
 
         this.points = 0
@@ -210,11 +211,21 @@ CG.B2DPolygon.extend('B2DPlayer', {
 CG.B2DPlayer.extend('B2DRightPlayer', {
     init: function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+
+        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50))
+        this.shadow.xscale = 1.3
+        this.shadow.name = 'beachvolleyball-shadow'
+        mainlayer.addElement(this.shadow)
+
     },
     draw: function () {
         this._super()
         this.font.draw('' + this.points, Game.width - this.offhor - this.font.getTextWidth('' + this.points), this.offver)
 
+    },
+    update: function () {
+        this._super()
+        this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
     }
 })
 
@@ -224,11 +235,20 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
 CG.B2DPlayer.extend('B2DLeftPlayer', {
     init: function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+
+        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50))
+        this.shadow.xscale = 1.3
+        this.shadow.name = 'beachvolleyball-shadow'
+        mainlayer.addElement(this.shadow)
     },
     draw: function () {
         this._super()
         this.font.draw('' + this.points, this.offhor, this.offver)
 
+    },
+    update: function () {
+        this._super()
+        this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
     }
 })
 
@@ -243,9 +263,9 @@ CG.B2DCircle.extend('B2DBall', {
         this.bodyDef.bullet = true
 
         this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 1.0
+        this.fixDef.density = 2.5
         this.fixDef.friction = 0.2
-        this.fixDef.restitution = 0.6
+        this.fixDef.restitution = 0.55
 
         this._super(world, name, image, radius, x, y, scale, stat)
 
@@ -253,11 +273,15 @@ CG.B2DCircle.extend('B2DBall', {
         this.arrow = new CG.Sprite(Game.asset.getImageByName('arrow'), new CG.Point(this.body.GetPosition().x * this.scale, 15))
         this.arrow.name = 'arrow'
         mainlayer.addElement(this.arrow)
+        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point(this.body.GetPosition().x * this.scale, Game.height - 50))
+        this.shadow.name = 'beachvolleyball-shadow'
+        mainlayer.addElement(this.shadow)
 
     },
     update: function () {
         this._super()
         this.arrow.position.x = this.body.GetPosition().x * this.scale
+        this.shadow.position.x = this.body.GetPosition().x * this.scale
     }
 })
 
@@ -303,6 +327,7 @@ Game = (function () {
                 .addImage('media/img/blobby-ctrl-left.png', 'ctrl-left')
                 .addImage('media/img/arrow-25.png', 'arrow')
                 .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
+                .addImage('media/img/beachvolleyball-shadow.png', 'beachvolleyball-shadow')
 
                 //font
                 .addImage('media/font/blobby-points.png', 'blobby-points')
