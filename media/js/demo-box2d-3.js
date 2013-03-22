@@ -5,6 +5,7 @@ var mainscreen, mainlayer
 var can, canvas, ctx
 
 var rightplayer, leftplayer, ball
+var startleft = false, startright = true
 
 var mousex = 0
 var mousey = 0
@@ -63,17 +64,24 @@ CG.B2DWorld.extend('B2DTestbed', {
         ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, false)
         this.addCustom(ball)
 
-        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), 425, 200, this.scale, false, false)
+        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 175, 230, this.scale, false, false)
         this.addCustom(rightplayer)
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 150, 200, this.scale, false, false)
+        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, false, false)
         this.addCustom(leftplayer)
 
         this.addContactListener({
             BeginContact: function (idA, idB) {
-                //console.log('BeginContact');
-            },
-
-            PostSolve: function (idA, idB, impulse) {
+                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "beachvolleyball") {
+                    startleft = startright = false
+                }
+                //beachvolleyball hits the ground
+                if (idA.name == 'G' && idB.name == "beachvolleyball") {
+                    if(ball.body.GetPosition().x * 40 > 400){
+                        startleft = true
+                    } else {
+                        startright = true
+                    }
+                }
                 //players are landing on ground, set jump flag to false
                 if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "G") {
                     b2world.elements[idA.uid - 1].jump = false
@@ -90,16 +98,19 @@ CG.B2DWorld.extend('B2DTestbed', {
                     b2world.elements[idA.uid - 1].points += 1
                     if (idA.name == 'blobby-egg-right') {
                         leftplayer.points = 0
-                        if(rightplayer.points > 4){
+                        if (rightplayer.points > 4) {
                             //alert('rightplayer lost to much contacts')
                         }
                     } else if (idA.name == 'blobby-egg-left') {
                         rightplayer.points = 0
-                        if(leftplayer.points > 4){
+                        if (leftplayer.points > 4) {
                             //alert('leftplayer lost to much contacts')
                         }
                     }
                 }
+            },
+
+            PostSolve: function (idA, idB, impulse) {
 
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
@@ -162,8 +173,8 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this.jump = false
-        this.max_hor_vel = 10
-        this.max_ver_vel = 9
+        this.max_hor_vel = 11
+        this.max_ver_vel = 11
 
         this.points = 0
         this.offhor = 20
@@ -398,7 +409,7 @@ Game = (function () {
                 if (keyCode == 87) { // w - up
                     if (leftplayer.jump == false) {
                         //self.applyImpulse(270, self.hor_impulse)
-                        leftplayer.addVelocity(new b2Vec2(0, -6))
+                        leftplayer.addVelocity(new b2Vec2(0, -9))
                         leftplayer.jump = true
                     }
                 }
@@ -414,7 +425,7 @@ Game = (function () {
                 if (keyCode == 38) { //up
                     if (rightplayer.jump == false) {
                         //self.applyImpulse(270, self.hor_impulse)
-                        rightplayer.addVelocity(new b2Vec2(0, -6))
+                        rightplayer.addVelocity(new b2Vec2(0, -9))
                         rightplayer.jump = true
                     }
                 }
@@ -440,6 +451,18 @@ Game = (function () {
         update: function () {
             //update here what ever you want
             Game.director.update()
+
+            if (startleft == true) {
+                ball.body.SetPosition(new b2Vec2(4, 4.5))
+                //ball.body.SetAngularVelocity(0)
+                ball.body.SetSleepingAllowed()
+                ball.body.SetAngularVelocity(0)
+            } else if (startright == true) {
+                ball.body.SetPosition(new b2Vec2(16, 4.5))
+                //ball.body.SetAngularVelocity(0)
+                ball.body.SetSleepingAllowed()
+                ball.body.SetAngularVelocity(0)
+            }
         },
         draw: function () {
             ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
