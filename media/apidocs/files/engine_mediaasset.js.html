@@ -184,6 +184,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
             this.image.src = image
         }
         this.ready = false
+        this.progress = 0
 
         this.images = []
         this.currimage = 0
@@ -360,8 +361,8 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
      *&#x2F;
     startPreLoad:function () {
 
-        progress = 100 &#x2F; this.assetcount * this.assetcurrent
-        this.progressScreen(progress)
+        this.progress = 100 &#x2F; this.assetcount * this.assetcurrent
+        this.progressScreen()
 
         if (this.currimage &lt; this.images.length) {
             &#x2F;&#x2F;BUG last image is not preloading
@@ -401,7 +402,11 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
             Game.create()
         }
     },
-    progressScreen:function (progress) {
+    &#x2F;**
+     * @method progressScreen
+     * @description render a progress screen to the canvas
+     *&#x2F;
+    progressScreen:function () {
         var x = (Game.bound.width - this.width) &#x2F; 2
         var y = (Game.bound.height - this.height) &#x2F; 2
         if (this.image) {
@@ -412,7 +417,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         Game.b_ctx.save()
 
         Game.b_ctx.fillStyle = this.progresscolor;
-        Game.b_ctx.fillRect((Game.bound.width - this.width) &#x2F; 2, (Game.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * progress, this.height);
+        Game.b_ctx.fillRect((Game.bound.width - this.width) &#x2F; 2, (Game.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * this.progress, this.height);
 
         Game.b_ctx.strokeStyle = this.bordercolor
         Game.b_ctx.shadowColor = this.shadowcolor

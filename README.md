@@ -40,6 +40,7 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
+* wtf, preloader is not working?
 * global renderer with webgl support and canvas 2d fallback
 * additional options argument for Box2D wrapper classes for detailed configuration?
 * MapPolyLine and MapPolygon for use as b2ChainShape in Box2D Wrapper => oh, no! b2ChainShape not exists in box2dweb 2.1.x

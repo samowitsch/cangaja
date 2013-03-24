@@ -3,6 +3,7 @@ var renderStats, updateStats
 var mainscreen, mainlayer
 
 var can, canvas, ctx
+var sfxWhistle,sfxCrowd,sfxNet,sfxIntro
 
 var rightplayer, leftplayer, ball
 var startleft = false, startright = true
@@ -81,15 +82,17 @@ CG.B2DWorld.extend('B2DTestbed', {
                     } else {
                         startright = true
                     }
+                    sfxWhistle.play()
+                    sfxCrowd.play()
                 }
+                //ball hits net
+                if (idA.name == 'N' && idB.name == "beachvolleyball") {
+                    sfxNet.play()
+                }
+
                 //players are landing on ground, set jump flag to false
                 if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "G") {
                     b2world.elements[idA.uid - 1].jump = false
-                }
-
-                //beachvolleyball hits the ground
-                if (idA.name == 'G' && idB.name == "beachvolleyball") {
-                    //alert('lost ball on ground')
                 }
 
                 //players contact with beachvolleyball
@@ -312,6 +315,35 @@ Game = (function () {
         director: new CG.Director(),
         delta: new CG.Delta(60),
         preload: function () {
+
+            //sfx
+            sfxIntro = new buzz.sound("media/sfx/blobby-intro", {
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                autoplay:true,
+                loop:true
+            });
+            sfxCrowd = new buzz.sound("media/sfx/blobby-crowd", {
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                autoplay:false,
+                loop:false
+            });
+            sfxWhistle = new buzz.sound("media/sfx/blobby-whistle", {
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                autoplay:false,
+                loop:false
+            });
+            sfxNet = new buzz.sound("media/sfx/blobby-net", {
+                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload:true,
+                autoplay:false,
+                loop:false
+            });
+
+
+
             //canvas for ouput
             canvas = document.getElementById("canvas")
             ctx = canvas.getContext("2d")

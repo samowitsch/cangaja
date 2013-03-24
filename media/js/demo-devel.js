@@ -84,7 +84,7 @@ window.onload = function () {
 };
 
 
-Game = (function () {
+var Game = (function () {
     var Game = {
         fps:60,
         width:640,
@@ -104,9 +104,9 @@ Game = (function () {
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
             Game.b_canvas.width = Game.bound.width
             Game.b_canvas.height = Game.bound.height
+            Game.b_ctx = Game.b_canvas.getContext('2d')
 
             //preload images
             Game.asset.addImage('media/img/rocket.png', 'rocket')

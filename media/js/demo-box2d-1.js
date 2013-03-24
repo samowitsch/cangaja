@@ -162,7 +162,7 @@ Game = (function () {
 
             //create Box2D World
             b2world = new CG.B2DTestbed('box2d-world')
-            b2world.debug = 1
+            b2world.debug = 0
 
             //create circle element with image
             b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
@@ -172,8 +172,8 @@ Game = (function () {
 
             //create polybody with image
             b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
-            b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, false, false)
-            b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, false, false)
+            b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, false, false)
+            b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, false, false)
 
             // bridge test
             // name, image, x, y, length, segments, segmentHeight, scale
@@ -233,10 +233,10 @@ Game = (function () {
                     b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
+                    b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
                 }
                 if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
+                    b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
                 }
                 if (evt.keyCode == 66) { //b
                     b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)

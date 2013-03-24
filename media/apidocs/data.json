@@ -371,6 +371,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "js/demo-box2d-3.js": {
+            "name": "js/demo-box2d-3.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "js/demo-sprite-collision.js": {
             "name": "js/demo-sprite-collision.js",
             "modules": {},
@@ -1048,7 +1055,7 @@
                 },
                 {
                     "name": "startframe",
-                    "description": "startframe startframe of atlas image",
+                    "description": "startframe of atlas image",
                     "type": "Number"
                 },
                 {
@@ -1683,7 +1690,7 @@
             "line": 30,
             "itemtype": "property",
             "name": "start",
-            "type": "{Number}",
+            "type": "{b2Vec2}",
             "class": "CG.B2DLine"
         },
         {
@@ -1691,7 +1698,7 @@
             "line": 35,
             "itemtype": "property",
             "name": "end",
-            "type": "{Number}",
+            "type": "{b2Vec2}",
             "class": "CG.B2DLine"
         },
         {
@@ -1840,7 +1847,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 50,
+            "line": 51,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -1848,7 +1855,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 55,
+            "line": 56,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -1856,7 +1863,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 60,
+            "line": 61,
             "itemtype": "property",
             "name": "vecs",
             "type": "{Array}",
@@ -1864,7 +1871,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 67,
+            "line": 68,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{b2Body.b2_staticBody/b2Body.b2_dynamicBody}",
@@ -1872,14 +1879,14 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 76,
+            "line": 77,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DPolygon"
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 80,
+            "line": 81,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -1887,7 +1894,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 85,
+            "line": 86,
             "itemtype": "property",
             "name": "bullet",
             "type": "{*}",
@@ -1895,7 +1902,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 90,
+            "line": 91,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{*}",
@@ -1903,7 +1910,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 100,
+            "line": 101,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -1911,7 +1918,7 @@
         },
         {
             "file": "engine/b2d-polygon.js",
-            "line": 121,
+            "line": 122,
             "itemtype": "method",
             "name": "createVecs",
             "return": {
@@ -2694,8 +2701,8 @@
             "name": "loadImage",
             "params": [
                 {
-                    "name": "image",
-                    "description": "imgpath, image object or tpimage object to use",
+                    "name": "imgpath,",
+                    "description": "image object or tpimage object to use",
                     "type": "String, image, tpimage"
                 }
             ],
@@ -5064,7 +5071,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 57,
+            "line": 58,
             "itemtype": "method",
             "name": "addImage",
             "params": [
@@ -5086,7 +5093,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 72,
+            "line": 73,
             "itemtype": "method",
             "name": "addFont",
             "params": [
@@ -5108,7 +5115,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 87,
+            "line": 88,
             "itemtype": "method",
             "name": "addXml",
             "params": [
@@ -5130,7 +5137,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 102,
+            "line": 103,
             "itemtype": "method",
             "name": "addJson",
             "params": [
@@ -5152,7 +5159,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 117,
+            "line": 118,
             "itemtype": "method",
             "name": "getImageByName",
             "params": [
@@ -5170,7 +5177,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 134,
+            "line": 135,
             "itemtype": "method",
             "name": "getImagesByName",
             "params": [
@@ -5188,7 +5195,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 155,
+            "line": 156,
             "itemtype": "method",
             "name": "getFontByName",
             "params": [
@@ -5206,7 +5213,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 168,
+            "line": 169,
             "itemtype": "method",
             "name": "getXmlByName",
             "params": [
@@ -5224,7 +5231,7 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 181,
+            "line": 182,
             "itemtype": "method",
             "name": "getJsonByName",
             "params": [
@@ -5242,9 +5249,18 @@
         },
         {
             "file": "engine/mediaasset.js",
-            "line": 194,
+            "line": 195,
             "itemtype": "method",
             "name": "startPreLoad",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "engine/mediaasset.js",
+            "line": 241,
+            "itemtype": "method",
+            "name": "progressScreen",
+            "description": "render a progress screen to the canvas",
             "class": "CG.MediaAsset",
             "module": "CG"
         },
@@ -6713,6 +6729,55 @@
             "module": "CG"
         },
         {
+            "file": "js/demo-box2d-3.js",
+            "line": 50,
+            "description": "extend B2DWorld and create own objects in the constructor.",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 126,
+            "description": "extend B2DLine and define/overwrite custom bodyDef and fixDef in constructor",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 144,
+            "description": "extend B2DLine and define/overwrite bodyDef and fixDef in constructor",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 162,
+            "description": "extend B2DPolygon and define own bodyDef/fixDef and some additional properties/methods",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 222,
+            "description": "extend B2DPlayer with additional font drawing",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 246,
+            "description": "extend B2DPlayer with additional font drawing",
+            "class": "",
+            "module": "CG"
+        },
+        {
+            "file": "js/demo-box2d-3.js",
+            "line": 269,
+            "description": "extend B2DCircle adding custom bodyDef/fixDef and control arrow (sprite)",
+            "class": "",
+            "module": "CG"
+        },
+        {
             "file": "js/demo-sprite-collision.js",
             "line": 191,
             "description": "callback for map collision detection.\nfor the moment the map object sends the depending sprite and the tile as arguments",
@@ -6850,6 +6915,34 @@
         {
             "message": "Missing item type",
             "line": " engine/translate.js:32"
+        },
+        {
+            "message": "Missing item type\nextend B2DWorld and create own objects in the constructor.",
+            "line": " js/demo-box2d-3.js:50"
+        },
+        {
+            "message": "Missing item type\nextend B2DLine and define/overwrite custom bodyDef and fixDef in constructor",
+            "line": " js/demo-box2d-3.js:126"
+        },
+        {
+            "message": "Missing item type\nextend B2DLine and define/overwrite bodyDef and fixDef in constructor",
+            "line": " js/demo-box2d-3.js:144"
+        },
+        {
+            "message": "Missing item type\nextend B2DPolygon and define own bodyDef/fixDef and some additional properties/methods",
+            "line": " js/demo-box2d-3.js:162"
+        },
+        {
+            "message": "Missing item type\nextend B2DPlayer with additional font drawing",
+            "line": " js/demo-box2d-3.js:222"
+        },
+        {
+            "message": "Missing item type\nextend B2DPlayer with additional font drawing",
+            "line": " js/demo-box2d-3.js:246"
+        },
+        {
+            "message": "Missing item type\nextend B2DCircle adding custom bodyDef/fixDef and control arrow (sprite)",
+            "line": " js/demo-box2d-3.js:269"
         },
         {
             "message": "Missing item type\ncallback for map collision detection.\nfor the moment the map object sends the depending sprite and the tile as arguments",

@@ -193,7 +193,7 @@ CG.B2DEntity.extend(&#x27;B2DBridge&#x27;, {
      * @param scale         {Number}     the world scale of B2DWorld
      * @return {*}
      *&#x2F;
-    init:function (world, name, image, x, y, length, segments, segmentHeight, scale) {
+    init: function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
         &#x2F;**
          * @property length
@@ -291,7 +291,7 @@ CG.B2DEntity.extend(&#x27;B2DBridge&#x27;, {
 
         return this
     },
-    draw:function () {
+    draw: function () {
         for (var i = 2; i &lt;= this.bodyCount; i++) {
             var x = this.bodyGroup[i].GetPosition().x
             var y = this.bodyGroup[i].GetPosition().y

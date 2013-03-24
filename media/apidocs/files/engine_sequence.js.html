@@ -177,7 +177,7 @@ CG.Entity.extend(&#x27;Sequence&#x27;, {
      * @param sequencename
      * @return {*}
      *&#x2F;
-    init:function (sequencename) {
+    init: function (sequencename) {
         this._super(sequencename)
         &#x2F;**
          * @property current
@@ -202,11 +202,11 @@ CG.Entity.extend(&#x27;Sequence&#x27;, {
      * @param translationobj {translation} the translation object to add
      * @return {*}
      *&#x2F;
-    addTranslation:function (translationobj) {
+    addTranslation: function (translationobj) {
         this.translations.push(translationobj)
         return this
     },
-    update:function (callback) {
+    update: function (callback) {
         if (this.current &lt; this.translations.length) {
             if (this.translations[this.current].finished === false) {
                 this.translations[this.current].update()
@@ -221,10 +221,10 @@ CG.Entity.extend(&#x27;Sequence&#x27;, {
             }
         }
     },
-    draw:function () {
+    draw: function () {
 
     },
-    reset:function () {
+    reset: function () {
         for (var i = 0, l = this.translations.length; i &lt; l; i++) {
             this.translations[i].reset()
         }
