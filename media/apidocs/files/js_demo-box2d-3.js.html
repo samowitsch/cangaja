@@ -109,6 +109,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
@@ -398,7 +400,7 @@ CG.B2DPlayer.extend(&#x27;B2DRightPlayer&#x27;, {
     },
     draw: function () {
         this._super()
-        this.font.draw(&#x27;&#x27; + this.points, Game.width - this.offhor - this.font.getTextWidth(&#x27;&#x27; + this.points), this.offver)
+        this.font.drawText(&#x27;&#x27; + this.points, Game.width - this.offhor - this.font.getTextWidth(&#x27;&#x27; + this.points), this.offver)
 
     },
     update: function () {
@@ -421,7 +423,7 @@ CG.B2DPlayer.extend(&#x27;B2DLeftPlayer&#x27;, {
     },
     draw: function () {
         this._super()
-        this.font.draw(&#x27;&#x27; + this.points, this.offhor, this.offver)
+        this.font.drawText(&#x27;&#x27; + this.points, this.offhor, this.offver)
 
     },
     update: function () {
@@ -668,7 +670,7 @@ Game = (function () {
 
             &#x2F;&#x2F;text stuff
             var dummytext = &#x27;Tribute to blobby ;o)&#x27;
-            small.draw(dummytext, Game.width2 - (small.getTextWidth(dummytext) &#x2F; 2), 10)
+            small.drawText(dummytext, Game.width2 - (small.getTextWidth(dummytext) &#x2F; 2), 10)
 
             &#x2F;&#x2F; draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

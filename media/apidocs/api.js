@@ -36,6 +36,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Sequence",
         "CG.Sprite",
         "CG.TPImage",
+        "CG.Text",
         "CG.TexturePacker",
         "CG.Translate",
         "CG.Vector"

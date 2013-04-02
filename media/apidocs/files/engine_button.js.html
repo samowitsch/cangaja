@@ -109,6 +109,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
@@ -232,7 +234,7 @@ CG.Sprite.extend(&#x27;Button&#x27;, {
             Game.b_ctx.rotate(r * CG.Const_PI_180)
             Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale &#x2F; 2), 0 - (this.image.height * this.yscale &#x2F; 2), this.image.width * this.xscale, this.image.height * this.yscale)
         }
-        this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) &#x2F; 2 &gt;&gt; 0), 0 - ((this.font.getFontSize() &#x2F; 2) &gt;&gt; 0))
+        this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) &#x2F; 2 &gt;&gt; 0), 0 - ((this.font.getFontSize() &#x2F; 2) &gt;&gt; 0))
         Game.b_ctx.restore()
     }
 })

@@ -8,7 +8,7 @@
  small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
  //draw text to canvas
- small.draw('Foo bar!', xpos, ypos)
+ small.drawText('Foo bar!', xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -27,7 +27,7 @@ CG.Entity.extend('Font', {
         /**
          @property initText {string}
          */
-        this.initText = ''
+        this.fontFile = ''
         /**
          @property chars {Array}
          */
@@ -105,13 +105,22 @@ CG.Entity.extend('Font', {
         }
     },
     /**
+     * @method draw
+     */
+    draw: function () {
+        throw {
+            name: 'Font Error',
+            message: 'TODO, not defined yet.'
+        }
+    },
+    /**
      * @description draw the given text to the canvas
      * @method draw
      * @param text {string} the text to draw
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      */
-    draw: function (text, xpos, ypos) {
+    drawText: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -166,12 +175,12 @@ CG.Entity.extend('Font', {
     loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == 'string') {
-            this.initText = loadString(fontfile)
+            this.fontFile = loadString(fontfile)
         } else {
-            this.initText = fontfile.data
+            this.fontFile = fontfile.data
         }
 
-        var lines = this.initText.split('\n')
+        var lines = this.fontFile.split('\n')
         for (l in lines) {
             line = lines[l].trim()
 
@@ -228,7 +237,7 @@ CG.Entity.extend('Font', {
                     data = pagedata[p]
                     if (data.startsWith('file=')) {
                         var fn = data.split('=')
-                        this.atlas.src = 'media/font/' + fn[1].split('"').join('')
+                        this.atlas.src = Game.path + 'media/font/' + fn[1].split('"').join('')
                     }
 
                 }

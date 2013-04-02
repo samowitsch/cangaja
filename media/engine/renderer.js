@@ -16,7 +16,7 @@ CG.Class.extend('CanvasRenderer', {
      * @constructor
      * @return {*}
      */
-    init:function(){
+    init:function(canvas){
 
         //TODO the renderer recognizes the canvas features WebGL/Canvas
 

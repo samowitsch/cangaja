@@ -335,6 +335,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "engine/text.js": {
+            "name": "engine/text.js",
+            "modules": {},
+            "classes": {
+                "CG.Text": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "engine/texturepacker.js": {
             "name": "engine/texturepacker.js",
             "modules": {},
@@ -439,6 +448,7 @@
                 "CG.Screen": 1,
                 "CG.Sequence": 1,
                 "CG.Sprite": 1,
+                "CG.Text": 1,
                 "CG.TexturePacker": 1,
                 "CG.TPImage": 1,
                 "CG.Translate": 1,
@@ -973,6 +983,21 @@
             "line": 1,
             "description": "CG.Sprite",
             "extends": "CG.Rectangle"
+        },
+        "CG.Text": {
+            "name": "CG.Text",
+            "shortname": "CG.Text",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "engine/text.js",
+            "line": 1,
+            "description": "Future plans:\nCG.Text => support for different text drawing modes like textblock, text alignment, text ticker or scroller",
+            "extends": "CG.Entity"
         },
         "CG.TexturePacker": {
             "name": "CG.TexturePacker",
@@ -2265,7 +2290,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 123,
+            "line": 124,
             "description": "Custom extended objects can be added to the B2DWork with this method.",
             "itemtype": "method",
             "name": "addCustom",
@@ -2279,7 +2304,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 136,
+            "line": 137,
             "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
@@ -2314,7 +2339,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 154,
+            "line": 155,
             "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
@@ -2339,7 +2364,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 170,
+            "line": 171,
             "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
@@ -2379,7 +2404,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 189,
+            "line": 190,
             "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -2424,7 +2449,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 211,
+            "line": 212,
             "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
@@ -2473,7 +2498,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 232,
+            "line": 233,
             "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
@@ -2522,7 +2547,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 253,
+            "line": 254,
             "description": "Enables dragging B2D objects with the mouse.",
             "itemtype": "method",
             "name": "mouseDownAt",
@@ -2542,14 +2567,14 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 279,
+            "line": 280,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld"
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 286,
+            "line": 287,
             "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
@@ -2573,7 +2598,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 319,
+            "line": 320,
             "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -2596,7 +2621,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 343,
+            "line": 344,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -2607,7 +2632,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 350,
+            "line": 351,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -2620,7 +2645,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 357,
+            "line": 358,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -2641,7 +2666,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 370,
+            "line": 371,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -2654,7 +2679,7 @@
         },
         {
             "file": "engine/b2d-world.js",
-            "line": 391,
+            "line": 392,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -4027,6 +4052,14 @@
         {
             "file": "engine/font.js",
             "line": 107,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Font",
+            "module": "CG"
+        },
+        {
+            "file": "engine/font.js",
+            "line": 116,
             "description": "draw the given text to the canvas",
             "itemtype": "method",
             "name": "draw",
@@ -4052,7 +4085,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 128,
+            "line": 137,
             "description": "get the line height of the current font",
             "itemtype": "method",
             "name": "getLineHeight",
@@ -4065,7 +4098,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 137,
+            "line": 146,
             "description": "get the font size of the current font",
             "itemtype": "method",
             "name": "getFontSize",
@@ -4078,7 +4111,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 146,
+            "line": 155,
             "description": "get the width of the given text",
             "itemtype": "method",
             "name": "getTextWidth",
@@ -4098,7 +4131,7 @@
         },
         {
             "file": "engine/font.js",
-            "line": 161,
+            "line": 170,
             "description": "loadFont - load and parse the given fontfile",
             "itemtype": "method",
             "name": "loadFont",
@@ -4141,7 +4174,7 @@
         },
         {
             "file": "engine/layer.js",
-            "line": 54,
+            "line": 55,
             "description": "addElement to the layer",
             "itemtype": "method",
             "name": "addElement",
@@ -4157,7 +4190,7 @@
         },
         {
             "file": "engine/layer.js",
-            "line": 64,
+            "line": 65,
             "description": "getElementByName",
             "itemtype": "method",
             "name": "getElementByName",
@@ -4177,7 +4210,7 @@
         },
         {
             "file": "engine/layer.js",
-            "line": 79,
+            "line": 80,
             "description": "getElementsByName",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -6157,7 +6190,105 @@
             "file": "engine/string.js",
             "line": 1,
             "description": "string functions",
-            "class": "CG.TexturePacker",
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 11,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "font",
+                    "description": "the font object (CG.Font) to use"
+                }
+            ],
+            "is_constructor": 1,
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 20,
+            "itemtype": "property",
+            "name": "font",
+            "type": "CG.Font",
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 25,
+            "itemtype": "property",
+            "name": "text",
+            "type": "String",
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 30,
+            "itemtype": "property",
+            "name": "textcurrent",
+            "type": "String",
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 37,
+            "itemtype": "method",
+            "name": "initAsTextblock",
+            "params": [
+                {
+                    "name": "font",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 46,
+            "itemtype": "method",
+            "name": "setText",
+            "params": [
+                {
+                    "name": "text",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 55,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Text",
+            "module": "CG"
+        },
+        {
+            "file": "engine/text.js",
+            "line": 61,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Text",
             "module": "CG"
         },
         {
@@ -6793,7 +6924,7 @@
         },
         {
             "file": "js/demo-tilemap-advanced-tilecollision.js",
-            "line": 169,
+            "line": 168,
             "description": "callback for map collision detection.\nfor the moment the map object sends the depending sprite and the tile as arguments",
             "class": "",
             "module": "CG"
@@ -6819,6 +6950,14 @@
         {
             "message": "replacing incorrect tag: extend with extends",
             "line": " engine/renderer.js:1"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " engine/text.js:37"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " engine/text.js:46"
         },
         {
             "message": "unknown tag: init",
@@ -6954,7 +7093,7 @@
         },
         {
             "message": "Missing item type\ncallback for map collision detection.\nfor the moment the map object sends the depending sprite and the tile as arguments",
-            "line": " js/demo-tilemap-advanced-tilecollision.js:169"
+            "line": " js/demo-tilemap-advanced-tilecollision.js:168"
         }
     ]
 }

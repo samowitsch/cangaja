@@ -38,9 +38,12 @@ CG.Entity.extend('Screen', {
 
     },
     update:function () {
-        this.layers.forEach(function (element, index) {
-            element.update()
-        }, this)
+//        this.layers.forEach(function (element, index) {
+//            element.update()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
+            this.layers[i].update()
+        }
     },
     draw:function () {
         Game.b_ctx.save()
@@ -48,9 +51,15 @@ CG.Entity.extend('Screen', {
             Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
             Game.b_ctx.scale(this.xscale, this.yscale)
         }
-        this.layers.forEach(function (element, index) {
-            element.draw()
-        }, this)
+
+//        this.layers.forEach(function (element, index) {
+//            element.draw()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
+            this.layers[i].draw()
+        }
+
+
         Game.b_ctx.restore()
 
     },

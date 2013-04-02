@@ -280,7 +280,7 @@ CG.Entity.extend('Map', {
                         this.tileset.offsety = parseInt(element.getElementsByTagName('tileoffset')[0].getAttribute('y'))
                     }
                     var image = element.getElementsByTagName('image')[0]
-                    this.atlas.src = 'media/map/' + image.getAttribute('source')
+                    this.atlas.src = Game.path + 'media/map/' + image.getAttribute('source')
 
                     this.atlaswidth = parseInt(image.getAttribute('width'))
                     this.atlasheight = parseInt(image.getAttribute('height'))
@@ -489,7 +489,7 @@ CG.Entity.extend('Map', {
 
 
         //get tile properties
-        this.atlas.src = 'media/map/' + this.json.tilesets[0].image
+        this.atlas.src = Game.path + 'media/map/' + this.json.tilesets[0].image
 
         this.atlaswidth = this.json.tilesets[0].imagewidth
         this.atlasheight = this.json.tilesets[0].imageheight

@@ -102,9 +102,13 @@ CG.Layer.extend('B2DWorld', {
             this.mouseUp();
         }
 
-        this.elements.forEach(function (element) {
-            element.update()
-        }, this)
+//        this.elements.forEach(function (element) {
+//            element.update()
+//        }, this)
+
+        for(var i = 0, l = this.elements.length; i < l; i++){
+            this.elements[i].update()
+        }
 
 
     },
@@ -115,9 +119,22 @@ CG.Layer.extend('B2DWorld', {
             this.world.DrawDebugData()
             this.world.ClearForces()
         }
-        this.elements.forEach(function (element) {
-            element.draw()
-        }, this)
+
+
+        //TODO ? place for CanvasRenderer ?
+
+
+//        this.elements.forEach(function (element) {
+//            element.draw()
+//        }, this)
+
+        for(var i = 0, l = this.elements.length; i < l; i++){
+            this.elements[i].draw()
+        }
+
+
+
+
         Game.b_ctx.restore()
     },
     /**

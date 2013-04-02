@@ -109,6 +109,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
@@ -191,7 +193,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
         &#x2F;**
          @property initText {string}
          *&#x2F;
-        this.initText = &#x27;&#x27;
+        this.fontFile = &#x27;&#x27;
         &#x2F;**
          @property chars {Array}
          *&#x2F;
@@ -269,13 +271,22 @@ CG.Entity.extend(&#x27;Font&#x27;, {
         }
     },
     &#x2F;**
+     * @method draw
+     *&#x2F;
+    draw: function () {
+        throw {
+            name: &#x27;Font Error&#x27;,
+            message: &#x27;TODO, not defined yet.&#x27;
+        }
+    },
+    &#x2F;**
      * @description draw the given text to the canvas
      * @method draw
      * @param text {string} the text to draw
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      *&#x2F;
-    draw: function (text, xpos, ypos) {
+    drawText: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -330,12 +341,12 @@ CG.Entity.extend(&#x27;Font&#x27;, {
     loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == &#x27;string&#x27;) {
-            this.initText = loadString(fontfile)
+            this.fontFile = loadString(fontfile)
         } else {
-            this.initText = fontfile.data
+            this.fontFile = fontfile.data
         }
 
-        var lines = this.initText.split(&#x27;\n&#x27;)
+        var lines = this.fontFile.split(&#x27;\n&#x27;)
         for (l in lines) {
             line = lines[l].trim()
 

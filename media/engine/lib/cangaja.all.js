@@ -223,7 +223,7 @@ CG.Class.extend('CanvasRenderer', {
      * @constructor
      * @return {*}
      */
-    init:function(){
+    init:function(canvas){
 
         //TODO the renderer recognizes the canvas features WebGL/Canvas
 
@@ -1764,7 +1764,7 @@ CG.Sprite.extend('Button', {
             Game.b_ctx.rotate(r * CG.Const_PI_180)
             Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
         }
-        this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+        this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
         Game.b_ctx.restore()
     }
 })
@@ -1859,12 +1859,16 @@ CG.Class.extend('MediaAsset', {
      * @method init
      * @constructor
      * @param image {string} image path to background image of preloader
+     * @param ctx {canvas context} canvas context for drawing
      */
-    init:function (image) {
+    init:function (image, ctx) {
         if (image) {
             this.image = new Image()
             this.image.src = image
         }
+        
+        this.ctx = ctx
+        
         this.ready = false
         this.progress = 0
 
@@ -2092,31 +2096,31 @@ CG.Class.extend('MediaAsset', {
         var x = (Game.bound.width - this.width) / 2
         var y = (Game.bound.height - this.height) / 2
         if (this.image) {
-            Game.b_ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
+            this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
         } else {
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+            this.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
         }
-        Game.b_ctx.save()
+        this.ctx.save()
 
-        Game.b_ctx.fillStyle = this.progresscolor;
-        Game.b_ctx.fillRect((Game.bound.width - this.width) / 2, (Game.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
+        this.ctx.fillStyle = this.progresscolor;
+        this.ctx.fillRect((Game.bound.width - this.width) / 2, (Game.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
 
-        Game.b_ctx.strokeStyle = this.bordercolor
-        Game.b_ctx.shadowColor = this.shadowcolor
-        Game.b_ctx.shadowBlur = this.shadowblur
-        Game.b_ctx.shadowOffsetX = this.shadowoffsetx
-        Game.b_ctx.shadowOffsetY = this.shadowoffsety
-        Game.b_ctx.beginPath();
-        Game.b_ctx.moveTo(x + this.radius, y);
-        Game.b_ctx.lineTo(x + this.width - (1 * this.radius), y)
-        Game.b_ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
-        Game.b_ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
-        Game.b_ctx.lineTo(x + this.radius, 2 * this.radius + y)
-        Game.b_ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
-        Game.b_ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
-        Game.b_ctx.lineWidth = this.linewidth
-        Game.b_ctx.stroke()
-        Game.b_ctx.restore()
+        this.ctx.strokeStyle = this.bordercolor
+        this.ctx.shadowColor = this.shadowcolor
+        this.ctx.shadowBlur = this.shadowblur
+        this.ctx.shadowOffsetX = this.shadowoffsetx
+        this.ctx.shadowOffsetY = this.shadowoffsety
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + this.radius, y);
+        this.ctx.lineTo(x + this.width - (1 * this.radius), y)
+        this.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
+        this.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
+        this.ctx.lineTo(x + this.radius, 2 * this.radius + y)
+        this.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
+        this.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
+        this.ctx.lineWidth = this.linewidth
+        this.ctx.stroke()
+        this.ctx.restore()
     }
 })
 
@@ -2136,7 +2140,7 @@ function MediaAssetException(message) {
  small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
  //draw text to canvas
- small.draw('Foo bar!', xpos, ypos)
+ small.drawText('Foo bar!', xpos, ypos)
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -2155,7 +2159,7 @@ CG.Entity.extend('Font', {
         /**
          @property initText {string}
          */
-        this.initText = ''
+        this.fontFile = ''
         /**
          @property chars {Array}
          */
@@ -2233,13 +2237,22 @@ CG.Entity.extend('Font', {
         }
     },
     /**
+     * @method draw
+     */
+    draw: function () {
+        throw {
+            name: 'Font Error',
+            message: 'TODO, not defined yet.'
+        }
+    },
+    /**
      * @description draw the given text to the canvas
      * @method draw
      * @param text {string} the text to draw
      * @param xpos {Number} the x position
      * @param ypos {Number} the y position
      */
-    draw: function (text, xpos, ypos) {
+    drawText: function (text, xpos, ypos) {
         currx = 0
         curry = 0
         c = 0
@@ -2294,12 +2307,12 @@ CG.Entity.extend('Font', {
     loadFont: function (fontfile) {
         idnum = 0
         if (typeof fontfile == 'string') {
-            this.initText = loadString(fontfile)
+            this.fontFile = loadString(fontfile)
         } else {
-            this.initText = fontfile.data
+            this.fontFile = fontfile.data
         }
 
-        var lines = this.initText.split('\n')
+        var lines = this.fontFile.split('\n')
         for (l in lines) {
             line = lines[l].trim()
 
@@ -2356,7 +2369,7 @@ CG.Entity.extend('Font', {
                     data = pagedata[p]
                     if (data.startsWith('file=')) {
                         var fn = data.split('=')
-                        this.atlas.src = 'media/font/' + fn[1].split('"').join('')
+                        this.atlas.src = Game.path + 'media/font/' + fn[1].split('"').join('')
                     }
 
                 }
@@ -2409,6 +2422,98 @@ CG.Entity.extend('Font', {
 
 
 /**
+ * @description
+ *
+ * Future plans:
+ * CG.Text => support for different text drawing modes like textblock, text alignment, text ticker or scroller.
+ *
+ * @class CG.Text
+ * @extends CG.Entity
+ */
+CG.Entity.extend('Text', {
+    /**
+     * @method init
+     * @param font the font object (CG.Font) to use
+     * @constructor
+     * @return {*}
+     */
+
+    init: function (font) {
+
+        /**
+         @property font {CG.Font}
+         */
+        this.font = font
+
+        /**
+         * @property text {string}
+         */
+        this.text = ''
+
+        /**
+         * @property textcurrent {string}
+         */
+        this.textcurrent = ''
+
+        /**
+         * @property x {number} the x position
+         */
+        this.x = 0
+
+        /**
+         * @property y {number} the y position
+         */
+        this.y = 0
+
+        /**
+         * @property width {number} width of textbox
+         */
+        this.width = 0
+
+        /**
+         * @property height {number} height of textbox
+         */
+        this.height = 0
+
+        /**
+         * @property textAlign {string} alignment of text
+         */
+        this.textAlign = 'left' //left, right, centered
+
+        return this
+    },
+    initAsTextblock: function (font) {
+
+        return this
+    },
+    initAsScroller: function () {
+
+    },
+    initAsTicker: function () {
+
+    },
+    /**
+     * @method setText
+     * @param text
+     * @returns {*}
+     */
+    setText: function (text) {
+        this.text = text
+        return this
+    },
+    /**
+     * @method update
+     */
+    update: function () {
+
+    },
+    /**
+     * @method draw
+     */
+    draw: function () {
+
+    }
+})/**
  * @description
  *
  * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
@@ -2655,9 +2760,12 @@ CG.Entity.extend('Screen', {
 
     },
     update:function () {
-        this.layers.forEach(function (element, index) {
-            element.update()
-        }, this)
+//        this.layers.forEach(function (element, index) {
+//            element.update()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
+            this.layers[i].update()
+        }
     },
     draw:function () {
         Game.b_ctx.save()
@@ -2665,9 +2773,15 @@ CG.Entity.extend('Screen', {
             Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
             Game.b_ctx.scale(this.xscale, this.yscale)
         }
-        this.layers.forEach(function (element, index) {
-            element.draw()
-        }, this)
+
+//        this.layers.forEach(function (element, index) {
+//            element.draw()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
+            this.layers[i].draw()
+        }
+
+
         Game.b_ctx.restore()
 
     },
@@ -2724,12 +2838,19 @@ CG.Entity.extend('Layer', {
     },
     update:function () {
         if (this.visible == true) {
-            this.elements.forEach(function (element, index) {
-                element.update()
-                if (element.status == 1) {
-                    this.elementsToDelete.push(index)
+//            this.elements.forEach(function (element, index) {
+//                element.update()
+//                if (element.status == 1) {
+//                    this.elementsToDelete.push(index)
+//                }
+//            }, this)
+
+            for(var i = 0, l = this.elements.length; i < l; i++){
+                this.elements[i].update()
+                if(this.elements[i].status == 1){
+                    this.elementsToDelete.push(this.elements[i])
                 }
-            }, this)
+            }
 
             if (this.elementsToDelete.length > 0) {
                 this._deleteElements()
@@ -2738,9 +2859,19 @@ CG.Entity.extend('Layer', {
     },
     draw:function () {
         if (this.visible == true) {
-            this.elements.forEach(function (element) {
-                element.draw()
-            }, this)
+
+            //TODO ? place for CanvasRenderer ?
+
+//            this.elements.forEach(function (element) {
+//                element.draw()
+//            }, this)
+
+
+            for(var i = 0, l = this.elements.length; i < l; i++){
+                this.elements[i].draw()
+            }
+
+
         }
     },
     _deleteElements:function () {
@@ -3278,7 +3409,7 @@ CG.Entity.extend('Map', {
                         this.tileset.offsety = parseInt(element.getElementsByTagName('tileoffset')[0].getAttribute('y'))
                     }
                     var image = element.getElementsByTagName('image')[0]
-                    this.atlas.src = 'media/map/' + image.getAttribute('source')
+                    this.atlas.src = Game.path + 'media/map/' + image.getAttribute('source')
 
                     this.atlaswidth = parseInt(image.getAttribute('width'))
                     this.atlasheight = parseInt(image.getAttribute('height'))
@@ -3487,7 +3618,7 @@ CG.Entity.extend('Map', {
 
 
         //get tile properties
-        this.atlas.src = 'media/map/' + this.json.tilesets[0].image
+        this.atlas.src = Game.path + 'media/map/' + this.json.tilesets[0].image
 
         this.atlaswidth = this.json.tilesets[0].imagewidth
         this.atlasheight = this.json.tilesets[0].imageheight
@@ -16768,9 +16899,13 @@ CG.Layer.extend('B2DWorld', {
             this.mouseUp();
         }
 
-        this.elements.forEach(function (element) {
-            element.update()
-        }, this)
+//        this.elements.forEach(function (element) {
+//            element.update()
+//        }, this)
+
+        for(var i = 0, l = this.elements.length; i < l; i++){
+            this.elements[i].update()
+        }
 
 
     },
@@ -16781,9 +16916,22 @@ CG.Layer.extend('B2DWorld', {
             this.world.DrawDebugData()
             this.world.ClearForces()
         }
-        this.elements.forEach(function (element) {
-            element.draw()
-        }, this)
+
+
+        //TODO ? place for CanvasRenderer ?
+
+
+//        this.elements.forEach(function (element) {
+//            element.draw()
+//        }, this)
+
+        for(var i = 0, l = this.elements.length; i < l; i++){
+            this.elements[i].draw()
+        }
+
+
+
+
         Game.b_ctx.restore()
     },
     /**

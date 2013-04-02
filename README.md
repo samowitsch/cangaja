@@ -40,14 +40,14 @@ This is a very early version of it.
 
 ## Todo/wishlist/bugs:
 
-* wtf, preloader is not working?
-* global renderer with webgl support and canvas 2d fallback
+* eliminate Array.forEach
+* global renderer with webgl support and canvas 2d fallback?
 * additional options argument for Box2D wrapper classes for detailed configuration?
 * MapPolyLine and MapPolygon for use as b2ChainShape in Box2D Wrapper => oh, no! b2ChainShape not exists in box2dweb 2.1.x
 * Tilemap => decision what to prefer => xml or json format?
 * bugfixing Tilemap with tmx csv format is not animating correctly (tmx with xml and tilemap exported as json works!)
 * fix missing rotation when follower sprite using TPImage
-* add support for additional [Tiled Map Editor] features like object positioning, object path and object group
+* add support for additional [Tiled Map Editor] features like object positioning(done!), object path and object group(done!)
 * support [TexturePacker] cropping option
 * class Sequence rewind feature
 * create new class Writer or Text for textblocks and textscroller using update/draw => then it can be an element of a layer
@@ -56,7 +56,7 @@ This is a very early version of it.
 * clean up demo code ;o)
 * z-index for objects useful?
 * class bitmap method clearcircle is not working with Ejecta ;o(
-* class font => textblock, alignment, textticker, textscroller features
+* class text => textblock, alignment, textticker, textscroller features
 * [ParticleDesigner] support?
 * are sprites and other objects out of the game screen (Game.bound) => no drawing and/or not updating of this object?
 * configurable handle for sprite, animation and button (maybe also button)
@@ -67,6 +67,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-04-02 [fixed] - preloader had wrong context
 * 2013-03-05 [added] - apidoc generated with yuidoc
 * 2013-02-22 [added] - added B2DLine class
 * 2013-02-20 [added] - added working B2DBridge class
@@ -160,10 +161,10 @@ This is a very early version of it.
         + Map
         + Menu => TODO
         + Sprite
-      + B2DWorld
-        + B2DCircle
-        + B2DRectangle
-        + B2DPolygon
+        + B2DWorld
+          + B2DCircle
+          + B2DRectangle
+          + B2DPolygon
 
 # Examples #
 
@@ -219,7 +220,7 @@ Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
 font = new CG.Font().loadFont(Game.asset.getFontByName('heiti'))
 
 //draw some text
-font.draw('Hello world ;o)', xpos, ypos)
+font.drawText('Hello world ;o)', xpos, ypos)
 ```
 
 

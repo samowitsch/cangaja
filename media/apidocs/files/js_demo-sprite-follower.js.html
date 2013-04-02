@@ -109,6 +109,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
@@ -315,10 +317,10 @@ Game = (function () {
             Game.director.draw()
 
             &#x2F;&#x2F;text stuff
-            abadi.draw(&#x27;cangaja - Canvas Game JavaScript FW&#x27;, xpos, ypos)
-            small.draw(&#x27;Sprite class example.&#x27;, xpos, ypos + 56)
-            small.draw(&#x27;This sprite example shows the follower function.&#x27;, xpos, ypos + 56 + small.getLineHeight())
-            small.draw(mapcollisiontext, xpos, ypos + 56 + (small.getLineHeight() * 2))
+            abadi.drawText(&#x27;cangaja - Canvas Game JavaScript FW&#x27;, xpos, ypos)
+            small.drawText(&#x27;Sprite class example.&#x27;, xpos, ypos + 56)
+            small.drawText(&#x27;This sprite example shows the follower function.&#x27;, xpos, ypos + 56 + small.getLineHeight())
+            small.drawText(mapcollisiontext, xpos, ypos + 56 + (small.getLineHeight() * 2))
 
             &#x2F;&#x2F; draw Game.b_canvas to the canvas
             ctx.drawImage(Game.b_canvas, 0, 0)

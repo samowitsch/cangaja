@@ -109,6 +109,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
@@ -201,6 +203,7 @@ CG.Entity.extend(&#x27;Layer&#x27;, {
     },
     draw:function () {
         if (this.visible == true) {
+            &#x2F;&#x2F;TODO ? place for CanvasRenderer ?
             this.elements.forEach(function (element) {
                 element.draw()
             }, this)
