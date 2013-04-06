@@ -1,15 +1,25 @@
+ejecta.include('cangaja.all.js');
+
+
+/*
+
+ INSTRUCTIONS:
+ This file must be copied into ./App in order to work
+
+ */
+var w = window.innerWidth;
+var h = window.innerHeight;
+var w2 = w / 2;
+var h2 = h / 2;
+
+var canvas = document.getElementById('canvas');
+canvas.width = w;
+canvas.height = h;
+
+var ctx = canvas.getContext('2d');
+
+
 var mainscreen, mainlayer
-
-//waiting to get started ;o)
-window.onload = function () {
-
-    Game.init({
-        place: document.body,
-        width: 640,
-        height: 480
-    })
-    Game.preload()
-};
 
 // the Game object
 Game = (function () {
@@ -20,7 +30,7 @@ Game = (function () {
         height: 0,
         width2: 0,
         height2: 0,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        bound: new CG.Bound(0, 0, w, h).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -37,64 +47,58 @@ Game = (function () {
             Game.height = init.height
             Game.height2 = Game.height / 2
 
-            //create canvas element programaticaly
-            Game.canvas = document.createElement('canvas')
-            Game.canvas.width = init.width
-            Game.canvas.height = init.height
-            Game.canvas.id = 'canvas'
+            if (init.place) {
+                //create canvas element programaticaly
+                Game.canvas = document.createElement('canvas')
+                Game.canvas.width = init.width
+                Game.canvas.height = init.height
+                Game.canvas.id = 'canvas'
 
-            //append to body tag
-            init.place.appendChild(Game.canvas)
+                //append to body tag
+                init.place.appendChild(Game.canvas)
+                Game.ctx = Game.canvas.getContext("2d")
+
+            } else {
+                Game.canvas = canvas
+                Game.ctx = ctx
+            }
 
             //add needed eventlistener or use included hammer.js
-            Game.canvas.addEventListener("mousedown", function (e) {
-                CG.mousedown = true
-            }, true);
-
-            Game.canvas.addEventListener("mouseup", function () {
-                CG.mousedown = false
-            }, true);
-
-            Game.canvas.addEventListener('touchmove', function (evt) {
+            document.addEventListener('touchmove', function (evt) {
+                console.log('move', evt.touches[0].pageX, evt.touches[0].pageY);
                 CG.mouse = Game.mouse = {
-                    x: evt.touches[0].pageX - Game.canvas.offsetLeft,
-                    y: evt.touches[0].pageY - Game.canvas.offsetTop
+                    x: evt.touches[0].pageX,
+                    y: evt.touches[0].pageY
                 }
-//                alert(JSON.stringify(Game.mouse))
                 evt.preventDefault();
             }, false)
 
-            Game.canvas.addEventListener("touchstart", function (evt) {
+            document.addEventListener('touchstart', function (evt) {
+                console.log('start', evt.touches[0].pageX, evt.touches[0].pageY);
                 CG.mousedown = true
                 CG.start = Game.start = {
-                    x: evt.touches[0].pageX - Game.canvas.offsetLeft,
-                    y: evt.touches[0].pageY - Game.canvas.offsetTop
+                    x: evt.touches[0].pageX,
+                    y: evt.touches[0].pageY
                 }
-//                alert(JSON.stringify(Game.start))
-                evt.preventDefault();//Stops the default behavior
+                evt.preventDefault();
             }, false);
 
-            Game.canvas.addEventListener("touchend", function (evt) {
+            document.addEventListener('touchend', function (evt) {
+                console.log('end', evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
                 CG.mousedown = false
                 CG.end = Game.end = {
-                    x: evt.touches[0].pageX - Game.canvas.offsetLeft,
-                    y: evt.touches[0].pageY - Game.canvas.offsetTop
+                    x: evt.changedTouches[0].pageX,
+                    y: evt.changedTouches[0].pageY
                 }
-//                alert(JSON.stringify(Game.end))
-                evt.preventDefault();//Stops the default behavior
+                evt.preventDefault();
             }, false);
 
-            Game.canvas.addEventListener('mousemove', function (evt) {
-                CG.mouse = Game.mouse = {
-                    x: evt.clientX - Game.canvas.offsetLeft,
-                    y: evt.clientY - Game.canvas.offsetTop
-                }
-
-//                console.log(JSON.stringify(Game.mouse));
+            document.addEventListener('devicemotion', function (ev) {
+                var accel = ev.accelerationIncludingGravity;
+                //console.log(accel.x, accel.y, accel.z);
             }, false);
 
 
-            Game.ctx = Game.canvas.getContext("2d")
             Game.asset = new CG.MediaAsset('', Game.ctx)
 
             //create frame buffer
@@ -110,7 +114,7 @@ Game = (function () {
                 //.addFont(Game.path + 'media/font/small.txt', 'small', 'small')
 
                 //example adding json (texturepacker)
-                //.addJson(Game.path + 'media/img/texturepacker.json', 'json')
+                .addJson(Game.path + 'media/img/texturepacker.json', 'json')
 
                 //example adding xml (tiled)
                 //.addXml(Game.path + 'media/map/map-advanced.tmx', 'map1')
@@ -178,3 +182,11 @@ Game = (function () {
 
     return Game
 }())
+
+
+Game.init({
+    place: false,
+    width: w,
+    height: h
+})
+Game.preload()

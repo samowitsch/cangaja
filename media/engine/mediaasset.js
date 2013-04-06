@@ -20,9 +20,9 @@ CG.Class.extend('MediaAsset', {
             this.image = new Image()
             this.image.src = image
         }
-        
+
         this.ctx = ctx
-        
+
         this.ready = false
         this.progress = 0
 

@@ -10,7 +10,6 @@ function loadString(path) {
     return "";
 }
 
-
 String.prototype.ltrim = function (clist) {
     if (clist) return this.replace(new RegExp('^[' + clist + ']+'), '')
     return this.replace(/^\s+/, '')
@@ -26,5 +25,3 @@ String.prototype.trim = function (clist) {
 String.prototype.startsWith = function (str) {
     return !this.indexOf(str);
 }
-
-

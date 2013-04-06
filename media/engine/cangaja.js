@@ -4,14 +4,14 @@
  * CG is the base class of the cangaja framework.
  * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
  @example
-     //Class example, how to start from scratch with simple inheritance
-     CG.Class.extend("Entity",{
+ //Class example, how to start from scratch with simple inheritance
+ CG.Class.extend("Entity",{
         init: function(){
             this.myprop = 'set from constructor'
         }
      });
 
-     CG.Entity.extend("Point",{
+ CG.Entity.extend("Point",{
         init: function(x, y){
             this._super()
             this.x = x
@@ -19,7 +19,7 @@
         }
      });
 
-     CG.Point.extend("Rectangle",{
+ CG.Point.extend("Rectangle",{
         init: function(x, y, w, h){
             this._super(x, y)
             this.w = w
@@ -33,15 +33,23 @@
  * @main CG
  */
 var CG = CG || {
-    VERSION:1,
+    VERSION: 1,
 
     //constants
-    Const_PI_180:Math.PI / 180,
-    Const_180_PI:180 / Math.PI,
-    LEFT:1,
-    RIGHT:2,
-    UP:3,
-    DOWN:4
+    Const_PI_180: Math.PI / 180,
+    Const_180_PI: 180 / Math.PI,
+    LEFT: 1,
+    RIGHT: 2,
+    UP: 3,
+    DOWN: 4,
+
+    //input related
+    mousedown: false,
+    mouse: {x: 0, y: 0},
+    //touch start
+    start: {x: 0, y: 0},
+    //touch end
+    end: {x: 0, y: 0}
 };
 
 

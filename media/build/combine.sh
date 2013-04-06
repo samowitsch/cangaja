@@ -66,3 +66,9 @@ echo "Minified lib version."
 #add intro to minified file
 #cat ../engine/intro.js ../engine/lib/cangaja.min.js > ../engine/lib/cangaja.min.js
 #echo "Added intro to minified file."
+
+#copy also to the template folders
+cp ../engine/lib/cangaja.all.js ../../template/cangaja.all.js
+cp ../engine/lib/cangaja.all.min.js ../../template/cangaja.all.min.js
+cp ../engine/lib/cangaja.all.js ../../template-ejecta/cangaja.all.js
+cp ../engine/lib/cangaja.all.min.js ../../template-ejecta/cangaja.all.min.js

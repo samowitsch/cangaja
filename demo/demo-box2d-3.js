@@ -10,7 +10,6 @@ var startleft = false, startright = true
 
 var mousex = 0
 var mousey = 0
-var mousedown = false
 var tp = new CG.TexturePacker()
 var collision = {direction: '', overlap: 0}
 
@@ -31,17 +30,17 @@ window.onload = function () {
 
 
     can.addEventListener("mousedown", function (e) {
-        mousedown = true;
+        CG.mousedown = true;
     }, true);
 
     can.addEventListener("mouseup", function () {
-        mousedown = false;
+        CG.mousedown = false;
     }, true);
 
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
-        mousey = evt.clientY - canvas.offsetTop;
+        mousex = evt.clientX - can.offsetLeft;
+        mousey = evt.clientY - can.offsetTop;
     }, false);
 
     Game.preload()

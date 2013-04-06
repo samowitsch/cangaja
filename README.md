@@ -67,6 +67,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-04-07 [added] - started basic cangaja template for ejecta
 * 2013-04-06 [added] - started basic cangaja template
 * 2013-04-04 [cleanup] - a little folder structure cleanup
 * 2013-04-02 [fixed] - preloader had wrong context

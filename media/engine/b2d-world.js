@@ -96,7 +96,7 @@ CG.Layer.extend('B2DWorld', {
             , 10       //position iterations
         )
 
-        if (mousedown) {
+        if (CG.mousedown) {
             this.mouseDownAt(mousex, mousey);
         } else if (this.isMouseDown()) {
             this.mouseUp();

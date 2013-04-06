@@ -182,15 +182,15 @@ Game = (function () {
         touchinit:function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
-                mousedown = true
-                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
-                mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
+                CG.mousedown = true
+                CG.mouse.x = ev.position[0].x - canvas.offsetLeft //correct ontap value x
+                CG.mouse.y = ev.position[0].y - canvas.offsetTop  //correct ontap value y
             };
             hammer.ondragstart = function (ev) {
             };
             hammer.ondrag = function (ev) {
-                mousex = ev.position.x
-                mousey = ev.position.y
+                CG.mouse.x = ev.position.x
+                CG.mouse.y = ev.position.y
 
 
                 //log = document.getElementById('log')

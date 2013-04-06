@@ -92,9 +92,9 @@ CG.Entity.extend('Rectangle', {
      * @return {true/false}
      */
     ifClicked:function () {
-        if (mousedown && this.clickable) {
-            var dx = mousex - this.position.x,
-                dy = mousey - this.position.y
+        if (CG.mousedown && this.clickable) {
+            var dx = CG.mouse.x - this.position.x,
+                dy = CG.mouse.y - this.position.y
             var h1 = Math.sqrt(dx * dx + dy * dy)
             var currA = Math.atan2(dy, dx)
             var newA = currA - (this.rotation * CG.Const_PI_180);
@@ -105,7 +105,7 @@ CG.Entity.extend('Rectangle', {
                 y2 > -0.5 * (this.height * this.yscale) &&
                 y2 < 0.5 * (this.height * this.yscale)) {
                 this.clicked = true
-                mousedown = false
+                CG.mousedown = false
             }
         }
         return false
@@ -115,8 +115,8 @@ CG.Entity.extend('Rectangle', {
      * @method ifMouseOver
      */
     ifMouseOver:function () {
-        var dx = mousex - this.position.x,
-            dy = mousey - this.position.y
+        var dx = CG.mouse.x - this.position.x,
+            dy = CG.mouse.y - this.position.y
         var h1 = Math.sqrt(dx * dx + dy * dy)
         var currA = Math.atan2(dy, dx)
         var newA = currA - (this.rotation * CG.Const_PI_180)

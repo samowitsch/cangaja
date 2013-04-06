@@ -4,14 +4,14 @@
  * CG is the base class of the cangaja framework.
  * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
  @example
-     //Class example, how to start from scratch with simple inheritance
-     CG.Class.extend("Entity",{
+ //Class example, how to start from scratch with simple inheritance
+ CG.Class.extend("Entity",{
         init: function(){
             this.myprop = 'set from constructor'
         }
      });
 
-     CG.Entity.extend("Point",{
+ CG.Entity.extend("Point",{
         init: function(x, y){
             this._super()
             this.x = x
@@ -19,7 +19,7 @@
         }
      });
 
-     CG.Point.extend("Rectangle",{
+ CG.Point.extend("Rectangle",{
         init: function(x, y, w, h){
             this._super(x, y)
             this.w = w
@@ -33,15 +33,23 @@
  * @main CG
  */
 var CG = CG || {
-    VERSION:1,
+    VERSION: 1,
 
     //constants
-    Const_PI_180:Math.PI / 180,
-    Const_180_PI:180 / Math.PI,
-    LEFT:1,
-    RIGHT:2,
-    UP:3,
-    DOWN:4
+    Const_PI_180: Math.PI / 180,
+    Const_180_PI: 180 / Math.PI,
+    LEFT: 1,
+    RIGHT: 2,
+    UP: 3,
+    DOWN: 4,
+
+    //input related
+    mousedown: false,
+    mouse: {x: 0, y: 0},
+    //touch start
+    start: {x: 0, y: 0},
+    //touch end
+    end: {x: 0, y: 0}
 };
 
 
@@ -187,7 +195,6 @@ function loadString(path) {
     return "";
 }
 
-
 String.prototype.ltrim = function (clist) {
     if (clist) return this.replace(new RegExp('^[' + clist + ']+'), '')
     return this.replace(/^\s+/, '')
@@ -202,10 +209,7 @@ String.prototype.trim = function (clist) {
 }
 String.prototype.startsWith = function (str) {
     return !this.indexOf(str);
-}
-
-
-/**
+}/**
  * @description
  *
  * A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)
@@ -674,9 +678,9 @@ CG.Entity.extend('Rectangle', {
      * @return {true/false}
      */
     ifClicked:function () {
-        if (mousedown && this.clickable) {
-            var dx = mousex - this.position.x,
-                dy = mousey - this.position.y
+        if (CG.mousedown && this.clickable) {
+            var dx = CG.mouse.x - this.position.x,
+                dy = CG.mouse.y - this.position.y
             var h1 = Math.sqrt(dx * dx + dy * dy)
             var currA = Math.atan2(dy, dx)
             var newA = currA - (this.rotation * CG.Const_PI_180);
@@ -687,7 +691,7 @@ CG.Entity.extend('Rectangle', {
                 y2 > -0.5 * (this.height * this.yscale) &&
                 y2 < 0.5 * (this.height * this.yscale)) {
                 this.clicked = true
-                mousedown = false
+                CG.mousedown = false
             }
         }
         return false
@@ -697,8 +701,8 @@ CG.Entity.extend('Rectangle', {
      * @method ifMouseOver
      */
     ifMouseOver:function () {
-        var dx = mousex - this.position.x,
-            dy = mousey - this.position.y
+        var dx = CG.mouse.x - this.position.x,
+            dy = CG.mouse.y - this.position.y
         var h1 = Math.sqrt(dx * dx + dy * dy)
         var currA = Math.atan2(dy, dx)
         var newA = currA - (this.rotation * CG.Const_PI_180)
@@ -1879,9 +1883,9 @@ CG.Class.extend('MediaAsset', {
             this.image = new Image()
             this.image.src = image
         }
-        
+
         this.ctx = ctx
-        
+
         this.ready = false
         this.progress = 0
 
@@ -16908,7 +16912,7 @@ CG.Layer.extend('B2DWorld', {
             , 10       //position iterations
         )
 
-        if (mousedown) {
+        if (CG.mousedown) {
             this.mouseDownAt(mousex, mousey);
         } else if (this.isMouseDown()) {
             this.mouseUp();

@@ -3,8 +3,6 @@ var loadjson = true  //test json map loader
 var delta
 var then = Date.now();
 var mousePos
-var mousex = 0
-var mousey = 0
 var mousedown = false
 var mouseup
 var bm
@@ -75,8 +73,8 @@ window.onload = function () {
     //mouse move
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
-        mousey = evt.clientY - canvas.offsetTop;
+        CG.mouse.x = evt.clientX - canvas.offsetLeft;
+        CG.mouse.y = evt.clientY - canvas.offsetTop;
     }, false);
 
     Game.preload()
@@ -314,11 +312,11 @@ var Game = (function () {
             layerrunner.getElementByName('rocket').alpha = 1
             layerrunner.getElementByName('rocket').checkCollision(layerfollower.elements, callbackCollisionTest)
 
-            map.xcol = mousex
-            map.ycol = mousey
+            map.xcol = CG.mouse.x
+            map.ycol = CG.mouse.y
 
-            crosshair.position.x = mousex
-            crosshair.position.y = mousey
+            crosshair.position.x = CG.mouse.x
+            crosshair.position.y = CG.mouse.y
 
             map.update()
 
@@ -328,7 +326,7 @@ var Game = (function () {
         },
         draw: function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            map.drawMap(0, 0, mousex * 2 >> 0, mousey * 2 >> 0, Game.bound.width, Game.bound.height, callbackMapCollision)
+            map.drawMap(0, 0, CG.mouse.x * 2 >> 0, CG.mouse.y * 2 >> 0, Game.bound.width, Game.bound.height, callbackMapCollision)
             //        map.drawMap()
             //        map.draw()
 
@@ -360,17 +358,17 @@ var Game = (function () {
         touchinit: function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
-                mousedown = true
-                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
-                mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
+                CG.mousedown = true
+                CG.mouse.x = ev.position[0].x - canvas.offsetLeft //correct ontap value x
+                CG.mouse.y = ev.position[0].y - canvas.offsetTop  //correct ontap value y
                 clicked()
 
             };
             hammer.ondragstart = function (ev) {
             };
             hammer.ondrag = function (ev) {
-                mousex = ev.position.x
-                mousey = ev.position.y
+                CG.mouse.x = ev.position.x
+                CG.mouse.y = ev.position.y
 
             };
             hammer.ondragend = function (ev) {
@@ -394,7 +392,7 @@ var Game = (function () {
             };
         },
         touchhandler: function () {
-            mousedown = false
+            CG.mousedown = false
         }
     }
 
@@ -978,30 +976,30 @@ function callbackMapCollision(sprite, tile) {
 
 function clicked() {
     if (Game.director.getActiveScreenName() == 'bitmap') {
-        if (mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height) {
+        if (CG.mouse.x < bm.bitmap_canvas.width && CG.mouse.y < bm.bitmap_canvas.height) {
             bm.clearCircle(mousex, mousey, 10)
         }
     } else {
         var expl
         myShoot.play()
-        if (mousex % 2) {
+        if (CG.mouse.x % 2) {
             expl = new CG.Animation(Game.asset.getImageByName('exp' + (Math.floor((Math.random() * 5)) + 1)), new CG.Point(mousex, mousey), 1, 16, 64, 64)
             expl.yspeed = -2
             expl.delay = 5
         } else {
-            if (mousey % 2) {
-                expl = new CG.Animation(Game.asset.getImageByName('bigexplosion'), new CG.Point(mousex, mousey), 1, 64, 256, 256)
+            if (CG.mouse.y % 2) {
+                expl = new CG.Animation(Game.asset.getImageByName('bigexplosion'), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 64, 256, 256)
             } else {
-                expl = new CG.Animation(Game.asset.getImageByName('burst'), new CG.Point(mousex, mousey), 1, 256, 256, 256)
+                expl = new CG.Animation(Game.asset.getImageByName('burst'), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 256, 256, 256)
             }
             expl.yspeed = -1
             expl.delay = 0.5
-            expl.xscale = 3
-            expl.yscale = 3
         }
 
         expl.name = 'expl'
         expl.loop = false
+        expl.xscale = 3
+        expl.yscale = 3
         expl.rotation = Math.floor((Math.random() * 180) + 1.5)
         expl.rotationspeed = Math.floor((Math.random() * 3) + 1.5)
 
