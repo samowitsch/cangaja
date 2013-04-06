@@ -67,6 +67,8 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-04-06 [added] - started basic cangaja template
+* 2013-04-04 [cleanup] - a little folder structure cleanup
 * 2013-04-02 [fixed] - preloader had wrong context
 * 2013-03-05 [added] - apidoc generated with yuidoc
 * 2013-02-22 [added] - added B2DLine class
@@ -271,9 +273,7 @@ layersprites.addElement(cloud)
 
 ```js
 //create animation object
-expl = new CG.Animation('media/img/burst.png', mousex, mousey, 1, 256)
-expl.cutwidth = 256
-expl.cutheight = 256
+expl = new CG.Animation('media/img/burst.png', mousex, mousey, 1, 256, 256, 256)
 expl.yspeed = -1
 expl.name = 'expl'
 expl.loop = false
@@ -355,14 +355,17 @@ window.onload = function() {
 };
 
 var Game = {
+    path: '', //optional path depending on file/folder structure
     fps: 60,
     width: 640,
     height: 480,
     width2: 640 / 2,
     height2: 480 / 2,
     bound: new CG.Bound(0,0,640,480).setName('game'),
-    b_canvas: false,
-    b_ctx: false,
+    canvas: {},
+    ctx: {},
+    b_canvas: {},
+    b_ctx: {},
     asset: new CG.MediaAsset('media/img/splash3.jpg'),
     director: new CG.Director(),
     delta: new CG.Delta(60),

@@ -427,6 +427,11 @@ Game = (function () {
             document.onkeydown = function (evt) {
                 var keyCode = evt.keyCode
 
+
+                if (keyCode == 70) { //f
+                    alert('FPS ?: ' + Game.delta.getFPS())
+                }
+
                 if (keyCode == 71) { //g
                     b = b2world.getBodyAt(mousex, mousey)
                     console.log([b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
@@ -481,6 +486,7 @@ Game = (function () {
         anim1: function () {
             Game.update()
             Game.draw()
+            //Game.delta.update()
         },
         update: function () {
             //update here what ever you want

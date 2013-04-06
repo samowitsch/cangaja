@@ -16,7 +16,7 @@ CG.Class.extend('MediaAsset', {
      * @param ctx {canvas context} canvas context for drawing
      */
     init:function (image, ctx) {
-        if (image) {
+        if (image != '') {
             this.image = new Image()
             this.image.src = image
         }

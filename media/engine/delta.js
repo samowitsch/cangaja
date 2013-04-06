@@ -15,22 +15,27 @@ CG.Class.extend('Delta', {
      * @constructor
      * @param fps {Number}
      */
-    init:function (fps) {
+    init: function (fps) {
         /**
          * @property targetfps
          * @type {Number}
          */
         this.targetfps = fps
         /**
-         * @property currentticks
+         * @property currenttime
          * @type {Number}
          */
-        this.currentticks = 0
+        this.currenttime = 0
         /**
-         * @property lastticks
-         * @type {Date}
+         * @property lasttime
+         * @type {Number}
          */
-        this.lastticks = Date.now()
+        this.lasttime = new Date().getTime()
+        /**
+         * @property elapsedtime
+         * @type {Number}
+         */
+        this.elapsedtime = 0
         /**
          * @property frametime
          * @type {Number}
@@ -41,16 +46,24 @@ CG.Class.extend('Delta', {
          * @type {Number}
          */
         this.delta = 0
+        /**
+         * @property fps
+         * @type {Number}
+         */
+        this.fps = 0
     },
 
-    update:function () {
-        this.currentticks = Date.now()
-        this.frametime = this.currentticks - this.lastticks
-        this.delta = this.frametime / ( 1000 / this.targetfps)
-        this.lastticks = this.currentticks
+    update: function () {
+        this.currenttime = new Date().getTime()
+        var delta = (this.currenttime - this.lasttime) / 1000
+        this.fps = 1 / delta
+        this.lasttime = this.currenttime
     },
-    get:function () {
+    getDelta: function () {
         return this.delta
+    },
+    getFPS: function () {
+        return this.fps
     }
 })
 

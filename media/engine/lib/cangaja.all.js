@@ -388,22 +388,27 @@ CG.Class.extend('Delta', {
      * @constructor
      * @param fps {Number}
      */
-    init:function (fps) {
+    init: function (fps) {
         /**
          * @property targetfps
          * @type {Number}
          */
         this.targetfps = fps
         /**
-         * @property currentticks
+         * @property currenttime
          * @type {Number}
          */
-        this.currentticks = 0
+        this.currenttime = 0
         /**
-         * @property lastticks
-         * @type {Date}
+         * @property lasttime
+         * @type {Number}
          */
-        this.lastticks = Date.now()
+        this.lasttime = new Date().getTime()
+        /**
+         * @property elapsedtime
+         * @type {Number}
+         */
+        this.elapsedtime = 0
         /**
          * @property frametime
          * @type {Number}
@@ -414,16 +419,24 @@ CG.Class.extend('Delta', {
          * @type {Number}
          */
         this.delta = 0
+        /**
+         * @property fps
+         * @type {Number}
+         */
+        this.fps = 0
     },
 
-    update:function () {
-        this.currentticks = Date.now()
-        this.frametime = this.currentticks - this.lastticks
-        this.delta = this.frametime / ( 1000 / this.targetfps)
-        this.lastticks = this.currentticks
+    update: function () {
+        this.currenttime = new Date().getTime()
+        var delta = (this.currenttime - this.lasttime) / 1000
+        this.fps = 1 / delta
+        this.lasttime = this.currenttime
     },
-    get:function () {
+    getDelta: function () {
         return this.delta
+    },
+    getFPS: function () {
+        return this.fps
     }
 })
 
@@ -1862,7 +1875,7 @@ CG.Class.extend('MediaAsset', {
      * @param ctx {canvas context} canvas context for drawing
      */
     init:function (image, ctx) {
-        if (image) {
+        if (image != '') {
             this.image = new Image()
             this.image.src = image
         }
@@ -15938,6 +15951,8 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2MassData = Box2D.Collision.Shapes.b2MassData,
     b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
     b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
+    b2EdgeChainDef = Box2D.Collision.Shapes.b2EdgeChainDef,
+    b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
     b2DebugDraw = Box2D.Dynamics.b2DebugDraw,
     b2RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef,
     b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef,
@@ -15947,9 +15962,9 @@ delete Box2D.postDefs;var b2Vec2 = Box2D.Common.Math.b2Vec2,
     b2ContactListener = Box2D.Dynamics.b2ContactListener,
     b2Settings = Box2D.Common.b2Settings,
     b2Mat22 = Box2D.Common.Math.b2Mat22,
-    b2EdgeChainDef = Box2D.Collision.Shapes.b2EdgeChainDef,
-    b2EdgeShape = Box2D.Collision.Shapes.b2EdgeShape,
     b2WorldManifold = Box2D.Collision.b2WorldManifold
+
+
 
 /**
  *  © 2012 by Christian Sonntag <info@motions-media.de>
