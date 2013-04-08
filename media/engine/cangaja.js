@@ -35,10 +35,6 @@
 var CG = CG || {
     VERSION: 1,
 
-    //canvas if needed, remember director mode slide!
-    canvas: {},
-    ctx: {},
-
     //constants
     Const_PI_180: Math.PI / 180,
     Const_180_PI: 180 / Math.PI,

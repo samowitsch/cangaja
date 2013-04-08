@@ -25,23 +25,23 @@ window.onload = function () {
 Game = (function () {
     var Game = {
         path: '../',
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
-        director: new CG.Director(),
-        delta: new CG.Delta(60),
-        preload: function () {
+        fps:60,
+        width:640,
+        height:480,
+        width2:640 / 2,
+        height2:480 / 2,
+        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        canvas:{},
+        ctx:{},
+        b_canvas:{},
+        b_ctx:{},
+        asset:{}, //new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        director:new CG.Director(),
+        delta:new CG.Delta(60),
+        preload:function () {
             //canvas for ouput
-            Game.canvas = CG.canvas = document.getElementById("canvas")
-            Game.ctx = CG.ctx = Game.canvas.getContext("2d")
+            Game.canvas = document.getElementById("canvas")
+            Game.ctx = Game.canvas.getContext("2d")
             Game.asset = new CG.MediaAsset(Game.path + 'media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
@@ -69,7 +69,7 @@ Game = (function () {
 
                 .startPreLoad()
         },
-        create: function () {
+        create:function () {
             //initialize Touch/Click handling with hammer.js
             Game.touchinit()
 
@@ -123,36 +123,24 @@ Game = (function () {
                 .addScreen(gamescreen.addLayer(gamelayer))
                 .addScreen(settingsscreen.addLayer(settingslayer))
 
-            //Simple Button
-            back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 400), 'BACK TO MAIN SCREEN', small, function () {
-                Game.director.nextScreen('mainscreen', 'fade', 10)
-            })
-            back.name = 'back'
+                //define the director fademode
+                .setFadeMode('scale')
 
+            //Simple Button
+            back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 300), 'BACK TO MAIN SCREEN', small, backToMainCallback)
+            back.name = 'back'
             gamelayer.addElement(back)
             settingslayer.addElement(back)
 
 
             //Buttons as Menu
             menu = new CG.Menu(Game.width2, 200, 10)
-            button1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SCALE)', small, function () {
-                Game.director.nextScreen('gamescreen', 'scale', 15)
-            })
-            button1.name = '#mbutton 1#'
-            menu.addButton(button1)
-
-            button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(FADE)', small, function () {
-                Game.director.nextScreen('settingsscreen', 'fade', 30)
-            })
-            button2.name = '#mbutton 2#'
-            menu.addButton(button2)
-            mainlayer.addElement(menu)
-
-            button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SLIDE)', small, function () {
-                Game.director.setDirection(CG.RIGHT).nextScreen('settingsscreen', 'slide', 100)
-            })
-            button3.name = '#mbutton 3#'
-            menu.addButton(button3)
+            button = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), 'GOTO GAME SCREEN', small, gameCallback)
+            button.name = '#mbutton 1#'
+            menu.addButton(button)
+            button = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), 'GOTO SETTINGS SCREEN', small, settingsCallback)
+            button.name = '#mbutton 2#'
+            menu.addButton(button)
             mainlayer.addElement(menu)
 
 
@@ -161,21 +149,21 @@ Game = (function () {
 
             Game.loop()
         },
-        loop: function () {
+        loop:function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run: function () {
+        run:function () {
             Game.update()
             Game.draw()
         },
-        update: function () {
+        update:function () {
             //update here what ever you want
             Game.director.update()
         },
-        draw: function () {
+        draw:function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -191,7 +179,7 @@ Game = (function () {
 
             renderStats.update();
         },
-        touchinit: function () {
+        touchinit:function () {
             hammer = new Hammer(canvas);
             hammer.ontap = function (ev) {
                 CG.mousedown = true
@@ -230,9 +218,21 @@ Game = (function () {
 
             };
         },
-        touchhandler: function () {
+        touchhandler:function () {
         }
     }
 
     return Game
 }())
+
+function backToMainCallback(obj) {
+    Game.director.nextScreen('mainscreen', 10)
+}
+function gameCallback(obj) {
+    Game.director.setFadeMode('scale')
+    Game.director.nextScreen('gamescreen', 10)
+}
+function settingsCallback(obj) {
+    Game.director.setFadeMode('fade')
+    Game.director.nextScreen('settingsscreen', 10)
+}
