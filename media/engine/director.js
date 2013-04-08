@@ -3,24 +3,24 @@
  *
  * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
  * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
-@example
-    //create top level CG.Director object
-    var director = new CG.Director()
+ @example
+ //create top level CG.Director object
+ var director = new CG.Director()
 
-    //create a CG.Screen
-    var mainscreen = new CG.Screen('mainscreen')
+ //create a CG.Screen
+ var mainscreen = new CG.Screen('mainscreen')
 
-    //create a CG.Layer
-    var mainlayer = new CG.Layer('mainlayer')
+ //create a CG.Layer
+ var mainlayer = new CG.Layer('mainlayer')
 
-    //create a demo CG.Sprite
-    var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
+ //create a demo CG.Sprite
+ var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
-    //add/attach the demo sprite to the layer
-    mainlayer.addElement(back)
+ //add/attach the demo sprite to the layer
+ mainlayer.addElement(back)
 
-    //add/attach mainscreen and mainlayer to the director
-    director.addScreen(mainscreen.addLayer(mainlayer))
+ //add/attach mainscreen and mainlayer to the director
+ director.addScreen(mainscreen.addLayer(mainlayer))
 
  * @class CG.Director
  * @extends Class
@@ -31,7 +31,7 @@ CG.Class.extend('Director', {
      * @constructor
      * @return {*}
      */
-    init:function () {
+    init: function () {
         /**
          * @property screens
          * @type {Array}
@@ -58,10 +58,15 @@ CG.Class.extend('Director', {
          */
         this.alpha = 0
         /**
-         * @description fademode
+         * @description mode
          * @type {String}
          */
-        this.fademode = 'fade'      //fade or scale
+        this.mode = 'fade'      //fade or scale
+        /**
+         * @description direction
+         * @type {String}
+         */
+        this.direction = CG.RIGHT      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
         /**
          * @property color
          * @type {String}
@@ -69,9 +74,9 @@ CG.Class.extend('Director', {
         this.color = 'rgb(0,0,0)'
         return this
     },
-    update:function () {
+    update: function () {
         //handle screen fading
-        switch (this.fademode) {
+        switch (this.mode) {
             case 'scale':
                 if (this.nextscreen != this.activescreen) {
                     this.screens[this.activescreen].xscale -= 0.4 / this.duration
@@ -92,6 +97,7 @@ CG.Class.extend('Director', {
                     this.activescreen = this.nextscreen
                 }
                 break
+
             case 'fade':
                 // the fade is bound to the alpha value in the draw method
                 if (this.nextscreen != this.activescreen && this.alpha < 1) {
@@ -107,12 +113,60 @@ CG.Class.extend('Director', {
                     this.alpha = 0
                 }
                 break
+
+            case 'slide':
+                if (this.nextscreen != this.activescreen) {
+                    xStep = CG.canvas.width / this.duration
+                    yStep = CG.canvas.height / this.duration
+                    switch (this.direction) {
+                        case CG.UP:
+                            this.screens[this.activescreen].position.y -= yStep
+                            this.screens[this.nextscreen].position.y -= yStep
+                            if (this.screens[this.nextscreen].position.y < 0) {
+                                this.resetScreens()
+                                this.activescreen = this.nextscreen
+                            }
+                            break
+                        case CG.DOWN:
+                            this.screens[this.activescreen].position.y += yStep
+                            this.screens[this.nextscreen].position.y += yStep
+                            if (this.screens[this.nextscreen].position.y > 0) {
+                                this.resetScreens()
+                                this.activescreen = this.nextscreen
+                            }
+                            break
+                        case CG.LEFT:
+                            this.screens[this.activescreen].position.x -= xStep
+                            this.screens[this.nextscreen].position.x -= xStep
+                            if (this.screens[this.nextscreen].position.x < 0) {
+                                this.resetScreens()
+                                this.activescreen = this.nextscreen
+                            }
+                            break
+                        case CG.RIGHT:
+                        default:
+                            this.screens[this.activescreen].position.x += xStep
+                            this.screens[this.nextscreen].position.x += xStep
+                            if (this.screens[this.nextscreen].position.x > 0) {
+                                this.resetScreens()
+                                this.activescreen = this.nextscreen
+                            }
+                            break
+                    }
+                }
+                break
         }
         this.screens[this.activescreen].update()
     },
-    draw:function () {
+    draw: function () {
         //draw active screen
         this.screens[this.activescreen].draw()
+
+        //draw nextscreen for slide mode
+        if (this.screens[this.nextscreen].position.x != 0 || this.screens[this.nextscreen].position.y != 0) {
+            this.screens[this.nextscreen].draw()
+        }
+
         //draw fading layer
         if (this.alpha > 0) {
             Game.b_ctx.save()
@@ -122,34 +176,66 @@ CG.Class.extend('Director', {
             Game.b_ctx.restore()
         }
     },
+    resetScreens: function () {
+        this.screens[this.activescreen].position = this.screens[this.nextscreen].position = new CG.Point(0, 0)
+        return this
+    },
     /**
      * @method addScreen
      *
      * @param {CG.Screen} screen to add to the screen list
      */
-    addScreen:function (screen) {
+    addScreen: function (screen) {
         this.screens.push(screen)
         return this
     },
     /**
      * @method nextScreen
-    @example
-        //tell the director class to fade to next screen with scale mode
-        Game.director.setFadeMode('scale');
-        Game.director.nextScreen('gamescreen', 10);
+     @example
+     //tell the director class to fade to next screen with scale mode
+     Game.director.setFadeMode('scale');
+     Game.director.nextScreen('gamescreen', 10);
 
-        //tell the director class to fade to next screen
-        Game.director.setFadeMode('fade');
-        Game.director.nextScreen('settingsscreen', 10);
+     //tell the director class to fade to next screen
+     Game.director.setFadeMode('fade');
+     Game.director.nextScreen('settingsscreen', 10);
      *
      * @param {string} screenname to define nextscreen for fading
+     * @param {string} mode mode for transition
      * @param {Number} duration the duration for fading
      */
-    nextScreen:function (screenname, duration) {
-        if (this.getIndexOfScreen(screenname) != this.activescreen) {
+    nextScreen: function (screenname, mode, duration) {
+        var nextscreen = this.getIndexOfScreen(screenname)
+
+        if (nextscreen != this.activescreen) {
+            this.mode = mode
             this.duration = duration
-            this.nextscreen = this.getIndexOfScreen(screenname)
+            this.nextscreen = nextscreen
+
+            if (this.mode === 'scale') {
+                this.alpha = 0
+            } else if (this.mode === 'fade') {
+                // hmm ?
+            } else if (this.mode === 'slide') {
+                this.resetScreens()
+                switch (this.direction) {
+                    case CG.UP:
+                        this.screens[this.nextscreen].position.y += CG.canvas.height
+                        break
+                    case CG.DOWN:
+                        this.screens[this.nextscreen].position.y -= CG.canvas.height
+                        break
+                    case CG.LEFT:
+                        this.screens[this.nextscreen].position.x += CG.canvas.width
+                        break
+                    case CG.RIGHT:
+                    default:
+                        this.screens[this.nextscreen].position.x -= CG.canvas.width
+                        break
+                }
+            }
         }
+        return this
     },
 
     /**
@@ -158,7 +244,7 @@ CG.Class.extend('Director', {
      * @param {string} screenname to find screen by name
      * @return {false/CG.Screen} returns false or the screen object
      */
-    getScreenByName:function (screenname) {
+    getScreenByName: function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
             if (this.screens[i].name == screenname) {
                 return this.screens[i]
@@ -173,7 +259,7 @@ CG.Class.extend('Director', {
      * @param {string} screenname to find index of screen in screen array
      * @return {false/Number} return false or index number of the screen
      */
-    getIndexOfScreen:function (screenname) {
+    getIndexOfScreen: function (screenname) {
         for (var i = 0, l = this.screens.length; i < l; i++) {
             if (this.screens[i].name == screenname) {
                 return i
@@ -187,22 +273,11 @@ CG.Class.extend('Director', {
      *
      * @return {string} the name of the active screen
      */
-    getActiveScreenName:function () {
+    getActiveScreenName: function () {
         return this.screens[this.activescreen].name
     },
-
-    /**
-     * @method setFadeMode
-     *
-     * @return {String} fademode for screen transitions => fade or scale
-     */
-    setFadeMode:function (fademode) {
-        if (fademode == 'scale') {
-            this.fademode = fademode
-            this.alpha = 0
-        } else if (fademode == 'fade') {
-            this.fademode = fademode
-        }
+    setDirection: function (direction) {
+        this.direction = direction
         return this
     }
 })
