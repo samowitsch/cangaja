@@ -273,19 +273,19 @@ var Game = (function () {
             document.onkeydown = function (evt) {
 
                 if (evt.keyIdentifier == 'Up') {
-                    mousey = mousey - 20
+                    CG.mouse.y = CG.mouse.y - 20
                 }
                 if (evt.keyIdentifier == 'Down') {
-                    mousey = mousey + 20
+                    CG.mouse.y = CG.mouse.y + 20
                 }
                 if (evt.keyIdentifier == 'CG.LEFT') {
-                    mousex = mousex - 20
+                    CG.mouse.x = CG.mouse.x - 20
                 }
                 if (evt.keyIdentifier == 'Right') {
-                    mousex = mousex + 20
+                    CG.mouse.x = CG.mouse.x + 20
                 }
-                layerrunner.getElementByName('rocket').x = mousex
-                layerrunner.getElementByName('rocket').y = mousey
+                layerrunner.getElementByName('rocket').x = CG.mouse.x
+                layerrunner.getElementByName('rocket').y = CG.mouse.y
 
             };
 
@@ -341,8 +341,8 @@ var Game = (function () {
             }
 
             if (Game.director.getActiveScreenName() == 'bitmap') {
-                if (mousex < bm.bitmap_canvas.width && mousey < bm.bitmap_canvas.height) {
-                    data = bm.getPixel(mousex, mousey).data
+                if (CG.mouse.x < bm.bitmap_canvas.width && CG.mouse.y < bm.bitmap_canvas.height) {
+                    data = bm.getPixel(CG.mouse.x, CG.mouse.y).data
                     font.drawText('Bitmap pixeldata: ' + data[0] + '/' + data[1] + '/' + data[2] + '/' + data[3], 10, ytext += 250)
                 }
             }
@@ -922,28 +922,28 @@ function createElements() {
 
 
 function cbToEmitterdemo() {
-    Game.director.nextScreen('emitter', 50)
+    Game.director.nextScreen('emitter', 'fade', 50)
 }
 function cbToSpritedemo() {
-    Game.director.nextScreen('sprites', 50)
+    Game.director.nextScreen('sprites', 'fade', 50)
 }
 function cbToAnimationdemo() {
-    Game.director.nextScreen('animation', 50)
+    Game.director.nextScreen('animation', 'fade', 50)
 }
 function cbToFollowerdemo() {
     map.visible = true
 
-    Game.director.nextScreen('follower', 50)
+    Game.director.nextScreen('follower', 'fade', 50)
 }
 function cbToMapdemo() {
     map.visible = true
-    Game.director.nextScreen('map', 50)
+    Game.director.nextScreen('map', 'fade', 50)
 }
 function cbToMenudemo() {
-    Game.director.nextScreen('menu', 50)
+    Game.director.nextScreen('menu', 'fade', 50)
 }
 function cbToBitmapdemo() {
-    Game.director.nextScreen('bitmap', 50)
+    Game.director.nextScreen('bitmap', 'fade', 50)
 }
 function cbToMapChange() {
     map.loadMapXml(Game.asset.getXmlByName(this.name))
@@ -954,7 +954,7 @@ function cbToMapChange() {
 
 function cbBackToMain() {
     map.visible = false
-    Game.director.nextScreen('menuscreen', 5)
+    Game.director.nextScreen('menuscreen', 'fade', 5)
 }
 
 
@@ -977,13 +977,13 @@ function callbackMapCollision(sprite, tile) {
 function clicked() {
     if (Game.director.getActiveScreenName() == 'bitmap') {
         if (CG.mouse.x < bm.bitmap_canvas.width && CG.mouse.y < bm.bitmap_canvas.height) {
-            bm.clearCircle(mousex, mousey, 10)
+            bm.clearCircle(CG.mouse.x, CG.mouse.y, 10)
         }
     } else {
         var expl
         myShoot.play()
         if (CG.mouse.x % 2) {
-            expl = new CG.Animation(Game.asset.getImageByName('exp' + (Math.floor((Math.random() * 5)) + 1)), new CG.Point(mousex, mousey), 1, 16, 64, 64)
+            expl = new CG.Animation(Game.asset.getImageByName('exp' + (Math.floor((Math.random() * 5)) + 1)), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 16, 64, 64)
             expl.yspeed = -2
             expl.delay = 5
         } else {

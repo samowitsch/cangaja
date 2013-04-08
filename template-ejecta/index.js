@@ -1,12 +1,6 @@
+//ejecta stuff start
 ejecta.include('cangaja.all.js');
 
-
-/*
-
- INSTRUCTIONS:
- This file must be copied into ./App in order to work
-
- */
 var w = window.innerWidth;
 var h = window.innerHeight;
 var w2 = w / 2;
@@ -17,6 +11,8 @@ canvas.width = w;
 canvas.height = h;
 
 var ctx = canvas.getContext('2d');
+//ejecta stuff start
+
 
 
 var mainscreen, mainlayer
@@ -49,18 +45,18 @@ Game = (function () {
 
             if (init.place) {
                 //create canvas element programaticaly
-                Game.canvas = document.createElement('canvas')
+                Game.canvas = CG.canvas = document.createElement('canvas')
                 Game.canvas.width = init.width
                 Game.canvas.height = init.height
                 Game.canvas.id = 'canvas'
 
                 //append to body tag
                 init.place.appendChild(Game.canvas)
-                Game.ctx = Game.canvas.getContext("2d")
+                Game.ctx = CG.ctx = Game.canvas.getContext("2d")
 
             } else {
-                Game.canvas = canvas
-                Game.ctx = ctx
+                Game.canvas = CG.canvas = canvas
+                Game.ctx = CG.ctx = ctx
             }
 
             //add needed eventlistener or use included hammer.js

@@ -38,10 +38,13 @@ Game = (function () {
             Game.height2 = Game.height / 2
 
             //create canvas element programaticaly
-            Game.canvas = document.createElement('canvas')
+            Game.canvas = CG.canvas = document.createElement('canvas')
             Game.canvas.width = init.width
             Game.canvas.height = init.height
             Game.canvas.id = 'canvas'
+
+            Game.ctx = CG.ctx = Game.canvas.getContext("2d")
+
 
             //append to body tag
             init.place.appendChild(Game.canvas)
@@ -94,7 +97,6 @@ Game = (function () {
             }, false);
 
 
-            Game.ctx = Game.canvas.getContext("2d")
             Game.asset = new CG.MediaAsset('', Game.ctx)
 
             //create frame buffer
