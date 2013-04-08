@@ -67,6 +67,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-04-08 [added] - added mode slide for director to switch screens
 * 2013-04-07 [added] - started basic cangaja template for ejecta
 * 2013-04-06 [added] - started basic cangaja template
 * 2013-04-04 [cleanup] - a little folder structure cleanup
