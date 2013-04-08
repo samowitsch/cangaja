@@ -15,12 +15,8 @@ CG.Entity.extend('Screen', {
      * @param screenname
      * @return {*}
      */
-    init: function (screenname) {
+    init:function (screenname) {
         this._super(screenname)
-        /**
-         @property position {CG.Point}
-         */
-        this.position = new CG.Point(0, 0)
         /**
          * @property xscale
          * @type {Number}
@@ -38,23 +34,28 @@ CG.Entity.extend('Screen', {
         this.layers = []
         return this
     },
-    create: function () {
+    create:function () {
 
     },
-    update: function () {
-        for (var i = 0, l = this.layers.length; i < l; i++) {
+    update:function () {
+//        this.layers.forEach(function (element, index) {
+//            element.update()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
             this.layers[i].update()
         }
     },
-    draw: function () {
+    draw:function () {
         Game.b_ctx.save()
         if (this.xscale !== 1 || this.yscale !== 1) {
             Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
             Game.b_ctx.scale(this.xscale, this.yscale)
-        } else {
-            Game.b_ctx.translate(this.position.x, this.position.y)
         }
-        for (var i = 0, l = this.layers.length; i < l; i++) {
+
+//        this.layers.forEach(function (element, index) {
+//            element.draw()
+//        }, this)
+        for(var i = 0, l = this.layers.length; i < l; i++){
             this.layers[i].draw()
         }
 
@@ -68,7 +69,7 @@ CG.Entity.extend('Screen', {
      * @method addLayer
      * @param {layer} layer to add
      */
-    addLayer: function (layer) {
+    addLayer:function (layer) {
         this.layers.push(layer)
         return this
     },
@@ -79,7 +80,7 @@ CG.Entity.extend('Screen', {
      * @param {string} layername find layer by name
      * @return {false/layer}
      */
-    getLayerByName: function (layername) {
+    getLayerByName:function (layername) {
         for (var i = 0, l = this.layers.length; i < l; i++) {
             if (this.layers[i].name == layername) {
                 return this.layers[i]
