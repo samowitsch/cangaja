@@ -38,8 +38,17 @@ This is a very early version of it.
 [Hammer]: http://eightmedia.github.com/hammer.js/
 [Ejecta]: http://impactjs.com/ejecta
 
-## Todo/wishlist/bugs:
+## Todo / wish list / bugs:
 
+* Oneway/onesided Platforms Box2d
+    http://www.box2d.org/forum/viewtopic.php?f=3&t=4985
+    http://www.emanueleferonato.com/2010/03/02/understanding-box2ds-one-way-platforms-aka-clouds/
+    http://gamedev.stackexchange.com/questions/47828/box2d-with-lines
+    http://www.iforce2d.net/b2dtut/one-way-walls
+
+* implement Game into Cangaja as class?
+* develop something similar to DiddyData. A config file to define files to preload and screens an layers to generate
+* sprite positioning bug in slide demo?
 * eliminate Array.forEach
 * global renderer with webgl support and canvas 2d fallback?
 * additional options argument for Box2D wrapper classes for detailed configuration?
@@ -67,6 +76,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-04-17 [cleanup] - cleanup again
 * 2013-04-08 [added] - added mode slide for director to switch screens
 * 2013-04-07 [added] - started basic cangaja template for ejecta
 * 2013-04-06 [added] - started basic cangaja template
