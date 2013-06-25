@@ -83,8 +83,12 @@ window.onload = function () {
 
 var Game = (function () {
     var Game = {
-        path: '../',
+        path: '',
         fps: 60,
+
+        lastrun: new Date().getTime(),
+        delta: 0,
+
         width: 640,
         height: 480,
         width2: 640 / 2,
@@ -101,7 +105,7 @@ var Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game.path + 'media/img/splash3.jpg', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
@@ -110,48 +114,48 @@ var Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //preload images
-            Game.asset.addImage(Game.path + 'media/img/rocket.png', 'rocket')
-                .addImage(Game.path + 'media/img/rocket2.png', 'rocket2')
-                .addImage(Game.path + 'media/img/btn-back.png', 'button')
-                .addImage(Game.path + 'media/img/exp1.png', 'exp1')
-                .addImage(Game.path + 'media/img/exp2.png', 'exp2')
-                .addImage(Game.path + 'media/img/exp3.png', 'exp3')
-                .addImage(Game.path + 'media/img/exp4.png', 'exp4')
-                .addImage(Game.path + 'media/img/exp5.png', 'exp5')
-                .addImage(Game.path + 'media/img/expbig1.png', 'bigexplosion')
-                .addImage(Game.path + 'media/img/burst.png', 'burst')
-                .addImage(Game.path + 'media/img/ballon.png', 'ballon')
-                .addImage(Game.path + 'media/img/sonne.png', 'sun')
-                .addImage(Game.path + 'media/img/sonne-50.png', 'sun50')
-                .addImage(Game.path + 'media/img/powerstar75.png', 'powerstar75')
-                .addImage(Game.path + 'media/img/smoke50.png', 'smoke')
-                .addImage(Game.path + 'media/img/cloud.png', 'cloud')
-                .addImage(Game.path + 'media/img/raindrop.png', 'raindrop-old')
-                .addImage(Game.path + 'media/img/rainbow_256.png', 'rainbow')
-                .addImage(Game.path + 'media/img/glowball.png', 'glowball')
-                .addImage(Game.path + 'media/img/glowball-50.png', 'glowball50')
-                .addImage(Game.path + 'media/img/basketball.png', 'basketball')
-                .addImage(Game.path + 'media/img/basketball-25.png', 'basketball25')
-                .addImage(Game.path + 'media/img/hunter.png', 'hunter')
-                .addImage(Game.path + 'media/img/crosshair.png', 'crosshair')
+            Game.asset.addImage('media/img/rocket.png', 'rocket')
+                .addImage('media/img/rocket2.png', 'rocket2')
+                .addImage('media/img/btn-back.png', 'button')
+                .addImage('media/img/exp1.png', 'exp1')
+                .addImage('media/img/exp2.png', 'exp2')
+                .addImage('media/img/exp3.png', 'exp3')
+                .addImage('media/img/exp4.png', 'exp4')
+                .addImage('media/img/exp5.png', 'exp5')
+                .addImage('media/img/expbig1.png', 'bigexplosion')
+                .addImage('media/img/burst.png', 'burst')
+                .addImage('media/img/ballon.png', 'ballon')
+                .addImage('media/img/sonne.png', 'sun')
+                .addImage('media/img/sonne-50.png', 'sun50')
+                .addImage('media/img/powerstar75.png', 'powerstar75')
+                .addImage('media/img/smoke50.png', 'smoke')
+                .addImage('media/img/cloud.png', 'cloud')
+                .addImage('media/img/raindrop.png', 'raindrop-old')
+                .addImage('media/img/rainbow_256.png', 'rainbow')
+                .addImage('media/img/glowball.png', 'glowball')
+                .addImage('media/img/glowball-50.png', 'glowball50')
+                .addImage('media/img/basketball.png', 'basketball')
+                .addImage('media/img/basketball-25.png', 'basketball25')
+                .addImage('media/img/hunter.png', 'hunter')
+                .addImage('media/img/crosshair.png', 'crosshair')
                 //font
-                .addFont(Game.path + 'media/font/small.txt', 'small', 'small')
-                .addFont(Game.path + 'media/font/heiti.txt', 'heiti')
-                .addFont(Game.path + 'media/font/gill.txt', 'gill')
-                .addFont(Game.path + 'media/font/abadi_ez.txt', 'abadi')
+                .addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/heiti.txt', 'heiti')
+                .addFont('media/font/gill.txt', 'gill')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
                 //tilemaps
-                .addXml(Game.path + 'media/map/map-diddy-csv.tmx', 'map-diddy-csv')
-                .addXml(Game.path + 'media/map/map.tmx', 'map1')
-                .addXml(Game.path + 'media/map/map2.tmx', 'map2')
-                .addXml(Game.path + 'media/map/othermap.tmx', 'othermap')
-                .addXml(Game.path + 'media/map/isometric_grass_and_water.tmx', 'iso')
-                .addXml(Game.path + 'media/map/sewers.tmx', 'sewers')
+                .addXml('media/map/map-diddy-csv.tmx', 'map-diddy-csv')
+                .addXml('media/map/map.tmx', 'map1')
+                .addXml('media/map/map2.tmx', 'map2')
+                .addXml('media/map/othermap.tmx', 'othermap')
+                .addXml('media/map/isometric_grass_and_water.tmx', 'iso')
+                .addXml('media/map/sewers.tmx', 'sewers')
                 //texturepacker
-                .addImage(Game.path + 'media/img/texturepacker.png', 'texturepacker')
-                .addXml(Game.path + 'media/img/texturepacker.xml', 'texturepacker-xml')
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addXml('media/img/texturepacker.xml', 'texturepacker-xml')
                 //jsons
-                .addJson(Game.path + 'media/img/texturepacker.json', 'texturepacker-json')
-                .addJson(Game.path + 'media/map/map.json', 'map-json')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+                .addJson('media/map/map.json', 'map-json')
 
                 .startPreLoad()
         },
@@ -163,13 +167,13 @@ var Game = (function () {
 
 
             //sfx
-            mySound = new buzz.sound(Game.path + "media/sfx/serious", {
+            mySound = new buzz.sound("media/sfx/serious", {
                 formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
                 preload: true,
                 autoplay: false,
                 loop: true
             });
-            myShoot = new buzz.sound(Game.path + "media/sfx/laser", {
+            myShoot = new buzz.sound("media/sfx/laser", {
                 formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
                 preload: true,
                 loop: false
@@ -253,7 +257,6 @@ var Game = (function () {
 
         },
         loop: function () {
-            Game.delta.update()
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 var last = new Date()
@@ -264,8 +267,18 @@ var Game = (function () {
             }
         },
         run: function () {
+
             Game.update()
             Game.draw()
+
+            Game.delta = (new Date().getTime() - Game.lastrun) / 1000;
+            Game.lastrun = new Date().getTime()
+            Game.showFPS()
+        },
+        showFPS: function () {
+            Game.ctx.fillStyle = "White";
+            Game.ctx.font = "normal 12pt Courier";
+            Game.ctx.fillText((1 / Game.delta >> 0) + " fps", 10, 20);
         },
         update: function () {
 
@@ -903,7 +916,7 @@ function createElements() {
     layermenu.addElement(menu)
 
 
-    rotclick = new CG.Sprite(Game.path + 'media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
+    rotclick = new CG.Sprite('media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
     rotclick.name = 'transme'
     rotclick.clickable = true
     rotclick.xscale = 1
@@ -911,7 +924,7 @@ function createElements() {
     rotclick.rotationspeed = 1
     layersprites.addElement(rotclick)
 
-    rotclick = new CG.Sprite(Game.path + 'media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
+    rotclick = new CG.Sprite('media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
     rotclick.name = '### rotation click ;o) ###'
     rotclick.clickable = true
     rotclick.xscale = 0.5

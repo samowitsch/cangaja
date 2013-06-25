@@ -3,7 +3,7 @@ var renderStats, updateStats
 var mainscreen, mainlayer
 
 var can, canvas, ctx
-var sfxWhistle,sfxCrowd,sfxNet,sfxIntro
+var sfxWhistle, sfxCrowd, sfxNet, sfxIntro
 
 var rightplayer, leftplayer, ball
 var startleft = false, startright = true
@@ -69,14 +69,14 @@ CG.B2DWorld.extend('B2DTestbed', {
         leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, false, false)
         this.addCustom(leftplayer)
 
-        this.addContactListener({
+        this. addContactListener({
             BeginContact: function (idA, idB) {
                 if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "beachvolleyball") {
                     startleft = startright = false
                 }
                 //beachvolleyball hits the ground
                 if (idA.name == 'G' && idB.name == "beachvolleyball") {
-                    if(ball.body.GetPosition().x * 40 > 400){
+                    if (ball.body.GetPosition().x * 40 > 400) {
                         startleft = true
                     } else {
                         startright = true
@@ -116,6 +116,11 @@ CG.B2DWorld.extend('B2DTestbed', {
 
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
+            },
+            PreSolve: function (contact, oldManifold) {
+                console.log([contact, oldManifold])
+                var fixtureA = contact.GetFixtureA();
+                var fixtureB = contact.GetFixtureB();
             }
         });
 
@@ -302,7 +307,7 @@ CG.B2DCircle.extend('B2DBall', {
 // the Game object
 Game = (function () {
     var Game = {
-        path: '../',
+        path: '',
         fps: 60,
         width: gw,
         height: gh,
@@ -319,35 +324,35 @@ Game = (function () {
         preload: function () {
 
             //sfx
-            sfxIntro = new buzz.sound(Game.path + "media/sfx/blobby-intro", {
-                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload:true,
-                autoplay:true,
-                loop:true
+            sfxIntro = new buzz.sound("media/sfx/blobby-intro", {
+                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload: true,
+                autoplay: true,
+                loop: true
             });
-            sfxCrowd = new buzz.sound(Game.path + "media/sfx/blobby-crowd", {
-                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload:true,
-                autoplay:false,
-                loop:false
+            sfxCrowd = new buzz.sound("media/sfx/blobby-crowd", {
+                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload: true,
+                autoplay: false,
+                loop: false
             });
-            sfxWhistle = new buzz.sound(Game.path + "media/sfx/blobby-whistle", {
-                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload:true,
-                autoplay:false,
-                loop:false
+            sfxWhistle = new buzz.sound("media/sfx/blobby-whistle", {
+                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload: true,
+                autoplay: false,
+                loop: false
             });
-            sfxNet = new buzz.sound(Game.path + "media/sfx/blobby-net", {
-                formats:[ "ogg", "mp3"/*, "aac", "wav"*/ ],
-                preload:true,
-                autoplay:false,
-                loop:false
+            sfxNet = new buzz.sound("media/sfx/blobby-net", {
+                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+                preload: true,
+                autoplay: false,
+                loop: false
             });
 
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game.path + 'media/img/blobby-back.png', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/blobby-back.png', Game.ctx)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
@@ -356,30 +361,30 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont(Game.path + 'media/font/small.txt', 'small', 'small')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
 
                 //physics engine
-                .addJson(Game.path + 'media/img/blobbies.json', 'blobbies')
+                .addJson('media/img/blobbies.json', 'blobbies')
 
-                .addImage(Game.path + 'media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/glowball-50.png', 'glowball')
 
-                .addImage(Game.path + 'media/img/blobby-egg-left.png', 'blobby-egg-left')
-                .addImage(Game.path + 'media/img/blobby-egg-right.png', 'blobby-egg-right')
+                .addImage('media/img/blobby-egg-left.png', 'blobby-egg-left')
+                .addImage('media/img/blobby-egg-right.png', 'blobby-egg-right')
 
-                .addImage(Game.path + 'media/img/blobby-back.png', 'blobby-back')
-                .addImage(Game.path + 'media/img/blobby-ctrl-right.png', 'ctrl-right')
-                .addImage(Game.path + 'media/img/blobby-ctrl-left.png', 'ctrl-left')
-                .addImage(Game.path + 'media/img/arrow-25.png', 'arrow')
-                .addImage(Game.path + 'media/img/beachvolleyball.png', 'beachvolleyball')
-                .addImage(Game.path + 'media/img/beachvolleyball-shadow.png', 'beachvolleyball-shadow')
+                .addImage('media/img/blobby-back.png', 'blobby-back')
+                .addImage('media/img/blobby-ctrl-right.png', 'ctrl-right')
+                .addImage('media/img/blobby-ctrl-left.png', 'ctrl-left')
+                .addImage('media/img/arrow-25.png', 'arrow')
+                .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
+                .addImage('media/img/beachvolleyball-shadow.png', 'beachvolleyball-shadow')
 
                 //font
-                .addImage(Game.path + 'media/font/blobby-points.png', 'blobby-points')
-                .addFont(Game.path + 'media/font/blobby-points.txt', 'blobby-points')
+                .addImage('media/font/blobby-points.png', 'blobby-points')
+                .addFont('media/font/blobby-points.txt', 'blobby-points')
 
                 //texturepacker
-                .addImage(Game.path + 'media/img/texturepacker.png', 'texturepacker')
-                .addJson(Game.path + 'media/img/texturepacker.json', 'texturepacker-json')
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
                 .startPreLoad()
         },

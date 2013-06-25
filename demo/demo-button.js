@@ -22,7 +22,7 @@ window.onload = function () {
 // the Game object
 Game = (function () {
     var Game = {
-        path: '../',
+        path: '',
         fps:60,
         width:640,
         height:480,
@@ -40,7 +40,7 @@ Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game.path + 'media/img/splash3.jpg', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
@@ -49,17 +49,17 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont(Game.path + 'media/font/small.txt', 'small', 'small')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
                 //add glyphdesigner file
-                .addFont(Game.path + 'media/font/abadi_ez.txt', 'abadi')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
                 //add single image
-                .addImage(Game.path + 'media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/glowball-50.png', 'glowball')
                 //add image for texturepacker file
-                .addImage(Game.path + 'media/img/texturepacker.png', 'texturepacker')
+                .addImage('media/img/texturepacker.png', 'texturepacker')
                 //add texturepacker file
-                .addXml(Game.path + 'media/img/texturepacker.xml', 'texturepacker-xml')
+                .addXml('media/img/texturepacker.xml', 'texturepacker-xml')
                 //texturepacker json is also supported
-                .addJson(Game.path + 'media/img/texturepacker.json', 'texturepacker-json')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
 
                 .startPreLoad()

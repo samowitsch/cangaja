@@ -1,0 +1,1 @@
+Put all generated files from Glyphdesigner in this folder.

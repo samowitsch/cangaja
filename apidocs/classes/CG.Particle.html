@@ -1,0 +1,3045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CG.Particle - Cangaja API</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Cangaja API"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Bitmap.html">CG.Bitmap</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Buffer.html">CG.Buffer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Entity.html">CG.Entity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapPoint.html">CG.MapPoint</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Menu.html">CG.Menu</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Morph.html">CG.Morph</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>CG.Particle Class</h1>
+<div class="box meta">
+    
+
+    
+        <div class="extends">
+            Extends <a href="../classes/CG.Sprite.html" class="crosslink">CG.Sprite</a>
+        </div>
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l1"><code>cangaja&#x2F;particle.js:1</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/CG.html">CG</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>CG.Particle</p>
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_AABB">AABB</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_attachObject">attachObject</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_checkBound">checkBound</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_checkCollision">checkCollision</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_follow">follow</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_ifAttached">ifAttached</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_ifClicked">ifClicked</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_ifMouseOver">ifMouseOver</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_removeAttachedObject">removeAttachedObject</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_setAttachedOffsetX">setAttachedOffsetX</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_setAttachedOffsetY">setAttachedOffsetY</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_setBound">setBound</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_setImage">setImage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_updateDiff">updateDiff</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                        
+                            <li class="index-item property">
+                                <a href="#property_aging">aging</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_alpha">alpha</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_atlasimage">atlasimage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_attachedobject">attachedobject</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_bound">bound</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_boundingradius">boundingradius</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_boundsMode">boundsMode</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_clickable">clickable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_clicked">clicked</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_currtime">currtime</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_diffpoint">diffpoint</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_dragable">dragable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_fadeout">fadeout</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_followobject">followobject</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_followspeed">followspeed</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_followsteps">followsteps</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_gravity">gravity</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_height">height</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_hover">hover</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_lifetime">lifetime</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_mapcollision">mapcollision</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_name">name</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_offsetx">offsetx</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_offsety">offsety</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_position">position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_rotation">rotation</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_rotationspeed">rotationspeed</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_visible">visible</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_width">width</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_xhandle">xhandle</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_xscale">xscale</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_xspeed">xspeed</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_yhandle">yhandle</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited inherited">
+                                <a href="#property_yscale">yscale</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_yspeed">yspeed</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_AABB" class="method item inherited">
+    <h3 class="name"><code>AABB</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_AABB">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l72"><code>cangaja&#x2F;rectangle.js:72</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>returns the bounds of rotated rectangle</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    returns the calculated bounds
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_attachObject" class="method item inherited">
+    <h3 class="name"><code>attachObject</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_attachObject">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l255"><code>cangaja&#x2F;sprite.js:255</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>attach a reference of the given object to this object</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_checkBound" class="method item inherited">
+    <h3 class="name"><code>checkBound</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_checkBound">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l142"><code>cangaja&#x2F;sprite.js:142</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Checks the bound if a boundMode (bounce or slide) is set</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_checkCollision" class="method item inherited">
+    <h3 class="name"><code>checkCollision</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>objects</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_checkCollision">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l134"><code>cangaja&#x2F;rectangle.js:134</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">objects</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a array of objects to check for collision => Sprites, Animations, MapAreas</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type">Callback</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>what to do after collision?</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_follow" class="method item inherited">
+    <h3 class="name"><code>follow</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_follow">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l199"><code>cangaja&#x2F;sprite.js:199</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_ifAttached" class="method item inherited">
+    <h3 class="name"><code>ifAttached</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_ifAttached">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l244"><code>cangaja&#x2F;sprite.js:244</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>if there is a attached object get its position</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_ifClicked" class="method item inherited">
+    <h3 class="name"><code>ifClicked</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">True/false</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_ifClicked">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l89"><code>cangaja&#x2F;rectangle.js:89</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks click inside of the rectangle, supports rotation</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">True/false</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_ifMouseOver" class="method item inherited">
+    <h3 class="name"><code>ifMouseOver</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_ifMouseOver">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l113"><code>cangaja&#x2F;rectangle.js:113</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks if the mouse/pointer is over the rectangle</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>image</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_init">
+                CG.Entity
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l12"><code>cangaja&#x2F;particle.js:12</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">image</code>
+                        <span class="type">Mixed</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>image imgpath, image object or tpimage object to use for the particle</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeAttachedObject" class="method item inherited">
+    <h3 class="name"><code>removeAttachedObject</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_removeAttachedObject">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l264"><code>cangaja&#x2F;sprite.js:264</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>removes the attached object reference</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setAttachedOffsetX" class="method item inherited">
+    <h3 class="name"><code>setAttachedOffsetX</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_setAttachedOffsetX">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l273"><code>cangaja&#x2F;sprite.js:273</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>set the x offset of the attached object to this object</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setAttachedOffsetY" class="method item inherited">
+    <h3 class="name"><code>setAttachedOffsetY</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_setAttachedOffsetY">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l282"><code>cangaja&#x2F;sprite.js:282</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>set the y offset of the attached object to this object</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setBound" class="method item inherited">
+    <h3 class="name"><code>setBound</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>bound</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_setBound">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l233"><code>cangaja&#x2F;sprite.js:233</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>set the bound of the sprite</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">bound</code>
+                        <span class="type"><a href="../classes/CG.Bound.html" class="crosslink">CG.Bound</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the bound</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setImage" class="method item inherited">
+    <h3 class="name"><code>setImage</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>image</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#method_setImage">CG.Entity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_entity.js.html#l44"><code>cangaja&#x2F;entity.js:44</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>initialize image for object. for now => sprite, particle, buffer, bitmap and button use it</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">image</code>
+                        <span class="type">Image</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>image path, image or tpimage</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_updateDiff" class="method item inherited">
+    <h3 class="name"><code>updateDiff</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#method_updateDiff">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l185"><code>cangaja&#x2F;sprite.js:185</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>calculate offset if bound is moving</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_aging" class="property item">
+    <h3 class="name"><code>aging</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l29"><code>cangaja&#x2F;particle.js:29</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_alpha" class="property item">
+    <h3 class="name"><code>alpha</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_alpha">
+                CG.Sprite
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l39"><code>cangaja&#x2F;particle.js:39</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_atlasimage" class="property item inherited">
+    <h3 class="name"><code>atlasimage</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_atlasimage">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l20"><code>cangaja&#x2F;sprite.js:20</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_attachedobject" class="property item inherited">
+    <h3 class="name"><code>attachedobject</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_attachedobject">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l93"><code>cangaja&#x2F;sprite.js:93</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bound" class="property item inherited">
+    <h3 class="name"><code>bound</code></h3>
+    <span class="type"><a href="../classes/CG.Bound.html" class="crosslink">CG.Bound</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_bound">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l26"><code>cangaja&#x2F;sprite.js:26</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_boundingradius" class="property item inherited">
+    <h3 class="name"><code>boundingradius</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_boundingradius">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l61"><code>cangaja&#x2F;rectangle.js:61</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_boundsMode" class="property item inherited">
+    <h3 class="name"><code>boundsMode</code></h3>
+    <span class="type">False/string</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_boundsMode">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l59"><code>cangaja&#x2F;sprite.js:59</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_clickable" class="property item inherited">
+    <h3 class="name"><code>clickable</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_clickable">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l32"><code>cangaja&#x2F;rectangle.js:32</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_clicked" class="property item inherited">
+    <h3 class="name"><code>clicked</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_clicked">
+                CG.Rectangle
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l75"><code>cangaja&#x2F;sprite.js:75</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_currtime" class="property item">
+    <h3 class="name"><code>currtime</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l24"><code>cangaja&#x2F;particle.js:24</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_diffpoint" class="property item inherited">
+    <h3 class="name"><code>diffpoint</code></h3>
+    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_diffpoint">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l30"><code>cangaja&#x2F;sprite.js:30</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_dragable" class="property item inherited">
+    <h3 class="name"><code>dragable</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_dragable">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l36"><code>cangaja&#x2F;rectangle.js:36</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_fadeout" class="property item">
+    <h3 class="name"><code>fadeout</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l34"><code>cangaja&#x2F;particle.js:34</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_followobject" class="property item inherited">
+    <h3 class="name"><code>followobject</code></h3>
+    <span class="type">Boolean/object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_followobject">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l80"><code>cangaja&#x2F;sprite.js:80</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_followspeed" class="property item inherited">
+    <h3 class="name"><code>followspeed</code></h3>
+    <span class="type">Boolean/integer</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_followspeed">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l84"><code>cangaja&#x2F;sprite.js:84</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_followsteps" class="property item inherited">
+    <h3 class="name"><code>followsteps</code></h3>
+    <span class="type">Boolean/integer</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_followsteps">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l88"><code>cangaja&#x2F;sprite.js:88</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_gravity" class="property item">
+    <h3 class="name"><code>gravity</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l44"><code>cangaja&#x2F;particle.js:44</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_height" class="property item inherited">
+    <h3 class="name"><code>height</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_height">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l28"><code>cangaja&#x2F;rectangle.js:28</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_hover" class="property item inherited">
+    <h3 class="name"><code>hover</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_hover">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l56"><code>cangaja&#x2F;rectangle.js:56</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_lifetime" class="property item">
+    <h3 class="name"><code>lifetime</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_particle.js.html#l19"><code>cangaja&#x2F;particle.js:19</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_mapcollision" class="property item inherited">
+    <h3 class="name"><code>mapcollision</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_mapcollision">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l65"><code>cangaja&#x2F;rectangle.js:65</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_name" class="property item inherited">
+    <h3 class="name"><code>name</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_name">CG.Entity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_entity.js.html#l23"><code>cangaja&#x2F;entity.js:23</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_offsetx" class="property item inherited">
+    <h3 class="name"><code>offsetx</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_offsetx">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l97"><code>cangaja&#x2F;sprite.js:97</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_offsety" class="property item inherited">
+    <h3 class="name"><code>offsety</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_offsety">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l101"><code>cangaja&#x2F;sprite.js:101</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_position" class="property item inherited">
+    <h3 class="name"><code>position</code></h3>
+    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_position">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l20"><code>cangaja&#x2F;rectangle.js:20</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_rotation" class="property item inherited">
+    <h3 class="name"><code>rotation</code></h3>
+    <span class="type">Integer/float</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_rotation">
+                CG.Rectangle
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l63"><code>cangaja&#x2F;sprite.js:63</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_rotationspeed" class="property item inherited">
+    <h3 class="name"><code>rotationspeed</code></h3>
+    <span class="type">Integer/float</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_rotationspeed">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l67"><code>cangaja&#x2F;sprite.js:67</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_visible" class="property item inherited">
+    <h3 class="name"><code>visible</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Entity.html#property_visible">CG.Entity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_entity.js.html#l27"><code>cangaja&#x2F;entity.js:27</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_width" class="property item inherited">
+    <h3 class="name"><code>width</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_width">CG.Rectangle</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_rectangle.js.html#l24"><code>cangaja&#x2F;rectangle.js:24</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_xhandle" class="property item inherited">
+    <h3 class="name"><code>xhandle</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_xhandle">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l43"><code>cangaja&#x2F;sprite.js:43</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_xscale" class="property item inherited">
+    <h3 class="name"><code>xscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_xscale">
+                CG.Rectangle
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l39"><code>cangaja&#x2F;sprite.js:39</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_xspeed" class="property item inherited">
+    <h3 class="name"><code>xspeed</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_xspeed">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l35"><code>cangaja&#x2F;sprite.js:35</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_yhandle" class="property item inherited">
+    <h3 class="name"><code>yhandle</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_yhandle">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l55"><code>cangaja&#x2F;sprite.js:55</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_yscale" class="property item inherited">
+    <h3 class="name"><code>yscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            <p>Inherited from
+            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_yscale">
+                CG.Rectangle
+            </a>
+            
+            but overwritten in
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l51"><code>cangaja&#x2F;sprite.js:51</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_yspeed" class="property item inherited">
+    <h3 class="name"><code>yspeed</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.Sprite.html#property_yspeed">CG.Sprite</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_sprite.js.html#l47"><code>cangaja&#x2F;sprite.js:47</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

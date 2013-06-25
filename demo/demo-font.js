@@ -16,7 +16,7 @@ window.onload = function () {
 // the Game object
 Game = (function () {
     var Game = {
-        path: '../',
+        path: '',
         fps:60,
         width:640,
         height:480,
@@ -34,7 +34,7 @@ Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game.path + 'media/img/splash3.jpg', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
@@ -43,10 +43,10 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont(Game.path + 'media/font/small.txt', 'small', 'small')
-                .addFont(Game.path + 'media/font/heiti.txt', 'heiti')
-                .addFont(Game.path + 'media/font/gill.txt', 'gill')
-                .addFont(Game.path + 'media/font/abadi_ez.txt', 'abadi')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/heiti.txt', 'heiti')
+                .addFont('media/font/gill.txt', 'gill')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
                 .startPreLoad()
         },
         create:function () {

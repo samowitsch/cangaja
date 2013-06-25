@@ -95,7 +95,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 // the Game object
 Game = (function () {
     var Game = {
-        path: '../',
+        path: '',
         fps:60,
         width:640,
         height:480,
@@ -113,7 +113,7 @@ Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game.path + 'media/img/splash3.jpg', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
@@ -122,25 +122,25 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont(Game.path + 'media/font/small.txt', 'small', 'small')
-                .addFont(Game.path + 'media/font/abadi_ez.txt', 'abadi')
-                .addImage(Game.path + 'media/img/glowball-50.png', 'glowball')
-                .addImage(Game.path + 'media/img/ballon.png', 'ballon')
-                .addImage(Game.path + 'media/img/hunter.png', 'hunter')
-                .addImage(Game.path + 'media/img/back3.jpg', 'back3')
+            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+                .addFont('media/font/abadi_ez.txt', 'abadi')
+                .addImage('media/img/glowball-50.png', 'glowball')
+                .addImage('media/img/ballon.png', 'ballon')
+                .addImage('media/img/hunter.png', 'hunter')
+                .addImage('media/img/back3.jpg', 'back3')
 
 
                 //tiled map
-                .addJson(Game.path + 'media/map/map-advanced-inner-outer.json', 'map1')
+                .addJson('media/map/map-advanced-inner-outer.json', 'map1')
 
                 //physics engine
-                .addJson(Game.path + 'media/img/ballon.json', 'ballon')
-                .addJson(Game.path + 'media/img/rainbow_256.json', 'rainbow_256')
-                .addJson(Game.path + 'media/img/powerstar75.json', 'powerstar75')
+                .addJson('media/img/ballon.json', 'ballon')
+                .addJson('media/img/rainbow_256.json', 'rainbow_256')
+                .addJson('media/img/powerstar75.json', 'powerstar75')
 
                 //texturepacker
-                .addImage(Game.path + 'media/img/texturepacker.png', 'texturepacker')
-                .addJson(Game.path + 'media/img/texturepacker.json', 'texturepacker-json')
+                .addImage('media/img/texturepacker.png', 'texturepacker')
+                .addJson('media/img/texturepacker.json', 'texturepacker-json')
 
                 .startPreLoad()
         },

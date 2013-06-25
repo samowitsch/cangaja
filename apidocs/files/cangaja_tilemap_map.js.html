@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>cangaja&#x2F;tilemap&#x2F;map.js - Cangaja API</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Cangaja API"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Bitmap.html">CG.Bitmap</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Buffer.html">CG.Buffer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Entity.html">CG.Entity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapPoint.html">CG.MapPoint</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Menu.html">CG.Menu</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Morph.html">CG.Morph</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: cangaja&#x2F;tilemap&#x2F;map.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * @description
+ *
+ * CG.Map supports loading and rendering maps from the editor Tiled.
+ * XML and JSON file types are supported.
+ * XML =&gt; supported tiled encodings are csv and xml (see settings!). base64, base64(gzip) and base64(zlib) are not supported!
+ *
+ * Supported types of the object layer are:
+ * - object&#x2F;group (rectangle?)
+ * - tile element, reference point is bottom&#x2F;CG.LEFT
+ *
+ * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
+ *
+ * @class CG.Map
+ * @extends CG.Entity
+ *
+ * TODO spacing and margin ?
+ * TODO own buffer for drawing =&gt; split screen possible?
+ * TODO update &amp; draw method 50%
+ *
+ *&#x2F;
+CG.Entity.extend(&#x27;Map&#x27;, {
+    &#x2F;**
+     * @method init
+     * @constructor
+     * @param width {Number} width of the map
+     * @param height {Number} height of the map
+     * @param mapname {string} mapname
+     * @return {*}
+     *&#x2F;
+    init:function (width, height, mapname) {
+        this._super(mapname)
+
+        &#x2F;**
+         * @property elements
+         * @type {Array}
+         *&#x2F;
+        this.elements = [] &#x2F;&#x2F;how handle elements in maps? experimental collision detection at the moment with only one
+        &#x2F;&#x2F;point and areas from tilemap editor
+        &#x2F;&#x2F;using as references for external objects in layers?
+        &#x2F;&#x2F;how to handle the relative position to the position of the map?
+
+        &#x2F;**
+         * @property points
+         * @type {Array}
+         *&#x2F;
+        this.points = [] &#x2F;&#x2F; position points (tiles) of tilemap editor =&gt; position point and type?
+        &#x2F;**
+         * @property areas
+         * @type {Array}
+         *&#x2F;
+        this.areas = [] &#x2F;&#x2F; group objects e.g. area for objects of tilemap editor =&gt; bound and type?
+        &#x2F;**
+         * @property position
+         * @type {CG.Point}
+         *&#x2F;
+        this.position = new CG.Point(0, 0) &#x2F;&#x2F; needed as relative point for points and areas
+        &#x2F;**
+         * @property changemap
+         * @type {String}
+         *&#x2F;
+        this.changemap = &#x27;&#x27;
+        &#x2F;**
+         * @description
+         *
+         * If set to true the map is being updated with method updateAnimation.
+         * See also method description of updateAnimation!
+         *
+         * @property animated
+         * @type {Boolean}
+         *&#x2F;
+        this.animated = false &#x2F;&#x2F;performance eater if true ;o(
+        &#x2F;**
+         * @property animDelayFactor
+         * @type {Number}
+         *&#x2F;
+        this.animDelayFactor = 20
+        &#x2F;**
+         * @property atlas
+         * @type {Image}
+         *&#x2F;
+        this.atlas = new Image()
+        &#x2F;**
+         * @property atlaswidth
+         * @type {Number}
+         *&#x2F;
+        this.atlaswidth = 0
+        &#x2F;**
+         * @property atlasheight
+         * @type {Number}
+         *&#x2F;
+        this.atlasheight = 0
+        &#x2F;**
+         * @property atlastranscol
+         * @type {String}
+         *&#x2F;
+        this.atlastranscol = &#x27;&#x27; &#x2F;&#x2F;
+        &#x2F;&#x2F;ejecta has no DOMParser!
+        if (typeof(ejecta) == &#x27;undefined&#x27;) {
+            &#x2F;**
+             * @property xml
+             * @type {String}
+             *&#x2F;
+            this.xml = &#x27;&#x27;
+            &#x2F;**
+             * @property parser
+             * @type {DOMParser}
+             *&#x2F;
+            this.parser = new DOMParser()
+            &#x2F;**
+             * @property xmlDoc
+             * @type {String}
+             *&#x2F;
+            this.xmlDoc = &#x27;&#x27;
+        }
+        &#x2F;**
+         * @property json
+         * @type {Object}
+         *&#x2F;
+        this.json = {}
+        &#x2F;**
+         * @description
+         *
+         * The tiled layer are parsed into separate layers
+         *
+         * @property layers
+         * @type {Array}
+         *&#x2F;
+        this.layers = [] &#x2F;&#x2F;can contain maptilelayer or objectlayer
+        &#x2F;**
+         * @description
+         *
+         * Defines the layer to draw:
+         * all - for all layers
+         * name - the name of layer to draw
+         * index - array index of layer
+         *
+         * @property renderlayer
+         * @type {String}
+         *&#x2F;
+        this.renderlayer = &#x27;all&#x27; &#x2F;&#x2F;render layer: all for all layers, name of layer or array index for example 0 ;o)
+        &#x2F;**
+         * @property tileproperties
+         * @type {Array}
+         *&#x2F;
+        this.tileproperties = [] &#x2F;&#x2F;properties of the tiles
+        &#x2F;**
+         * @property orientation
+         * @type {String}
+         *&#x2F;
+        this.orientation = &#x27;&#x27;
+        &#x2F;**
+         * @property width
+         * @type {Number}
+         *&#x2F;
+        this.width = 0
+        &#x2F;**
+         * @property height
+         * @type {Number}
+         *&#x2F;
+        this.height = 0
+        &#x2F;**
+         * @property tilewidth
+         * @type {Number}
+         *&#x2F;
+        this.tilewidth = 0
+        &#x2F;**
+         * @property tileheight
+         * @type {Number}
+         *&#x2F;
+        this.tileheight = 0
+        &#x2F;**
+         * @property tileset
+         * @type {Object}
+         *&#x2F;
+        this.tileset = {
+            tilewidth:0,
+            tileheight:0,
+            offsetx:0,
+            offsety:0,
+            spacing:0,
+            margin:0
+        }
+        &#x2F;**
+         * @property xspeed
+         * @type {Number}
+         *&#x2F;
+        this.xspeed = 0
+        &#x2F;**
+         * @property yspeed
+         * @type {Number}
+         *&#x2F;
+        this.yspeed = 0
+        &#x2F;**
+         * @property xscale
+         * @type {Number}
+         *&#x2F;
+        this.xscale = 1
+        &#x2F;**
+         * @property yscale
+         * @type {Number}
+         *&#x2F;
+        this.yscale = 1
+        &#x2F;**
+         * @property alpha
+         * @type {Number}
+         *&#x2F;
+        this.alpha = 1
+        &#x2F;**
+         * @property wrapX
+         * @deprecated
+         * @type {Boolean}
+         *&#x2F;
+        this.wrapX = false &#x2F;&#x2F;stuff from diddy?
+        &#x2F;**
+         * @property wrapY
+         * @deprecated
+         * @type {Boolean}
+         *&#x2F;
+        this.wrapY = false &#x2F;&#x2F;stuff from diddy?
+        &#x2F;**
+         * @property layertocheck
+         * @type {Number}
+         *&#x2F;
+        this.layertocheck = 0 &#x2F;&#x2F;as default use layer 0 for collision detection
+        return this
+    },
+    &#x2F;**
+     * @description
+     *
+     * Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.
+     * All other formats are not supported!
+     *
+     * @method loadMapXml
+     * @param xmlfile {string&#x2F;object} xmlfile path or mediaasset object with data of tiled map xml
+     *&#x2F;
+    loadMapXml:function (xmlfile) {
+        this.changemap = &#x27;&#x27;
+        this.animated = false
+        this.layers = []
+
+        &#x2F;&#x2F;from asset
+        if (typeof xmlfile == &#x27;string&#x27;) {
+            this.xml = loadString(xmlfile)
+        } else {
+            this.xml = xmlfile.data
+        }
+        this.removeJsonData()
+
+        this.xmlDoc = this.parser.parseFromString(this.xml, &#x27;text&#x2F;xml&#x27;)
+
+        &#x2F;&#x2F;get map
+        var tilemap = map.xmlDoc.getElementsByTagName(&#x27;map&#x27;)[0]
+        this.orientation = tilemap.getAttribute(&#x27;orientation&#x27;)
+        this.width = parseInt(tilemap.getAttribute(&#x27;width&#x27;))
+        this.height = parseInt(tilemap.getAttribute(&#x27;height&#x27;))
+        this.tilewidth = parseInt(tilemap.getAttribute(&#x27;tilewidth&#x27;))
+        this.tileheight = parseInt(tilemap.getAttribute(&#x27;tileheight&#x27;))
+
+        var childcount = tilemap.childElementCount
+
+        &#x2F;&#x2F;tilemap.firstElementChild.nextElementSibling.nextElementSibling
+        var element = tilemap.firstElementChild
+        for (i = 0; i &lt; childcount; i++) {
+            console.log(&#x27;&gt;&#x27; + element.nodeName)
+            switch (element.nodeName) {
+                case &#x27;tileset&#x27;:
+                    &#x2F;&#x2F;read tileset settings
+                    &#x2F;&#x2F;only one tileset for the moment
+                    this.tileset.tilewidth = parseInt(element.getAttribute(&#x27;tilewidth&#x27;))
+                    this.tileset.tileheight = parseInt(element.getAttribute(&#x27;tileheight&#x27;))
+                    if (element.getAttribute(&#x27;spacing&#x27;)) {
+                        this.tileset.spacing = parseInt(element.getAttribute(&#x27;spacing&#x27;))
+                    }
+                    if (element.getAttribute(&#x27;margin&#x27;)) {
+                        this.tileset.margin = parseInt(element.getAttribute(&#x27;margin&#x27;))
+                    }
+                    if (element.getElementsByTagName(&#x27;tileoffset&#x27;)[0]) {
+                        this.tileset.offsetx = parseInt(element.getElementsByTagName(&#x27;tileoffset&#x27;)[0].getAttribute(&#x27;x&#x27;))
+                        this.tileset.offsety = parseInt(element.getElementsByTagName(&#x27;tileoffset&#x27;)[0].getAttribute(&#x27;y&#x27;))
+                    }
+                    var image = element.getElementsByTagName(&#x27;image&#x27;)[0]
+                    this.atlas.src = &#x27;media&#x2F;map&#x2F;&#x27; + image.getAttribute(&#x27;source&#x27;)
+
+                    this.atlaswidth = parseInt(image.getAttribute(&#x27;width&#x27;))
+                    this.atlasheight = parseInt(image.getAttribute(&#x27;height&#x27;))
+                    this.atlastranscol = image.getAttribute(&#x27;trans&#x27;)
+
+                    break
+                case &#x27;layer&#x27;:
+                    &#x2F;&#x2F;get tilemap data of layer
+                    var tl = new CG.MapTileLayer()
+                    data = element.getElementsByTagName(&#x27;data&#x27;)[0]
+
+                    if (data.getAttribute(&#x27;encoding&#x27;) == &#x27;csv&#x27;) {
+                        tl.tiles = data.textContent.replace(&#x2F;(\r\n|\n|\r)&#x2F;gm, &#x27;&#x27;).split(&#x27;,&#x27;)
+                        console.log(&#x27;map encoding csv [layer &#x27; + i + &#x27;]&#x27;)
+                    } else if (data.getAttribute(&#x27;encoding&#x27;) == &#x27;base64&#x27; &amp;&amp; data.getAttribute(&#x27;compression&#x27;) == &#x27;gzip&#x27;) {
+                        throw &#x27;base64 gzip compressed map format not supported at the moment&#x27;
+                    } else if (data.getAttribute(&#x27;encoding&#x27;) == &#x27;base64&#x27; &amp;&amp; data.getAttribute(&#x27;compression&#x27;) == &#x27;zlib&#x27;) {
+                        throw &#x27;base64 zlib compressed map format not supported at the moment&#x27;
+                    } else if (data.getAttribute(&#x27;encoding&#x27;) == &#x27;base64&#x27;) {
+                        throw &#x27;base64 map format not supported at the moment&#x27;
+                    } else {
+                        console.log(&#x27;map encoding xml [layer &#x27; + i + &#x27;]&#x27;)
+                        var tiles = element.getElementsByTagName(&#x27;tile&#x27;)
+                        for (x in tiles) {
+                            if (x &lt; tiles.length) {
+                                tl.tiles[x] = parseInt(tiles[x].getAttribute(&#x27;gid&#x27;))
+                            }
+                        }
+                    }
+
+                    tl.name = element.getAttribute(&#x27;name&#x27;)
+                    tl.width = parseInt(element.getAttribute(&#x27;width&#x27;))
+                    tl.height = parseInt(element.getAttribute(&#x27;height&#x27;))
+                    if (element.getAttribute(&#x27;opacity&#x27;)) {
+                        tl.opacity = parseFloat(element.getAttribute(&#x27;opacity&#x27;))
+                    }
+                    if (element.getAttribute(&#x27;visible&#x27;) === &#x27;0&#x27;) {
+                        tl.visible = false
+                    }
+                    this.layers.push(tl)
+                    break
+                case &#x27;objectgroup&#x27;:
+                    &#x2F;&#x2F;get tilemap data of grouplayer
+                    console.log(&#x27;grouplayer found&#x27;)
+                    var objects = element.getElementsByTagName(&#x27;object&#x27;)
+                    for (o in objects) {
+                        if (o &lt; objects.length) {
+                            var obj = objects[o]
+                            var name = obj.getAttribute(&#x27;name&#x27;)
+                            if (obj.getAttribute(&#x27;gid&#x27;)) {
+                                &#x2F;&#x2F;tile as object&#x2F;point
+                                this.points.push(
+                                    new CG.MapPoint(
+                                        new CG.Point(
+                                            parseInt(obj.getAttribute(&#x27;x&#x27;)), parseInt(obj.getAttribute(&#x27;y&#x27;))), this.position, obj.getAttribute(&#x27;name&#x27;), parseInt(obj.getAttribute(&#x27;gid&#x27;))))
+                                console.log(&#x27;tile as oject found: &#x27; + name)
+                                console.log(obj)
+                            } else if (obj.getAttribute(&#x27;width&#x27;)) {
+                                type = false
+                                properties = obj.getElementsByTagName(&#x27;property&#x27;)
+                                console.log(properties.length)
+                                for (var p = 0, l = properties.length; p &lt; l; p++) {
+                                    if (properties[p].getAttribute(&#x27;name&#x27;) == &#x27;type&#x27;) {
+                                        type = properties[p].getAttribute(&#x27;value&#x27;)
+                                    }
+                                }
+
+                                &#x2F;&#x2F;object group
+                                this.areas.push(
+                                    new CG.MapArea(
+                                        new CG.Bound(
+                                            parseInt(obj.getAttribute(&#x27;x&#x27;)), parseInt(obj.getAttribute(&#x27;y&#x27;)), parseInt(obj.getAttribute(&#x27;width&#x27;)), parseInt(obj.getAttribute(&#x27;height&#x27;))), this.position, obj.getAttribute(&#x27;name&#x27;), type))
+                                console.log(&#x27;group object found: &#x27; + name)
+                                console.log(obj)
+                            } else if (obj.getElementsByTagName(&#x27;polygon&#x27;).length &gt; 0) {
+                                console.log(&#x27;polygon found: &#x27; + name)
+                            } else if (obj.getElementsByTagName(&#x27;polyline&#x27;).length &gt; 0) {
+                                console.log(&#x27;polyline found: &#x27; + name)
+                            }
+                        }
+                    }
+                    break
+
+            }
+            element = element.nextElementSibling
+        }
+
+
+        &#x2F;&#x2F;get tile properties
+        this.tileproperties = Array(parseInt((this.atlaswidth &#x2F; this.tilewidth)) * parseInt((this.atlasheight &#x2F; this.tileheight)))
+        var tiles = map.xmlDoc.getElementsByTagName(&#x27;tileset&#x27;)[0].getElementsByTagName(&#x27;tile&#x27;)
+        var time = new Date().getTime()
+        for (i in tiles) {
+            var tprop = new CG.MapTileProperties()
+            var tile = tiles[i]
+
+            if (i &lt; this.tileproperties.length) {
+                var id = tile.getAttribute(&#x27;id&#x27;)
+                var properties = tile.getElementsByTagName(&#x27;properties&#x27;)[0].getElementsByTagName(&#x27;property&#x27;)
+                for (p in properties) {
+                    if (p &lt; properties.length) {
+                        var tp = properties[p]
+                        var elem = tp.getAttribute(&#x27;name&#x27;)
+                        var value = tp.getAttribute(&#x27;value&#x27;)
+                        if (elem == &#x27;name&#x27;) {
+                            tprop.name = value
+                        } else if (elem == &#x27;anim_delay&#x27;) {
+                            tprop.animDelay = parseInt(value)
+                            tprop.delayTimer = time
+                            this.animated = true
+                        } else if (elem == &#x27;anim_direction&#x27;) {
+                            tprop.animDirection = parseInt(value)
+                        } else if (elem == &#x27;anim_next&#x27;) {
+                            tprop.animNext = parseInt(value)
+                            tprop.animated = true
+                        }
+                    }
+                }
+                this.tileproperties[id] = tprop
+            }
+        }
+        return this
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Load and parse an tilemap json file. Use the tiled json export.
+     * Hopefully the json format has the same functionality as the xml loader ;o)
+     *
+     * @method loadMapJson
+     * @param jsonfile {string&#x2F;object} jsonfile path or mediaasset object with data of tiled map xml
+     *&#x2F;
+    loadMapJson:function (jsonfile) {
+        this.changemap = &#x27;&#x27;
+        this.animated = false
+        this.layers = []
+
+        &#x2F;&#x2F;from asset
+        if (typeof jsonfile == &#x27;string&#x27;) {
+            this.json = JSON.parse(loadString(jsonfile))
+        } else {
+            this.json = jsonfile.data
+        }
+
+        this.removeXmlData()
+
+        &#x2F;&#x2F;get map
+        this.orientation = this.json.orientation
+        this.width = this.json.width
+        this.height = this.json.height
+        this.tilewidth = this.json.tilewidth
+        this.tileheight = this.json.tileheight
+
+        &#x2F;&#x2F;tilesets
+        for (i = 0, l = this.json.layers.length; i &lt; l; i++) {
+            switch (this.json.layers[i].type) {
+                case &#x27;tilelayer&#x27;:
+                    &#x2F;&#x2F;get tilemap data of layer
+                    var tl = new CG.MapTileLayer()
+                    tl.tiles = this.json.layers[i].data
+                    tl.name = this.json.layers[i].name
+                    tl.width = this.json.layers[i].width
+                    tl.height = this.json.layers[i].height
+                    tl.opacity = this.json.layers[i].opacity
+                    tl.visible = this.json.layers[i].visible
+                    this.layers.push(tl)
+                    break
+                case &#x27;objectgroup&#x27;:
+                    &#x2F;&#x2F;get tilemap data of grouplayer
+                    console.log(&#x27;grouplayer found&#x27;)
+                    var objects = this.json.layers[i].objects
+                    for (o in objects) {
+                        if (o &lt; objects.length) {
+                            var obj = objects[o]
+                            var name = obj.name
+                            if (obj.gid) {
+                                &#x2F;&#x2F;tile as object&#x2F;point
+                                this.points.push(
+                                    new CG.MapPoint(
+                                        new CG.Point(
+                                            parseInt(obj.x), parseInt(obj.y)), this.position, obj.name, parseInt(obj.gid)))
+
+                                console.log(&#x27;tile as oject found: &#x27; + name)
+                                console.log(obj)
+                            } else if (obj.width) {
+                                &#x2F;&#x2F;object group
+                                this.areas.push(
+                                    new CG.MapArea(
+                                        new CG.Bound(
+                                            parseInt(obj.x), parseInt(obj.y), parseInt(obj.width), parseInt(obj.height)), this.position, obj.name, obj.properties.type))
+
+                                console.log(&#x27;group object found: &#x27; + name)
+                                console.log(obj)
+                            } else if (obj.polygon) {
+                                console.log(&#x27;polygon found: &#x27; + name)
+                            } else if (obj.polyline) {
+                                console.log(&#x27;polyline found: &#x27; + name)
+                            }
+                        }
+                    }
+                    break
+
+            }
+        }
+
+
+        &#x2F;&#x2F;get tile properties
+        this.atlas.src = &#x27;media&#x2F;map&#x2F;&#x27; + this.json.tilesets[0].image
+
+        this.atlaswidth = this.json.tilesets[0].imagewidth
+        this.atlasheight = this.json.tilesets[0].imageheight
+        this.atlastranscol = this.json.tilesets[0].transparentcolor
+
+        this.tileproperties = Array(parseInt((this.atlaswidth &#x2F; this.tilewidth)) * parseInt((this.atlasheight &#x2F; this.tileheight)))
+        var tiles = this.json.tilesets[0].tileproperties
+
+        var time = new Date().getTime()
+
+        for (id in tiles) {
+            var tprop = new CG.MapTileProperties()
+            var tile = tiles[id]
+            tprop.name = tile.name
+            tprop.animDelay = parseInt(tile.anim_delay)
+            tprop.delayTimer = (tprop.animDelay &gt; 0) ? time : 0
+            tprop.animated = (tprop.animDelay &gt; 0) ? true : false
+            tprop.animNext = parseInt(tile.anim_next)
+            if (tprop.animDelay &gt; 0) {
+                this.animated = true
+            }
+            tprop.animDirection = parseInt(tile.anim_direction)
+            this.tileproperties[id] = tprop
+
+        }
+        return this
+    },
+
+
+    &#x2F;**
+     * @description
+     *
+     * This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.
+     *
+     * @method drawMap
+     *
+     * @param sx {Number} sx top left coord for canvas drawing
+     * @param sy {Number} sy top left coord for canvas drawing
+     * @param bx {Number} bx top left x coord of bound in tilemap
+     * @param by {Number} by top left y coord of bound in tilemap
+     * @param bw {Number} bw width of bound in tilemap
+     * @param bh {Number} bh height of bound in tilemap
+     * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
+     *&#x2F;
+    drawMap:function (sx, sy, bx, by, bw, bh, callback) {
+        this.position.x = bx
+        this.position.y = by
+
+        this.bx = bx || this.bx || 0
+        this.by = by || this.by || 0
+        this.bw = bw || Game.bound.width
+        this.bh = bh || Game.bound.height
+        this.sx = sx || this.sx || 0
+        this.sy = sy || this.sy || 0
+        this.callback = callback || false
+
+        &#x2F;&#x2F;update all points an areas
+        this.updatePointsAndAreas()
+
+        if (this.changemap != &#x27;&#x27;) {
+            this.loadMap(this.changemap)
+        }
+        if (this.visible) {
+            this.updateAnimation()
+            if (this.layers.length &gt; 0) {
+                for (var layer = 0, l = this.layers.length; layer &lt; l; layer++) {
+                    var tl = this.layers[layer]
+                    &#x2F;&#x2F;render control, render by name, layer number or &#x27;all&#x27;&#x27;
+                    if (this.renderlayer == tl.name || this.renderlayer == layer || this.renderlayer == &#x27;all&#x27;) {
+                        &#x2F;&#x2F; MAP ORTHOGONAL
+                        if (this.orientation == &#x27;orthogonal&#x27; &amp;&amp; tl.visible == true) {
+                            modx = (this.bx * this.xscale) % this.tilewidth
+                            mody = (this.by * this.yscale) % this.tileheight
+                            y = this.by
+                            my = Math.floor(parseFloat(this.by) &#x2F; parseFloat(this.tileheight)) &gt;&gt; 0
+
+                            var tmpy = (this.by + this.bh + this.tileheight)
+                            while (y &lt; tmpy) {
+                                x = this.bx &#x2F;&#x2F;- this.tilewidth
+                                mx = Math.floor(parseFloat(this.bx) &#x2F; parseFloat(this.tilewidth)) &gt;&gt; 0
+
+                                var tmpx = (this.bx + this.bw + this.tilewidth)
+                                while (x &lt; tmpx) {
+                                    if ((this.wrapX || (mx &gt;= 0 &amp;&amp; mx &lt; this.width)) &amp;&amp; (this.wrapY || (my &gt;= 0 &amp;&amp; my &lt; this.height))) {
+                                        mx2 = mx
+                                        my2 = my
+
+                                        while (mx2 &lt; 0) {
+                                            mx2 += this.width
+                                        }
+
+                                        while (mx2 &gt;= this.width) {
+                                            mx2 -= this.width
+                                        }
+
+                                        while (my2 &lt; 0) {
+                                            my2 += this.height
+                                        }
+
+                                        while (my2 &gt;= this.height) {
+                                            my2 -= this.height
+                                        }
+
+                                        gid = tl.tiles[mx2 + my2 * tl.width] - 1
+
+                                        if (gid &gt;= 0) {
+                                            if (modx &lt; 0) {
+                                                modx += this.tilewidth
+                                            }
+                                            if (mody &lt; 0) {
+                                                mody += this.tileheight
+                                            }
+                                            rx = x - modx - this.bx
+                                            ry = y - mody - this.by
+
+
+                                            &#x2F;&#x2F;time for collision detection?
+                                            &#x2F;&#x2F;limit to specific tilemap layer?
+                                            &#x2F;&#x2F;collision depending on bounds and direction (xspeed&#x2F;yspeed)?
+                                            &#x2F;&#x2F;include some layer functionality here and render some sprites between map layers?
+                                            if (this.elements.length &gt; 0 &amp;&amp; this.layertocheck == l) {
+                                                for (var o = 0, l = this.elements.length; o &lt; l; o++) {
+                                                    if (this.checkMapCollision(this.elements[0], rx, ry)) {
+                                                        this.callback(this.elements[o], this.tileproperties[gid])
+                                                    }
+                                                }
+                                            }
+
+
+                                            &#x2F;&#x2F;margin&#x2F;spacing?
+                                            cx = (gid % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
+                                            cy = Math.floor(this.tilewidth * gid &#x2F; this.atlaswidth) * this.tileheight
+
+                                            Game.b_ctx.save()
+                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
+                                            Game.b_ctx.translate(rx, ry)
+                                            try {
+                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
+                                            } catch (e) {
+                                            }
+                                            Game.b_ctx.restore()
+                                        }
+                                    }
+                                    x = x + this.tilewidth
+                                    mx += 1
+                                }
+                                y = y + this.tileheight
+                                my += 1
+                            }
+                        }
+                        &#x2F;&#x2F; MAP ISOMETRIC
+                        else if (this.orientation == &#x27;isometric&#x27;) {
+                            var t = tl.width + tl.height
+                            for (var y = 0; y &lt; t; y++) {
+                                var ry = y
+                                var rx = 0
+                                while (ry &gt;= tl.height) {
+                                    ry -= 1
+                                    rx += 1
+                                }
+
+
+                                while (ry &gt;= 0 &amp;&amp; rx &lt; tl.width) {
+                                    var gid = tl.tiles[rx + ry * tl.width]
+                                    var xpos = (rx - ry - 1) * this.tilewidth &#x2F; 2 - bx
+                                    var ypos = (rx + ry + 1) * this.tileheight &#x2F; 2 - by
+                                    if (xpos &gt; -this.tileset.tilewidth &amp;&amp; xpos &lt; bw &amp;&amp; ypos &gt; -this.tileset.tileheight &amp;&amp; ypos &lt; bh) {
+                                        if (gid &gt; 0) {
+                                            cx = ((gid - 1) % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
+                                            cy = Math.floor(this.tilewidth * (gid - 1) &#x2F; this.atlaswidth) * this.tileset.tileheight
+                                            Game.b_ctx.save()
+                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
+                                            Game.b_ctx.translate(xpos, ypos)
+                                            try {
+                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
+                                            } catch (e) {
+
+                                            }
+                                            Game.b_ctx.restore()
+                                        }
+                                    }
+                                    ry -= 1
+                                    rx += 1
+                                }
+                            }
+                        }
+                    }
+                    &#x2F;&#x2F;                else {
+                    &#x2F;&#x2F;                    throw &#x27;unknown orientation: &#x27; + this.orientation
+                    &#x2F;&#x2F;                }
+                }
+            }
+        }
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Update all areas and points elements.
+     *
+     * @method updatePointsAndAreas
+     *&#x2F;
+    updatePointsAndAreas:function () {
+        this.points.forEach(function (point, index) {
+            point.update()
+        }, this)
+        this.areas.forEach(function (area, index) {
+            area.update()
+        }, this)
+    },
+
+
+    &#x2F;**
+     * @description
+     *
+     * Get all point(s) with the given name in the points
+     *
+     * @method getPointsByName
+     *
+     * @param name {string} name of the points to return
+     * @return {false&#x2F;array} returns false or an array with point(s)
+     *&#x2F;
+    getPointsByName:function (name) {
+        points = []
+        for (var i = 0, l = this.points.length; i &lt; l; i++) {
+            if (this.points[i].name === name) {
+                points.push(this.points[i])
+            }
+        }
+        if (points.length &gt; 0) {
+            return points
+        }
+        return false
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Get all areas with the given name
+     *
+     * @method getAreasByName
+     *
+     * @param name {string} name of the area(s) to return
+     * @return {false&#x2F;array} returns false or an array with area(s)
+     *&#x2F;
+    getAreasByName:function (name) {
+        areas = []
+        for (var i = 0, l = this.areas.length; i &lt; l; i++) {
+            if (this.areas[i].name === name) {
+                areas.push(this.areas[i])
+            }
+        }
+        if (areas.length &gt; 0) {
+            return areas
+        }
+        return false
+    },
+
+
+    &#x2F;**
+     * @description
+     *
+     * Defines layer drawing, See property options
+     *
+     * @method setLayerToRender
+     *
+     * @param mixed {mixed} mixed define the map layer(s) to render &#x27;all&#x27; (string) for all layers, array index (integer) for layer to render or &#x27;name&#x27; (string) of layer to render&#x27;
+     *&#x2F;
+    setLayerToRender:function (mixed) {
+        this.renderlayer = mixed
+        return this
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * The update method is not complete yet and only experimental.
+     * At the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!
+     * Then also a map class can be added to a layer as an element for auto update&#x2F;draw from Game.director!
+     *
+     * @method update
+     *&#x2F;
+    update:function () {
+        &#x2F;&#x2F;TODO automatic movement of map or other stuff?
+        this.bx += this.xspeed
+        this.by += this.yspeed
+        if (this.getBounds().width - Game.bound.width &lt; this.bx) {
+            this.xspeed = this.xspeed * -1
+        }
+        if (this.bx &lt; 0) {
+            this.xspeed = this.xspeed * -1
+        }
+        if (this.getBounds().height - Game.bound.height &lt; this.by) {
+            this.yspeed = this.yspeed * -1
+        }
+        if (this.by &lt; 0) {
+            this.yspeed = this.yspeed * -1
+        }
+        return this
+    },
+
+    &#x2F;**
+     * yust calls drawMap ;o)
+     *&#x2F;
+    draw:function () {
+        this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
+        return this
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Get the bounds of the map
+     *
+     * @method getBounds
+     *&#x2F;
+    getBounds:function () {
+        return {
+            width:this.width * this.tilewidth,
+            height:this.height * this.tileheight
+        }
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Updates all tilemap properties of the map.
+     *
+     * Supported custom tiled map properties for now are (see also tilemap examples):
+     * anim_delay       =&gt; time to used to display an switch to next tile
+     * anim_direction   =&gt; direction for next tile 1 = jump forward, -1 = jump back
+     * anim_next        =&gt; defines the offset
+     *
+     * With this tile properties it is possible to define tilemap animations.
+     * These must be defined in the tilemap property window with key&#x2F;value pairs
+     *
+     * @method updateAnimation
+     *&#x2F;
+    updateAnimation:function () {
+        &#x2F;&#x2F; update if map is visible
+        if (this.visible &amp;&amp; this.animated) {
+            if (this.layers.length &gt; 0) {
+                for (var layer = 0, l = this.layers.length; layer &lt; l; layer++) {
+                    var newtime = new Date().getTime()
+                    for (t = 0; t &lt; this.layers[layer].tiles.length; t++) {
+                        var tile = this.layers[layer].tiles[t]
+                        if (tile &gt; 0) {
+                            try {
+                                var tprop = this.tileproperties[tile - 1]
+                                if (tprop.animated &amp;&amp; tprop.animDirection != 0) {
+                                    if (newtime &gt; (tprop.delayTimer + (tprop.animDelay &#x2F; this.animDelayFactor))) {
+                                        switch (tprop.animDirection) {
+                                            case 1:
+                                                this.layers[layer].tiles[t] += tprop.animNext
+                                                this.tileproperties[tile - 1 + tprop.animNext].delayTimer = newtime
+                                                break
+                                            case -1:
+                                                this.layers[layer].tiles[t] -= tprop.animNext
+                                                this.tileproperties[tile - 1 - tprop.animNext].delayTimer = newtime
+                                                break
+                                            default:
+                                                break
+                                        }
+                                    }
+                                }
+                            } catch (e) {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Adds a object to the element array, used at the moment for collision detection to tilemap.
+     *
+     * @method addElement
+     *
+     * @param {obj} element to to add to elements array
+     *&#x2F;
+    addElement:function (element) {
+        this.elements.push(element)
+        return this
+    },
+
+    &#x2F;**
+     * @description
+     * Checks if the attached element collides with an tile of the tilemap
+     *
+     * @method checkMapCollision
+     *
+     * @param {obj} element to check for
+     * @param {Number} rx current rx of rendermap method
+     * @param {Number} ry current ry of rendermap method
+     *
+     * @return {boolean} returns true or false
+     *&#x2F;
+    checkMapCollision:function (element, rx, ry) {
+        &#x2F;&#x2F;TODO return detailed collision object or offsets instead of true?
+        if (element.boundingradius &gt; 0) {
+            &#x2F;&#x2F;circular collision
+            xr = element.boundingradius &#x2F; 2 * element.xscale
+            yr = element.boundingradius &#x2F; 2 * element.yscale
+            if (element.position.x + xr &gt;= rx &amp;&amp; element.position.x - xr &lt;= rx + this.tilewidth &amp;&amp; element.position.y + yr &gt;= ry &amp;&amp; element.position.y - yr &lt;= ry + this.tileheight) {
+                return true
+            }
+        } else {
+            &#x2F;&#x2F;bounding collision
+            xw = element.width &#x2F; 2 * element.xscale
+            yh = element.height &#x2F; 2 * element.yscale
+            if (element.position.x + xw &gt;= rx &amp;&amp; element.position.x - xw &lt;= rx + this.tilewidth &amp;&amp; element.position.y + yh &gt;= ry &amp;&amp; element.position.y - yh &lt;= ry + this.tileheight) {
+                return true
+            }
+        }
+        return false
+    },
+
+    &#x2F;**
+     * @description
+     *
+     * Checks if a external object(s) collides with the areas of the tiled map.
+     * This can be elements from an layer or the map itself.
+     *
+     * @param {Array} objarray to check for a areas collision
+     * @param {Callback} callback what should happen
+     *&#x2F;
+    checkElementsToAreasCollision:function (objarray, callback) {
+        for (var o = 0, ol = objarray.length; o &lt; ol; o++) {
+
+            obj = objarray[o].checkCollision(this.areas, callback)
+        }
+        return this
+    },
+
+    &#x2F;**
+     * @description removes the json data of the map object
+     * @method removeJsonData
+     *&#x2F;
+    removeJsonData:function () {
+        this.json = {}
+        return this
+    },
+    &#x2F;**
+     * @description removes the xml data of the map object
+     * @method removeXmlData
+     *&#x2F;
+    removeXmlData:function () {
+        this.xml = &#x27;&#x27;
+        &#x2F;&#x2F;this.parser = new DOMParser()
+        this.xmlDoc = &#x27;&#x27;
+        return this
+    }
+})
+
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>
