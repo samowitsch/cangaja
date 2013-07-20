@@ -2277,9 +2277,24 @@ CG.Entity.extend('Font', {
         var currx = xpos
         var curry = ypos
 
-        for (var i = 0, l = text.length - 1; i < l; i++) {
-            Game.b_ctx.drawImage(this.atlas, this.x[text.charCodeAt(i)], this.y[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)], currx, curry + this.yoff[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)])
-            currx += this.xadv[text.charCodeAt(i)]
+        for (var i = 0, l = text.length; i < l; i++) {
+            var charCode = text.charCodeAt(i)
+            try {
+                Game.b_ctx.drawImage(
+                    this.atlas,
+                    this.x[charCode],
+                    this.y[charCode],
+                    this.width[charCode],
+                    this.height[charCode],
+                    currx,
+                    curry + this.yoff[charCode],
+                    this.width[charCode],
+                    this.height[charCode]
+                )
+            } catch (e) {
+                //console.log("drawText error: " + e)
+            }
+            currx += this.xadv[charCode]
         }
     },
 
