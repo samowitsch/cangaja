@@ -16,6 +16,7 @@ window.onload = function () {
 // the Game object
 Game = (function () {
     var Game = {
+        clock: new Clock(60),
         path: '',
         fps:60,
         width:640,
@@ -63,6 +64,7 @@ Game = (function () {
             Game.loop()
         },
         loop:function () {
+            Game.clock.tick()
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 Game.run();
