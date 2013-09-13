@@ -43,9 +43,9 @@ cat ../cangaja/cangaja.js \
 ../cangaja/morph.js \
 ../cangaja/particle.js \
 ../cangaja/emitter.js \
-../cangaja/lib/box2d.js/box2d.min.js \
-../cangaja/lib/box2d.js/embox2d-helpers.js \
-../cangaja/lib/box2d.js/embox2d-html5canvas-debugDraw.js \
+../cangaja/lib/embox2d/box2d.min.js \
+../cangaja/lib/embox2d/embox2d-helpers.js \
+../cangaja/lib/embox2d/embox2d-html5canvas-debugDraw.js \
 ../cangaja/box2d/b2d-entity.js \
 ../cangaja/box2d/b2d-circle.js \
 ../cangaja/box2d/b2d-line.js \
