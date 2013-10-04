@@ -148,38 +148,38 @@ Game = (function () {
         },
         touchinit:function () {
             hammer = new Hammer(canvas);
-            hammer.ontap = function (ev) {
+            hammer.on('tap', function (ev) {
                 mousedown = true
-                mousex = ev.position[0].x - canvas.offsetLeft //correct ontap value x
-                mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
+                mousex = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
+                mousey = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
                 clicked()
-            };
-            hammer.ondragstart = function (ev) {
-            };
-            hammer.ondrag = function (ev) {
-                mousex = ev.position.x
-                mousey = ev.position.y
-            };
-            hammer.ondragend = function (ev) {
-            };
-            hammer.onswipe = function (ev) {
-            };
+            })
+            hammer.on('dragstart', function (ev) {
+            })
+            hammer.on('drag', function (ev) {
+                mousex = ev.gesture.center.pageX
+                mousey = ev.gesture.center.pageY
+            })
+            hammer.on('dragend', function (ev) {
+            })
+            hammer.on('swipe', function (ev) {
+            })
 
-            hammer.ondoubletap = function (ev) {
-            };
-            hammer.onhold = function (ev) {
-            };
+            hammer.on('doubletap', function (ev) {
+            })
+            hammer.on('hold', function (ev) {
+            })
 
-            hammer.ontransformstart = function (ev) {
-            };
-            hammer.ontransform = function (ev) {
-            };
-            hammer.ontransformend = function (ev) {
-            };
+            hammer.on('transformstart', function (ev) {
+            })
+            hammer.on('transform', function (ev) {
+            })
+            hammer.on('transformend', function (ev) {
+            })
 
-            hammer.onrelease = function (ev) {
+            hammer.on('release', function (ev) {
 
-            };
+            })
         },
         touchhandler:function () {
         }

@@ -370,39 +370,38 @@ var Game = (function () {
         },
         touchinit: function () {
             hammer = new Hammer(canvas);
-            hammer.ontap = function (ev) {
+            hammer.on('tap', function (ev) {
                 CG.mousedown = true
-                CG.mouse.x = ev.position[0].x - canvas.offsetLeft //correct ontap value x
-                CG.mouse.y = ev.position[0].y - canvas.offsetTop  //correct ontap value y
+                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
+                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
                 clicked()
 
-            };
-            hammer.ondragstart = function (ev) {
-            };
-            hammer.ondrag = function (ev) {
-                CG.mouse.x = ev.position.x
-                CG.mouse.y = ev.position.y
+            })
+            hammer.on('dragstart', function (ev) {
+            })
+            hammer.on('drag', function (ev) {
+                CG.mouse.x = ev.gesture.center.pageX
+                CG.mouse.y = ev.gesture.center.pageY
+            })
+            hammer.on('dragend', function (ev) {
+            })
+            hammer.on('swipe', function (ev) {
+            })
 
-            };
-            hammer.ondragend = function (ev) {
-            };
-            hammer.onswipe = function (ev) {
-            };
+            hammer.on('doubletap', function (ev) {
+            })
+            hammer.on('hold', function (ev) {
+            })
 
-            hammer.ondoubletap = function (ev) {
-            };
-            hammer.onhold = function (ev) {
-            };
+            hammer.on('transformstart', function (ev) {
+            })
+            hammer.on('transform', function (ev) {
+            })
+            hammer.on('transformend', function (ev) {
+            })
 
-            hammer.ontransformstart = function (ev) {
-            };
-            hammer.ontransform = function (ev) {
-            };
-            hammer.ontransformend = function (ev) {
-            };
-
-            hammer.onrelease = function (ev) {
-            };
+            hammer.on('release', function (ev) {
+            })
         },
         touchhandler: function () {
             CG.mousedown = false
