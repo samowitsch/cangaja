@@ -1,7 +1,6 @@
 # cangaja - Canvas Game JavaScript Framework
 
 cangaja is a javascript canvas project that i have started to explore the html canvas features.
-This is a very early version of it.
 
 ## Featurelist for now:
 
@@ -27,6 +26,7 @@ This is a very early version of it.
 * Tilemap support orthogonal/isometric ([Tiled Map Editor] .tmx files format xml or csv)
 * Font support ([Glyphdesigner] EZ Gui text files)
 * TexturePacker support ([TexturePacker] generic XML file)
+* Box2DHtml support ([Box2DHtml5])
 * PhysicsEditor support ([PhysicsEditor] use Lime + Corona JSON format for use in Box2D Wrapper)
 
 [Glyphdesigner]: http://www.71squared.com/glyphdesigner
@@ -37,6 +37,7 @@ This is a very early version of it.
 [Buzz!]: http://buzz.jaysalvat.com
 [Hammer]: http://eightmedia.github.com/hammer.js/
 [Ejecta]: http://impactjs.com/ejecta
+[Box2DHtml5]: https://code.google.com/p/box2d-html5/
 
 ## Todo / wish list / bugs:
 
@@ -76,6 +77,7 @@ This is a very early version of it.
 
 ## Changelog:
 
+* 2013-10-07 [change]] - removed box2dweb, added box2dhtml5 (Box2D 2.3.0), rework for box2dhtml5, misc updates
 * 2013-04-17 [cleanup] - cleanup again
 * 2013-04-08 [added] - added mode slide for director to switch screens
 * 2013-04-07 [added] - started basic cangaja template for ejecta
@@ -134,6 +136,7 @@ This is a very early version of it.
     + B2DLine
     + B2DBridge
     + B2DRope
+    + B2DChainShape
   + Bitmap
   + Bound
   + Buffer
@@ -173,12 +176,16 @@ This is a very early version of it.
         + Button
         + Emitter
         + Map
-        + Menu => TODO
+        + Menu
         + Sprite
         + B2DWorld
           + B2DCircle
           + B2DRectangle
           + B2DPolygon
+          + B2DLine
+          + B2DBridge
+          + B2DRope
+          + B2DChainShape
 
 # Examples #
 
@@ -491,46 +498,46 @@ var Game = {
     },
     touchinit: function() {
         hammer = new Hammer(canvas);
-        hammer.ontap = function(ev) {
+        hammer.on('tap', function(ev) {
             mousedown = true
             mousex = ev.position[0].x - canvas.offsetCG.LEFT //correct ontap value x
             mousey = ev.position[0].y - canvas.offsetTop  //correct ontap value y
 
-        };
-        hammer.ondragstart = function(ev) {
+        });
+        hammer.on('dragstart', function(ev) {
 
-        };
-        hammer.ondrag = function(ev) {
+        });
+        hammer.on('drag', function(ev) {
             mousex = ev.position.x
             mousey = ev.position.y
-        };
-        hammer.ondragend = function(ev) {
+        });
+        hammer.on('dragend', function(ev) {
 
-        };
-        hammer.onswipe = function(ev) {
+        });
+        hammer.on('swipe', function(ev) {
 
-        };
+        });
 
-        hammer.ondoubletap = function(ev) {
+        hammer.on('doubletap', function(ev) {
 
-        };
-        hammer.onhold = function(ev) {
+        });
+        hammer.on('hold', function(ev) {
 
-        };
+        });
 
-        hammer.ontransformstart = function(ev) {
+        hammer.on('transformstart', function(ev) {
 
-        };
-        hammer.ontransform = function(ev) {
+        });
+        hammer.on('transform', function(ev) {
 
-        };
-        hammer.ontransformend = function(ev) {
+        });
+        hammer.on('transformend', function(ev) {
 
-        };
+        });
 
-        hammer.onrelease = function(ev) {
+        hammer.on('release', function(ev) {
 
-        };
+        });
     },
     touchhandler: function(){
         mousedown = false
