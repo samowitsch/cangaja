@@ -15,6 +15,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "cangaja/box2d/b2d-chainshape.js": {
+            "name": "cangaja/box2d/b2d-chainshape.js",
+            "modules": {},
+            "classes": {
+                "CG.B2DChainShape": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "cangaja/box2d/b2d-circle.js": {
             "name": "cangaja/box2d/b2d-circle.js",
             "modules": {},
@@ -191,6 +200,13 @@
             "modules": {
                 "CG": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "cangaja/clock.js": {
+            "name": "cangaja/clock.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -387,6 +403,7 @@
             "submodules": {},
             "classes": {
                 "CG.B2DBridge": 1,
+                "CG.B2DChainShape": 1,
                 "CG.B2DCirlce": 1,
                 "CG.B2DEntity": 1,
                 "CG.B2DLine": 1,
@@ -451,6 +468,20 @@
             "file": "cangaja/box2d/b2d-bridge.js",
             "line": 7,
             "description": "B2DBridge is a simple wrapper that creates a bridge with segments.\nJust play with the params to get a good result.",
+            "extends": "CG.B2DEntity"
+        },
+        "CG.B2DChainShape": {
+            "name": "CG.B2DChainShape",
+            "shortname": "CG.B2DChainShape",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 7,
+            "description": "B2DChainShape",
             "extends": "CG.B2DEntity"
         },
         "CG.B2DCirlce": {
@@ -1156,6 +1187,159 @@
             "class": "CG.B2DBridge"
         },
         {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 1,
+            "description": "© 2012 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 17,
+            "itemtype": "method",
+            "name": "init",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "world",
+                    "description": "reference to world of B2DWorld",
+                    "type": "Object"
+                },
+                {
+                    "name": "name",
+                    "description": "id or name to identify",
+                    "type": "String"
+                },
+                {
+                    "name": "vertices",
+                    "description": "vertices for chainshape CG.Point array",
+                    "type": "Array"
+                },
+                {
+                    "name": "x",
+                    "description": "the x position",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "the y position",
+                    "type": "Number"
+                },
+                {
+                    "name": "scale",
+                    "description": "the world scale of B2DWorld",
+                    "type": "Number"
+                },
+                {
+                    "name": "stat",
+                    "description": "true if static body",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 31,
+            "itemtype": "property",
+            "name": "stat",
+            "type": "{*}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 36,
+            "itemtype": "property",
+            "name": "polys",
+            "type": "{Array}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 41,
+            "itemtype": "property",
+            "name": "xhandle",
+            "type": "{Number}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 46,
+            "itemtype": "property",
+            "name": "yhandle",
+            "type": "{Number}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 51,
+            "itemtype": "property",
+            "name": "bodyDef.type",
+            "type": "{b2Body.b2_staticBody/b2Body.b2_dynamicBody}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 60,
+            "itemtype": "property",
+            "name": "bodyDef.position",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 64,
+            "itemtype": "property",
+            "name": "bodyDef.userData",
+            "type": "{*}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 69,
+            "itemtype": "property",
+            "name": "body",
+            "type": "{b2Body}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 73,
+            "itemtype": "property",
+            "name": "fixDef.shape",
+            "type": "{b2CircleShape}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 80,
+            "itemtype": "property",
+            "name": "body",
+            "type": "{b2Body}",
+            "class": "CG.B2DChainShape"
+        },
+        {
+            "file": "cangaja/box2d/b2d-chainshape.js",
+            "line": 90,
+            "description": "createVec converts real world vectors to box2d world vecs depending on scale",
+            "itemtype": "method",
+            "name": "createVecs",
+            "params": [
+                {
+                    "name": "vertices",
+                    "description": "CG.Point array",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "vecs b2Vec2  with box2d world scale",
+                "type": "Array"
+            },
+            "class": "CG.B2DChainShape"
+        },
+        {
             "file": "cangaja/box2d/b2d-circle.js",
             "line": 1,
             "description": "© 2012 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework",
@@ -1243,21 +1427,13 @@
             "file": "cangaja/box2d/b2d-circle.js",
             "line": 52,
             "itemtype": "property",
-            "name": "fixDef.shape",
-            "type": "{b2CircleShape}",
-            "class": "CG.B2DCirlce"
-        },
-        {
-            "file": "cangaja/box2d/b2d-circle.js",
-            "line": 57,
-            "itemtype": "property",
             "name": "bodyDef.position.x",
             "type": "{Number}",
             "class": "CG.B2DCirlce"
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 62,
+            "line": 57,
             "itemtype": "property",
             "name": "bodyDef.position.y",
             "type": "{Number}",
@@ -1265,10 +1441,18 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 67,
+            "line": 62,
             "itemtype": "property",
             "name": "bdyDef.userData",
             "type": "{*}",
+            "class": "CG.B2DCirlce"
+        },
+        {
+            "file": "cangaja/box2d/b2d-circle.js",
+            "line": 67,
+            "itemtype": "property",
+            "name": "fixDef.shape",
+            "type": "{b2CircleShape}",
             "class": "CG.B2DCirlce"
         },
         {
@@ -2115,7 +2299,13 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 138,
+            "line": 80,
+            "description": "add m_groundBody for use with b2MouseJoint",
+            "class": "CG.B2DWorld"
+        },
+        {
+            "file": "cangaja/box2d/b2d-world.js",
+            "line": 133,
             "description": "Custom extended objects can be added to the B2DWork with this method.",
             "itemtype": "method",
             "name": "addCustom",
@@ -2129,7 +2319,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 151,
+            "line": 146,
             "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
@@ -2164,7 +2354,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 169,
+            "line": 164,
             "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
@@ -2189,7 +2379,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 185,
+            "line": 180,
             "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
@@ -2229,7 +2419,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 204,
+            "line": 199,
             "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -2274,7 +2464,37 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 226,
+            "line": 221,
+            "description": "createChainShape",
+            "itemtype": "method",
+            "name": "createChainShape",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "id or name to identify",
+                    "type": "String"
+                },
+                {
+                    "name": "vertices",
+                    "description": "vertices for chainshape CG.Point array",
+                    "type": "Array"
+                },
+                {
+                    "name": "x",
+                    "description": "the x position",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "the y position",
+                    "type": "Number"
+                }
+            ],
+            "class": "CG.B2DWorld"
+        },
+        {
+            "file": "cangaja/box2d/b2d-world.js",
+            "line": 238,
             "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
@@ -2323,7 +2543,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 247,
+            "line": 259,
             "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
@@ -2372,7 +2592,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 268,
+            "line": 280,
             "description": "Enables dragging B2D objects with the mouse.",
             "itemtype": "method",
             "name": "mouseDownAt",
@@ -2392,14 +2612,14 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 294,
+            "line": 307,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 301,
+            "line": 314,
             "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
@@ -2423,7 +2643,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 334,
+            "line": 347,
             "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -2446,7 +2666,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 358,
+            "line": 371,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -2457,7 +2677,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 365,
+            "line": 378,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -2470,7 +2690,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 372,
+            "line": 385,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -2491,7 +2711,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 385,
+            "line": 398,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -2504,7 +2724,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 409,
+            "line": 422,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -4040,6 +4260,94 @@
             "class": "CG.Button"
         },
         {
+            "file": "cangaja/clock.js",
+            "line": 1,
+            "description": "Created with JetBrains WebStorm.\nUser: Apple\nDate: 23.07.13\nTime: 22:43\nTo change this template use File | Settings | File Templates.",
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 12,
+            "description": "millisecond value returned by Date.now(). Will always",
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 17,
+            "description": "the number of milliseconds between the epoch (January 1, 1970)",
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 24,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 29,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 33,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 37,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 41,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 45,
+            "description": "The tick() method updates ALL the Clock members, which should only\nbe read from and never written to manually. It is recommended that\ntick() is called from a callback loop using requestAnimationFrame\n\nLearn more: http://paulirish.com/2011/requestanimationframe-for-smart-animating/",
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 53,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 57,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 60,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 65,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/clock.js",
+            "line": 71,
+            "class": "CG.Delta",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/delta.js",
             "line": 13,
             "itemtype": "method",
@@ -5081,7 +5389,7 @@
         },
         {
             "file": "cangaja/font.js",
-            "line": 137,
+            "line": 148,
             "description": "get the line height of the current font",
             "itemtype": "method",
             "name": "getLineHeight",
@@ -5094,7 +5402,7 @@
         },
         {
             "file": "cangaja/font.js",
-            "line": 146,
+            "line": 157,
             "description": "get the font size of the current font",
             "itemtype": "method",
             "name": "getFontSize",
@@ -5107,7 +5415,7 @@
         },
         {
             "file": "cangaja/font.js",
-            "line": 155,
+            "line": 166,
             "description": "get the width of the given text",
             "itemtype": "method",
             "name": "getTextWidth",
@@ -5127,7 +5435,7 @@
         },
         {
             "file": "cangaja/font.js",
-            "line": 170,
+            "line": 181,
             "description": "loadFont - load and parse the given fontfile",
             "itemtype": "method",
             "name": "loadFont",
@@ -6850,6 +7158,10 @@
         },
         {
             "message": "Missing item type\n© 2012 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework",
+            "line": " cangaja/box2d/b2d-chainshape.js:1"
+        },
+        {
+            "message": "Missing item type\n© 2012 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework",
             "line": " cangaja/box2d/b2d-circle.js:1"
         },
         {
@@ -6881,6 +7193,10 @@
             "line": " cangaja/box2d/b2d-world.js:1"
         },
         {
+            "message": "Missing item type\nadd m_groundBody for use with b2MouseJoint",
+            "line": " cangaja/box2d/b2d-world.js:80"
+        },
+        {
             "message": "Missing item type\nyust calls drawMap ;o)",
             "line": " cangaja/tilemap/map.js:794"
         },
@@ -6891,6 +7207,62 @@
         {
             "message": "Missing item type\ngid",
             "line": " cangaja/tilemap/mappoint.js:31"
+        },
+        {
+            "message": "Missing item type\nCreated with JetBrains WebStorm.\nUser: Apple\nDate: 23.07.13\nTime: 22:43\nTo change this template use File | Settings | File Templates.",
+            "line": " cangaja/clock.js:1"
+        },
+        {
+            "message": "Missing item type\nmillisecond value returned by Date.now(). Will always",
+            "line": " cangaja/clock.js:12"
+        },
+        {
+            "message": "Missing item type\nthe number of milliseconds between the epoch (January 1, 1970)",
+            "line": " cangaja/clock.js:17"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:24"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:29"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:33"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:37"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:41"
+        },
+        {
+            "message": "Missing item type\nThe tick() method updates ALL the Clock members, which should only\nbe read from and never written to manually. It is recommended that\ntick() is called from a callback loop using requestAnimationFrame\n\nLearn more: http://paulirish.com/2011/requestanimationframe-for-smart-animating/",
+            "line": " cangaja/clock.js:45"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:53"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:57"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:60"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:65"
+        },
+        {
+            "message": "Missing item type",
+            "line": " cangaja/clock.js:71"
         },
         {
             "message": "Missing item type\nnextscreen",

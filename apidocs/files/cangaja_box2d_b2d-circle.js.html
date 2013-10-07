@@ -45,6 +45,8 @@
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
+                <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
@@ -211,15 +213,10 @@ CG.B2DEntity.extend(&#x27;B2DCircle&#x27;, {
          * @type {b2Body.b2_staticBody&#x2F;b2Body.b2_dynamicBody}
          *&#x2F;
         if (this.stat) {
-            this.bodyDef.type = b2Body.b2_staticBody
+            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
         } else {
-            this.bodyDef.type = b2Body.b2_dynamicBody
+            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         }
-        &#x2F;**
-         * @property fixDef.shape
-         * @type {b2CircleShape}
-         *&#x2F;
-        this.fixDef.shape = new b2CircleShape(this.radius &#x2F; this.scale)
         &#x2F;**
          * @property bodyDef.position.x
          * @type {Number}
@@ -235,6 +232,11 @@ CG.B2DEntity.extend(&#x27;B2DCircle&#x27;, {
          * @type {*}
          *&#x2F;
         this.bodyDef.userData = this.id
+        &#x2F;**
+         * @property fixDef.shape
+         * @type {b2CircleShape}
+         *&#x2F;
+        this.fixDef.shape = new b2CircleShape(this.radius &#x2F; this.scale)
 
         &#x2F;**
          * @property body

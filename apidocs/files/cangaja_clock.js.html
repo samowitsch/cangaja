@@ -45,6 +45,8 @@
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
+                <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
@@ -171,7 +173,9 @@
  * Time: 22:43
  * To change this template use File | Settings | File Templates.
  *&#x2F;
-var Clock = function () {
+var Clock = function (targetfps) {
+
+    this.targetfps = targetfps || 60
 
     &#x2F;** Member startTime will remain fixed at its integer
      millisecond value returned by Date.now(). Will always
@@ -227,8 +231,10 @@ var Clock = function () {
         this.last = this.ms;
 
         &#x2F;** Calculate floating-point delta and increment time member *&#x2F;
-        this.delta = 0.001 * this.dt;
-        this.time += this.delta;
+&#x2F;&#x2F;        this.delta = 0.001 * this.dt;
+&#x2F;&#x2F;        this.time += this.delta;
+        this.delta = this.dt &#x2F; (1000 &#x2F; this.targetfps);
+        this.time += 0.001 * this.dt;
 
         &#x2F;** Calculate private temp variables for fps calculation *&#x2F;
         if (this.frameCounter) {

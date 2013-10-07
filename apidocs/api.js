@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "CG.Animation",
         "CG.B2DBridge",
+        "CG.B2DChainShape",
         "CG.B2DCirlce",
         "CG.B2DEntity",
         "CG.B2DLine",

@@ -45,6 +45,8 @@
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
+                <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
@@ -236,14 +238,14 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
          * @type {b2Body.b2_staticBody&#x2F;b2Body.b2_dynamicBody}
          *&#x2F;
         if (this.stat) {
-            this.bodyDef.type = b2Body.b2_staticBody
+            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
         } else {
-            this.bodyDef.type = b2Body.b2_dynamicBody
+            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         }
         &#x2F;**
          * @property bodyDef.position
          *&#x2F;
-        this.bodyDef.position.Set(this.x &#x2F; this.scale, this.y &#x2F; this.scale)
+        this.bodyDef.position.SetXY(this.x &#x2F; this.scale, this.y &#x2F; this.scale)
         &#x2F;**
          * @property bodyDef.userData
          * @type {*}

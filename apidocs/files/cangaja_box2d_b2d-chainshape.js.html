@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;buffer.js - Cangaja API</title>
+    <title>cangaja&#x2F;box2d&#x2F;b2d-chainshape.js - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -162,59 +162,123 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;buffer.js</h1>
+                        <h1 class="file-heading">File: cangaja&#x2F;box2d&#x2F;b2d-chainshape.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
+ *  © 2012 by Christian Sonntag &lt;info@motions-media.de&gt;
+ *  simple experimental Canvas Game JavaScript Framework
+ *&#x2F;
+
+
+&#x2F;**
  * @description
  *
- * CG.Buffer for separate canvas rendering&#x2F;buffering
+ * B2DChainShape
  *
- * @class CG.Buffer
- * @extends CG.Entity
- *
+ * @class CG.B2DChainShape
+ * @extends CG.B2DEntity
  *&#x2F;
-CG.Entity.extend(&#x27;Buffer&#x27;, {
+
+CG.B2DEntity.extend(&#x27;B2DChainShape&#x27;, {
     &#x2F;**
-     * @constructor
      * @method init
-     * @param width {Number} width of the buffer
-     * @param height {Number} height of the buffer
-     * @param buffername {string} buffername
+     * @constructor
+     * @param world     {Object}      reference to world of B2DWorld
+     * @param name      {String}      id or name to identify
+     * @param vertices  {array}      vertices for chainshape CG.Point array
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param scale     {Number}     the world scale of B2DWorld
+     * @param stat     {Boolean}     true if static body
      * @return {*}
      *&#x2F;
-    init:function (width, height, buffername) {
-        this._super(buffername)
+    init:function (world, name, vertices, x, y, scale, stat) {
+        this._super(name, false, world, x, y, scale)
         &#x2F;**
-         * @property b_canvas
-         * @type {HTMLElement}
-         *&#x2F;
-        this.b_canvas = document.createElement(&#x27;canvas&#x27;)
-&#x2F;&#x2F;    if(typeof(ejecta) !== &#x27;undefined&#x27;){
-&#x2F;&#x2F;        this.b_canvas.width = w
-&#x2F;&#x2F;        this.b_canvas.height = h
-&#x2F;&#x2F;    }else{
-
-        &#x2F;**
-         * @property b_canvas.width
+         * @property stat
          * @type {*}
          *&#x2F;
-        this.b_canvas.width = width
+        this.stat = stat || false
         &#x2F;**
-         * @property b_canvas.height
+         * @property polys
+         * @type {Array}
+         *&#x2F;
+        this.vertices = this.createVecs(vertices)
+        &#x2F;**
+         * @property xhandle
+          * @type {Number}
+         *&#x2F;
+        this.xhandle = 0
+        &#x2F;**
+         * @property yhandle
+         * @type {Number}
+         *&#x2F;
+        this.yhandle = 0
+        &#x2F;**
+         * @property bodyDef.type
+         * @type {b2Body.b2_staticBody&#x2F;b2Body.b2_dynamicBody}
+         *&#x2F;
+        if (this.stat) {
+            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
+        } else {
+            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
+        }
+        &#x2F;**
+         * @property bodyDef.position
+         *&#x2F;
+        this.bodyDef.position.SetXY(this.x &#x2F; this.scale, this.y &#x2F; this.scale)
+        &#x2F;**
+         * @property bodyDef.userData
          * @type {*}
          *&#x2F;
-        this.b_canvas.height = height
-&#x2F;&#x2F;    }
+        this.bodyDef.userData = this.id
+        &#x2F;**
+         * @property body
+         * @type {b2Body}
+         *&#x2F;
+        &#x2F;**
+         * @property fixDef.shape
+         * @type {b2CircleShape}
+         *&#x2F;
+        this.fixDef.shape = new b2ChainShape()
+        this.fixDef.shape.CreateChain(this.vertices, this.vertices.length)
 
         &#x2F;**
-         * @property b_ctx
-         * @type {CanvasRenderingContext2D}
+         * @property body
+         * @type {b2Body}
          *&#x2F;
-        this.b_ctx = this.b_canvas.getContext(&#x27;2d&#x27;)
+        this.body = this.world.CreateBody(this.bodyDef)
+        this.body.CreateFixture(this.fixDef)
+
         return this
+
+    },
+    &#x2F;**
+     * @description
+     *
+     * createVec converts real world vectors to box2d world vecs depending on scale
+     *
+     * @method createVecs
+     * @param {Array} vertices CG.Point array
+     * @return {Array} vecs b2Vec2  with box2d world scale
+     *&#x2F;
+    createVecs:function (vertices) {
+        var vecs = []
+        for (var i = 0, l = vertices.length; i &lt; l; i++) {
+            var vec = new b2Vec2(vertices[i].x &#x2F; this.scale, vertices[i].y &#x2F; this.scale)
+            vecs.push(vec)
+        }
+        return vecs
+    },
+    update:function () {
+
+    },
+    draw:function () {
+
     }
+
 })
 
 
