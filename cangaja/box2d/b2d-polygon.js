@@ -70,14 +70,14 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
          */
         if (this.stat) {
-            this.bodyDef.type = b2Body.b2_staticBody
+            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
         } else {
-            this.bodyDef.type = b2Body.b2_dynamicBody
+            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         }
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}

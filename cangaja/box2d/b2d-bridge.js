@@ -83,13 +83,13 @@ CG.B2DEntity.extend('B2DBridge', {
         this.fixtureDef.restitution = 0.2
         this.fixtureDef.friction = 0.2
         this.fixtureDef.shape = this.bodyShapeCircle
-        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
         this.bodyGroup[0].CreateFixture(this.fixtureDef)
         this.prevBody = this.bodyGroup[0]
 
         // BridgeEnd
-        this.bodyDef.position.Set(this.length / this.scale, this.y / this.scale)
+        this.bodyDef.position.SetXY(this.length / this.scale, this.y / this.scale)
         this.bodyDef.userData = this.id
         this.bodyGroup[1] = this.world.CreateBody(this.bodyDef)
         this.bodyGroup[1].CreateFixture(this.fixtureDef)
@@ -100,7 +100,7 @@ CG.B2DEntity.extend('B2DBridge', {
         this.bodyDef = new b2BodyDef()
         this.bodyDef.userData = this.id
         this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
-        this.bodyDef.type = b2Body.b2_dynamicBody
+        this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         this.fixtureDef.shape = this.bodyShapePoly
         this.fixtureDef.density = 20.0
         this.fixtureDef.restitution = 0.2
@@ -111,17 +111,17 @@ CG.B2DEntity.extend('B2DBridge', {
         this.jointDef.enableLimit = true
 
         for (var i = 0, l = this.segments; i < l; i++) {
-            this.bodyDef.position.Set(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.bodyDef.position.SetXY(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
             this.bodyGroup[i + 2] = this.world.CreateBody(this.bodyDef)
             this.bodyGroup[i + 2].CreateFixture(this.fixtureDef)
-            this.anchor.Set((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.anchor.SetXY((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
             this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 2], this.anchor)
             this.world.CreateJoint(this.jointDef)
             this.prevBody = this.bodyGroup[i + 2]
             this.bodyCount = i + 2
         }
 
-        this.anchor.Set((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
+        this.anchor.SetXY((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
         this.jointDef.Initialize(this.prevBody, this.bodyGroup[1], this.anchor)
         this.world.CreateJoint(this.jointDef)
 
@@ -131,7 +131,7 @@ CG.B2DEntity.extend('B2DBridge', {
         for (var i = 2; i <= this.bodyCount; i++) {
             var x = this.bodyGroup[i].GetPosition().x
             var y = this.bodyGroup[i].GetPosition().y
-            var r = this.bodyGroup[i].GetAngle()
+            var r = this.bodyGroup[i].GetAngleRadians()
             Game.b_ctx.save()
             Game.b_ctx.globalAlpha = this.alpha
             Game.b_ctx.translate(x * this.scale, y * this.scale)

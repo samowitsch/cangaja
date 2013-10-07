@@ -51,17 +51,17 @@ CG.B2DEntity.extend('B2DLine', {
          * @property fixDef.shape
          * @type {b2PolygonShape}
          */
-        this.fixDef.shape = new b2PolygonShape
-        this.fixDef.shape.SetAsArray([this.start, this.end], 2)
+        this.fixDef.shape = new b2EdgeShape()
+        this.fixDef.shape.Set(this.start, this.end)
         /**
          * @property bodyDef.type
          * @type {Number}
          */
-        this.bodyDef.type = b2Body.b2_staticBody
+        this.bodyDef.type = box2d.b2BodyType.b2_staticBody
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.Set(0 / this.scale, 0 / this.scale)
+        this.bodyDef.position.SetXY(0 / this.scale, 0 / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}

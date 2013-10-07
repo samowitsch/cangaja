@@ -77,14 +77,19 @@ CG.Layer.extend('B2DWorld', {
          */
         this.scale = 40
 
+        /**
+         * add m_groundBody for use with b2MouseJoint
+         */
+        this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
+
 
         //setup debug draw
-        var debugDraw = new b2DebugDraw()
-        debugDraw.SetSprite(Game.b_ctx)
-        debugDraw.SetDrawScale(this.scale)
-        debugDraw.SetFillAlpha(0.3)
-        debugDraw.SetLineThickness(1.0)
-        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
+        var debugDraw = new b2DebugDraw({
+            scale: this.scale,
+            canvas: Game.b_canvas,
+            ctx: Game.b_ctx,
+            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit
+        })
         this.world.SetDebugDraw(debugDraw)
 
     },
@@ -102,10 +107,6 @@ CG.Layer.extend('B2DWorld', {
             this.mouseUp();
         }
 
-//        this.elements.forEach(function (element) {
-//            element.update()
-//        }, this)
-
         for (var i = 0, l = this.elements.length; i < l; i++) {
             this.elements[i].update()
         }
@@ -115,23 +116,17 @@ CG.Layer.extend('B2DWorld', {
     draw: function () {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
-        if (this.debug) {
-            this.world.DrawDebugData()
-            this.world.ClearForces()
-        }
-
 
         //TODO ? place for CanvasRenderer ?
-
-
-//        this.elements.forEach(function (element) {
-//            element.draw()
-//        }, this)
 
         for (var i = 0, l = this.elements.length; i < l; i++) {
             this.elements[i].draw()
         }
 
+        if (this.debug) {
+            this.world.DrawDebugData()
+            this.world.ClearForces()
+        }
 
         Game.b_ctx.restore()
     },
@@ -226,6 +221,23 @@ CG.Layer.extend('B2DWorld', {
     /**
      * @description
      *
+     * createChainShape
+     *
+     * @method createChainShape
+     * @param id        {String}      id or name to identify
+     * @param vertices  {array}      vertices for chainshape CG.Point array
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     */
+    createChainShape: function (id, vertices, x, y, stat) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DChainShape(this.world, id, vertices, x, y, this.scale, stat)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
+    },
+    /**
+     * @description
+     *
      * This method creates a B2D bridge. Just play with the params to get a good result!
      *
      * @method createBridge
@@ -277,11 +289,12 @@ CG.Layer.extend('B2DWorld', {
     mouseDownAt: function (x, y) {
         if (!this.mouseJoint) {
             var body = this.getBodyAt(x, y)
+            console.log(body)
             if (body) {
                 var md = new b2MouseJointDef()
-                md.bodyA = this.world.GetGroundBody()
+                md.bodyA = this.world.m_groundBody
                 md.bodyB = body
-                md.target.Set((x - this.x) / this.scale, (y - this.y) / this.scale)
+                md.target.SetXY((x - this.x) / this.scale, (y - this.y) / this.scale)
                 md.collideConnected = true
                 md.maxForce = 300.0 * body.GetMass()
                 this.mouseJoint = this.world.CreateJoint(md)
@@ -314,8 +327,8 @@ CG.Layer.extend('B2DWorld', {
 
         var mousePVec = new b2Vec2(worldx, worldy)  //b2world offset for x and y!!!
         var aabb = new b2AABB()
-        aabb.lowerBound.Set(worldx - 0.001, worldy - 0.001)
-        aabb.upperBound.Set(worldx + 0.001, worldy + 0.001)
+        aabb.lowerBound.SetXY(worldx - 0.001, worldy - 0.001)
+        aabb.upperBound.SetXY(worldx + 0.001, worldy + 0.001)
 
         // Query the world for overlapping shapes.
 
@@ -377,7 +390,7 @@ CG.Layer.extend('B2DWorld', {
      */
     applyImpulse: function (body, degrees, power) {
         if (body) {
-            body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
+            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
                 Math.sin(degrees * (Math.PI / 180)) * power),
                 body.GetWorldCenter());
         }
@@ -387,7 +400,7 @@ CG.Layer.extend('B2DWorld', {
      * @param callbacks
      */
     addContactListener: function (callbacks) {
-        var listener = new Box2D.Dynamics.b2ContactListener;
+        var listener = new box2d.b2ContactListener;
         if (callbacks.BeginContact) listener.BeginContact = function (contact) {
             callbacks.BeginContact(contact.GetFixtureA().GetBody().GetUserData(),
                 contact.GetFixtureB().GetBody().GetUserData());

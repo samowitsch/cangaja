@@ -45,15 +45,10 @@ CG.B2DEntity.extend('B2DCircle', {
          * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
          */
         if (this.stat) {
-            this.bodyDef.type = b2Body.b2_staticBody
+            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
         } else {
-            this.bodyDef.type = b2Body.b2_dynamicBody
+            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         }
-        /**
-         * @property fixDef.shape
-         * @type {b2CircleShape}
-         */
-        this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
         /**
          * @property bodyDef.position.x
          * @type {Number}
@@ -69,6 +64,11 @@ CG.B2DEntity.extend('B2DCircle', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
+        /**
+         * @property fixDef.shape
+         * @type {b2CircleShape}
+         */
+        this.fixDef.shape = new b2CircleShape(this.radius / this.scale)
 
         /**
          * @property body
