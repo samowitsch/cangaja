@@ -29,11 +29,11 @@ window.onload = function () {
     //mouse move
 
 
-    can.addEventListener("mousedown", function (e) {
+    can.addEventListener('mousedown', function (e) {
         CG.mousedown = true;
     }, true);
 
-    can.addEventListener("mouseup", function () {
+    can.addEventListener('mouseup', function () {
         CG.mousedown = false;
     }, true);
 
@@ -69,13 +69,13 @@ CG.B2DWorld.extend('B2DTestbed', {
         leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, false, false)
         this.addCustom(leftplayer)
 
-        this. addContactListener({
+        this.addContactListener({
             BeginContact: function (idA, idB) {
-                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "beachvolleyball") {
+                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == 'beachvolleyball') {
                     startleft = startright = false
                 }
                 //beachvolleyball hits the ground
-                if (idA.name == 'G' && idB.name == "beachvolleyball") {
+                if (idA.name == 'G' && idB.name == 'beachvolleyball') {
                     if (ball.body.GetPosition().x * 40 > 400) {
                         startleft = true
                     } else {
@@ -85,17 +85,20 @@ CG.B2DWorld.extend('B2DTestbed', {
                     sfxCrowd.play()
                 }
                 //ball hits net
-                if (idA.name == 'N' && idB.name == "beachvolleyball") {
+                if (idA.name == 'N' && idB.name == 'beachvolleyball') {
                     sfxNet.play()
                 }
 
                 //players are landing on ground, set jump flag to false
-                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "G") {
-                    b2world.elements[idA.uid - 1].jump = false
+                if (idA.name == 'G' && idB.name == 'blobby-egg-left') {
+                    leftplayer.jump = false
+                }
+                if (idA.name == 'G' && idB.name == 'blobby-egg-right') {
+                    rightplayer.jump = false
                 }
 
                 //players contact with beachvolleyball
-                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == "beachvolleyball") {
+                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == 'beachvolleyball') {
                     //console.log(['PostSolve', idA, idB, impulse]);
                     b2world.elements[idA.uid - 1].points += 1
                     if (idA.name == 'blobby-egg-right') {
@@ -118,7 +121,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 //                    var entityB = world[idB];
             },
             PreSolve: function (contact, oldManifold) {
-                console.log([contact, oldManifold])
+//                console.log([contact, oldManifold])
                 var fixtureA = contact.GetFixtureA();
                 var fixtureB = contact.GetFixtureB();
             }
@@ -196,7 +199,7 @@ CG.B2DPolygon.extend('B2DPlayer', {
     addVelocity: function (vel) {
         var v = this.body.GetLinearVelocity();
 
-        v.Add(vel);
+        v.SelfAdd(vel);
 
         //check for max horizontal and vertical velocities and then set
         if (Math.abs(v.y) > this.max_ver_vel) {
@@ -216,7 +219,7 @@ CG.B2DPolygon.extend('B2DPlayer', {
     },
     applyImpulse: function (degrees, power) {
         if (this.body) {
-            this.body.ApplyImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
+            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
                 Math.sin(degrees * (Math.PI / 180)) * power),
                 this.body.GetWorldCenter());
         }
@@ -244,6 +247,7 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
     update: function () {
         this._super()
         this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
+        this.shadow.xscale = this.shadow.yscale = (this.body.GetPosition().y * this.scale) / 250
     }
 })
 
@@ -267,6 +271,7 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
     update: function () {
         this._super()
         this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
+        this.shadow.xscale = this.shadow.yscale = (this.body.GetPosition().y * this.scale) / 250
     }
 })
 
@@ -281,7 +286,7 @@ CG.B2DCircle.extend('B2DBall', {
         this.bodyDef.bullet = true
 
         this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 2.5
+        this.fixDef.density = 1.5
         this.fixDef.friction = 0.2
         this.fixDef.restitution = 0.55
 
@@ -300,6 +305,11 @@ CG.B2DCircle.extend('B2DBall', {
         this._super()
         this.arrow.position.x = this.body.GetPosition().x * this.scale
         this.shadow.position.x = this.body.GetPosition().x * this.scale
+        if (this.body.GetPosition().y* this.scale < 100) {
+            this.shadow.xscale = this.shadow.yscale = 0.2
+        } else {
+            this.shadow.xscale = this.shadow.yscale = ( this.body.GetPosition().y * this.scale) / 400
+        }
     }
 })
 
@@ -324,34 +334,34 @@ Game = (function () {
         preload: function () {
 
             //sfx
-            sfxIntro = new buzz.sound("media/sfx/blobby-intro", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+            sfxIntro = new buzz.sound('media/sfx/blobby-intro', {
+                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
                 preload: true,
                 autoplay: true,
                 loop: true
             });
-            sfxCrowd = new buzz.sound("media/sfx/blobby-crowd", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+            sfxCrowd = new buzz.sound('media/sfx/blobby-crowd', {
+                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
                 preload: true,
                 autoplay: false,
                 loop: false
             });
-            sfxWhistle = new buzz.sound("media/sfx/blobby-whistle", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+            sfxWhistle = new buzz.sound('media/sfx/blobby-whistle', {
+                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
                 preload: true,
                 autoplay: false,
                 loop: false
             });
-            sfxNet = new buzz.sound("media/sfx/blobby-net", {
-                formats: [ "ogg", "mp3"/*, "aac", "wav"*/ ],
+            sfxNet = new buzz.sound('media/sfx/blobby-net', {
+                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
                 preload: true,
                 autoplay: false,
                 loop: false
             });
 
             //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
+            Game.canvas = document.getElementById('canvas')
+            Game.ctx = Game.canvas.getContext('2d')
             Game.asset = new CG.MediaAsset('media/img/blobby-back.png', Game.ctx)
 
             //frame buffer
@@ -361,7 +371,7 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+            Game.asset.addFont('media/font/abadi_ez.txt', 'small', 'small')
 
                 //physics engine
                 .addJson('media/img/blobbies.json', 'blobbies')
@@ -484,13 +494,9 @@ Game = (function () {
         loop: function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
-                Game.anim1();
+                Game.update()
+                Game.draw()
             }
-        },
-        anim1: function () {
-            Game.update()
-            Game.draw()
-            //Game.delta.update()
         },
         update: function () {
             //update here what ever you want
@@ -515,7 +521,7 @@ Game = (function () {
             Game.director.draw()
 
             //text stuff
-            var dummytext = 'Tribute to blobby ;o)'
+            var dummytext = 'Tribute to blobby...'
             small.drawText(dummytext, Game.width2 - (small.getTextWidth(dummytext) / 2), 10)
 
             // draw Game.b_canvas to the canvas

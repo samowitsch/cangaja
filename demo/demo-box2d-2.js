@@ -22,11 +22,11 @@ window.onload = function () {
     //mouse move
 
 
-    can.addEventListener("mousedown", function (e) {
+    can.addEventListener('mousedown', function () {
         mousedown = true;
     }, true);
 
-    can.addEventListener("mouseup", function () {
+    can.addEventListener('mouseup', function () {
         mousedown = false;
     }, true);
 
@@ -54,7 +54,7 @@ CG.B2DWorld.extend('B2DTestbed', {
         var bodyDef = new b2BodyDef
 
         //create ground
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = Game.width2 / this.scale
         bodyDef.position.y = (Game.height / this.scale) - 1
@@ -66,7 +66,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 
 
         //create wall1
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = 10 / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
@@ -78,7 +78,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 
 
         //create wall2
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = (Game.width - 10) / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
@@ -111,8 +111,8 @@ Game = (function () {
         delta:new CG.Delta(60),
         preload:function () {
             //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
+            Game.canvas = document.getElementById('canvas')
+            Game.ctx = Game.canvas.getContext('2d')
             Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
@@ -209,12 +209,9 @@ Game = (function () {
         loop:function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
-                Game.anim1();
+                Game.update()
+                Game.draw()
             }
-        },
-        anim1:function () {
-            Game.update()
-            Game.draw()
         },
         update:function () {
             //update here what ever you want
@@ -243,18 +240,16 @@ Game = (function () {
                 }
                 if(evt.keyCode == 37){ //cursor left
                     velo = b2world.elements[0].body.GetLinearVelocity()
-                    velo.Add(new b2Vec2(-5,0))
+                    velo.SelfAdd(new b2Vec2(-5,0))
                     b2world.elements[0].body.SetLinearVelocity(velo)
-                    console.log(velo)
                 }
                 if(evt.keyCode == 38){ //cursor up
                     b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
                 }
                 if(evt.keyCode == 39){ //cursor right
                     velo = b2world.elements[0].body.GetLinearVelocity()
-                    velo.Add(new b2Vec2(5,0))
+                    velo.SelfAdd(new b2Vec2(5,0))
                     b2world.elements[0].body.SetLinearVelocity(velo)
-                    console.log(velo)
                 }
 
                 console.log(evt.keyCode)

@@ -22,12 +22,12 @@ window.onload = function () {
     //mouse move
 
 
-    can.addEventListener("mousedown", function (e) {
-        mousedown = true;
+    can.addEventListener('mousedown', function () {
+        CG.mousedown = true;
     }, true);
 
-    can.addEventListener("mouseup", function () {
-        mousedown = false;
+    can.addEventListener('mouseup', function () {
+        CG.mousedown = false;
     }, true);
 
     can.addEventListener('mousemove', function (evt) {
@@ -52,7 +52,7 @@ CG.B2DWorld.extend('B2DTestbed', {
         var bodyDef = new b2BodyDef
 
         //create ground
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = Game.width2 / this.scale
         bodyDef.position.y = (Game.height / this.scale) - 1
@@ -64,7 +64,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 
 
         //create wall1
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = 10 / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
@@ -76,7 +76,7 @@ CG.B2DWorld.extend('B2DTestbed', {
 
 
         //create wall2
-        bodyDef.type = b2Body.b2_staticBody
+        bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = (Game.width - 10) / this.scale
         bodyDef.position.y = (Game.height2 / this.scale) - 1
@@ -109,8 +109,8 @@ Game = (function () {
         delta: new CG.Delta(60),
         preload: function () {
             //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
+            Game.canvas = document.getElementById('canvas')
+            Game.ctx = Game.canvas.getContext('2d')
             Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
 
             //frame buffer
@@ -125,7 +125,6 @@ Game = (function () {
                 .addImage('media/img/glowball-50.png', 'glowball')
                 .addImage('media/img/hunter.png', 'hunter')
                 .addImage('media/img/back3.jpg', 'back3')
-
 
                 //tiled map
                 .addJson('media/map/map-advanced-inner-outer.json', 'map1')
@@ -149,7 +148,6 @@ Game = (function () {
             //put the texturepacker TPImages to the asset
             Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
@@ -161,10 +159,9 @@ Game = (function () {
             back3.name = 'back3'
             mainlayer.addElement(back3)
 
-
             //create Box2D World
             b2world = new CG.B2DTestbed('box2d-world')
-            b2world.debug = 0
+            b2world.debug = 1
 
             //create circle element with image
             b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
@@ -214,17 +211,12 @@ Game = (function () {
         loop: function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
-                Game.anim1();
+                Game.update()
+                Game.draw()
             }
-        },
-        anim1: function () {
-            Game.update()
-            Game.draw()
         },
         update: function () {
             //update here what ever you want
-
-
             document.onkeydown = function (evt) {
                 if (evt.keyCode == 71) { //g
                     b = b2world.getBodyAt(mousex, mousey)
