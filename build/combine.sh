@@ -6,7 +6,9 @@
 echo "> Building box2dhtml5 version."
 echo ""
 
-cat ../cangaja/cangaja.js \
+cat ../cangaja/lib/clipper.js \
+../cangaja/lib/poly2tri.js \
+../cangaja/cangaja.js \
 ../cangaja/clock.js \
 ../cangaja/string.js \
 ../cangaja/renderer.js \
