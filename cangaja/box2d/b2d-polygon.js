@@ -63,7 +63,7 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {Array}
          */
         this.vecs = new Array()
-        this.vecs = this.createVecs(jsonpoly) // build grouped b2vecs from physicseditor
+        this.vecs = this.getPolysFromJson(jsonpoly) // build grouped b2vecs from physicseditor
 
         /**
          * @property bodyDef.type
@@ -120,10 +120,12 @@ CG.B2DEntity.extend('B2DPolygon', {
 
     },
     /**
-     * @method createVecs
+     * @description extract the polygons out of the PhysicsEditor json file and collect them into an array
+     *
+     * @method getPolysFromJson
      * @return {Array}
      */
-    createVecs:function () {
+    getPolysFromJson:function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i < l; i++) {
             poly = this.jsondata[i].shape

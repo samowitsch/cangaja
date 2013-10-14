@@ -37,7 +37,7 @@ CG.B2DEntity.extend('B2DChainShape', {
          * @property polys
          * @type {Array}
          */
-        this.vertices = this.createVecs(vertices)
+        this.vertices = this.convertRealWorldPointToBox2DVec2(vertices)
         /**
          * @property xhandle
           * @type {Number}
@@ -90,13 +90,13 @@ CG.B2DEntity.extend('B2DChainShape', {
     /**
      * @description
      *
-     * createVec converts real world vectors to box2d world vecs depending on scale
+     * convertRealWorldPointToBox2DVec2 converts real world vectors to box2d world vecs depending on scale
      *
-     * @method createVecs
+     * @method convertRealWorldPointToBox2DVec2
      * @param {Array} vertices CG.Point array
      * @return {Array} vecs b2Vec2  with box2d world scale
      */
-    createVecs:function (vertices) {
+    convertRealWorldPointToBox2DVec2:function (vertices) {
         var vecs = []
         for (var i = 0, l = vertices.length; i < l; i++) {
             var vec = new b2Vec2(vertices[i].x / this.scale, vertices[i].y / this.scale)

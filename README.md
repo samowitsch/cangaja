@@ -77,6 +77,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Changelog:
 
+* 2013-10-07 [added]] - added libs Clipper and poly2tri
 * 2013-10-07 [change]] - removed box2dweb, added box2dhtml5 (Box2D 2.3.0), rework for box2dhtml5, misc updates
 * 2013-04-17 [cleanup] - cleanup again
 * 2013-04-08 [added] - added mode slide for director to switch screens

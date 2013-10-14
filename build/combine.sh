@@ -50,6 +50,7 @@ cat ../cangaja/lib/clipper.js \
 ../cangaja/box2d/b2d-line.js \
 ../cangaja/box2d/b2d-rectangle.js \
 ../cangaja/box2d/b2d-polygon.js \
+../cangaja/box2d/b2d-terrain.js \
 ../cangaja/box2d/b2d-chainshape.js \
 ../cangaja/box2d/b2d-rope.js \
 ../cangaja/box2d/b2d-bridge.js \

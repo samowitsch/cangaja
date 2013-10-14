@@ -7,6 +7,10 @@
  * @extends CG.Entity
  *
  */
+
+//@TODO add margin squares function for contour finding => also for polygon path? (http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)
+//@TODO add surface normal function (http://gamedev.tutsplus.com/tutorials/implementation/coding-destructible-pixel-terrain/, http://en.wikipedia.org/wiki/Surface_normal)
+
 CG.Entity.extend('Bitmap', {
     /**
      * @method init

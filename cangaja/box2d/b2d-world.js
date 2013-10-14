@@ -26,6 +26,8 @@ CG.Layer.extend('B2DWorld', {
      */
     init: function (name, opt) {
 
+        this.framerate = 1 / 60
+
         /**
          * @property opt
          * @type {object}
@@ -96,7 +98,7 @@ CG.Layer.extend('B2DWorld', {
     update: function () {
 
         this.world.Step(
-            1 / 60   //frame-rate
+            this.framerate   //frame-rate
             , 10       //velocity iterations
             , 10       //position iterations
         )
@@ -215,6 +217,26 @@ CG.Layer.extend('B2DWorld', {
     createPolyBody: function (id, image, jsonpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
         var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
+    },
+    /**
+     * @description
+     *
+     * createTerrain
+     *
+     * @method createPolyBody
+     * @param id        {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param terrainpoly  {Array}      array of vertices to start terrain building
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
+     */
+    createTerrain: function (id, image, terrainpoly, x, y, stat, bullet) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DTerrain(this.world, id, image, terrainpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
     },
