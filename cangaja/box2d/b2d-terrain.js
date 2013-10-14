@@ -153,37 +153,31 @@ CG.B2DEntity.extend('B2DTerrain', {
             this.terrainPoly[part].holes.push(newhole)
         }
 
-
-        //@TODO use clipper to calculate new terrainPolys
+        //use clipper to calculate new terrainPolys
         var tempPolys = []
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
             var subj_polygons = [this.terrainPoly[part].outer]
-            console.log('outer')
-            console.log(subj_polygons)
             var clip_polygons = []
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
                     clip_polygons.push(this.terrainPoly[part].holes[i])
                 }
             }
-            console.log('holes')
-            console.log(clip_polygons)
             var cpr = new ClipperLib.Clipper()
             cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
             cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
 
             var solution_polygons = new ClipperLib.ExPolygons()
             cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
-            tempPolys.push(solution_polygons[0])
+            if(solution_polygons.length > 0){
+                for(var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++){
+                    tempPolys.push(solution_polygons[spoly])
+                }
+            }
         }
         this.terrainPoly = tempPolys
         this.deleteTerrain()
         this.createTerrain()
-
-        console.log('Clipper result')
-        console.log(tempPolys)
-
-        //@TODO save clipper result back to terrainPolys
     },
     pauseWorld: function () {
         this.world.framerate = 0
