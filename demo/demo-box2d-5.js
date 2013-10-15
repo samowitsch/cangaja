@@ -314,11 +314,17 @@ Game = (function () {
                 if (evt.keyCode == 66) { //b
                     b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
                 }
-                if (evt.keyCode == 67) { //b
-                    b2world.elements[5].clippTerrain({x:mousex, y:mousey})
+                if (evt.keyCode == 67) { //c
+                    b2world.elements[5].clippTerrain({x: mousex, y: mousey})
                 }
                 if (evt.keyCode == 68) { //d
-                    body = b2world.deleteBodyAt(mousex, mousey)
+//                    console.log('RESULT stringified')
+//                    console.log(JSON.stringify(b2world.elements[5].terrainPoly))
+                    console.log('RESULT as object')
+                    console.log(b2world.elements[5].terrainPoly)
+
+
+//                    body = b2world.deleteBodyAt(mousex, mousey)
                 }
                 if (evt.keyCode == 37) { //cursor left
                     velo = b2world.elements[0].body.GetLinearVelocity()
@@ -350,7 +356,9 @@ Game = (function () {
 
             //text stuff
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Box2D example. b2Terrain. Move mouse an click ;o)', xpos, ypos + 56)
+            small.drawText('Destructable Terrain.', xpos, ypos + 56)
+            small.drawText('C=clip hole, D=debug info, B=new ball', xpos, ypos + 76)
+            small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length , xpos, ypos + 96)
 
             // draw Game.b_canvas to the canvas
             Game.ctx.drawImage(Game.b_canvas, 0, 0)
