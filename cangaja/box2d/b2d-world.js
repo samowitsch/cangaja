@@ -26,7 +26,7 @@ CG.Layer.extend('B2DWorld', {
      */
     init: function (name, opt) {
 
-        this.framerate = 1 / 60
+        this.framerate = 1 / 30
 
         /**
          * @property opt
