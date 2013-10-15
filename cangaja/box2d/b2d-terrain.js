@@ -155,9 +155,11 @@ CG.B2DEntity.extend('B2DTerrain', {
 
         //use clipper to calculate new terrainPolys
         var tempPolys = []
+        var subj_polygons = []
+        var clip_polygons = []
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var subj_polygons = [this.terrainPoly[part].outer]
-            var clip_polygons = []
+            subj_polygons = [this.terrainPoly[part].outer]
+            clip_polygons = []
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
                     clip_polygons.push(this.terrainPoly[part].holes[i])
@@ -169,16 +171,33 @@ CG.B2DEntity.extend('B2DTerrain', {
 
             var solution_polygons = new ClipperLib.ExPolygons()
             cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
-            if(solution_polygons.length > 0){
-                for(var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++){
+            if (solution_polygons.length > 0) {
+                for (var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++) {
                     tempPolys.push(solution_polygons[spoly])
                 }
             }
         }
         this.terrainPoly = tempPolys
+        this.lightenTerrain()
         this.deleteTerrain()
         this.createTerrain()
     },
+    lightenTerrain: function () {
+        //use clipper to eliminate to much vertices
+        var tolerance = 0.015
+
+        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
+            var temp = ClipperLib.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
+            this.terrainPoly[part].outer = temp[0]
+            if (this.terrainPoly[part].holes.length > 0) {
+                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
+                    var temp = ClipperLib.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    this.terrainPoly[part].holes[i] = temp[0]
+                }
+            }
+        }
+    },
+
     pauseWorld: function () {
         this.world.framerate = 0
     },
