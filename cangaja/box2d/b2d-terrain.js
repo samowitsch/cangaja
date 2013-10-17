@@ -13,8 +13,7 @@
  * @extends CG.B2DEntity
  */
 
-//@TODO add function for clipping and triangulating polygons
-//@TODO box2d body handling
+
 //@TODO handling for terrain bitmap
 
 CG.B2DEntity.extend('B2DTerrain', {
@@ -113,17 +112,21 @@ CG.B2DEntity.extend('B2DTerrain', {
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var swctx = new poly2tri.SweepContext(this.terrainPoly[part].outer, {cloneArrays: true})
+            try {
+                var swctx = new poly2tri.SweepContext(this.terrainPoly[part].outer, {cloneArrays: true})
 
-            if (this.terrainPoly[part].holes.length > 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    swctx.addHole(this.terrainPoly[part].holes[i])
+                if (this.terrainPoly[part].holes.length > 0) {
+                    for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
+                        swctx.addHole(this.terrainPoly[part].holes[i])
+                    }
                 }
+
+                swctx.triangulate();
+
+                this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
+            } catch (e) {
+                console.log(e)
             }
-
-            swctx.triangulate();
-
-            this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
         }
 
         for (var i = 0, l = this.terrainTriangles.length; i < l; i++) {
@@ -179,6 +182,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         }
         this.terrainPoly = tempPolys
         this.lightenTerrain()
+//        this.cleanTerrain()
         this.deleteTerrain()
         this.createTerrain()
     },
@@ -192,6 +196,21 @@ CG.B2DEntity.extend('B2DTerrain', {
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
                     var temp = ClipperLib.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    this.terrainPoly[part].holes[i] = temp[0]
+                }
+            }
+        }
+    },
+    cleanTerrain: function () {
+        //use clipper to eliminate to much vertices
+        var tolerance = 0.015
+
+        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
+            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, tolerance * this.scale)
+            this.terrainPoly[part].outer = temp[0]
+            if (this.terrainPoly[part].holes.length > 0) {
+                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
+                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], tolerance * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
@@ -224,7 +243,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         for (var i = 0; i < precision; i++) {
             circleArray.push({x: origin.x + radius * Math.cos(angle * i), y: origin.y + radius * Math.sin(angle * i)})
         }
-        return circleArray
+        return circleArray.reverse()
     },
     update: function () {
 
