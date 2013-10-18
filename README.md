@@ -27,7 +27,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 * Font support ([Glyphdesigner] EZ Gui text files)
 * TexturePacker support ([TexturePacker] generic XML file)
 * Box2DHtml support ([Box2DHtml5])
-* Destructable Terrain class
+* Destructible Terrain class
 * PhysicsEditor support ([PhysicsEditor] use Lime + Corona JSON format for use in Box2D Wrapper)
 
 [Glyphdesigner]: http://www.71squared.com/glyphdesigner

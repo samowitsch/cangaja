@@ -14,7 +14,8 @@
  */
 
 
-//@TODO handling for terrain bitmap
+//@TODO code cleanup and description
+//@TODO comment to polygon winding order for clipper (outer == CW; holes == CCW)
 
 CG.B2DEntity.extend('B2DTerrain', {
     /**
@@ -148,8 +149,8 @@ CG.B2DEntity.extend('B2DTerrain', {
         //remove body from b2world
         this.world.DestroyBody(this.body)
     },
-    clippTerrain: function (point) {
-        var newhole = this.createCircle(20, point, 20)
+    clippTerrain: function (opt) {
+        var newhole = this.createCircle(opt)
 
         //add new hole to all contour terrainPolys
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
@@ -186,6 +187,10 @@ CG.B2DEntity.extend('B2DTerrain', {
         this.deleteTerrain()
         this.createTerrain()
     },
+    /**
+     * @description this method uses the Clipper Lighten mehtod to reduces vertices for better triangulation
+     * @method lightenTerrain
+     */
     lightenTerrain: function () {
         //use clipper to eliminate to much vertices
         var tolerance = 0.015
@@ -201,6 +206,9 @@ CG.B2DEntity.extend('B2DTerrain', {
             }
         }
     },
+    /**
+     * experimental not working yet
+     */
     cleanTerrain: function () {
         //use clipper to eliminate to much vertices
         var tolerance = 0.015
@@ -216,13 +224,6 @@ CG.B2DEntity.extend('B2DTerrain', {
             }
         }
     },
-
-    pauseWorld: function () {
-        this.world.framerate = 0
-    },
-    resumeWorld: function () {
-        this.world.framerate = 1 / 60
-    },
     /**
      * @description extract the triangles out of poly2tri array
      *
@@ -237,11 +238,18 @@ CG.B2DEntity.extend('B2DTerrain', {
         }
         return vecs
     },
-    createCircle: function (precision, origin, radius) {
-        var angle = 2 * Math.PI / precision
+    /**
+     * @description creates a ccw wise circle vertices array for clipping
+     *
+     * @method createCircle
+     * @param {object} opts example {points: 16, radius: 30, x: 320, y: 240}
+     * @returns {Array}
+     */
+    createCircle: function (opts) {
+        var angle = 2 * Math.PI / opts.points
         var circleArray = []
-        for (var i = 0; i < precision; i++) {
-            circleArray.push({x: origin.x + radius * Math.cos(angle * i), y: origin.y + radius * Math.sin(angle * i)})
+        for (var i = 0; i < opts.points; i++) {
+            circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
     },
