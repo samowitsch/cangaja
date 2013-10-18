@@ -377,7 +377,7 @@ Game = (function () {
             //text stuff
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.drawText('Destructible Terrain.', xpos, ypos + 56)
-            small.drawText('C=clip hole, D=debug info, B=new ball', xpos, ypos + 76)
+            small.drawText('C=clip hole, D=debugdraw on/off, B=new ball, I=impulse on body below mousepointer', xpos, ypos + 76)
             small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length , xpos, ypos + 96)
 
             // draw Game.b_canvas to the canvas
