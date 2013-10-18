@@ -14,8 +14,8 @@ window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
+    can.width = 1024
+    can.height = 768
     can.id = 'canvas'
     document.body.appendChild(can)
 
@@ -95,11 +95,11 @@ Game = (function () {
     var Game = {
         path: '',
         fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        width: 1024,
+        height: 768,
+        width2: 1024 / 2,
+        height2: 768 / 2,
+        bound: new CG.Bound(0, 0, 1024, 768).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -175,9 +175,9 @@ Game = (function () {
                     {
                         outer: [
                             {x: 0, y: 100},
-                            {x: 640, y: 100},
-                            {x: 640, y: 480},
-                            {x: 0, y: 480}
+                            {x: 1024, y: 100},
+                            {x: 1024, y: 768},
+                            {x: 0, y: 768}
                         ],
 
                         holes: [
