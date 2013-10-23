@@ -1,4 +1,6 @@
-//ejecta stuff start
+/**
+ * ejecta stuff start
+ */
 ejecta.include('cangaja.all.js');
 
 var w = window.innerWidth;
@@ -6,12 +8,15 @@ var h = window.innerHeight;
 var w2 = w / 2;
 var h2 = h / 2;
 
+//get canvas from cangaja
 var canvas = document.getElementById('canvas');
 canvas.width = w;
 canvas.height = h;
 
 var ctx = canvas.getContext('2d');
-//ejecta stuff start
+/**
+ * ejecta stuff end
+ */
 
 
 
