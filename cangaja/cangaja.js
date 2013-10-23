@@ -188,3 +188,5 @@ var CG = CG || {
         return Class;
     };
 }())
+
+
