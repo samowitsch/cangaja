@@ -25642,6 +25642,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25658,6 +25659,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DLine(this.world, id, new b2Vec2(start.x / this.scale, start.y / this.scale), new b2Vec2(end.x / this.scale, end.y / this.scale), this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25677,6 +25679,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25699,6 +25702,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25719,6 +25723,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DTerrain(this.world, id, image, terrainpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25736,6 +25741,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DChainShape(this.world, id, vertices, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25757,6 +25763,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
@@ -25778,6 +25785,7 @@ CG.Layer.extend('B2DWorld', {
         var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     /**
      * @description
