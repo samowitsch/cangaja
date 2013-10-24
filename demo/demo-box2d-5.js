@@ -276,7 +276,7 @@ Game = (function () {
 //                        holes: []
 //                    }
 
-                ]
+            ]
 
             b2world.createTerrain('terrain', false, terrainPolys, 0, 0, true, false)
 
@@ -317,51 +317,86 @@ Game = (function () {
             //update here what ever you want
 
 
-            document.onkeydown = function (evt) {
-                if (evt.keyCode == 71) { //g
-                    b = b2world.getBodyAt(mousex, mousey)
-                    console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
+            if (key.isPressed("g")) {
+                b = b2world.getBodyAt(mousex, mousey)
+                console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
+            }
+            if (key.isPressed("i")) {
+                body = b2world.getBodyAt(mousex, mousey)
+                b2world.applyImpulse(body, 270, 25)
+            }
+            if (key.isPressed("b")) {
+                b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
+            }
+            if (key.isPressed("c")) {
+                b2world.elements[5].clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+            }
+            if (key.isPressed("d")) {
+                if (b2world.debug == 0) {
+                    b2world.debug = 1
+                } else {
+                    b2world.debug = 0
                 }
-                if (evt.keyCode == 73) { //i
-                    body = b2world.getBodyAt(mousex, mousey)
-                    b2world.applyImpulse(body, 270, 25)
-                }
-                if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
-                }
-                if (evt.keyCode == 67) { //c
-                    b2world.elements[5].clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
-                }
-                if (evt.keyCode == 68) { //d
-//                    console.log('RESULT stringified')
-//                    console.log(JSON.stringify(b2world.elements[5].terrainPoly))
-//                    console.log('RESULT as object')
-//                    console.log(b2world.elements[5].terrainPoly)
-                    if (b2world.debug == 0 ) {
-                        b2world.debug = 1
-                    } else {
-                        b2world.debug = 0
-                    }
+            }
+            if (key.isPressed("left")) {
+                velo = b2world.elements[0].body.GetLinearVelocity()
+                velo.SelfAdd(new b2Vec2(-5, 0))
+                b2world.elements[0].body.SetLinearVelocity(velo)
+            }
+            if (key.isPressed("up")) {
+                b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
+            }
+            if (key.isPressed("right")) {
+                velo = b2world.elements[0].body.GetLinearVelocity()
+                velo.SelfAdd(new b2Vec2(5, 0))
+                b2world.elements[0].body.SetLinearVelocity(velo)
+            }
 
-
-//                    body = b2world.deleteBodyAt(mousex, mousey)
-                }
-                if (evt.keyCode == 37) { //cursor left
-                    velo = b2world.elements[0].body.GetLinearVelocity()
-                    velo.SelfAdd(new b2Vec2(-5, 0))
-                    b2world.elements[0].body.SetLinearVelocity(velo)
-                }
-                if (evt.keyCode == 38) { //cursor up
-                    b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
-                }
-                if (evt.keyCode == 39) { //cursor right
-                    velo = b2world.elements[0].body.GetLinearVelocity()
-                    velo.SelfAdd(new b2Vec2(5, 0))
-                    b2world.elements[0].body.SetLinearVelocity(velo)
-                }
-
-//                console.log(evt.keyCode)
-            };
+//                document.onkeydown = function (evt) {
+//                if (evt.keyCode == 71) { //g
+//                    b = b2world.getBodyAt(mousex, mousey)
+//                    console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
+//                }
+//                if (evt.keyCode == 73) { //i
+//                    body = b2world.getBodyAt(mousex, mousey)
+//                    b2world.applyImpulse(body, 270, 25)
+//                }
+//                if (evt.keyCode == 66) { //b
+//                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
+//                }
+//                if (evt.keyCode == 67) { //c
+//                    b2world.elements[5].clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+//                }
+//                if (evt.keyCode == 68) { //d
+////                    console.log('RESULT stringified')
+////                    console.log(JSON.stringify(b2world.elements[5].terrainPoly))
+////                    console.log('RESULT as object')
+////                    console.log(b2world.elements[5].terrainPoly)
+//                    if (b2world.debug == 0 ) {
+//                        b2world.debug = 1
+//                    } else {
+//                        b2world.debug = 0
+//                    }
+//
+//
+////                    body = b2world.deleteBodyAt(mousex, mousey)
+//                }
+//                if (evt.keyCode == 37) { //cursor left
+//                    velo = b2world.elements[0].body.GetLinearVelocity()
+//                    velo.SelfAdd(new b2Vec2(-5, 0))
+//                    b2world.elements[0].body.SetLinearVelocity(velo)
+//                }
+//                if (evt.keyCode == 38) { //cursor up
+//                    b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
+//                }
+//                if (evt.keyCode == 39) { //cursor right
+//                    velo = b2world.elements[0].body.GetLinearVelocity()
+//                    velo.SelfAdd(new b2Vec2(5, 0))
+//                    b2world.elements[0].body.SetLinearVelocity(velo)
+//                }
+//
+////                console.log(evt.keyCode)
+//            };
 
             Game.director.update()
         },
@@ -378,7 +413,7 @@ Game = (function () {
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
             small.drawText('Destructible Terrain.', xpos, ypos + 56)
             small.drawText('C=clip hole, D=debugdraw on/off, B=new ball, I=impulse on body below mousepointer', xpos, ypos + 76)
-            small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length , xpos, ypos + 96)
+            small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length, xpos, ypos + 96)
 
             // draw Game.b_canvas to the canvas
             Game.ctx.drawImage(Game.b_canvas, 0, 0)
