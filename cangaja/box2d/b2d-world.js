@@ -432,16 +432,16 @@ CG.Layer.extend('B2DWorld', {
     addContactListener: function (callbacks) {
         var listener = new box2d.b2ContactListener;
         if (callbacks.BeginContact) listener.BeginContact = function (contact) {
-            callbacks.BeginContact(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData());
+            callbacks.BeginContact(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody());
         }
         if (callbacks.EndContact) listener.EndContact = function (contact) {
-            callbacks.EndContact(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData());
+            callbacks.EndContact(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody());
         }
         if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
-            callbacks.PostSolve(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData(),
+            callbacks.PostSolve(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody(),
                 impulse.normalImpulses[0]);
         }
         if (callbacks.PreSolve) listener.PreSolve = function (contact, oldManifold) {
