@@ -71,11 +71,11 @@ CG.B2DWorld.extend('B2DTestbed', {
 
         this.addContactListener({
             BeginContact: function (idA, idB) {
-                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == 'beachvolleyball') {
+                if ((idA.GetUserData().name == 'blobby-egg-left' || idA.GetUserData().name == 'blobby-egg-right') && idB.GetUserData().name == 'beachvolleyball') {
                     startleft = startright = false
                 }
                 //beachvolleyball hits the ground
-                if (idA.name == 'G' && idB.name == 'beachvolleyball') {
+                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'beachvolleyball') {
                     if (ball.body.GetPosition().x * 40 > 400) {
                         startleft = true
                     } else {
@@ -85,28 +85,28 @@ CG.B2DWorld.extend('B2DTestbed', {
                     sfxCrowd.play()
                 }
                 //ball hits net
-                if (idA.name == 'N' && idB.name == 'beachvolleyball') {
+                if (idA.GetUserData().name == 'N' && idB.GetUserData().name == 'beachvolleyball') {
                     sfxNet.play()
                 }
 
                 //players are landing on ground, set jump flag to false
-                if (idA.name == 'G' && idB.name == 'blobby-egg-left') {
+                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-left') {
                     leftplayer.jump = false
                 }
-                if (idA.name == 'G' && idB.name == 'blobby-egg-right') {
+                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-right') {
                     rightplayer.jump = false
                 }
 
                 //players contact with beachvolleyball
-                if ((idA.name == 'blobby-egg-left' || idA.name == 'blobby-egg-right') && idB.name == 'beachvolleyball') {
+                if ((idA.GetUserData().name == 'blobby-egg-left' || idA.GetUserData().name == 'blobby-egg-right') && idB.GetUserData().name == 'beachvolleyball') {
                     //console.log(['PostSolve', idA, idB, impulse]);
                     b2world.elements[idA.uid - 1].points += 1
-                    if (idA.name == 'blobby-egg-right') {
+                    if (idA.GetUserData().name == 'blobby-egg-right') {
                         leftplayer.points = 0
                         if (rightplayer.points > 4) {
                             //alert('rightplayer lost to much contacts')
                         }
-                    } else if (idA.name == 'blobby-egg-left') {
+                    } else if (idA.GetUserData().name == 'blobby-egg-left') {
                         rightplayer.points = 0
                         if (leftplayer.points > 4) {
                             //alert('leftplayer lost to much contacts')
