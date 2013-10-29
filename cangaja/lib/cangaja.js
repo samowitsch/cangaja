@@ -25893,6 +25893,17 @@ CG.Layer.extend('B2DWorld', {
         this.elements.splice(index, 1);
     },
     /**
+     * @method removeElementByUid
+     * @param uid
+     */
+    removeElementByUid: function (uid) {
+        for (var i = 0, l = this.elements.length; i < l; i++) {
+            if(this.elements[i].id.uid === uid) {
+                this.elements.splice(i, 1);
+            }
+        }
+    },
+    /**
      * @method applyImpulse
      * @param body
      * @param degrees
