@@ -418,8 +418,10 @@ CG.Layer.extend('B2DWorld', {
      */
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
-            if(this.elements[i].id.uid === uid) {
-                this.elements.splice(i, 1);
+            if (typeof this.elements[i].id === 'object') {
+                if(this.elements[i].id.uid === uid) {
+                    this.elements.splice(i, 1);
+                }
             }
         }
     },
