@@ -24452,7 +24452,7 @@ CG.B2DEntity.extend('B2DCircle', {
         this.radius = this.width / 2
         /**
          * @property bodyDef.type
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
 
@@ -24610,7 +24610,7 @@ CG.B2DEntity.extend('B2DRectangle', {
 
         /**
          * @property bodyDef.stat
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
 
@@ -24711,7 +24711,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         /**
          * @property bodyDef.type
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
 
@@ -24849,7 +24849,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 
         /**
          * @property bodyDef.type
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
         /**
@@ -25084,7 +25084,7 @@ CG.B2DEntity.extend('B2DChainShape', {
         this.yhandle = 0
         /**
          * @property bodyDef.type
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
         /**
