@@ -7,6 +7,6 @@
  *  Includes:
  *  hammer.js
  *  buzz.js
- *  Box2dWeb-2.1.a.3.min.js
+ *  Box2Html5.js
  */
 

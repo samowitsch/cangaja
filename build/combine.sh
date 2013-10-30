@@ -9,40 +9,40 @@ echo ""
 cat ../cangaja/lib/keymaster.js \
 ../cangaja/lib/clipper.js \
 ../cangaja/lib/poly2tri.js \
-../cangaja/cangaja.js \
-../cangaja/clock.js \
-../cangaja/string.js \
-../cangaja/renderer.js \
-../cangaja/delta.js \
-../cangaja/entity.js \
-../cangaja/point.js \
-../cangaja/vector.js \
-../cangaja/rectangle.js \
-../cangaja/bound.js \
-../cangaja/buffer.js \
-../cangaja/sprite.js \
+../cangaja/misc/base.js \
+../cangaja/misc/clock.js \
+../cangaja/misc/string.js \
+../cangaja/renderer/renderer.js \
+../cangaja/misc/delta.js \
+../cangaja/misc/entity.js \
+../cangaja/misc/point.js \
+../cangaja/misc/vector.js \
+../cangaja/misc/rectangle.js \
+../cangaja/misc/bound.js \
+../cangaja/misc/buffer.js \
+../cangaja/sprite/sprite.js \
 ../cangaja/texturepacker/tpimage.js \
 ../cangaja/texturepacker/texturepacker.js \
-../cangaja/animation.js \
-../cangaja/bitmap.js \
-../cangaja/button.js \
-../cangaja/menu.js \
-../cangaja/mediaasset.js \
-../cangaja/font.js \
-../cangaja/text.js \
-../cangaja/director.js \
-../cangaja/screen.js \
-../cangaja/layer.js \
+../cangaja/sprite/animation.js \
+../cangaja/misc/bitmap.js \
+../cangaja/sprite/button.js \
+../cangaja/control/menu.js \
+../cangaja/control/mediaasset.js \
+../cangaja/text/font.js \
+../cangaja/text/text.js \
+../cangaja/control/director.js \
+../cangaja/control/screen.js \
+../cangaja/control/layer.js \
 ../cangaja/tilemap/maptilelayer.js \
 ../cangaja/tilemap/maptileproperties.js \
 ../cangaja/tilemap/mappoint.js \
 ../cangaja/tilemap/maparea.js \
 ../cangaja/tilemap/map.js \
-../cangaja/sequence.js \
-../cangaja/translate.js \
-../cangaja/morph.js \
-../cangaja/particle.js \
-../cangaja/emitter.js \
+../cangaja/control/sequence.js \
+../cangaja/control/translate.js \
+../cangaja/control/morph.js \
+../cangaja/sprite/particle.js \
+../cangaja/control/emitter.js \
 ../cangaja/lib/box2dhtml5/box2d-html5.js \
 ../cangaja/lib/box2dhtml5/b2DebugDraw.js \
 ../cangaja/box2d/b2d-vars-html5.js \
@@ -88,7 +88,7 @@ echo ""
 
 
 #add intro to minified file
-#cat ../cangaja/intro.js ../cangaja/lib/cangaja.min.js > ../cangaja/lib/cangaja.min.js
+#cat ../cangaja/misc/intro.js ../cangaja/lib/cangaja.min.js > ../cangaja/lib/cangaja.min.js
 #echo "> Added intro to minified file."
 #echo ""
 
