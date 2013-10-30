@@ -171,9 +171,9 @@ Game = (function () {
             b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -100, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -100, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
 
             b2world.createLine('testline1', new CG.Point(100,100), new CG.Point(300,150))

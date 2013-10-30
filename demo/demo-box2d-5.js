@@ -163,11 +163,11 @@ Game = (function () {
             b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 510, -200, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 410, -300, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 210, -400, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 110, 0, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 510, -200, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 410, -300, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 210, -400, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
             var terrainPolys =
                 [
@@ -278,7 +278,7 @@ Game = (function () {
 
             ]
 
-            b2world.createTerrain('terrain', false, terrainPolys, 0, 0, true, false)
+            b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
 
             b2world.addContactListener({
                 BeginContact: function (idA, idB) {

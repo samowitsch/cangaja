@@ -164,15 +164,15 @@ Game = (function () {
             b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -200, box2d.b2BodyType.b2_dynamicBody)
 
             //create box element with image
-            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, false)
+            b2world.createBox('btn-back', Game.asset.getImageByName('btn-back'), 420, -500, box2d.b2BodyType.b2_dynamicBody)
 
             //create polybody with image
-            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, false, false)
-            b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, false, false)
-            b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, false, false)
+            b2world.createPolyBody('ballon', Game.asset.getImageByName('ballon'), Game.asset.getJsonByName('ballon'), 350, -250, box2d.b2BodyType.b2_dynamicBody, false)
+            b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), 250, -400, box2d.b2BodyType.b2_dynamicBody, false)
+            b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), 200, -150, box2d.b2BodyType.b2_dynamicBody, false)
 
             // bridge test
             // name, image, x, y, length, segments, segmentHeight, scale
@@ -227,13 +227,13 @@ Game = (function () {
                     b2world.applyImpulse(body, 270, 25)
                 }
                 if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
+                    b2world.createPolyBody('rainbow_256', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, box2d.b2BodyType.b2_dynamicBody, false)
                 }
                 if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
+                    b2world.createPolyBody('powerstar75', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, box2d.b2BodyType.b2_dynamicBody, false)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
+                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, box2d.b2BodyType.b2_dynamicBody)
                 }
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex, mousey)

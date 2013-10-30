@@ -90,16 +90,16 @@ Game = (function () {
                 var x = Math.random() * 1024
                 var y = Math.random() * 768
                 if (y < 200) y+=200;
-                b2world.createCircle('rock', Game.asset.getImageByName('rock'), 16, x, y, true)
+                b2world.createCircle('rock', Game.asset.getImageByName('rock'), 16, x, y, box2d.b2BodyType.b2_staticBody)
 
             }
 
 
             //dynamic glowballs:
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 340, -800, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 320, -400, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 330, -600, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 340, -800, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 320, -400, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 330, -600, box2d.b2BodyType.b2_dynamicBody)
 
 
             //a bitmap that hides the background sprite
@@ -123,7 +123,7 @@ Game = (function () {
                     }
                 ]
 
-            terrainBody = b2world.createTerrain('terrain', false, terrainPolys, 0, 0, true, false)
+            terrainBody = b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
 
             b2world.addContactListener({
                 BeginContact: function (idA, idB) {
@@ -165,7 +165,7 @@ Game = (function () {
                     b2world.applyImpulse(body, 270, 10)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
+                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, box2d.b2BodyType.b2_dynamicBody)
                 }
                 if (evt.keyCode == 67) { //c
                     bitmap.clearCircle(mousex, mousey, 40)

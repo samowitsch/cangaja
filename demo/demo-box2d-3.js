@@ -61,12 +61,12 @@ CG.B2DWorld.extend('B2DTestbed', {
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))
 
-        ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, false)
+        ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, box2d.b2BodyType.b2_dynamicBody)
         this.addCustom(ball)
 
-        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 175, 230, this.scale, false, false)
+        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 175, 230, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
         this.addCustom(rightplayer)
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, false, false)
+        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
         this.addCustom(leftplayer)
 
         this.addContactListener({

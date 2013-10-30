@@ -169,11 +169,11 @@ Game = (function () {
             b2world.debug = 1
 
             //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 510, -200, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 410, -300, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -100, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -400, false)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, false)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 510, -200, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 410, -300, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 210, -400, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
             chainArray = [
                 new CG.Point(0, 0),
@@ -237,14 +237,8 @@ Game = (function () {
                     body = b2world.getBodyAt(mousex, mousey)
                     b2world.applyImpulse(body, 270, 25)
                 }
-                if (evt.keyCode == 82) { //r
-                    b2world.createPolyBody('rainbow', Game.asset.getImageByName('rainbow_256'), Game.asset.getJsonByName('rainbow_256'), mousex, mousey, false, false)
-                }
-                if (evt.keyCode == 83) { //s
-                    b2world.createPolyBody('powerstar', Game.asset.getImageByName('powerstar75'), Game.asset.getJsonByName('powerstar75'), mousex, mousey, false, false)
-                }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
+                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, box2d.b2BodyType.b2_dynamicBody)
                 }
                 if (evt.keyCode == 68) { //d
                     body = b2world.deleteBodyAt(mousex, mousey)
