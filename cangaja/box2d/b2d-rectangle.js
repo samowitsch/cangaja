@@ -23,25 +23,18 @@ CG.B2DEntity.extend('B2DRectangle', {
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
      * @param scale     {Number}     the world scale of B2DWorld
-     * @param stat      {Boolean}     is the body static or dynamic
+     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
      * @return {*}
      */
-    init:function (world, name, image, x, y, scale, stat) {
+    init:function (world, name, image, x, y, scale, b2BodyType) {
         this._super(name, image, world, x, y, scale)
-        /**
-         * @πroperty stat
-         * @type {*}
-         */
-        this.stat = stat
+
         /**
          * @property bodyDef.stat
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         * @type {box2d.b2_staticBody/box2d.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        if (this.stat) {
-            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
-        } else {
-            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
-        }
+        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+
         /**
          * @property fixDef.shape
          * @type {b2PolygonShape}

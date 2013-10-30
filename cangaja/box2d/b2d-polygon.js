@@ -26,17 +26,12 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
      * @param scale     {Number}     the world scale of B2DWorld
-     * @param stat      {Boolean}     is the body static or dynamic
+     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
      * @param bullet    {Boolean}     bullet option
      * @return {*}
      */
-    init:function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
+    init:function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
-        /**
-         * @property stat
-         * @type {*}
-         */
-        this.stat = stat || false
         /**
          * @property polys
          * @type {Array}
@@ -67,13 +62,10 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         /**
          * @property bodyDef.type
-         * @type {b2Body.b2_staticBody/b2Body.b2_dynamicBody}
+         * @type {box2d.b2_staticBody/box2d.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        if (this.stat) {
-            this.bodyDef.type = box2d.b2BodyType.b2_staticBody
-        } else {
-            this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
-        }
+        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+
         /**
          * @property bodyDef.position
          */
