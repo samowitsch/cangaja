@@ -123,7 +123,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @description initAsPoint
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      */
 
     initAsPoint:function (image) {
@@ -136,7 +136,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @method initAsExplosion
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} min value for particle speed
      * @param {Number} max value for particle speed
      */
@@ -151,7 +151,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @method initAsCorona
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} radius of the corona emitter
      */
     initAsCorona:function (image, radius) {
@@ -164,7 +164,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @method initAsLine
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} width of the plate emitter
      * @param {Number} direction (defined constants) of the plate emitter
      */
@@ -179,7 +179,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @method initAsRectangle
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} width of the plate emitter
      * @param {Number} height (defined constants) of the plate emitter
      */

@@ -19,7 +19,7 @@ CG.Entity.extend('B2DEntity', {
      * @method init
      * @constructor
      * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param world     {object}      reference to world of B2DWorld
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position

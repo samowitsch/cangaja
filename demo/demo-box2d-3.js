@@ -10,7 +10,7 @@ var startleft = false, startright = true
 
 var mousex = 0
 var mousey = 0
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 var collision = {direction: '', overlap: 0}
 
 var gw = 800, gh = 480
@@ -404,7 +404,7 @@ Game = (function () {
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
 
             //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
+            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 

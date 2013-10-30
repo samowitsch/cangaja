@@ -1,16 +1,16 @@
 /**
  * @description
  *
- * CG.TPImage class. It is needed when using TexturePacker atlas files.
+ * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
  *
- * @class CG.TPImage
+ * @class CG.AtlasImage
  * @extends Class
  */
-CG.Class.extend('TPImage', {
+CG.Class.extend('AtlasImage', {
     /**
      * @method init
      * @constructor
-     * @param image {image} imgpath, image object or tpimage object to use
+     * @param image {image} imgpath, image object or atlasimage object to use
      * @param xoffset {Number} xoffset of image in atlas file
      * @param yoffset {Number} yoffset of image in atlas file
      * @param width {Number} width of image in atlas file

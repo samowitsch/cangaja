@@ -152,7 +152,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createBox
      * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param image   {mixed}       path to image, image or atlasimage from asset
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
      * @param stat    {Boolean}     is the body static or dynamic
@@ -188,7 +188,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createCircle
      * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param image   {mixed}       path to image, image or atlasimage from asset
      * @param radius  {Number}     the radius
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
@@ -210,7 +210,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createPolyBody
      * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param jsonpoly  {String}      json file from PhysicsEditor from asset
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
@@ -231,7 +231,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createPolyBody
      * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param terrainpoly  {Array}      array of vertices to start terrain building
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
@@ -270,7 +270,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createBridge
      * @param id          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param image         {mixed}       path to image, image or atlasimage from asset
      * @param x             {Number}     the x position
      * @param y             {Number}     the y position
      * @param length        {Number}     the length/width of the bridge
@@ -292,7 +292,7 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method createRope
      * @param id            {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param image         {mixed}       path to image, image or atlasimage from asset
      * @param x             {Number}     the x position
      * @param y             {Number}     the y position
      * @param length        {Number}     the length/width of the bridge

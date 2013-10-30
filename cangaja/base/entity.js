@@ -44,13 +44,13 @@ CG.Class.extend('Entity', {
     /**
      * @description initialize image for object. for now => sprite, particle, buffer, bitmap and button use it
      * @method setImage
-     * @param {image} image image path, image or tpimage
+     * @param {image} image image path, image or atlasimage
      */
     setImage:function (image) {
         this.atlasimage = false
         if (image) {
-            if (image instanceof CG.TPImage) {
-                //TPImage from MediaAsset
+            if (image instanceof CG.AtlasImage) {
+                //AtlasImage from MediaAsset
                 this.image = Game.asset.getImageByName(image.atlasname)
                 this.imagerotation = image.rotation //|| 0
                 this.xoffset = image.xoffset

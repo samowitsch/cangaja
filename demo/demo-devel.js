@@ -58,7 +58,7 @@ var colmsg = ''
 var asset, circle, circlesmoke, tween, squence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
 var morph = new CG.Morph('sinus', 0.25, 1, 1)
 var map = new CG.Map(640, 480)
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 
 
 window.onload = function () {
@@ -163,7 +163,7 @@ var Game = (function () {
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
             //tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
-            Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
+            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
 
             //sfx

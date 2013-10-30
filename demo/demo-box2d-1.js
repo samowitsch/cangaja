@@ -5,7 +5,7 @@ var mainscreen, mainlayer
 var mousex = 0
 var mousey = 0
 var mousedown = false
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 var collision = {direction: '', overlap: 0}
 
 
@@ -146,7 +146,7 @@ Game = (function () {
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
 
             //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
+            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))

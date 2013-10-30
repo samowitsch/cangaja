@@ -6,7 +6,7 @@ var mousex = 0
 var mousey = 0
 var mousedown = false
 var leftplayer
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 var collision = {direction: '', overlap: 0}
 
 

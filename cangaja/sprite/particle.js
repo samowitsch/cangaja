@@ -12,7 +12,7 @@ CG.Sprite.extend('Particle', {
     /**
      * @constructor
      * @method init
-     * @param image {mixed} image imgpath, image object or tpimage object to use for the particle
+     * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
      */
     init:function (image) {
         this._super(image, new CG.Point(0, 0))

@@ -21,7 +21,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @constructor
      * @param world     {Object}      reference to world of B2DWorld
      * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param jsonpoly  {string}      json file from PhysicsEditor from asset
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position

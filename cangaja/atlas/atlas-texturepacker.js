@@ -1,14 +1,14 @@
 /**
  *  @description
  *
- *  CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.
- *  These TPImages are only handled within Sprite, Particle and Button class.
+ *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+ *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.
+ *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
- *  @class CG.TexturePacker
+ *  @class CG.AtlasTexturePacker
  *  @extends Class
  */
-CG.Class.extend('TexturePacker', {
+CG.Class.extend('AtlasTexturePacker', {
     /**
      * @constructor
      * @method init
@@ -36,16 +36,16 @@ CG.Class.extend('TexturePacker', {
          */
         this.height = 0
         /**
-         * @property tpimages
+         * @property atlasimages
          * @type {Array}
          */
-        this.tpimages = []
+        this.atlasimages = []
         return this
     },
     /**
-     * @description load a xml file from texturepacker
+     * @description load a xml file from TexturePacker
      * @method loadXml
-     * @param {string/object} xmlfile path or mediaasset object with data of texturepacker xml
+     * @param {string/object} xmlfile path or mediaasset object with data of TexturePacker xml
      * @return {*}
      */
     loadXml:function (xmlfile) {
@@ -64,7 +64,7 @@ CG.Class.extend('TexturePacker', {
 
         var sprites = this.xmlDoc.getElementsByTagName('sprite')
         for (var i = 0, l = sprites.length; i < l; i++) {
-            tpimage = new CG.TPImage(
+            atlasimage = new CG.atlasimage(
                 sprites[i].getAttribute('n'),
                 parseInt(sprites[i].getAttribute('x')),
                 parseInt(sprites[i].getAttribute('y')),
@@ -72,21 +72,21 @@ CG.Class.extend('TexturePacker', {
                 parseInt(sprites[i].getAttribute('h'))
             )
             if (sprites[i].getAttribute('r') == 'y') {
-                tpimage.rotation = 90
+                atlasimage.rotation = 90
             }
-            tpimage.atlasimage = this.imagename
-            tpimage.source = 'xml'
-            tpimage.atlasname = this.imagename.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
+            atlasimage.atlasimage = this.imagename
+            atlasimage.source = 'xml'
+            atlasimage.atlasname = this.imagename.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
 
-            this.tpimages.push(tpimage)
+            this.atlasimages.push(atlasimage)
         }
         return this
     },
 
     /**
-     * @description load a json file from texturepacker
+     * @description load a json file from TexturePacker
      * @method loadJson
-     * @param {string/object} jsonfile path or mediaasset object with data of texturepacker json
+     * @param {string/object} jsonfile path or mediaasset object with data of TexturePacker json
      * @return {*}
      */
     loadJson:function (jsonfile) {
@@ -104,7 +104,7 @@ CG.Class.extend('TexturePacker', {
         //loop thru all images
         for (var i = 0, l = this.json.frames.length; i < l; i++) {
             var image = this.json.frames[i]
-            var tpimage = new CG.TPImage(
+            var atlasimage = new CG.AtlasImage(
                 image.filename,
                 image.frame.x,
                 image.frame.y,
@@ -112,26 +112,26 @@ CG.Class.extend('TexturePacker', {
                 image.frame.h
             )
             if (image.rotated === true) {
-                tpimage.rotation = 90
-                //            tpimage.width = this.json.frames[i].frame.w,
-                //            tpimage.height = this.json.frames[i].frame.h
+                atlasimage.rotation = 90
+                //            atlasimage.width = this.json.frames[i].frame.w,
+                //            atlasimage.height = this.json.frames[i].frame.h
             }
-            tpimage.atlasimage = this.imagename
-            tpimage.source = 'json'
-            tpimage.atlasname = this.imagename.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
+            atlasimage.atlasimage = this.imagename
+            atlasimage.source = 'json'
+            atlasimage.atlasname = this.imagename.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
 
-            this.tpimages.push(tpimage)
+            this.atlasimages.push(atlasimage)
         }
         return this
     },
 
     /**
-     * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getTPImages
-     * @return {array} returns all tpimages of texturepacker file to use with Game.asset
+     * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
+     * @method getatlasimages
+     * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      */
-    getTPImages:function () {
-        return this.tpimages
+    getAtlasImages:function () {
+        return this.atlasimages
     }
 })
 

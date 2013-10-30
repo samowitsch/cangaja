@@ -8,5 +8,8 @@
  *  hammer.js
  *  buzz.js
  *  Box2Html5.js
+ *  clipper.js
+ *  poly2tri.js
+ *  spine.js
  */
 

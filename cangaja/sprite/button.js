@@ -11,7 +11,7 @@ CG.Sprite.extend('Button', {
     /**
      * @method init
      * @constructor
-     * @param image {image} image image path, image or tpimage
+     * @param image {image} image image path, image or atlasimage
      * @param position {CG.Point} position point
      * @param text {string} the button text
      * @param font {CG.Font} a CG.Font object for text rendering

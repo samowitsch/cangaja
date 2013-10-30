@@ -10,7 +10,7 @@ CG.Rectangle.extend('Sprite', {
     /**
      * @method init
      * @constructor
-     * @param image {image}  imgpath, image object or tpimage object to use
+     * @param image {image}  imgpath, image object or atlasimage object to use
      * @param position {CG.Point}  position object
      * @return {*}
      */

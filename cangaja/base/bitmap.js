@@ -37,7 +37,7 @@ CG.Entity.extend('Bitmap', {
      *
      * @method loadImage
      *
-     * @param {string, image, tpimage} imgpath, image object or tpimage object to use
+     * @param {string, image, atlasimage} imgpath, image object or atlasimage object to use
      */
     loadImage:function (image) {
         this.setImage(image)

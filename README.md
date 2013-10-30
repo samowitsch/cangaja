@@ -166,8 +166,8 @@ cangaja is a javascript canvas project that i have started to explore the html c
 + MapTileLayer
 + MapTileProperties
 + MediaAsset
-+ TexturePacker
-+ TPImage
++ Atlas-Image
++ Atlas-TexturePacker
 
 ## Framework logic
 
@@ -226,7 +226,7 @@ Game.asset.getJsonByName('name')
 ## Texturepacker example ##
 
 ```js
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 
 //load texturepacker json file (recommended for ejecta use)
 tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
@@ -235,7 +235,7 @@ tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
 tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
 
 //add Texturepacker TPImages to mediaasset images
-Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
+Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 ```
 
 ## Font (Glyphdesigner) example ##

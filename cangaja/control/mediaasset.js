@@ -127,7 +127,7 @@ CG.Class.extend('MediaAsset', {
     getImageByName:function (name) {
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
-                if (this.images[i] instanceof CG.TPImage) {
+                if (this.images[i] instanceof CG.AtlasImage) {
                     return this.images[i]
                 } else {
                     return this.images[i].img
@@ -145,7 +145,7 @@ CG.Class.extend('MediaAsset', {
         names = []
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
-                if (this.images[i] instanceof CG.TPImage) {
+                if (this.images[i] instanceof CG.AtlasImage) {
                     names.push(this.images[i])
                 } else {
                     names.push(this.images[i].img)

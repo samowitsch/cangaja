@@ -5,7 +5,7 @@ var mainscreen, mainlayer, gamescreen, gamelayer, settingsscreen, settingslayer
 var mousex = 0
 var mousey = 0
 var mousedown = false
-var tp = new CG.TexturePacker()
+var tp = new CG.AtlasTexturePacker()
 
 
 //waiting to get started ;o)
@@ -79,7 +79,7 @@ Game = (function () {
             //tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
 
             //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getTPImages())
+            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
 
             //create font objects
