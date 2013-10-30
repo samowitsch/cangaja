@@ -194,6 +194,8 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *&#x2F;
     init: function (name, opt) {
 
+        this.framerate = 1 &#x2F; 30
+
         &#x2F;**
          * @property opt
          * @type {object}
@@ -264,7 +266,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
     update: function () {
 
         this.world.Step(
-            1 &#x2F; 60   &#x2F;&#x2F;frame-rate
+            this.framerate   &#x2F;&#x2F;frame-rate
             , 10       &#x2F;&#x2F;velocity iterations
             , 10       &#x2F;&#x2F;position iterations
         )
@@ -328,6 +330,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -344,6 +347,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DLine(this.world, id, new b2Vec2(start.x &#x2F; this.scale, start.y &#x2F; this.scale), new b2Vec2(end.x &#x2F; this.scale, end.y &#x2F; this.scale), this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -363,6 +367,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -385,6 +390,28 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
+    },
+    &#x2F;**
+     * @description
+     *
+     * createTerrain
+     *
+     * @method createPolyBody
+     * @param id        {String}      id or name to identify
+     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param terrainpoly  {Array}      array of vertices to start terrain building
+     * @param x         {Number}     the x position
+     * @param y         {Number}     the y position
+     * @param stat      {Boolean}     is the body static or dynamic
+     * @param bullet    {Boolean}     bullet option
+     *&#x2F;
+    createTerrain: function (id, image, terrainpoly, x, y, stat, bullet) {
+        this.uid = this.uid + 1
+        var entity = new CG.B2DTerrain(this.world, id, image, terrainpoly, x, y, this.scale, stat, bullet)
+        entity.id.uid = this.uid
+        this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -402,6 +429,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DChainShape(this.world, id, vertices, x, y, this.scale, stat)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -423,6 +451,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -444,6 +473,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
         entity.id.uid = this.uid
         this.elements.push(entity)
+        return entity
     },
     &#x2F;**
      * @description
@@ -551,6 +581,19 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         this.elements.splice(index, 1);
     },
     &#x2F;**
+     * @method removeElementByUid
+     * @param uid
+     *&#x2F;
+    removeElementByUid: function (uid) {
+        for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+            if (typeof this.elements[i].id !== &#x27;undefined&#x27;) {
+                if(this.elements[i].id.uid === uid) {
+                    this.elements.splice(i, 1);
+                }
+            }
+        }
+    },
+    &#x2F;**
      * @method applyImpulse
      * @param body
      * @param degrees
@@ -570,16 +613,16 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
     addContactListener: function (callbacks) {
         var listener = new box2d.b2ContactListener;
         if (callbacks.BeginContact) listener.BeginContact = function (contact) {
-            callbacks.BeginContact(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData());
+            callbacks.BeginContact(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody());
         }
         if (callbacks.EndContact) listener.EndContact = function (contact) {
-            callbacks.EndContact(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData());
+            callbacks.EndContact(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody());
         }
         if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
-            callbacks.PostSolve(contact.GetFixtureA().GetBody().GetUserData(),
-                contact.GetFixtureB().GetBody().GetUserData(),
+            callbacks.PostSolve(contact.GetFixtureA().GetBody(),
+                contact.GetFixtureB().GetBody(),
                 impulse.normalImpulses[0]);
         }
         if (callbacks.PreSolve) listener.PreSolve = function (contact, oldManifold) {
