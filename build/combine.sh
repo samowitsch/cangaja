@@ -6,25 +6,25 @@
 echo "> Building box2dhtml5 version."
 echo ""
 
-cat ../cangaja/lib/keymaster.js \
-../cangaja/lib/clipper.js \
-../cangaja/lib/poly2tri.js \
-../cangaja/misc/base.js \
-../cangaja/misc/clock.js \
-../cangaja/misc/string.js \
+cat ../cangaja/lib-ext/keymaster.js \
+../cangaja/lib-ext/clipper.js \
+../cangaja/lib-ext/poly2tri.js \
+../cangaja/base/base.js \
+../cangaja/base/clock.js \
+../cangaja/base/string.js \
 ../cangaja/renderer/renderer.js \
-../cangaja/misc/delta.js \
-../cangaja/misc/entity.js \
-../cangaja/misc/point.js \
-../cangaja/misc/vector.js \
-../cangaja/misc/rectangle.js \
-../cangaja/misc/bound.js \
-../cangaja/misc/buffer.js \
+../cangaja/base/delta.js \
+../cangaja/base/entity.js \
+../cangaja/base/point.js \
+../cangaja/base/vector.js \
+../cangaja/base/rectangle.js \
+../cangaja/base/bound.js \
+../cangaja/base/buffer.js \
 ../cangaja/sprite/sprite.js \
 ../cangaja/texturepacker/tpimage.js \
 ../cangaja/texturepacker/texturepacker.js \
 ../cangaja/sprite/animation.js \
-../cangaja/misc/bitmap.js \
+../cangaja/base/bitmap.js \
 ../cangaja/sprite/button.js \
 ../cangaja/control/menu.js \
 ../cangaja/control/mediaasset.js \
@@ -43,8 +43,8 @@ cat ../cangaja/lib/keymaster.js \
 ../cangaja/control/morph.js \
 ../cangaja/sprite/particle.js \
 ../cangaja/control/emitter.js \
-../cangaja/lib/box2dhtml5/box2d-html5.js \
-../cangaja/lib/box2dhtml5/b2DebugDraw.js \
+../cangaja/lib-ext/box2dhtml5/box2d-html5.js \
+../cangaja/lib-ext/box2dhtml5/b2DebugDraw.js \
 ../cangaja/box2d/b2d-vars-html5.js \
 ../cangaja/box2d/b2d-entity.js \
 ../cangaja/box2d/b2d-circle.js \
@@ -59,14 +59,6 @@ cat ../cangaja/lib/keymaster.js \
 
 
 
-#../cangaja/lib/box2d.js/box2d.min.js \
-#../cangaja/lib/box2d.js/embox2d-helpers.js \
-#../cangaja/lib/box2d.js/embox2d-html5canvas-debugDraw.js \
-
-#../cangaja/lib/Box2dWeb/Box2d.js \
-#../cangaja/box2d/b2d-vars.js \
-
-
 echo "> Files merged."
 echo ""
 
@@ -77,7 +69,7 @@ echo ""
 
 
 #concat all libs
-cat ../cangaja/lib/cangaja.js ../cangaja/lib/buzz.js ../cangaja/lib/hammer.js ../cangaja/lib/stats.js > ../cangaja/lib/cangaja.all.js
+cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/buzz.js ../cangaja/lib-ext/hammer.js ../cangaja/lib-ext/stats.js > ../cangaja/lib/cangaja.all.js
 echo "> generated lib version, added libs buzz and hammer."
 echo ""
 
@@ -88,7 +80,7 @@ echo ""
 
 
 #add intro to minified file
-#cat ../cangaja/misc/intro.js ../cangaja/lib/cangaja.min.js > ../cangaja/lib/cangaja.min.js
+#cat ../cangaja/base/intro.js ../cangaja/lib/cangaja.min.js > ../cangaja/lib/cangaja.min.js
 #echo "> Added intro to minified file."
 #echo ""
 
