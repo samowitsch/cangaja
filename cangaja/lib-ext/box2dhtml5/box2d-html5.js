@@ -7037,8 +7037,7 @@ box2d.b2Island.prototype.SolveTOI = function(a, b, c) {
     e.positions = this.m_positions;
     e.velocities = this.m_velocities;
     d = box2d.b2Island.s_contactSolver.Initialize(e);
-    for (e = 0; e < a.positionIterations && !d.SolveTOIPositionConstraints(b, c); ++e)
-        ;
+    for (e = 0; e < a.positionIterations && !d.SolveTOIPositionConstraints(b, c); ++e){};
     this.m_bodies[b].m_sweep.c0.Copy(this.m_positions[b].c);
     this.m_bodies[b].m_sweep.a0 = this.m_positions[b].a;
     this.m_bodies[c].m_sweep.c0.Copy(this.m_positions[c].c);

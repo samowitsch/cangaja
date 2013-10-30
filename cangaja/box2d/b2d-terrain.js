@@ -88,19 +88,12 @@ CG.B2DEntity.extend('B2DTerrain', {
          */
         this.bodyDef.bullet = this.bullet
 
-
-        /**
-         * @property body
-         * @type {b2Body}
-         */
-
         this.createTerrain()
 
         return this
 
     },
     createTerrain: function () {
-        // @TODO poly2tri
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {

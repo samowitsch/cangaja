@@ -32,7 +32,7 @@ CG.Layer.extend('B2DWorld', {
          * @property opt
          * @type {object}
          */
-        opt = opt || {}
+        this.opt = opt || {}
 
         /**
          * @property name
@@ -66,7 +66,7 @@ CG.Layer.extend('B2DWorld', {
          */
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
-            opt.sleep || true        //allow sleep
+            this.opt.sleep || true        //allow sleep
         )
         /**
          * @property uid

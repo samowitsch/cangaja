@@ -384,7 +384,7 @@ CG.Entity.extend('Emitter', {
         return this
     },
 
-    /*
+    /**
      * @method setParticleSpeed
      *
      * @param {Number} speed set the speed of the particles

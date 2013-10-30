@@ -18,9 +18,9 @@
 
 goog.provide('box2d.Render');
 
-goog.require('box2d');
+//goog.require('box2d');
 
-goog.require('goog.string.format');
+//goog.require('goog.string.format');
 
 /** 
  * This class implements debug drawing callbacks that are 
