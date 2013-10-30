@@ -9,6 +9,7 @@ echo ""
 cat ../cangaja/lib-ext/keymaster.js \
 ../cangaja/lib-ext/clipper.js \
 ../cangaja/lib-ext/poly2tri.js \
+../cangaja/lib-ext/spine.js \
 ../cangaja/base/base.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
@@ -21,8 +22,8 @@ cat ../cangaja/lib-ext/keymaster.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/sprite/sprite.js \
-../cangaja/texturepacker/tpimage.js \
-../cangaja/texturepacker/texturepacker.js \
+../cangaja/atlas/atlas-image.js \
+../cangaja/atlas/atlas-texturepacker.js \
 ../cangaja/sprite/animation.js \
 ../cangaja/base/bitmap.js \
 ../cangaja/sprite/button.js \
