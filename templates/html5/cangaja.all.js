@@ -8895,7 +8895,7 @@ spine.AtlasRegion.prototype = {
 	index: 0,
 	rotate: false,
 	splits: null,
-	pads: null,
+	pads: null
 };
 
 spine.AtlasReader = function (text) {
@@ -14304,7 +14304,7 @@ CG.Entity.extend('Emitter', {
         return this
     },
 
-    /*
+    /**
      * @method setParticleSpeed
      *
      * @param {Number} speed set the speed of the particles
@@ -21417,8 +21417,7 @@ box2d.b2Island.prototype.SolveTOI = function(a, b, c) {
     e.positions = this.m_positions;
     e.velocities = this.m_velocities;
     d = box2d.b2Island.s_contactSolver.Initialize(e);
-    for (e = 0; e < a.positionIterations && !d.SolveTOIPositionConstraints(b, c); ++e)
-        ;
+    for (e = 0; e < a.positionIterations && !d.SolveTOIPositionConstraints(b, c); ++e){};
     this.m_bodies[b].m_sweep.c0.Copy(this.m_positions[b].c);
     this.m_bodies[b].m_sweep.a0 = this.m_positions[b].a;
     this.m_bodies[c].m_sweep.c0.Copy(this.m_positions[c].c);
@@ -25714,9 +25713,9 @@ goog.exportProperty(box2d.b2MotorJoint.prototype, "Dump", box2d.b2MotorJoint.pro
 
 goog.provide('box2d.Render');
 
-goog.require('box2d');
+//goog.require('box2d');
 
-goog.require('goog.string.format');
+//goog.require('goog.string.format');
 
 /** 
  * This class implements debug drawing callbacks that are 
@@ -26676,19 +26675,12 @@ CG.B2DEntity.extend('B2DTerrain', {
          */
         this.bodyDef.bullet = this.bullet
 
-
-        /**
-         * @property body
-         * @type {b2Body}
-         */
-
         this.createTerrain()
 
         return this
 
     },
     createTerrain: function () {
-        // @TODO poly2tri
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
@@ -27274,7 +27266,7 @@ CG.Layer.extend('B2DWorld', {
          * @property opt
          * @type {object}
          */
-        opt = opt || {}
+        this.opt = opt || {}
 
         /**
          * @property name
@@ -27308,7 +27300,7 @@ CG.Layer.extend('B2DWorld', {
          */
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
-            opt.sleep || true        //allow sleep
+            this.opt.sleep || true        //allow sleep
         )
         /**
          * @property uid
