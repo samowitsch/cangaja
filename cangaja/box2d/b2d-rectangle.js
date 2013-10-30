@@ -31,7 +31,7 @@ CG.B2DEntity.extend('B2DRectangle', {
 
         /**
          * @property bodyDef.stat
-         * @type {box2d.b2_staticBody/box2d.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
         this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
 
