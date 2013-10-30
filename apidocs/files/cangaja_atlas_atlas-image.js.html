@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;texturepacker&#x2F;tpimage.js - Cangaja API</title>
+    <title>cangaja&#x2F;atlas&#x2F;atlas-image.js - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -42,6 +42,10 @@
             <ul id="api-classes" class="apis classes">
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
@@ -113,10 +117,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
             
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
@@ -162,23 +162,23 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;texturepacker&#x2F;tpimage.js</h1>
+                        <h1 class="file-heading">File: cangaja&#x2F;atlas&#x2F;atlas-image.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
  * @description
  *
- * CG.TPImage class. It is needed when using TexturePacker atlas files.
+ * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
  *
- * @class CG.TPImage
+ * @class CG.AtlasImage
  * @extends Class
  *&#x2F;
-CG.Class.extend(&#x27;TPImage&#x27;, {
+CG.Class.extend(&#x27;AtlasImage&#x27;, {
     &#x2F;**
      * @method init
      * @constructor
-     * @param image {image} imgpath, image object or tpimage object to use
+     * @param image {image} imgpath, image object or atlasimage object to use
      * @param xoffset {Number} xoffset of image in atlas file
      * @param yoffset {Number} yoffset of image in atlas file
      * @param width {Number} width of image in atlas file

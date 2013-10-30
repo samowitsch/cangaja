@@ -43,6 +43,10 @@
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
@@ -112,10 +116,6 @@
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
@@ -212,13 +212,13 @@ CG.Class.extend(&#x27;Entity&#x27;, {
     &#x2F;**
      * @description initialize image for object. for now =&gt; sprite, particle, buffer, bitmap and button use it
      * @method setImage
-     * @param {image} image image path, image or tpimage
+     * @param {image} image image path, image or atlasimage
      *&#x2F;
     setImage:function (image) {
         this.atlasimage = false
         if (image) {
-            if (image instanceof CG.TPImage) {
-                &#x2F;&#x2F;TPImage from MediaAsset
+            if (image instanceof CG.AtlasImage) {
+                &#x2F;&#x2F;AtlasImage from MediaAsset
                 this.image = Game.asset.getImageByName(image.atlasname)
                 this.imagerotation = image.rotation &#x2F;&#x2F;|| 0
                 this.xoffset = image.xoffset

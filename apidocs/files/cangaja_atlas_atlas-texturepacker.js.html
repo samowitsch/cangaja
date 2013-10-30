@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;texturepacker&#x2F;texturepacker.js - Cangaja API</title>
+    <title>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -42,6 +42,10 @@
             <ul id="api-classes" class="apis classes">
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
@@ -113,10 +117,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
             
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
@@ -162,21 +162,21 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;texturepacker&#x2F;texturepacker.js</h1>
+                        <h1 class="file-heading">File: cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
  *  @description
  *
- *  CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml&#x2F;json and generates new CG.TPImage objects in the MediaAsset manager.
- *  These TPImages are only handled within Sprite, Particle and Button class.
+ *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+ *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml&#x2F;json and generates new CG.atlasimage objects in the MediaAsset manager.
+ *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
- *  @class CG.TexturePacker
+ *  @class CG.AtlasTexturePacker
  *  @extends Class
  *&#x2F;
-CG.Class.extend(&#x27;TexturePacker&#x27;, {
+CG.Class.extend(&#x27;AtlasTexturePacker&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
@@ -204,16 +204,16 @@ CG.Class.extend(&#x27;TexturePacker&#x27;, {
          *&#x2F;
         this.height = 0
         &#x2F;**
-         * @property tpimages
+         * @property atlasimages
          * @type {Array}
          *&#x2F;
-        this.tpimages = []
+        this.atlasimages = []
         return this
     },
     &#x2F;**
-     * @description load a xml file from texturepacker
+     * @description load a xml file from TexturePacker
      * @method loadXml
-     * @param {string&#x2F;object} xmlfile path or mediaasset object with data of texturepacker xml
+     * @param {string&#x2F;object} xmlfile path or mediaasset object with data of TexturePacker xml
      * @return {*}
      *&#x2F;
     loadXml:function (xmlfile) {
@@ -232,7 +232,7 @@ CG.Class.extend(&#x27;TexturePacker&#x27;, {
 
         var sprites = this.xmlDoc.getElementsByTagName(&#x27;sprite&#x27;)
         for (var i = 0, l = sprites.length; i &lt; l; i++) {
-            tpimage = new CG.TPImage(
+            atlasimage = new CG.atlasimage(
                 sprites[i].getAttribute(&#x27;n&#x27;),
                 parseInt(sprites[i].getAttribute(&#x27;x&#x27;)),
                 parseInt(sprites[i].getAttribute(&#x27;y&#x27;)),
@@ -240,21 +240,21 @@ CG.Class.extend(&#x27;TexturePacker&#x27;, {
                 parseInt(sprites[i].getAttribute(&#x27;h&#x27;))
             )
             if (sprites[i].getAttribute(&#x27;r&#x27;) == &#x27;y&#x27;) {
-                tpimage.rotation = 90
+                atlasimage.rotation = 90
             }
-            tpimage.atlasimage = this.imagename
-            tpimage.source = &#x27;xml&#x27;
-            tpimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
+            atlasimage.atlasimage = this.imagename
+            atlasimage.source = &#x27;xml&#x27;
+            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
 
-            this.tpimages.push(tpimage)
+            this.atlasimages.push(atlasimage)
         }
         return this
     },
 
     &#x2F;**
-     * @description load a json file from texturepacker
+     * @description load a json file from TexturePacker
      * @method loadJson
-     * @param {string&#x2F;object} jsonfile path or mediaasset object with data of texturepacker json
+     * @param {string&#x2F;object} jsonfile path or mediaasset object with data of TexturePacker json
      * @return {*}
      *&#x2F;
     loadJson:function (jsonfile) {
@@ -272,7 +272,7 @@ CG.Class.extend(&#x27;TexturePacker&#x27;, {
         &#x2F;&#x2F;loop thru all images
         for (var i = 0, l = this.json.frames.length; i &lt; l; i++) {
             var image = this.json.frames[i]
-            var tpimage = new CG.TPImage(
+            var atlasimage = new CG.AtlasImage(
                 image.filename,
                 image.frame.x,
                 image.frame.y,
@@ -280,26 +280,26 @@ CG.Class.extend(&#x27;TexturePacker&#x27;, {
                 image.frame.h
             )
             if (image.rotated === true) {
-                tpimage.rotation = 90
-                &#x2F;&#x2F;            tpimage.width = this.json.frames[i].frame.w,
-                &#x2F;&#x2F;            tpimage.height = this.json.frames[i].frame.h
+                atlasimage.rotation = 90
+                &#x2F;&#x2F;            atlasimage.width = this.json.frames[i].frame.w,
+                &#x2F;&#x2F;            atlasimage.height = this.json.frames[i].frame.h
             }
-            tpimage.atlasimage = this.imagename
-            tpimage.source = &#x27;json&#x27;
-            tpimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
+            atlasimage.atlasimage = this.imagename
+            atlasimage.source = &#x27;json&#x27;
+            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
 
-            this.tpimages.push(tpimage)
+            this.atlasimages.push(atlasimage)
         }
         return this
     },
 
     &#x2F;**
-     * @description get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getTPImages
-     * @return {array} returns all tpimages of texturepacker file to use with Game.asset
+     * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
+     * @method getatlasimages
+     * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      *&#x2F;
-    getTPImages:function () {
-        return this.tpimages
+    getAtlasImages:function () {
+        return this.atlasimages
     }
 })
 

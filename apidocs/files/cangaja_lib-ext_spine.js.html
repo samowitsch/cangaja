@@ -43,6 +43,10 @@
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
@@ -112,10 +116,6 @@
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
@@ -709,7 +709,7 @@ spine.EventTimeline.prototype = {
 
 		if (lastTime &gt; time) { &#x2F;&#x2F; Fire events after last time for looped animations.
 			apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha);
-			lastTime = -1f;
+			lastTime = -1;
 		} else if (lastTime &gt;= frames[frameCount - 1]) &#x2F;&#x2F; Last time is after last frame.
 			return;
 		if (time &lt; frames[0]) return; &#x2F;&#x2F; Time is before first frame.

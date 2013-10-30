@@ -6,6 +6,24 @@
         "url": "http://example.com/"
     },
     "files": {
+        "cangaja/atlas/atlas-image.js": {
+            "name": "cangaja/atlas/atlas-image.js",
+            "modules": {},
+            "classes": {
+                "CG.AtlasImage": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "cangaja/atlas/atlas-texturepacker.js": {
+            "name": "cangaja/atlas/atlas-texturepacker.js",
+            "modules": {},
+            "classes": {
+                "CG.AtlasTexturePacker": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "cangaja/base/base.js": {
             "name": "cangaja/base/base.js",
             "modules": {
@@ -403,24 +421,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "cangaja/texturepacker/texturepacker.js": {
-            "name": "cangaja/texturepacker/texturepacker.js",
-            "modules": {},
-            "classes": {
-                "CG.TexturePacker": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "cangaja/texturepacker/tpimage.js": {
-            "name": "cangaja/texturepacker/tpimage.js",
-            "modules": {},
-            "classes": {
-                "CG.TPImage": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "cangaja/tilemap/map.js": {
             "name": "cangaja/tilemap/map.js",
             "modules": {},
@@ -472,6 +472,8 @@
             "name": "CG",
             "submodules": {},
             "classes": {
+                "CG.AtlasImage": 1,
+                "CG.AtlasTexturePacker": 1,
                 "CG.Bitmap": 1,
                 "CG.Bound": 1,
                 "CG.Buffer": 1,
@@ -505,8 +507,6 @@
                 "CG.Sprite": 1,
                 "CG.Font": 1,
                 "CG.Text": 1,
-                "CG.TexturePacker": 1,
-                "CG.TPImage": 1,
                 "CG.Map": 1,
                 "CG.MapArea": 1,
                 "CG.MapPoint": 1,
@@ -526,6 +526,34 @@
         }
     },
     "classes": {
+        "CG.AtlasImage": {
+            "name": "CG.AtlasImage",
+            "shortname": "CG.AtlasImage",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 1,
+            "description": "CG.AtlasImage class. It is needed when using TexturePacker atlas files.",
+            "extends": "Class"
+        },
+        "CG.AtlasTexturePacker": {
+            "name": "CG.AtlasTexturePacker",
+            "shortname": "CG.AtlasTexturePacker",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 1,
+            "description": "CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.\nThese atlasimages are only handled within Sprite, Particle and Button class.",
+            "extends": "Class"
+        },
         "CG.Bitmap": {
             "name": "CG.Bitmap",
             "shortname": "CG.Bitmap",
@@ -1041,36 +1069,6 @@
             "description": "Future plans:\nCG.Text => support for different text drawing modes like textblock, text alignment, text ticker or scroller.",
             "extends": "CG.Entity"
         },
-        "CG.TexturePacker": {
-            "name": "CG.TexturePacker",
-            "shortname": "CG.TexturePacker",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "CG",
-            "namespace": "",
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 1,
-            "description": "CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.\nThese TPImages are only handled within Sprite, Particle and Button class.",
-            "extends": "Class"
-        },
-        "CG.TPImage": {
-            "name": "CG.TPImage",
-            "shortname": "CG.TPImage",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "CG",
-            "namespace": "",
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 1,
-            "description": "CG.TPImage class. It is needed when using TexturePacker atlas files.",
-            "extends": "Class"
-        },
         "CG.Map": {
             "name": "CG.Map",
             "shortname": "CG.Map",
@@ -1149,6 +1147,215 @@
     },
     "classitems": [
         {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 10,
+            "itemtype": "method",
+            "name": "init",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "image",
+                    "description": "imgpath, image object or atlasimage object to use",
+                    "type": "Image"
+                },
+                {
+                    "name": "xoffset",
+                    "description": "xoffset of image in atlas file",
+                    "type": "Number"
+                },
+                {
+                    "name": "yoffset",
+                    "description": "yoffset of image in atlas file",
+                    "type": "Number"
+                },
+                {
+                    "name": "width",
+                    "description": "width of image in atlas file",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "height of image in atlas file",
+                    "type": "Number"
+                }
+            ],
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 20,
+            "itemtype": "property",
+            "name": "source",
+            "type": "{String}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 25,
+            "itemtype": "property",
+            "name": "atlasimage",
+            "type": "{String}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 30,
+            "itemtype": "property",
+            "name": "atlasname",
+            "type": "{String}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 35,
+            "itemtype": "property",
+            "name": "image",
+            "type": "{*}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 40,
+            "itemtype": "property",
+            "name": "name",
+            "type": "{String}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 45,
+            "itemtype": "property",
+            "name": "xoffset",
+            "type": "{Number}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 50,
+            "itemtype": "property",
+            "name": "yoffset",
+            "type": "{*}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 55,
+            "itemtype": "property",
+            "name": "width",
+            "type": "{Number}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 60,
+            "itemtype": "property",
+            "name": "height",
+            "type": "{Number}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-image.js",
+            "line": 65,
+            "itemtype": "property",
+            "name": "rotation",
+            "type": "{Number}",
+            "class": "CG.AtlasImage"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 12,
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "init",
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 23,
+            "itemtype": "property",
+            "name": "imagename",
+            "type": "{String}",
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 28,
+            "itemtype": "property",
+            "name": "width",
+            "type": "{Number}",
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 33,
+            "itemtype": "property",
+            "name": "height",
+            "type": "{Number}",
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 38,
+            "itemtype": "property",
+            "name": "atlasimages",
+            "type": "{Array}",
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 45,
+            "description": "load a xml file from TexturePacker",
+            "itemtype": "method",
+            "name": "loadXml",
+            "params": [
+                {
+                    "name": "xmlfile",
+                    "description": "path or mediaasset object with data of TexturePacker xml",
+                    "type": "String/object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 86,
+            "description": "load a json file from TexturePacker",
+            "itemtype": "method",
+            "name": "loadJson",
+            "params": [
+                {
+                    "name": "jsonfile",
+                    "description": "path or mediaasset object with data of TexturePacker json",
+                    "type": "String/object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
+            "file": "cangaja/atlas/atlas-texturepacker.js",
+            "line": 128,
+            "description": "get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)",
+            "itemtype": "method",
+            "name": "getatlasimages",
+            "return": {
+                "description": "returns all atlasimages of TexturePacker file to use with Game.asset",
+                "type": "Array"
+            },
+            "class": "CG.AtlasTexturePacker"
+        },
+        {
             "file": "cangaja/base/bitmap.js",
             "line": 16,
             "itemtype": "method",
@@ -1182,8 +1389,8 @@
             "params": [
                 {
                     "name": "imgpath,",
-                    "description": "image object or tpimage object to use",
-                    "type": "String, image, tpimage"
+                    "description": "image object or atlasimage object to use",
+                    "type": "String, image, atlasimage"
                 }
             ],
             "class": "CG.Bitmap",
@@ -1691,7 +1898,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "image path, image or tpimage",
+                    "description": "image path, image or atlasimage",
                     "type": "Image"
                 }
             ],
@@ -1701,7 +1908,7 @@
         {
             "file": "cangaja/base/intro.js",
             "line": 1,
-            "description": "© 2013 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework\n\nhttps://www.github.com/samowitsch/cangaja/\n\nIncludes:\nhammer.js\nbuzz.js\nBox2Html5.js",
+            "description": "© 2013 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework\n\nhttps://www.github.com/samowitsch/cangaja/\n\nIncludes:\nhammer.js\nbuzz.js\nBox2Html5.js\nclipper.js\npoly2tri.js\nspine.js",
             "class": "CG.Point",
             "module": "CG"
         },
@@ -2006,7 +2213,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -2302,7 +2509,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -2422,7 +2629,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -2786,7 +2993,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -2964,7 +3171,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3075,7 +3282,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3214,7 +3421,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3547,7 +3754,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3609,7 +3816,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3650,7 +3857,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3696,7 +3903,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3773,7 +3980,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -3823,7 +4030,7 @@
                 },
                 {
                     "name": "image",
-                    "description": "path to image, image or tpimage from asset",
+                    "description": "path to image, image or atlasimage from asset",
                     "type": "Mixed"
                 },
                 {
@@ -4421,7 +4628,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "path, image or tpimage to use for the particle",
+                    "description": "path, image or atlasimage to use for the particle",
                     "type": "Mixed"
                 }
             ],
@@ -4436,7 +4643,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "path, image or tpimage to use for the particle",
+                    "description": "path, image or atlasimage to use for the particle",
                     "type": "Mixed"
                 },
                 {
@@ -4461,7 +4668,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "path, image or tpimage to use for the particle",
+                    "description": "path, image or atlasimage to use for the particle",
                     "type": "Mixed"
                 },
                 {
@@ -4481,7 +4688,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "path, image or tpimage to use for the particle",
+                    "description": "path, image or atlasimage to use for the particle",
                     "type": "Mixed"
                 },
                 {
@@ -4506,7 +4713,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "path, image or tpimage to use for the particle",
+                    "description": "path, image or atlasimage to use for the particle",
                     "type": "Mixed"
                 },
                 {
@@ -8923,7 +9130,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "image image path, image or tpimage",
+                    "description": "image image path, image or atlasimage",
                     "type": "Image"
                 },
                 {
@@ -9008,7 +9215,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "image imgpath, image object or tpimage object to use for the particle",
+                    "description": "image imgpath, image object or atlasimage object to use for the particle",
                     "type": "Mixed"
                 }
             ],
@@ -9078,7 +9285,7 @@
             "params": [
                 {
                     "name": "image",
-                    "description": "imgpath, image object or tpimage object to use",
+                    "description": "imgpath, image object or atlasimage object to use",
                     "type": "Image"
                 },
                 {
@@ -9764,234 +9971,6 @@
             "itemtype": "method",
             "name": "draw",
             "class": "CG.Text",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 12,
-            "is_constructor": 1,
-            "itemtype": "method",
-            "name": "init",
-            "return": {
-                "description": "",
-                "type": "*"
-            },
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 23,
-            "itemtype": "property",
-            "name": "imagename",
-            "type": "{String}",
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 28,
-            "itemtype": "property",
-            "name": "width",
-            "type": "{Number}",
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 33,
-            "itemtype": "property",
-            "name": "height",
-            "type": "{Number}",
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 38,
-            "itemtype": "property",
-            "name": "tpimages",
-            "type": "{Array}",
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 45,
-            "description": "load a xml file from texturepacker",
-            "itemtype": "method",
-            "name": "loadXml",
-            "params": [
-                {
-                    "name": "xmlfile",
-                    "description": "path or mediaasset object with data of texturepacker xml",
-                    "type": "String/object"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "*"
-            },
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 86,
-            "description": "load a json file from texturepacker",
-            "itemtype": "method",
-            "name": "loadJson",
-            "params": [
-                {
-                    "name": "jsonfile",
-                    "description": "path or mediaasset object with data of texturepacker json",
-                    "type": "String/object"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "*"
-            },
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/texturepacker.js",
-            "line": 128,
-            "description": "get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)",
-            "itemtype": "method",
-            "name": "getTPImages",
-            "return": {
-                "description": "returns all tpimages of texturepacker file to use with Game.asset",
-                "type": "Array"
-            },
-            "class": "CG.TexturePacker",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 10,
-            "itemtype": "method",
-            "name": "init",
-            "is_constructor": 1,
-            "params": [
-                {
-                    "name": "image",
-                    "description": "imgpath, image object or tpimage object to use",
-                    "type": "Image"
-                },
-                {
-                    "name": "xoffset",
-                    "description": "xoffset of image in atlas file",
-                    "type": "Number"
-                },
-                {
-                    "name": "yoffset",
-                    "description": "yoffset of image in atlas file",
-                    "type": "Number"
-                },
-                {
-                    "name": "width",
-                    "description": "width of image in atlas file",
-                    "type": "Number"
-                },
-                {
-                    "name": "height",
-                    "description": "height of image in atlas file",
-                    "type": "Number"
-                }
-            ],
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 20,
-            "itemtype": "property",
-            "name": "source",
-            "type": "{String}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 25,
-            "itemtype": "property",
-            "name": "atlasimage",
-            "type": "{String}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 30,
-            "itemtype": "property",
-            "name": "atlasname",
-            "type": "{String}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 35,
-            "itemtype": "property",
-            "name": "image",
-            "type": "{*}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 40,
-            "itemtype": "property",
-            "name": "name",
-            "type": "{String}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 45,
-            "itemtype": "property",
-            "name": "xoffset",
-            "type": "{Number}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 50,
-            "itemtype": "property",
-            "name": "yoffset",
-            "type": "{*}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 55,
-            "itemtype": "property",
-            "name": "width",
-            "type": "{Number}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 60,
-            "itemtype": "property",
-            "name": "height",
-            "type": "{Number}",
-            "class": "CG.TPImage",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/texturepacker/tpimage.js",
-            "line": 65,
-            "itemtype": "property",
-            "name": "rotation",
-            "type": "{Number}",
-            "class": "CG.TPImage",
             "module": "CG"
         },
         {
@@ -11167,7 +11146,7 @@
             "line": " cangaja/base/entity.js:1"
         },
         {
-            "message": "Missing item type\n© 2013 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework\n\nhttps://www.github.com/samowitsch/cangaja/\n\nIncludes:\nhammer.js\nbuzz.js\nBox2Html5.js",
+            "message": "Missing item type\n© 2013 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework\n\nhttps://www.github.com/samowitsch/cangaja/\n\nIncludes:\nhammer.js\nbuzz.js\nBox2Html5.js\nclipper.js\npoly2tri.js\nspine.js",
             "line": " cangaja/base/intro.js:1"
         },
         {

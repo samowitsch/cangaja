@@ -43,6 +43,10 @@
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
@@ -112,10 +116,6 @@
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
@@ -291,7 +291,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @description initAsPoint
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      *&#x2F;
 
     initAsPoint:function (image) {
@@ -304,7 +304,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method initAsExplosion
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} min value for particle speed
      * @param {Number} max value for particle speed
      *&#x2F;
@@ -319,7 +319,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method initAsCorona
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} radius of the corona emitter
      *&#x2F;
     initAsCorona:function (image, radius) {
@@ -332,7 +332,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method initAsLine
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} width of the plate emitter
      * @param {Number} direction (defined constants) of the plate emitter
      *&#x2F;
@@ -347,7 +347,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method initAsRectangle
      *
-     * @param {mixed} image path, image or tpimage to use for the particle
+     * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} width of the plate emitter
      * @param {Number} height (defined constants) of the plate emitter
      *&#x2F;

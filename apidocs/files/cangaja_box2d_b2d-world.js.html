@@ -43,6 +43,10 @@
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
@@ -112,10 +116,6 @@
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
@@ -320,7 +320,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createBox
      * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param image   {mixed}       path to image, image or atlasimage from asset
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
      * @param stat    {Boolean}     is the body static or dynamic
@@ -356,7 +356,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createCircle
      * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or tpimage from asset
+     * @param image   {mixed}       path to image, image or atlasimage from asset
      * @param radius  {Number}     the radius
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
@@ -378,7 +378,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createPolyBody
      * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param jsonpoly  {String}      json file from PhysicsEditor from asset
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
@@ -399,7 +399,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createPolyBody
      * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or tpimage from asset
+     * @param image     {mixed}       path to image, image or atlasimage from asset
      * @param terrainpoly  {Array}      array of vertices to start terrain building
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
@@ -438,7 +438,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createBridge
      * @param id          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param image         {mixed}       path to image, image or atlasimage from asset
      * @param x             {Number}     the x position
      * @param y             {Number}     the y position
      * @param length        {Number}     the length&#x2F;width of the bridge
@@ -460,7 +460,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *
      * @method createRope
      * @param id            {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or tpimage from asset
+     * @param image         {mixed}       path to image, image or atlasimage from asset
      * @param x             {Number}     the x position
      * @param y             {Number}     the y position
      * @param length        {Number}     the length&#x2F;width of the bridge

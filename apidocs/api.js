@@ -2,6 +2,8 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "CG.Animation",
+        "CG.AtlasImage",
+        "CG.AtlasTexturePacker",
         "CG.B2DBridge",
         "CG.B2DChainShape",
         "CG.B2DCirlce",
@@ -36,9 +38,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Screen",
         "CG.Sequence",
         "CG.Sprite",
-        "CG.TPImage",
         "CG.Text",
-        "CG.TexturePacker",
         "CG.Translate",
         "CG.Vector"
     ],

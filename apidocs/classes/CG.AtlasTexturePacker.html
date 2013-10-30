@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.TexturePacker - Cangaja API</title>
+    <title>CG.AtlasTexturePacker - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -42,6 +42,10 @@
             <ul id="api-classes" class="apis classes">
             
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
             
@@ -113,10 +117,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
             
-                <li><a href="..&#x2F;classes/CG.TexturePacker.html">CG.TexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.TPImage.html">CG.TPImage</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
@@ -162,7 +162,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.TexturePacker Class</h1>
+                        <h1>CG.AtlasTexturePacker Class</h1>
 <div class="box meta">
     
 
@@ -174,7 +174,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l1"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l1"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:1</code></a>
         </div>
     
 
@@ -190,9 +190,9 @@
 
 
 <div class="box intro">
-    <p>CG.TexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
-No trimming at the moment, keep texturepacker settings simple! TexturePacker parses the xml/json and generates new CG.TPImage objects in the MediaAsset manager.
-These TPImages are only handled within Sprite, Particle and Button class.</p>
+    <p>CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
+No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.
+These atlasimages are only handled within Sprite, Particle and Button class.</p>
 </div>
 
 
@@ -222,7 +222,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
-                                <a href="#method_getTPImages">getTPImages</a>
+                                <a href="#method_getatlasimages">getatlasimages</a>
 
                                 
                                 
@@ -260,6 +260,13 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
+                                <a href="#property_atlasimages">atlasimages</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_height">height</a>
 
                                 
@@ -268,13 +275,6 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                         
                             <li class="index-item property">
                                 <a href="#property_imagename">imagename</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_tpimages">tpimages</a>
 
                                 
                                 
@@ -301,8 +301,8 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_getTPImages" class="method item">
-    <h3 class="name"><code>getTPImages</code></h3>
+                    <div id="method_getatlasimages" class="method item">
+    <h3 class="name"><code>getatlasimages</code></h3>
 
     
         <span class="paren">()</span>
@@ -337,7 +337,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l128"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:128</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l128"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:128</code></a>
         
         </p>
 
@@ -348,7 +348,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
     </div>
 
     <div class="description">
-        <p>get all texturepacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)</p>
+        <p>get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)</p>
     </div>
 
     
@@ -362,7 +362,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                     
                         <span class="type">Array</span>:
                     
-                    returns all tpimages of texturepacker file to use with Game.asset
+                    returns all atlasimages of TexturePacker file to use with Game.asset
                 
             </div>
         </div>
@@ -408,7 +408,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l12"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:12</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l12"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:12</code></a>
         
         </p>
 
@@ -488,7 +488,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l86"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:86</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l86"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:86</code></a>
         
         </p>
 
@@ -499,7 +499,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
     </div>
 
     <div class="description">
-        <p>load a json file from texturepacker</p>
+        <p>load a json file from TexturePacker</p>
     </div>
 
     
@@ -517,7 +517,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                     
 
                     <div class="param-description">
-                        <p>path or mediaasset object with data of texturepacker json</p>
+                        <p>path or mediaasset object with data of TexturePacker json</p>
                     </div>
 
                     
@@ -591,7 +591,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l45"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:45</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l45"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:45</code></a>
         
         </p>
 
@@ -602,7 +602,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
     </div>
 
     <div class="description">
-        <p>load a xml file from texturepacker</p>
+        <p>load a xml file from TexturePacker</p>
     </div>
 
     
@@ -620,7 +620,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                     
 
                     <div class="param-description">
-                        <p>path or mediaasset object with data of texturepacker xml</p>
+                        <p>path or mediaasset object with data of TexturePacker xml</p>
                     </div>
 
                     
@@ -656,6 +656,50 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property_atlasimages" class="property item">
+    <h3 class="name"><code>atlasimages</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l38"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:38</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_height" class="property item">
     <h3 class="name"><code>height</code></h3>
     <span class="type">Number</span>
@@ -679,7 +723,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l33"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:33</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l33"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:33</code></a>
         
         </p>
 
@@ -723,51 +767,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l23"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:23</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_tpimages" class="property item">
-    <h3 class="name"><code>tpimages</code></h3>
-    <span class="type">Array</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l38"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:38</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l23"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:23</code></a>
         
         </p>
 
@@ -811,7 +811,7 @@ These TPImages are only handled within Sprite, Particle and Button class.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_texturepacker_texturepacker.js.html#l28"><code>cangaja&#x2F;texturepacker&#x2F;texturepacker.js:28</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-texturepacker.js.html#l28"><code>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js:28</code></a>
         
         </p>
 
