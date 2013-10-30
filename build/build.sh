@@ -59,14 +59,24 @@ cat ../cangaja/lib-ext/keymaster.js \
 ../cangaja/box2d/b2d-world.js > ../cangaja/lib/cangaja.js
 
 
-
 echo "> Files merged."
 echo ""
 
+
+
+
 #running yuicompressor
 java -jar yuicompressor-2.4.8.jar ../cangaja/lib/cangaja.js -o ../cangaja/lib/cangaja.min.js --charset utf-8
-echo "> Minified standard version."
+echo "> Minified standard version (yuicompressor)."
 echo ""
+
+#running closure compiler
+#java -jar compiler.jar --js=../cangaja/lib/cangaja.js --js_output_file=../cangaja/lib/cangaja-closure.min.js
+#echo "> Minified standard version (closure compiler)."
+#echo ""
+
+
+
 
 
 #concat all libs
@@ -76,8 +86,15 @@ echo ""
 
 #running yuicompressor
 java -jar yuicompressor-2.4.8.jar ../cangaja/lib/cangaja.all.js -o ../cangaja/lib/cangaja.all.min.js --charset utf-8
-echo "> Minified lib version."
+echo "> Minified lib version (yuicompressor)."
 echo ""
+
+#running closure compiler
+#java -jar compiler.jar --js=../cangaja/lib/cangaja.all.js --js_output_file=../cangaja/lib/cangaja-closure.all.min.js
+#echo "> Minified lib version (closure compiler)."
+#echo ""
+
+
 
 
 #add intro to minified file
