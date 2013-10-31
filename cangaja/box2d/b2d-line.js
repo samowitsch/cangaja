@@ -1,10 +1,4 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DLine is a simple b2PolygonShape wrapper. There is no visible drawing

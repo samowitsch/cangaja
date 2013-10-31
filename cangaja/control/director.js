@@ -43,7 +43,7 @@ CG.Class.extend('Director', {
          */
         this.activescreen = 0
         /**
-         * @description nextscreen
+         * @property nextscreen
          * @type {Number}
          */
         this.nextscreen = 0
@@ -63,17 +63,17 @@ CG.Class.extend('Director', {
          */
         this.stepy = 30
         /**
-         * @description alpha
+         * @property alpha
          * @type {Number}
          */
         this.alpha = 0
         /**
-         * @description mode
+         * @property mode
          * @type {String}
          */
         this.mode = 'fade'      //fade or scale
         /**
-         * @description direction
+         * @property direction
          * @type {String}
          */
         this.direction = CG.RIGHT      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN

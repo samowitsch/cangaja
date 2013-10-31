@@ -127,7 +127,7 @@ CG.Class.extend('AtlasTexturePacker', {
 
     /**
      * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getatlasimages
+     * @method getAtlasImages
      * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      */
     getAtlasImages:function () {

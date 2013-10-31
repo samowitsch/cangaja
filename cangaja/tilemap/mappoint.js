@@ -29,7 +29,7 @@ CG.Class.extend('MapPoint', {
          */
         this.mapoffset = mapoffset || new CG.Point(0, 0)
         /**
-         * @description gid
+         * @property gid
          * @type {Number}
          */
         this.gid = gid

@@ -1,10 +1,4 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
@@ -79,11 +73,8 @@ CG.Layer.extend('B2DWorld', {
          */
         this.scale = 40
 
-        /**
-         * add m_groundBody for use with b2MouseJoint
-         */
+        // add m_groundBody for use with b2MouseJoint
         this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
-
 
         //setup debug draw
         var debugDraw = new b2DebugDraw({

@@ -1,10 +1,4 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.

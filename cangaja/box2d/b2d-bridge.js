@@ -1,10 +1,4 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DBridge is a simple wrapper that creates a bridge with segments.

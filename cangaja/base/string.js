@@ -1,6 +1,4 @@
-/**
- * string functions
- **/
+// string functions
 
 function loadString(path) {
     var xhr = new XMLHttpRequest();

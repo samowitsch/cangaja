@@ -121,11 +121,10 @@ CG.Entity.extend('Emitter', {
      */
 
     /**
-     * @description initAsPoint
+     * @method initAsPoint
      *
      * @param {mixed} image path, image or atlasimage to use for the particle
      */
-
     initAsPoint:function (image) {
         this.image = image
         this.type = 'point'

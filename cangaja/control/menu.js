@@ -28,7 +28,7 @@ CG.Entity.extend('Menu', {
          */
         this.y = y
         /**
-         * @proerty margin
+         * @property margin
          * @type {Number}
          */
         this.margin = margin

@@ -8,8 +8,8 @@
  */
 CG.Entity.extend('Translate', {
     /**
-     * @init
      * @constructor
+     * @method init
      * @return {*}
      */
     init:function () {
@@ -30,7 +30,7 @@ CG.Entity.extend('Translate', {
          */
         this.ty = 0 //translated y value for the object
         /**
-         * @properzty x1
+         * @property x1
          * @type {Number}
          */
         this.x1 = 0

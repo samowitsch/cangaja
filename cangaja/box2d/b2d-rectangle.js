@@ -1,10 +1,4 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.

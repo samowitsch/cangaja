@@ -791,9 +791,7 @@ CG.Entity.extend('Map', {
         return this
     },
 
-    /**
-     * yust calls drawMap ;o)
-     */
+    // just calls drawMap ;o)
     draw:function () {
         this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
         return this
@@ -913,9 +911,10 @@ CG.Entity.extend('Map', {
 
     /**
      * @description
-     *
      * Checks if a external object(s) collides with the areas of the tiled map.
      * This can be elements from an layer or the map itself.
+     *
+     * @method checkElementsToAreasCollision
      *
      * @param {Array} objarray to check for a areas collision
      * @param {Callback} callback what should happen
@@ -927,7 +926,6 @@ CG.Entity.extend('Map', {
         }
         return this
     },
-
     /**
      * @description removes the json data of the map object
      * @method removeJsonData
