@@ -329,7 +329,7 @@ Game = (function () {
                 b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
             }
             if (key.isPressed("c")) {
-                b2world.elements[5].clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+                b2world.elements[5].clipTerrain({points: 16, radius: 40, x: mousex, y: mousey})
             }
             if (key.isPressed("d")) {
                 if (b2world.debug == 0) {
@@ -365,7 +365,7 @@ Game = (function () {
 //                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
 //                }
 //                if (evt.keyCode == 67) { //c
-//                    b2world.elements[5].clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+//                    b2world.elements[5].clipTerrain({points: 16, radius: 40, x: mousex, y: mousey})
 //                }
 //                if (evt.keyCode == 68) { //d
 ////                    console.log('RESULT stringified')

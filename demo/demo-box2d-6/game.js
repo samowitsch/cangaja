@@ -169,7 +169,7 @@ Game = (function () {
                 }
                 if (evt.keyCode == 67) { //c
                     bitmap.clearCircle(mousex, mousey, 40)
-                    terrainBody.clippTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+                    terrainBody.clipTerrain({points: 16, radius: 40, x: mousex, y: mousey})
 
                     b2world.getStaticBodyListAt(mousex,mousey,34,0)
 
@@ -190,16 +190,16 @@ Game = (function () {
                 }
                 if (evt.keyCode == 83) { // s - down
                     bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +40,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clippTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+40, y: leftplayer.body.GetPosition().y * 40+40})
+                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+40, y: leftplayer.body.GetPosition().y * 40+40})
                     b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x *40, leftplayer.body.GetPosition().y * 40, 34, 0)
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 65) { // s - down && a-left
                     bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 -10,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clippTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40-10, y: leftplayer.body.GetPosition().y * 40+40})
+                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40-10, y: leftplayer.body.GetPosition().y * 40+40})
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 68) { // s - down && d-right
                     bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +50,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clippTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+50, y: leftplayer.body.GetPosition().y * 40+40})
+                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+50, y: leftplayer.body.GetPosition().y * 40+40})
                 }
                 if (evt.keyCode == 68) { // d - right
                     leftplayer.addVelocity(new b2Vec2(2, 0))
