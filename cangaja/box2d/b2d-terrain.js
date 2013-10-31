@@ -1,15 +1,9 @@
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
- * B2DTerrain
+ * B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.
  *
- * @class CG.B2DPolygon
+ * @class CG.B2DTerrain
  * @extends CG.B2DEntity
  */
 
@@ -44,9 +38,12 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @type {*}
          */
         this.terrainPoly = terrainPoly
-
+        /**
+         * @description the generated triangles generated thru clipper and poly2tri
+         * @property terrainTriangles
+         * @type {Array}
+         */
         this.terrainTriangles = []
-
         /**
          * @property holes
          * @type {Array}
@@ -93,6 +90,9 @@ CG.B2DEntity.extend('B2DTerrain', {
         return this
 
     },
+    /**
+     * @method createTerrain
+     */
     createTerrain: function () {
         this.body = this.world.CreateBody(this.bodyDef)
 
@@ -127,13 +127,23 @@ CG.B2DEntity.extend('B2DTerrain', {
             this.body.CreateFixture(this.fixDef)
         }
     },
+    /**
+     * @description deletes the terrain
+     * @method deleteTerrain
+     */
     deleteTerrain: function () {
         //remove triangles
         this.terrainTriangles = []
         //remove body from b2world
         this.world.DestroyBody(this.body)
     },
-    clippTerrain: function (opt) {
+    /**
+     * @description Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW
+     *
+     * @method clipTerrain
+     * @param opt
+     */
+    clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
 
         //add new hole to all contour terrainPolys
@@ -172,7 +182,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         this.createTerrain()
     },
     /**
-     * @description this method uses the Clipper Lighten mehtod to reduces vertices for better triangulation
+     * @description this method uses the Clipper Lighten method to reduce vertices for better triangulation
      * @method lightenTerrain
      */
     lightenTerrain: function () {
@@ -191,7 +201,8 @@ CG.B2DEntity.extend('B2DTerrain', {
         }
     },
     /**
-     * experimental not working yet
+     * @description Experimental not working yet. Try to use the Clipperlib Clean method
+     * @method cleanTerrain
      */
     cleanTerrain: function () {
         //use clipper to eliminate to much vertices
