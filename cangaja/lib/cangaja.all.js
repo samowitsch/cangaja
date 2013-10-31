@@ -9382,9 +9382,7 @@ var Clock = function (targetfps) {
             }
         }
     }
-}/**
- * string functions
- **/
+}// string functions
 
 function loadString(path) {
     var xhr = new XMLHttpRequest();
@@ -9642,12 +9640,6 @@ CG.Class.extend('Delta', {
         return this.fps
     }
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -10632,7 +10624,7 @@ CG.Class.extend('AtlasTexturePacker', {
 
     /**
      * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getatlasimages
+     * @method getAtlasImages
      * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      */
     getAtlasImages:function () {
@@ -11021,7 +11013,7 @@ CG.Entity.extend('Menu', {
          */
         this.y = y
         /**
-         * @proerty margin
+         * @property margin
          * @type {Number}
          */
         this.margin = margin
@@ -11790,7 +11782,7 @@ CG.Class.extend('Director', {
          */
         this.activescreen = 0
         /**
-         * @description nextscreen
+         * @property nextscreen
          * @type {Number}
          */
         this.nextscreen = 0
@@ -11810,17 +11802,17 @@ CG.Class.extend('Director', {
          */
         this.stepy = 30
         /**
-         * @description alpha
+         * @property alpha
          * @type {Number}
          */
         this.alpha = 0
         /**
-         * @description mode
+         * @property mode
          * @type {String}
          */
         this.mode = 'fade'      //fade or scale
         /**
-         * @description direction
+         * @property direction
          * @type {String}
          */
         this.direction = CG.RIGHT      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
@@ -12363,7 +12355,7 @@ CG.Class.extend('MapPoint', {
          */
         this.mapoffset = mapoffset || new CG.Point(0, 0)
         /**
-         * @description gid
+         * @property gid
          * @type {Number}
          */
         this.gid = gid
@@ -13235,9 +13227,7 @@ CG.Entity.extend('Map', {
         return this
     },
 
-    /**
-     * yust calls drawMap ;o)
-     */
+    // just calls drawMap ;o)
     draw:function () {
         this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
         return this
@@ -13357,9 +13347,10 @@ CG.Entity.extend('Map', {
 
     /**
      * @description
-     *
      * Checks if a external object(s) collides with the areas of the tiled map.
      * This can be elements from an layer or the map itself.
+     *
+     * @method checkElementsToAreasCollision
      *
      * @param {Array} objarray to check for a areas collision
      * @param {Callback} callback what should happen
@@ -13371,7 +13362,6 @@ CG.Entity.extend('Map', {
         }
         return this
     },
-
     /**
      * @description removes the json data of the map object
      * @method removeJsonData
@@ -13475,8 +13465,8 @@ CG.Entity.extend('Sequence', {
  */
 CG.Entity.extend('Translate', {
     /**
-     * @init
      * @constructor
+     * @method init
      * @return {*}
      */
     init:function () {
@@ -13497,7 +13487,7 @@ CG.Entity.extend('Translate', {
          */
         this.ty = 0 //translated y value for the object
         /**
-         * @properzty x1
+         * @property x1
          * @type {Number}
          */
         this.x1 = 0
@@ -14041,11 +14031,10 @@ CG.Entity.extend('Emitter', {
      */
 
     /**
-     * @description initAsPoint
+     * @method initAsPoint
      *
      * @param {mixed} image path, image or atlasimage to use for the particle
      */
-
     initAsPoint:function (image) {
         this.image = image
         this.type = 'point'
@@ -26056,12 +26045,6 @@ var b2AABB = box2d.b2AABB,
     b2World = box2d.b2World,
     b2WorldManifold = box2d.b2WorldManifold,
     b2Vec2 = box2d.b2Vec2/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DEntity is the base class with properties for all B2D objects.
@@ -26218,12 +26201,6 @@ CG.Entity.extend('B2DEntity', {
 
 
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.
@@ -26291,12 +26268,6 @@ CG.B2DEntity.extend('B2DCircle', {
 
     }
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -26381,12 +26352,6 @@ CG.B2DEntity.extend('B2DLine', {
 
 
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.
@@ -26448,12 +26413,6 @@ CG.B2DEntity.extend('B2DRectangle', {
         return this
     }
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -26586,17 +26545,11 @@ CG.B2DEntity.extend('B2DPolygon', {
 
 
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
- * B2DTerrain
+ * B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.
  *
- * @class CG.B2DPolygon
+ * @class CG.B2DTerrain
  * @extends CG.B2DEntity
  */
 
@@ -26631,9 +26584,12 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @type {*}
          */
         this.terrainPoly = terrainPoly
-
+        /**
+         * @description the generated triangles generated thru clipper and poly2tri
+         * @property terrainTriangles
+         * @type {Array}
+         */
         this.terrainTriangles = []
-
         /**
          * @property holes
          * @type {Array}
@@ -26680,6 +26636,9 @@ CG.B2DEntity.extend('B2DTerrain', {
         return this
 
     },
+    /**
+     * @method createTerrain
+     */
     createTerrain: function () {
         this.body = this.world.CreateBody(this.bodyDef)
 
@@ -26714,13 +26673,23 @@ CG.B2DEntity.extend('B2DTerrain', {
             this.body.CreateFixture(this.fixDef)
         }
     },
+    /**
+     * @description deletes the terrain
+     * @method deleteTerrain
+     */
     deleteTerrain: function () {
         //remove triangles
         this.terrainTriangles = []
         //remove body from b2world
         this.world.DestroyBody(this.body)
     },
-    clippTerrain: function (opt) {
+    /**
+     * @description Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW
+     *
+     * @method clipTerrain
+     * @param opt
+     */
+    clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
 
         //add new hole to all contour terrainPolys
@@ -26759,7 +26728,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         this.createTerrain()
     },
     /**
-     * @description this method uses the Clipper Lighten mehtod to reduces vertices for better triangulation
+     * @description this method uses the Clipper Lighten method to reduce vertices for better triangulation
      * @method lightenTerrain
      */
     lightenTerrain: function () {
@@ -26778,7 +26747,8 @@ CG.B2DEntity.extend('B2DTerrain', {
         }
     },
     /**
-     * experimental not working yet
+     * @description Experimental not working yet. Try to use the Clipperlib Clean method
+     * @method cleanTerrain
      */
     cleanTerrain: function () {
         //use clipper to eliminate to much vertices
@@ -26831,12 +26801,6 @@ CG.B2DEntity.extend('B2DTerrain', {
 
     }
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -26938,12 +26902,6 @@ CG.B2DEntity.extend('B2DChainShape', {
     }
 
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -27080,12 +27038,6 @@ CG.B2DEntity.extend('B2DRope', {
         }
     }
 })
-
-
-/**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
 
 
 /**
@@ -27233,12 +27185,6 @@ CG.B2DEntity.extend('B2DBridge', {
 
 
 /**
- *  © 2012 by Christian Sonntag <info@motions-media.de>
- *  simple experimental Canvas Game JavaScript Framework
- */
-
-
-/**
  * @description
  *
  * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
@@ -27313,11 +27259,8 @@ CG.Layer.extend('B2DWorld', {
          */
         this.scale = 40
 
-        /**
-         * add m_groundBody for use with b2MouseJoint
-         */
+        // add m_groundBody for use with b2MouseJoint
         this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
-
 
         //setup debug draw
         var debugDraw = new b2DebugDraw({
