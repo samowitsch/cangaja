@@ -100,7 +100,7 @@ CG.B2DWorld.extend('B2DTestbed', {
                 //players contact with beachvolleyball
                 if ((idA.GetUserData().name == 'blobby-egg-left' || idA.GetUserData().name == 'blobby-egg-right') && idB.GetUserData().name == 'beachvolleyball') {
                     //console.log(['PostSolve', idA, idB, impulse]);
-                    b2world.elements[idA.uid - 1].points += 1
+                    b2world.elements[idA.GetUserData().uid - 1].points += 1
                     if (idA.GetUserData().name == 'blobby-egg-right') {
                         leftplayer.points = 0
                         if (rightplayer.points > 4) {
