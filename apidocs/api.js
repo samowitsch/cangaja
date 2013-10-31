@@ -12,6 +12,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.B2DPolygon",
         "CG.B2DRectangle",
         "CG.B2DRope",
+        "CG.B2DTerrain",
         "CG.B2DWorld",
         "CG.Bitmap",
         "CG.Bound",

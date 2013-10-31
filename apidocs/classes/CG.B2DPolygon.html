@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.0.0</em>
+            <em>API Docs for: 0.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
             
@@ -174,7 +176,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l7"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:7</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l1"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:1</code></a>
         </div>
     
 
@@ -190,7 +192,9 @@
 
 
 <div class="box intro">
-    <p>B2DTerrain</p>
+    <p>B2DPolygon  is a simple b2PolygonShape wrapper element with basic physics properties.
+It uses PhysicsEditor json files, use export Lime + Corona (json).
+Supported options for now are friction, density and bounce and would be set to B2DPolygon.</p>
 </div>
 
 
@@ -220,20 +224,6 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
-                                <a href="#method_createCircle">createCircle</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getPolysFromJson">getPolysFromJson</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_getPolysFromJson">getPolysFromJson</a>
 
                                 
@@ -249,20 +239,6 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_init">init</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_init">init</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_lightenTerrain">lightenTerrain</a>
 
                                 
                                 
@@ -284,13 +260,6 @@
                     <h3>Properties</h3>
 
                     <ul class="index-list properties extends">
-                        
-                            <li class="index-item property">
-                                <a href="#property_body">body</a>
-
-                                
-                                
-                            </li>
                         
                             <li class="index-item property inherited">
                                 <a href="#property_body">body</a>
@@ -328,20 +297,6 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_bodyDef.bullet">bodyDef.bullet</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bodyDef.position">bodyDef.position</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
                                 <a href="#property_bodyDef.position">bodyDef.position</a>
 
                                 
@@ -356,28 +311,7 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_bodyDef.type">bodyDef.type</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
                                 <a href="#property_bodyDef.userData">bodyDef.userData</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bodyDef.userData">bodyDef.userData</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bullet">bullet</a>
 
                                 
                                 
@@ -425,13 +359,6 @@
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_holes">holes</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item property inherited">
                                 <a href="#property_id">id</a>
 
@@ -467,13 +394,6 @@
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_polys">polys</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item property inherited">
                                 <a href="#property_scale">scale</a>
 
@@ -483,13 +403,6 @@
                         
                             <li class="index-item property inherited">
                                 <a href="#property_strength">strength</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_terrainpoly">terrainpoly</a>
 
                                 
                                 
@@ -523,13 +436,6 @@
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_xhandle">xhandle</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item property inherited">
                                 <a href="#property_xhandle">xhandle</a>
 
@@ -539,13 +445,6 @@
                         
                             <li class="index-item property inherited">
                                 <a href="#property_y">y</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_yhandle">yhandle</a>
 
                                 
                                 
@@ -572,109 +471,6 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_createCircle" class="method item">
-    <h3 class="name"><code>createCircle</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>opts</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Array</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l232"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:232</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>creates a ccw wise circle vertices array for clipping</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">opts</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>example {points: 16, radius: 30, x: 320, y: 240}</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Array</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
                     <div id="method_getPolysFromJson" class="method item">
     <h3 class="name"><code>getPolysFromJson</code></h3>
 
@@ -711,7 +507,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l114"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:114</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l108"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:108</code></a>
         
         </p>
 
@@ -723,76 +519,6 @@
 
     <div class="description">
         <p>extract the polygons out of the PhysicsEditor json file and collect them into an array</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Array</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getPolysFromJson" class="method item">
-    <h3 class="name"><code>getPolysFromJson</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Array</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l218"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:218</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>extract the triangles out of poly2tri array</p>
     </div>
 
     
@@ -860,7 +586,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l131"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:131</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l125"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:125</code></a>
         
         </p>
 
@@ -1014,7 +740,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l19"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:19</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l13"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:13</code></a>
         
         </p>
 
@@ -1191,331 +917,6 @@
 </div>
 
                 
-                    <div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>world</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>name</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>terrainPoly</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>scale</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>b2BodyType</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>bullet</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l21"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:21</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">world</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>reference to world of B2DWorld</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">name</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">terrainPoly</code>
-                        <span class="type">Array</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>array of vertices to start terrain building</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">scale</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the world scale of B2DWorld</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">b2BodyType</code>
-                        <span class="type">box2d.b2BodyType</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Box2D bodytype constant</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">bullet</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>bullet option</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_lightenTerrain" class="method item">
-    <h3 class="name"><code>lightenTerrain</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l181"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:181</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>this method uses the Clipper Lighten mehtod to reduces vertices for better triangulation</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_setImage" class="method item inherited">
     <h3 class="name"><code>setImage</code></h3>
 
@@ -1555,7 +956,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l44"><code>cangaja&#x2F;base&#x2F;entity.js:44</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l38"><code>cangaja&#x2F;base&#x2F;entity.js:38</code></a>
         
         </p>
 
@@ -1622,50 +1023,6 @@
 
     <div class="meta">
         
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l92"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:92</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_body" class="property item">
-    <h3 class="name"><code>body</code></h3>
-    <span class="type">B2Body</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
             <p>Inherited from
             <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_body">
                 CG.B2DEntity
@@ -1675,7 +1032,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l93"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:93</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l87"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:87</code></a>
         
         </p>
 
@@ -1716,7 +1073,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l74"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:74</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l68"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:68</code></a>
         
         </p>
 
@@ -1757,7 +1114,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l79"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:79</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l73"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:73</code></a>
         
         </p>
 
@@ -1798,7 +1155,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l84"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:84</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l78"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:78</code></a>
         
         </p>
 
@@ -1842,51 +1199,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l85"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:85</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.bullet" class="property item">
-    <h3 class="name"><code>bodyDef.bullet</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l83"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:83</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l77"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:77</code></a>
         
         </p>
 
@@ -1910,94 +1223,6 @@
                     <div id="property_bodyDef.position" class="property item">
     <h3 class="name"><code>bodyDef.position</code></h3>
     <span class="type">Unknown</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l69"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:69</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.position" class="property item">
-    <h3 class="name"><code>bodyDef.position</code></h3>
-    <span class="type">Unknown</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l71"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:71</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.type" class="property item">
-    <h3 class="name"><code>bodyDef.type</code></h3>
-    <span class="type">box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody</span>
 
     
 
@@ -2062,7 +1287,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l66"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:66</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l57"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:57</code></a>
         
         </p>
 
@@ -2106,51 +1331,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l73"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:73</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bodyDef.userData" class="property item">
-    <h3 class="name"><code>bodyDef.userData</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l75"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:75</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l67"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:67</code></a>
         
         </p>
 
@@ -2194,51 +1375,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l78"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:78</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_bullet" class="property item">
-    <h3 class="name"><code>bullet</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l80"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:80</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l72"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:72</code></a>
         
         </p>
 
@@ -2279,7 +1416,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l123"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:123</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l117"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:117</code></a>
         
         </p>
 
@@ -2320,7 +1457,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l92"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:92</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l86"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:86</code></a>
         
         </p>
 
@@ -2361,7 +1498,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l97"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:97</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l91"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:91</code></a>
         
         </p>
 
@@ -2402,7 +1539,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l102"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:102</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l96"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:96</code></a>
         
         </p>
 
@@ -2443,51 +1580,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l107"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:107</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_holes" class="property item">
-    <h3 class="name"><code>holes</code></h3>
-    <span class="type">Array</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l50"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:50</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l101"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:101</code></a>
         
         </p>
 
@@ -2528,7 +1621,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l53"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:53</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l47"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:47</code></a>
         
         </p>
 
@@ -2569,7 +1662,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l113"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:113</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l107"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:107</code></a>
         
         </p>
 
@@ -2613,7 +1706,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l40"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:40</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l34"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:34</code></a>
         
         </p>
 
@@ -2654,7 +1747,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l23"><code>cangaja&#x2F;base&#x2F;entity.js:23</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l17"><code>cangaja&#x2F;base&#x2F;entity.js:17</code></a>
         
         </p>
 
@@ -2698,51 +1791,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l37"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:37</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_polys" class="property item">
-    <h3 class="name"><code>polys</code></h3>
-    <span class="type">Array</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l35"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:35</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l29"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:29</code></a>
         
         </p>
 
@@ -2783,7 +1832,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l48"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:48</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l42"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:42</code></a>
         
         </p>
 
@@ -2824,51 +1873,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l118"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:118</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_terrainpoly" class="property item">
-    <h3 class="name"><code>terrainpoly</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l42"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:42</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l112"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:112</code></a>
         
         </p>
 
@@ -2912,7 +1917,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l56"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:56</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l50"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:50</code></a>
         
         </p>
 
@@ -2953,7 +1958,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l27"><code>cangaja&#x2F;base&#x2F;entity.js:27</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l21"><code>cangaja&#x2F;base&#x2F;entity.js:21</code></a>
         
         </p>
 
@@ -2994,7 +1999,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l58"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:58</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l52"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:52</code></a>
         
         </p>
 
@@ -3035,51 +2040,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l38"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:38</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_xhandle" class="property item">
-    <h3 class="name"><code>xhandle</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l55"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:55</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l32"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:32</code></a>
         
         </p>
 
@@ -3123,7 +2084,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l46"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:46</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l40"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:40</code></a>
         
         </p>
 
@@ -3164,51 +2125,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l43"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:43</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_yhandle" class="property item">
-    <h3 class="name"><code>yhandle</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l60"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:60</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l37"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:37</code></a>
         
         </p>
 
@@ -3252,7 +2169,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l51"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:51</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-polygon.js.html#l45"><code>cangaja&#x2F;box2d&#x2F;b2d-polygon.js:45</code></a>
         
         </p>
 

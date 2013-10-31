@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.0.0</em>
+            <em>API Docs for: 0.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
             
@@ -167,17 +169,11 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
- *  © 2012 by Christian Sonntag &lt;info@motions-media.de&gt;
- *  simple experimental Canvas Game JavaScript Framework
- *&#x2F;
-
-
-&#x2F;**
  * @description
  *
- * B2DTerrain
+ * B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.
  *
- * @class CG.B2DPolygon
+ * @class CG.B2DTerrain
  * @extends CG.B2DEntity
  *&#x2F;
 
@@ -212,9 +208,12 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
          * @type {*}
          *&#x2F;
         this.terrainPoly = terrainPoly
-
+        &#x2F;**
+         * @description the generated triangles generated thru clipper and poly2tri
+         * @property terrainTriangles
+         * @type {Array}
+         *&#x2F;
         this.terrainTriangles = []
-
         &#x2F;**
          * @property holes
          * @type {Array}
@@ -256,19 +255,15 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
          *&#x2F;
         this.bodyDef.bullet = this.bullet
 
-
-        &#x2F;**
-         * @property body
-         * @type {b2Body}
-         *&#x2F;
-
         this.createTerrain()
 
         return this
 
     },
+    &#x2F;**
+     * @method createTerrain
+     *&#x2F;
     createTerrain: function () {
-        &#x2F;&#x2F; @TODO poly2tri
         this.body = this.world.CreateBody(this.bodyDef)
 
         for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
@@ -302,13 +297,23 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
             this.body.CreateFixture(this.fixDef)
         }
     },
+    &#x2F;**
+     * @description deletes the terrain
+     * @method deleteTerrain
+     *&#x2F;
     deleteTerrain: function () {
         &#x2F;&#x2F;remove triangles
         this.terrainTriangles = []
         &#x2F;&#x2F;remove body from b2world
         this.world.DestroyBody(this.body)
     },
-    clippTerrain: function (opt) {
+    &#x2F;**
+     * @description Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW
+     *
+     * @method clipTerrain
+     * @param opt
+     *&#x2F;
+    clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
 
         &#x2F;&#x2F;add new hole to all contour terrainPolys
@@ -347,7 +352,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         this.createTerrain()
     },
     &#x2F;**
-     * @description this method uses the Clipper Lighten mehtod to reduces vertices for better triangulation
+     * @description this method uses the Clipper Lighten method to reduce vertices for better triangulation
      * @method lightenTerrain
      *&#x2F;
     lightenTerrain: function () {
@@ -366,7 +371,8 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         }
     },
     &#x2F;**
-     * experimental not working yet
+     * @description Experimental not working yet. Try to use the Clipperlib Clean method
+     * @method cleanTerrain
      *&#x2F;
     cleanTerrain: function () {
         &#x2F;&#x2F;use clipper to eliminate to much vertices

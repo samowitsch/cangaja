@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Sprite - Cangaja API</title>
+    <title>CG.B2DTerrain - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -164,19 +164,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Sprite Class</h1>
+                        <h1>CG.B2DTerrain Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends <a href="../classes/CG.Rectangle.html" class="crosslink">CG.Rectangle</a>
+            Extends <a href="../classes/CG.B2DEntity.html" class="crosslink">CG.B2DEntity</a>
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l1"><code>cangaja&#x2F;sprite&#x2F;sprite.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l1"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:1</code></a>
         </div>
     
 
@@ -192,7 +192,7 @@
 
 
 <div class="box intro">
-    <p>CG.Sprite</p>
+    <p>B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.</p>
 </div>
 
 
@@ -221,57 +221,50 @@
 
                     <ul class="index-list methods extends">
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_AABB">AABB</a>
+                            <li class="index-item method">
+                                <a href="#method_cleanTerrain">cleanTerrain</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_attachObject">attachObject</a>
+                                <a href="#method_clipTerrain">clipTerrain</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_checkBound">checkBound</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method inherited">
-                                <a href="#method_checkCollision">checkCollision</a>
+                                <a href="#method_createCircle">createCircle</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_follow">follow</a>
+                                <a href="#method_createTerrain">createTerrain</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_ifAttached">ifAttached</a>
+                                <a href="#method_deleteTerrain">deleteTerrain</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getPolysFromJson">getPolysFromJson</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method inherited">
-                                <a href="#method_ifClicked">ifClicked</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method inherited">
-                                <a href="#method_ifMouseOver">ifMouseOver</a>
+                                <a href="#method_hit">hit</a>
 
                                 
                                 
@@ -285,28 +278,7 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_removeAttachedObject">removeAttachedObject</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setAttachedOffsetX">setAttachedOffsetX</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setAttachedOffsetY">setAttachedOffsetY</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setBound">setBound</a>
+                                <a href="#method_lightenTerrain">lightenTerrain</a>
 
                                 
                                 
@@ -314,13 +286,6 @@
                         
                             <li class="index-item method inherited">
                                 <a href="#method_setImage">setImage</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_updateDiff">updateDiff</a>
 
                                 
                                 
@@ -336,113 +301,120 @@
 
                     <ul class="index-list properties extends">
                         
-                            <li class="index-item property">
-                                <a href="#property_alpha">alpha</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_atlasimage">atlasimage</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_attachedobject">attachedobject</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_bound">bound</a>
+                            <li class="index-item property inherited">
+                                <a href="#property_body">body</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_boundingradius">boundingradius</a>
+                                <a href="#property_bodyDef">bodyDef</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_bodyDef.alowSleep">bodyDef.alowSleep</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_bodyDef.awake">bodyDef.awake</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_boundsMode">boundsMode</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property inherited">
-                                <a href="#property_clickable">clickable</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property inherited">
-                                <a href="#property_clicked">clicked</a>
+                                <a href="#property_bodyDef.bullet">bodyDef.bullet</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_diffpoint">diffpoint</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property inherited">
-                                <a href="#property_dragable">dragable</a>
+                                <a href="#property_bodyDef.position">bodyDef.position</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_followobject">followobject</a>
+                                <a href="#property_bodyDef.type">bodyDef.type</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_followspeed">followspeed</a>
+                                <a href="#property_bodyDef.userData">bodyDef.userData</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_followsteps">followsteps</a>
+                                <a href="#property_bullet">bullet</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_height">height</a>
+                                <a href="#property_dead">dead</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_hover">hover</a>
+                                <a href="#property_fixDef">fixDef</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_mapcollision">mapcollision</a>
+                                <a href="#property_fixDef.density">fixDef.density</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_fixDef.friction">fixDef.friction</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_fixDef.restitution">fixDef.restitution</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_holes">holes</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_id">id</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
+                                <a href="#property_isHit">isHit</a>
 
                                 
                                 
@@ -456,35 +428,35 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_offsetx">offsetx</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_offsety">offsety</a>
+                                <a href="#property_polys">polys</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_position">position</a>
+                                <a href="#property_scale">scale</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_rotation">rotation</a>
+                                <a href="#property_strength">strength</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_rotationspeed">rotationspeed</a>
+                                <a href="#property_terrainpoly">terrainpoly</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_terrainTriangles">terrainTriangles</a>
 
                                 
                                 
@@ -498,13 +470,20 @@
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_width">width</a>
+                                <a href="#property_world">world</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
+                            <li class="index-item property inherited">
+                                <a href="#property_x">x</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property inherited">
                                 <a href="#property_xhandle">xhandle</a>
 
                                 
@@ -512,35 +491,14 @@
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_xscale">xscale</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_xspeed">xspeed</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_yhandle">yhandle</a>
+                                <a href="#property_y">y</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property inherited">
-                                <a href="#property_yscale">yscale</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_yspeed">yspeed</a>
+                                <a href="#property_yhandle">yhandle</a>
 
                                 
                                 
@@ -560,16 +518,167 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_AABB" class="method item inherited">
-    <h3 class="name"><code>AABB</code></h3>
+                    <div id="method_cleanTerrain" class="method item">
+    <h3 class="name"><code>cleanTerrain</code></h3>
 
     
         <span class="paren">()</span>
     
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l203"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:203</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Experimental not working yet. Try to use the Clipperlib Clean method</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_clipTerrain" class="method item">
+    <h3 class="name"><code>clipTerrain</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>opt</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l140"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:140</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">opt</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_createCircle" class="method item">
+    <h3 class="name"><code>createCircle</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>opts</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
         <span class="returns-inline">
-            <span class="type">Object</span>
+            <span class="type">Array</span>
         </span>
     
 
@@ -588,12 +697,15 @@
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_AABB">CG.Rectangle</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l72"><code>cangaja&#x2F;base&#x2F;rectangle.js:72</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l236"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:236</code></a>
         
         </p>
 
@@ -604,7 +716,208 @@
     </div>
 
     <div class="description">
-        <p>returns the bounds of rotated rectangle</p>
+        <p>creates a ccw wise circle vertices array for clipping</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">opts</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>example {points: 16, radius: 30, x: 320, y: 240}</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Array</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_createTerrain" class="method item">
+    <h3 class="name"><code>createTerrain</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l93"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:93</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_deleteTerrain" class="method item">
+    <h3 class="name"><code>deleteTerrain</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l130"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:130</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>deletes the terrain</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_getPolysFromJson" class="method item">
+    <h3 class="name"><code>getPolysFromJson</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l222"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:222</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>extract the triangles out of poly2tri array</p>
     </div>
 
     
@@ -616,9 +929,8 @@
             <div class="returns-description">
                 
                     
-                        <span class="type">Object</span>:
+                        <span class="type">Array</span>:
                     
-                    returns the calculated bounds
                 
             </div>
         </div>
@@ -628,116 +940,8 @@
 </div>
 
                 
-                    <div id="method_attachObject" class="method item">
-    <h3 class="name"><code>attachObject</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l255"><code>cangaja&#x2F;sprite&#x2F;sprite.js:255</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>attach a reference of the given object to this object</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_checkBound" class="method item">
-    <h3 class="name"><code>checkBound</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l142"><code>cangaja&#x2F;sprite&#x2F;sprite.js:142</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Checks the bound if a boundMode (bounce or slide) is set</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_checkCollision" class="method item inherited">
-    <h3 class="name"><code>checkCollision</code></h3>
+                    <div id="method_hit" class="method item inherited">
+    <h3 class="name"><code>hit</code></h3>
 
     
         <div class="args">
@@ -745,13 +949,13 @@
             
                 <li class="arg">
                     
-                        <code>objects</code>
+                        <code>impulse</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>callback</code>
+                        <code>source</code>
                     
                 </li>
             
@@ -777,11 +981,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_checkCollision">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#method_hit">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l134"><code>cangaja&#x2F;base&#x2F;rectangle.js:134</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l125"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:125</code></a>
         
         </p>
 
@@ -792,7 +996,7 @@
     </div>
 
     <div class="description">
-        <p>checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/</p>
+        
     </div>
 
     
@@ -803,14 +1007,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">objects</code>
-                        <span class="type">Array</span>
+                        <code class="param-name">impulse</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>a array of objects to check for collision => Sprites, Animations, MapAreas</p>
+                         
                     </div>
 
                     
@@ -818,14 +1022,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">callback</code>
-                        <span class="type">Callback</span>
+                        <code class="param-name">source</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>what to do after collision?</p>
+                         
                     </div>
 
                     
@@ -833,232 +1037,6 @@
             
             </ul>
         </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_follow" class="method item">
-    <h3 class="name"><code>follow</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l199"><code>cangaja&#x2F;sprite&#x2F;sprite.js:199</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_ifAttached" class="method item">
-    <h3 class="name"><code>ifAttached</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l244"><code>cangaja&#x2F;sprite&#x2F;sprite.js:244</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>if there is a attached object get its position</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_ifClicked" class="method item inherited">
-    <h3 class="name"><code>ifClicked</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">True/false</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_ifClicked">CG.Rectangle</a>:
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l89"><code>cangaja&#x2F;base&#x2F;rectangle.js:89</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>checks click inside of the rectangle, supports rotation</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">True/false</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_ifMouseOver" class="method item inherited">
-    <h3 class="name"><code>ifMouseOver</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#method_ifMouseOver">CG.Rectangle</a>:
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l113"><code>cangaja&#x2F;base&#x2F;rectangle.js:113</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>checks if the mouse/pointer is over the rectangle</p>
-    </div>
-
     
 
     
@@ -1076,13 +1054,55 @@
             
                 <li class="arg">
                     
+                        <code>world</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>name</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
                         <code>image</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>position</code>
+                        <code>terrainPoly</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>scale</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>b2BodyType</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>bullet</code>
                     
                 </li>
             
@@ -1119,7 +1139,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l10"><code>cangaja&#x2F;sprite&#x2F;sprite.js:10</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l15"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:15</code></a>
         
         </p>
 
@@ -1141,14 +1161,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">image</code>
-                        <span class="type">Image</span>
+                        <code class="param-name">world</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>imgpath, image object or atlasimage object to use</p>
+                        <p>reference to world of B2DWorld</p>
                     </div>
 
                     
@@ -1156,14 +1176,119 @@
             
                 <li class="param">
                     
-                        <code class="param-name">position</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>position object</p>
+                        <p>id or name to identify</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">image</code>
+                        <span class="type">Mixed</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>path to image, image or atlasimage from asset</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">terrainPoly</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>array of vertices to start terrain building</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the x position</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the y position</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">scale</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the world scale of B2DWorld</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">b2BodyType</code>
+                        <span class="type">box2d.b2BodyType</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Box2D bodytype constant</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">bullet</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>bullet option</p>
                     </div>
 
                     
@@ -1191,8 +1316,8 @@
 </div>
 
                 
-                    <div id="method_removeAttachedObject" class="method item">
-    <h3 class="name"><code>removeAttachedObject</code></h3>
+                    <div id="method_lightenTerrain" class="method item">
+    <h3 class="name"><code>lightenTerrain</code></h3>
 
     
         <span class="paren">()</span>
@@ -1223,7 +1348,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l264"><code>cangaja&#x2F;sprite&#x2F;sprite.js:264</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l184"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:184</code></a>
         
         </p>
 
@@ -1234,204 +1359,9 @@
     </div>
 
     <div class="description">
-        <p>removes the attached object reference</p>
+        <p>this method uses the Clipper Lighten method to reduce vertices for better triangulation</p>
     </div>
 
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setAttachedOffsetX" class="method item">
-    <h3 class="name"><code>setAttachedOffsetX</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l273"><code>cangaja&#x2F;sprite&#x2F;sprite.js:273</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>set the x offset of the attached object to this object</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setAttachedOffsetY" class="method item">
-    <h3 class="name"><code>setAttachedOffsetY</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l282"><code>cangaja&#x2F;sprite&#x2F;sprite.js:282</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>set the y offset of the attached object to this object</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setBound" class="method item">
-    <h3 class="name"><code>setBound</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>bound</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l233"><code>cangaja&#x2F;sprite&#x2F;sprite.js:233</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>set the bound of the sprite</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">bound</code>
-                        <span class="type"><a href="../classes/CG.Bound.html" class="crosslink">CG.Bound</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the bound</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
@@ -1524,60 +1454,6 @@
 </div>
 
                 
-                    <div id="method_updateDiff" class="method item">
-    <h3 class="name"><code>updateDiff</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l185"><code>cangaja&#x2F;sprite&#x2F;sprite.js:185</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>calculate offset if bound is moving</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
             </div>
         
 
@@ -1586,9 +1462,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_alpha" class="property item">
-    <h3 class="name"><code>alpha</code></h3>
-    <span class="type">Float</span>
+                    <div id="property_body" class="property item inherited">
+    <h3 class="name"><code>body</code></h3>
+    <span class="type">B2Body</span>
 
     
 
@@ -1601,15 +1477,12 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_body">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l71"><code>cangaja&#x2F;sprite&#x2F;sprite.js:71</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l27"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:27</code></a>
         
         </p>
 
@@ -1630,8 +1503,49 @@
 </div>
 
                 
-                    <div id="property_atlasimage" class="property item">
-    <h3 class="name"><code>atlasimage</code></h3>
+                    <div id="property_bodyDef" class="property item inherited">
+    <h3 class="name"><code>bodyDef</code></h3>
+    <span class="type">B2BodyDef</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_bodyDef">CG.B2DEntity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l68"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:68</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bodyDef.alowSleep" class="property item inherited">
+    <h3 class="name"><code>bodyDef.alowSleep</code></h3>
     <span class="type">Boolean</span>
 
     
@@ -1645,15 +1559,12 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_bodyDef.alowSleep">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l20"><code>cangaja&#x2F;sprite&#x2F;sprite.js:20</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l73"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:73</code></a>
         
         </p>
 
@@ -1674,8 +1585,8 @@
 </div>
 
                 
-                    <div id="property_attachedobject" class="property item">
-    <h3 class="name"><code>attachedobject</code></h3>
+                    <div id="property_bodyDef.awake" class="property item inherited">
+    <h3 class="name"><code>bodyDef.awake</code></h3>
     <span class="type">Boolean</span>
 
     
@@ -1689,15 +1600,12 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_bodyDef.awake">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l93"><code>cangaja&#x2F;sprite&#x2F;sprite.js:93</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l78"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:78</code></a>
         
         </p>
 
@@ -1718,9 +1626,9 @@
 </div>
 
                 
-                    <div id="property_bound" class="property item">
-    <h3 class="name"><code>bound</code></h3>
-    <span class="type"><a href="../classes/CG.Bound.html" class="crosslink">CG.Bound</a></span>
+                    <div id="property_bodyDef.bullet" class="property item">
+    <h3 class="name"><code>bodyDef.bullet</code></h3>
+    <span class="type"></span>
 
     
 
@@ -1741,7 +1649,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l26"><code>cangaja&#x2F;sprite&#x2F;sprite.js:26</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l82"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:82</code></a>
         
         </p>
 
@@ -1762,8 +1670,266 @@
 </div>
 
                 
-                    <div id="property_boundingradius" class="property item inherited">
-    <h3 class="name"><code>boundingradius</code></h3>
+                    <div id="property_bodyDef.position" class="property item">
+    <h3 class="name"><code>bodyDef.position</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l68"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:68</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bodyDef.type" class="property item">
+    <h3 class="name"><code>bodyDef.type</code></h3>
+    <span class="type">box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l63"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:63</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bodyDef.userData" class="property item">
+    <h3 class="name"><code>bodyDef.userData</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l72"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:72</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_bullet" class="property item">
+    <h3 class="name"><code>bullet</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l77"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:77</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_dead" class="property item inherited">
+    <h3 class="name"><code>dead</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_dead">CG.B2DEntity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l117"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:117</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_fixDef" class="property item inherited">
+    <h3 class="name"><code>fixDef</code></h3>
+    <span class="type">B2FixtureDef</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_fixDef">CG.B2DEntity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l86"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:86</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_fixDef.density" class="property item inherited">
+    <h3 class="name"><code>fixDef.density</code></h3>
     <span class="type">Number</span>
 
     
@@ -1778,11 +1944,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_boundingradius">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_fixDef.density">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l61"><code>cangaja&#x2F;base&#x2F;rectangle.js:61</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l91"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:91</code></a>
         
         </p>
 
@@ -1803,354 +1969,8 @@
 </div>
 
                 
-                    <div id="property_boundsMode" class="property item">
-    <h3 class="name"><code>boundsMode</code></h3>
-    <span class="type">False/string</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l59"><code>cangaja&#x2F;sprite&#x2F;sprite.js:59</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_clickable" class="property item inherited">
-    <h3 class="name"><code>clickable</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_clickable">CG.Rectangle</a>:
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l32"><code>cangaja&#x2F;base&#x2F;rectangle.js:32</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_clicked" class="property item">
-    <h3 class="name"><code>clicked</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_clicked">
-                CG.Rectangle
-            </a>
-            
-            but overwritten in
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l75"><code>cangaja&#x2F;sprite&#x2F;sprite.js:75</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_diffpoint" class="property item">
-    <h3 class="name"><code>diffpoint</code></h3>
-    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l30"><code>cangaja&#x2F;sprite&#x2F;sprite.js:30</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_dragable" class="property item inherited">
-    <h3 class="name"><code>dragable</code></h3>
-    <span class="type">Boolean</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_dragable">CG.Rectangle</a>:
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l36"><code>cangaja&#x2F;base&#x2F;rectangle.js:36</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_followobject" class="property item">
-    <h3 class="name"><code>followobject</code></h3>
-    <span class="type">Boolean/object</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l80"><code>cangaja&#x2F;sprite&#x2F;sprite.js:80</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_followspeed" class="property item">
-    <h3 class="name"><code>followspeed</code></h3>
-    <span class="type">Boolean/integer</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l84"><code>cangaja&#x2F;sprite&#x2F;sprite.js:84</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_followsteps" class="property item">
-    <h3 class="name"><code>followsteps</code></h3>
-    <span class="type">Boolean/integer</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l88"><code>cangaja&#x2F;sprite&#x2F;sprite.js:88</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_height" class="property item inherited">
-    <h3 class="name"><code>height</code></h3>
+                    <div id="property_fixDef.friction" class="property item inherited">
+    <h3 class="name"><code>fixDef.friction</code></h3>
     <span class="type">Number</span>
 
     
@@ -2165,11 +1985,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_height">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_fixDef.friction">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l28"><code>cangaja&#x2F;base&#x2F;rectangle.js:28</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l96"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:96</code></a>
         
         </p>
 
@@ -2190,9 +2010,9 @@
 </div>
 
                 
-                    <div id="property_hover" class="property item inherited">
-    <h3 class="name"><code>hover</code></h3>
-    <span class="type">Boolean</span>
+                    <div id="property_fixDef.restitution" class="property item inherited">
+    <h3 class="name"><code>fixDef.restitution</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -2206,11 +2026,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_hover">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_fixDef.restitution">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l56"><code>cangaja&#x2F;base&#x2F;rectangle.js:56</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l101"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:101</code></a>
         
         </p>
 
@@ -2231,8 +2051,93 @@
 </div>
 
                 
-                    <div id="property_mapcollision" class="property item inherited">
-    <h3 class="name"><code>mapcollision</code></h3>
+                    <div id="property_holes" class="property item">
+    <h3 class="name"><code>holes</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l47"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:47</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_id" class="property item inherited">
+    <h3 class="name"><code>id</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_id">CG.B2DEntity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l47"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:47</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_isHit" class="property item inherited">
+    <h3 class="name"><code>isHit</code></h3>
     <span class="type">Boolean</span>
 
     
@@ -2247,11 +2152,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_mapcollision">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_isHit">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l65"><code>cangaja&#x2F;base&#x2F;rectangle.js:65</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l107"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:107</code></a>
         
         </p>
 
@@ -2313,9 +2218,9 @@
 </div>
 
                 
-                    <div id="property_offsetx" class="property item">
-    <h3 class="name"><code>offsetx</code></h3>
-    <span class="type">Number</span>
+                    <div id="property_polys" class="property item">
+    <h3 class="name"><code>polys</code></h3>
+    <span class="type">Array</span>
 
     
 
@@ -2336,7 +2241,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l97"><code>cangaja&#x2F;sprite&#x2F;sprite.js:97</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l31"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:31</code></a>
         
         </p>
 
@@ -2357,53 +2262,9 @@
 </div>
 
                 
-                    <div id="property_offsety" class="property item">
-    <h3 class="name"><code>offsety</code></h3>
+                    <div id="property_scale" class="property item inherited">
+    <h3 class="name"><code>scale</code></h3>
     <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l101"><code>cangaja&#x2F;sprite&#x2F;sprite.js:101</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_position" class="property item inherited">
-    <h3 class="name"><code>position</code></h3>
-    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
 
     
 
@@ -2417,11 +2278,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_position">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_scale">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l20"><code>cangaja&#x2F;base&#x2F;rectangle.js:20</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l42"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:42</code></a>
         
         </p>
 
@@ -2442,9 +2303,9 @@
 </div>
 
                 
-                    <div id="property_rotation" class="property item">
-    <h3 class="name"><code>rotation</code></h3>
-    <span class="type">Integer/float</span>
+                    <div id="property_strength" class="property item inherited">
+    <h3 class="name"><code>strength</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -2456,16 +2317,13 @@
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_rotation">
-                CG.Rectangle
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_strength">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l63"><code>cangaja&#x2F;sprite&#x2F;sprite.js:63</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l112"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:112</code></a>
         
         </p>
 
@@ -2486,9 +2344,9 @@
 </div>
 
                 
-                    <div id="property_rotationspeed" class="property item">
-    <h3 class="name"><code>rotationspeed</code></h3>
-    <span class="type">Integer/float</span>
+                    <div id="property_terrainpoly" class="property item">
+    <h3 class="name"><code>terrainpoly</code></h3>
+    <span class="type"></span>
 
     
 
@@ -2509,7 +2367,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l67"><code>cangaja&#x2F;sprite&#x2F;sprite.js:67</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l36"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:36</code></a>
         
         </p>
 
@@ -2520,6 +2378,50 @@
 
     <div class="description">
         
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_terrainTriangles" class="property item">
+    <h3 class="name"><code>terrainTriangles</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l41"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:41</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>the generated triangles generated thru clipper and poly2tri</p>
     </div>
 
     
@@ -2571,8 +2473,49 @@
 </div>
 
                 
-                    <div id="property_width" class="property item inherited">
-    <h3 class="name"><code>width</code></h3>
+                    <div id="property_world" class="property item inherited">
+    <h3 class="name"><code>world</code></h3>
+    <span class="type">B2World</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_world">CG.B2DEntity</a>:
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l52"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:52</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_x" class="property item inherited">
+    <h3 class="name"><code>x</code></h3>
     <span class="type">Number</span>
 
     
@@ -2587,11 +2530,11 @@
         
             
                 <p>Inherited from
-                <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_width">CG.Rectangle</a>:
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_x">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_rectangle.js.html#l24"><code>cangaja&#x2F;base&#x2F;rectangle.js:24</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l32"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:32</code></a>
         
         </p>
 
@@ -2626,60 +2569,16 @@
 
     <div class="meta">
         
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l43"><code>cangaja&#x2F;sprite&#x2F;sprite.js:43</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_xscale" class="property item">
-    <h3 class="name"><code>xscale</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
             <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_xscale">
-                CG.Rectangle
+            <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_xhandle">
+                CG.B2DEntity
             </a>
             
             but overwritten in
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l39"><code>cangaja&#x2F;sprite&#x2F;sprite.js:39</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l52"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:52</code></a>
         
         </p>
 
@@ -2700,8 +2599,8 @@
 </div>
 
                 
-                    <div id="property_xspeed" class="property item">
-    <h3 class="name"><code>xspeed</code></h3>
+                    <div id="property_y" class="property item inherited">
+    <h3 class="name"><code>y</code></h3>
     <span class="type">Number</span>
 
     
@@ -2715,15 +2614,12 @@
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_y">CG.B2DEntity</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l35"><code>cangaja&#x2F;sprite&#x2F;sprite.js:35</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-entity.js.html#l37"><code>cangaja&#x2F;box2d&#x2F;b2d-entity.js:37</code></a>
         
         </p>
 
@@ -2758,104 +2654,16 @@
 
     <div class="meta">
         
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l55"><code>cangaja&#x2F;sprite&#x2F;sprite.js:55</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_yscale" class="property item">
-    <h3 class="name"><code>yscale</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
             <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;CG.Rectangle.html#property_yscale">
-                CG.Rectangle
+            <a href="..&#x2F;classes&#x2F;CG.B2DEntity.html#property_yhandle">
+                CG.B2DEntity
             </a>
             
             but overwritten in
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l51"><code>cangaja&#x2F;sprite&#x2F;sprite.js:51</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_yspeed" class="property item">
-    <h3 class="name"><code>yspeed</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_sprite_sprite.js.html#l47"><code>cangaja&#x2F;sprite&#x2F;sprite.js:47</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-terrain.js.html#l57"><code>cangaja&#x2F;box2d&#x2F;b2d-terrain.js:57</code></a>
         
         </p>
 

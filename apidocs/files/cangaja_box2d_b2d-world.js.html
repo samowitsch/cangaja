@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.0.0</em>
+            <em>API Docs for: 0.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
             
@@ -167,12 +169,6 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
- *  © 2012 by Christian Sonntag &lt;info@motions-media.de&gt;
- *  simple experimental Canvas Game JavaScript Framework
- *&#x2F;
-
-
-&#x2F;**
  * @description
  *
  * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
@@ -200,7 +196,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
          * @property opt
          * @type {object}
          *&#x2F;
-        opt = opt || {}
+        this.opt = opt || {}
 
         &#x2F;**
          * @property name
@@ -234,7 +230,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
          *&#x2F;
         this.world = new b2World(
             new b2Vec2(0, 10), &#x2F;&#x2F;gravity
-            opt.sleep || true        &#x2F;&#x2F;allow sleep
+            this.opt.sleep || true        &#x2F;&#x2F;allow sleep
         )
         &#x2F;**
          * @property uid
@@ -247,11 +243,8 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
          *&#x2F;
         this.scale = 40
 
-        &#x2F;**
-         * add m_groundBody for use with b2MouseJoint
-         *&#x2F;
+        &#x2F;&#x2F; add m_groundBody for use with b2MouseJoint
         this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
-
 
         &#x2F;&#x2F;setup debug draw
         var debugDraw = new b2DebugDraw({
