@@ -10927,7 +10927,7 @@ CG.Sprite.extend('Button', {
      * @param clickedCallback {callback} callback function for click handling
      * @return {*}
      */
-    init:function (image, position, text, font, clickedCallback) {
+    init: function (image, position, text, font, clickedCallback) {
         this._super(image, position)
 
         /**
@@ -10946,6 +10946,10 @@ CG.Sprite.extend('Button', {
          @property clickable {boolean}
          */
         this.clickable = true
+        /**
+         @property visible {boolean}
+         */
+        this.visible = true
 
         /**
          @property text {string}
@@ -10953,7 +10957,7 @@ CG.Sprite.extend('Button', {
         this.text = text
         return this
     },
-    update:function () {
+    update: function () {
         this.ifClicked()
         this.ifMouseOver()
         this.ifAttached()
@@ -10965,20 +10969,22 @@ CG.Sprite.extend('Button', {
             }
         }
     },
-    draw:function () {
-        Game.b_ctx.save()
-        Game.b_ctx.translate(this.position.x, this.position.y)
-        if (this.atlasimage) {
-            var r = this.rotation
-            Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-            Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
-        } else {
-            Game.b_ctx.rotate(r * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
+    draw: function () {
+        if (this.visible == true) {
+            Game.b_ctx.save()
+            Game.b_ctx.translate(this.position.x, this.position.y)
+            if (this.atlasimage) {
+                var r = this.rotation
+                Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
+                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
+                Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
+            } else {
+                Game.b_ctx.rotate(r * CG.Const_PI_180)
+                Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
+            }
+            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+            Game.b_ctx.restore()
         }
-        this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
-        Game.b_ctx.restore()
     }
 })
 
