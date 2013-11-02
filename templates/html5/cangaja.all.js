@@ -9424,153 +9424,192 @@ CG.Class.extend('CanvasRenderer', {
      * @constructor
      * @return {*}
      */
-    init:function(canvas){
+    init: function (canvas) {
 
         //TODO the renderer recognizes the canvas features WebGL/Canvas
 
         //TODO the renderer creates the canvas element
 
-        //TODO the renderer handles all drawings from all classes, urgh ;o)
-
-        /*
-
-         //sprite draw method
-
-         draw:function () {
-             this.updateDiff()
-
-             Game.b_ctx.save()
-             Game.b_ctx.globalAlpha = this.alpha
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.atlasimage) {
-                 Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
-             } else {
-                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             Game.b_ctx.restore()
-         },
-
-
-
-
-        //animation draw method
-         draw:function () {
-             this.updateDiff()
-
-             Game.b_ctx.save()
-             Game.b_ctx.globalAlpha = this.alpha
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.frames == 1) {
-                 Game.b_ctx.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             else {
-                 this.fx = this.currentframe * this.width
-
-                 if ((this.fx / this.image.width) > 0) {
-                 this.fx = this.fx % this.image.width
-                 }
-                 this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
-
-                 Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                 try {
-                 Game.b_ctx.drawImage(this.image, this.fx, this.fy, this.width, this.height, 0 - this.xhandle, 0 - this.yhandle, this.width * this.xscale, this.height * this.yscale)
-                 } catch (e) {
-
-                 }
-             }
-             Game.b_ctx.restore()
-         }
-
-
-
-         //button draw method
-         draw:function () {
-             Game.b_ctx.save()
-             Game.b_ctx.translate(this.position.x, this.position.y)
-             if (this.atlasimage) {
-                 var r = this.rotation
-                 Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                 Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
-             } else {
-                 Game.b_ctx.rotate(r * CG.Const_PI_180)
-                 Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-             }
-             this.font.draw(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
-             Game.b_ctx.restore()
-         }
-
-
-        //particle draw method
-         draw:function () {
-             if (this.visible) {
-                 Game.b_ctx.save()
-                 Game.b_ctx.globalAlpha = this.alpha
-                 Game.b_ctx.translate(this.position.x, this.position.y)
-                 if (this.atlasimage) {
-                     Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-                     Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                     Game.b_ctx.rotate((this.rotation + this.imagerotation) * CG.Const_PI_180)
-                 } else {
-                     Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                     Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-                 }
-                 Game.b_ctx.restore()
-             }
-         }
-
-
-
-         //map drawmap part orthogonal
-         Game.b_ctx.save()
-         Game.b_ctx.globalAlpha = this.layers[layer].opacity
-         Game.b_ctx.translate(rx, ry)
-         try {
-            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
-         } catch (e) {
-         }
-         Game.b_ctx.restore()
-
-
-         //map drawmap part isometric
-         Game.b_ctx.save()
-         Game.b_ctx.globalAlpha = this.layers[layer].opacity
-         Game.b_ctx.translate(xpos, ypos)
-         try {
-            Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
-         } catch (e) {
-
-         }
-         Game.b_ctx.restore()
-
-
-
-        //font class part draw
-         for (var i = 0, l = text.length; i < l; i++) {
-             Game.b_ctx.drawImage(this.atlas, this.x[text.charCodeAt(i)], this.y[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)], currx, curry + this.yoff[text.charCodeAt(i)], this.width[text.charCodeAt(i)], this.height[text.charCodeAt(i)])
-             currx += this.xadv[text.charCodeAt(i)]
-         }
-
-
-         //bitmap class
-         draw:function () {
-             Game.b_ctx.drawImage(this.bitmap_canvas, this.x, this.y)
-         },
-
-
-
-
-
-
-
-
-
-
-
-         */
         return this
+    },
+    draw: function (renderObject) {
+        Game.b_ctx.save()
+
+
+        switch (renderObject.instanceOf) {
+
+
+            case "Sprite":
+
+
+                renderObject.updateDiff()
+
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                if (renderObject.atlasimage) {
+                    Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
+                } else {
+                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
+                }
+                break;
+
+
+            case "Animation":
+
+
+                renderObject.updateDiff()
+
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                if (renderObject.frames == 1) {
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
+                }
+                else {
+                    renderObject.fx = renderObject.currentframe * renderObject.width
+
+                    if ((renderObject.fx / renderObject.image.width) > 0) {
+                        renderObject.fx = renderObject.fx % renderObject.image.width
+                    }
+                    renderObject.fy = Math.floor(renderObject.width * renderObject.currentframe / renderObject.image.width) * renderObject.height
+
+                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
+                    try {
+                        Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
+                    } catch (e) {
+
+                    }
+                }
+                break;
+
+
+            case "Button":
+
+
+                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                if (renderObject.atlasimage) {
+                    var r = renderObject.rotation
+                    Game.b_ctx.rotate((r - renderObject.imagerotation) * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - (renderObject.cutwidth / 2), 0 - (renderObject.cutheight / 2), renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
+                    Game.b_ctx.rotate(renderObject.imagerotation * CG.Const_PI_180)
+                } else {
+                    Game.b_ctx.rotate(r * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, 0 - (renderObject.image.width * renderObject.xscale / 2), 0 - (renderObject.image.height * renderObject.yscale / 2), renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
+                }
+                renderObject.font.drawText(renderObject.text, 0 - (renderObject.font.getTextWidth(renderObject.text) / 2 >> 0), 0 - ((renderObject.font.getFontSize() / 2) >> 0))
+
+                break;
+
+
+            case "Particle":
+
+
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                if (renderObject.atlasimage) {
+                    Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - (renderObject.cutwidth / 2), 0 - (renderObject.cutheight / 2), renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
+                    Game.b_ctx.rotate((renderObject.rotation + renderObject.imagerotation) * CG.Const_PI_180)
+                } else {
+                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, 0 - (renderObject.image.width * renderObject.xscale / 2), 0 - (renderObject.image.height * renderObject.yscale / 2), renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
+                }
+
+                break;
+
+
+            case "Font":
+
+
+                for (var i = 0, l = renderObject.text.length; i < l; i++) {
+                    var charCode = renderObject.text.charCodeAt(i)
+                    try {
+                        Game.b_ctx.drawImage(
+                            renderObject.atlas,
+                            renderObject.x[charCode],
+                            renderObject.y[charCode],
+                            renderObject.width[charCode],
+                            renderObject.height[charCode],
+                            renderObject.currentX,
+                            renderObject.currentY + renderObject.yoff[charCode],
+                            renderObject.width[charCode],
+                            renderObject.height[charCode]
+                        )
+                    } catch (e) {
+                        //console.log("drawText error: " + e)
+                    }
+                    renderObject.currentX += renderObject.xadv[charCode]
+                }
+                break;
+
+
+            case "Bitmap":
+
+
+                Game.b_ctx.drawImage(renderObject.bitmap_canvas, renderObject.x, renderObject.y)
+                break;
+
+
+            case "Map":
+
+
+                if (renderObject.orientation == 'orthogonal') {
+
+                    Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
+                    Game.b_ctx.translate(renderObject.rx, renderObject.ry)
+                    try {
+                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
+                    } catch (e) {
+                    }
+
+                } else if (renderObject.orientation == 'isometric') {
+
+                    Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
+                    Game.b_ctx.translate(renderObject.xpos, renderObject.ypos)
+                    try {
+                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, 0, 0, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
+                    } catch (e) {
+
+                    }
+
+                }
+
+                break;
+
+            case "B2DEntity":
+            case "B2DCircle":
+            case "B2DRectangle":
+            case "B2DPolygon":
+
+
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.translate(renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
+                if (renderObject.atlasimage) {
+                    Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
+                } else {
+                    Game.b_ctx.rotate(renderObject.body.GetAngleRadians())
+                    Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
+                }
+                break;
+
+            case "B2DBridge":
+            case "B2DRope":
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.translate(renderObject.xd * renderObject.scale, renderObject.yd * renderObject.scale)
+                if (renderObject.atlasimage) {
+                    Game.b_ctx.rotate(renderObject.rd - renderObject.imagerotation)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
+                } else {
+                    Game.b_ctx.rotate(renderObject.rd)
+                    Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
+                }
+                break;
+        }
+
+
+        Game.b_ctx.restore()
     }
 })/**
  * @description
@@ -10150,6 +10189,7 @@ CG.Rectangle.extend('Sprite', {
      */
     init:function (image, position) {
         this._super(position, 0, 0)
+        this.instanceOf = 'Sprite'
 
         /**
          @property atlasimage {boolean}
@@ -10258,19 +10298,9 @@ CG.Rectangle.extend('Sprite', {
         }
     },
     draw:function () {
-        this.updateDiff()
 
-        Game.b_ctx.save()
-        Game.b_ctx.globalAlpha = this.alpha
-        Game.b_ctx.translate(this.position.x, this.position.y)
-        if (this.atlasimage) {
-            Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
-        } else {
-            Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
-        }
-        Game.b_ctx.restore()
+        Game.renderer.draw(this);
+
     },
 
     /**
@@ -10654,8 +10684,9 @@ CG.Sprite.extend('Animation', {
      * @param frameheight {number} frameheight height of frame to cut
      * @return {*}
      */
-    init:function (image, position, startframe, endframe, framewidth, frameheight) {
+    init: function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
+        this.instanceOf = 'Animation'
 
         //from asset?
         if (typeof image == 'string') {
@@ -10727,7 +10758,7 @@ CG.Sprite.extend('Animation', {
 
         return this
     },
-    update:function () {
+    update: function () {
         //animation specific stuff
         if (this.status == 0) {
             this.tempdelay += 1
@@ -10748,31 +10779,10 @@ CG.Sprite.extend('Animation', {
         //update all other stuff in the parent class
         this._super()
     },
-    draw:function () {
-        this.updateDiff()
+    draw: function () {
 
-        Game.b_ctx.save()
-        Game.b_ctx.globalAlpha = this.alpha
-        Game.b_ctx.translate(this.position.x, this.position.y)
-        if (this.frames == 1) {
-            Game.b_ctx.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.xscale, this.image.height * this.yscale)
-        }
-        else {
-            this.fx = this.currentframe * this.width
+        Game.renderer.draw(this)
 
-            if ((this.fx / this.image.width) > 0) {
-                this.fx = this.fx % this.image.width
-            }
-            this.fy = Math.floor(this.width * this.currentframe / this.image.width) * this.height
-
-            Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-            try {
-                Game.b_ctx.drawImage(this.image, this.fx, this.fy, this.width, this.height, 0 - this.xhandle, 0 - this.yhandle, this.width * this.xscale, this.height * this.yscale)
-            } catch (e) {
-
-            }
-        }
-        Game.b_ctx.restore()
     }
 })
 
@@ -10800,6 +10810,7 @@ CG.Entity.extend('Bitmap', {
      */
     init:function (width, height) {
         this._super(this)
+        this.instanceOf = 'Bitmap'
         this.x = 0
         this.y = 0
         this.bitmap_canvas = document.createElement('canvas')
@@ -10828,7 +10839,9 @@ CG.Entity.extend('Bitmap', {
     },
 
     draw:function () {
-        Game.b_ctx.drawImage(this.bitmap_canvas, this.x, this.y)
+
+        Game.renderer.draw(this)
+
     },
 
 
@@ -10929,6 +10942,7 @@ CG.Sprite.extend('Button', {
      */
     init: function (image, position, text, font, clickedCallback) {
         this._super(image, position)
+        this.instanceOf = 'Button'
 
         /**
          @property font {CG.Font}
@@ -10971,19 +10985,9 @@ CG.Sprite.extend('Button', {
     },
     draw: function () {
         if (this.visible == true) {
-            Game.b_ctx.save()
-            Game.b_ctx.translate(this.position.x, this.position.y)
-            if (this.atlasimage) {
-                var r = this.rotation
-                Game.b_ctx.rotate((r - this.imagerotation) * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                Game.b_ctx.rotate(this.imagerotation * CG.Const_PI_180)
-            } else {
-                Game.b_ctx.rotate(r * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-            }
-            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
-            Game.b_ctx.restore()
+
+            Game.renderer.draw(this)
+
         }
     }
 })
@@ -11371,6 +11375,7 @@ CG.Entity.extend('Font', {
      * @return {*}
      */
     init: function () {
+        this.instanceOf = 'Font'
         /**
          @property atlas {Image}
          */
@@ -11444,6 +11449,18 @@ CG.Entity.extend('Font', {
          @property scaleH {Number}
          */
         this.scaleH = 0
+        /**
+         @property text {String}
+         */
+        this.text = ''
+        /**
+         @property currentX {Number}
+         */
+        this.currentX = 0
+        /**
+         @property currentY {Number}
+         */
+        this.currentY = 0
         return this
     },
     /**
@@ -11472,28 +11489,13 @@ CG.Entity.extend('Font', {
      * @param ypos {Number} the y position
      */
     drawText: function (text, xpos, ypos) {
-        var currx = xpos
-        var curry = ypos
 
-        for (var i = 0, l = text.length; i < l; i++) {
-            var charCode = text.charCodeAt(i)
-            try {
-                Game.b_ctx.drawImage(
-                    this.atlas,
-                    this.x[charCode],
-                    this.y[charCode],
-                    this.width[charCode],
-                    this.height[charCode],
-                    currx,
-                    curry + this.yoff[charCode],
-                    this.width[charCode],
-                    this.height[charCode]
-                )
-            } catch (e) {
-                //console.log("drawText error: " + e)
-            }
-            currx += this.xadv[charCode]
-        }
+        this.text = text
+        this.currentX = xpos
+        this.currentY = ypos
+
+        Game.renderer.draw(this)
+
     },
 
     /**
@@ -12472,6 +12474,7 @@ CG.Entity.extend('Map', {
      */
     init:function (width, height, mapname) {
         this._super(mapname)
+        this.instanceOf = 'Map'
 
         /**
          * @property elements
@@ -12988,6 +12991,15 @@ CG.Entity.extend('Map', {
         this.sy = sy || this.sy || 0
         this.callback = callback || false
 
+        //for renderer
+        this.rx = 0
+        this.ry = 0
+        this.cx = 0
+        this.cy = 0
+        this.xpos = 0
+        this.ypos = 0
+        this.layer = 0
+
         //update all points an areas
         this.updatePointsAndAreas()
 
@@ -12997,10 +13009,10 @@ CG.Entity.extend('Map', {
         if (this.visible) {
             this.updateAnimation()
             if (this.layers.length > 0) {
-                for (var layer = 0, l = this.layers.length; layer < l; layer++) {
-                    var tl = this.layers[layer]
+                for (this.layer = 0, l = this.layers.length; this.layer < l; this.layer++) {
+                    var tl = this.layers[this.layer]
                     //render control, render by name, layer number or 'all''
-                    if (this.renderlayer == tl.name || this.renderlayer == layer || this.renderlayer == 'all') {
+                    if (this.renderlayer == tl.name || this.renderlayer == this.layer || this.renderlayer == 'all') {
                         // MAP ORTHOGONAL
                         if (this.orientation == 'orthogonal' && tl.visible == true) {
                             modx = (this.bx * this.xscale) % this.tilewidth
@@ -13044,8 +13056,8 @@ CG.Entity.extend('Map', {
                                             if (mody < 0) {
                                                 mody += this.tileheight
                                             }
-                                            rx = x - modx - this.bx
-                                            ry = y - mody - this.by
+                                            this.rx = x - modx - this.bx
+                                            this.ry = y - mody - this.by
 
 
                                             //time for collision detection?
@@ -13054,7 +13066,7 @@ CG.Entity.extend('Map', {
                                             //include some layer functionality here and render some sprites between map layers?
                                             if (this.elements.length > 0 && this.layertocheck == l) {
                                                 for (var o = 0, l = this.elements.length; o < l; o++) {
-                                                    if (this.checkMapCollision(this.elements[0], rx, ry)) {
+                                                    if (this.checkMapCollision(this.elements[0], this.rx, this.ry)) {
                                                         this.callback(this.elements[o], this.tileproperties[gid])
                                                     }
                                                 }
@@ -13062,17 +13074,11 @@ CG.Entity.extend('Map', {
 
 
                                             //margin/spacing?
-                                            cx = (gid % (this.atlaswidth / this.tilewidth)) * this.tilewidth
-                                            cy = Math.floor(this.tilewidth * gid / this.atlaswidth) * this.tileheight
+                                            this.cx = (gid % (this.atlaswidth / this.tilewidth)) * this.tilewidth
+                                            this.cy = Math.floor(this.tilewidth * gid / this.atlaswidth) * this.tileheight
 
-                                            Game.b_ctx.save()
-                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
-                                            Game.b_ctx.translate(rx, ry)
-                                            try {
-                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
-                                            } catch (e) {
-                                            }
-                                            Game.b_ctx.restore()
+                                            Game.renderer.draw(this)
+
                                         }
                                     }
                                     x = x + this.tilewidth
@@ -13096,21 +13102,15 @@ CG.Entity.extend('Map', {
 
                                 while (ry >= 0 && rx < tl.width) {
                                     var gid = tl.tiles[rx + ry * tl.width]
-                                    var xpos = (rx - ry - 1) * this.tilewidth / 2 - bx
-                                    var ypos = (rx + ry + 1) * this.tileheight / 2 - by
-                                    if (xpos > -this.tileset.tilewidth && xpos < bw && ypos > -this.tileset.tileheight && ypos < bh) {
+                                    this.xpos = (rx - ry - 1) * this.tilewidth / 2 - bx
+                                    this.ypos = (rx + ry + 1) * this.tileheight / 2 - by
+                                    if (this.xpos > -this.tileset.tilewidth && this.xpos < bw && this.ypos > -this.tileset.tileheight && this.ypos < bh) {
                                         if (gid > 0) {
-                                            cx = ((gid - 1) % (this.atlaswidth / this.tilewidth)) * this.tilewidth
-                                            cy = Math.floor(this.tilewidth * (gid - 1) / this.atlaswidth) * this.tileset.tileheight
-                                            Game.b_ctx.save()
-                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
-                                            Game.b_ctx.translate(xpos, ypos)
-                                            try {
-                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
-                                            } catch (e) {
+                                            this.cx = ((gid - 1) % (this.atlaswidth / this.tilewidth)) * this.tilewidth
+                                            this.cy = Math.floor(this.tilewidth * (gid - 1) / this.atlaswidth) * this.tileset.tileheight
 
-                                            }
-                                            Game.b_ctx.restore()
+                                            Game.renderer.draw(this)
+
                                         }
                                     }
                                     ry -= 1
@@ -13335,15 +13335,15 @@ CG.Entity.extend('Map', {
         //TODO return detailed collision object or offsets instead of true?
         if (element.boundingradius > 0) {
             //circular collision
-            xr = element.boundingradius / 2 * element.xscale
-            yr = element.boundingradius / 2 * element.yscale
+            var xr = element.boundingradius / 2 * element.xscale
+            var yr = element.boundingradius / 2 * element.yscale
             if (element.position.x + xr >= rx && element.position.x - xr <= rx + this.tilewidth && element.position.y + yr >= ry && element.position.y - yr <= ry + this.tileheight) {
                 return true
             }
         } else {
             //bounding collision
-            xw = element.width / 2 * element.xscale
-            yh = element.height / 2 * element.yscale
+            var xw = element.width / 2 * element.xscale
+            var yh = element.height / 2 * element.yscale
             if (element.position.x + xw >= rx && element.position.x - xw <= rx + this.tilewidth && element.position.y + yh >= ry && element.position.y - yh <= ry + this.tileheight) {
                 return true
             }
@@ -13843,8 +13843,9 @@ CG.Sprite.extend('Particle', {
      * @method init
      * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
      */
-    init:function (image) {
+    init: function (image) {
         this._super(image, new CG.Point(0, 0))
+        this.instanceOf = 'Particle'
         /**
          * @property lifetime
          * @type {Number}
@@ -13876,7 +13877,7 @@ CG.Sprite.extend('Particle', {
          */
         this.gravity = 0
     },
-    update:function () {
+    update: function () {
         if (this.visible) {
             if (this.fadeout) {
                 this.alpha = this.currtime / this.lifetime
@@ -13895,20 +13896,11 @@ CG.Sprite.extend('Particle', {
             this.rotation += this.rotationspeed
         }
     },
-    draw:function () {
+    draw: function () {
         if (this.visible) {
-            Game.b_ctx.save()
-            Game.b_ctx.globalAlpha = this.alpha
-            Game.b_ctx.translate(this.position.x, this.position.y)
-            if (this.atlasimage) {
-                Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - (this.cutwidth / 2), 0 - (this.cutheight / 2), this.cutwidth * this.xscale, this.cutheight * this.yscale)
-                Game.b_ctx.rotate((this.rotation + this.imagerotation) * CG.Const_PI_180)
-            } else {
-                Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, 0 - (this.image.width * this.xscale / 2), 0 - (this.image.height * this.yscale / 2), this.image.width * this.xscale, this.image.height * this.yscale)
-            }
-            Game.b_ctx.restore()
+
+            Game.renderer.draw(this)
+
         }
     }
 })
@@ -26075,6 +26067,7 @@ CG.Entity.extend('B2DEntity', {
 
     init:function (name, image, world, x, y, scale) {
         this._super()
+        this.instanceOf = 'B2DEntity'
         this.setImage(image)
         /**
          * @property body
@@ -26191,17 +26184,9 @@ CG.Entity.extend('B2DEntity', {
     update:function () {
     },
     draw:function () {
-        Game.b_ctx.save()
-        Game.b_ctx.globalAlpha = this.alpha
-        Game.b_ctx.translate(this.body.GetPosition().x * this.scale, this.body.GetPosition().y * this.scale)
-        if (this.atlasimage) {
-            Game.b_ctx.rotate((this.body.GetAngleRadians() - this.imagerotation)) // * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-        } else {
-            Game.b_ctx.rotate(this.body.GetAngleRadians()) // * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-        }
-        Game.b_ctx.restore()
+
+        Game.renderer.draw(this)
+
     }
 })
 
@@ -26231,6 +26216,7 @@ CG.B2DEntity.extend('B2DCircle', {
      */
     init:function (world, name, image, radius, x, y, scale, b2BodyType) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DCircle'
         /**
          * @property radius
          * @type {Number}
@@ -26299,6 +26285,7 @@ CG.B2DEntity.extend('B2DLine', {
      */
     init:function (world, name, start, end, scale) {
         this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
+        this.instanceOf = 'B2DLine'
         /**
          * @property start
          * @type {b2Vec2}
@@ -26381,6 +26368,7 @@ CG.B2DEntity.extend('B2DRectangle', {
      */
     init:function (world, name, image, x, y, scale, b2BodyType) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DRectangle'
 
         /**
          * @property bodyDef.stat
@@ -26449,6 +26437,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      */
     init:function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DPolygon'
         /**
          * @property polys
          * @type {Array}
@@ -26833,6 +26822,7 @@ CG.B2DEntity.extend('B2DChainShape', {
      */
     init:function (world, name, vertices, x, y, scale, b2BodyType) {
         this._super(name, false, world, x, y, scale)
+        this.instanceOf = 'B2DChainShape'
         /**
          * @property polys
          * @type {Array}
@@ -26937,6 +26927,7 @@ CG.B2DEntity.extend('B2DRope', {
      */
     init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DRope'
         /**
          * @property length
          * @type {Number}
@@ -26977,6 +26968,10 @@ CG.B2DEntity.extend('B2DRope', {
          * @type {Number}
          */
         this.bodyCount = 0
+
+        this.xd = 0
+        this.yd = 0
+        this.rd = 0
 
         // RopeStart
         this.fixtureDef = new b2FixtureDef()
@@ -27027,20 +27022,12 @@ CG.B2DEntity.extend('B2DRope', {
 
     draw:function () {
         for (var i = 1; i <= this.bodyCount; i++) {
-            var x = this.bodyGroup[i].GetPosition().x
-            var y = this.bodyGroup[i].GetPosition().y
-            var r = this.bodyGroup[i].GetAngleRadians()
-            Game.b_ctx.save()
-            Game.b_ctx.globalAlpha = this.alpha
-            Game.b_ctx.translate(x * this.scale, y * this.scale)
-            if (this.atlasimage) {
-                Game.b_ctx.rotate(r - this.imagerotation) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-            } else {
-                Game.b_ctx.rotate(r) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-            }
-            Game.b_ctx.restore()
+            this.xd = this.bodyGroup[i].GetPosition().x
+            this.yd = this.bodyGroup[i].GetPosition().y
+            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            Game.renderer.draw(this)
+
         }
     }
 })
@@ -27073,6 +27060,7 @@ CG.B2DEntity.extend('B2DBridge', {
      */
     init: function (world, name, image, x, y, length, segments, segmentHeight, scale) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DBridge'
         /**
          * @property length
          * @type {Number}
@@ -27113,6 +27101,10 @@ CG.B2DEntity.extend('B2DBridge', {
          * @type {Number}
          */
         this.bodyCount = 0
+
+        this.xd = 0
+        this.yd = 0
+        this.rd = 0
 
         // BridgeStart
 
@@ -27171,20 +27163,12 @@ CG.B2DEntity.extend('B2DBridge', {
     },
     draw: function () {
         for (var i = 2; i <= this.bodyCount; i++) {
-            var x = this.bodyGroup[i].GetPosition().x
-            var y = this.bodyGroup[i].GetPosition().y
-            var r = this.bodyGroup[i].GetAngleRadians()
-            Game.b_ctx.save()
-            Game.b_ctx.globalAlpha = this.alpha
-            Game.b_ctx.translate(x * this.scale, y * this.scale)
-            if (this.atlasimage) {
-                Game.b_ctx.rotate(r - this.imagerotation) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-            } else {
-                Game.b_ctx.rotate(r) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-            }
-            Game.b_ctx.restore()
+            this.xd = this.bodyGroup[i].GetPosition().x
+            this.yd = this.bodyGroup[i].GetPosition().y
+            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            Game.renderer.draw(this)
+
         }
     }
 })
@@ -27301,8 +27285,6 @@ CG.Layer.extend('B2DWorld', {
     draw: function () {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
-
-        //TODO ? place for CanvasRenderer ?
 
         for (var i = 0, l = this.elements.length; i < l; i++) {
             this.elements[i].draw()
