@@ -16,6 +16,7 @@ Game = (function () {
         b_ctx: {},
         asset: {}, //new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
         director: new CG.Director(),
+        renderer: new CG.CanvasRenderer(),
         delta: new CG.Delta(60),
         preload: function () {
             //canvas for ouput

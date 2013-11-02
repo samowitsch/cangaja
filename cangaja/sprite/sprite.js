@@ -16,6 +16,7 @@ CG.Rectangle.extend('Sprite', {
      */
     init:function (image, position) {
         this._super(position, 0, 0)
+        this.instanceOf = 'Sprite'
 
         /**
          @property atlasimage {boolean}
@@ -124,19 +125,9 @@ CG.Rectangle.extend('Sprite', {
         }
     },
     draw:function () {
-        this.updateDiff()
 
-        Game.b_ctx.save()
-        Game.b_ctx.globalAlpha = this.alpha
-        Game.b_ctx.translate(this.position.x, this.position.y)
-        if (this.atlasimage) {
-            Game.b_ctx.rotate((this.rotation - this.imagerotation) * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth * this.xscale, this.cutheight * this.yscale)
-        } else {
-            Game.b_ctx.rotate(this.rotation * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width * this.xscale, this.image.height * this.yscale)
-        }
-        Game.b_ctx.restore()
+        Game.renderer.draw(this);
+
     },
 
     /**

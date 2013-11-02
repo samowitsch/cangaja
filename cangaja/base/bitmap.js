@@ -22,6 +22,7 @@ CG.Entity.extend('Bitmap', {
      */
     init:function (width, height) {
         this._super(this)
+        this.instanceOf = 'Bitmap'
         this.x = 0
         this.y = 0
         this.bitmap_canvas = document.createElement('canvas')
@@ -50,7 +51,9 @@ CG.Entity.extend('Bitmap', {
     },
 
     draw:function () {
-        Game.b_ctx.drawImage(this.bitmap_canvas, this.x, this.y)
+
+        Game.renderer.draw(this)
+
     },
 
 

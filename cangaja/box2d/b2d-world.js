@@ -110,8 +110,6 @@ CG.Layer.extend('B2DWorld', {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
 
-        //TODO ? place for CanvasRenderer ?
-
         for (var i = 0, l = this.elements.length; i < l; i++) {
             this.elements[i].draw()
         }

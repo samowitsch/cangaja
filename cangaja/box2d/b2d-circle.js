@@ -23,6 +23,7 @@ CG.B2DEntity.extend('B2DCircle', {
      */
     init:function (world, name, image, radius, x, y, scale, b2BodyType) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DCircle'
         /**
          * @property radius
          * @type {Number}

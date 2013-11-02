@@ -22,6 +22,7 @@ CG.B2DEntity.extend('B2DRectangle', {
      */
     init:function (world, name, image, x, y, scale, b2BodyType) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DRectangle'
 
         /**
          * @property bodyDef.stat

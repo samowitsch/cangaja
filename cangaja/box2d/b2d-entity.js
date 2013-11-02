@@ -23,6 +23,7 @@ CG.Entity.extend('B2DEntity', {
 
     init:function (name, image, world, x, y, scale) {
         this._super()
+        this.instanceOf = 'B2DEntity'
         this.setImage(image)
         /**
          * @property body
@@ -139,17 +140,9 @@ CG.Entity.extend('B2DEntity', {
     update:function () {
     },
     draw:function () {
-        Game.b_ctx.save()
-        Game.b_ctx.globalAlpha = this.alpha
-        Game.b_ctx.translate(this.body.GetPosition().x * this.scale, this.body.GetPosition().y * this.scale)
-        if (this.atlasimage) {
-            Game.b_ctx.rotate((this.body.GetAngleRadians() - this.imagerotation)) // * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-        } else {
-            Game.b_ctx.rotate(this.body.GetAngleRadians()) // * CG.Const_PI_180)
-            Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-        }
-        Game.b_ctx.restore()
+
+        Game.renderer.draw(this)
+
     }
 })
 

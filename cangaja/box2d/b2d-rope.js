@@ -25,6 +25,7 @@ CG.B2DEntity.extend('B2DRope', {
      */
     init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DRope'
         /**
          * @property length
          * @type {Number}
@@ -65,6 +66,10 @@ CG.B2DEntity.extend('B2DRope', {
          * @type {Number}
          */
         this.bodyCount = 0
+
+        this.xd = 0
+        this.yd = 0
+        this.rd = 0
 
         // RopeStart
         this.fixtureDef = new b2FixtureDef()
@@ -115,20 +120,12 @@ CG.B2DEntity.extend('B2DRope', {
 
     draw:function () {
         for (var i = 1; i <= this.bodyCount; i++) {
-            var x = this.bodyGroup[i].GetPosition().x
-            var y = this.bodyGroup[i].GetPosition().y
-            var r = this.bodyGroup[i].GetAngleRadians()
-            Game.b_ctx.save()
-            Game.b_ctx.globalAlpha = this.alpha
-            Game.b_ctx.translate(x * this.scale, y * this.scale)
-            if (this.atlasimage) {
-                Game.b_ctx.rotate(r - this.imagerotation) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, this.cutwidth, this.cutheight, 0 - this.xhandle, 0 - this.yhandle, this.cutwidth, this.cutheight)
-            } else {
-                Game.b_ctx.rotate(r) // * CG.Const_PI_180)
-                Game.b_ctx.drawImage(this.image, 0 - this.xhandle, 0 - this.yhandle, this.image.width, this.image.height)
-            }
-            Game.b_ctx.restore()
+            this.xd = this.bodyGroup[i].GetPosition().x
+            this.yd = this.bodyGroup[i].GetPosition().y
+            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            Game.renderer.draw(this)
+
         }
     }
 })

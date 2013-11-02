@@ -26,6 +26,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      */
     init:function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DPolygon'
         /**
          * @property polys
          * @type {Array}
