@@ -191,6 +191,7 @@ CG.B2DEntity.extend(&#x27;B2DLine&#x27;, {
      *&#x2F;
     init:function (world, name, start, end, scale) {
         this._super(name, false, world, 0, 0, scale) &#x2F;&#x2F;TODO clean arguments?
+        this.instanceOf = &#x27;B2DLine&#x27;
         &#x2F;**
          * @property start
          * @type {b2Vec2}

@@ -192,6 +192,7 @@ CG.B2DEntity.extend(&#x27;B2DChainShape&#x27;, {
      *&#x2F;
     init:function (world, name, vertices, x, y, scale, b2BodyType) {
         this._super(name, false, world, x, y, scale)
+        this.instanceOf = &#x27;B2DChainShape&#x27;
         &#x2F;**
          * @property polys
          * @type {Array}

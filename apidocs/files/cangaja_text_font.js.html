@@ -190,6 +190,7 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @return {*}
      *&#x2F;
     init: function () {
+        this.instanceOf = &#x27;Font&#x27;
         &#x2F;**
          @property atlas {Image}
          *&#x2F;
@@ -263,6 +264,18 @@ CG.Entity.extend(&#x27;Font&#x27;, {
          @property scaleH {Number}
          *&#x2F;
         this.scaleH = 0
+        &#x2F;**
+         @property text {String}
+         *&#x2F;
+        this.text = &#x27;&#x27;
+        &#x2F;**
+         @property currentX {Number}
+         *&#x2F;
+        this.currentX = 0
+        &#x2F;**
+         @property currentY {Number}
+         *&#x2F;
+        this.currentY = 0
         return this
     },
     &#x2F;**
@@ -291,28 +304,13 @@ CG.Entity.extend(&#x27;Font&#x27;, {
      * @param ypos {Number} the y position
      *&#x2F;
     drawText: function (text, xpos, ypos) {
-        var currx = xpos
-        var curry = ypos
 
-        for (var i = 0, l = text.length; i &lt; l; i++) {
-            var charCode = text.charCodeAt(i)
-            try {
-                Game.b_ctx.drawImage(
-                    this.atlas,
-                    this.x[charCode],
-                    this.y[charCode],
-                    this.width[charCode],
-                    this.height[charCode],
-                    currx,
-                    curry + this.yoff[charCode],
-                    this.width[charCode],
-                    this.height[charCode]
-                )
-            } catch (e) {
-                &#x2F;&#x2F;console.log(&quot;drawText error: &quot; + e)
-            }
-            currx += this.xadv[charCode]
-        }
+        this.text = text
+        this.currentX = xpos
+        this.currentY = ypos
+
+        Game.renderer.draw(this)
+
     },
 
     &#x2F;**

@@ -200,6 +200,7 @@ CG.Entity.extend(&#x27;Map&#x27;, {
      *&#x2F;
     init:function (width, height, mapname) {
         this._super(mapname)
+        this.instanceOf = &#x27;Map&#x27;
 
         &#x2F;**
          * @property elements
@@ -716,6 +717,15 @@ CG.Entity.extend(&#x27;Map&#x27;, {
         this.sy = sy || this.sy || 0
         this.callback = callback || false
 
+        &#x2F;&#x2F;for renderer
+        this.rx = 0
+        this.ry = 0
+        this.cx = 0
+        this.cy = 0
+        this.xpos = 0
+        this.ypos = 0
+        this.layer = 0
+
         &#x2F;&#x2F;update all points an areas
         this.updatePointsAndAreas()
 
@@ -725,10 +735,10 @@ CG.Entity.extend(&#x27;Map&#x27;, {
         if (this.visible) {
             this.updateAnimation()
             if (this.layers.length &gt; 0) {
-                for (var layer = 0, l = this.layers.length; layer &lt; l; layer++) {
-                    var tl = this.layers[layer]
+                for (this.layer = 0, l = this.layers.length; this.layer &lt; l; this.layer++) {
+                    var tl = this.layers[this.layer]
                     &#x2F;&#x2F;render control, render by name, layer number or &#x27;all&#x27;&#x27;
-                    if (this.renderlayer == tl.name || this.renderlayer == layer || this.renderlayer == &#x27;all&#x27;) {
+                    if (this.renderlayer == tl.name || this.renderlayer == this.layer || this.renderlayer == &#x27;all&#x27;) {
                         &#x2F;&#x2F; MAP ORTHOGONAL
                         if (this.orientation == &#x27;orthogonal&#x27; &amp;&amp; tl.visible == true) {
                             modx = (this.bx * this.xscale) % this.tilewidth
@@ -772,8 +782,8 @@ CG.Entity.extend(&#x27;Map&#x27;, {
                                             if (mody &lt; 0) {
                                                 mody += this.tileheight
                                             }
-                                            rx = x - modx - this.bx
-                                            ry = y - mody - this.by
+                                            this.rx = x - modx - this.bx
+                                            this.ry = y - mody - this.by
 
 
                                             &#x2F;&#x2F;time for collision detection?
@@ -782,7 +792,7 @@ CG.Entity.extend(&#x27;Map&#x27;, {
                                             &#x2F;&#x2F;include some layer functionality here and render some sprites between map layers?
                                             if (this.elements.length &gt; 0 &amp;&amp; this.layertocheck == l) {
                                                 for (var o = 0, l = this.elements.length; o &lt; l; o++) {
-                                                    if (this.checkMapCollision(this.elements[0], rx, ry)) {
+                                                    if (this.checkMapCollision(this.elements[0], this.rx, this.ry)) {
                                                         this.callback(this.elements[o], this.tileproperties[gid])
                                                     }
                                                 }
@@ -790,17 +800,11 @@ CG.Entity.extend(&#x27;Map&#x27;, {
 
 
                                             &#x2F;&#x2F;margin&#x2F;spacing?
-                                            cx = (gid % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
-                                            cy = Math.floor(this.tilewidth * gid &#x2F; this.atlaswidth) * this.tileheight
+                                            this.cx = (gid % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
+                                            this.cy = Math.floor(this.tilewidth * gid &#x2F; this.atlaswidth) * this.tileheight
 
-                                            Game.b_ctx.save()
-                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
-                                            Game.b_ctx.translate(rx, ry)
-                                            try {
-                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileheight, this.sx, this.sy, this.tilewidth * this.xscale, this.tileheight * this.yscale)
-                                            } catch (e) {
-                                            }
-                                            Game.b_ctx.restore()
+                                            Game.renderer.draw(this)
+
                                         }
                                     }
                                     x = x + this.tilewidth
@@ -824,21 +828,15 @@ CG.Entity.extend(&#x27;Map&#x27;, {
 
                                 while (ry &gt;= 0 &amp;&amp; rx &lt; tl.width) {
                                     var gid = tl.tiles[rx + ry * tl.width]
-                                    var xpos = (rx - ry - 1) * this.tilewidth &#x2F; 2 - bx
-                                    var ypos = (rx + ry + 1) * this.tileheight &#x2F; 2 - by
-                                    if (xpos &gt; -this.tileset.tilewidth &amp;&amp; xpos &lt; bw &amp;&amp; ypos &gt; -this.tileset.tileheight &amp;&amp; ypos &lt; bh) {
+                                    this.xpos = (rx - ry - 1) * this.tilewidth &#x2F; 2 - bx
+                                    this.ypos = (rx + ry + 1) * this.tileheight &#x2F; 2 - by
+                                    if (this.xpos &gt; -this.tileset.tilewidth &amp;&amp; this.xpos &lt; bw &amp;&amp; this.ypos &gt; -this.tileset.tileheight &amp;&amp; this.ypos &lt; bh) {
                                         if (gid &gt; 0) {
-                                            cx = ((gid - 1) % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
-                                            cy = Math.floor(this.tilewidth * (gid - 1) &#x2F; this.atlaswidth) * this.tileset.tileheight
-                                            Game.b_ctx.save()
-                                            Game.b_ctx.globalAlpha = this.layers[layer].opacity
-                                            Game.b_ctx.translate(xpos, ypos)
-                                            try {
-                                                Game.b_ctx.drawImage(this.atlas, cx, cy, this.tilewidth, this.tileset.tileheight, 0, 0, this.tilewidth * this.xscale, this.tileset.tileheight * this.yscale)
-                                            } catch (e) {
+                                            this.cx = ((gid - 1) % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
+                                            this.cy = Math.floor(this.tilewidth * (gid - 1) &#x2F; this.atlaswidth) * this.tileset.tileheight
 
-                                            }
-                                            Game.b_ctx.restore()
+                                            Game.renderer.draw(this)
+
                                         }
                                     }
                                     ry -= 1
@@ -1063,15 +1061,15 @@ CG.Entity.extend(&#x27;Map&#x27;, {
         &#x2F;&#x2F;TODO return detailed collision object or offsets instead of true?
         if (element.boundingradius &gt; 0) {
             &#x2F;&#x2F;circular collision
-            xr = element.boundingradius &#x2F; 2 * element.xscale
-            yr = element.boundingradius &#x2F; 2 * element.yscale
+            var xr = element.boundingradius &#x2F; 2 * element.xscale
+            var yr = element.boundingradius &#x2F; 2 * element.yscale
             if (element.position.x + xr &gt;= rx &amp;&amp; element.position.x - xr &lt;= rx + this.tilewidth &amp;&amp; element.position.y + yr &gt;= ry &amp;&amp; element.position.y - yr &lt;= ry + this.tileheight) {
                 return true
             }
         } else {
             &#x2F;&#x2F;bounding collision
-            xw = element.width &#x2F; 2 * element.xscale
-            yh = element.height &#x2F; 2 * element.yscale
+            var xw = element.width &#x2F; 2 * element.xscale
+            var yh = element.height &#x2F; 2 * element.yscale
             if (element.position.x + xw &gt;= rx &amp;&amp; element.position.x - xw &lt;= rx + this.tilewidth &amp;&amp; element.position.y + yh &gt;= ry &amp;&amp; element.position.y - yh &lt;= ry + this.tileheight) {
                 return true
             }

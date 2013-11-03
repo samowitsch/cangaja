@@ -290,8 +290,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "cangaja/renderer/renderer.js": {
-            "name": "cangaja/renderer/renderer.js",
+        "cangaja/renderer/canvasrenderer.js": {
+            "name": "cangaja/renderer/canvasrenderer.js",
             "modules": {},
             "classes": {
                 "CG.CanvasRenderer": 1
@@ -919,7 +919,7 @@
             "extension_for": [],
             "module": "CG",
             "namespace": "",
-            "file": "cangaja/renderer/renderer.js",
+            "file": "cangaja/renderer/canvasrenderer.js",
             "line": 1,
             "description": "A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)\nHow to implement all the different classes....?",
             "extends": "CG.Class"
@@ -1330,7 +1330,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 33,
+            "line": 34,
             "description": "Loads an image and draws it to the buffer",
             "itemtype": "method",
             "name": "loadImage",
@@ -1346,7 +1346,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 57,
+            "line": 60,
             "itemtype": "method",
             "name": "clearBuffer",
             "class": "CG.Bitmap",
@@ -1354,7 +1354,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 65,
+            "line": 68,
             "itemtype": "method",
             "name": "drawImageToBuffer",
             "class": "CG.Bitmap",
@@ -1362,7 +1362,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 74,
+            "line": 77,
             "itemtype": "method",
             "name": "clearRect",
             "params": [
@@ -1392,7 +1392,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 89,
+            "line": 92,
             "itemtype": "method",
             "name": "clearCircle",
             "params": [
@@ -1417,7 +1417,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 106,
+            "line": 109,
             "itemtype": "method",
             "name": "getPixel",
             "params": [
@@ -1441,7 +1441,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 117,
+            "line": 120,
             "itemtype": "method",
             "name": "getPixels",
             "params": [
@@ -2183,7 +2183,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 28,
+            "line": 29,
             "itemtype": "property",
             "name": "length",
             "type": "{Number}",
@@ -2192,7 +2192,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "property",
             "name": "segments",
             "type": "{Number}",
@@ -2201,7 +2201,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "property",
             "name": "segmentHeight",
             "type": "{Number}",
@@ -2210,7 +2210,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "segmentWidth",
             "type": "{Number}",
@@ -2219,7 +2219,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 48,
+            "line": 49,
             "itemtype": "property",
             "name": "anchor",
             "type": "{b2Vec2}",
@@ -2228,7 +2228,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 53,
+            "line": 54,
             "itemtype": "property",
             "name": "prevBodf",
             "type": "{Object}",
@@ -2237,7 +2237,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "bodyGroup",
             "type": "{Array}",
@@ -2246,7 +2246,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-bridge.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "bodyCount",
             "type": "{Number}",
@@ -2305,7 +2305,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 25,
+            "line": 26,
             "itemtype": "property",
             "name": "polys",
             "type": "{Array}",
@@ -2314,7 +2314,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 30,
+            "line": 31,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -2323,7 +2323,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 35,
+            "line": 36,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -2332,7 +2332,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 40,
+            "line": 41,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -2341,7 +2341,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 45,
+            "line": 46,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DChainShape",
@@ -2349,7 +2349,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 49,
+            "line": 50,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -2358,7 +2358,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 54,
+            "line": 55,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -2367,7 +2367,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "fixDef.shape",
             "type": "{b2CircleShape}",
@@ -2376,7 +2376,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 65,
+            "line": 66,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -2385,7 +2385,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-chainshape.js",
-            "line": 75,
+            "line": 76,
             "description": "convertRealWorldPointToBox2DVec2 converts real world vectors to box2d world vecs depending on scale",
             "itemtype": "method",
             "name": "convertRealWorldPointToBox2DVec2",
@@ -2460,7 +2460,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 26,
+            "line": 27,
             "itemtype": "property",
             "name": "radius",
             "type": "{Number}",
@@ -2469,7 +2469,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 31,
+            "line": 32,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -2478,7 +2478,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 37,
+            "line": 38,
             "itemtype": "property",
             "name": "bodyDef.position.x",
             "type": "{Number}",
@@ -2487,7 +2487,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 42,
+            "line": 43,
             "itemtype": "property",
             "name": "bodyDef.position.y",
             "type": "{Number}",
@@ -2496,7 +2496,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 47,
+            "line": 48,
             "itemtype": "property",
             "name": "bdyDef.userData",
             "type": "{*}",
@@ -2505,7 +2505,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 52,
+            "line": 53,
             "itemtype": "property",
             "name": "fixDef.shape",
             "type": "{b2CircleShape}",
@@ -2514,7 +2514,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-circle.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -2568,7 +2568,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 27,
+            "line": 28,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -2577,7 +2577,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 32,
+            "line": 33,
             "itemtype": "property",
             "name": "x",
             "type": "{Number}",
@@ -2586,7 +2586,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 37,
+            "line": 38,
             "itemtype": "property",
             "name": "y",
             "type": "{Number}",
@@ -2595,7 +2595,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 42,
+            "line": 43,
             "itemtype": "property",
             "name": "scale",
             "type": "{Number}",
@@ -2604,7 +2604,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 47,
+            "line": 48,
             "itemtype": "property",
             "name": "id",
             "type": "{Object}",
@@ -2613,7 +2613,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 52,
+            "line": 53,
             "itemtype": "property",
             "name": "world",
             "type": "{b2World}",
@@ -2622,7 +2622,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 57,
+            "line": 58,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -2631,7 +2631,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 62,
+            "line": 63,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -2640,7 +2640,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 68,
+            "line": 69,
             "itemtype": "property",
             "name": "bodyDef",
             "type": "{b2BodyDef}",
@@ -2649,7 +2649,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 73,
+            "line": 74,
             "itemtype": "property",
             "name": "bodyDef.alowSleep",
             "type": "{Boolean}",
@@ -2658,7 +2658,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 78,
+            "line": 79,
             "itemtype": "property",
             "name": "bodyDef.awake",
             "type": "{Boolean}",
@@ -2667,7 +2667,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 86,
+            "line": 87,
             "itemtype": "property",
             "name": "fixDef",
             "type": "{b2FixtureDef}",
@@ -2676,7 +2676,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 91,
+            "line": 92,
             "itemtype": "property",
             "name": "fixDef.density",
             "type": "{Number}",
@@ -2685,7 +2685,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 96,
+            "line": 97,
             "itemtype": "property",
             "name": "fixDef.friction",
             "type": "{Number}",
@@ -2694,7 +2694,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 101,
+            "line": 102,
             "itemtype": "property",
             "name": "fixDef.restitution",
             "type": "{Number}",
@@ -2703,7 +2703,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 107,
+            "line": 108,
             "itemtype": "property",
             "name": "isHit",
             "type": "{Boolean}",
@@ -2712,7 +2712,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 112,
+            "line": 113,
             "itemtype": "property",
             "name": "strength",
             "type": "{Number}",
@@ -2721,7 +2721,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 117,
+            "line": 118,
             "itemtype": "property",
             "name": "dead",
             "type": "{Boolean}",
@@ -2730,7 +2730,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 125,
+            "line": 126,
             "itemtype": "method",
             "name": "hit",
             "params": [
@@ -2788,7 +2788,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 24,
+            "line": 25,
             "itemtype": "property",
             "name": "start",
             "type": "{b2Vec2}",
@@ -2797,7 +2797,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 29,
+            "line": 30,
             "itemtype": "property",
             "name": "end",
             "type": "{b2Vec2}",
@@ -2806,7 +2806,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -2815,7 +2815,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 39,
+            "line": 40,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -2824,7 +2824,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 44,
+            "line": 45,
             "itemtype": "property",
             "name": "fixDef.shape",
             "type": "{b2PolygonShape}",
@@ -2833,7 +2833,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 50,
+            "line": 51,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{Number}",
@@ -2842,7 +2842,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 55,
+            "line": 56,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DLine",
@@ -2850,7 +2850,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 59,
+            "line": 60,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -2859,7 +2859,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-line.js",
-            "line": 64,
+            "line": 65,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -2928,7 +2928,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 29,
+            "line": 30,
             "itemtype": "property",
             "name": "polys",
             "type": "{Array}",
@@ -2937,7 +2937,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "property",
             "name": "jsondata",
             "type": "{*}",
@@ -2946,7 +2946,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 40,
+            "line": 41,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -2955,7 +2955,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 45,
+            "line": 46,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -2964,7 +2964,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 50,
+            "line": 51,
             "itemtype": "property",
             "name": "vecs",
             "type": "{Array}",
@@ -2973,7 +2973,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 57,
+            "line": 58,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -2982,7 +2982,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DPolygon",
@@ -2990,7 +2990,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 67,
+            "line": 68,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -2999,7 +2999,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 72,
+            "line": 73,
             "itemtype": "property",
             "name": "bullet",
             "type": "{*}",
@@ -3008,7 +3008,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 77,
+            "line": 78,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{*}",
@@ -3017,7 +3017,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 87,
+            "line": 88,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -3026,7 +3026,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 108,
+            "line": 109,
             "description": "extract the polygons out of the PhysicsEditor json file and collect them into an array",
             "itemtype": "method",
             "name": "getPolysFromJson",
@@ -3089,7 +3089,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 26,
+            "line": 27,
             "itemtype": "property",
             "name": "bodyDef.stat",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -3098,7 +3098,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 32,
+            "line": 33,
             "itemtype": "property",
             "name": "fixDef.shape",
             "type": "{b2PolygonShape}",
@@ -3107,7 +3107,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "property",
             "name": "bodyDef.position.x",
             "type": "{Number}",
@@ -3116,7 +3116,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "bodyDef.position.y",
             "type": "{Number}",
@@ -3125,7 +3125,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 48,
+            "line": 49,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -3134,7 +3134,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rectangle.js",
-            "line": 53,
+            "line": 54,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -3203,7 +3203,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 28,
+            "line": 29,
             "itemtype": "property",
             "name": "length",
             "type": "{Number}",
@@ -3212,7 +3212,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "property",
             "name": "segments",
             "type": "{Number}",
@@ -3221,7 +3221,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "property",
             "name": "segmentHeight",
             "type": "{Number}",
@@ -3230,7 +3230,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "segmentWidth",
             "type": "{*}",
@@ -3239,7 +3239,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 48,
+            "line": 49,
             "itemtype": "property",
             "name": "anchor",
             "type": "{b2Vec2}",
@@ -3248,7 +3248,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 53,
+            "line": 54,
             "itemtype": "property",
             "name": "prevBody",
             "type": "{Object}",
@@ -3257,7 +3257,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "bodyGroup",
             "type": "{Array}",
@@ -3266,7 +3266,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-rope.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "bodyCount",
             "type": "{Number}",
@@ -3619,7 +3619,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 126,
+            "line": 124,
             "description": "Custom extended objects can be added to the B2DWork with this method.",
             "itemtype": "method",
             "name": "addCustom",
@@ -3634,7 +3634,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 139,
+            "line": 137,
             "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
@@ -3670,7 +3670,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 158,
+            "line": 156,
             "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
@@ -3696,7 +3696,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 175,
+            "line": 173,
             "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
@@ -3737,7 +3737,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 195,
+            "line": 193,
             "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -3783,7 +3783,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 218,
+            "line": 216,
             "description": "createTerrain",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -3829,7 +3829,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 239,
+            "line": 237,
             "description": "createChainShape",
             "itemtype": "method",
             "name": "createChainShape",
@@ -3860,7 +3860,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 257,
+            "line": 255,
             "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
@@ -3910,7 +3910,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 279,
+            "line": 277,
             "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
@@ -3960,7 +3960,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 301,
+            "line": 299,
             "description": "Enables dragging B2D objects with the mouse.",
             "itemtype": "method",
             "name": "mouseDownAt",
@@ -3981,7 +3981,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 328,
+            "line": 326,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld",
@@ -3989,7 +3989,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 335,
+            "line": 333,
             "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
@@ -4014,7 +4014,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 368,
+            "line": 366,
             "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -4038,7 +4038,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 392,
+            "line": 390,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -4050,7 +4050,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 399,
+            "line": 397,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -4064,7 +4064,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 406,
+            "line": 404,
             "itemtype": "method",
             "name": "removeElementByUid",
             "params": [
@@ -4078,7 +4078,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 419,
+            "line": 417,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -4100,7 +4100,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 432,
+            "line": 430,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -4114,7 +4114,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 456,
+            "line": 454,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -5727,7 +5727,7 @@
             "module": "CG"
         },
         {
-            "file": "cangaja/renderer/renderer.js",
+            "file": "cangaja/renderer/canvasrenderer.js",
             "line": 14,
             "itemtype": "method",
             "name": "init",
@@ -5786,7 +5786,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "property",
             "name": "loop",
             "type": "Boolean",
@@ -5795,7 +5795,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 37,
+            "line": 38,
             "itemtype": "property",
             "name": "status",
             "type": "Number",
@@ -5804,7 +5804,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 41,
+            "line": 42,
             "itemtype": "property",
             "name": "currentframe",
             "type": "Number",
@@ -5813,7 +5813,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 45,
+            "line": 46,
             "itemtype": "property",
             "name": "frames",
             "type": "Number",
@@ -5822,7 +5822,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 49,
+            "line": 50,
             "itemtype": "property",
             "name": "startframe",
             "type": "Number",
@@ -5831,7 +5831,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 53,
+            "line": 54,
             "itemtype": "property",
             "name": "endframe",
             "type": "Number",
@@ -5840,7 +5840,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 57,
+            "line": 58,
             "itemtype": "property",
             "name": "width",
             "type": "Number",
@@ -5849,7 +5849,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 61,
+            "line": 62,
             "itemtype": "property",
             "name": "height",
             "type": "Number",
@@ -5858,7 +5858,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 75,
+            "line": 76,
             "itemtype": "property",
             "name": "fx",
             "type": "Number",
@@ -5867,7 +5867,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 79,
+            "line": 80,
             "itemtype": "property",
             "name": "fy",
             "type": "Number",
@@ -5876,7 +5876,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 84,
+            "line": 85,
             "itemtype": "property",
             "name": "delay",
             "type": "Number",
@@ -5885,7 +5885,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 88,
+            "line": 89,
             "itemtype": "property",
             "name": "tempdelay",
             "type": "Number",
@@ -5934,7 +5934,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 24,
+            "line": 25,
             "itemtype": "property",
             "name": "font",
             "type": "CG.Font",
@@ -5943,7 +5943,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 28,
+            "line": 29,
             "itemtype": "property",
             "name": "clickedCallback",
             "type": "Callback",
@@ -5952,7 +5952,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 32,
+            "line": 33,
             "itemtype": "property",
             "name": "clicked",
             "type": "Boolean",
@@ -5961,7 +5961,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 36,
+            "line": 37,
             "itemtype": "property",
             "name": "clickable",
             "type": "Boolean",
@@ -5971,6 +5971,15 @@
         {
             "file": "cangaja/sprite/button.js",
             "line": 41,
+            "itemtype": "property",
+            "name": "visible",
+            "type": "Boolean",
+            "class": "CG.Button",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/sprite/button.js",
+            "line": 46,
             "itemtype": "property",
             "name": "text",
             "type": "String",
@@ -5995,7 +6004,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 19,
+            "line": 20,
             "itemtype": "property",
             "name": "lifetime",
             "type": "{Number}",
@@ -6004,7 +6013,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 24,
+            "line": 25,
             "itemtype": "property",
             "name": "currtime",
             "type": "{Number}",
@@ -6013,7 +6022,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 29,
+            "line": 30,
             "itemtype": "property",
             "name": "aging",
             "type": "{Number}",
@@ -6022,7 +6031,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "property",
             "name": "fadeout",
             "type": "{Boolean}",
@@ -6031,7 +6040,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 39,
+            "line": 40,
             "itemtype": "property",
             "name": "alpha",
             "type": "{Number}",
@@ -6040,7 +6049,7 @@
         },
         {
             "file": "cangaja/sprite/particle.js",
-            "line": 44,
+            "line": 45,
             "itemtype": "property",
             "name": "gravity",
             "type": "{Number}",
@@ -6074,7 +6083,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 20,
+            "line": 21,
             "itemtype": "property",
             "name": "atlasimage",
             "type": "Boolean",
@@ -6083,7 +6092,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 26,
+            "line": 27,
             "itemtype": "property",
             "name": "bound",
             "type": "CG.Bound",
@@ -6092,7 +6101,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 30,
+            "line": 31,
             "itemtype": "property",
             "name": "diffpoint",
             "type": "CG.Point",
@@ -6101,7 +6110,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 35,
+            "line": 36,
             "itemtype": "property",
             "name": "xspeed",
             "type": "Number",
@@ -6110,7 +6119,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 39,
+            "line": 40,
             "itemtype": "property",
             "name": "xscale",
             "type": "Number",
@@ -6119,7 +6128,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "xhandle",
             "type": "Number",
@@ -6128,7 +6137,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 47,
+            "line": 48,
             "itemtype": "property",
             "name": "yspeed",
             "type": "Number",
@@ -6137,7 +6146,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 51,
+            "line": 52,
             "itemtype": "property",
             "name": "yscale",
             "type": "Number",
@@ -6146,7 +6155,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 55,
+            "line": 56,
             "itemtype": "property",
             "name": "yhandle",
             "type": "Number",
@@ -6155,7 +6164,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 59,
+            "line": 60,
             "itemtype": "property",
             "name": "boundsMode",
             "type": "False/string",
@@ -6164,7 +6173,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "rotation",
             "type": "Integer/float",
@@ -6173,7 +6182,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 67,
+            "line": 68,
             "itemtype": "property",
             "name": "rotationspeed",
             "type": "Integer/float",
@@ -6182,7 +6191,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 71,
+            "line": 72,
             "itemtype": "property",
             "name": "alpha",
             "type": "Float",
@@ -6191,7 +6200,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 75,
+            "line": 76,
             "itemtype": "property",
             "name": "clicked",
             "type": "Boolean",
@@ -6200,7 +6209,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 80,
+            "line": 81,
             "itemtype": "property",
             "name": "followobject",
             "type": "Boolean/object",
@@ -6209,7 +6218,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 84,
+            "line": 85,
             "itemtype": "property",
             "name": "followspeed",
             "type": "Boolean/integer",
@@ -6218,7 +6227,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 88,
+            "line": 89,
             "itemtype": "property",
             "name": "followsteps",
             "type": "Boolean/integer",
@@ -6227,7 +6236,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 93,
+            "line": 94,
             "itemtype": "property",
             "name": "attachedobject",
             "type": "Boolean",
@@ -6236,7 +6245,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 97,
+            "line": 98,
             "itemtype": "property",
             "name": "offsetx",
             "type": "Number",
@@ -6245,7 +6254,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 101,
+            "line": 102,
             "itemtype": "property",
             "name": "offsety",
             "type": "Number",
@@ -6254,7 +6263,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 142,
+            "line": 133,
             "description": "Checks the bound if a boundMode (bounce or slide) is set",
             "itemtype": "method",
             "name": "checkBound",
@@ -6263,7 +6272,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 185,
+            "line": 176,
             "description": "calculate offset if bound is moving",
             "itemtype": "method",
             "name": "updateDiff",
@@ -6272,7 +6281,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 199,
+            "line": 190,
             "description": "is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different",
             "itemtype": "method",
             "name": "follow",
@@ -6281,7 +6290,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 233,
+            "line": 224,
             "description": "set the bound of the sprite",
             "itemtype": "method",
             "name": "setBound",
@@ -6297,7 +6306,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 244,
+            "line": 235,
             "description": "if there is a attached object get its position",
             "itemtype": "method",
             "name": "ifAttached",
@@ -6306,7 +6315,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 255,
+            "line": 246,
             "description": "attach a reference of the given object to this object",
             "itemtype": "method",
             "name": "attachObject",
@@ -6315,7 +6324,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 264,
+            "line": 255,
             "description": "removes the attached object reference",
             "itemtype": "method",
             "name": "removeAttachedObject",
@@ -6324,7 +6333,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 273,
+            "line": 264,
             "description": "set the x offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetX",
@@ -6333,7 +6342,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 282,
+            "line": 273,
             "description": "set the y offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetY",
@@ -6355,7 +6364,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 23,
+            "line": 24,
             "itemtype": "property",
             "name": "atlas",
             "type": "Image",
@@ -6364,7 +6373,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 27,
+            "line": 28,
             "itemtype": "property",
             "name": "initText",
             "type": "String",
@@ -6373,7 +6382,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 31,
+            "line": 32,
             "itemtype": "property",
             "name": "chars",
             "type": "Array",
@@ -6382,7 +6391,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 35,
+            "line": 36,
             "itemtype": "property",
             "name": "x",
             "type": "Array",
@@ -6391,7 +6400,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 39,
+            "line": 40,
             "itemtype": "property",
             "name": "y",
             "type": "Array",
@@ -6400,7 +6409,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "width",
             "type": "Array",
@@ -6409,7 +6418,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 47,
+            "line": 48,
             "itemtype": "property",
             "name": "height",
             "type": "Array",
@@ -6418,7 +6427,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 51,
+            "line": 52,
             "itemtype": "property",
             "name": "xoff",
             "type": "Array",
@@ -6427,7 +6436,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 55,
+            "line": 56,
             "itemtype": "property",
             "name": "yoff",
             "type": "Array",
@@ -6436,7 +6445,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 59,
+            "line": 60,
             "itemtype": "property",
             "name": "xadv",
             "type": "Array",
@@ -6445,7 +6454,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "lineHeight",
             "type": "Number",
@@ -6454,7 +6463,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 67,
+            "line": 68,
             "itemtype": "property",
             "name": "face",
             "type": "String",
@@ -6463,7 +6472,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 71,
+            "line": 72,
             "itemtype": "property",
             "name": "size",
             "type": "Number",
@@ -6472,7 +6481,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 75,
+            "line": 76,
             "itemtype": "property",
             "name": "bold",
             "type": "Number",
@@ -6481,7 +6490,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 79,
+            "line": 80,
             "itemtype": "property",
             "name": "italic",
             "type": "Number",
@@ -6490,7 +6499,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 84,
+            "line": 85,
             "itemtype": "property",
             "name": "base",
             "type": "Number",
@@ -6499,7 +6508,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 88,
+            "line": 89,
             "itemtype": "property",
             "name": "scaleW",
             "type": "Number",
@@ -6508,7 +6517,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 92,
+            "line": 93,
             "itemtype": "property",
             "name": "scaleH",
             "type": "Number",
@@ -6517,7 +6526,34 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 98,
+            "line": 97,
+            "itemtype": "property",
+            "name": "text",
+            "type": "String",
+            "class": "CG.Font",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/text/font.js",
+            "line": 101,
+            "itemtype": "property",
+            "name": "currentX",
+            "type": "Number",
+            "class": "CG.Font",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/text/font.js",
+            "line": 105,
+            "itemtype": "property",
+            "name": "currentY",
+            "type": "Number",
+            "class": "CG.Font",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/text/font.js",
+            "line": 111,
             "itemtype": "method",
             "name": "update",
             "class": "CG.Font",
@@ -6525,7 +6561,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 107,
+            "line": 120,
             "itemtype": "method",
             "name": "draw",
             "class": "CG.Font",
@@ -6533,7 +6569,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 116,
+            "line": 129,
             "description": "draw the given text to the canvas",
             "itemtype": "method",
             "name": "draw",
@@ -6559,7 +6595,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 148,
+            "line": 146,
             "description": "get the line height of the current font",
             "itemtype": "method",
             "name": "getLineHeight",
@@ -6572,7 +6608,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 157,
+            "line": 155,
             "description": "get the font size of the current font",
             "itemtype": "method",
             "name": "getFontSize",
@@ -6585,7 +6621,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 166,
+            "line": 164,
             "description": "get the width of the given text",
             "itemtype": "method",
             "name": "getTextWidth",
@@ -6605,7 +6641,7 @@
         },
         {
             "file": "cangaja/text/font.js",
-            "line": 181,
+            "line": 179,
             "description": "loadFont - load and parse the given fontfile",
             "itemtype": "method",
             "name": "loadFont",
@@ -6776,7 +6812,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "property",
             "name": "elements",
             "type": "{Array}",
@@ -6785,7 +6821,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 43,
+            "line": 44,
             "itemtype": "property",
             "name": "points",
             "type": "{Array}",
@@ -6794,7 +6830,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 48,
+            "line": 49,
             "itemtype": "property",
             "name": "areas",
             "type": "{Array}",
@@ -6803,7 +6839,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 53,
+            "line": 54,
             "itemtype": "property",
             "name": "position",
             "type": "{CG.Point}",
@@ -6812,7 +6848,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "changemap",
             "type": "{String}",
@@ -6821,7 +6857,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 63,
+            "line": 64,
             "description": "If set to true the map is being updated with method updateAnimation.\nSee also method description of updateAnimation!",
             "itemtype": "property",
             "name": "animated",
@@ -6831,7 +6867,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 73,
+            "line": 74,
             "itemtype": "property",
             "name": "animDelayFactor",
             "type": "{Number}",
@@ -6840,7 +6876,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 78,
+            "line": 79,
             "itemtype": "property",
             "name": "atlas",
             "type": "{Image}",
@@ -6849,7 +6885,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 83,
+            "line": 84,
             "itemtype": "property",
             "name": "atlaswidth",
             "type": "{Number}",
@@ -6858,7 +6894,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 88,
+            "line": 89,
             "itemtype": "property",
             "name": "atlasheight",
             "type": "{Number}",
@@ -6867,7 +6903,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 93,
+            "line": 94,
             "itemtype": "property",
             "name": "atlastranscol",
             "type": "{String}",
@@ -6876,7 +6912,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 100,
+            "line": 101,
             "itemtype": "property",
             "name": "xml",
             "type": "{String}",
@@ -6885,7 +6921,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 105,
+            "line": 106,
             "itemtype": "property",
             "name": "parser",
             "type": "{DOMParser}",
@@ -6894,7 +6930,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 110,
+            "line": 111,
             "itemtype": "property",
             "name": "xmlDoc",
             "type": "{String}",
@@ -6903,7 +6939,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 116,
+            "line": 117,
             "itemtype": "property",
             "name": "json",
             "type": "{Object}",
@@ -6912,7 +6948,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 121,
+            "line": 122,
             "description": "The tiled layer are parsed into separate layers",
             "itemtype": "property",
             "name": "layers",
@@ -6922,7 +6958,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 130,
+            "line": 131,
             "description": "Defines the layer to draw:\nall - for all layers\nname - the name of layer to draw\nindex - array index of layer",
             "itemtype": "property",
             "name": "renderlayer",
@@ -6932,7 +6968,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 142,
+            "line": 143,
             "itemtype": "property",
             "name": "tileproperties",
             "type": "{Array}",
@@ -6941,7 +6977,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 147,
+            "line": 148,
             "itemtype": "property",
             "name": "orientation",
             "type": "{String}",
@@ -6950,7 +6986,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 152,
+            "line": 153,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -6959,7 +6995,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 157,
+            "line": 158,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -6968,7 +7004,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 162,
+            "line": 163,
             "itemtype": "property",
             "name": "tilewidth",
             "type": "{Number}",
@@ -6977,7 +7013,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 167,
+            "line": 168,
             "itemtype": "property",
             "name": "tileheight",
             "type": "{Number}",
@@ -6986,7 +7022,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 172,
+            "line": 173,
             "itemtype": "property",
             "name": "tileset",
             "type": "{Object}",
@@ -6995,7 +7031,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 184,
+            "line": 185,
             "itemtype": "property",
             "name": "xspeed",
             "type": "{Number}",
@@ -7004,7 +7040,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 189,
+            "line": 190,
             "itemtype": "property",
             "name": "yspeed",
             "type": "{Number}",
@@ -7013,7 +7049,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 194,
+            "line": 195,
             "itemtype": "property",
             "name": "xscale",
             "type": "{Number}",
@@ -7022,7 +7058,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 199,
+            "line": 200,
             "itemtype": "property",
             "name": "yscale",
             "type": "{Number}",
@@ -7031,7 +7067,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 204,
+            "line": 205,
             "itemtype": "property",
             "name": "alpha",
             "type": "{Number}",
@@ -7040,7 +7076,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 209,
+            "line": 210,
             "itemtype": "property",
             "name": "wrapX",
             "deprecated": true,
@@ -7050,7 +7086,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 215,
+            "line": 216,
             "itemtype": "property",
             "name": "wrapY",
             "deprecated": true,
@@ -7060,7 +7096,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 221,
+            "line": 222,
             "itemtype": "property",
             "name": "layertocheck",
             "type": "{Number}",
@@ -7069,7 +7105,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 228,
+            "line": 229,
             "description": "Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.\nAll other formats are not supported!",
             "itemtype": "method",
             "name": "loadMapXml",
@@ -7085,7 +7121,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 408,
+            "line": 409,
             "description": "Load and parse an tilemap json file. Use the tiled json export.\nHopefully the json format has the same functionality as the xml loader ;o)",
             "itemtype": "method",
             "name": "loadMapJson",
@@ -7101,7 +7137,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 522,
+            "line": 523,
             "description": "This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.",
             "itemtype": "method",
             "name": "drawMap",
@@ -7147,7 +7183,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 688,
+            "line": 686,
             "description": "Update all areas and points elements.",
             "itemtype": "method",
             "name": "updatePointsAndAreas",
@@ -7156,7 +7192,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 705,
+            "line": 703,
             "description": "Get all point(s) with the given name in the points",
             "itemtype": "method",
             "name": "getPointsByName",
@@ -7176,7 +7212,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 728,
+            "line": 726,
             "description": "Get all areas with the given name",
             "itemtype": "method",
             "name": "getAreasByName",
@@ -7196,7 +7232,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 752,
+            "line": 750,
             "description": "Defines layer drawing, See property options",
             "itemtype": "method",
             "name": "setLayerToRender",
@@ -7212,7 +7248,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 766,
+            "line": 764,
             "description": "The update method is not complete yet and only experimental.\nAt the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!\nThen also a map class can be added to a layer as an element for auto update/draw from Game.director!",
             "itemtype": "method",
             "name": "update",
@@ -7221,7 +7257,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 800,
+            "line": 798,
             "description": "Get the bounds of the map",
             "itemtype": "method",
             "name": "getBounds",
@@ -7230,7 +7266,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 814,
+            "line": 812,
             "description": "Updates all tilemap properties of the map.\n\nSupported custom tiled map properties for now are (see also tilemap examples):\nanim_delay       => time to used to display an switch to next tile\nanim_direction   => direction for next tile 1 = jump forward, -1 = jump back\nanim_next        => defines the offset\n\nWith this tile properties it is possible to define tilemap animations.\nThese must be defined in the tilemap property window with key/value pairs",
             "itemtype": "method",
             "name": "updateAnimation",
@@ -7239,7 +7275,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 866,
+            "line": 864,
             "description": "Adds a object to the element array, used at the moment for collision detection to tilemap.",
             "itemtype": "method",
             "name": "addElement",
@@ -7255,7 +7291,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 880,
+            "line": 878,
             "description": "Checks if the attached element collides with an tile of the tilemap",
             "itemtype": "method",
             "name": "checkMapCollision",
@@ -7285,7 +7321,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 912,
+            "line": 910,
             "description": "Checks if a external object(s) collides with the areas of the tiled map.\nThis can be elements from an layer or the map itself.",
             "itemtype": "method",
             "name": "checkElementsToAreasCollision",
@@ -7306,7 +7342,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 929,
+            "line": 927,
             "description": "removes the json data of the map object",
             "itemtype": "method",
             "name": "removeJsonData",
@@ -7315,7 +7351,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 937,
+            "line": 935,
             "description": "removes the xml data of the map object",
             "itemtype": "method",
             "name": "removeXmlData",
@@ -7602,11 +7638,11 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:106"
+            "line": " cangaja/base/bitmap.js:109"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:117"
+            "line": " cangaja/base/bitmap.js:120"
         },
         {
             "message": "replacing incorrect tag: returns with return",
@@ -7618,7 +7654,7 @@
         },
         {
             "message": "replacing incorrect tag: extend with extends",
-            "line": " cangaja/renderer/renderer.js:1"
+            "line": " cangaja/renderer/canvasrenderer.js:1"
         },
         {
             "message": "replacing incorrect tag: returns with return",
