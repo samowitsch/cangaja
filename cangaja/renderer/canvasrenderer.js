@@ -35,7 +35,6 @@ CG.Class.extend('CanvasRenderer', {
             case "Button":
             case "Particle":
 
-
                 renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
@@ -51,7 +50,6 @@ CG.Class.extend('CanvasRenderer', {
 
 
             case "Animation":
-
 
                 renderObject.updateDiff()
 
@@ -80,7 +78,6 @@ CG.Class.extend('CanvasRenderer', {
 
             case "Font":
 
-
                 for (var i = 0, l = renderObject.text.length; i < l; i++) {
                     var charCode = renderObject.text.charCodeAt(i)
                     try {
@@ -105,13 +102,11 @@ CG.Class.extend('CanvasRenderer', {
 
             case "Bitmap":
 
-
                 Game.b_ctx.drawImage(renderObject.bitmap_canvas, renderObject.x, renderObject.y)
                 break;
 
 
             case "Map":
-
 
                 if (renderObject.orientation == 'orthogonal') {
 
@@ -140,7 +135,8 @@ CG.Class.extend('CanvasRenderer', {
             case "B2DCircle":
             case "B2DRectangle":
             case "B2DPolygon":
-
+            case "B2DBridge":
+            case "B2DRope":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.translate(renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
@@ -153,20 +149,7 @@ CG.Class.extend('CanvasRenderer', {
                 }
                 break;
 
-            case "B2DBridge":
-            case "B2DRope":
-                Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.xd * renderObject.scale, renderObject.yd * renderObject.scale)
-                if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate(renderObject.rd - renderObject.imagerotation)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
-                } else {
-                    Game.b_ctx.rotate(renderObject.rd)
-                    Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
-                }
-                break;
         }
-
 
         Game.b_ctx.restore()
     }

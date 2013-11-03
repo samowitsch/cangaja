@@ -67,9 +67,8 @@ CG.B2DEntity.extend('B2DBridge', {
          */
         this.bodyCount = 0
 
-        this.xd = 0
-        this.yd = 0
-        this.rd = 0
+        this.body = {}
+
 
         // BridgeStart
 
@@ -128,9 +127,8 @@ CG.B2DEntity.extend('B2DBridge', {
     },
     draw: function () {
         for (var i = 2; i <= this.bodyCount; i++) {
-            this.xd = this.bodyGroup[i].GetPosition().x
-            this.yd = this.bodyGroup[i].GetPosition().y
-            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            this.body = this.bodyGroup[i]
 
             Game.renderer.draw(this)
 
