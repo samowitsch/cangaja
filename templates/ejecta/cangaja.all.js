@@ -9440,7 +9440,8 @@ CG.Class.extend('CanvasRenderer', {
 
 
             case "Sprite":
-
+            case "Button":
+            case "Particle":
 
                 renderObject.updateDiff()
 
@@ -9457,7 +9458,6 @@ CG.Class.extend('CanvasRenderer', {
 
 
             case "Animation":
-
 
                 renderObject.updateDiff()
 
@@ -9484,43 +9484,7 @@ CG.Class.extend('CanvasRenderer', {
                 break;
 
 
-            case "Button":
-
-
-                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
-                if (renderObject.atlasimage) {
-                    var r = renderObject.rotation
-                    Game.b_ctx.rotate((r - renderObject.imagerotation) * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - (renderObject.cutwidth / 2), 0 - (renderObject.cutheight / 2), renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
-                    Game.b_ctx.rotate(renderObject.imagerotation * CG.Const_PI_180)
-                } else {
-                    Game.b_ctx.rotate(r * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, 0 - (renderObject.image.width * renderObject.xscale / 2), 0 - (renderObject.image.height * renderObject.yscale / 2), renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
-                }
-                renderObject.font.drawText(renderObject.text, 0 - (renderObject.font.getTextWidth(renderObject.text) / 2 >> 0), 0 - ((renderObject.font.getFontSize() / 2) >> 0))
-
-                break;
-
-
-            case "Particle":
-
-
-                Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
-                if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - (renderObject.cutwidth / 2), 0 - (renderObject.cutheight / 2), renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
-                    Game.b_ctx.rotate((renderObject.rotation + renderObject.imagerotation) * CG.Const_PI_180)
-                } else {
-                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, 0 - (renderObject.image.width * renderObject.xscale / 2), 0 - (renderObject.image.height * renderObject.yscale / 2), renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
-                }
-
-                break;
-
-
             case "Font":
-
 
                 for (var i = 0, l = renderObject.text.length; i < l; i++) {
                     var charCode = renderObject.text.charCodeAt(i)
@@ -9546,13 +9510,11 @@ CG.Class.extend('CanvasRenderer', {
 
             case "Bitmap":
 
-
                 Game.b_ctx.drawImage(renderObject.bitmap_canvas, renderObject.x, renderObject.y)
                 break;
 
 
             case "Map":
-
 
                 if (renderObject.orientation == 'orthogonal') {
 
@@ -9581,7 +9543,8 @@ CG.Class.extend('CanvasRenderer', {
             case "B2DCircle":
             case "B2DRectangle":
             case "B2DPolygon":
-
+            case "B2DBridge":
+            case "B2DRope":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.translate(renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
@@ -9594,24 +9557,111 @@ CG.Class.extend('CanvasRenderer', {
                 }
                 break;
 
-            case "B2DBridge":
-            case "B2DRope":
-                Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.xd * renderObject.scale, renderObject.yd * renderObject.scale)
-                if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate(renderObject.rd - renderObject.imagerotation)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
-                } else {
-                    Game.b_ctx.rotate(renderObject.rd)
-                    Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
-                }
-                break;
         }
-
 
         Game.b_ctx.restore()
     }
-})/**
+})
+
+
+
+
+/*
+
+Pixi renderer
+
+ context.setTransform(
+
+ transform[0],
+ transform[3],
+ transform[1],
+ transform[4],
+ transform[2],
+ transform[5]
+
+ );
+
+ context.drawImage(displayObject.texture.baseTexture.source,
+ frame.x,
+ frame.y,
+ frame.width,
+ frame.height,
+ (displayObject.anchor.x) * -frame.width,
+ (displayObject.anchor.y) * -frame.height,
+ frame.width,
+ frame.height);
+
+
+
+
+
+
+Pixi Displayobject
+
+
+
+ *
+ * Updates the object transform for rendering
+ *
+ * @method updateTransform
+ * @private
+ *
+PIXI.DisplayObject.prototype.updateTransform = function()
+{
+    // TODO OPTIMIZE THIS!! with dirty
+    if(this.rotation !== this.rotationCache)
+    {
+        this.rotationCache = this.rotation;
+        this._sr =  Math.sin(this.rotation);
+        this._cr =  Math.cos(this.rotation);
+    }
+
+    var localTransform = this.localTransform;
+    var parentTransform = this.parent.worldTransform;
+    var worldTransform = this.worldTransform;
+    //console.log(localTransform)
+    localTransform[0] = this._cr * this.scale.x;
+    localTransform[1] = -this._sr * this.scale.y
+    localTransform[3] = this._sr * this.scale.x;
+    localTransform[4] = this._cr * this.scale.y;
+
+    // TODO --> do we even need a local matrix???
+
+    var px = this.pivot.x;
+    var py = this.pivot.y;
+
+    // Cache the matrix values (makes for huge speed increases!)
+    var a00 = localTransform[0], a01 = localTransform[1], a02 = this.position.x - localTransform[0] * px - py * localTransform[1],
+        a10 = localTransform[3], a11 = localTransform[4], a12 = this.position.y - localTransform[4] * py - px * localTransform[3],
+
+        b00 = parentTransform[0], b01 = parentTransform[1], b02 = parentTransform[2],
+        b10 = parentTransform[3], b11 = parentTransform[4], b12 = parentTransform[5];
+
+    localTransform[2] = a02
+    localTransform[5] = a12
+
+    worldTransform[0] = b00 * a00 + b01 * a10;
+    worldTransform[1] = b00 * a01 + b01 * a11;
+    worldTransform[2] = b00 * a02 + b01 * a12 + b02;
+
+    worldTransform[3] = b10 * a00 + b11 * a10;
+    worldTransform[4] = b10 * a01 + b11 * a11;
+    worldTransform[5] = b10 * a02 + b11 * a12 + b12;
+
+    // because we are using affine transformation, we can optimise the matrix concatenation process.. wooo!
+    // mat3.multiply(this.localTransform, this.parent.worldTransform, this.worldTransform);
+    this.worldAlpha = this.alpha * this.parent.worldAlpha;
+
+    this.vcount = PIXI.visibleCount;
+
+}
+
+
+
+
+
+
+ *//**
  * @description
  *
  * CG.Delta not really used at the moment ;o)
@@ -10976,6 +11026,10 @@ CG.Sprite.extend('Button', {
         this.ifMouseOver()
         this.ifAttached()
 
+        this.xhandle = (this.width * this.xscale / 2)
+        this.yhandle = (this.height * this.yscale / 2)
+
+
         if (this.clicked) {
             if (this.clickedCallback) {
                 this.clicked = false
@@ -10987,6 +11041,12 @@ CG.Sprite.extend('Button', {
         if (this.visible == true) {
 
             Game.renderer.draw(this)
+
+            Game.b_ctx.save()
+            Game.b_ctx.translate(this.position.x, this.position.y)
+            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+            Game.b_ctx.restore()
+
 
         }
     }
@@ -13894,6 +13954,8 @@ CG.Sprite.extend('Particle', {
             this.position.y += this.yspeed
             this.yspeed += this.gravity
             this.rotation += this.rotationspeed
+            this.xhandle = (this.width * this.xscale / 2)
+            this.yhandle = (this.height * this.yscale / 2)
         }
     },
     draw: function () {
@@ -26969,9 +27031,7 @@ CG.B2DEntity.extend('B2DRope', {
          */
         this.bodyCount = 0
 
-        this.xd = 0
-        this.yd = 0
-        this.rd = 0
+        this.body = {}
 
         // RopeStart
         this.fixtureDef = new b2FixtureDef()
@@ -27022,9 +27082,8 @@ CG.B2DEntity.extend('B2DRope', {
 
     draw:function () {
         for (var i = 1; i <= this.bodyCount; i++) {
-            this.xd = this.bodyGroup[i].GetPosition().x
-            this.yd = this.bodyGroup[i].GetPosition().y
-            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            this.body = this.bodyGroup[i]
 
             Game.renderer.draw(this)
 
@@ -27102,9 +27161,8 @@ CG.B2DEntity.extend('B2DBridge', {
          */
         this.bodyCount = 0
 
-        this.xd = 0
-        this.yd = 0
-        this.rd = 0
+        this.body = {}
+
 
         // BridgeStart
 
@@ -27163,9 +27221,8 @@ CG.B2DEntity.extend('B2DBridge', {
     },
     draw: function () {
         for (var i = 2; i <= this.bodyCount; i++) {
-            this.xd = this.bodyGroup[i].GetPosition().x
-            this.yd = this.bodyGroup[i].GetPosition().y
-            this.rd = this.bodyGroup[i].GetAngleRadians()
+
+            this.body = this.bodyGroup[i]
 
             Game.renderer.draw(this)
 
