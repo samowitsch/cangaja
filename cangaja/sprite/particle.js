@@ -65,6 +65,8 @@ CG.Sprite.extend('Particle', {
             this.position.y += this.yspeed
             this.yspeed += this.gravity
             this.rotation += this.rotationspeed
+            this.xhandle = (this.width * this.xscale / 2)
+            this.yhandle = (this.height * this.yscale / 2)
         }
     },
     draw: function () {

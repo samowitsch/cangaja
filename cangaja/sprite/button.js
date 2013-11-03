@@ -54,6 +54,10 @@ CG.Sprite.extend('Button', {
         this.ifMouseOver()
         this.ifAttached()
 
+        this.xhandle = (this.width * this.xscale / 2)
+        this.yhandle = (this.height * this.yscale / 2)
+
+
         if (this.clicked) {
             if (this.clickedCallback) {
                 this.clicked = false
@@ -65,6 +69,12 @@ CG.Sprite.extend('Button', {
         if (this.visible == true) {
 
             Game.renderer.draw(this)
+
+            Game.b_ctx.save()
+            Game.b_ctx.translate(this.position.x, this.position.y)
+            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
+            Game.b_ctx.restore()
+
 
         }
     }

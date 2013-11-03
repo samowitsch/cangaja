@@ -13,7 +13,7 @@ cat ../cangaja/lib-ext/keymaster.js \
 ../cangaja/base/base.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
-../cangaja/renderer/renderer.js \
+../cangaja/renderer/canvasrenderer.js \
 ../cangaja/base/delta.js \
 ../cangaja/base/entity.js \
 ../cangaja/base/point.js \
