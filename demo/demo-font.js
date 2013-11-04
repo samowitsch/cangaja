@@ -35,8 +35,10 @@ Game = (function () {
         preload:function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset('media/img/splash3.jpg', Game.ctx)
+            WebGL2D.enable(Game.canvas)
+            Game.ctx = Game.canvas.getContext("webgl-2d")
+
+            Game.asset = new CG.MediaAsset()
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')

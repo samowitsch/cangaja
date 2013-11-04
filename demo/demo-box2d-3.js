@@ -363,7 +363,7 @@ Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById('canvas')
             Game.ctx = Game.canvas.getContext('2d')
-            Game.asset = new CG.MediaAsset('media/img/blobby-back.png', Game.ctx)
+            Game.asset = new CG.MediaAsset('media/img/blobby-back.png')
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
