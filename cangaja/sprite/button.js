@@ -70,10 +70,7 @@ CG.Sprite.extend('Button', {
 
             Game.renderer.draw(this)
 
-            Game.b_ctx.save()
-            Game.b_ctx.translate(this.position.x, this.position.y)
-            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) / 2 >> 0), 0 - ((this.font.getFontSize() / 2) >> 0))
-            Game.b_ctx.restore()
+            this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) / 2 >> 0), this.position.y - ((this.font.getFontSize() / 2) >> 0))
 
 
         }
