@@ -26,7 +26,7 @@
 * Paper no. DETC2005-85513 pp. 565-575                                         *
 * ASME 2005 International Design Engineering Technical Conferences             *
 * and Computers and Information in Engineering Conference (IDETC/CIE2005)      *
-* September 24–28, 2005 , Long Beach, California, USA                          *
+* September 24ï¿½28, 2005 , Long Beach, California, USA                          *
 * http://www.me.berkeley.edu/~mcmains/pubs/DAC05OffsetPolygon.pdf              *
 *                                                                              *
 *******************************************************************************/
@@ -83,6 +83,9 @@
   if ( nav.indexOf("msie 8") != -1 ) browser.msie8 = 1; else browser.msie8 = 0;
   if ( nav.indexOf("msie 7") != -1 ) browser.msie7 = 1; else browser.msie7 = 0;
   if ( nav.indexOf("msie ") != -1 ) browser.msie = 1; else browser.msie = 0;
+
+  // patch, treat ejecta as safari
+  if ( nav.indexOf("ejecta") != -1 ) browser.safari = 1; else browser.safari = 0;
 
   var ClipperLib = {};
   ClipperLib.biginteger_used = null;
