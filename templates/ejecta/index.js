@@ -8,7 +8,7 @@ var h = window.innerHeight;
 var w2 = w / 2;
 var h2 = h / 2;
 
-//get canvas from cangaja
+//get canvas from ejecta runtime
 var canvas = document.getElementById('canvas');
 canvas.width = w;
 canvas.height = h;
@@ -38,6 +38,7 @@ Game = (function () {
         b_ctx: {},
         asset: {},
         director: new CG.Director(),
+        renderer: new CG.CanvasRenderer(),
         delta: new CG.Delta(60),
         mouse: {x: 0, y: 0},
         start: {x: 0, y: 0},
