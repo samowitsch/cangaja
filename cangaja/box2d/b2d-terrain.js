@@ -187,7 +187,7 @@ CG.B2DEntity.extend('B2DTerrain', {
      */
     lightenTerrain: function () {
         //use clipper to eliminate to much vertices
-        var tolerance = 0.015
+        var tolerance = 0.02
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
             var temp = ClipperLib.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
@@ -206,14 +206,14 @@ CG.B2DEntity.extend('B2DTerrain', {
      */
     cleanTerrain: function () {
         //use clipper to eliminate to much vertices
-        var tolerance = 0.015
+        var cleandelta = 0.1
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, tolerance * this.scale)
+            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
