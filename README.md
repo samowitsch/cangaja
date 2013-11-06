@@ -78,6 +78,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Changelog:
 
+* 2013-11-06 [bugfix] - patched ClipperLib, treat useragent ejecta as useragent safari for ejecta usage. Otherwise cangaja is not working in ejecta.
 * 2013-10-30 [added] - closure compiler for testing
              [change] - renamed classes: CG.TexturePacker => CG.AtlasTexturePacker and CG.TPImage => CG.AtlasImage
 * 2013-10-17 [bugfix] - of terrain crash, the circle vertices has to be reversed to CCW(?)
