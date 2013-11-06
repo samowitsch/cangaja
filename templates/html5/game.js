@@ -27,6 +27,7 @@ Game = (function () {
         b_ctx: {},
         asset: {},
         director: new CG.Director(),
+        renderer: new CG.CanvasRenderer(),
         delta: new CG.Delta(60),
         mouse: {x: 0, y: 0},
         start: {x: 0, y: 0},
