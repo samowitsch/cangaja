@@ -16,8 +16,8 @@ window.onload = function () {
 
     //create canvas element programaticaly
     can = document.createElement('canvas')
-    can.width = 1024
-    can.height = 768
+    can.width = 512
+    can.height = 384
     can.id = 'canvas'
     document.body.appendChild(can)
 

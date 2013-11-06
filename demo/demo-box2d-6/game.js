@@ -1,15 +1,15 @@
-var terrainBody
+var terrainBody, clipPoints = 12, clipRadius = 20
 
 // the Game object
 Game = (function () {
     var Game = {
         path: '',
         fps: 60,
-        width: 1024,
-        height: 768,
-        width2: 1024 / 2,
-        height2: 768 / 2,
-        bound: new CG.Bound(0, 0, 1024, 768).setName('game'),
+        width: 512,
+        height: 384,
+        width2: 512 / 2,
+        height2: 384 / 2,
+        bound: new CG.Bound(0, 0, 512, 384).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -33,14 +33,10 @@ Game = (function () {
             //Asset preloading font files
             Game.asset.addFont('media/font/small.txt', 'small', 'small')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/ballon.png', 'ballon')
+                .addImage('media/img/basketball-25.png', 'basketball-25')
                 .addImage('media/img/TestTerrain.png', 'testTerrain')
-                .addImage('media/img/hunter.png', 'hunter')
-                .addImage('media/img/back3.jpg', 'back3')
                 .addImage('media/img/TerrainBackground.png', 'back')
                 .addImage('media/img/spritetestphysics.png', 'spritetestphysics')
-                .addImage('media/img/sun.png', 'sun')
                 .addImage('media/img/rock.png', 'rock')
 
 
@@ -49,9 +45,6 @@ Game = (function () {
                 .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
 
                 //physics engine
-                .addJson('media/img/ballon.json', 'ballon')
-                .addJson('media/img/rainbow_256.json', 'rainbow_256')
-                .addJson('media/img/powerstar75.json', 'powerstar75')
 
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
@@ -87,20 +80,20 @@ Game = (function () {
             //create circle element with image
             //static rocks
 
-            for ( var i = 0; i < 100; i++) {
-                var x = Math.random() * 1024
-                var y = Math.random() * 768
-                if (y < 200) y+=200;
+            for ( var i = 0; i < 150; i++) {
+                var x = Math.random() * Game.width
+                var y = Math.random() * Game.height
+                if (y < 90) y+=90;
                 b2world.createCircle('rock', Game.asset.getImageByName('rock'), 16, x, y, box2d.b2BodyType.b2_staticBody)
 
             }
 
 
-            //dynamic glowballs:
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 340, -800, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 320, -400, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 330, -600, box2d.b2BodyType.b2_dynamicBody)
+            //dynamic basketball-25s:
+            b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 25, 340, -800, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 25, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 25, 320, -400, box2d.b2BodyType.b2_dynamicBody)
+            b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 25, 330, -600, box2d.b2BodyType.b2_dynamicBody)
 
 
             //a bitmap that hides the background sprite
@@ -113,10 +106,10 @@ Game = (function () {
 
                     {
                         outer: [
-                            {x: 0, y: 165},
-                            {x: 1024, y: 165},
-                            {x: 1024, y: 768},
-                            {x: 0, y: 768}
+                            {x: 0.1, y: 82.5},
+                            {x: 512.5, y: 82.5},
+                            {x: 512.5, y: 384.5},
+                            {x: 0.1, y: 384.5}
                         ],
 
                         holes: [
@@ -162,17 +155,17 @@ Game = (function () {
                     console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
                 }
                 if (evt.keyCode == 73) { //i
-                    body = b2world.getBodyAt(mousex, mousey)
+                    body = b2world.getBodyAt(mousex / 2, mousey / 2)
                     b2world.applyImpulse(body, 270, 10)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, box2d.b2BodyType.b2_dynamicBody)
+                    b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 40, mousex / 2, mousey / 2, box2d.b2BodyType.b2_dynamicBody)
                 }
                 if (evt.keyCode == 67) { //c
-                    bitmap.clearCircle(mousex, mousey, 40)
-                    terrainBody.clipTerrain({points: 16, radius: 40, x: mousex, y: mousey})
+                    bitmap.clearCircle(mousex / 2 >> 0, mousey / 2 >> 0, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: mousex / 2 >> 0, y: mousey / 2 >> 0})
 
-                    b2world.getStaticBodyListAt(mousex,mousey,34,0)
+                    b2world.getStaticBodyListAt(mousex/2,mousey/2,16,0)
 
                 }
                 if (evt.keyCode == 	79) { //o
@@ -190,17 +183,17 @@ Game = (function () {
                     leftplayer.addVelocity(new b2Vec2(0, -5))
                 }
                 if (evt.keyCode == 83) { // s - down
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +40,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+40, y: leftplayer.body.GetPosition().y * 40+40})
-                    b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x *40, leftplayer.body.GetPosition().y * 40, 34, 0)
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +40,leftplayer.body.GetPosition().y * 40+40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40+40, y: leftplayer.body.GetPosition().y * 40+40})
+                    b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x *40, leftplayer.body.GetPosition().y * 40, 16, 0)
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 65) { // s - down && a-left
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 -10,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40-10, y: leftplayer.body.GetPosition().y * 40+40})
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 -10,leftplayer.body.GetPosition().y * 40+40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40-10, y: leftplayer.body.GetPosition().y * 40+40})
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 68) { // s - down && d-right
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +50,leftplayer.body.GetPosition().y * 40+40, 40)
-                    terrainBody.clipTerrain({points: 16, radius: 40, x: leftplayer.body.GetPosition().x * 40+50, y: leftplayer.body.GetPosition().y * 40+40})
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +50,leftplayer.body.GetPosition().y * 40+40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40+50, y: leftplayer.body.GetPosition().y * 40+40})
                 }
                 if (evt.keyCode == 68) { // d - right
                     leftplayer.addVelocity(new b2Vec2(2, 0))

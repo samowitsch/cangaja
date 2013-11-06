@@ -35,8 +35,7 @@ Game = (function () {
         preload:function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
-            WebGL2D.enable(Game.canvas)
-            Game.ctx = Game.canvas.getContext("webgl-2d")
+            Game.ctx = Game.canvas.getContext("2d")
 
             Game.asset = new CG.MediaAsset()
 

@@ -13,7 +13,7 @@ CG.B2DWorld.extend('B2DTestbed', {
         bodyDef.type = box2d.b2BodyType.b2_staticBody
         // positions the center of the object (not upper left!)
         bodyDef.position.x = Game.width2 / this.scale
-        bodyDef.position.y = (Game.height / this.scale) - 1
+        bodyDef.position.y = (Game.height / this.scale)
         bodyDef.userData = 'ground'
         fixDef.shape = new b2PolygonShape
         // half width, half height. eg actual height here is 1 unit
@@ -43,7 +43,7 @@ CG.B2DWorld.extend('B2DTestbed', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 610, 110, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        leftplayer = new CG.B2DLeftPlayer(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 350, 10, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
         console.log(leftplayer);
         this.addCustom(leftplayer)
 
