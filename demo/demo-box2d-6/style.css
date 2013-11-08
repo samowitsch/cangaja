@@ -1,5 +1,5 @@
 * {margin: 0;padding: 0;}
-body {font-family: verdana,arial;font-size: 13px;color: #707070;background: #000;text-align: center;}
+body {font-family: verdana,arial;font-size: 13px;color: #707070;background: #333;text-align: center;}
 canvas {
     border: 1px solid #555;
     width:1024px;
