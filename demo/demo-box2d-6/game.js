@@ -80,7 +80,7 @@ Game = (function () {
             //create circle element with image
             //static rocks
 
-            for ( var i = 0; i < 150; i++) {
+            for ( var i = 0; i < 120; i++) {
                 var x = Math.random() * Game.width
                 var y = Math.random() * Game.height
                 if (y < 90) y+=90;
@@ -229,9 +229,9 @@ Game = (function () {
 
             //text stuff
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Destructible Terrain.', xpos, ypos + 50)
-            small.drawText('C=clip hole, O=debugdraw on/off, B=new ball, I=impulse on body below mousepointer, WASD=Player', xpos, ypos + 70)
-            small.drawText('Triangles: ' + terrainBody.terrainTriangles.length , xpos, ypos + 90)
+            small.drawText('Destructible Terrain.', xpos, ypos + 45)
+            small.drawText('C=clip hole, O=debugdraw on/off, B=new ball, I=impulse on body below mousepointer, WASD=Player', xpos, ypos + 65)
+            small.drawText('Triangles: ' + terrainBody.terrainTriangles.length + ', box2d bodycount:' + b2world.world.GetBodyCount() + ', CG.B2World elements:' + b2world.elements.length, xpos, ypos + 85)
 
             // draw Game.b_canvas to the canvas
             Game.ctx.drawImage(Game.b_canvas, 0, 0)
