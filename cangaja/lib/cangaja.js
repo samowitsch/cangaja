@@ -16451,6 +16451,7 @@ CG.B2DEntity.extend('B2DTerrain', {
      */
     init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = 'B2DTerrain'
         /**
          * @property polys
          * @type {Array}
