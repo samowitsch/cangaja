@@ -17461,7 +17461,7 @@ CG.Layer.extend('B2DWorld', {
      */
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
-            if (typeof this.elements[i].id !== 'undefined') {
+            if (typeof this.elements[i].id !== 'undefined' && typeof this.elements[i] === 'object') {
                 if(this.elements[i].id.uid === uid) {
                     this.elements.splice(i, 1);
                 }
