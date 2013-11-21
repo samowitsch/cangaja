@@ -41,9 +41,9 @@ Game = (function () {
         delta: new CG.Delta(60),
         preload: function () {
             //canvas for ouput
-            Game.canvas = Game.b_canvas = document.getElementById("canvas")
+            Game.b_canvas = document.getElementById("canvas")
             WebGL2D.enable(Game.b_canvas)
-            Game.ctx = Game.b_ctx = Game.b_canvas.getContext("webgl-2d")
+            Game.b_ctx = Game.b_canvas.getContext("webgl-2d")
 
             //Asset preloading font files
             Game.asset
