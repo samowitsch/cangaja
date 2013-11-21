@@ -41,9 +41,9 @@ Game = (function () {
         delta: new CG.Delta(60),
         preload: function () {
             //canvas for ouput
-            Game.b_canvas = document.getElementById("canvas")
+            Game.canvas = Game.b_canvas = document.getElementById("canvas")
             WebGL2D.enable(Game.b_canvas)
-            Game.b_ctx = Game.b_canvas.getContext("webgl-2d")
+            Game.ctx = Game.b_ctx = Game.b_canvas.getContext("webgl-2d")
 
             //Asset preloading font files
             Game.asset
@@ -143,7 +143,7 @@ Game = (function () {
 
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
 
-            small.drawText('Sprite class example.', xpos, ypos + 50)
+            small.drawText('Sprite class example. (WebGL-2D test)', xpos, ypos + 50)
 
 
             small.drawText('SIMPLE SPRITE', spr1.position.x + 20, spr1.position.y + 20)

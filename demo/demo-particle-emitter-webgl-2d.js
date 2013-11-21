@@ -56,13 +56,19 @@ Game = (function () {
         delta:new CG.Delta(60),
         preload:function () {
             //canvas for ouput
-            Game.b_canvas = document.getElementById("canvas")
+            Game.canvas = Game.b_canvas = document.getElementById("canvas")
             WebGL2D.enable(Game.b_canvas)
-            Game.b_ctx = Game.canvas.getContext("webgl-2d")
+            Game.ctx = Game.b_ctx = Game.b_canvas.getContext("webgl-2d")
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+            Game.asset
+
+                .addImage('media/font/small.png', 'small')
+                .addFont('media/font/small.txt', 'small')
+
+                .addImage('media/font/abadi_ez.png', 'abadi')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
+
                 .addImage('media/img/glowball-50.png', 'glowball')
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
@@ -117,8 +123,8 @@ Game = (function () {
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, -20))
                 .setName('rainy')
-                .setParticleSpeed(2)
-                .setMaxParticles(400)
+                .setParticleSpeed(1)
+                .setMaxParticles(100)
                 .setGravity(0.02)
                 .setCreationTime(0.1)
                 .initAsLine(Game.asset.getImageByName('raindrop'), Game.height, CG.DOWN)
@@ -129,9 +135,9 @@ Game = (function () {
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(-25, Game.height2))
                 .setName('glowy')
-                .setGravity(1)
-                .setParticleSpeed(2)
-                .setMaxParticles(200)
+                .setGravity(0.15)
+                .setParticleSpeed(3)
+                .setMaxParticles(100)
                 .setCreationTime(1)
                 .setProtation(2)
                 .initAsLine(Game.asset.getImageByName('glowball-50'), 120   , CG.RIGHT)
@@ -141,11 +147,11 @@ Game = (function () {
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width + 15, Game.height2))
                 .setName('bally')
-                .setParticleSpeed(3)
-                .setMaxParticles(200)
+                .setParticleSpeed(4)
+                .setMaxParticles(100)
                 .setProtation(-1)
                 .setCreationTime(1)
-                .setGravity(1)
+                .setGravity(0.05)
                 .initAsLine(Game.asset.getImageByName('basketball-25'), 120, CG.LEFT)
                 //        .setEmitterPosition(new CG.Point(655,240))
                 .activateFadeout()
@@ -154,7 +160,7 @@ Game = (function () {
             mainlayer.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
                 .setName('explodi-stars')
                 .activateFadeout()
-                .setMaxParticles(200)
+                .setMaxParticles(100)
                 .setProtation(2)
                 .setGravity(0)
                 .initAsExplosion(Game.asset.getImageByName('powerstar75'), -2, 2)
@@ -164,7 +170,7 @@ Game = (function () {
             smokey = new CG.Emitter(new CG.Point(Game.width2, Game.height2))
                 .setName('smokey')
                 .activateFadeout()
-                .setMaxParticles(200)
+                .setMaxParticles(100)
                 .setCreationTime(1)
                 .setGravity(-0.05)
                 .initAsPoint(Game.asset.getImageByName('smoke50'))
@@ -174,7 +180,7 @@ Game = (function () {
 
             mainlayer.addElement(new CG.Emitter(new CG.Point(160, 120))
                 .setName('smokey')
-                .setMaxParticles(300)
+                .setMaxParticles(100)
                 .activateFadeout()
                 .setGravity(0.15)
                 .setProtation(5)
@@ -217,7 +223,7 @@ Game = (function () {
 
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
 
-            small.drawText('Particle/Emitter class example.', xpos, ypos + 50)
+            small.drawText('Particle/Emitter class example. (WebGL-2D test)', xpos, ypos + 50)
 
 //            Game.ctx.drawImage(Game.b_canvas, 0, 0)
 //            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
