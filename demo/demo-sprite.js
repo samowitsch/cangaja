@@ -53,8 +53,14 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
+            Game.asset
+
+                .addImage('media/font/small.png', 'small')
+                .addFont('media/font/small.txt', 'small')
+
+                .addImage('media/font/abadi_ez.png', 'abadi')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
+
                 .addImage('media/img/glowball-50.png', 'glowball')
 
                 .startPreLoad()

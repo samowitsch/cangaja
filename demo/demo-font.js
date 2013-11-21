@@ -46,19 +46,41 @@ Game = (function () {
             Game.b_canvas.height = Game.bound.height
 
             //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/heiti.txt', 'heiti')
+            Game.asset
+
+                .addImage('media/img/back1.jpg', 'back1')
+
+                .addImage('media/font/small.png', 'small')
+                .addFont('media/font/small.txt', 'small')
+
+                .addImage('media/font/gill.png', 'gill')
                 .addFont('media/font/gill.txt', 'gill')
+
+                .addImage('media/font/abadi_ez.png', 'abadi')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
+
                 .startPreLoad()
         },
         create:function () {
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            heiti = new CG.Font().loadFont(Game.asset.getFontByName('heiti'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             gill = new CG.Font().loadFont(Game.asset.getFontByName('gill'))
+
+
+            //screen and layer
+            mainscreen = new CG.Screen('mainscreen')
+            mainlayer = new CG.Layer('mainlayer')
+
+            //add screen to Director
+            Game.director.addScreen(mainscreen.addLayer(mainlayer))
+
+            //sprite for the background
+            back = new CG.Sprite(Game.asset.getImageByName('back1'), new CG.Point(0, 0))
+            back.name = 'back'
+            mainlayer.addElement(back)
+
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
@@ -81,6 +103,9 @@ Game = (function () {
         },
         draw:function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+
+            Game.director.draw()
+
             var xpos = 10
             var ypos = 10
 
