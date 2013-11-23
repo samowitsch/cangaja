@@ -330,7 +330,13 @@
 
 
   // Fragment shader source
-  WebGL2D.prototype.getFragmentShaderSource = function getFragmentShaderSource(sMask) {
+  WebGL2D.prototype.getFragmentShaderSource = function getFragmentShaderSource(sMask, alpha) {
+
+    var alpha = alpha;
+    if ( alpha === 1 || typeof alpha === 'undefined' ) {
+        alpha = '1.0';
+    }
+
     var fsSource = [
       "#ifdef GL_ES",
         "precision highp float;",
@@ -343,6 +349,7 @@
 
       "#if hasTexture",
         "varying vec2 vTextureCoord;",
+
         "uniform sampler2D uSampler;",
         "#if hasCrop",
           "uniform vec4 uCropSource;",
@@ -350,14 +357,17 @@
       "#endif",
 
       "void main(void) {",
+
         "#if hasTexture",
           "#if hasCrop",
-            "gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.x * uCropSource.z, vTextureCoord.y * uCropSource.w) + uCropSource.xy);",
+            "vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.x * uCropSource.z, vTextureCoord.y * uCropSource.w) + uCropSource.xy);",
+            "gl_FragColor = vec4(textureColor.rgb, textureColor.a * " + alpha + ");",
           "#else",
-            "gl_FragColor = texture2D(uSampler, vTextureCoord);",
+            "vec4 textureColor = texture2D(uSampler, vTextureCoord);",
+            "gl_FragColor = vec4(textureColor.rgb, textureColor.a * " + alpha + ");",
           "#endif",
         "#else",
-          "gl_FragColor = vColor;",
+          "gl_FragColor = vColor * " + alpha + ";",
         "#endif",
       "}"
     ].join("\n");
@@ -410,6 +420,8 @@
   WebGL2D.prototype.initShaders = function initShaders(transformStackDepth,sMask) {
     var gl = this.gl;
 
+    var a = gl.globalAlpha;
+
     transformStackDepth = transformStackDepth || 1;
     sMask = sMask || 0;
     var storedShader = this.shaderPool[transformStackDepth];
@@ -423,7 +435,7 @@
       return storedShader;
     } else {
       var fs = this.fs = gl.createShader(gl.FRAGMENT_SHADER);
-      gl.shaderSource(this.fs, this.getFragmentShaderSource(sMask));
+      gl.shaderSource(this.fs, this.getFragmentShaderSource(sMask,gl.globalAlpha));
       gl.compileShader(this.fs);
 
       if (!gl.getShaderParameter(this.fs, gl.COMPILE_STATUS)) {
