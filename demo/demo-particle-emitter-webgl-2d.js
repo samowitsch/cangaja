@@ -40,21 +40,21 @@ window.onload = function () {
 Game = (function () {
     var Game = {
         path: '',
-        fps:60,
-        width:640,
-        height:480,
-        width2:640 / 2,
-        height2:480 / 2,
-        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas:{},
-        ctx:{},
-        b_canvas:{},
-        b_ctx:{},
-        asset:new CG.MediaAsset(),
-        director:new CG.Director(),
+        fps: 60,
+        width: 640,
+        height: 480,
+        width2: 640 / 2,
+        height2: 480 / 2,
+        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        canvas: {},
+        ctx: {},
+        b_canvas: {},
+        b_ctx: {},
+        asset: new CG.MediaAsset(),
+        director: new CG.Director(),
         renderer: new CG.CanvasRenderer(),
-        delta:new CG.Delta(60),
-        preload:function () {
+        delta: new CG.Delta(60),
+        preload: function () {
             //canvas for ouput
             Game.canvas = Game.b_canvas = document.getElementById("canvas")
             WebGL2D.enable(Game.b_canvas)
@@ -76,7 +76,7 @@ Game = (function () {
 
                 .startPreLoad()
         },
-        create:function () {
+        create: function () {
 
             //create texturepacker image in asset
             tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
@@ -113,7 +113,7 @@ Game = (function () {
                 .setName('sunny')
                 .setParticleSpeed(2)
                 .setMaxParticles(100)
-                .setGravity(0.02)
+                .setGravity(0.01)
                 .initAsLine(Game.asset.getImageByName('sonne-50'), Game.height, CG.UP)
                 .setProtation(2)
                 //        .setEmitterPosition(new CG.Point(320,500))
@@ -133,14 +133,14 @@ Game = (function () {
             )
 
 
-            mainlayer.addElement(new CG.Emitter(new CG.Point(-25, Game.height2))
+            mainlayer.addElement(new CG.Emitter(new CG.Point(-25, 50))
                 .setName('glowy')
-                .setGravity(0.15)
+                .setGravity(0.1)
                 .setParticleSpeed(3)
-                .setMaxParticles(100)
-                .setCreationTime(1)
-                .setProtation(2)
-                .initAsLine(Game.asset.getImageByName('glowball-50'), 120   , CG.RIGHT)
+                .setMaxParticles(200)
+                .setCreationTime(0.5)
+                .setProtation(5)
+                .initAsLine(Game.asset.getImageByName('glowball-50'), 120, CG.RIGHT)
                 //        .setEmitterPosition(new CG.Point(-25,240))
                 .activateFadeout()
             )
@@ -151,7 +151,7 @@ Game = (function () {
                 .setMaxParticles(100)
                 .setProtation(-1)
                 .setCreationTime(1)
-                .setGravity(0.05)
+                .setGravity(0.01)
                 .initAsLine(Game.asset.getImageByName('basketball-25'), 120, CG.LEFT)
                 //        .setEmitterPosition(new CG.Point(655,240))
                 .activateFadeout()
@@ -197,24 +197,24 @@ Game = (function () {
 
             Game.loop()
         },
-        loop:function () {
+        loop: function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run:function () {
+        run: function () {
             Game.update()
             Game.draw()
         },
-        update:function () {
+        update: function () {
             //update here what ever you want
 
             smokey.position._x = mousex
             smokey.position._y = mousey
             Game.director.update()
         },
-        draw:function () {
+        draw: function () {
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -230,9 +230,9 @@ Game = (function () {
 
             renderStats.update();
         },
-        touchinit:function () {
+        touchinit: function () {
         },
-        touchhandler:function () {
+        touchhandler: function () {
         }
     }
 
