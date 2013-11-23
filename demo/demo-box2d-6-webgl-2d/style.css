@@ -1,0 +1,11 @@
+* {margin: 0;padding: 0;}
+body {font-family: verdana,arial;font-size: 13px;color: #707070;background: #333;text-align: center;}
+canvas {
+    border: 1px solid #555;
+    width:1024px;
+    image-rendering: -moz-crisp-edges;          /* FF 6.0+ */
+    image-rendering: -webkit-optimize-contrast; /* Webkit */
+    image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+    image-rendering: optimize-contrast;         /* Possible future browsers */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE */
+}
