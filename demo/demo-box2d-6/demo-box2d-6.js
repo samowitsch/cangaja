@@ -23,8 +23,7 @@ window.onload = function () {
 
     //mouse move
 
-
-    can.addEventListener('mousedown', function (e) {
+    can.addEventListener('mousedown', function () {
         mousedown = true;
     }, true);
 
@@ -34,8 +33,8 @@ window.onload = function () {
 
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
-        mousey = evt.clientY - canvas.offsetTop;
+        mousex = (evt.clientX - canvas.offsetLeft) / 2;
+        mousey = (evt.clientY - canvas.offsetTop) / 2;
     }, false);
 
     Game.preload()

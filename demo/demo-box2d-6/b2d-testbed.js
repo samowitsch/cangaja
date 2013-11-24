@@ -44,7 +44,7 @@ CG.B2DWorld.extend('B2DTestbed', {
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
         leftplayer = new CG.B2DLeftPlayer(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 350, 10, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
-        console.log(leftplayer);
+
         this.addCustom(leftplayer)
 
     },

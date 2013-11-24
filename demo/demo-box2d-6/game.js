@@ -80,12 +80,11 @@ Game = (function () {
             //create circle element with image
             //static rocks
 
-            for ( var i = 0; i < 120; i++) {
+            for (var i = 0; i < 120; i++) {
                 var x = Math.random() * Game.width
                 var y = Math.random() * Game.height
-                if (y < 90) y+=90;
+                if (y < 90) y += 90;
                 b2world.createCircle('rock', Game.asset.getImageByName('rock'), 16, x, y, box2d.b2BodyType.b2_staticBody)
-
             }
 
 
@@ -103,7 +102,6 @@ Game = (function () {
 
             var terrainPolys =
                 [
-
                     {
                         outer: [
                             {x: 0.1, y: 82.5},
@@ -148,28 +146,32 @@ Game = (function () {
         update: function () {
             //update here what ever you want
 
+            if (mousedown == true) {
+                bitmap.clearCircle(mousex, mousey, clipRadius)
+                terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: mousex, y: mousey})
+                b2world.getStaticBodyListAt(mousex, mousey, 16, 0)
+            }
 
             document.onkeydown = function (evt) {
                 if (evt.keyCode == 71) { //g
                     b = b2world.getBodyAt(mousex, mousey)
-                    console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
                 }
                 if (evt.keyCode == 73) { //i
-                    body = b2world.getBodyAt(mousex / 2, mousey / 2)
+                    body = b2world.getBodyAt(mousex, mousey)
                     b2world.applyImpulse(body, 270, 10)
                 }
                 if (evt.keyCode == 66) { //b
-                    b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 40, mousex / 2, mousey / 2, box2d.b2BodyType.b2_dynamicBody)
+                    b2world.createCircle('basketball-25', Game.asset.getImageByName('basketball-25'), 40, mousex, mousey, box2d.b2BodyType.b2_dynamicBody)
                 }
-                if (evt.keyCode == 67) { //c
-                    bitmap.clearCircle(mousex / 2 >> 0, mousey / 2 >> 0, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: mousex / 2 >> 0, y: mousey / 2 >> 0})
-
-                    b2world.getStaticBodyListAt(mousex/2,mousey/2,16,0)
-
+                if (evt.keyCode == 67 || mousedown == true) { //c
+                    bitmap.clearCircle(mousex, mousey, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: mousex, y: mousey})
+                    b2world.getStaticBodyListAt(mousex, mousey, 16, 0)
                 }
-                if (evt.keyCode == 	79) { //o
-                    if (b2world.debug == 0 ) {
+
+
+                if (evt.keyCode == 79) { //o
+                    if (b2world.debug == 0) {
                         b2world.debug = 1
                     } else {
                         b2world.debug = 0
@@ -183,17 +185,17 @@ Game = (function () {
                     leftplayer.addVelocity(new b2Vec2(0, -5))
                 }
                 if (evt.keyCode == 83) { // s - down
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +40,leftplayer.body.GetPosition().y * 40+40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40+40, y: leftplayer.body.GetPosition().y * 40+40})
-                    b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x *40, leftplayer.body.GetPosition().y * 40, 16, 0)
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 + 40, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 + 40, y: leftplayer.body.GetPosition().y * 40 + 40})
+                    b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x * 40, leftplayer.body.GetPosition().y * 40, 16, 0)
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 65) { // s - down && a-left
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 -10,leftplayer.body.GetPosition().y * 40+40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40-10, y: leftplayer.body.GetPosition().y * 40+40})
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 - 10, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 - 10, y: leftplayer.body.GetPosition().y * 40 + 40})
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 68) { // s - down && d-right
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 +50,leftplayer.body.GetPosition().y * 40+40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40+50, y: leftplayer.body.GetPosition().y * 40+40})
+                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 + 50, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 + 50, y: leftplayer.body.GetPosition().y * 40 + 40})
                 }
                 if (evt.keyCode == 68) { // d - right
                     leftplayer.addVelocity(new b2Vec2(2, 0))
@@ -213,7 +215,6 @@ Game = (function () {
                     b2world.elements[1].body.SetLinearVelocity(velo)
                 }
 
-//                console.log(evt.keyCode)
             };
 
             Game.director.update()
@@ -240,10 +241,6 @@ Game = (function () {
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
 
             renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
         }
     }
 
