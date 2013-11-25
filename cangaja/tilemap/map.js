@@ -675,9 +675,6 @@ CG.Entity.extend('Map', {
                             }
                         }
                     }
-                    //                else {
-                    //                    throw 'unknown orientation: ' + this.orientation
-                    //                }
                 }
             }
         }
