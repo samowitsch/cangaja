@@ -85,10 +85,7 @@ var Game = (function () {
     var Game = {
         path: '',
         fps: 60,
-
         lastrun: new Date().getTime(),
-        delta: 0,
-
         width: 640,
         height: 480,
         width2: 640 / 2,
