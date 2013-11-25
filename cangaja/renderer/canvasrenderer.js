@@ -120,9 +120,9 @@ CG.Class.extend('CanvasRenderer', {
                 } else if (renderObject.orientation == 'isometric') {
 
                     Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                    Game.b_ctx.translate(renderObject.xpos, renderObject.ypos)
+                    Game.b_ctx.translate(renderObject.rx, renderObject.ry)
                     try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, 0, 0, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
+                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
                     } catch (e) {
 
                     }

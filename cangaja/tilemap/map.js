@@ -658,9 +658,9 @@ CG.Entity.extend('Map', {
 
                                 while (ry >= 0 && rx < tl.width) {
                                     var gid = tl.tiles[rx + ry * tl.width]
-                                    this.xpos = (rx - ry - 1) * this.tilewidth / 2 - bx
-                                    this.ypos = (rx + ry + 1) * this.tileheight / 2 - by
-                                    if (this.xpos > -this.tileset.tilewidth && this.xpos < bw && this.ypos > -this.tileset.tileheight && this.ypos < bh) {
+                                    this.rx = (rx - ry - 1) * this.tilewidth / 2 - bx
+                                    this.ry = (rx + ry + 1) * this.tileheight / 2 - by
+                                    if (this.rx > -this.tileset.tilewidth && this.rx < bw && this.ry > -this.tileset.tileheight && this.ry < bh) {
                                         if (gid > 0) {
                                             this.cx = ((gid - 1) % (this.atlaswidth / this.tilewidth)) * this.tilewidth
                                             this.cy = Math.floor(this.tilewidth * (gid - 1) / this.atlaswidth) * this.tileset.tileheight
