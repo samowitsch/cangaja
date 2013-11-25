@@ -43,9 +43,9 @@ CG.B2DWorld.extend('B2DTestbed', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 350, 10, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        clonk = new CG.Clonk(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 350, 10, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
 
-        this.addCustom(leftplayer)
+        this.addCustom(clonk)
 
     },
     /**

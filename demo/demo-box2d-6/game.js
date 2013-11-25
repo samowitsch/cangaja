@@ -44,8 +44,6 @@ Game = (function () {
                 .addJson('media/map/map-advanced-inner-outer.json', 'map1')
                 .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
 
-                //physics engine
-
                 //texturepacker
                 .addImage('media/img/texturepacker.png', 'texturepacker')
                 .addJson('media/img/texturepacker.json', 'texturepacker-json')
@@ -60,7 +58,6 @@ Game = (function () {
             //put the texturepacker TPImages to the asset
             Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
             abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
             small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
@@ -80,7 +77,7 @@ Game = (function () {
             //create circle element with image
             //static rocks
 
-            for (var i = 0; i < 120; i++) {
+            for (var i = 0; i < 1; i++) {
                 var x = Math.random() * Game.width
                 var y = Math.random() * Game.height
                 if (y < 90) y += 90;
@@ -138,10 +135,8 @@ Game = (function () {
         },
         loop: function () {
             requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.update()
-                Game.draw()
-            }
+            Game.update()
+            Game.draw()
         },
         update: function () {
             //update here what ever you want
@@ -179,26 +174,26 @@ Game = (function () {
                 }
 
                 if (evt.keyCode == 65) { // a - left
-                    leftplayer.addVelocity(new b2Vec2(-2, 0))
+                    clonk.addVelocity(new b2Vec2(-2, 0))
                 }
                 if (evt.keyCode == 87) { // w - up
-                    leftplayer.addVelocity(new b2Vec2(0, -5))
+                    clonk.addVelocity(new b2Vec2(0, -5))
                 }
                 if (evt.keyCode == 83) { // s - down
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 + 40, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 + 40, y: leftplayer.body.GetPosition().y * 40 + 40})
-                    b2world.getStaticBodyListAt(leftplayer.body.GetPosition().x * 40, leftplayer.body.GetPosition().y * 40, 16, 0)
+                    bitmap.clearCircle(clonk.body.GetPosition().x * 40 + 40, clonk.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 + 40, y: clonk.body.GetPosition().y * 40 + 40})
+                    b2world.getStaticBodyListAt(clonk.body.GetPosition().x * 40, clonk.body.GetPosition().y * 40, 16, 0)
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 65) { // s - down && a-left
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 - 10, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 - 10, y: leftplayer.body.GetPosition().y * 40 + 40})
+                    bitmap.clearCircle(clonk.body.GetPosition().x * 40 - 10, clonk.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 - 10, y: clonk.body.GetPosition().y * 40 + 40})
                 }
                 if (evt.keyCode == 83 && evt.keyCode == 68) { // s - down && d-right
-                    bitmap.clearCircle(leftplayer.body.GetPosition().x * 40 + 50, leftplayer.body.GetPosition().y * 40 + 40, clipRadius)
-                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: leftplayer.body.GetPosition().x * 40 + 50, y: leftplayer.body.GetPosition().y * 40 + 40})
+                    bitmap.clearCircle(clonk.body.GetPosition().x * 40 + 50, clonk.body.GetPosition().y * 40 + 40, clipRadius)
+                    terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 + 50, y: clonk.body.GetPosition().y * 40 + 40})
                 }
                 if (evt.keyCode == 68) { // d - right
-                    leftplayer.addVelocity(new b2Vec2(2, 0))
+                    clonk.addVelocity(new b2Vec2(2, 0))
                 }
 
                 if (evt.keyCode == 37) { //cursor left
