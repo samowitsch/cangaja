@@ -9519,10 +9519,11 @@ CG.Class.extend('CanvasRenderer', {
 
             case "Map":
 
+                Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
+                Game.b_ctx.translate(renderObject.rx, renderObject.ry)
+
                 if (renderObject.orientation == 'orthogonal') {
 
-                    Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                    Game.b_ctx.translate(renderObject.rx, renderObject.ry)
                     try {
                         Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
                     } catch (e) {
@@ -9530,10 +9531,8 @@ CG.Class.extend('CanvasRenderer', {
 
                 } else if (renderObject.orientation == 'isometric') {
 
-                    Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                    Game.b_ctx.translate(renderObject.xpos, renderObject.ypos)
                     try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, 0, 0, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
+                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
                     } catch (e) {
 
                     }
@@ -13075,12 +13074,12 @@ CG.Entity.extend('Map', {
                             modx = (this.bx * this.xscale) % this.tilewidth
                             mody = (this.by * this.yscale) % this.tileheight
                             y = this.by
-                            my = Math.floor(parseFloat(this.by) / parseFloat(this.tileheight)) >> 0
+                            my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0
 
                             var tmpy = (this.by + this.bh + this.tileheight)
                             while (y < tmpy) {
                                 x = this.bx //- this.tilewidth
-                                mx = Math.floor(parseFloat(this.bx) / parseFloat(this.tilewidth)) >> 0
+                                mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0
 
                                 var tmpx = (this.bx + this.bw + this.tilewidth)
                                 while (x < tmpx) {
@@ -13159,9 +13158,9 @@ CG.Entity.extend('Map', {
 
                                 while (ry >= 0 && rx < tl.width) {
                                     var gid = tl.tiles[rx + ry * tl.width]
-                                    this.xpos = (rx - ry - 1) * this.tilewidth / 2 - bx
-                                    this.ypos = (rx + ry + 1) * this.tileheight / 2 - by
-                                    if (this.xpos > -this.tileset.tilewidth && this.xpos < bw && this.ypos > -this.tileset.tileheight && this.ypos < bh) {
+                                    this.rx = (rx - ry - 1) * this.tilewidth / 2 - bx
+                                    this.ry = (rx + ry + 1) * this.tileheight / 2 - by
+                                    if (this.rx > -this.tileset.tilewidth && this.rx < bw && this.ry > -this.tileset.tileheight && this.ry < bh) {
                                         if (gid > 0) {
                                             this.cx = ((gid - 1) % (this.atlaswidth / this.tilewidth)) * this.tilewidth
                                             this.cy = Math.floor(this.tilewidth * (gid - 1) / this.atlaswidth) * this.tileset.tileheight
@@ -13176,9 +13175,6 @@ CG.Entity.extend('Map', {
                             }
                         }
                     }
-                    //                else {
-                    //                    throw 'unknown orientation: ' + this.orientation
-                    //                }
                 }
             }
         }
