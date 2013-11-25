@@ -2,4 +2,4 @@
 .DS_Store
 *.sublime*
 nbproject
-build-custom.sh
+*build-custom.sh
