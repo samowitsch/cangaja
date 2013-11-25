@@ -574,12 +574,12 @@ CG.Entity.extend('Map', {
                             modx = (this.bx * this.xscale) % this.tilewidth
                             mody = (this.by * this.yscale) % this.tileheight
                             y = this.by
-                            my = Math.floor(parseFloat(this.by) / parseFloat(this.tileheight)) >> 0
+                            my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0
 
                             var tmpy = (this.by + this.bh + this.tileheight)
                             while (y < tmpy) {
                                 x = this.bx //- this.tilewidth
-                                mx = Math.floor(parseFloat(this.bx) / parseFloat(this.tilewidth)) >> 0
+                                mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0
 
                                 var tmpx = (this.bx + this.bw + this.tilewidth)
                                 while (x < tmpx) {
