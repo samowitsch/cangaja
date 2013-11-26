@@ -22,6 +22,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/sprite/sprite.js \
+../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \
 ../cangaja/atlas/atlas-texturepacker.js \
 ../cangaja/sprite/animation.js \

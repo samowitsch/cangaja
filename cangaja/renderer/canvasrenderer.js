@@ -34,6 +34,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Sprite":
             case "Button":
             case "Particle":
+            case "SpineAnimation":
 
                 renderObject.updateDiff()
 
