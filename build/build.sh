@@ -8,6 +8,7 @@ echo ""
 
 cat ../cangaja/base/base.js \
 ../cangaja/lib-ext/keymaster.js \
+../cangaja/lib-ext/keyboard.js \
 ../cangaja/lib-ext/poly2tri.js \
 ../cangaja/lib-ext/clipper.js \
 ../cangaja/lib-ext/spine.js \

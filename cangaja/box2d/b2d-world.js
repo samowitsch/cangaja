@@ -134,6 +134,26 @@ CG.Layer.extend('B2DWorld', {
         obj.id.uid = this.uid
         this.elements.push(obj)
     },
+     /**
+     * @description
+     *
+     * Checks if a B2D body Exists
+     *
+     * @method deleteBodyAt
+     * @param body {Object}
+     * @return {Boolean}
+     */
+    checkIfBodyExists: function (body) {
+        if (body) {
+            for (var i = 0, l = this.elements.length; i < l; i++) {
+                //if b2entity found delete entity and b2body
+                if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
+                    return true
+                }
+            }
+        }
+        return false
+    },
     /**
      * @description
      *
@@ -407,7 +427,7 @@ CG.Layer.extend('B2DWorld', {
      */
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
-            if (typeof this.elements[i].id !== 'undefined' && typeof this.elements[i] === 'object') {
+            if (typeof this.elements[i] === 'object' && typeof this.elements[i].id !== 'undefined') {
                 if(this.elements[i].id.uid === uid) {
                     this.elements.splice(i, 1);
                 }
