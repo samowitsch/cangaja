@@ -540,7 +540,7 @@ spine.EventTimeline.prototype = {
 		var frameCount = frames.length;
 
 		if (lastTime > time) { // Fire events after last time for looped animations.
-			apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha);
+			this.apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha);
 			lastTime = -1;
 		} else if (lastTime >= frames[frameCount - 1]) // Last time is after last frame.
 			return;
