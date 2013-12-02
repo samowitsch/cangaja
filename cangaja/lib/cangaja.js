@@ -190,7 +190,103 @@ var CG = CG || {
 }())
 
 
-//     keymaster.js
+// Last updated November 2011
+// By Simon Sarris
+// www.simonsarris.com
+// sarris@acm.org
+//
+// Free to use and distribute at will
+// So long as you are nice to people, etc
+
+// Simple class for keeping track of the current transformation matrix
+
+// For instance:
+//    var t = new Transform();
+//    t.rotate(5);
+//    var m = t.m;
+//    ctx.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+
+// Is equivalent to:
+//    ctx.rotate(5);
+
+// But now you can retrieve it :)
+
+// Remember that this does not account for any CSS transforms applied to the canvas
+
+function Transform() {
+  this.reset();
+}
+
+Transform.prototype.reset = function() {
+  this.m = [1,0,0,1,0,0];
+};
+
+Transform.prototype.multiply = function(matrix) {
+  var m11 = this.m[0] * matrix.m[0] + this.m[2] * matrix.m[1];
+  var m12 = this.m[1] * matrix.m[0] + this.m[3] * matrix.m[1];
+
+  var m21 = this.m[0] * matrix.m[2] + this.m[2] * matrix.m[3];
+  var m22 = this.m[1] * matrix.m[2] + this.m[3] * matrix.m[3];
+
+  var dx = this.m[0] * matrix.m[4] + this.m[2] * matrix.m[5] + this.m[4];
+  var dy = this.m[1] * matrix.m[4] + this.m[3] * matrix.m[5] + this.m[5];
+
+  this.m[0] = m11;
+  this.m[1] = m12;
+  this.m[2] = m21;
+  this.m[3] = m22;
+  this.m[4] = dx;
+  this.m[5] = dy;
+};
+
+Transform.prototype.invert = function() {
+  var d = 1 / (this.m[0] * this.m[3] - this.m[1] * this.m[2]);
+  var m0 = this.m[3] * d;
+  var m1 = -this.m[1] * d;
+  var m2 = -this.m[2] * d;
+  var m3 = this.m[0] * d;
+  var m4 = d * (this.m[2] * this.m[5] - this.m[3] * this.m[4]);
+  var m5 = d * (this.m[1] * this.m[4] - this.m[0] * this.m[5]);
+  this.m[0] = m0;
+  this.m[1] = m1;
+  this.m[2] = m2;
+  this.m[3] = m3;
+  this.m[4] = m4;
+  this.m[5] = m5;
+};
+
+Transform.prototype.rotate = function(rad) {
+  var c = Math.cos(rad);
+  var s = Math.sin(rad);
+  var m11 = this.m[0] * c + this.m[2] * s;
+  var m12 = this.m[1] * c + this.m[3] * s;
+  var m21 = this.m[0] * -s + this.m[2] * c;
+  var m22 = this.m[1] * -s + this.m[3] * c;
+  this.m[0] = m11;
+  this.m[1] = m12;
+  this.m[2] = m21;
+  this.m[3] = m22;
+};
+
+Transform.prototype.translate = function(x, y) {
+  this.m[4] += this.m[0] * x + this.m[2] * y;
+  this.m[5] += this.m[1] * x + this.m[3] * y;
+};
+
+Transform.prototype.scale = function(sx, sy) {
+  this.m[0] *= sx;
+  this.m[1] *= sx;
+  this.m[2] *= sy;
+  this.m[3] *= sy;
+};
+
+Transform.prototype.transformPoint = function(px, py) {
+  var x = px;
+  var y = py;
+  px = x * this.m[0] + y * this.m[2] + this.m[4];
+  py = x * this.m[1] + y * this.m[3] + this.m[5];
+  return [px, py];
+};//     keymaster.js
 //     (c) 2011-2012 Thomas Fuchs
 //     keymaster.js may be freely distributed under the MIT license.
 
@@ -7586,8 +7682,8 @@ spine.Bone.prototype = {
 			}
 			this.worldRotation = this.data.inheritRotation ? parent.worldRotation + this.rotation : this.rotation;
 		} else {
-			this.worldX = this.x;
-			this.worldY = this.y;
+			this.worldX = flipX ? -this.x : this.x;
+			this.worldY = (flipY != spine.Bone.yDown) ? -this.y : this.y;
 			this.worldScaleX = this.scaleX;
 			this.worldScaleY = this.scaleY;
 			this.worldRotation = this.rotation;
@@ -8042,7 +8138,7 @@ spine.EventTimeline.prototype = {
 		var frameCount = frames.length;
 
 		if (lastTime > time) { // Fire events after last time for looped animations.
-			apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha);
+			this.apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha);
 			lastTime = -1;
 		} else if (lastTime >= frames[frameCount - 1]) // Last time is after last frame.
 			return;
@@ -8953,7 +9049,7 @@ spine.Atlas = function (atlasText, textureLoader) {
 			else if (direction == "xy")
 				page.uWrap = page.vWrap = spine.Atlas.TextureWrap.repeat;
 
-			textureLoader.load(page, line);
+			textureLoader.load(page, line, this);
 
 			this.pages.push(page);
 
@@ -9090,7 +9186,7 @@ spine.AtlasRegion.prototype = {
 	index: 0,
 	rotate: false,
 	splits: null,
-	pads: null
+	pads: null,
 };
 
 spine.AtlasReader = function (text) {
@@ -9445,6 +9541,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Sprite":
             case "Button":
             case "Particle":
+            case "SpineAnimation":
 
                 renderObject.updateDiff()
 
@@ -10510,6 +10607,154 @@ CG.Rectangle.extend('Sprite', {
 /**
  * @description
  *
+ * CG.SpineAnimation
+ *
+ * @class CG.SpineAnimation
+ * @extends CG.Entity
+ */
+CG.Entity.extend('SpineAnimation', {
+    /**
+     * @constructor
+     * @method init
+     * @param spinejson     Spine json animation file
+     * @param spineatlas    Spine
+     * @param position
+     * @param custominit callback function
+     */
+    init: function (spinejson, spineatlas, position, callback) {
+
+        _self = this
+
+        this.instanceOf = 'SpineAnimation'
+
+        this.baseposition = position || new CG.Point(0, 0)
+
+        this.vertices = []
+
+        this.atlasimage = true
+
+        this.textures = []
+
+        this.textureCount = 0
+
+        this.spineAtlasData = spineatlas
+        this.spineJsonData = spinejson
+
+        this.initCustom = callback
+
+        this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
+            load: function (page, path) {
+                this.textureCount++
+                var image = new Image()
+                image.onload = function () {
+                    page.rendererObject = image
+                    page.width = image.width
+                    page.height = image.height
+                    console.log('page', page)
+                    console.log('spineAtlas', _self.spineAtlas)
+                    console.log('this', this)
+                    _self.spineAtlas.updateUVs(page)
+                    this.textureCount--
+                }
+                image.onerror = function () {
+                    throw "error: atlas image not loaded!"
+                }
+                image.src = 'media/spine/' + path
+            },
+            unload: function (texture) {
+            }
+        });
+
+        this.waitForTextures();
+    },
+    waitForTextures: function () {
+        if (!this.textureCount) {
+            this.initSkeleton()
+        } else {
+            setTimeout(this.waitForTextures, 100)
+        }
+    },
+    initSkeleton: function () {
+
+        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(_self.spineAtlas))
+
+        if (typeof this.spineJsonData === 'object') {
+            this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
+        } else {
+            this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
+        }
+
+        this.skeleton = new spine.Skeleton(this.skeletonData)
+
+        this.skeleton.getRootBone().x = this.baseposition.x || 0
+        this.skeleton.getRootBone().y = this.baseposition.y || 0
+
+        this.skeleton.updateWorldTransform();
+
+        this.stateData = new spine.AnimationStateData(this.skeletonData);
+        this.state = new spine.AnimationState(this.stateData);
+
+
+
+        this.initCustom(this)
+
+        this.state.onEvent = function (trackIndex, event) {
+            // alert(trackIndex + " event: " + event.data.name)
+        }
+    },
+    update: function () {
+        this.state.update(0.015);    // delta
+        this.state.apply(this.skeleton);
+        this.skeleton.updateWorldTransform();
+    },
+    draw: function () {
+        var drawOrder = this.skeleton.drawOrder;
+        for (var i = 0, n = drawOrder.length; i < n; i++) {
+            var slot = drawOrder[i];
+            var attachment = slot.attachment;
+            var bone = slot.bone;
+            if (!(attachment instanceof spine.RegionAttachment)) continue;
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices);
+
+            try {
+                this.alpha = 1
+                this.position = new CG.Point(bone.worldX, bone.worldY)
+                this.xoffset = attachment.rendererObject.x
+                this.yoffset = attachment.rendererObject.y
+                this.cutwidth = attachment.width
+                this.cutheight = attachment.height
+                this.xhandle = this.cutwidth / 2
+                this.yhandle = this.cutheight / 2
+                this.xscale = this.yscale = 1
+                this.rotation = bone.rotation
+
+                this.imagerotation = 0
+
+                this.image = attachment.rendererObject.page.rendererObject
+                this.width = attachment.rendererObject.page.rendererObject.width
+                this.height = attachment.rendererObject.page.rendererObject.height
+
+                Game.renderer.draw(this);
+
+            } catch (e) {
+//                console.log(e)
+//                console.log(attachment)
+            }
+
+        }
+
+//        Game.renderer.draw(this);
+
+    },
+    updateDiff: function () {
+
+    }
+})
+
+
+/**
+ * @description
+ *
  * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
  *
  * @class CG.AtlasImage
@@ -11163,6 +11408,9 @@ CG.Class.extend('MediaAsset', {
         this.jsons = []
         this.currjson = 0
 
+        this.texts = []
+        this.currtext = 0
+
         this.fonts = []
         this.currfont = 0
 
@@ -11238,6 +11486,21 @@ CG.Class.extend('MediaAsset', {
     addJson:function (path, name) {
         this.assetcount += 1
         this.jsons.push({
+            name:name || '', //optional
+            path:path,
+            data:''
+        })
+        return this
+    },
+    /**
+     * @method addText
+     * @param path
+     * @param name
+     * @return {*}
+     */
+    addText:function (path, name) {
+        this.assetcount += 1
+        this.texts.push({
             name:name || '', //optional
             path:path,
             data:''
@@ -11322,6 +11585,19 @@ CG.Class.extend('MediaAsset', {
         throw new CG.MediaAssetException('No JSON with this name in asset.')
     },
     /**
+     * @method getTextByName
+     * @param name
+     * @return {*}
+     */
+    getTextByName:function (name) {
+        for (var i = 0, l = this.jsons.length; i < l; i++) {
+            if (this.texts[i].name == name) {
+                return this.texts[i]
+            }
+        }
+        throw new CG.MediaAssetException('No Text with this name in asset.')
+    },
+    /**
      * @method startPreLoad
      */
     startPreLoad:function () {
@@ -11339,11 +11615,7 @@ CG.Class.extend('MediaAsset', {
             }.bind(this)
             this.images[this.currimage].img.src = this.images[this.currimage].path
         } else if (this.currfont < this.fonts.length) {
-            //        if(typeof(ejecta) !== 'undefined'){
-            //            this.fonts[this.currfont].data = ejecta.loadText(this.fonts[this.currfont].path)
-            //        } else {
             this.fonts[this.currfont].data = loadString(this.fonts[this.currfont].path)
-            //        }
             this.currfont += 1
             this.assetcurrent += 1
             this.startPreLoad()
@@ -11353,12 +11625,13 @@ CG.Class.extend('MediaAsset', {
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
-            //        if(typeof(ejecta) !== 'undefined'){
-            //            this.jsons[this.currjson].data = ejecta.loadJSON(this.jsons[this.currjson].path)
-            //        } else {
             this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
-            //        }
             this.currjson += 1
+            this.assetcurrent += 1
+            this.startPreLoad()
+        } else if (this.currtext < this.texts.length) {
+            this.texts[this.currtext].data = loadString(this.texts[this.currtext].path)
+            this.currtext += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currimage == this.images.length &&
