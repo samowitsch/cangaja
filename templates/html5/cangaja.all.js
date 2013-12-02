@@ -8226,7 +8226,7 @@ spine.SkeletonData.prototype = {
 	findSlot: function (slotName) {
 		var slots = this.slots;
 		for (var i = 0, n = slots.length; i < n; i++) {
-			if (slots[i].name == slotName) return slot[i];
+			if (slots[i].name == slotName) return slots[i];
 		}
 		return null;
 	},
@@ -8307,7 +8307,7 @@ spine.Skeleton.prototype = {
 	setSlotsToSetupPose: function () {
 		var slots = this.slots;
 		for (var i = 0, n = slots.length; i < n; i++)
-			slots[i].setToSetupPose(i);
+			slots[i].setToSetupPose();
 	},
 	/** @return May return null. */
 	getRootBone: function () {
@@ -8369,12 +8369,12 @@ spine.Skeleton.prototype = {
 	/** @param attachmentName May be null. */
 	setAttachment: function (slotName, attachmentName) {
 		var slots = this.slots;
-		for (var i = 0, n = slots.size; i < n; i++) {
+		for (var i = 0, n = slots.length; i < n; i++) {
 			var slot = slots[i];
 			if (slot.data.name == slotName) {
 				var attachment = null;
 				if (attachmentName) {
-					attachment = this.getAttachment(i, attachmentName);
+                    attachment = this.getAttachmentBySlotIndex(i, attachmentName);
 					if (!attachment) throw "Attachment not found: " + attachmentName + ", for slot: " + slotName;
 				}
 				slot.setAttachment(attachment);
@@ -8384,7 +8384,7 @@ spine.Skeleton.prototype = {
 		throw "Slot not found: " + slotName;
 	},
 	update: function (delta) {
-		time += delta;
+		this.time += delta;
 	}
 };
 
@@ -9238,7 +9238,7 @@ spine.AtlasAttachmentLoader.prototype = {
 		case spine.AttachmentType.region:
 			var region = this.atlas.findRegion(name);
 			if (!region) throw "Region not found in atlas: " + name + " (" + type + ")";
-			var attachment = new spine.RegionAttachment(name);
+			var attachment = new spine.RegionAttachment();
 			attachment.rendererObject = region;
 			attachment.setUVs(region.u, region.v, region.u2, region.v2, region.rotate);
 			attachment.regionOffsetX = region.offsetX;
@@ -9525,6 +9525,8 @@ CG.Class.extend('CanvasRenderer', {
      */
     init: function (canvas) {
 
+        //TODO switch from translate, rotate, scale to transform?
+
         //TODO the renderer recognizes the canvas features WebGL/Canvas
 
         //TODO the renderer creates the canvas element
@@ -9541,12 +9543,12 @@ CG.Class.extend('CanvasRenderer', {
             case "Sprite":
             case "Button":
             case "Particle":
-            case "SpineAnimation":
+//            case "SpineAnimation":
 
                 renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
@@ -9556,13 +9558,28 @@ CG.Class.extend('CanvasRenderer', {
                 }
                 break;
 
+            case "SpineAnimation":
+
+                renderObject.updateDiff()
+
+                Game.b_ctx.globalAlpha = renderObject.alpha
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
+//                if (renderObject.atlasimage) {
+                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0, 0, renderObject.cutwidth, renderObject.cutheight)
+//                } else {
+//                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
+//                    Game.b_ctx.drawImage(renderObject.image, 0, 0, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
+//                }
+                break;
+
 
             case "Animation":
 
                 renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.frames == 1) {
                     Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
                 }
@@ -9617,7 +9634,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Map":
 
                 Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                Game.b_ctx.translate(renderObject.rx, renderObject.ry)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.rx, renderObject.ry)
 
                 if (renderObject.orientation == 'orthogonal') {
 
@@ -9646,7 +9663,7 @@ CG.Class.extend('CanvasRenderer', {
             case "B2DRope":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.translate(renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
@@ -9663,11 +9680,9 @@ CG.Class.extend('CanvasRenderer', {
 })
 
 
-
-
 /*
 
-Pixi renderer
+ Pixi renderer
 
  context.setTransform(
 
@@ -9695,7 +9710,7 @@ Pixi renderer
 
 
 
-Pixi Displayobject
+ Pixi Displayobject
 
 
 
@@ -9705,55 +9720,55 @@ Pixi Displayobject
  * @method updateTransform
  * @private
  *
-PIXI.DisplayObject.prototype.updateTransform = function()
-{
-    // TODO OPTIMIZE THIS!! with dirty
-    if(this.rotation !== this.rotationCache)
-    {
-        this.rotationCache = this.rotation;
-        this._sr =  Math.sin(this.rotation);
-        this._cr =  Math.cos(this.rotation);
-    }
+ PIXI.DisplayObject.prototype.updateTransform = function()
+ {
+ // TODO OPTIMIZE THIS!! with dirty
+ if(this.rotation !== this.rotationCache)
+ {
+ this.rotationCache = this.rotation;
+ this._sr =  Math.sin(this.rotation);
+ this._cr =  Math.cos(this.rotation);
+ }
 
-    var localTransform = this.localTransform;
-    var parentTransform = this.parent.worldTransform;
-    var worldTransform = this.worldTransform;
-    //console.log(localTransform)
-    localTransform[0] = this._cr * this.scale.x;
-    localTransform[1] = -this._sr * this.scale.y
-    localTransform[3] = this._sr * this.scale.x;
-    localTransform[4] = this._cr * this.scale.y;
+ var localTransform = this.localTransform;
+ var parentTransform = this.parent.worldTransform;
+ var worldTransform = this.worldTransform;
+ //console.log(localTransform)
+ localTransform[0] = this._cr * this.scale.x;
+ localTransform[1] = -this._sr * this.scale.y
+ localTransform[3] = this._sr * this.scale.x;
+ localTransform[4] = this._cr * this.scale.y;
 
-    // TODO --> do we even need a local matrix???
+ // TODO --> do we even need a local matrix???
 
-    var px = this.pivot.x;
-    var py = this.pivot.y;
+ var px = this.pivot.x;
+ var py = this.pivot.y;
 
-    // Cache the matrix values (makes for huge speed increases!)
-    var a00 = localTransform[0], a01 = localTransform[1], a02 = this.position.x - localTransform[0] * px - py * localTransform[1],
-        a10 = localTransform[3], a11 = localTransform[4], a12 = this.position.y - localTransform[4] * py - px * localTransform[3],
+ // Cache the matrix values (makes for huge speed increases!)
+ var a00 = localTransform[0], a01 = localTransform[1], a02 = this.position.x - localTransform[0] * px - py * localTransform[1],
+ a10 = localTransform[3], a11 = localTransform[4], a12 = this.position.y - localTransform[4] * py - px * localTransform[3],
 
-        b00 = parentTransform[0], b01 = parentTransform[1], b02 = parentTransform[2],
-        b10 = parentTransform[3], b11 = parentTransform[4], b12 = parentTransform[5];
+ b00 = parentTransform[0], b01 = parentTransform[1], b02 = parentTransform[2],
+ b10 = parentTransform[3], b11 = parentTransform[4], b12 = parentTransform[5];
 
-    localTransform[2] = a02
-    localTransform[5] = a12
+ localTransform[2] = a02
+ localTransform[5] = a12
 
-    worldTransform[0] = b00 * a00 + b01 * a10;
-    worldTransform[1] = b00 * a01 + b01 * a11;
-    worldTransform[2] = b00 * a02 + b01 * a12 + b02;
+ worldTransform[0] = b00 * a00 + b01 * a10;
+ worldTransform[1] = b00 * a01 + b01 * a11;
+ worldTransform[2] = b00 * a02 + b01 * a12 + b02;
 
-    worldTransform[3] = b10 * a00 + b11 * a10;
-    worldTransform[4] = b10 * a01 + b11 * a11;
-    worldTransform[5] = b10 * a02 + b11 * a12 + b12;
+ worldTransform[3] = b10 * a00 + b11 * a10;
+ worldTransform[4] = b10 * a01 + b11 * a11;
+ worldTransform[5] = b10 * a02 + b11 * a12 + b12;
 
-    // because we are using affine transformation, we can optimise the matrix concatenation process.. wooo!
-    // mat3.multiply(this.localTransform, this.parent.worldTransform, this.worldTransform);
-    this.worldAlpha = this.alpha * this.parent.worldAlpha;
+ // because we are using affine transformation, we can optimise the matrix concatenation process.. wooo!
+ // mat3.multiply(this.localTransform, this.parent.worldTransform, this.worldTransform);
+ this.worldAlpha = this.alpha * this.parent.worldAlpha;
 
-    this.vcount = PIXI.visibleCount;
+ this.vcount = PIXI.visibleCount;
 
-}
+ }
 
 
 
@@ -10627,6 +10642,8 @@ CG.Entity.extend('SpineAnimation', {
 
         this.instanceOf = 'SpineAnimation'
 
+        this.lastTime = Date.now()
+
         this.baseposition = position || new CG.Point(0, 0)
 
         this.vertices = []
@@ -10684,16 +10701,17 @@ CG.Entity.extend('SpineAnimation', {
             this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
         }
 
+        spine.Bone.yDown = true;
+
         this.skeleton = new spine.Skeleton(this.skeletonData)
 
         this.skeleton.getRootBone().x = this.baseposition.x || 0
-        this.skeleton.getRootBone().y = this.baseposition.y || 0
+        this.skeleton.getRootBone().y = this.baseposition.y * -1 || 0
 
         this.skeleton.updateWorldTransform();
 
         this.stateData = new spine.AnimationStateData(this.skeletonData);
         this.state = new spine.AnimationState(this.stateData);
-
 
 
         this.initCustom(this)
@@ -10703,7 +10721,11 @@ CG.Entity.extend('SpineAnimation', {
         }
     },
     update: function () {
-        this.state.update(0.015);    // delta
+
+        var dt = (Date.now() - this.lastTime)/1000
+        this.lastTime = Date.now()
+
+        this.state.update(dt);    // delta
         this.state.apply(this.skeleton);
         this.skeleton.updateWorldTransform();
     },
@@ -10718,23 +10740,35 @@ CG.Entity.extend('SpineAnimation', {
 
             try {
                 this.alpha = 1
-                this.position = new CG.Point(bone.worldX, bone.worldY)
+                this.position = new CG.Point(this.vertices[2], this.vertices[3])
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
                 this.cutwidth = attachment.width
                 this.cutheight = attachment.height
                 this.xhandle = this.cutwidth / 2
                 this.yhandle = this.cutheight / 2
-                this.xscale = this.yscale = 1
-                this.rotation = bone.rotation
+                this.xscale = attachment.scaleX
+                this.yscale = attachment.scaleY
+                this.rotation = -(slot.bone.worldRotation + attachment.rotation)
 
+                if (this.skeleton.flipX) {
+
+                    this.xscale *= -1;
+                    this.rotation *= -1;
+                }
+
+                if (this.skeleton.flipY) {
+
+                    this.yscale *= -1;
+                    this.rotation *= -1;
+                }
                 this.imagerotation = 0
 
                 this.image = attachment.rendererObject.page.rendererObject
                 this.width = attachment.rendererObject.page.rendererObject.width
                 this.height = attachment.rendererObject.page.rendererObject.height
 
-                Game.renderer.draw(this);
+                Game.renderer.draw(this)
 
             } catch (e) {
 //                console.log(e)
