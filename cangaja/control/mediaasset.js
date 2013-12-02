@@ -35,6 +35,9 @@ CG.Class.extend('MediaAsset', {
         this.jsons = []
         this.currjson = 0
 
+        this.texts = []
+        this.currtext = 0
+
         this.fonts = []
         this.currfont = 0
 
@@ -110,6 +113,21 @@ CG.Class.extend('MediaAsset', {
     addJson:function (path, name) {
         this.assetcount += 1
         this.jsons.push({
+            name:name || '', //optional
+            path:path,
+            data:''
+        })
+        return this
+    },
+    /**
+     * @method addText
+     * @param path
+     * @param name
+     * @return {*}
+     */
+    addText:function (path, name) {
+        this.assetcount += 1
+        this.texts.push({
             name:name || '', //optional
             path:path,
             data:''
@@ -194,6 +212,19 @@ CG.Class.extend('MediaAsset', {
         throw new CG.MediaAssetException('No JSON with this name in asset.')
     },
     /**
+     * @method getTextByName
+     * @param name
+     * @return {*}
+     */
+    getTextByName:function (name) {
+        for (var i = 0, l = this.jsons.length; i < l; i++) {
+            if (this.texts[i].name == name) {
+                return this.texts[i]
+            }
+        }
+        throw new CG.MediaAssetException('No Text with this name in asset.')
+    },
+    /**
      * @method startPreLoad
      */
     startPreLoad:function () {
@@ -211,11 +242,7 @@ CG.Class.extend('MediaAsset', {
             }.bind(this)
             this.images[this.currimage].img.src = this.images[this.currimage].path
         } else if (this.currfont < this.fonts.length) {
-            //        if(typeof(ejecta) !== 'undefined'){
-            //            this.fonts[this.currfont].data = ejecta.loadText(this.fonts[this.currfont].path)
-            //        } else {
             this.fonts[this.currfont].data = loadString(this.fonts[this.currfont].path)
-            //        }
             this.currfont += 1
             this.assetcurrent += 1
             this.startPreLoad()
@@ -225,12 +252,13 @@ CG.Class.extend('MediaAsset', {
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
-            //        if(typeof(ejecta) !== 'undefined'){
-            //            this.jsons[this.currjson].data = ejecta.loadJSON(this.jsons[this.currjson].path)
-            //        } else {
             this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
-            //        }
             this.currjson += 1
+            this.assetcurrent += 1
+            this.startPreLoad()
+        } else if (this.currtext < this.texts.length) {
+            this.texts[this.currtext].data = loadString(this.texts[this.currtext].path)
+            this.currtext += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currimage == this.images.length &&
