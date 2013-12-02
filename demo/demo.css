@@ -1,3 +1,29 @@
-* {margin: 0;padding: 0;}
-body {font-family: verdana,arial;font-size: 13px;color: #707070;background: #000;text-align: center;}
-canvas {border: 1px solid #555;}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: verdana, arial;
+    font-size: 13px;
+    color: #707070;
+    background: #000;
+    text-align: center;
+}
+
+canvas {
+    border: 1px solid #555;
+}
+
+#fpsGraph, #msGraph {
+    background-color: #ff0 !important;
+}
+
+div#stats {
+    width: 80px;
+    opacity: 0.9;
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: 0
+}

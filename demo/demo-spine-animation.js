@@ -76,14 +76,15 @@ Game = (function () {
                 .addFont('media/font/abadi_ez.txt', 'abadi')
                 .addImage('media/font/abadi_ez.png', 'abadi_ez')
 
+                //preloading spineboy
                 .addText('media/spine/spineboy.atlas', 'spineboy-atlas')
                 .addJson('media/spine/spineboy.json', 'spineboy-json')
-                .addImage('media/spine/spineboy.png', 'spineboy')
+                .addImage('media/spine/spineboy.png', 'spineboy')           //image preloading not nessecary SpineAnimation class has also a preloader
 
-
+                //preloading goblins
                 .addText('media/spine/goblins.atlas', 'goblins-atlas')
                 .addJson('media/spine/goblins.json', 'goblins-json')
-                .addImage('media/spine/goblins.png', 'goblins')
+                .addImage('media/spine/goblins.png', 'goblins')           //image preloading not nessecary SpineAnimation class has also a preloader
 
                 .startPreLoad()
         },
@@ -94,6 +95,8 @@ Game = (function () {
 
             //screen and layer
             mainscreen = new CG.Screen('mainscreen')
+//            mainscreen.xscale = 0.5
+//            mainscreen.yscale = 0.5
             mainlayer = new CG.Layer('mainlayer')
 
             //add screen to Director
@@ -104,7 +107,7 @@ Game = (function () {
             spineboy = new CG.SpineAnimation(
                 Game.asset.getJsonByName('spineboy-json').data,
                 Game.asset.getTextByName('spineboy-atlas').data,
-                new CG.Point(160, 100),
+                new CG.Point(160, 400),
                 function (spineObject) {
                     spineObject.stateData.setMixByName("walk", "jump", 0.2);
                     spineObject.stateData.setMixByName("jump", "walk", 0.4);
@@ -116,7 +119,7 @@ Game = (function () {
             goblins = new CG.SpineAnimation(
                 Game.asset.getJsonByName('goblins-json').data,
                 Game.asset.getTextByName('goblins-atlas').data,
-                new CG.Point(Game.width - 160, 100),
+                new CG.Point(Game.width - 160, 400),
                 function (spineObject) {
                     spineObject.skeleton.setSkinByName("goblingirl");
                     spineObject.skeleton.setSlotsToSetupPose();
@@ -124,7 +127,6 @@ Game = (function () {
                 }
             )
             mainlayer.addElement(goblins)
-
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
@@ -139,6 +141,12 @@ Game = (function () {
         update: function () {
             //update here what ever you want
             Game.director.update()
+
+            spineboy.skeleton.getRootBone().x += 3
+            if (spineboy.skeleton.getRootBone().x > 700) {
+                spineboy.skeleton.getRootBone().x = -100
+            }
+
         },
         draw: function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)

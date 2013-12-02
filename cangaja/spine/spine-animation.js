@@ -21,6 +21,8 @@ CG.Entity.extend('SpineAnimation', {
 
         this.instanceOf = 'SpineAnimation'
 
+        this.lastTime = Date.now()
+
         this.baseposition = position || new CG.Point(0, 0)
 
         this.vertices = []
@@ -78,16 +80,17 @@ CG.Entity.extend('SpineAnimation', {
             this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
         }
 
+        spine.Bone.yDown = true;
+
         this.skeleton = new spine.Skeleton(this.skeletonData)
 
         this.skeleton.getRootBone().x = this.baseposition.x || 0
-        this.skeleton.getRootBone().y = this.baseposition.y || 0
+        this.skeleton.getRootBone().y = this.baseposition.y * -1 || 0
 
         this.skeleton.updateWorldTransform();
 
         this.stateData = new spine.AnimationStateData(this.skeletonData);
         this.state = new spine.AnimationState(this.stateData);
-
 
 
         this.initCustom(this)
@@ -97,7 +100,11 @@ CG.Entity.extend('SpineAnimation', {
         }
     },
     update: function () {
-        this.state.update(0.015);    // delta
+
+        var dt = (Date.now() - this.lastTime)/1000
+        this.lastTime = Date.now()
+
+        this.state.update(dt);    // delta
         this.state.apply(this.skeleton);
         this.skeleton.updateWorldTransform();
     },
@@ -112,23 +119,35 @@ CG.Entity.extend('SpineAnimation', {
 
             try {
                 this.alpha = 1
-                this.position = new CG.Point(bone.worldX, bone.worldY)
+                this.position = new CG.Point(this.vertices[2], this.vertices[3])
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
                 this.cutwidth = attachment.width
                 this.cutheight = attachment.height
                 this.xhandle = this.cutwidth / 2
                 this.yhandle = this.cutheight / 2
-                this.xscale = this.yscale = 1
-                this.rotation = bone.rotation
+                this.xscale = attachment.scaleX
+                this.yscale = attachment.scaleY
+                this.rotation = -(slot.bone.worldRotation + attachment.rotation)
 
+                if (this.skeleton.flipX) {
+
+                    this.xscale *= -1;
+                    this.rotation *= -1;
+                }
+
+                if (this.skeleton.flipY) {
+
+                    this.yscale *= -1;
+                    this.rotation *= -1;
+                }
                 this.imagerotation = 0
 
                 this.image = attachment.rendererObject.page.rendererObject
                 this.width = attachment.rendererObject.page.rendererObject.width
                 this.height = attachment.rendererObject.page.rendererObject.height
 
-                Game.renderer.draw(this);
+                Game.renderer.draw(this)
 
             } catch (e) {
 //                console.log(e)
