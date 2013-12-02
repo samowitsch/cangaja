@@ -42,6 +42,8 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Todo / wish list / bugs:
 
+* integrate Spine-JS runtime?
+* integrate gamepad stuff (http://www.html5rocks.com/en/tutorials/doodles/gamepad/ or https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library)
 * Oneway/onesided Platforms Box2d
     http://www.box2d.org/forum/viewtopic.php?f=3&t=4985
     http://www.emanueleferonato.com/2010/03/02/understanding-box2ds-one-way-platforms-aka-clouds/
