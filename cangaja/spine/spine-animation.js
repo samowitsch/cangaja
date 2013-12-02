@@ -1,80 +1,103 @@
 /**
  * @description
  *
- * CG.SpineSprite
+ * CG.SpineAnimation
  *
- * @class CG.SpineSprite
+ * @class CG.SpineAnimation
  * @extends CG.Entity
  */
 CG.Entity.extend('SpineAnimation', {
     /**
      * @constructor
      * @method init
-     * @param image
      * @param spinejson     Spine json animation file
      * @param spineatlas    Spine
      * @param position
+     * @param custominit callback function
      */
-    init: function (image, spinejson, spineatlas, position) {
-        this.setImage(image)
+    init: function (spinejson, spineatlas, position, callback) {
+
+        _self = this
+
         this.instanceOf = 'SpineAnimation'
 
+        this.baseposition = position || new CG.Point(0, 0)
 
+        this.vertices = []
 
-        /**
-         *
-         * @type {*}
-         */
+        this.atlasimage = true
+
+        this.textures = []
+
+        this.textureCount = 0
+
         this.spineAtlasData = spineatlas
+        this.spineJsonData = spinejson
+
+        this.initCustom = callback
 
         this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
             load: function (page, path) {
+                this.textureCount++
+                var image = new Image()
+                image.onload = function () {
+                    page.rendererObject = image
+                    page.width = image.width
+                    page.height = image.height
+                    console.log('page', page)
+                    console.log('spineAtlas', _self.spineAtlas)
+                    console.log('this', this)
+                    _self.spineAtlas.updateUVs(page)
+                    this.textureCount--
+                }
+                image.onerror = function () {
+                    throw "error: atlas image not loaded!"
+                }
+                image.src = 'media/spine/' + path
             },
             unload: function (texture) {
             }
         });
 
+        this.waitForTextures();
+    },
+    waitForTextures: function () {
+        if (!this.textureCount) {
+            this.initSkeleton()
+        } else {
+            setTimeout(this.waitForTextures, 100)
+        }
+    },
+    initSkeleton: function () {
 
+        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(_self.spineAtlas))
 
-        /**
-         *
-         * @type {*}
-         */
-        this.spineJsonData = spinejson
+        if (typeof this.spineJsonData === 'object') {
+            this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
+        } else {
+            this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
+        }
 
+        this.skeleton = new spine.Skeleton(this.skeletonData)
 
-        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(this.spineAtlas))
+        this.skeleton.getRootBone().x = this.baseposition.x || 0
+        this.skeleton.getRootBone().y = this.baseposition.y || 0
 
-
-        this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
-
-
-
-        this.skeleton  = new spine.Skeleton(this.skeletonData)
-
-
-        this.skeleton.getRootBone().x = position.x || 0
-        this.skeleton.getRootBone().y = position.y || 0
         this.skeleton.updateWorldTransform();
-
 
         this.stateData = new spine.AnimationStateData(this.skeletonData);
         this.state = new spine.AnimationState(this.stateData);
 
+
+
+        this.initCustom(this)
+
         this.state.onEvent = function (trackIndex, event) {
             // alert(trackIndex + " event: " + event.data.name)
         }
-
-        /**
-         *
-         * @type {*|Point}
-         */
-        this.position = position || new CG.Point(0, 0)
-
-
     },
     update: function () {
-        this.state.update(1);    // delta
+        this.state.update(0.015);    // delta
         this.state.apply(this.skeleton);
         this.skeleton.updateWorldTransform();
     },
@@ -83,21 +106,42 @@ CG.Entity.extend('SpineAnimation', {
         for (var i = 0, n = drawOrder.length; i < n; i++) {
             var slot = drawOrder[i];
             var attachment = slot.attachment;
+            var bone = slot.bone;
             if (!(attachment instanceof spine.RegionAttachment)) continue;
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices);
 
-            // TODO
+            try {
+                this.alpha = 1
+                this.position = new CG.Point(bone.worldX, bone.worldY)
+                this.xoffset = attachment.rendererObject.x
+                this.yoffset = attachment.rendererObject.y
+                this.cutwidth = attachment.width
+                this.cutheight = attachment.height
+                this.xhandle = this.cutwidth / 2
+                this.yhandle = this.cutheight / 2
+                this.xscale = this.yscale = 1
+                this.rotation = bone.rotation
 
-            //alpha
-            //position
-            //xoffset,yoffset
-            //cutwidth,cutheight
-            //xhandle,yhandle
-            //xscale,yscale
-            //rotation
+                this.imagerotation = 0
 
-            Game.renderer.draw(this);
+                this.image = attachment.rendererObject.page.rendererObject
+                this.width = attachment.rendererObject.page.rendererObject.width
+                this.height = attachment.rendererObject.page.rendererObject.height
+
+                Game.renderer.draw(this);
+
+            } catch (e) {
+//                console.log(e)
+//                console.log(attachment)
+            }
 
         }
+
+//        Game.renderer.draw(this);
+
+    },
+    updateDiff: function () {
+
     }
 })
 
