@@ -3,7 +3,7 @@ var can
 
 var mainscreen, mainlayer
 
-var spineboy, goblins
+var spineboy, goblins, dragon
 
 var mousex = 0
 var mousey = 0
@@ -86,6 +86,12 @@ Game = (function () {
                 .addJson('media/spine/goblins.json', 'goblins-json')
                 .addImage('media/spine/goblins.png', 'goblins')           //image preloading not nessecary SpineAnimation class has also a preloader
 
+                //preloading goblins
+                .addJson('media/spine/dragon_atlas.json', 'dragon-atlas')
+                .addJson('media/spine/dragon.json', 'dragon-json')
+                .addImage('media/spine/dragon_atlas_0.png', 'dragon_0')           //image preloading not nessecary SpineAnimation class has also a preloader
+                .addImage('media/spine/dragon_atlas_1.png', 'dragon_1')           //image preloading not nessecary SpineAnimation class has also a preloader
+
                 .startPreLoad()
         },
         create: function () {
@@ -116,6 +122,7 @@ Game = (function () {
             )
             mainlayer.addElement(spineboy)
 
+
             goblins = new CG.SpineAnimation(
                 Game.asset.getJsonByName('goblins-json').data,
                 Game.asset.getTextByName('goblins-atlas').data,
@@ -127,6 +134,26 @@ Game = (function () {
                 }
             )
             mainlayer.addElement(goblins)
+
+
+//            dragon = new CG.SpineAnimation(
+//                Game.asset.getJsonByName('dragon-json').data,
+//                Game.asset.getJsonByName('dragon-atlas').data,
+//                new CG.Point(Game.width2, 400),
+//                function (spineObject) {
+//                    spineObject.skeleton.setSkinByName("goblingirl");
+//                    spineObject.skeleton.setSlotsToSetupPose();
+//                    spineObject.state.setAnimationByName(0, "flying", true);
+//                }
+//            )
+//            mainlayer.addElement(dragon)
+
+
+
+
+
+
+
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
