@@ -54,12 +54,13 @@ CG.B2DWorld.extend('B2DTestbed', {
         this._super(name, opt)
         this.debug = 0
 
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'L', new CG.Point(0, -400), new CG.Point(0, Game.height), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'R', new CG.Point(Game.width, -400), new CG.Point(Game.width, Game.height), this.scale))
-        this.addCustom(new CG.B2DBlobbyGround(this.world, 'G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 43), new CG.Point(Game.width2 - 10, Game.height), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'L', new CG.Point(0, -500), new CG.Point(0, Game.height), this.scale))                                              //left "wall"
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'R', new CG.Point(Game.width, -500), new CG.Point(Game.width, Game.height), this.scale))                            //right "wall"
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'T', new CG.Point(0, -500), new CG.Point(Game.width, -500), this.scale))                                            //roof
+        this.addCustom(new CG.B2DBlobbyGround(this.world, 'G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50), this.scale))                  //ground
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 43), new CG.Point(Game.width2 - 10, Game.height), this.scale))   //net part
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))             //net part
+        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))   //net part
 
         ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 75, 310, -200, this.scale, box2d.b2BodyType.b2_dynamicBody)
         this.addCustom(ball)
@@ -286,8 +287,8 @@ CG.B2DCircle.extend('B2DBall', {
         this.bodyDef.bullet = true
 
         this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 1.5
-        this.fixDef.friction = 0.2
+        this.fixDef.density = 0.5
+        this.fixDef.friction = 0.1
         this.fixDef.restitution = 0.55
 
         this._super(world, name, image, radius, x, y, scale, stat)
