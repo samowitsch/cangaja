@@ -30,7 +30,7 @@ CG.Class.extend('Delta', {
          * @property lasttime
          * @type {Number}
          */
-        this.lasttime = new Date().getTime()
+        this.lasttime = Date.now()
         /**
          * @property elapsedtime
          * @type {Number}
@@ -54,10 +54,9 @@ CG.Class.extend('Delta', {
     },
 
     update: function () {
-        this.currenttime = new Date().getTime()
-        var delta = (this.currenttime - this.lasttime) / 1000
+        var delta = (Date.now() - this.lasttime) / 1000
         this.fps = 1 / delta
-        this.lasttime = this.currenttime
+        this.lasttime = Date.now()
     },
     getDelta: function () {
         return this.delta
