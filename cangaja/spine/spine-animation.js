@@ -5,6 +5,20 @@
  *
  * @class CG.SpineAnimation
  * @extends CG.Entity
+ *
+ *
+ * TODO
+ * Boundingbox collision see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java
+ *
+ *
+ * Eventhandler see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java
+ *
+ *
+ * Box2d support see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java
+ * http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691
  */
 CG.Entity.extend('SpineAnimation', {
     /**
@@ -92,7 +106,7 @@ CG.Entity.extend('SpineAnimation', {
         this.stateData = new spine.AnimationStateData(this.skeletonData);
         this.state = new spine.AnimationState(this.stateData);
 
-
+        //callback for custom initialization?
         this.initCustom(this)
 
         this.state.onEvent = function (trackIndex, event) {
@@ -101,7 +115,7 @@ CG.Entity.extend('SpineAnimation', {
     },
     update: function () {
 
-        var dt = (Date.now() - this.lastTime)/1000
+        var dt = (Date.now() - this.lastTime) / 1000
         this.lastTime = Date.now()
 
         this.state.update(dt);    // delta
@@ -156,7 +170,6 @@ CG.Entity.extend('SpineAnimation', {
 
         }
 
-//        Game.renderer.draw(this);
 
     },
     updateDiff: function () {
