@@ -59,7 +59,8 @@ CG.Class.extend('CanvasRenderer', {
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
 //                if (renderObject.atlasimage) {
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0, 0, renderObject.cutwidth, renderObject.cutheight)
+                    Game.b_ctx.scale(renderObject.xscale, renderObject.yscale)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
 //                } else {
 //                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
 //                    Game.b_ctx.drawImage(renderObject.image, 0, 0, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
