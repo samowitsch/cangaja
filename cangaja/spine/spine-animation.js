@@ -27,17 +27,28 @@ CG.Entity.extend('SpineAnimation', {
      * @param spinejson     Spine json animation file
      * @param spineatlas    Spine
      * @param position
-     * @param custominit callback function
+     * @param scale
+     * @param callback callback function
      */
-    init: function (spinejson, spineatlas, position, callback) {
+    init: function (spinejson, spineatlas, position, scale, callback) {
 
-        _self = this
+        self = this
 
         this.instanceOf = 'SpineAnimation'
 
         this.lastTime = Date.now()
 
-        this.baseposition = position || new CG.Point(0, 0)
+        this.skeletonposition = position || new CG.Point(0, 0)
+
+        this.xscale = 1
+
+        this.yscale = 1
+
+        this.xpos = 0
+
+        this.ypos = 0
+
+        this.scale = scale || 1
 
         this.vertices = []
 
@@ -48,6 +59,7 @@ CG.Entity.extend('SpineAnimation', {
         this.textureCount = 0
 
         this.spineAtlasData = spineatlas
+
         this.spineJsonData = spinejson
 
         this.initCustom = callback
@@ -60,14 +72,11 @@ CG.Entity.extend('SpineAnimation', {
                     page.rendererObject = image
                     page.width = image.width
                     page.height = image.height
-                    console.log('page', page)
-                    console.log('spineAtlas', _self.spineAtlas)
-                    console.log('this', this)
-                    _self.spineAtlas.updateUVs(page)
+                    self.spineAtlas.updateUVs(page)
                     this.textureCount--
                 }
                 image.onerror = function () {
-                    throw "error: atlas image not loaded!"
+                    throw "error: atlas image not loaded! " + path
                 }
                 image.src = 'media/spine/' + path
             },
@@ -86,7 +95,8 @@ CG.Entity.extend('SpineAnimation', {
     },
     initSkeleton: function () {
 
-        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(_self.spineAtlas))
+        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(self.spineAtlas))
+        this.skeletonJson.scale = this.scale    //experimental scale
 
         if (typeof this.spineJsonData === 'object') {
             this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
@@ -94,17 +104,17 @@ CG.Entity.extend('SpineAnimation', {
             this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
         }
 
-        spine.Bone.yDown = true;
+        spine.Bone.yDown = true
 
         this.skeleton = new spine.Skeleton(this.skeletonData)
 
-        this.skeleton.getRootBone().x = this.baseposition.x || 0
-        this.skeleton.getRootBone().y = this.baseposition.y * -1 || 0
+        this.skeleton.getRootBone().x = this.skeletonposition.x || 0
+        this.skeleton.getRootBone().y = this.skeletonposition.y * -1 || 0   //has spine a another origin (bottom left) than the canvas on y axis?
 
-        this.skeleton.updateWorldTransform();
+        this.skeleton.updateWorldTransform()
 
-        this.stateData = new spine.AnimationStateData(this.skeletonData);
-        this.state = new spine.AnimationState(this.stateData);
+        this.stateData = new spine.AnimationStateData(this.skeletonData)
+        this.state = new spine.AnimationState(this.stateData)
 
         //callback for custom initialization?
         this.initCustom(this)
@@ -118,21 +128,21 @@ CG.Entity.extend('SpineAnimation', {
         var dt = (Date.now() - this.lastTime) / 1000
         this.lastTime = Date.now()
 
-        this.state.update(dt);    // delta
-        this.state.apply(this.skeleton);
-        this.skeleton.updateWorldTransform();
+        this.state.update(dt)    // delta
+        this.state.apply(this.skeleton)
+        this.skeleton.updateWorldTransform()
     },
     draw: function () {
-        var drawOrder = this.skeleton.drawOrder;
+        var drawOrder = this.skeleton.drawOrder
         for (var i = 0, n = drawOrder.length; i < n; i++) {
-            var slot = drawOrder[i];
-            var attachment = slot.attachment;
-            var bone = slot.bone;
-            if (!(attachment instanceof spine.RegionAttachment)) continue;
-            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices);
+            var slot = drawOrder[i]
+            var attachment = slot.attachment
+            var bone = slot.bone
+            if (!(attachment instanceof spine.RegionAttachment)) continue
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 
             try {
-                this.alpha = 1
+                this.alpha = slot.a //get alphe value from slot
                 this.position = new CG.Point(this.vertices[2], this.vertices[3])
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
@@ -140,20 +150,21 @@ CG.Entity.extend('SpineAnimation', {
                 this.cutheight = attachment.height
                 this.xhandle = this.cutwidth / 2
                 this.yhandle = this.cutheight / 2
-                this.xscale = attachment.scaleX
-                this.yscale = attachment.scaleY
+                this.xscale = slot.data.boneData.scaleX //* this.scale
+                this.yscale = slot.data.boneData.scaleY //* this.scale
                 this.rotation = -(slot.bone.worldRotation + attachment.rotation)
 
                 if (this.skeleton.flipX) {
 
-                    this.xscale *= -1;
-                    this.rotation *= -1;
+                    this.xscale *= -1
+//                    this.xpos = this.cutwidth * -1
+                    this.rotation *= -1
                 }
 
                 if (this.skeleton.flipY) {
 
-                    this.yscale *= -1;
-                    this.rotation *= -1;
+                    this.yscale *= -1
+                    this.rotation *= -1
                 }
                 this.imagerotation = 0
 
