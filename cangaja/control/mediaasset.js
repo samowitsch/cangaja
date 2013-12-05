@@ -149,7 +149,7 @@ CG.Class.extend('MediaAsset', {
                 }
             }
         }
-        throw new CG.MediaAssetException('No image with this name in asset.')
+        throw new MediaAssetException('No image with this name in asset.')
     },
     /**
      * @method getImagesByName
@@ -168,7 +168,7 @@ CG.Class.extend('MediaAsset', {
             }
         }
         if (names.length === 0) {
-            throw new CG.MediaAssetException('No image with this name in asset.')
+            throw new MediaAssetException('No image with this name in asset: ' + name)
         }
         return names
     },
@@ -183,7 +183,7 @@ CG.Class.extend('MediaAsset', {
                 return this.fonts[i]
             }
         }
-        throw new CG.MediaAssetException('No font with this name in asset.')
+        throw new MediaAssetException('No font with this name in asset: ' + name)
     },
     /**
      * @method getXmlByName
@@ -196,7 +196,7 @@ CG.Class.extend('MediaAsset', {
                 return this.xmls[i]
             }
         }
-        throw new CG.MediaAssetException('No XML with this name in asset.')
+        throw new MediaAssetException('No XML with this name in asset: ' + name)
     },
     /**
      * @method getJsonByName
@@ -209,7 +209,7 @@ CG.Class.extend('MediaAsset', {
                 return this.jsons[i]
             }
         }
-        throw new CG.MediaAssetException('No JSON with this name in asset.')
+        throw new MediaAssetException('No JSON with this name in asset: ' + name)
     },
     /**
      * @method getTextByName
@@ -222,7 +222,7 @@ CG.Class.extend('MediaAsset', {
                 return this.texts[i]
             }
         }
-        throw new CG.MediaAssetException('No Text with this name in asset.')
+        throw new MediaAssetException('No Text with this name in asset: ' + name)
     },
     /**
      * @method startPreLoad
@@ -235,29 +235,36 @@ CG.Class.extend('MediaAsset', {
         if (this.currimage < this.images.length) {
             //BUG last image is not preloading
             this.images[this.currimage].img.onload = function () {
-                console.log('loaded image (' + Math.floor(100 / (this.images.length - 1) * this.currimage) + ' %): ' + this.images[this.currimage].name)
+                console.log('image loaded: ' + this.images[this.currimage].path)
                 this.currimage += 1
                 this.assetcurrent += 1
                 this.startPreLoad()
             }.bind(this)
+            this.images[this.currimage].img.onerror = function () {
+                throw new MediaAssetException('error, cant load image: ' + this.images[this.currimage].path)
+            }.bind(this)
             this.images[this.currimage].img.src = this.images[this.currimage].path
         } else if (this.currfont < this.fonts.length) {
             this.fonts[this.currfont].data = loadString(this.fonts[this.currfont].path)
+            console.log('font loaded: ' + this.fonts[this.currfont].path)
             this.currfont += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currxml < this.xmls.length) {
             this.xmls[this.currxml].data = loadString(this.xmls[this.currxml].path)
+            console.log('xml loaded: ' + this.xmls[this.currxml].path)
             this.currxml += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
             this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
+            console.log('json loaded: ' + this.jsons[this.currjson].path)
             this.currjson += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currtext < this.texts.length) {
             this.texts[this.currtext].data = loadString(this.texts[this.currtext].path)
+            console.log('text loaded: ' + this.texts[this.currtext].path)
             this.currtext += 1
             this.assetcurrent += 1
             this.startPreLoad()
@@ -303,8 +310,9 @@ CG.Class.extend('MediaAsset', {
     }
 })
 
-function MediaAssetException(message) {
-    this.message = message
+function MediaAssetException(msg) {
+    this.msg = msg
+    console.log(this.msg)
 }
 
 
