@@ -9566,7 +9566,8 @@ CG.Class.extend('CanvasRenderer', {
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
 //                if (renderObject.atlasimage) {
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0, 0, renderObject.cutwidth, renderObject.cutheight)
+                    Game.b_ctx.scale(renderObject.xscale, renderObject.yscale)
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
 //                } else {
 //                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
 //                    Game.b_ctx.drawImage(renderObject.image, 0, 0, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
@@ -9807,7 +9808,7 @@ CG.Class.extend('Delta', {
          * @property lasttime
          * @type {Number}
          */
-        this.lasttime = new Date().getTime()
+        this.lasttime = Date.now()
         /**
          * @property elapsedtime
          * @type {Number}
@@ -9831,10 +9832,9 @@ CG.Class.extend('Delta', {
     },
 
     update: function () {
-        this.currenttime = new Date().getTime()
-        var delta = (this.currenttime - this.lasttime) / 1000
+        var delta = (Date.now() - this.lasttime) / 1000
         this.fps = 1 / delta
-        this.lasttime = this.currenttime
+        this.lasttime = Date.now()
     },
     getDelta: function () {
         return this.delta
@@ -10626,6 +10626,20 @@ CG.Rectangle.extend('Sprite', {
  *
  * @class CG.SpineAnimation
  * @extends CG.Entity
+ *
+ *
+ * TODO
+ * Boundingbox collision see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java
+ *
+ *
+ * Eventhandler see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java
+ *
+ *
+ * Box2d support see example here:
+ * https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java
+ * http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691
  */
 CG.Entity.extend('SpineAnimation', {
     /**
@@ -10634,17 +10648,28 @@ CG.Entity.extend('SpineAnimation', {
      * @param spinejson     Spine json animation file
      * @param spineatlas    Spine
      * @param position
-     * @param custominit callback function
+     * @param scale
+     * @param callback callback function
      */
-    init: function (spinejson, spineatlas, position, callback) {
+    init: function (spinejson, spineatlas, position, scale, callback) {
 
-        _self = this
+        self = this
 
         this.instanceOf = 'SpineAnimation'
 
         this.lastTime = Date.now()
 
-        this.baseposition = position || new CG.Point(0, 0)
+        this.skeletonposition = position || new CG.Point(0, 0)
+
+        this.xscale = 1
+
+        this.yscale = 1
+
+        this.xpos = 0
+
+        this.ypos = 0
+
+        this.scale = scale || 1
 
         this.vertices = []
 
@@ -10655,6 +10680,7 @@ CG.Entity.extend('SpineAnimation', {
         this.textureCount = 0
 
         this.spineAtlasData = spineatlas
+
         this.spineJsonData = spinejson
 
         this.initCustom = callback
@@ -10667,14 +10693,11 @@ CG.Entity.extend('SpineAnimation', {
                     page.rendererObject = image
                     page.width = image.width
                     page.height = image.height
-                    console.log('page', page)
-                    console.log('spineAtlas', _self.spineAtlas)
-                    console.log('this', this)
-                    _self.spineAtlas.updateUVs(page)
+                    self.spineAtlas.updateUVs(page)
                     this.textureCount--
                 }
                 image.onerror = function () {
-                    throw "error: atlas image not loaded!"
+                    throw "error: atlas image not loaded! " + path
                 }
                 image.src = 'media/spine/' + path
             },
@@ -10693,7 +10716,8 @@ CG.Entity.extend('SpineAnimation', {
     },
     initSkeleton: function () {
 
-        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(_self.spineAtlas))
+        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(self.spineAtlas))
+        this.skeletonJson.scale = this.scale    //experimental scale
 
         if (typeof this.spineJsonData === 'object') {
             this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
@@ -10701,19 +10725,19 @@ CG.Entity.extend('SpineAnimation', {
             this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
         }
 
-        spine.Bone.yDown = true;
+        spine.Bone.yDown = true
 
         this.skeleton = new spine.Skeleton(this.skeletonData)
 
-        this.skeleton.getRootBone().x = this.baseposition.x || 0
-        this.skeleton.getRootBone().y = this.baseposition.y * -1 || 0
+        this.skeleton.getRootBone().x = this.skeletonposition.x || 0
+        this.skeleton.getRootBone().y = this.skeletonposition.y * -1 || 0   //has spine a another origin (bottom left) than the canvas on y axis?
 
-        this.skeleton.updateWorldTransform();
+        this.skeleton.updateWorldTransform()
 
-        this.stateData = new spine.AnimationStateData(this.skeletonData);
-        this.state = new spine.AnimationState(this.stateData);
+        this.stateData = new spine.AnimationStateData(this.skeletonData)
+        this.state = new spine.AnimationState(this.stateData)
 
-
+        //callback for custom initialization?
         this.initCustom(this)
 
         this.state.onEvent = function (trackIndex, event) {
@@ -10722,24 +10746,24 @@ CG.Entity.extend('SpineAnimation', {
     },
     update: function () {
 
-        var dt = (Date.now() - this.lastTime)/1000
+        var dt = (Date.now() - this.lastTime) / 1000
         this.lastTime = Date.now()
 
-        this.state.update(dt);    // delta
-        this.state.apply(this.skeleton);
-        this.skeleton.updateWorldTransform();
+        this.state.update(dt)    // delta
+        this.state.apply(this.skeleton)
+        this.skeleton.updateWorldTransform()
     },
     draw: function () {
-        var drawOrder = this.skeleton.drawOrder;
+        var drawOrder = this.skeleton.drawOrder
         for (var i = 0, n = drawOrder.length; i < n; i++) {
-            var slot = drawOrder[i];
-            var attachment = slot.attachment;
-            var bone = slot.bone;
-            if (!(attachment instanceof spine.RegionAttachment)) continue;
-            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices);
+            var slot = drawOrder[i]
+            var attachment = slot.attachment
+            var bone = slot.bone
+            if (!(attachment instanceof spine.RegionAttachment)) continue
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 
             try {
-                this.alpha = 1
+                this.alpha = slot.a //get alphe value from slot
                 this.position = new CG.Point(this.vertices[2], this.vertices[3])
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
@@ -10747,20 +10771,21 @@ CG.Entity.extend('SpineAnimation', {
                 this.cutheight = attachment.height
                 this.xhandle = this.cutwidth / 2
                 this.yhandle = this.cutheight / 2
-                this.xscale = attachment.scaleX
-                this.yscale = attachment.scaleY
+                this.xscale = slot.data.boneData.scaleX //* this.scale
+                this.yscale = slot.data.boneData.scaleY //* this.scale
                 this.rotation = -(slot.bone.worldRotation + attachment.rotation)
 
                 if (this.skeleton.flipX) {
 
-                    this.xscale *= -1;
-                    this.rotation *= -1;
+                    this.xscale *= -1
+//                    this.xpos = this.cutwidth * -1
+                    this.rotation *= -1
                 }
 
                 if (this.skeleton.flipY) {
 
-                    this.yscale *= -1;
-                    this.rotation *= -1;
+                    this.yscale *= -1
+                    this.rotation *= -1
                 }
                 this.imagerotation = 0
 
@@ -10777,7 +10802,6 @@ CG.Entity.extend('SpineAnimation', {
 
         }
 
-//        Game.renderer.draw(this);
 
     },
     updateDiff: function () {
@@ -11556,7 +11580,7 @@ CG.Class.extend('MediaAsset', {
                 }
             }
         }
-        throw new CG.MediaAssetException('No image with this name in asset.')
+        throw new MediaAssetException('No image with this name in asset.')
     },
     /**
      * @method getImagesByName
@@ -11575,7 +11599,7 @@ CG.Class.extend('MediaAsset', {
             }
         }
         if (names.length === 0) {
-            throw new CG.MediaAssetException('No image with this name in asset.')
+            throw new MediaAssetException('No image with this name in asset: ' + name)
         }
         return names
     },
@@ -11590,7 +11614,7 @@ CG.Class.extend('MediaAsset', {
                 return this.fonts[i]
             }
         }
-        throw new CG.MediaAssetException('No font with this name in asset.')
+        throw new MediaAssetException('No font with this name in asset: ' + name)
     },
     /**
      * @method getXmlByName
@@ -11603,7 +11627,7 @@ CG.Class.extend('MediaAsset', {
                 return this.xmls[i]
             }
         }
-        throw new CG.MediaAssetException('No XML with this name in asset.')
+        throw new MediaAssetException('No XML with this name in asset: ' + name)
     },
     /**
      * @method getJsonByName
@@ -11616,7 +11640,7 @@ CG.Class.extend('MediaAsset', {
                 return this.jsons[i]
             }
         }
-        throw new CG.MediaAssetException('No JSON with this name in asset.')
+        throw new MediaAssetException('No JSON with this name in asset: ' + name)
     },
     /**
      * @method getTextByName
@@ -11629,7 +11653,7 @@ CG.Class.extend('MediaAsset', {
                 return this.texts[i]
             }
         }
-        throw new CG.MediaAssetException('No Text with this name in asset.')
+        throw new MediaAssetException('No Text with this name in asset: ' + name)
     },
     /**
      * @method startPreLoad
@@ -11642,29 +11666,36 @@ CG.Class.extend('MediaAsset', {
         if (this.currimage < this.images.length) {
             //BUG last image is not preloading
             this.images[this.currimage].img.onload = function () {
-                console.log('loaded image (' + Math.floor(100 / (this.images.length - 1) * this.currimage) + ' %): ' + this.images[this.currimage].name)
+                console.log('image loaded: ' + this.images[this.currimage].path)
                 this.currimage += 1
                 this.assetcurrent += 1
                 this.startPreLoad()
             }.bind(this)
+            this.images[this.currimage].img.onerror = function () {
+                throw new MediaAssetException('error, cant load image: ' + this.images[this.currimage].path)
+            }.bind(this)
             this.images[this.currimage].img.src = this.images[this.currimage].path
         } else if (this.currfont < this.fonts.length) {
             this.fonts[this.currfont].data = loadString(this.fonts[this.currfont].path)
+            console.log('font loaded: ' + this.fonts[this.currfont].path)
             this.currfont += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currxml < this.xmls.length) {
             this.xmls[this.currxml].data = loadString(this.xmls[this.currxml].path)
+            console.log('xml loaded: ' + this.xmls[this.currxml].path)
             this.currxml += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
             this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
+            console.log('json loaded: ' + this.jsons[this.currjson].path)
             this.currjson += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currtext < this.texts.length) {
             this.texts[this.currtext].data = loadString(this.texts[this.currtext].path)
+            console.log('text loaded: ' + this.texts[this.currtext].path)
             this.currtext += 1
             this.assetcurrent += 1
             this.startPreLoad()
@@ -11710,8 +11741,9 @@ CG.Class.extend('MediaAsset', {
     }
 })
 
-function MediaAssetException(message) {
-    this.message = message
+function MediaAssetException(msg) {
+    this.msg = msg
+    console.log(this.msg)
 }
 
 
