@@ -4,19 +4,18 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-        <link rel="stylesheet" href="index.css" type="text/css">
-
         <style>
             * {margin: 0;padding: 0;}
             body {font-family: verdana,arial;font-size: 13px;color: #888;background: #222;}
             canvas {margin: 10px 0;border: 1px solid #333;}
-            .demolist {background:#111;margin: 20px auto; width:auto;border: 1px dotted #666;padding:10px;border-radius: 5px;margin:10px;}
-            a {color:#aaa;text-decoration: none;display:block; padding:5px 10px;}
+            .demolist {background:#111;margin: 20px auto; width:auto;border: 1px dotted #666;padding:10px;border-radius: 5px;margin:10px auto  ;max-width: 800px}
+            a {color:#aaa;text-decoration: none;display:block; padding:5px 10px;font-size: 11px}
             a:hover {color:#ffc;text-decoration: none;}
             li {background: none;border-radius: 5px;}
-            li:hover {background:#333}
-            ul {list-style: none;width: 32%;float:left;}
-            h1 {font-size: 16px;padding:10px;}
+            li:hover {background:#222}
+            li b {display:block;background:#333;padding:3px;padding:5px 10px;}
+            ul {list-style: none;width: 32%;float:left;margin: 0 3px 0 0}
+            h1 {font-size: 24px;padding:10px 0;}
             .last {margin: 30px 0 0 0;}
         </style>
 
@@ -25,6 +24,7 @@
         <div class="demolist">
             <h1>cangaja - Canvas Game JavaScript Framework</h1>
             <ul>
+                <li><b>Common</b></li>
                 <li><a href="demo/demo-font.html">Font example (uses Glyphdesigner)</a></li>
                 <li><a href="demo/demo-sprite.html">Sprite example</a></li>
                 <li><a href="demo/demo-sprite-follower.html">Sprite follower example</a></li>
@@ -36,27 +36,31 @@
                 <li><a href="demo/demo-button.html">Button/Menu example (TexturePacker)</a></li>
                 <li><a href="demo/demo-screen.html">Layer/Screen example</a></li>
                 <li><a href="demo/demo-bitmap.html">Bitmap example</a></li>
-                <li class=""><a href="demo/demo-devel.html">Experimental playground (things may be brocken!)</a></li>
             </ul>
             <ul>
-                <li><a href="demo/demo-tilemap-orthogonal.html">Tilemap orthogonal (Tiled)</a></li>
-                <li><a href="demo/demo-tilemap-isometric.html">Tilemap isometric (Tiled)</a></li>
-                <li><a href="demo/demo-tilemap-advanced.html">Tilemap - bounds and points (Tiled)</a></li>
-                <li><a href="demo/demo-tilemap-advanced-tilecollision.html">Tilemap - sprite to tilemap collision (Tiled)</a></li>
-                <li><a href="demo/demo-tilemap-advanced-areacollision.html">Tilemap - sprite(s) to area(s) collision (Tiled)</a></li>
-                <li><a href="demo/demo-box2d-1.html">Box2D Wrapper: World, Cirlce, Rectangle, Bridge, Rope</a></li>
-                <li><a href="demo/demo-box2d-2.html">Box2D Wrapper: tests</a></li>
-                <li><a href="demo/demo-box2d-3.html">Box2D Wrapper: tribute to blobby ;o)</a></li>
-                <li><a href="demo/demo-box2d-4.html">Box2D Wrapper: ChainShape Test</a></li>
-                <li><a href="demo/demo-box2d-5.html">Box2D Wrapper: Terrain Test</a></li>
-                <li><a href="demo/demo-box2d-6.html">Box2D Wrapper: Terrain Test playground</a></li>
-                <li><a href="demo/demo-spine-animation.html">Spine: Animation</a></li>
+                <li><b>Tilemap (Tiled)</b></li>
+                <li><a href="demo/demo-tilemap-orthogonal.html">Orthogonal</a></li>
+                <li><a href="demo/demo-tilemap-isometric.html">Isometric</a></li>
+                <li><a href="demo/demo-tilemap-advanced.html">Map with bounds and points</a></li>
+                <li><a href="demo/demo-tilemap-advanced-tilecollision.html">Sprite to tilemap collision</a></li>
+                <li><a href="demo/demo-tilemap-advanced-areacollision.html">Sprite(s) to area(s) collision</a></li>
+                <li><b>Box2DHtml5</b></li>
+                <li><a href="demo/demo-box2d-1.html">World, Cirlce, Rectangle, Bridge, Rope</a></li>
+                <li><a href="demo/demo-box2d-2.html">Tests</a></li>
+                <li><a href="demo/demo-box2d-3.html">Tribute to blobby ;o)</a></li>
+                <li><a href="demo/demo-box2d-4.html">ChainShape Test</a></li>
+                <li><a href="demo/demo-box2d-5.html">Terrain Test</a></li>
+                <li><a href="demo/demo-box2d-6.html">Terrain playground</a></li>
+                <li><b>Spine</b></li>
+                <li><a href="demo/demo-spine-animation.html">Animation example</a></li>
             </ul>
 
             <ul>
+                <li><b>Experimental</b></li>
+                <li><a href="demo/demo-devel.html">Experimental playground </a></li>
                 <li><a href="demo/demo-sprite-webgl-2d.html">Sprite example [webgl-2d.js]</a></li>
                 <li><a href="demo/demo-particle-emitter-webgl-2d.html">Particle/Emitter example [webgl-2d.js]</a></li>
-                <li><a href="demo/demo-box2d-6-webgl-2d.html">Box2D Wrapper: Terrain Test playground [webgl-2d.js]</a></li>
+                <li><a href="demo/demo-box2d-6-webgl-2d.html">Box2D: Terrain playground [webgl-2d.js]</a></li>
             </ul>
             <div style="clear:both"></div>
         </div>
