@@ -13,7 +13,6 @@ CG.Class.extend('Sequence', {
      * @return {*}
      */
     init: function () {
-        this._super()
         /**
          * @property current
          * @type {Number}
