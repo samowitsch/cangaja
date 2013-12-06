@@ -136,43 +136,45 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Class inheritance
 
-+ Director
-+ Entity
-  + B2DEntity
-    + B2DCircle
-    + B2DRectangle
-    + B2DPolygon
-    + B2DLine
-    + B2DBridge
-    + B2DRope
-    + B2DChainShape
-  + Bitmap
++ Class
   + Bound
   + Buffer
+  + Director
   + Emitter
-  + Font
-  + Layer
-    + B2DWorld
-  + Map
+  + Entity
+    + B2DEntity
+      + B2DCircle
+      + B2DRectangle
+      + B2DPolygon
+      + B2DLine
+      + B2DBridge
+      + B2DRope
+      + B2DChainShape
+    + Bitmap
+    + Font
+    + Layer
+      + B2DWorld
+    + Map
+    + Rectangle
+      + Sprite
+        + Animation
+        + Button
+        + Particle
+    + Screen
+    + SpineAnimation
+  + MapPoints
+  + MapAreas
+  + MapTileLayer
+  + MapTileProperties
+  + MediaAsset
   + Menu
   + Morph
   + Point
     + Vector
-  + Rectangle
-    + Sprite
-      + Animation
-      + Button
-      + Particle
   + Sequence
-  + Screen
   + Translate
-+ MapPoints
-+ MapAreas
-+ MapTileLayer
-+ MapTileProperties
-+ MediaAsset
-+ Atlas-Image
-+ Atlas-TexturePacker
+  + Atlas-Image
+  + Atlas-TexturePacker
 
 ## Framework logic
 
@@ -186,6 +188,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
         + Emitter
         + Map
         + Menu
+        + SpineAnimation
         + Sprite
         + B2DWorld
           + B2DCircle
