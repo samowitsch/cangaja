@@ -155,9 +155,9 @@ CG.Entity.extend('SpineAnimation', {
                 this.cutheight = attachment.height
                 this.xhandle = this.cutwidth / 2
                 this.yhandle = this.cutheight / 2
-                this.xscale = slot.data.boneData.scaleX //* this.scale
-                this.yscale = slot.data.boneData.scaleY //* this.scale
-                this.rotation = -(slot.bone.worldRotation + attachment.rotation)
+                this.xscale = bone.worldScaleX //* this.scale
+                this.yscale = bone.worldScaleY //* this.scale
+                this.rotation = -(bone.worldRotation + attachment.rotation)
                 this.xpos = 0
                 this.ypos = 0
 
