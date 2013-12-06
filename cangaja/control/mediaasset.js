@@ -70,7 +70,8 @@ CG.Class.extend('MediaAsset', {
         this.images.push({
             name:name || '', //optional
             path:path,
-            img:new Image()
+            img:new Image(),
+            type:'image'
         })
         return this
     },
@@ -85,7 +86,8 @@ CG.Class.extend('MediaAsset', {
         this.fonts.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'font'
         })
         return this
     },
@@ -100,7 +102,8 @@ CG.Class.extend('MediaAsset', {
         this.xmls.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'xml'
         })
         return this
     },
@@ -115,7 +118,9 @@ CG.Class.extend('MediaAsset', {
         this.jsons.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            src:'',
+            type:'json'
         })
         return this
     },
@@ -130,7 +135,8 @@ CG.Class.extend('MediaAsset', {
         this.texts.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'text'
         })
         return this
     },
@@ -257,7 +263,9 @@ CG.Class.extend('MediaAsset', {
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
-            this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
+            var src = loadString(this.jsons[this.currjson].path)
+            this.jsons[this.currjson].data = JSON.parse(src)
+            this.jsons[this.currjson].src = src
             console.log('json loaded: ' + this.jsons[this.currjson].path)
             this.currjson += 1
             this.assetcurrent += 1
