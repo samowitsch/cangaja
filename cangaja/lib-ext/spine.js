@@ -84,8 +84,8 @@ spine.Bone.prototype = {
 			}
 			this.worldRotation = this.data.inheritRotation ? parent.worldRotation + this.rotation : this.rotation;
 		} else {
-			this.worldX = flipX ? -this.x : this.x;
-			this.worldY = (flipY != spine.Bone.yDown) ? -this.y : this.y;
+			this.worldX = this.x; // flipX ? -this.x : this.x;
+			this.worldY = this.y; //(flipY != spine.Bone.yDown) ? -this.y : this.y;
 			this.worldScaleX = this.scaleX;
 			this.worldScaleY = this.scaleY;
 			this.worldRotation = this.rotation;
