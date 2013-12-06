@@ -58,9 +58,18 @@ CG.Entity.extend('SpineAnimation', {
 
         this.textureCount = 0
 
-        this.spineAtlasData = spineatlas
+        if (spineatlas.type == 'text') {
+            this.spineAtlasData = spineatlas.data   //text data from mediaasset object
+            console.log('spine atlas: text (libGDX) used')
+        } else if (spineatlas.type == 'json') {
+            this.spineAtlasData = spineatlas.src    //pure json text for spine atlas loader?
+            console.log('spine atlas: json')
+            throw 'json format is not supported by spine-js runtime?'
+        } else {
+            throw 'check your atlas file format?'
+        }
 
-        this.spineJsonData = spinejson
+        this.spineJsonData = spinejson.data //parsed json data from mediaasset object
 
         this.initCustom = callback
 
@@ -109,7 +118,7 @@ CG.Entity.extend('SpineAnimation', {
         this.skeleton = new spine.Skeleton(this.skeletonData)
 
         this.skeleton.getRootBone().x = this.skeletonposition.x || 0
-        this.skeleton.getRootBone().y = this.skeletonposition.y * -1 || 0   //has spine a another origin (bottom left) than the canvas on y axis?
+        this.skeleton.getRootBone().y = this.skeletonposition.y || 0   //has spine a another origin (bottom left) than the canvas on y axis?
 
         this.skeleton.updateWorldTransform()
 
@@ -157,13 +166,14 @@ CG.Entity.extend('SpineAnimation', {
                 if (this.skeleton.flipX) {
 
                     this.xscale *= -1
-//                    this.xpos = this.cutwidth * -1
+                    this.xpos = this.cutwidth
                     this.rotation *= -1
                 }
 
                 if (this.skeleton.flipY) {
 
                     this.yscale *= -1
+                    this.ypos = this.cutheight
                     this.rotation *= -1
                 }
                 this.imagerotation = 0
