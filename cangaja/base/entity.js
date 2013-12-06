@@ -15,13 +15,25 @@ CG.Class.extend('Entity', {
      */
     init:function (name) {
         /**
+         @description name of the object
          @property name {string}
          */
         this.name = name || ''
         /**
+         @description visibility option
          @property visible {boolean}
          */
         this.visible = true
+        /**
+         @description Transform object for matrix transformation
+         @property transform {Transform}
+         */
+        this.transform = new Transform()
+        /**
+         @description the transformation matrix array of the Transform object
+         @property matrix {Array}
+         */
+        this.matrix = this.transform.m
     },
     update:function () {
         throw {
