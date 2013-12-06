@@ -4,9 +4,9 @@
  * CG.Point
  *
  * @class CG.Point
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Point', {
+CG.Class.extend('Point', {
     /**
      * @constructor
      * @method init

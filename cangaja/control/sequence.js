@@ -4,17 +4,16 @@
  * CG.Sequence container to collect/group CG.Translation objects
  *
  * @class CG.Sequence
- * @extends Entity
+ * @extends Class
  */
-CG.Entity.extend('Sequence', {
+CG.Class.extend('Sequence', {
     /**
      * @constructor
      * @method init
-     * @param sequencename
      * @return {*}
      */
-    init: function (sequencename) {
-        this._super(sequencename)
+    init: function () {
+        this._super()
         /**
          * @property current
          * @type {Number}

@@ -4,11 +4,11 @@
  * CG.Emitter that handles . . . particles.
  *
  * @class CG.Emitter
- * @extends CG.Entity
+ * @extends CG.Class
  *
  * @param {point} position of emitter
  */
-CG.Entity.extend('Emitter', {
+CG.Class.extend('Emitter', {
     /**
      * @method init
      * @constructor
@@ -16,7 +16,6 @@ CG.Entity.extend('Emitter', {
      * @return {*}
      */
     init:function (position) {
-        this._super()
         /**
          * @property particle
          * @type {Array}

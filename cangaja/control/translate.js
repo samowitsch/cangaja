@@ -4,16 +4,15 @@
  * CG.Translate moving a object
  *
  * @class CG.Translate
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Translate', {
+CG.Class.extend('Translate', {
     /**
      * @constructor
      * @method init
      * @return {*}
      */
     init:function () {
-        this._super()
         /**
          * @property type
          * @type {String}

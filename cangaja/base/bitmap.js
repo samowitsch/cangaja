@@ -21,7 +21,6 @@ CG.Entity.extend('Bitmap', {
      * @return {*}
      */
     init:function (width, height) {
-        this._super(this)
         this.instanceOf = 'Bitmap'
         this.x = 0
         this.y = 0

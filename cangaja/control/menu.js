@@ -4,10 +4,10 @@
  * CG.Menu
  *
  * @class CG.Menu
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Menu', {
+CG.Class.extend('Menu', {
     /**
      * @method init
      * @constructor

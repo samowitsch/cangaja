@@ -17,6 +17,7 @@ CG.Entity.extend('Rectangle', {
      * @return {*}
      */
     init:function (position, width, height) {
+        this._super('')
         /**
          @property position {CG.Point}
          */

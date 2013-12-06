@@ -2,22 +2,21 @@
  * @description
  *
  * CG.Buffer for separate canvas rendering/buffering
+ * @TODO to be removed?
  *
  * @class CG.Buffer
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Buffer', {
+CG.Class.extend('Buffer', {
     /**
      * @constructor
      * @method init
      * @param width {Number} width of the buffer
      * @param height {Number} height of the buffer
-     * @param buffername {string} buffername
      * @return {*}
      */
-    init:function (width, height, buffername) {
-        this._super(buffername)
+    init:function (width, height) {
         /**
          * @property b_canvas
          * @type {HTMLElement}

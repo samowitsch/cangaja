@@ -4,10 +4,10 @@
  * CG.Morph to manipulate objects in size and so on
  *
  * @class CG.Morph
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Morph', {
+CG.Class.extend('Morph', {
     /**
      * @method init
      * @constructor

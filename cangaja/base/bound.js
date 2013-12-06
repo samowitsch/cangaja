@@ -4,10 +4,10 @@
  * CG.Bound is used at different places in the Cangaja FW.
  *
  * @class CG.Bound
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Bound', {
+CG.Class.extend('Bound', {
     /**
      * @constructor
      * @method init
@@ -18,7 +18,6 @@ CG.Entity.extend('Bound', {
      * @return {*}
      */
     init:function (x, y, width, height) {
-        this._super()
         /**
          * @property x
          * @type {Number}
