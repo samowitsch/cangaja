@@ -120,8 +120,8 @@ Game = (function () {
 
             //spine animation
             spinosaurus = new CG.SpineAnimation(
-                Game.asset.getJsonByName('spinosaurus-json').data,
-                Game.asset.getTextByName('spinosaurus-atlas').data,
+                Game.asset.getJsonByName('spinosaurus-json'),
+                Game.asset.getTextByName('spinosaurus-atlas'),
                 new CG.Point(Game.width2, 600),
                 1,  //experimental scale
                 function (spineObject) {
@@ -133,8 +133,8 @@ Game = (function () {
             mainlayer.addElement(spinosaurus)
 
             dragon = new CG.SpineAnimation(
-                Game.asset.getJsonByName('dragon-json').data,
-                Game.asset.getTextByName('dragon-atlas').data,
+                Game.asset.getJsonByName('dragon-json'),
+                Game.asset.getTextByName('dragon-atlas'),
                 new CG.Point(Game.width2, 600),
                 1,  //experimental scale
                 function (spineObject) {
@@ -146,8 +146,8 @@ Game = (function () {
             mainlayer.addElement(dragon)
 
             powerup = new CG.SpineAnimation(
-                Game.asset.getJsonByName('powerup-json').data,
-                Game.asset.getTextByName('powerup-atlas').data,
+                Game.asset.getJsonByName('powerup-json'),
+                Game.asset.getTextByName('powerup-atlas'),
                 new CG.Point(200, 300),
                 1,  //experimental scale
                 function (spineObject) {
@@ -160,8 +160,8 @@ Game = (function () {
 
 
             spineboy = new CG.SpineAnimation(
-                Game.asset.getJsonByName('spineboy-json').data,
-                Game.asset.getTextByName('spineboy-atlas').data,
+                Game.asset.getJsonByName('spineboy-json'),
+                Game.asset.getTextByName('spineboy-atlas'),
                 new CG.Point(160, 550),
                 1,  //experimental scale
                 function (spineObject) {
@@ -174,8 +174,8 @@ Game = (function () {
 
 
             goblins = new CG.SpineAnimation(
-                Game.asset.getJsonByName('goblins-json').data,
-                Game.asset.getTextByName('goblins-atlas').data,
+                Game.asset.getJsonByName('goblins-json'),
+                Game.asset.getTextByName('goblins-atlas'),
                 new CG.Point(Game.width - 160, 550),
                 1,  //experimental scale
                 function (spineObject) {
