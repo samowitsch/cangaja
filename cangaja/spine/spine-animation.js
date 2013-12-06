@@ -44,10 +44,6 @@ CG.Entity.extend('SpineAnimation', {
 
         this.yscale = 1
 
-        this.xpos = 0
-
-        this.ypos = 0
-
         this.scale = scale || 1
 
         this.vertices = []
@@ -162,6 +158,8 @@ CG.Entity.extend('SpineAnimation', {
                 this.xscale = slot.data.boneData.scaleX //* this.scale
                 this.yscale = slot.data.boneData.scaleY //* this.scale
                 this.rotation = -(slot.bone.worldRotation + attachment.rotation)
+                this.xpos = 0
+                this.ypos = 0
 
                 if (this.skeleton.flipX) {
 
