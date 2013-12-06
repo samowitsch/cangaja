@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -200,7 +202,7 @@ CG.Class.extend(&#x27;Delta&#x27;, {
          * @property lasttime
          * @type {Number}
          *&#x2F;
-        this.lasttime = new Date().getTime()
+        this.lasttime = Date.now()
         &#x2F;**
          * @property elapsedtime
          * @type {Number}
@@ -224,10 +226,9 @@ CG.Class.extend(&#x27;Delta&#x27;, {
     },
 
     update: function () {
-        this.currenttime = new Date().getTime()
-        var delta = (this.currenttime - this.lasttime) &#x2F; 1000
+        var delta = (Date.now() - this.lasttime) &#x2F; 1000
         this.fps = 1 &#x2F; delta
-        this.lasttime = this.currenttime
+        this.lasttime = Date.now()
     },
     getDelta: function () {
         return this.delta

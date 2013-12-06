@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -240,10 +242,7 @@ CG.Sprite.extend(&#x27;Button&#x27;, {
 
             Game.renderer.draw(this)
 
-            Game.b_ctx.save()
-            Game.b_ctx.translate(this.position.x, this.position.y)
-            this.font.drawText(this.text, 0 - (this.font.getTextWidth(this.text) &#x2F; 2 &gt;&gt; 0), 0 - ((this.font.getFontSize() &#x2F; 2) &gt;&gt; 0))
-            Game.b_ctx.restore()
+            this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) &#x2F; 2 &gt;&gt; 0), this.position.y - ((this.font.getFontSize() &#x2F; 2) &gt;&gt; 0))
 
 
         }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js - Cangaja API</title>
+    <title>cangaja&#x2F;spine&#x2F;spine-animation.js - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -166,144 +166,206 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js</h1>
+                        <h1 class="file-heading">File: cangaja&#x2F;spine&#x2F;spine-animation.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
- *  @description
+ * @description
  *
- *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml&#x2F;json and generates new CG.atlasimage objects in the MediaAsset manager.
- *  These atlasimages are only handled within Sprite, Particle and Button class.
+ * CG.SpineAnimation
  *
- *  @class CG.AtlasTexturePacker
- *  @extends Class
+ * @class CG.SpineAnimation
+ * @extends CG.Entity
+ *
+ *
+ * TODO
+ * Boundingbox collision see example here:
+ * https:&#x2F;&#x2F;github.com&#x2F;EsotericSoftware&#x2F;spine-runtimes&#x2F;blob&#x2F;master&#x2F;spine-libgdx&#x2F;test&#x2F;com&#x2F;esotericsoftware&#x2F;spine&#x2F;AnimationStateTest.java
+ *
+ *
+ * Eventhandler see example here:
+ * https:&#x2F;&#x2F;github.com&#x2F;EsotericSoftware&#x2F;spine-runtimes&#x2F;blob&#x2F;master&#x2F;spine-libgdx&#x2F;test&#x2F;com&#x2F;esotericsoftware&#x2F;spine&#x2F;SkeletonTest.java
+ *
+ *
+ * Box2d support see example here:
+ * https:&#x2F;&#x2F;github.com&#x2F;EsotericSoftware&#x2F;spine-runtimes&#x2F;blob&#x2F;master&#x2F;spine-libgdx&#x2F;test&#x2F;com&#x2F;esotericsoftware&#x2F;spine&#x2F;Box2DExample.java
+ * http:&#x2F;&#x2F;www.esotericsoftware.com&#x2F;forum&#x2F;viewtopic.php?f=3&amp;t=1394&amp;p=6691&amp;hilit=skeletonbounds#p6691
  *&#x2F;
-CG.Class.extend(&#x27;AtlasTexturePacker&#x27;, {
+CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
-     * @return {*}
+     * @param spinejson     Spine json animation file
+     * @param spineatlas    Spine
+     * @param position
+     * @param scale
+     * @param callback callback function
      *&#x2F;
-    init:function () {
-        if (typeof(ejecta) == &#x27;undefined&#x27;) {
-            this.xml = &#x27;&#x27;
-            this.xmlDoc = &#x27;&#x27;
-            this.parser = new DOMParser() || {}
-        }
-        &#x2F;**
-         * @property imagename
-         * @type {String}
-         *&#x2F;
-        this.imagename = &#x27;&#x27;
-        &#x2F;**
-         * @property width
-         * @type {Number}
-         *&#x2F;
-        this.width = 0
-        &#x2F;**
-         * @property height
-         * @type {Number}
-         *&#x2F;
-        this.height = 0
-        &#x2F;**
-         * @property atlasimages
-         * @type {Array}
-         *&#x2F;
-        this.atlasimages = []
-        return this
-    },
-    &#x2F;**
-     * @description load a xml file from TexturePacker
-     * @method loadXml
-     * @param {string&#x2F;object} xmlfile path or mediaasset object with data of TexturePacker xml
-     * @return {*}
-     *&#x2F;
-    loadXml:function (xmlfile) {
-        &#x2F;&#x2F;from asset
-        if (typeof xmlfile == &#x27;string&#x27;) {
-            this.xml = loadString(xmlfile)
+    init: function (spinejson, spineatlas, position, scale, callback) {
+        this._super(&#x27;&#x27;)
+
+        self = this
+
+        this.instanceOf = &#x27;SpineAnimation&#x27;
+
+        this.lastTime = Date.now()
+
+        this.skeletonposition = position || new CG.Point(0, 0)
+
+        this.xscale = 1
+
+        this.yscale = 1
+
+        this.scale = scale || 1
+
+        this.vertices = []
+
+        this.atlasimage = true
+
+        this.textures = []
+
+        this.textureCount = 0
+
+        if (spineatlas.type == &#x27;text&#x27;) {
+            this.spineAtlasData = spineatlas.data   &#x2F;&#x2F;text data from mediaasset object
+            console.log(&#x27;spine atlas: text (libGDX) used&#x27;)
+        } else if (spineatlas.type == &#x27;json&#x27;) {
+            this.spineAtlasData = spineatlas.src    &#x2F;&#x2F;pure json text for spine atlas loader?
+            console.log(&#x27;spine atlas: json&#x27;)
+            throw &#x27;json format is not supported by spine-js runtime?&#x27;
         } else {
-            this.xml = xmlfile.data
+            throw &#x27;check your atlas file format?&#x27;
         }
 
-        this.xmlDoc = this.parser.parseFromString(this.xml, &#x27;text&#x2F;xml&#x27;)
+        this.spineJsonData = spinejson.data &#x2F;&#x2F;parsed json data from mediaasset object
 
-        this.imagename = this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;imagePath&#x27;)
-        this.width = parseInt(this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;width&#x27;))
-        this.height = parseInt(this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;height&#x27;))
+        this.initCustom = callback
 
-        var sprites = this.xmlDoc.getElementsByTagName(&#x27;sprite&#x27;)
-        for (var i = 0, l = sprites.length; i &lt; l; i++) {
-            atlasimage = new CG.atlasimage(
-                sprites[i].getAttribute(&#x27;n&#x27;),
-                parseInt(sprites[i].getAttribute(&#x27;x&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;y&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;w&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;h&#x27;))
-            )
-            if (sprites[i].getAttribute(&#x27;r&#x27;) == &#x27;y&#x27;) {
-                atlasimage.rotation = 90
+        this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
+            load: function (page, path) {
+                this.textureCount++
+                var image = new Image()
+                image.onload = function () {
+                    page.rendererObject = image
+                    page.width = image.width
+                    page.height = image.height
+                    self.spineAtlas.updateUVs(page)
+                    this.textureCount--
+                }
+                image.onerror = function () {
+                    throw &quot;error: atlas image not loaded! &quot; + path
+                }
+                image.src = &#x27;media&#x2F;spine&#x2F;&#x27; + path
+            },
+            unload: function (texture) {
             }
-            atlasimage.atlasimage = this.imagename
-            atlasimage.source = &#x27;xml&#x27;
-            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
+        });
 
-            this.atlasimages.push(atlasimage)
-        }
-        return this
+        this.waitForTextures();
     },
-
-    &#x2F;**
-     * @description load a json file from TexturePacker
-     * @method loadJson
-     * @param {string&#x2F;object} jsonfile path or mediaasset object with data of TexturePacker json
-     * @return {*}
-     *&#x2F;
-    loadJson:function (jsonfile) {
-        &#x2F;&#x2F;from asset
-        if (typeof jsonfile == &#x27;string&#x27;) {
-            this.json = JSON.parse(loadString(jsonfile))
+    waitForTextures: function () {
+        if (!this.textureCount) {
+            this.initSkeleton()
         } else {
-            this.json = jsonfile.data
+            setTimeout(this.waitForTextures, 100)
         }
-        &#x2F;&#x2F;meta info from json file
-        this.imagename = this.json.meta.image
-        this.width = this.json.meta.size.w
-        this.height = this.json.meta.size.h
-
-        &#x2F;&#x2F;loop thru all images
-        for (var i = 0, l = this.json.frames.length; i &lt; l; i++) {
-            var image = this.json.frames[i]
-            var atlasimage = new CG.AtlasImage(
-                image.filename,
-                image.frame.x,
-                image.frame.y,
-                image.frame.w,
-                image.frame.h
-            )
-            if (image.rotated === true) {
-                atlasimage.rotation = 90
-                &#x2F;&#x2F;            atlasimage.width = this.json.frames[i].frame.w,
-                &#x2F;&#x2F;            atlasimage.height = this.json.frames[i].frame.h
-            }
-            atlasimage.atlasimage = this.imagename
-            atlasimage.source = &#x27;json&#x27;
-            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
-
-            this.atlasimages.push(atlasimage)
-        }
-        return this
     },
+    initSkeleton: function () {
 
-    &#x2F;**
-     * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getAtlasImages
-     * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
-     *&#x2F;
-    getAtlasImages:function () {
-        return this.atlasimages
+        this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(self.spineAtlas))
+        this.skeletonJson.scale = this.scale    &#x2F;&#x2F;experimental scale
+
+        if (typeof this.spineJsonData === &#x27;object&#x27;) {
+            this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
+        } else {
+            this.skeletonData = this.skeletonJson.readSkeletonData(JSON.parse(this.spineJsonData))
+        }
+
+        spine.Bone.yDown = true
+
+        this.skeleton = new spine.Skeleton(this.skeletonData)
+
+        this.skeleton.getRootBone().x = this.skeletonposition.x || 0
+        this.skeleton.getRootBone().y = this.skeletonposition.y || 0   &#x2F;&#x2F;has spine a another origin (bottom left) than the canvas on y axis?
+
+        this.skeleton.updateWorldTransform()
+
+        this.stateData = new spine.AnimationStateData(this.skeletonData)
+        this.state = new spine.AnimationState(this.stateData)
+
+        &#x2F;&#x2F;callback for custom initialization?
+        this.initCustom(this)
+
+        this.state.onEvent = function (trackIndex, event) {
+            &#x2F;&#x2F; alert(trackIndex + &quot; event: &quot; + event.data.name)
+        }
+    },
+    update: function () {
+
+        var dt = (Date.now() - this.lastTime) &#x2F; 1000
+        this.lastTime = Date.now()
+
+        this.state.update(dt)    &#x2F;&#x2F; delta
+        this.state.apply(this.skeleton)
+        this.skeleton.updateWorldTransform()
+    },
+    draw: function () {
+        var drawOrder = this.skeleton.drawOrder
+        for (var i = 0, n = drawOrder.length; i &lt; n; i++) {
+            var slot = drawOrder[i]
+            var attachment = slot.attachment
+            var bone = slot.bone
+            if (!(attachment instanceof spine.RegionAttachment)) continue
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
+
+            try {
+                this.alpha = slot.a &#x2F;&#x2F;get alphe value from slot
+                this.position = new CG.Point(this.vertices[2], this.vertices[3])
+                this.xoffset = attachment.rendererObject.x
+                this.yoffset = attachment.rendererObject.y
+                this.cutwidth = attachment.width
+                this.cutheight = attachment.height
+                this.xscale = bone.worldScaleX &#x2F;&#x2F;* this.scale
+                this.yscale = bone.worldScaleY &#x2F;&#x2F;* this.scale
+                this.xhandle = this.cutwidth &#x2F; 2 * this.xscale
+                this.yhandle = this.cutheight &#x2F; 2 * this.yscale
+                this.rotation = -(bone.worldRotation + attachment.rotation)
+                this.xpos = 0
+                this.ypos = 0
+
+                if (this.skeleton.flipX) {
+
+                    this.xscale *= -1
+                    this.xpos = this.cutwidth
+                    this.rotation *= -1
+                }
+
+                if (this.skeleton.flipY) {
+
+                    this.yscale *= -1
+                    this.ypos = this.cutheight
+                    this.rotation *= -1
+                }
+                this.imagerotation = 0
+
+                this.image = attachment.rendererObject.page.rendererObject
+                this.width = attachment.rendererObject.page.rendererObject.width
+                this.height = attachment.rendererObject.page.rendererObject.height
+
+                Game.renderer.draw(this)
+
+            } catch (e) {
+&#x2F;&#x2F;                console.log(e)
+&#x2F;&#x2F;                console.log(attachment)
+            }
+
+        }
+
+
+    },
+    updateDiff: function () {
+
     }
 })
 

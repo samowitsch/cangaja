@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -198,6 +200,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
      *&#x2F;
     init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
+        this.instanceOf = &#x27;B2DTerrain&#x27;
         &#x2F;**
          * @property polys
          * @type {Array}
@@ -357,7 +360,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
      *&#x2F;
     lightenTerrain: function () {
         &#x2F;&#x2F;use clipper to eliminate to much vertices
-        var tolerance = 0.015
+        var tolerance = 0.02
 
         for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
             var temp = ClipperLib.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
@@ -376,14 +379,14 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
      *&#x2F;
     cleanTerrain: function () {
         &#x2F;&#x2F;use clipper to eliminate to much vertices
-        var tolerance = 0.015
+        var cleandelta = 0.1
 
         for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, tolerance * this.scale)
+            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length &gt; 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
-                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }

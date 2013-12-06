@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -174,17 +176,16 @@
  * CG.Sequence container to collect&#x2F;group CG.Translation objects
  *
  * @class CG.Sequence
- * @extends Entity
+ * @extends Class
  *&#x2F;
-CG.Entity.extend(&#x27;Sequence&#x27;, {
+CG.Class.extend(&#x27;Sequence&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
-     * @param sequencename
      * @return {*}
      *&#x2F;
-    init: function (sequencename) {
-        this._super(sequencename)
+    init: function () {
+        this._super()
         &#x2F;**
          * @property current
          * @type {Number}

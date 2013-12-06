@@ -38,6 +38,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Rectangle",
         "CG.Screen",
         "CG.Sequence",
+        "CG.SpineAnimation",
         "CG.Sprite",
         "CG.Text",
         "CG.Translate",

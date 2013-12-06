@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -744,12 +746,12 @@ CG.Entity.extend(&#x27;Map&#x27;, {
                             modx = (this.bx * this.xscale) % this.tilewidth
                             mody = (this.by * this.yscale) % this.tileheight
                             y = this.by
-                            my = Math.floor(parseFloat(this.by) &#x2F; parseFloat(this.tileheight)) &gt;&gt; 0
+                            my = parseFloat(this.by) &#x2F; parseFloat(this.tileheight) &gt;&gt; 0
 
                             var tmpy = (this.by + this.bh + this.tileheight)
                             while (y &lt; tmpy) {
                                 x = this.bx &#x2F;&#x2F;- this.tilewidth
-                                mx = Math.floor(parseFloat(this.bx) &#x2F; parseFloat(this.tilewidth)) &gt;&gt; 0
+                                mx = parseFloat(this.bx) &#x2F; parseFloat(this.tilewidth) &gt;&gt; 0
 
                                 var tmpx = (this.bx + this.bw + this.tilewidth)
                                 while (x &lt; tmpx) {
@@ -828,9 +830,9 @@ CG.Entity.extend(&#x27;Map&#x27;, {
 
                                 while (ry &gt;= 0 &amp;&amp; rx &lt; tl.width) {
                                     var gid = tl.tiles[rx + ry * tl.width]
-                                    this.xpos = (rx - ry - 1) * this.tilewidth &#x2F; 2 - bx
-                                    this.ypos = (rx + ry + 1) * this.tileheight &#x2F; 2 - by
-                                    if (this.xpos &gt; -this.tileset.tilewidth &amp;&amp; this.xpos &lt; bw &amp;&amp; this.ypos &gt; -this.tileset.tileheight &amp;&amp; this.ypos &lt; bh) {
+                                    this.rx = (rx - ry - 1) * this.tilewidth &#x2F; 2 - bx
+                                    this.ry = (rx + ry + 1) * this.tileheight &#x2F; 2 - by
+                                    if (this.rx &gt; -this.tileset.tilewidth &amp;&amp; this.rx &lt; bw &amp;&amp; this.ry &gt; -this.tileset.tileheight &amp;&amp; this.ry &lt; bh) {
                                         if (gid &gt; 0) {
                                             this.cx = ((gid - 1) % (this.atlaswidth &#x2F; this.tilewidth)) * this.tilewidth
                                             this.cy = Math.floor(this.tilewidth * (gid - 1) &#x2F; this.atlaswidth) * this.tileset.tileheight
@@ -845,9 +847,6 @@ CG.Entity.extend(&#x27;Map&#x27;, {
                             }
                         }
                     }
-                    &#x2F;&#x2F;                else {
-                    &#x2F;&#x2F;                    throw &#x27;unknown orientation: &#x27; + this.orientation
-                    &#x2F;&#x2F;                }
                 }
             }
         }

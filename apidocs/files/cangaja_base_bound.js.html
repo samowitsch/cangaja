@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -174,10 +176,10 @@
  * CG.Bound is used at different places in the Cangaja FW.
  *
  * @class CG.Bound
- * @extends CG.Entity
+ * @extends CG.Class
  *
  *&#x2F;
-CG.Entity.extend(&#x27;Bound&#x27;, {
+CG.Class.extend(&#x27;Bound&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
@@ -188,7 +190,6 @@ CG.Entity.extend(&#x27;Bound&#x27;, {
      * @return {*}
      *&#x2F;
     init:function (x, y, width, height) {
-        this._super()
         &#x2F;**
          * @property x
          * @type {Number}

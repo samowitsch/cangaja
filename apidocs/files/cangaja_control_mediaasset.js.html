@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -183,15 +185,12 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
      * @method init
      * @constructor
      * @param image {string} image path to background image of preloader
-     * @param ctx {canvas context} canvas context for drawing
      *&#x2F;
-    init:function (image, ctx) {
-        if (image != &#x27;&#x27;) {
+    init:function (image) {
+        if (image !== &#x27;&#x27; &amp;&amp; typeof image !== &#x27;undefined&#x27;) {
             this.image = new Image()
             this.image.src = image
         }
-
-        this.ctx = ctx
 
         this.ready = false
         this.progress = 0
@@ -207,6 +206,9 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
 
         this.jsons = []
         this.currjson = 0
+
+        this.texts = []
+        this.currtext = 0
 
         this.fonts = []
         this.currfont = 0
@@ -240,7 +242,8 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         this.images.push({
             name:name || &#x27;&#x27;, &#x2F;&#x2F;optional
             path:path,
-            img:new Image()
+            img:new Image(),
+            type:&#x27;image&#x27;
         })
         return this
     },
@@ -255,7 +258,8 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         this.fonts.push({
             name:name || &#x27;&#x27;, &#x2F;&#x2F;optional
             path:path,
-            data:&#x27;&#x27;
+            data:&#x27;&#x27;,
+            type:&#x27;font&#x27;
         })
         return this
     },
@@ -270,7 +274,8 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         this.xmls.push({
             name:name || &#x27;&#x27;, &#x2F;&#x2F;optional
             path:path,
-            data:&#x27;&#x27;
+            data:&#x27;&#x27;,
+            type:&#x27;xml&#x27;
         })
         return this
     },
@@ -285,7 +290,25 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         this.jsons.push({
             name:name || &#x27;&#x27;, &#x2F;&#x2F;optional
             path:path,
-            data:&#x27;&#x27;
+            data:&#x27;&#x27;,
+            src:&#x27;&#x27;,
+            type:&#x27;json&#x27;
+        })
+        return this
+    },
+    &#x2F;**
+     * @method addText
+     * @param path
+     * @param name
+     * @return {*}
+     *&#x2F;
+    addText:function (path, name) {
+        this.assetcount += 1
+        this.texts.push({
+            name:name || &#x27;&#x27;, &#x2F;&#x2F;optional
+            path:path,
+            data:&#x27;&#x27;,
+            type:&#x27;text&#x27;
         })
         return this
     },
@@ -304,7 +327,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
                 }
             }
         }
-        throw new CG.MediaAssetException(&#x27;No image with this name in asset.&#x27;)
+        throw new MediaAssetException(&#x27;No image with this name in asset.&#x27;)
     },
     &#x2F;**
      * @method getImagesByName
@@ -323,7 +346,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
             }
         }
         if (names.length === 0) {
-            throw new CG.MediaAssetException(&#x27;No image with this name in asset.&#x27;)
+            throw new MediaAssetException(&#x27;No image with this name in asset: &#x27; + name)
         }
         return names
     },
@@ -338,7 +361,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
                 return this.fonts[i]
             }
         }
-        throw new CG.MediaAssetException(&#x27;No font with this name in asset.&#x27;)
+        throw new MediaAssetException(&#x27;No font with this name in asset: &#x27; + name)
     },
     &#x2F;**
      * @method getXmlByName
@@ -351,7 +374,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
                 return this.xmls[i]
             }
         }
-        throw new CG.MediaAssetException(&#x27;No XML with this name in asset.&#x27;)
+        throw new MediaAssetException(&#x27;No XML with this name in asset: &#x27; + name)
     },
     &#x2F;**
      * @method getJsonByName
@@ -364,7 +387,20 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
                 return this.jsons[i]
             }
         }
-        throw new CG.MediaAssetException(&#x27;No JSON with this name in asset.&#x27;)
+        throw new MediaAssetException(&#x27;No JSON with this name in asset: &#x27; + name)
+    },
+    &#x2F;**
+     * @method getTextByName
+     * @param name
+     * @return {*}
+     *&#x2F;
+    getTextByName:function (name) {
+        for (var i = 0, l = this.jsons.length; i &lt; l; i++) {
+            if (this.texts[i].name == name) {
+                return this.texts[i]
+            }
+        }
+        throw new MediaAssetException(&#x27;No Text with this name in asset: &#x27; + name)
     },
     &#x2F;**
      * @method startPreLoad
@@ -377,33 +413,39 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         if (this.currimage &lt; this.images.length) {
             &#x2F;&#x2F;BUG last image is not preloading
             this.images[this.currimage].img.onload = function () {
-                console.log(&#x27;loaded image (&#x27; + Math.floor(100 &#x2F; (this.images.length - 1) * this.currimage) + &#x27; %): &#x27; + this.images[this.currimage].name)
+                console.log(&#x27;image loaded: &#x27; + this.images[this.currimage].path)
                 this.currimage += 1
                 this.assetcurrent += 1
                 this.startPreLoad()
             }.bind(this)
+            this.images[this.currimage].img.onerror = function () {
+                throw new MediaAssetException(&#x27;error, cant load image: &#x27; + this.images[this.currimage].path)
+            }.bind(this)
             this.images[this.currimage].img.src = this.images[this.currimage].path
         } else if (this.currfont &lt; this.fonts.length) {
-            &#x2F;&#x2F;        if(typeof(ejecta) !== &#x27;undefined&#x27;){
-            &#x2F;&#x2F;            this.fonts[this.currfont].data = ejecta.loadText(this.fonts[this.currfont].path)
-            &#x2F;&#x2F;        } else {
             this.fonts[this.currfont].data = loadString(this.fonts[this.currfont].path)
-            &#x2F;&#x2F;        }
+            console.log(&#x27;font loaded: &#x27; + this.fonts[this.currfont].path)
             this.currfont += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currxml &lt; this.xmls.length) {
             this.xmls[this.currxml].data = loadString(this.xmls[this.currxml].path)
+            console.log(&#x27;xml loaded: &#x27; + this.xmls[this.currxml].path)
             this.currxml += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson &lt; this.jsons.length) {
-            &#x2F;&#x2F;        if(typeof(ejecta) !== &#x27;undefined&#x27;){
-            &#x2F;&#x2F;            this.jsons[this.currjson].data = ejecta.loadJSON(this.jsons[this.currjson].path)
-            &#x2F;&#x2F;        } else {
-            this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
-            &#x2F;&#x2F;        }
+            var src = loadString(this.jsons[this.currjson].path)
+            this.jsons[this.currjson].data = JSON.parse(src)
+            this.jsons[this.currjson].src = src
+            console.log(&#x27;json loaded: &#x27; + this.jsons[this.currjson].path)
             this.currjson += 1
+            this.assetcurrent += 1
+            this.startPreLoad()
+        } else if (this.currtext &lt; this.texts.length) {
+            this.texts[this.currtext].data = loadString(this.texts[this.currtext].path)
+            console.log(&#x27;text loaded: &#x27; + this.texts[this.currtext].path)
+            this.currtext += 1
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currimage == this.images.length &amp;&amp;
@@ -420,36 +462,37 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         var x = (Game.bound.width - this.width) &#x2F; 2
         var y = (Game.bound.height - this.height) &#x2F; 2
         if (this.image) {
-            this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
+            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
         } else {
-            this.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
         }
-        this.ctx.save()
+        Game.ctx.save()
 
-        this.ctx.fillStyle = this.progresscolor;
-        this.ctx.fillRect((Game.bound.width - this.width) &#x2F; 2, (Game.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * this.progress, this.height);
+        Game.ctx.fillStyle = this.progresscolor;
+        Game.ctx.fillRect((Game.bound.width - this.width) &#x2F; 2, (Game.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * this.progress, this.height);
 
-        this.ctx.strokeStyle = this.bordercolor
-        this.ctx.shadowColor = this.shadowcolor
-        this.ctx.shadowBlur = this.shadowblur
-        this.ctx.shadowOffsetX = this.shadowoffsetx
-        this.ctx.shadowOffsetY = this.shadowoffsety
-        this.ctx.beginPath();
-        this.ctx.moveTo(x + this.radius, y);
-        this.ctx.lineTo(x + this.width - (1 * this.radius), y)
-        this.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
-        this.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
-        this.ctx.lineTo(x + this.radius, 2 * this.radius + y)
-        this.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
-        this.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
-        this.ctx.lineWidth = this.linewidth
-        this.ctx.stroke()
-        this.ctx.restore()
+        Game.ctx.strokeStyle = this.bordercolor
+        Game.ctx.shadowColor = this.shadowcolor
+        Game.ctx.shadowBlur = this.shadowblur
+        Game.ctx.shadowOffsetX = this.shadowoffsetx
+        Game.ctx.shadowOffsetY = this.shadowoffsety
+        Game.ctx.beginPath();
+        Game.ctx.moveTo(x + this.radius, y);
+        Game.ctx.lineTo(x + this.width - (1 * this.radius), y)
+        Game.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
+        Game.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
+        Game.ctx.lineTo(x + this.radius, 2 * this.radius + y)
+        Game.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
+        Game.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
+        Game.ctx.lineWidth = this.linewidth
+        Game.ctx.stroke()
+        Game.ctx.restore()
     }
 })
 
-function MediaAssetException(message) {
-    this.message = message
+function MediaAssetException(msg) {
+    this.msg = msg
+    console.log(this.msg)
 }
 
 

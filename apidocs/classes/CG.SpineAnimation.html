@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js - Cangaja API</title>
+    <title>CG.SpineAnimation - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -166,150 +166,278 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;atlas&#x2F;atlas-texturepacker.js</h1>
+                        <h1>CG.SpineAnimation Class</h1>
+<div class="box meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&#x2F;**
- *  @description
- *
- *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml&#x2F;json and generates new CG.atlasimage objects in the MediaAsset manager.
- *  These atlasimages are only handled within Sprite, Particle and Button class.
- *
- *  @class CG.AtlasTexturePacker
- *  @extends Class
- *&#x2F;
-CG.Class.extend(&#x27;AtlasTexturePacker&#x27;, {
-    &#x2F;**
-     * @constructor
-     * @method init
-     * @return {*}
-     *&#x2F;
-    init:function () {
-        if (typeof(ejecta) == &#x27;undefined&#x27;) {
-            this.xml = &#x27;&#x27;
-            this.xmlDoc = &#x27;&#x27;
-            this.parser = new DOMParser() || {}
-        }
-        &#x2F;**
-         * @property imagename
-         * @type {String}
-         *&#x2F;
-        this.imagename = &#x27;&#x27;
-        &#x2F;**
-         * @property width
-         * @type {Number}
-         *&#x2F;
-        this.width = 0
-        &#x2F;**
-         * @property height
-         * @type {Number}
-         *&#x2F;
-        this.height = 0
-        &#x2F;**
-         * @property atlasimages
-         * @type {Array}
-         *&#x2F;
-        this.atlasimages = []
-        return this
-    },
-    &#x2F;**
-     * @description load a xml file from TexturePacker
-     * @method loadXml
-     * @param {string&#x2F;object} xmlfile path or mediaasset object with data of TexturePacker xml
-     * @return {*}
-     *&#x2F;
-    loadXml:function (xmlfile) {
-        &#x2F;&#x2F;from asset
-        if (typeof xmlfile == &#x27;string&#x27;) {
-            this.xml = loadString(xmlfile)
-        } else {
-            this.xml = xmlfile.data
-        }
+    
+        <div class="extends">
+            Extends CG.Entity
 
-        this.xmlDoc = this.parser.parseFromString(this.xml, &#x27;text&#x2F;xml&#x27;)
 
-        this.imagename = this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;imagePath&#x27;)
-        this.width = parseInt(this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;width&#x27;))
-        this.height = parseInt(this.xmlDoc.getElementsByTagName(&#x27;TextureAtlas&#x27;)[0].getAttribute(&#x27;height&#x27;))
+TODO
+Boundingbox collision see example here:
+https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java
 
-        var sprites = this.xmlDoc.getElementsByTagName(&#x27;sprite&#x27;)
-        for (var i = 0, l = sprites.length; i &lt; l; i++) {
-            atlasimage = new CG.atlasimage(
-                sprites[i].getAttribute(&#x27;n&#x27;),
-                parseInt(sprites[i].getAttribute(&#x27;x&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;y&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;w&#x27;)),
-                parseInt(sprites[i].getAttribute(&#x27;h&#x27;))
-            )
-            if (sprites[i].getAttribute(&#x27;r&#x27;) == &#x27;y&#x27;) {
-                atlasimage.rotation = 90
-            }
-            atlasimage.atlasimage = this.imagename
-            atlasimage.source = &#x27;xml&#x27;
-            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
 
-            this.atlasimages.push(atlasimage)
-        }
-        return this
-    },
+Eventhandler see example here:
+https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java
 
-    &#x2F;**
-     * @description load a json file from TexturePacker
-     * @method loadJson
-     * @param {string&#x2F;object} jsonfile path or mediaasset object with data of TexturePacker json
-     * @return {*}
-     *&#x2F;
-    loadJson:function (jsonfile) {
-        &#x2F;&#x2F;from asset
-        if (typeof jsonfile == &#x27;string&#x27;) {
-            this.json = JSON.parse(loadString(jsonfile))
-        } else {
-            this.json = jsonfile.data
-        }
-        &#x2F;&#x2F;meta info from json file
-        this.imagename = this.json.meta.image
-        this.width = this.json.meta.size.w
-        this.height = this.json.meta.size.h
 
-        &#x2F;&#x2F;loop thru all images
-        for (var i = 0, l = this.json.frames.length; i &lt; l; i++) {
-            var image = this.json.frames[i]
-            var atlasimage = new CG.AtlasImage(
-                image.filename,
-                image.frame.x,
-                image.frame.y,
-                image.frame.w,
-                image.frame.h
-            )
-            if (image.rotated === true) {
-                atlasimage.rotation = 90
-                &#x2F;&#x2F;            atlasimage.width = this.json.frames[i].frame.w,
-                &#x2F;&#x2F;            atlasimage.height = this.json.frames[i].frame.h
-            }
-            atlasimage.atlasimage = this.imagename
-            atlasimage.source = &#x27;json&#x27;
-            atlasimage.atlasname = this.imagename.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
+Box2d support see example here:
+https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java
+http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691
+        </div>
+    
 
-            this.atlasimages.push(atlasimage)
-        }
-        return this
-    },
+    
+        <div class="foundat">
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l1"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:1</code></a>
+        </div>
+    
 
-    &#x2F;**
-     * @description get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)
-     * @method getAtlasImages
-     * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
-     *&#x2F;
-    getAtlasImages:function () {
-        return this.atlasimages
-    }
-})
+    
+        
+            Module: <a href="../modules/CG.html">CG</a>
+        
+    
+
+    
+</div>
 
 
 
-    </pre>
+<div class="box intro">
+    <p>CG.SpineAnimation</p>
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                        
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>spinejson</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>spineatlas</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>position</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>scale</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l24"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:24</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">spinejson</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Spine json animation file</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">spineatlas</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Spine</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">position</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">scale</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>callback function</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -577,7 +579,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
      *&#x2F;
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-            if (typeof this.elements[i].id !== &#x27;undefined&#x27;) {
+            if (typeof this.elements[i].id !== &#x27;undefined&#x27; &amp;&amp; typeof this.elements[i] === &#x27;object&#x27;) {
                 if(this.elements[i].id.uid === uid) {
                     this.elements.splice(i, 1);
                 }

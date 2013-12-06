@@ -115,6 +115,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
             
+                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
@@ -185,13 +187,25 @@ CG.Class.extend(&#x27;Entity&#x27;, {
      *&#x2F;
     init:function (name) {
         &#x2F;**
+         @description name of the object
          @property name {string}
          *&#x2F;
         this.name = name || &#x27;&#x27;
         &#x2F;**
+         @description visibility option
          @property visible {boolean}
          *&#x2F;
         this.visible = true
+        &#x2F;**
+         @description Transform object for matrix transformation
+         @property transform {Transform}
+         *&#x2F;
+        this.transform = new Transform()
+        &#x2F;**
+         @description the transformation matrix array of the Transform object
+         @property matrix {Array}
+         *&#x2F;
+        this.matrix = this.transform.m
     },
     update:function () {
         throw {
