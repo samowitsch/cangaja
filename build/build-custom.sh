@@ -18,7 +18,6 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/entity.js \
 ../cangaja/base/point.js \
 ../cangaja/base/vector.js \
-../cangaja/base/rectangle.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/sprite/sprite.js \
