@@ -4,11 +4,11 @@
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends CG.Entity
+ * @extends CG.Class
  *
  * @param {string} screenname the name of the screen
  */
-CG.Entity.extend('Screen', {
+CG.Class.extend('Screen', {
     /**
      * @constructor
      * @method init
@@ -16,10 +16,8 @@ CG.Entity.extend('Screen', {
      * @return {*}
      */
     init: function (screenname) {
-        this._super(screenname)
-        /**
-         @property position {CG.Point}
-         */
+        this.name = (screenname) ? screenname : ''
+
         this.position = new CG.Point(0, 0)
         /**
          * @property xscale

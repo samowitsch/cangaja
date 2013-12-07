@@ -4,9 +4,9 @@
  * CG.Sprite
  *
  * @class CG.Sprite
- * @extends CG.Rectangle
+ * @extends CG.Entity
  */
-CG.Rectangle.extend('Sprite', {
+CG.Entity.extend('Sprite', {
     /**
      * @method init
      * @constructor
@@ -15,7 +15,7 @@ CG.Rectangle.extend('Sprite', {
      * @return {*}
      */
     init:function (image, position) {
-        this._super(position, 0, 0)
+        this._super('', position)
         this.instanceOf = 'Sprite'
 
         /**

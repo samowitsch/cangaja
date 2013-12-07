@@ -4,9 +4,9 @@
  * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
  * @class CG.Layer
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Layer', {
+CG.Class.extend('Layer', {
     /**
      * @constructor
      * @method init
@@ -14,9 +14,8 @@ CG.Entity.extend('Layer', {
      * @return {*}
      */
     init:function (layername) {
-        this._super(layername)
-
-        var self = this
+        this.name = (layername) ? layername : ''
+        this.visible = true
         this.elements = []
         this.elementsToDelete = []
         return this
