@@ -22,7 +22,7 @@ window.onload = function () {
     //mouse move
     can.addEventListener('mousemove', function (evt) {
         var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetCG.LEFT;
+        mousex = evt.clientX - canvas.offsetLeft;
         mousey = evt.clientY - canvas.offsetTop;
     }, false);
 
