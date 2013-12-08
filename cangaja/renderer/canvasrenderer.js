@@ -26,6 +26,11 @@ CG.Class.extend('CanvasRenderer', {
 
         return this
     },
+    /**
+     * @description central draw method for all objects that draws to the canvas
+     * @method draw
+     * @param {object} renderObject the object to render
+     */
     draw: function (renderObject) {
         Game.b_ctx.save()
 
@@ -36,7 +41,6 @@ CG.Class.extend('CanvasRenderer', {
             case "Sprite":
             case "Button":
             case "Particle":
-//            case "SpineAnimation":
 
                 renderObject.updateDiff()
 
@@ -56,17 +60,11 @@ CG.Class.extend('CanvasRenderer', {
                 renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
-//                if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    Game.b_ctx.scale(renderObject.xscale, renderObject.yscale)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
-//                } else {
-//                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-//                    Game.b_ctx.drawImage(renderObject.image, 0, 0, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
-//                }
-                break;
 
+                Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
+
+                Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
+                break;
 
             case "Animation":
 

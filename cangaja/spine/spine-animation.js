@@ -31,6 +31,7 @@ CG.Entity.extend('SpineAnimation', {
      * @param callback callback function
      */
     init: function (spinejson, spineatlas, position, scale, callback) {
+        this._super('')
 
         self = this
 
@@ -129,7 +130,6 @@ CG.Entity.extend('SpineAnimation', {
         }
     },
     update: function () {
-
         var dt = (Date.now() - this.lastTime) / 1000
         this.lastTime = Date.now()
 
@@ -147,17 +147,21 @@ CG.Entity.extend('SpineAnimation', {
             attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 
             try {
+
                 this.alpha = slot.a //get alphe value from slot
                 this.position = new CG.Point(this.vertices[2], this.vertices[3])
+                this.xscale = bone.worldScaleX //* this.scale
+                this.yscale = bone.worldScaleY //* this.scale
+                this.rotation = -(bone.worldRotation + attachment.rotation)
+
+                this.updateMatrix.call(this)
+
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
                 this.cutwidth = attachment.width
                 this.cutheight = attachment.height
-                this.xhandle = this.cutwidth / 2
-                this.yhandle = this.cutheight / 2
-                this.xscale = bone.worldScaleX //* this.scale
-                this.yscale = bone.worldScaleY //* this.scale
-                this.rotation = -(bone.worldRotation + attachment.rotation)
+                this.xhandle = this.cutwidth / 2 * this.xscale
+                this.yhandle = this.cutheight / 2 * this.yscale
                 this.xpos = 0
                 this.ypos = 0
 
