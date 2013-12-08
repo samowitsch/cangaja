@@ -27,36 +27,31 @@ CG.Sprite.extend('Button', {
          */
         this.font = font
         /**
+         @property text {string}
+         */
+        this.text = text
+
+        /**
          @property clickedCallback {callback}
          */
         this.clickedCallback = clickedCallback
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
         /**
          @property clickable {boolean}
          */
         this.clickable = true
         /**
-         @property visible {boolean}
+         @property clicked {boolean}
          */
-        this.visible = true
+        this.clicked = false
 
-        /**
-         @property text {string}
-         */
-        this.text = text
         return this
     },
     update: function () {
         this.ifClicked()
         this.ifMouseOver()
-        this.ifAttached()
 
         this.xhandle = (this.width * this.xscale / 2)
         this.yhandle = (this.height * this.yscale / 2)
-
 
         if (this.clicked) {
             if (this.clickedCallback) {
@@ -64,6 +59,7 @@ CG.Sprite.extend('Button', {
                 this.clickedCallback(this)
             }
         }
+        this.updateMatrix()
     },
     draw: function () {
         if (this.visible == true) {

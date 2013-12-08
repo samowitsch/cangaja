@@ -14,7 +14,7 @@ CG.Class.extend('Entity', {
      * @param name {string} the name of the Entity
      * @param position {CG.Point} position
      */
-    init:function (name, position) {
+    init: function (name, position) {
         /**
          @description name of the object
          @property name {string}
@@ -31,11 +31,6 @@ CG.Class.extend('Entity', {
          */
         this.transform = new Transform()
         /**
-         @description the transformation matrix array of the Transform object
-         @property matrix {Array}
-         */
-        this.matrix = this.transform.m
-        /**
          @property position {CG.Point}
          */
         this.position = (position) ? position : new CG.Point(0, 0)
@@ -48,13 +43,9 @@ CG.Class.extend('Entity', {
          */
         this.height = 0
         /**
-         @property clickable {boolean}
-         */
-        this.clickable = false
-        /**
          @property dragable {boolean}
          */
-        this.dragable = false
+        this.dragable = true
         /**
          @property rotation {Number}
          */
@@ -67,10 +58,6 @@ CG.Class.extend('Entity', {
          @property yscale {Number}
          */
         this.yscale = 1
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
         /**
          @property hover {boolean}
          */
@@ -86,16 +73,18 @@ CG.Class.extend('Entity', {
 
         return this
     },
-    update:function () {
-        throw {
-            name:'Entity Error',
-            message:'Subclass has no update method.'
-        }
+    update: function () {
     },
-    draw:function () {
+    updateMatrix: function () {
+        this.transform.reset()
+        this.transform.translate(this.position.x, this.position.y)
+        this.transform.rotate(this.rotation * CG.Const_PI_180)
+        this.transform.scale(this.xscale, this.yscale)
+    },
+    draw: function () {
         throw {
-            name:'Entity Error',
-            message:'Subclass has no draw method.'
+            name: 'Entity Error',
+            message: 'Subclass has no draw method.'
         }
     },
     /**
@@ -103,7 +92,7 @@ CG.Class.extend('Entity', {
      * @method setImage
      * @param {image} image image path, image or atlasimage
      */
-    setImage:function (image) {
+    setImage: function (image) {
         this.atlasimage = false
         if (image) {
             if (image instanceof CG.AtlasImage) {
@@ -141,16 +130,17 @@ CG.Class.extend('Entity', {
      * @method AABB
      * @return {object} returns the calculated bounds
      */
-    AABB:function () {
+    AABB: function () {
         //http://willperone.net/Code/coderr.php
-        a = this.rotation * CG.Const_PI_180
-        s = Math.sin(a);
-        c = Math.cos(a);
-        if (s < 0) s = -s;
-        if (c < 0) c = -c;
+        var a = this.rotation * CG.Const_PI_180,
+            s = Math.sin(a),
+            c = Math.cos(a)
+
+        if (s < 0) s = -s
+        if (c < 0) c = -c
         return {
-            bw:this.height * this.xscale * s + this.width * this.yscale * c,
-            bh:this.height * this.xscale * c + this.width * this.yscale * s
+            bw: this.height * this.xscale * s + this.width * this.yscale * c,
+            bh: this.height * this.xscale * c + this.width * this.yscale * s
         }
     },
     /**
@@ -158,37 +148,40 @@ CG.Class.extend('Entity', {
      * @method ifClicked
      * @return {true/false}
      */
-    ifClicked:function () {
+    ifClicked: function () {
         if (CG.mousedown && this.clickable) {
             var dx = CG.mouse.x - this.position.x,
-                dy = CG.mouse.y - this.position.y
-            var h1 = Math.sqrt(dx * dx + dy * dy)
-            var currA = Math.atan2(dy, dx)
-            var newA = currA - (this.rotation * CG.Const_PI_180);
-            var x2 = Math.cos(newA) * h1
-            var y2 = Math.sin(newA) * h1
+                dy = CG.mouse.y - this.position.y,
+                h1 = Math.sqrt(dx * dx + dy * dy),
+                currA = Math.atan2(dy, dx),
+                newA = currA - (this.rotation * CG.Const_PI_180),
+                x2 = Math.cos(newA) * h1,
+                y2 = Math.sin(newA) * h1
+
             if (x2 > -0.5 * (this.width * this.xscale) &&
                 x2 < 0.5 * (this.width * this.xscale) &&
                 y2 > -0.5 * (this.height * this.yscale) &&
                 y2 < 0.5 * (this.height * this.yscale)) {
                 this.clicked = true
                 CG.mousedown = false
+            } else {
+                this.clicked = false
             }
         }
-        return false
     },
     /**
      * @description checks if the mouse/pointer is over the rectangle
      * @method ifMouseOver
      */
-    ifMouseOver:function () {
+    ifMouseOver: function () {
         var dx = CG.mouse.x - this.position.x,
-            dy = CG.mouse.y - this.position.y
-        var h1 = Math.sqrt(dx * dx + dy * dy)
-        var currA = Math.atan2(dy, dx)
-        var newA = currA - (this.rotation * CG.Const_PI_180)
-        var x2 = Math.cos(newA) * h1
-        var y2 = Math.sin(newA) * h1
+            dy = CG.mouse.y - this.position.y,
+            h1 = Math.sqrt(dx * dx + dy * dy),
+            currA = Math.atan2(dy, dx),
+            newA = currA - (this.rotation * CG.Const_PI_180),
+            x2 = Math.cos(newA) * h1,
+            y2 = Math.sin(newA) * h1
+
         if (x2 > -0.5 * (this.width * this.xscale) &&
             x2 < 0.5 * (this.width * this.xscale) &&
             y2 > -0.5 * (this.height * this.yscale) &&
@@ -204,7 +197,7 @@ CG.Class.extend('Entity', {
      * @param objects {array} a array of objects to check for collision => Sprites, Animations, MapAreas
      * @param callback {callback} what to do after collision?
      */
-    checkCollision:function (objects, callback) {
+    checkCollision: function (objects, callback) {
         objects.forEach(function (obj, index) {
                 if (obj.className == 'MapArea') {
                     if ((this.position.y + this.AABB().bh / 2) >= obj.bound.y &&
@@ -228,7 +221,7 @@ CG.Class.extend('Entity', {
                                         direction = 'bottom'
                                         overlap = ((this.position.y - this.AABB().bh / 2) - (obj.bound.y + obj.bound.height)) >> 0
                                     } else {
-                                        direction = 'CG.LEFT'
+                                        direction = 'left'
                                         overlap = ((this.position.x + this.AABB().bw / 2) - obj.bound.x) >> 0
                                     }
                                 } else {
@@ -243,8 +236,8 @@ CG.Class.extend('Entity', {
                             }
 
                             collision = {
-                                overlap:overlap,
-                                direction:direction
+                                overlap: overlap,
+                                direction: direction
                             }
                             //callback arguments: this => the sprite, obj => the maparea if needed, collision => {collison direction, offset}
                             callback(this, obj, collision)
@@ -283,7 +276,7 @@ CG.Class.extend('Entity', {
                                     direction = 'bottom'
                                     overlap = ((this.position.y - this.AABB().bh / 2) - (obj.position.y - obj.AABB().bh / 2)) >> 0
                                 } else {
-                                    direction = 'CG.LEFT'
+                                    direction = 'left'
                                     overlap = ((this.position.x + this.AABB().bw / 2) - (obj.position.x + obj.AABB().bw / 2)) >> 0
                                 }
                             } else {
@@ -298,8 +291,8 @@ CG.Class.extend('Entity', {
                         }
 
                         collision = {
-                            overlap:overlap,
-                            direction:direction
+                            overlap: overlap,
+                            direction: direction
                         }
 
                         callback(this, obj, collision)
