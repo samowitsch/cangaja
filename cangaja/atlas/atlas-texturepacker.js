@@ -73,6 +73,7 @@ CG.Class.extend('AtlasTexturePacker', {
             )
             if (sprites[i].getAttribute('r') == 'y') {
                 atlasimage.rotation = 90
+                console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = 'xml'
@@ -113,8 +114,7 @@ CG.Class.extend('AtlasTexturePacker', {
             )
             if (image.rotated === true) {
                 atlasimage.rotation = 90
-                //            atlasimage.width = this.json.frames[i].frame.w,
-                //            atlasimage.height = this.json.frames[i].frame.h
+                console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = 'json'
