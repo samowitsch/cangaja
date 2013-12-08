@@ -1,20 +1,15 @@
-var loadjson = true  //test json map loader
-
-var delta
-var then = Date.now();
-var mousePos
-var mousedown = false
-var mouseup
-var bm
-var renderStats
-var hammer
-var mySound
-var myShoot
-var angl, xs = 0, ys = 0
-var ri = 0
-
-var sliderx = 0
-var slidery = 0
+var loadjson = true,  //test json map loader
+    delta,
+    then = Date.now(),
+    hammer,
+    mousedown = false,
+    mouseup,
+    bm,
+    renderStats,
+    mySound,
+    myShoot, canvas,
+    angl, xs = 0, ys = 0,
+    ri = 0
 
 //screen 1 menu
 var screen = new CG.Screen('menuscreen')
@@ -55,7 +50,7 @@ var layerbitmap = new CG.Layer('bitmap')
 
 var colmsg = ''
 
-var asset, circle, circlesmoke, tween, squence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
+var asset, circle, circlesmoke, tween, sequence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
 var morph = new CG.Morph('sinus', 0.25, 1, 1)
 var map = new CG.Map(640, 480)
 var tp = new CG.AtlasTexturePacker()
@@ -64,18 +59,18 @@ var tp = new CG.AtlasTexturePacker()
 window.onload = function () {
 
     //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //mouse move
-    can.addEventListener('mousemove', function (evt) {
-        var rect = can.getBoundingClientRect(), root = document.documentElement;
-        CG.mouse.x = evt.clientX - canvas.offsetLeft;
-        CG.mouse.y = evt.clientY - canvas.offsetTop;
-    }, false);
+//    //mouse move
+//    canvas.addEventListener('mousemove', function (evt) {
+//        var rect = canvas.getBoundingClientRect(), root = document.documentElement;
+//        CG.mouse.x = evt.clientX - canvas.offsetLeft;
+//        CG.mouse.y = evt.clientY - canvas.offsetTop;
+//    }, false);
 
     Game.preload()
 };
@@ -258,9 +253,7 @@ var Game = (function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 var last = new Date()
-                //    delta = (now - then) / (1000 / Game.fps)
                 Game.run();
-                Game.touchhandler()
                 delta = (new Date() - last) / 1000
             }
         },
@@ -338,8 +331,6 @@ var Game = (function () {
         draw: function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             map.drawMap(0, 0, CG.mouse.x * 2 >> 0, CG.mouse.y * 2 >> 0, Game.bound.width, Game.bound.height, callbackMapCollision)
-            //        map.drawMap()
-            //        map.draw()
 
             var ytext = 10
             font2.drawText('cangaja - Canvas Game JavaScript FW', 10, ytext)
@@ -358,9 +349,7 @@ var Game = (function () {
                 }
             }
 
-
             colmsg = ''
-
 
             Game.ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
@@ -370,39 +359,32 @@ var Game = (function () {
             hammer = new Hammer(canvas);
             hammer.on('tap', function (ev) {
                 CG.mousedown = true
-                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
-                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
+                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft; //correct ontap value x
+                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
                 clicked()
-
             })
             hammer.on('dragstart', function (ev) {
             })
             hammer.on('drag', function (ev) {
-                CG.mouse.x = ev.gesture.center.pageX
-                CG.mouse.y = ev.gesture.center.pageY
+                CG.mouse.x = ev.gesture.center.pageX;
+                CG.mouse.y = ev.gesture.center.pageY;
             })
             hammer.on('dragend', function (ev) {
             })
             hammer.on('swipe', function (ev) {
             })
-
             hammer.on('doubletap', function (ev) {
             })
             hammer.on('hold', function (ev) {
             })
-
             hammer.on('transformstart', function (ev) {
             })
             hammer.on('transform', function (ev) {
             })
             hammer.on('transformend', function (ev) {
             })
-
             hammer.on('release', function (ev) {
             })
-        },
-        touchhandler: function () {
-            CG.mousedown = false
         }
     }
 

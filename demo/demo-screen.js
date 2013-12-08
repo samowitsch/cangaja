@@ -1,22 +1,29 @@
-var renderStats
-
-var mainscreen, mainlayer, gamescreen, gamelayer, settingsscreen, settingslayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var tp = new CG.AtlasTexturePacker()
+var renderStats,
+    mainscreen,
+    mainlayer,
+    gamescreen,
+    gamelayer,
+    settingsscreen,
+    settingslayer,
+    abadi,
+    small,
+    hammer,
+    canvas,
+    mousex = 0,
+    mousey = 0,
+    mousedown = false,
+    tp = new CG.AtlasTexturePacker();
 
 
 //waiting to get started ;o)
 window.onload = function () {
 
     //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
     Game.preload()
 };
@@ -120,9 +127,7 @@ Game = (function () {
 
 
             //Simple Button
-            var back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 400), 'BACK TO MAIN SCREEN', small, function () {
-                Game.director.setDirection(CG.LEFT).nextScreen('mainscreen', 'slide', 50)
-            })
+            var back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 400), 'BACK TO MAIN SCREEN', small, Callback.Back)
             back.name = 'back'
 
             gamelayer.addElement(back)
@@ -131,22 +136,16 @@ Game = (function () {
 
             //Buttons as Menu
             var menu = new CG.Menu(Game.width2, 200, 10)
-            var button1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SCALE)', small, function () {
-                Game.director.nextScreen('gamescreen', 'scale', 15)
-            })
+            var button1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SCALE)', small, Callback.Scale)
             button1.name = '#mbutton 1#'
             menu.addButton(button1)
 
-            var button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(FADE)', small, function () {
-                Game.director.nextScreen('settingsscreen', 'fade', 30)
-            })
+            var button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(FADE)', small, Callback.Fade)
             button2.name = '#mbutton 2#'
             menu.addButton(button2)
             mainlayer.addElement(menu)
 
-            var button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SLIDE)', small, function () {
-                Game.director.setDirection(CG.RIGHT).nextScreen('settingsscreen', 'slide', 50)
-            })
+            var button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SLIDE)', small, Callback.Slide)
             button3.name = '#mbutton 3#'
             menu.addButton(button3)
             mainlayer.addElement(menu)
@@ -197,44 +196,48 @@ Game = (function () {
             hammer = new Hammer(canvas);
             hammer.on('tap', function (ev) {
                 CG.mousedown = true
-                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
-                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
+                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft; //correct ontap value x
+                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
             })
             hammer.on('dragstart', function (ev) {
             })
             hammer.on('drag', function (ev) {
-                CG.mouse.x = ev.gesture.center.pageX
-                CG.mouse.y = ev.gesture.center.pageY
-
-
-                //log = document.getElementById('log')
-                //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
-
+                CG.mouse.x = ev.gesture.center.pageX;
+                CG.mouse.y = ev.gesture.center.pageY;
             })
             hammer.on('dragend', function (ev) {
             })
             hammer.on('swipe', function (ev) {
             })
-
             hammer.on('doubletap', function (ev) {
             })
             hammer.on('hold', function (ev) {
             })
-
             hammer.on('transformstart', function (ev) {
             })
             hammer.on('transform', function (ev) {
             })
             hammer.on('transformend', function (ev) {
             })
-
             hammer.on('release', function (ev) {
-
             })
-        },
-        touchhandler: function () {
         }
     }
 
     return Game
 }())
+
+var Callback = {
+    Back: function () {
+        Game.director.setDirection(CG.LEFT).nextScreen('mainscreen', 'slide', 50)
+    },
+    Scale: function () {
+        Game.director.nextScreen('gamescreen', 'scale', 15)
+    },
+    Fade: function () {
+        Game.director.nextScreen('settingsscreen', 'fade', 30)
+    },
+    Slide: function () {
+        Game.director.setDirection(CG.RIGHT).nextScreen('settingsscreen', 'slide', 50)
+    }
+}

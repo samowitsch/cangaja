@@ -1,26 +1,33 @@
-var renderStats
+'use strict';
 
-var mainscreen, mainlayer
-
-var mousedown = false
-var tp = new CG.AtlasTexturePacker()
+var renderStats,
+    mainscreen,
+    mainlayer,
+    canvas,
+    hammer,
+    abadi,
+    small,
+    button,
+    menu,
+    mousedown = false,
+    tp = new CG.AtlasTexturePacker();
 
 
 //waiting to get started ;o)
 window.onload = function () {
 
     //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
     Game.preload()
 };
 
 // the Game object
-Game = (function () {
+//Game = (function () {
     var Game = {
         path: '',
         fps:60,
@@ -152,19 +159,14 @@ Game = (function () {
             hammer = new Hammer(canvas);
             hammer.on('tap', function (ev) {
                 CG.mousedown = true
-                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
-                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
+                CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft; //correct ontap value x
+                CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
             })
             hammer.on('dragstart', function (ev) {
             })
             hammer.on('drag', function (ev) {
-                CG.mouse.x = ev.gesture.center.pageX
-                CG.mouse.y = ev.gesture.center.pageY
-
-
-                //log = document.getElementById('log')
-                //log.innerHTML = 'x: ' + mousex + "   y: " + mousey + '  back[' + layerback.elements.length + '] ' + '  middle[' + layermiddle.elements.length + '] ' + '  front[' + layerfront.elements.length + '] '
-
+                CG.mouse.x = ev.gesture.center.pageX;
+                CG.mouse.y = ev.gesture.center.pageY;
             })
             hammer.on('dragend', function (ev) {
             })
@@ -190,10 +192,9 @@ Game = (function () {
         }
     }
 
-    return Game
-}())
+//    return Game
+//}())
 
 function buttonCallback(obj) {
-    alert('Clicked button')
-    console.log(['clicked & execute callback', obj])
+    console.log('clicked & execute callback', obj)
 }
