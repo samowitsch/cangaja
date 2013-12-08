@@ -56,7 +56,7 @@ CG.Class.extend('Menu', {
     update:function () {
         this.buttons.forEach(function (button) {
             button.update()
-        }, this)
+        })
     },
 
     draw:function () {
