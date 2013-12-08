@@ -21,15 +21,8 @@ CG.Sprite.extend('Animation', {
      */
     init: function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
-        this.instanceOf = 'Animation'
 
-        //from asset?
-        if (typeof image == 'string') {
-            this.image = new Image()
-            this.image.src = image
-        } else {
-            this.image = image
-        }
+        this.instanceOf = 'Animation'
 
         /**
          @property loop {boolean}

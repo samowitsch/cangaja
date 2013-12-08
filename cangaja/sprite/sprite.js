@@ -38,10 +38,6 @@ CG.Entity.extend('Sprite', {
          */
         this.xspeed = 0 //xspeed of the sprite
         /**
-         @property xscale {Number}
-         */
-        this.xscale = 1
-        /**
          @property xhandle {Number}
          */
         this.xhandle = 0
@@ -49,10 +45,6 @@ CG.Entity.extend('Sprite', {
          @property yspeed {Number}
          */
         this.yspeed = 0
-        /**
-         @property yscale {Number}
-         */
-        this.yscale = 1
         /**
          @property yhandle {Number}
          */
@@ -62,10 +54,6 @@ CG.Entity.extend('Sprite', {
          */
         this.boundsMode = false // false, bounce or slide
         /**
-         @property rotation {integer/float}
-         */
-        this.rotation = 0
-        /**
          @property rotationspeed {integer/float}
          */
         this.rotationspeed = 0
@@ -73,11 +61,6 @@ CG.Entity.extend('Sprite', {
          @property alpha {float}
          */
         this.alpha = 1
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
-
         /**
          @property followobject {boolean/object}
          */
@@ -123,6 +106,7 @@ CG.Entity.extend('Sprite', {
         if (this.boundsMode) {
             this.checkBound()
         }
+        this.updateMatrix()
     },
     draw:function () {
 

@@ -38,11 +38,6 @@ CG.Sprite.extend('Particle', {
          */
         this.fadeout = false
         /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 1
-        /**
          * @property gravity
          * @type {Number}
          */
@@ -67,6 +62,8 @@ CG.Sprite.extend('Particle', {
             this.rotation += this.rotationspeed
             this.xhandle = (this.width * this.xscale / 2)
             this.yhandle = (this.height * this.yscale / 2)
+
+            this.updateMatrix()
         }
     },
     draw: function () {
