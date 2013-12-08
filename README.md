@@ -29,6 +29,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 * Box2DHtml support ([Box2DHtml5])
 * Destructible Terrain class
 * PhysicsEditor support ([PhysicsEditor] use Lime + Corona JSON format for use in Box2D Wrapper)
+* Spine 2D support ([Spine])
 
 [Glyphdesigner]: http://www.71squared.com/glyphdesigner
 [ParticleDesigner]: http://www.71squared.com/particledesigner
@@ -39,6 +40,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 [Hammer]: http://eightmedia.github.com/hammer.js/
 [Ejecta]: http://impactjs.com/ejecta
 [Box2DHtml5]: https://code.google.com/p/box2d-html5/
+[Spine]: http://esotericsoftware.com
 
 ## Todo / wish list / bugs:
 
