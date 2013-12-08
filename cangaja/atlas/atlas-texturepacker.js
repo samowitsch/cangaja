@@ -1,8 +1,9 @@
 /**
  *  @description
- *
  *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.
+ *  No trimming at the moment, keep TexturePacker settings simple! The rotation option of TexturePacker
+ *  will be dropped in future releases!
+ *  AtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.
  *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.AtlasTexturePacker
