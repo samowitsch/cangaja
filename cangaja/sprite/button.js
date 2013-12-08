@@ -59,6 +59,7 @@ CG.Sprite.extend('Button', {
                 this.clickedCallback(this)
             }
         }
+        this.updateDiff()
         this.updateMatrix()
     },
     draw: function () {

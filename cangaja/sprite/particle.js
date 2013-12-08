@@ -63,6 +63,7 @@ CG.Sprite.extend('Particle', {
             this.xhandle = (this.width * this.xscale / 2)
             this.yhandle = (this.height * this.yscale / 2)
 
+            this.updateDiff()
             this.updateMatrix()
         }
     },

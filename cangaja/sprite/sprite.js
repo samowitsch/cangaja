@@ -106,6 +106,7 @@ CG.Entity.extend('Sprite', {
         if (this.boundsMode) {
             this.checkBound()
         }
+        this.updateDiff()
         this.updateMatrix()
     },
     draw:function () {
