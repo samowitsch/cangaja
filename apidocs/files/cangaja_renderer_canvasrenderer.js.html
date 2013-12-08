@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -196,8 +194,6 @@ CG.Class.extend(&#x27;CanvasRenderer&#x27;, {
 
         &#x2F;&#x2F;TODO the renderer creates the canvas element
 
-        this.trans = new Transform()
-
         return this
     },
     &#x2F;**
@@ -215,9 +211,6 @@ CG.Class.extend(&#x27;CanvasRenderer&#x27;, {
             case &quot;Sprite&quot;:
             case &quot;Button&quot;:
             case &quot;Particle&quot;:
-&#x2F;&#x2F;            case &quot;SpineAnimation&quot;:
-
-                renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
@@ -232,22 +225,14 @@ CG.Class.extend(&#x27;CanvasRenderer&#x27;, {
 
             case &quot;SpineAnimation&quot;:
 
-                renderObject.updateDiff()
-
-                this.trans.reset()
-                this.trans.translate(renderObject.position.x, renderObject.position.y)
-                this.trans.rotate(renderObject.rotation * CG.Const_PI_180)
-                this.trans.scale(renderObject.xscale, renderObject.yscale)
-
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(this.trans.m[0], this.trans.m[1], this.trans.m[2], this.trans.m[3], this.trans.m[4], this.trans.m[5])
+
+                Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
+
                 Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
                 break;
 
-
             case &quot;Animation&quot;:
-
-                renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
@@ -270,7 +255,6 @@ CG.Class.extend(&#x27;CanvasRenderer&#x27;, {
                     }
                 }
                 break;
-
 
             case &quot;Font&quot;:
 

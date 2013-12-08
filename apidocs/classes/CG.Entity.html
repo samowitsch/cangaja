@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -224,6 +222,34 @@
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
+                                <a href="#method_AABB">AABB</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_checkCollision">checkCollision</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_ifClicked">ifClicked</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_ifMouseOver">ifMouseOver</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_init">init</a>
 
                                 
@@ -248,7 +274,35 @@
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
-                                <a href="#property_matrix">matrix</a>
+                                <a href="#property_boundingradius">boundingradius</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_dragable">dragable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_height">height</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_hover">hover</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_mapcollision">mapcollision</a>
 
                                 
                                 
@@ -256,6 +310,20 @@
                         
                             <li class="index-item property">
                                 <a href="#property_name">name</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_position">position</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_rotation">rotation</a>
 
                                 
                                 
@@ -275,6 +343,27 @@
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_width">width</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_xscale">xscale</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_yscale">yscale</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -289,6 +378,309 @@
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method_AABB" class="method item">
+    <h3 class="name"><code>AABB</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l128"><code>cangaja&#x2F;base&#x2F;entity.js:128</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>returns the bounds of rotated rectangle</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    returns the calculated bounds
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_checkCollision" class="method item">
+    <h3 class="name"><code>checkCollision</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>objects</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l194"><code>cangaja&#x2F;base&#x2F;entity.js:194</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">objects</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a array of objects to check for collision => Sprites, Animations, MapAreas</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type">Callback</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>what to do after collision?</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_ifClicked" class="method item">
+    <h3 class="name"><code>ifClicked</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">True/false</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l146"><code>cangaja&#x2F;base&#x2F;entity.js:146</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks click inside of the rectangle, supports rotation</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">True/false</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_ifMouseOver" class="method item">
+    <h3 class="name"><code>ifMouseOver</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l172"><code>cangaja&#x2F;base&#x2F;entity.js:172</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>checks if the mouse/pointer is over the rectangle</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_init" class="method item">
     <h3 class="name"><code>init</code></h3>
 
@@ -299,6 +691,12 @@
                 <li class="arg">
                     
                         <code>name</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>position</code>
                     
                 </li>
             
@@ -366,6 +764,21 @@
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name">position</code>
+                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>position</p>
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -418,7 +831,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l50"><code>cangaja&#x2F;base&#x2F;entity.js:50</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l90"><code>cangaja&#x2F;base&#x2F;entity.js:90</code></a>
         
         </p>
 
@@ -471,9 +884,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_matrix" class="property item">
-    <h3 class="name"><code>matrix</code></h3>
-    <span class="type">Array</span>
+                    <div id="property_boundingradius" class="property item">
+    <h3 class="name"><code>boundingradius</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -494,7 +907,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l32"><code>cangaja&#x2F;base&#x2F;entity.js:32</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l65"><code>cangaja&#x2F;base&#x2F;entity.js:65</code></a>
         
         </p>
 
@@ -504,7 +917,183 @@
     </div>
 
     <div class="description">
-        <p>the transformation matrix array of the Transform object</p>
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_dragable" class="property item">
+    <h3 class="name"><code>dragable</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l45"><code>cangaja&#x2F;base&#x2F;entity.js:45</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_height" class="property item">
+    <h3 class="name"><code>height</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l41"><code>cangaja&#x2F;base&#x2F;entity.js:41</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_hover" class="property item">
+    <h3 class="name"><code>hover</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l61"><code>cangaja&#x2F;base&#x2F;entity.js:61</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_mapcollision" class="property item">
+    <h3 class="name"><code>mapcollision</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l69"><code>cangaja&#x2F;base&#x2F;entity.js:69</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
     </div>
 
     
@@ -538,7 +1127,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l17"><code>cangaja&#x2F;base&#x2F;entity.js:17</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l18"><code>cangaja&#x2F;base&#x2F;entity.js:18</code></a>
         
         </p>
 
@@ -549,6 +1138,94 @@
 
     <div class="description">
         <p>name of the object</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_position" class="property item">
+    <h3 class="name"><code>position</code></h3>
+    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l33"><code>cangaja&#x2F;base&#x2F;entity.js:33</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_rotation" class="property item">
+    <h3 class="name"><code>rotation</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l49"><code>cangaja&#x2F;base&#x2F;entity.js:49</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
     </div>
 
     
@@ -582,7 +1259,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l27"><code>cangaja&#x2F;base&#x2F;entity.js:27</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l28"><code>cangaja&#x2F;base&#x2F;entity.js:28</code></a>
         
         </p>
 
@@ -626,7 +1303,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l22"><code>cangaja&#x2F;base&#x2F;entity.js:22</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l23"><code>cangaja&#x2F;base&#x2F;entity.js:23</code></a>
         
         </p>
 
@@ -637,6 +1314,138 @@
 
     <div class="description">
         <p>visibility option</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_width" class="property item">
+    <h3 class="name"><code>width</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l37"><code>cangaja&#x2F;base&#x2F;entity.js:37</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_xscale" class="property item">
+    <h3 class="name"><code>xscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l53"><code>cangaja&#x2F;base&#x2F;entity.js:53</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_yscale" class="property item">
+    <h3 class="name"><code>yscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_base_entity.js.html#l57"><code>cangaja&#x2F;base&#x2F;entity.js:57</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
     </div>
 
     

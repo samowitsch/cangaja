@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -172,9 +170,10 @@
     <pre class="code prettyprint linenums">
 &#x2F;**
  *  @description
- *
  *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml&#x2F;json and generates new CG.atlasimage objects in the MediaAsset manager.
+ *  No trimming at the moment, keep TexturePacker settings simple! The rotation option of TexturePacker
+ *  will be dropped in future releases!
+ *  AtlasTexturePacker parses xml&#x2F;json and generates new CG.AtlasImage objects in the MediaAsset manager.
  *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.AtlasTexturePacker
@@ -245,6 +244,7 @@ CG.Class.extend(&#x27;AtlasTexturePacker&#x27;, {
             )
             if (sprites[i].getAttribute(&#x27;r&#x27;) == &#x27;y&#x27;) {
                 atlasimage.rotation = 90
+                console.log(&#x27;!!! support for rotated images in atlas files would be dropped in future versions !!!&#x27;)
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = &#x27;xml&#x27;
@@ -285,8 +285,7 @@ CG.Class.extend(&#x27;AtlasTexturePacker&#x27;, {
             )
             if (image.rotated === true) {
                 atlasimage.rotation = 90
-                &#x2F;&#x2F;            atlasimage.width = this.json.frames[i].frame.w,
-                &#x2F;&#x2F;            atlasimage.height = this.json.frames[i].frame.h
+                console.log(&#x27;!!! support for rotated images in atlas files would be dropped in future versions !!!&#x27;)
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = &#x27;json&#x27;

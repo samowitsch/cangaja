@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -176,11 +174,11 @@
  * CG.Screen is a child of CG.Director and a container to collect&#x2F;group CG.Layers and&#x2F;or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends CG.Entity
+ * @extends CG.Class
  *
  * @param {string} screenname the name of the screen
  *&#x2F;
-CG.Entity.extend(&#x27;Screen&#x27;, {
+CG.Class.extend(&#x27;Screen&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
@@ -188,10 +186,8 @@ CG.Entity.extend(&#x27;Screen&#x27;, {
      * @return {*}
      *&#x2F;
     init: function (screenname) {
-        this._super(screenname)
-        &#x2F;**
-         @property position {CG.Point}
-         *&#x2F;
+        this.name = (screenname) ? screenname : &#x27;&#x27;
+
         this.position = new CG.Point(0, 0)
         &#x2F;**
          * @property xscale

@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -199,36 +197,31 @@ CG.Sprite.extend(&#x27;Button&#x27;, {
          *&#x2F;
         this.font = font
         &#x2F;**
+         @property text {string}
+         *&#x2F;
+        this.text = text
+
+        &#x2F;**
          @property clickedCallback {callback}
          *&#x2F;
         this.clickedCallback = clickedCallback
-        &#x2F;**
-         @property clicked {boolean}
-         *&#x2F;
-        this.clicked = false
         &#x2F;**
          @property clickable {boolean}
          *&#x2F;
         this.clickable = true
         &#x2F;**
-         @property visible {boolean}
+         @property clicked {boolean}
          *&#x2F;
-        this.visible = true
+        this.clicked = false
 
-        &#x2F;**
-         @property text {string}
-         *&#x2F;
-        this.text = text
         return this
     },
     update: function () {
         this.ifClicked()
         this.ifMouseOver()
-        this.ifAttached()
 
         this.xhandle = (this.width * this.xscale &#x2F; 2)
         this.yhandle = (this.height * this.yscale &#x2F; 2)
-
 
         if (this.clicked) {
             if (this.clickedCallback) {
@@ -236,6 +229,8 @@ CG.Sprite.extend(&#x27;Button&#x27;, {
                 this.clickedCallback(this)
             }
         }
+        this.updateDiff()
+        this.updateMatrix()
     },
     draw: function () {
         if (this.visible == true) {

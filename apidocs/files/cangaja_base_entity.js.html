@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -184,13 +182,14 @@ CG.Class.extend(&#x27;Entity&#x27;, {
      * @constructor
      * @method init
      * @param name {string} the name of the Entity
+     * @param position {CG.Point} position
      *&#x2F;
-    init:function (name) {
+    init: function (name, position) {
         &#x2F;**
          @description name of the object
          @property name {string}
          *&#x2F;
-        this.name = name || &#x27;&#x27;
+        this.name = (name) ? name : &#x27;&#x27;
         &#x2F;**
          @description visibility option
          @property visible {boolean}
@@ -202,21 +201,60 @@ CG.Class.extend(&#x27;Entity&#x27;, {
          *&#x2F;
         this.transform = new Transform()
         &#x2F;**
-         @description the transformation matrix array of the Transform object
-         @property matrix {Array}
+         @property position {CG.Point}
          *&#x2F;
-        this.matrix = this.transform.m
+        this.position = (position) ? position : new CG.Point(0, 0)
+        &#x2F;**
+         @property width {Number}
+         *&#x2F;
+        this.width = 0
+        &#x2F;**
+         @property height {Number}
+         *&#x2F;
+        this.height = 0
+        &#x2F;**
+         @property dragable {boolean}
+         *&#x2F;
+        this.dragable = true
+        &#x2F;**
+         @property rotation {Number}
+         *&#x2F;
+        this.rotation = 0
+        &#x2F;**
+         @property xscale {Number}
+         *&#x2F;
+        this.xscale = 1
+        &#x2F;**
+         @property yscale {Number}
+         *&#x2F;
+        this.yscale = 1
+        &#x2F;**
+         @property hover {boolean}
+         *&#x2F;
+        this.hover = false
+        &#x2F;**
+         @property boundingradius {Number}
+         *&#x2F;
+        this.boundingradius = 0     &#x2F;&#x2F;radius for circular collision bounds
+        &#x2F;**
+         @property mapcollision {boolean}
+         *&#x2F;
+        this.mapcollision = false
+
+        return this
     },
-    update:function () {
-        throw {
-            name:&#x27;Entity Error&#x27;,
-            message:&#x27;Subclass has no update method.&#x27;
-        }
+    update: function () {
     },
-    draw:function () {
+    updateMatrix: function () {
+        this.transform.reset()
+        this.transform.translate(this.position.x, this.position.y)
+        this.transform.rotate(this.rotation * CG.Const_PI_180)
+        this.transform.scale(this.xscale, this.yscale)
+    },
+    draw: function () {
         throw {
-            name:&#x27;Entity Error&#x27;,
-            message:&#x27;Subclass has no draw method.&#x27;
+            name: &#x27;Entity Error&#x27;,
+            message: &#x27;Subclass has no draw method.&#x27;
         }
     },
     &#x2F;**
@@ -224,7 +262,7 @@ CG.Class.extend(&#x27;Entity&#x27;, {
      * @method setImage
      * @param {image} image image path, image or atlasimage
      *&#x2F;
-    setImage:function (image) {
+    setImage: function (image) {
         this.atlasimage = false
         if (image) {
             if (image instanceof CG.AtlasImage) {
@@ -256,6 +294,184 @@ CG.Class.extend(&#x27;Entity&#x27;, {
                 this.height = this.image.height
             }
         }
+    },
+    &#x2F;**
+     * @description returns the bounds of rotated rectangle
+     * @method AABB
+     * @return {object} returns the calculated bounds
+     *&#x2F;
+    AABB: function () {
+        &#x2F;&#x2F;http:&#x2F;&#x2F;willperone.net&#x2F;Code&#x2F;coderr.php
+        var a = this.rotation * CG.Const_PI_180,
+            s = Math.sin(a),
+            c = Math.cos(a)
+
+        if (s &lt; 0) s = -s
+        if (c &lt; 0) c = -c
+        return {
+            bw: this.height * this.xscale * s + this.width * this.yscale * c,
+            bh: this.height * this.xscale * c + this.width * this.yscale * s
+        }
+    },
+    &#x2F;**
+     * @description checks click inside of the rectangle, supports rotation
+     * @method ifClicked
+     * @return {true&#x2F;false}
+     *&#x2F;
+    ifClicked: function () {
+        if (CG.mousedown &amp;&amp; this.clickable) {
+            var dx = CG.mouse.x - this.position.x,
+                dy = CG.mouse.y - this.position.y,
+                h1 = Math.sqrt(dx * dx + dy * dy),
+                currA = Math.atan2(dy, dx),
+                newA = currA - (this.rotation * CG.Const_PI_180),
+                x2 = Math.cos(newA) * h1,
+                y2 = Math.sin(newA) * h1
+
+            if (x2 &gt; -0.5 * (this.width * this.xscale) &amp;&amp;
+                x2 &lt; 0.5 * (this.width * this.xscale) &amp;&amp;
+                y2 &gt; -0.5 * (this.height * this.yscale) &amp;&amp;
+                y2 &lt; 0.5 * (this.height * this.yscale)) {
+                this.clicked = true
+                CG.mousedown = false
+            } else {
+                this.clicked = false
+            }
+        }
+    },
+    &#x2F;**
+     * @description checks if the mouse&#x2F;pointer is over the rectangle
+     * @method ifMouseOver
+     *&#x2F;
+    ifMouseOver: function () {
+        var dx = CG.mouse.x - this.position.x,
+            dy = CG.mouse.y - this.position.y,
+            h1 = Math.sqrt(dx * dx + dy * dy),
+            currA = Math.atan2(dy, dx),
+            newA = currA - (this.rotation * CG.Const_PI_180),
+            x2 = Math.cos(newA) * h1,
+            y2 = Math.sin(newA) * h1
+
+        if (x2 &gt; -0.5 * (this.width * this.xscale) &amp;&amp;
+            x2 &lt; 0.5 * (this.width * this.xscale) &amp;&amp;
+            y2 &gt; -0.5 * (this.height * this.yscale) &amp;&amp;
+            y2 &lt; 0.5 * (this.height * this.yscale)) {
+            this.hover = true
+        } else {
+            this.hover = false
+        }
+    },
+    &#x2F;**
+     * @description checks if there is a collision of the given objects to this object http:&#x2F;&#x2F;devmag.org.za&#x2F;2009&#x2F;04&#x2F;13&#x2F;basic-collision-detection-in-2d-part-1&#x2F;
+     * @method checkCollision
+     * @param objects {array} a array of objects to check for collision =&gt; Sprites, Animations, MapAreas
+     * @param callback {callback} what to do after collision?
+     *&#x2F;
+    checkCollision: function (objects, callback) {
+        objects.forEach(function (obj, index) {
+                if (obj.className == &#x27;MapArea&#x27;) {
+                    if ((this.position.y + this.AABB().bh &#x2F; 2) &gt;= obj.bound.y &amp;&amp;
+                        this.position.y - this.AABB().bh &#x2F; 2 &lt;= (obj.bound.y + obj.bound.height) &amp;&amp;
+                        (this.position.x + this.AABB().bw &#x2F; 2) &gt;= obj.bound.x &amp;&amp;
+                        this.position.x - this.AABB().bw &#x2F; 2 &lt;= (obj.bound.x + obj.bound.width )) {
+                        if (obj.type === &#x27;outer&#x27;) {
+
+                            w = 0.5 * (this.width + obj.bound.width)
+                            h = 0.5 * (this.height + obj.bound.height)
+                            dx = this.position.x - (obj.bound.width &#x2F; 2 + obj.bound.x)
+                            dy = this.position.y - (obj.bound.height &#x2F; 2 + obj.bound.y)
+
+                            if (Math.abs(dx) &lt;= w &amp;&amp; Math.abs(dy) &lt;= h) {
+                                &#x2F;* collision! *&#x2F;
+                                wy = w * dy;
+                                hx = h * dx;
+
+                                if (wy &gt; hx) {
+                                    if (wy &gt; -hx) {
+                                        direction = &#x27;bottom&#x27;
+                                        overlap = ((this.position.y - this.AABB().bh &#x2F; 2) - (obj.bound.y + obj.bound.height)) &gt;&gt; 0
+                                    } else {
+                                        direction = &#x27;left&#x27;
+                                        overlap = ((this.position.x + this.AABB().bw &#x2F; 2) - obj.bound.x) &gt;&gt; 0
+                                    }
+                                } else {
+                                    if (wy &gt; -hx) {
+                                        direction = &#x27;right&#x27;
+                                        overlap = ((this.position.x - this.AABB().bw &#x2F; 2) - (obj.bound.x + obj.bound.width)) &gt;&gt; 0
+                                    } else {
+                                        direction = &#x27;top&#x27;
+                                        overlap = ((this.position.y + this.AABB().bh &#x2F; 2) - obj.bound.y) &gt;&gt; 0
+                                    }
+                                }
+                            }
+
+                            collision = {
+                                overlap: overlap,
+                                direction: direction
+                            }
+                            &#x2F;&#x2F;callback arguments: this =&gt; the sprite, obj =&gt; the maparea if needed, collision =&gt; {collison direction, offset}
+                            callback(this, obj, collision)
+                        }
+                    }
+                }
+                else if (this.boundingradius &gt; 0 &amp;&amp; obj.boundingradius &gt; 0) {
+                    &#x2F;&#x2F;check boundingradius for circuar collision
+                    distx = this.position.x - obj.position.x
+                    disty = this.position.y - obj.position.y
+                    dist = Math.sqrt((distx * distx) + (disty * disty))
+                    if (dist &lt;= (this.boundingradius &#x2F; 2 * this.xscale + obj.boundingradius &#x2F; 2 * obj.yscale)) {
+                        collision = false &#x2F;&#x2F;dummy
+                        callback(this, obj, collision)
+                    }
+                }
+                else {
+                    &#x2F;&#x2F;if boundingradius is 0, fallback to bounding collision
+                    if ((this.position.y + this.AABB().bh &#x2F; 2) &gt;= obj.position.y - obj.AABB().bh &#x2F; 2 &amp;&amp;
+                        this.position.y - this.AABB().bh &#x2F; 2 &lt;= (obj.position.y + obj.AABB().bh &#x2F; 2) &amp;&amp;
+                        (this.position.x + this.AABB().bw &#x2F; 2) &gt;= obj.position.x - obj.AABB().bw &#x2F; 2 &amp;&amp;
+                        this.position.x - this.AABB().bw &#x2F; 2 &lt;= (obj.position.x + obj.AABB().bw &#x2F; 2)) {
+
+                        w = 0.5 * (this.width + obj.width)
+                        h = 0.5 * (this.height + obj.height)
+                        dx = this.position.x - obj.position.x
+                        dy = this.position.y - obj.position.y
+
+                        if (Math.abs(dx) &lt;= w &amp;&amp; Math.abs(dy) &lt;= h) {
+                            &#x2F;* collision! *&#x2F;
+                            wy = w * dy;
+                            hx = h * dx;
+
+                            if (wy &gt; hx) {
+                                if (wy &gt; -hx) {
+                                    direction = &#x27;bottom&#x27;
+                                    overlap = ((this.position.y - this.AABB().bh &#x2F; 2) - (obj.position.y - obj.AABB().bh &#x2F; 2)) &gt;&gt; 0
+                                } else {
+                                    direction = &#x27;left&#x27;
+                                    overlap = ((this.position.x + this.AABB().bw &#x2F; 2) - (obj.position.x + obj.AABB().bw &#x2F; 2)) &gt;&gt; 0
+                                }
+                            } else {
+                                if (wy &gt; -hx) {
+                                    direction = &#x27;right&#x27;
+                                    overlap = ((this.position.x - this.AABB().bw &#x2F; 2) - (obj.position.x - obj.AABB().bw &#x2F; 2)) &gt;&gt; 0
+                                } else {
+                                    direction = &#x27;top&#x27;
+                                    overlap = ((this.position.y + this.AABB().bh &#x2F; 2) - (obj.position.y + obj.AABB().bh &#x2F; 2)) &gt;&gt; 0
+                                }
+                            }
+                        }
+
+                        collision = {
+                            overlap: overlap,
+                            direction: direction
+                        }
+
+                        callback(this, obj, collision)
+                    }
+                }
+            },
+            this
+        )
+        return this
     }
 })
 

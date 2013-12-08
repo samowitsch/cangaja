@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -193,15 +191,8 @@ CG.Sprite.extend(&#x27;Animation&#x27;, {
      *&#x2F;
     init: function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
-        this.instanceOf = &#x27;Animation&#x27;
 
-        &#x2F;&#x2F;from asset?
-        if (typeof image == &#x27;string&#x27;) {
-            this.image = new Image()
-            this.image.src = image
-        } else {
-            this.image = image
-        }
+        this.instanceOf = &#x27;Animation&#x27;
 
         &#x2F;**
          @property loop {boolean}

@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -176,9 +174,9 @@
  * CG.Sprite
  *
  * @class CG.Sprite
- * @extends CG.Rectangle
+ * @extends CG.Entity
  *&#x2F;
-CG.Rectangle.extend(&#x27;Sprite&#x27;, {
+CG.Entity.extend(&#x27;Sprite&#x27;, {
     &#x2F;**
      * @method init
      * @constructor
@@ -187,7 +185,7 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
      * @return {*}
      *&#x2F;
     init:function (image, position) {
-        this._super(position, 0, 0)
+        this._super(&#x27;&#x27;, position)
         this.instanceOf = &#x27;Sprite&#x27;
 
         &#x2F;**
@@ -210,10 +208,6 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
          *&#x2F;
         this.xspeed = 0 &#x2F;&#x2F;xspeed of the sprite
         &#x2F;**
-         @property xscale {Number}
-         *&#x2F;
-        this.xscale = 1
-        &#x2F;**
          @property xhandle {Number}
          *&#x2F;
         this.xhandle = 0
@@ -221,10 +215,6 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
          @property yspeed {Number}
          *&#x2F;
         this.yspeed = 0
-        &#x2F;**
-         @property yscale {Number}
-         *&#x2F;
-        this.yscale = 1
         &#x2F;**
          @property yhandle {Number}
          *&#x2F;
@@ -234,10 +224,6 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
          *&#x2F;
         this.boundsMode = false &#x2F;&#x2F; false, bounce or slide
         &#x2F;**
-         @property rotation {integer&#x2F;float}
-         *&#x2F;
-        this.rotation = 0
-        &#x2F;**
          @property rotationspeed {integer&#x2F;float}
          *&#x2F;
         this.rotationspeed = 0
@@ -245,11 +231,6 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
          @property alpha {float}
          *&#x2F;
         this.alpha = 1
-        &#x2F;**
-         @property clicked {boolean}
-         *&#x2F;
-        this.clicked = false
-
         &#x2F;**
          @property followobject {boolean&#x2F;object}
          *&#x2F;
@@ -295,6 +276,8 @@ CG.Rectangle.extend(&#x27;Sprite&#x27;, {
         if (this.boundsMode) {
             this.checkBound()
         }
+        this.updateDiff()
+        this.updateMatrix()
     },
     draw:function () {
 

@@ -35,7 +35,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Morph",
         "CG.Particle",
         "CG.Point",
-        "CG.Rectangle",
         "CG.Screen",
         "CG.Sequence",
         "CG.SpineAnimation",

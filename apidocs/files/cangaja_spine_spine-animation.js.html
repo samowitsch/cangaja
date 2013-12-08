@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -173,7 +171,8 @@
 &#x2F;**
  * @description
  *
- * CG.SpineAnimation
+ * CG.SpineAnimation - this class is a little wrapper for spine animations (http:&#x2F;&#x2F;esotericsoftware.com). The implementation is not perfect at the moment
+ * and is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support
  *
  * @class CG.SpineAnimation
  * @extends CG.Entity
@@ -197,9 +196,9 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
      * @constructor
      * @method init
      * @param spinejson     Spine json animation file
-     * @param spineatlas    Spine
-     * @param position
-     * @param scale
+     * @param spineatlas    Spine atlas file (libGDX)
+     * @param position      initial position
+     * @param scale         scale animation experimental
      * @param callback callback function
      *&#x2F;
     init: function (spinejson, spineatlas, position, scale, callback) {
@@ -211,22 +210,51 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
 
         this.lastTime = Date.now()
 
+        &#x2F;**
+         * @description initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)
+         * @property skeletonposition
+         * @type {CG.Point}
+         *&#x2F;
         this.skeletonposition = position || new CG.Point(0, 0)
 
+        &#x2F;**
+         * @description spine bone xscale
+         * @property xscale
+         * @type {Number}
+         *&#x2F;
         this.xscale = 1
 
+        &#x2F;**
+         * @description spine bone yscale
+         * @property yscale
+         * @type {Number}
+         *&#x2F;
         this.yscale = 1
 
+        &#x2F;**
+         * @property scale
+         * @type {Number}
+         *&#x2F;
         this.scale = scale || 1
 
+        &#x2F;**
+         * @property vertices
+         * @type {Array}
+         *&#x2F;
         this.vertices = []
 
-        this.atlasimage = true
-
-        this.textures = []
-
+        &#x2F;**
+         * @description counter for the spine image preloader
+         * @property textureCount
+         * @type {Number}
+         *&#x2F;
         this.textureCount = 0
 
+        &#x2F;**
+         * @description data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.
+         * @property spineAtlasData
+         * @type {String}
+         *&#x2F;
         if (spineatlas.type == &#x27;text&#x27;) {
             this.spineAtlasData = spineatlas.data   &#x2F;&#x2F;text data from mediaasset object
             console.log(&#x27;spine atlas: text (libGDX) used&#x27;)
@@ -238,10 +266,25 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
             throw &#x27;check your atlas file format?&#x27;
         }
 
-        this.spineJsonData = spinejson.data &#x2F;&#x2F;parsed json data from mediaasset object
+        &#x2F;**
+         * @description spine animation json data loaded and parsed thru MediaAsset.
+         * @property spineJsonData
+         * @type {Object}
+         *&#x2F;
+        this.spineJsonData = spinejson.data
 
+        &#x2F;**
+         * @description this is used for a callback for custom spine initialization.
+         * @property initCustom
+         * @type {Object}
+         *&#x2F;
         this.initCustom = callback
 
+        &#x2F;**
+         * @description this is used for a callback for custom animation configuration.
+         * @property spineAtlas
+         * @type {Object}
+         *&#x2F;
         this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
             load: function (page, path) {
                 this.textureCount++
@@ -264,6 +307,9 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
 
         this.waitForTextures();
     },
+    &#x2F;**
+     * @method waitForTextures
+     *&#x2F;
     waitForTextures: function () {
         if (!this.textureCount) {
             this.initSkeleton()
@@ -271,11 +317,22 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
             setTimeout(this.waitForTextures, 100)
         }
     },
+    &#x2F;**
+     * @description initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).
+     * @method initSkeleton
+     *&#x2F;
     initSkeleton: function () {
-
+        &#x2F;**
+         * @property skeletonJson
+         * @type {spine.SkeletonJson}
+         *&#x2F;
         this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(self.spineAtlas))
         this.skeletonJson.scale = this.scale    &#x2F;&#x2F;experimental scale
 
+        &#x2F;**
+         * @property spineJsonData
+         * @type {Object}
+         *&#x2F;
         if (typeof this.spineJsonData === &#x27;object&#x27;) {
             this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
         } else {
@@ -284,14 +341,24 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
 
         spine.Bone.yDown = true
 
+        &#x2F;**
+         * @property skeleton
+         * @type {spine.Skeleton}
+         *&#x2F;
         this.skeleton = new spine.Skeleton(this.skeletonData)
-
         this.skeleton.getRootBone().x = this.skeletonposition.x || 0
         this.skeleton.getRootBone().y = this.skeletonposition.y || 0   &#x2F;&#x2F;has spine a another origin (bottom left) than the canvas on y axis?
-
         this.skeleton.updateWorldTransform()
 
+        &#x2F;**
+         * @property stateData
+         * @type {spine.AnimationStateData}
+         *&#x2F;
         this.stateData = new spine.AnimationStateData(this.skeletonData)
+        &#x2F;**
+         * @property state
+         * @type {spine.AnimationState}
+         *&#x2F;
         this.state = new spine.AnimationState(this.stateData)
 
         &#x2F;&#x2F;callback for custom initialization?
@@ -301,8 +368,10 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
             &#x2F;&#x2F; alert(trackIndex + &quot; event: &quot; + event.data.name)
         }
     },
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update: function () {
-
         var dt = (Date.now() - this.lastTime) &#x2F; 1000
         this.lastTime = Date.now()
 
@@ -310,6 +379,10 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
         this.state.apply(this.skeleton)
         this.skeleton.updateWorldTransform()
     },
+    &#x2F;**
+     * @description this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.
+     * @method draw
+     *&#x2F;
     draw: function () {
         var drawOrder = this.skeleton.drawOrder
         for (var i = 0, n = drawOrder.length; i &lt; n; i++) {
@@ -320,17 +393,22 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
             attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 
             try {
+
                 this.alpha = slot.a &#x2F;&#x2F;get alphe value from slot
                 this.position = new CG.Point(this.vertices[2], this.vertices[3])
+                this.xscale = bone.worldScaleX &#x2F;&#x2F;* this.scale
+                this.yscale = bone.worldScaleY &#x2F;&#x2F;* this.scale
+                this.rotation = -(bone.worldRotation + attachment.rotation)
+
+                this.updateDiff()
+                this.updateMatrix.call(this)
+
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
                 this.cutwidth = attachment.width
                 this.cutheight = attachment.height
-                this.xscale = bone.worldScaleX &#x2F;&#x2F;* this.scale
-                this.yscale = bone.worldScaleY &#x2F;&#x2F;* this.scale
                 this.xhandle = this.cutwidth &#x2F; 2 * this.xscale
                 this.yhandle = this.cutheight &#x2F; 2 * this.yscale
-                this.rotation = -(bone.worldRotation + attachment.rotation)
                 this.xpos = 0
                 this.ypos = 0
 
@@ -364,13 +442,13 @@ CG.Entity.extend(&#x27;SpineAnimation&#x27;, {
 
 
     },
+    &#x2F;**
+     * @method updateDiff
+     *&#x2F;
     updateDiff: function () {
 
     }
 })
-
-
-
     </pre>
 </div>
 

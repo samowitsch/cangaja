@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -176,9 +174,9 @@
  * CG.Layer is a child of CG.Screen and a container to collect&#x2F;group sprites, buttons, menus, emitters and animations
  *
  * @class CG.Layer
- * @extends CG.Entity
+ * @extends CG.Class
  *&#x2F;
-CG.Entity.extend(&#x27;Layer&#x27;, {
+CG.Class.extend(&#x27;Layer&#x27;, {
     &#x2F;**
      * @constructor
      * @method init
@@ -186,9 +184,8 @@ CG.Entity.extend(&#x27;Layer&#x27;, {
      * @return {*}
      *&#x2F;
     init:function (layername) {
-        this._super(layername)
-
-        var self = this
+        this.name = (layername) ? layername : &#x27;&#x27;
+        this.visible = true
         this.elements = []
         this.elementsToDelete = []
         return this

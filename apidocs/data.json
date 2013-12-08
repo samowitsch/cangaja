@@ -101,15 +101,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "cangaja/base/rectangle.js": {
-            "name": "cangaja/base/rectangle.js",
-            "modules": {},
-            "classes": {
-                "CG.Rectangle": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "cangaja/base/vector.js": {
             "name": "cangaja/base/vector.js",
             "modules": {},
@@ -421,7 +412,6 @@
                 "CG.Delta": 1,
                 "CG.Entity": 1,
                 "CG.Point": 1,
-                "CG.Rectangle": 1,
                 "CG.Vector": 1,
                 "CG.B2DBridge": 1,
                 "CG.B2DChainShape": 1,
@@ -494,7 +484,7 @@
             "module": "CG",
             "file": "cangaja/atlas/atlas-texturepacker.js",
             "line": 1,
-            "description": "CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.\nThese atlasimages are only handled within Sprite, Particle and Button class.",
+            "description": "CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep TexturePacker settings simple! The rotation option of TexturePacker\nwill be dropped in future releases!\nAtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.\nThese atlasimages are only handled within Sprite, Particle and Button class.",
             "extends": "Class"
         },
         "CG.Bitmap": {
@@ -589,21 +579,6 @@
             "line": 1,
             "description": "CG.Point",
             "extends": "CG.Class"
-        },
-        "CG.Rectangle": {
-            "name": "CG.Rectangle",
-            "shortname": "CG.Rectangle",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "CG",
-            "namespace": "",
-            "file": "cangaja/base/rectangle.js",
-            "line": 1,
-            "description": "CG.Rectangle for click and mouseover handling, collision detection and AABB function",
-            "extends": "CG.Entity"
         },
         "CG.Vector": {
             "name": "CG.Vector",
@@ -801,7 +776,7 @@
             "file": "cangaja/control/emitter.js",
             "line": 1,
             "description": "CG.Emitter that handles . . . particles.",
-            "extends": "CG.Class",
+            "extends": "CG.Entity",
             "params": [
                 {
                     "name": "position",
@@ -823,7 +798,7 @@
             "file": "cangaja/control/layer.js",
             "line": 1,
             "description": "CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations",
-            "extends": "CG.Entity"
+            "extends": "CG.Class"
         },
         "CG.MediaAsset": {
             "name": "CG.MediaAsset",
@@ -883,7 +858,7 @@
             "file": "cangaja/control/screen.js",
             "line": 1,
             "description": "CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld",
-            "extends": "CG.Entity",
+            "extends": "CG.Class",
             "params": [
                 {
                     "name": "screenname",
@@ -949,7 +924,7 @@
             "namespace": "",
             "file": "cangaja/spine/spine-animation.js",
             "line": 1,
-            "description": "CG.SpineAnimation",
+            "description": "CG.SpineAnimation - this class is a little wrapper for spine animations (http://esotericsoftware.com). The implementation is not perfect at the moment\nand is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support",
             "extends": "CG.Entity\n\n\nTODO\nBoundingbox collision see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java\n\n\nEventhandler see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java\n\n\nBox2d support see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java\nhttp://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691"
         },
         "CG.Animation": {
@@ -1010,7 +985,7 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 1,
             "description": "CG.Sprite",
-            "extends": "CG.Rectangle"
+            "extends": "CG.Entity"
         },
         "CG.Font": {
             "name": "CG.Font",
@@ -1239,7 +1214,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 12,
+            "line": 13,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -1251,7 +1226,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 23,
+            "line": 24,
             "itemtype": "property",
             "name": "imagename",
             "type": "{String}",
@@ -1259,7 +1234,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 28,
+            "line": 29,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -1267,7 +1242,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 33,
+            "line": 34,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -1275,7 +1250,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 38,
+            "line": 39,
             "itemtype": "property",
             "name": "atlasimages",
             "type": "{Array}",
@@ -1283,7 +1258,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 45,
+            "line": 46,
             "description": "load a xml file from TexturePacker",
             "itemtype": "method",
             "name": "loadXml",
@@ -1302,7 +1277,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 86,
+            "line": 88,
             "description": "load a json file from TexturePacker",
             "itemtype": "method",
             "name": "loadJson",
@@ -1321,7 +1296,7 @@
         },
         {
             "file": "cangaja/atlas/atlas-texturepacker.js",
-            "line": 128,
+            "line": 129,
             "description": "get all TexturePacker images (Use array.push.apply(array, anotherarray) to append to Game.asset)",
             "itemtype": "method",
             "name": "getAtlasImages",
@@ -1830,6 +1805,11 @@
                     "name": "name",
                     "description": "the name of the Entity",
                     "type": "String"
+                },
+                {
+                    "name": "position",
+                    "description": "position",
+                    "type": "CG.Point"
                 }
             ],
             "class": "CG.Entity",
@@ -1837,7 +1817,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 17,
+            "line": 18,
             "description": "name of the object",
             "itemtype": "property",
             "name": "name",
@@ -1847,7 +1827,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 22,
+            "line": 23,
             "description": "visibility option",
             "itemtype": "property",
             "name": "visible",
@@ -1857,7 +1837,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 27,
+            "line": 28,
             "description": "Transform object for matrix transformation",
             "itemtype": "property",
             "name": "transform",
@@ -1867,17 +1847,97 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 32,
-            "description": "the transformation matrix array of the Transform object",
+            "line": 33,
             "itemtype": "property",
-            "name": "matrix",
-            "type": "Array",
+            "name": "position",
+            "type": "CG.Point",
             "class": "CG.Entity",
             "module": "CG"
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 50,
+            "line": 37,
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 41,
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 45,
+            "itemtype": "property",
+            "name": "dragable",
+            "type": "Boolean",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 49,
+            "itemtype": "property",
+            "name": "rotation",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 53,
+            "itemtype": "property",
+            "name": "xscale",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 57,
+            "itemtype": "property",
+            "name": "yscale",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 61,
+            "itemtype": "property",
+            "name": "hover",
+            "type": "Boolean",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 65,
+            "itemtype": "property",
+            "name": "boundingradius",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 69,
+            "itemtype": "property",
+            "name": "mapcollision",
+            "type": "Boolean",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 90,
             "description": "initialize image for object. for now => sprite, particle, buffer, bitmap and button use it",
             "itemtype": "method",
             "name": "setImage",
@@ -1886,6 +1946,62 @@
                     "name": "image",
                     "description": "image path, image or atlasimage",
                     "type": "Image"
+                }
+            ],
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 128,
+            "description": "returns the bounds of rotated rectangle",
+            "itemtype": "method",
+            "name": "AABB",
+            "return": {
+                "description": "returns the calculated bounds",
+                "type": "Object"
+            },
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 146,
+            "description": "checks click inside of the rectangle, supports rotation",
+            "itemtype": "method",
+            "name": "ifClicked",
+            "return": {
+                "description": "",
+                "type": "True/false"
+            },
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 172,
+            "description": "checks if the mouse/pointer is over the rectangle",
+            "itemtype": "method",
+            "name": "ifMouseOver",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 194,
+            "description": "checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/",
+            "itemtype": "method",
+            "name": "checkCollision",
+            "params": [
+                {
+                    "name": "objects",
+                    "description": "a array of objects to check for collision => Sprites, Animations, MapAreas",
+                    "type": "Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "what to do after collision?",
+                    "type": "Callback"
                 }
             ],
             "class": "CG.Entity",
@@ -1935,200 +2051,6 @@
             "name": "y",
             "type": "Number",
             "class": "CG.Point",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 11,
-            "is_constructor": 1,
-            "itemtype": "method",
-            "name": "init",
-            "params": [
-                {
-                    "name": "position",
-                    "description": "position point",
-                    "type": "CG.Point"
-                },
-                {
-                    "name": "width",
-                    "description": "width the width of rectangle",
-                    "type": "Number"
-                },
-                {
-                    "name": "height",
-                    "description": "height the height of rectangle",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "*"
-            },
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 21,
-            "itemtype": "property",
-            "name": "position",
-            "type": "CG.Point",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 25,
-            "itemtype": "property",
-            "name": "width",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 29,
-            "itemtype": "property",
-            "name": "height",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 33,
-            "itemtype": "property",
-            "name": "clickable",
-            "type": "Boolean",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 37,
-            "itemtype": "property",
-            "name": "dragable",
-            "type": "Boolean",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 41,
-            "itemtype": "property",
-            "name": "rotation",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 45,
-            "itemtype": "property",
-            "name": "xscale",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 49,
-            "itemtype": "property",
-            "name": "yscale",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 53,
-            "itemtype": "property",
-            "name": "clicked",
-            "type": "Boolean",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 57,
-            "itemtype": "property",
-            "name": "hover",
-            "type": "Boolean",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 62,
-            "itemtype": "property",
-            "name": "boundingradius",
-            "type": "Number",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 66,
-            "itemtype": "property",
-            "name": "mapcollision",
-            "type": "Boolean",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 73,
-            "description": "returns the bounds of rotated rectangle",
-            "itemtype": "method",
-            "name": "AABB",
-            "return": {
-                "description": "returns the calculated bounds",
-                "type": "Object"
-            },
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 90,
-            "description": "checks click inside of the rectangle, supports rotation",
-            "itemtype": "method",
-            "name": "ifClicked",
-            "return": {
-                "description": "",
-                "type": "True/false"
-            },
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 114,
-            "description": "checks if the mouse/pointer is over the rectangle",
-            "itemtype": "method",
-            "name": "ifMouseOver",
-            "class": "CG.Rectangle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/rectangle.js",
-            "line": 135,
-            "description": "checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/",
-            "itemtype": "method",
-            "name": "checkCollision",
-            "params": [
-                {
-                    "name": "objects",
-                    "description": "a array of objects to check for collision => Sprites, Animations, MapAreas",
-                    "type": "Array"
-                },
-                {
-                    "name": "callback",
-                    "description": "what to do after collision?",
-                    "type": "Callback"
-                }
-            ],
-            "class": "CG.Rectangle",
             "module": "CG"
         },
         {
@@ -4393,7 +4315,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 19,
+            "line": 20,
             "itemtype": "property",
             "name": "particle",
             "type": "{Array}",
@@ -4402,7 +4324,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 24,
+            "line": 25,
             "itemtype": "property",
             "name": "maxparticles",
             "type": "{Number}",
@@ -4411,7 +4333,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 29,
+            "line": 30,
             "itemtype": "property",
             "name": "creationtime",
             "type": "{Number}",
@@ -4420,7 +4342,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 34,
+            "line": 35,
             "itemtype": "property",
             "name": "currenttime",
             "type": "{Number}",
@@ -4429,7 +4351,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 39,
+            "line": 40,
             "itemtype": "property",
             "name": "creationspeed",
             "type": "{Number}",
@@ -4438,7 +4360,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 44,
+            "line": 45,
             "itemtype": "property",
             "name": "gravity",
             "type": "{Number}",
@@ -4447,7 +4369,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 49,
+            "line": 50,
             "itemtype": "property",
             "name": "image",
             "type": "{null}",
@@ -4456,7 +4378,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 54,
+            "line": 55,
             "itemtype": "property",
             "name": "type",
             "type": "{String}",
@@ -4465,7 +4387,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 59,
+            "line": 60,
             "itemtype": "property",
             "name": "position",
             "type": "{CG.Point}",
@@ -4474,7 +4396,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 66,
+            "line": 67,
             "itemtype": "property",
             "name": "rotation",
             "type": "{Number}",
@@ -4483,7 +4405,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 71,
+            "line": 72,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -4492,7 +4414,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 76,
+            "line": 77,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -4501,7 +4423,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 81,
+            "line": 82,
             "itemtype": "property",
             "name": "radius",
             "type": "{Number}",
@@ -4510,7 +4432,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 86,
+            "line": 87,
             "itemtype": "property",
             "name": "pspeed",
             "type": "{Number}",
@@ -4519,7 +4441,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 91,
+            "line": 92,
             "itemtype": "property",
             "name": "protation",
             "type": "{Number}",
@@ -4528,7 +4450,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 96,
+            "line": 97,
             "itemtype": "property",
             "name": "pdirection",
             "type": "{Number}",
@@ -4537,7 +4459,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 101,
+            "line": 102,
             "itemtype": "property",
             "name": "plifetime",
             "type": "{Number}",
@@ -4546,7 +4468,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 106,
+            "line": 107,
             "itemtype": "property",
             "name": "paging",
             "type": "{Number}",
@@ -4555,7 +4477,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 111,
+            "line": 112,
             "itemtype": "property",
             "name": "pfadeout",
             "type": "{Boolean}",
@@ -4564,7 +4486,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 122,
+            "line": 123,
             "itemtype": "method",
             "name": "initAsPoint",
             "params": [
@@ -4579,7 +4501,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 134,
+            "line": 135,
             "itemtype": "method",
             "name": "initAsExplosion",
             "params": [
@@ -4604,7 +4526,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 149,
+            "line": 150,
             "itemtype": "method",
             "name": "initAsCorona",
             "params": [
@@ -4624,7 +4546,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 162,
+            "line": 163,
             "itemtype": "method",
             "name": "initAsLine",
             "params": [
@@ -4649,7 +4571,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 177,
+            "line": 178,
             "itemtype": "method",
             "name": "initAsRectangle",
             "params": [
@@ -4674,7 +4596,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 191,
+            "line": 192,
             "itemtype": "method",
             "name": "createParticle",
             "return": {
@@ -4686,7 +4608,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 200,
+            "line": 201,
             "itemtype": "method",
             "name": "initParticle",
             "params": [
@@ -4701,7 +4623,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 324,
+            "line": 325,
             "description": "Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle",
             "itemtype": "method",
             "name": "searchInvisibleParticle",
@@ -4710,7 +4632,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 337,
+            "line": 338,
             "itemtype": "method",
             "name": "setEmitterPosition",
             "params": [
@@ -4725,7 +4647,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 347,
+            "line": 348,
             "itemtype": "method",
             "name": "setName",
             "params": [
@@ -4740,7 +4662,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 357,
+            "line": 358,
             "itemtype": "method",
             "name": "setCreationTime",
             "params": [
@@ -4755,7 +4677,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 366,
+            "line": 367,
             "itemtype": "method",
             "name": "setMaxParticles",
             "params": [
@@ -4770,7 +4692,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 375,
+            "line": 376,
             "itemtype": "method",
             "name": "setGravity",
             "params": [
@@ -4785,7 +4707,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 385,
+            "line": 386,
             "itemtype": "method",
             "name": "setParticleSpeed",
             "params": [
@@ -4800,7 +4722,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 395,
+            "line": 396,
             "itemtype": "method",
             "name": "setProtation",
             "params": [
@@ -4815,7 +4737,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 405,
+            "line": 406,
             "itemtype": "method",
             "name": "setPLifetime",
             "params": [
@@ -4830,7 +4752,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 415,
+            "line": 416,
             "itemtype": "method",
             "name": "activateFadeout",
             "description": "Activate fadeout of the particles depending on lifetime",
@@ -4839,7 +4761,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 424,
+            "line": 425,
             "itemtype": "method",
             "name": "deactivateFadeout",
             "description": "Deactivate fadeout of the particles depending on lifetime",
@@ -4848,7 +4770,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 433,
+            "line": 434,
             "itemtype": "method",
             "name": "getRandom",
             "params": [
@@ -4868,7 +4790,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 443,
+            "line": 444,
             "itemtype": "method",
             "name": "getX",
             "class": "CG.Emitter",
@@ -4876,7 +4798,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 450,
+            "line": 451,
             "itemtype": "method",
             "name": "getY",
             "class": "CG.Emitter",
@@ -4904,7 +4826,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 71,
+            "line": 70,
             "description": "Add new element to the layer. This could be a CG.Sprite, CG.Animation, CG.Button and so on. Every thing that has a update and draw method ;o)",
             "itemtype": "method",
             "name": "addElement",
@@ -4920,7 +4842,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 81,
+            "line": 80,
             "description": "Find element by name (the first one)",
             "itemtype": "method",
             "name": "getElementByName",
@@ -4940,7 +4862,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 96,
+            "line": 95,
             "description": "Find elements by name (if they have the same name ;o)",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -5363,16 +5285,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 20,
-            "itemtype": "property",
-            "name": "position",
-            "type": "CG.Point",
-            "class": "CG.Screen",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/control/screen.js",
-            "line": 24,
+            "line": 22,
             "itemtype": "property",
             "name": "xscale",
             "type": "{Number}",
@@ -5381,7 +5294,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 29,
+            "line": 27,
             "itemtype": "property",
             "name": "yscale",
             "type": "{Number}",
@@ -5390,7 +5303,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 34,
+            "line": 32,
             "itemtype": "property",
             "name": "layers",
             "type": "{Array}",
@@ -5399,7 +5312,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 66,
+            "line": 64,
             "description": "add a CG.Layer object to the layer array",
             "itemtype": "method",
             "name": "addLayer",
@@ -5415,7 +5328,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 76,
+            "line": 74,
             "description": "find CG.Layer by name",
             "itemtype": "method",
             "name": "getLayerByName",
@@ -5448,7 +5361,7 @@
         },
         {
             "file": "cangaja/control/sequence.js",
-            "line": 17,
+            "line": 16,
             "itemtype": "property",
             "name": "current",
             "type": "{Number}",
@@ -5457,7 +5370,7 @@
         },
         {
             "file": "cangaja/control/sequence.js",
-            "line": 22,
+            "line": 21,
             "itemtype": "property",
             "name": "loop",
             "type": "{Boolean}",
@@ -5466,7 +5379,7 @@
         },
         {
             "file": "cangaja/control/sequence.js",
-            "line": 27,
+            "line": 26,
             "itemtype": "property",
             "name": "translations",
             "type": "{Array}",
@@ -5475,7 +5388,7 @@
         },
         {
             "file": "cangaja/control/sequence.js",
-            "line": 34,
+            "line": 33,
             "description": "add a translation object to the sequence array",
             "itemtype": "method",
             "name": "addTranslation",
@@ -5815,7 +5728,7 @@
         },
         {
             "file": "cangaja/renderer/canvasrenderer.js",
-            "line": 31,
+            "line": 29,
             "description": "central draw method for all objects that draws to the canvas",
             "itemtype": "method",
             "name": "draw",
@@ -5831,7 +5744,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 24,
+            "line": 25,
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
@@ -5842,21 +5755,206 @@
                 },
                 {
                     "name": "spineatlas",
-                    "description": "Spine"
+                    "description": "Spine atlas file (libGDX)"
                 },
                 {
                     "name": "position",
-                    "description": ""
+                    "description": "initial position"
                 },
                 {
                     "name": "scale",
-                    "description": ""
+                    "description": "scale animation experimental"
                 },
                 {
                     "name": "callback",
                     "description": "callback function"
                 }
             ],
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 43,
+            "description": "initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)",
+            "itemtype": "property",
+            "name": "skeletonposition",
+            "type": "{CG.Point}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 50,
+            "description": "spine bone xscale",
+            "itemtype": "property",
+            "name": "xscale",
+            "type": "{Number}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 57,
+            "description": "spine bone yscale",
+            "itemtype": "property",
+            "name": "yscale",
+            "type": "{Number}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 64,
+            "itemtype": "property",
+            "name": "scale",
+            "type": "{Number}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 70,
+            "itemtype": "property",
+            "name": "vertices",
+            "type": "{Array}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 76,
+            "description": "counter for the spine image preloader",
+            "itemtype": "property",
+            "name": "textureCount",
+            "type": "{Number}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 83,
+            "description": "data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.",
+            "itemtype": "property",
+            "name": "spineAtlasData",
+            "type": "{String}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 99,
+            "description": "spine animation json data loaded and parsed thru MediaAsset.",
+            "itemtype": "property",
+            "name": "spineJsonData",
+            "type": "{Object}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 106,
+            "description": "this is used for a callback for custom spine initialization.",
+            "itemtype": "property",
+            "name": "initCustom",
+            "type": "{Object}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 113,
+            "description": "this is used for a callback for custom animation configuration.",
+            "itemtype": "property",
+            "name": "spineAtlas",
+            "type": "{Object}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 140,
+            "itemtype": "method",
+            "name": "waitForTextures",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 150,
+            "description": "initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).",
+            "itemtype": "method",
+            "name": "initSkeleton",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 155,
+            "itemtype": "property",
+            "name": "skeletonJson",
+            "type": "{spine.SkeletonJson}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 162,
+            "itemtype": "property",
+            "name": "spineJsonData",
+            "type": "{Object}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 174,
+            "itemtype": "property",
+            "name": "skeleton",
+            "type": "{spine.Skeleton}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 183,
+            "itemtype": "property",
+            "name": "stateData",
+            "type": "{spine.AnimationStateData}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 188,
+            "itemtype": "property",
+            "name": "state",
+            "type": "{spine.AnimationState}",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 201,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 212,
+            "description": "this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.",
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.SpineAnimation",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/spine/spine-animation.js",
+            "line": 275,
+            "itemtype": "method",
+            "name": "updateDiff",
             "class": "CG.SpineAnimation",
             "module": "CG"
         },
@@ -5907,7 +6005,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 34,
+            "line": 27,
             "itemtype": "property",
             "name": "loop",
             "type": "Boolean",
@@ -5916,7 +6014,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 38,
+            "line": 31,
             "itemtype": "property",
             "name": "status",
             "type": "Number",
@@ -5925,7 +6023,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 42,
+            "line": 35,
             "itemtype": "property",
             "name": "currentframe",
             "type": "Number",
@@ -5934,7 +6032,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 46,
+            "line": 39,
             "itemtype": "property",
             "name": "frames",
             "type": "Number",
@@ -5943,7 +6041,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 50,
+            "line": 43,
             "itemtype": "property",
             "name": "startframe",
             "type": "Number",
@@ -5952,7 +6050,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 54,
+            "line": 47,
             "itemtype": "property",
             "name": "endframe",
             "type": "Number",
@@ -5961,7 +6059,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 58,
+            "line": 51,
             "itemtype": "property",
             "name": "width",
             "type": "Number",
@@ -5970,7 +6068,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 62,
+            "line": 55,
             "itemtype": "property",
             "name": "height",
             "type": "Number",
@@ -5979,7 +6077,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 76,
+            "line": 69,
             "itemtype": "property",
             "name": "fx",
             "type": "Number",
@@ -5988,7 +6086,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 80,
+            "line": 73,
             "itemtype": "property",
             "name": "fy",
             "type": "Number",
@@ -5997,7 +6095,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 85,
+            "line": 78,
             "itemtype": "property",
             "name": "delay",
             "type": "Number",
@@ -6006,7 +6104,7 @@
         },
         {
             "file": "cangaja/sprite/animation.js",
-            "line": 89,
+            "line": 82,
             "itemtype": "property",
             "name": "tempdelay",
             "type": "Number",
@@ -6066,6 +6164,15 @@
             "file": "cangaja/sprite/button.js",
             "line": 29,
             "itemtype": "property",
+            "name": "text",
+            "type": "String",
+            "class": "CG.Button",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/sprite/button.js",
+            "line": 34,
+            "itemtype": "property",
             "name": "clickedCallback",
             "type": "Callback",
             "class": "CG.Button",
@@ -6073,16 +6180,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 33,
-            "itemtype": "property",
-            "name": "clicked",
-            "type": "Boolean",
-            "class": "CG.Button",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/button.js",
-            "line": 37,
+            "line": 38,
             "itemtype": "property",
             "name": "clickable",
             "type": "Boolean",
@@ -6091,19 +6189,10 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 41,
+            "line": 42,
             "itemtype": "property",
-            "name": "visible",
+            "name": "clicked",
             "type": "Boolean",
-            "class": "CG.Button",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/button.js",
-            "line": 46,
-            "itemtype": "property",
-            "name": "text",
-            "type": "String",
             "class": "CG.Button",
             "module": "CG"
         },
@@ -6162,15 +6251,6 @@
         {
             "file": "cangaja/sprite/particle.js",
             "line": 40,
-            "itemtype": "property",
-            "name": "alpha",
-            "type": "{Number}",
-            "class": "CG.Particle",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/particle.js",
-            "line": 45,
             "itemtype": "property",
             "name": "gravity",
             "type": "{Number}",
@@ -6242,7 +6322,7 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 40,
             "itemtype": "property",
-            "name": "xscale",
+            "name": "xhandle",
             "type": "Number",
             "class": "CG.Sprite",
             "module": "CG"
@@ -6251,7 +6331,7 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 44,
             "itemtype": "property",
-            "name": "xhandle",
+            "name": "yspeed",
             "type": "Number",
             "class": "CG.Sprite",
             "module": "CG"
@@ -6260,7 +6340,7 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 48,
             "itemtype": "property",
-            "name": "yspeed",
+            "name": "yhandle",
             "type": "Number",
             "class": "CG.Sprite",
             "module": "CG"
@@ -6269,24 +6349,6 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 52,
             "itemtype": "property",
-            "name": "yscale",
-            "type": "Number",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 56,
-            "itemtype": "property",
-            "name": "yhandle",
-            "type": "Number",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 60,
-            "itemtype": "property",
             "name": "boundsMode",
             "type": "False/string",
             "class": "CG.Sprite",
@@ -6294,16 +6356,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 64,
-            "itemtype": "property",
-            "name": "rotation",
-            "type": "Integer/float",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 68,
+            "line": 56,
             "itemtype": "property",
             "name": "rotationspeed",
             "type": "Integer/float",
@@ -6312,7 +6365,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 72,
+            "line": 60,
             "itemtype": "property",
             "name": "alpha",
             "type": "Float",
@@ -6321,16 +6374,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 76,
-            "itemtype": "property",
-            "name": "clicked",
-            "type": "Boolean",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 81,
+            "line": 64,
             "itemtype": "property",
             "name": "followobject",
             "type": "Boolean/object",
@@ -6339,7 +6383,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 85,
+            "line": 68,
             "itemtype": "property",
             "name": "followspeed",
             "type": "Boolean/integer",
@@ -6348,7 +6392,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 89,
+            "line": 72,
             "itemtype": "property",
             "name": "followsteps",
             "type": "Boolean/integer",
@@ -6357,7 +6401,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 94,
+            "line": 77,
             "itemtype": "property",
             "name": "attachedobject",
             "type": "Boolean",
@@ -6366,7 +6410,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 98,
+            "line": 81,
             "itemtype": "property",
             "name": "offsetx",
             "type": "Number",
@@ -6375,7 +6419,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 102,
+            "line": 85,
             "itemtype": "property",
             "name": "offsety",
             "type": "Number",
@@ -6384,7 +6428,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 133,
+            "line": 118,
             "description": "Checks the bound if a boundMode (bounce or slide) is set",
             "itemtype": "method",
             "name": "checkBound",
@@ -6393,7 +6437,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 176,
+            "line": 161,
             "description": "calculate offset if bound is moving",
             "itemtype": "method",
             "name": "updateDiff",
@@ -6402,7 +6446,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 190,
+            "line": 175,
             "description": "is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different",
             "itemtype": "method",
             "name": "follow",
@@ -6411,7 +6455,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 224,
+            "line": 209,
             "description": "set the bound of the sprite",
             "itemtype": "method",
             "name": "setBound",
@@ -6427,7 +6471,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 235,
+            "line": 220,
             "description": "if there is a attached object get its position",
             "itemtype": "method",
             "name": "ifAttached",
@@ -6436,7 +6480,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 246,
+            "line": 231,
             "description": "attach a reference of the given object to this object",
             "itemtype": "method",
             "name": "attachObject",
@@ -6445,7 +6489,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 255,
+            "line": 240,
             "description": "removes the attached object reference",
             "itemtype": "method",
             "name": "removeAttachedObject",
@@ -6454,7 +6498,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 264,
+            "line": 249,
             "description": "set the x offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetX",
@@ -6463,7 +6507,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 273,
+            "line": 258,
             "description": "set the y offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetY",

@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -176,11 +174,11 @@
  * CG.Emitter that handles . . . particles.
  *
  * @class CG.Emitter
- * @extends CG.Class
+ * @extends CG.Entity
  *
  * @param {point} position of emitter
  *&#x2F;
-CG.Class.extend(&#x27;Emitter&#x27;, {
+CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method init
      * @constructor
@@ -188,6 +186,7 @@ CG.Class.extend(&#x27;Emitter&#x27;, {
      * @return {*}
      *&#x2F;
     init:function (position) {
+        this._super()
         &#x2F;**
          * @property particle
          * @type {Array}

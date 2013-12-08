@@ -109,8 +109,6 @@
             
                 <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
             
-                <li><a href="..&#x2F;classes/CG.Rectangle.html">CG.Rectangle</a></li>
-            
                 <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
@@ -208,7 +206,8 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
 
 
 <div class="box intro">
-    <p>CG.SpineAnimation</p>
+    <p>CG.SpineAnimation - this class is a little wrapper for spine animations (http://esotericsoftware.com). The implementation is not perfect at the moment
+and is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support</p>
 </div>
 
 
@@ -220,6 +219,8 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -236,7 +237,157 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
                     <ul class="index-list methods extends">
                         
                             <li class="index-item method">
+                                <a href="#method_draw">draw</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_initSkeleton">initSkeleton</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_update">update</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_updateDiff">updateDiff</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_waitForTextures">waitForTextures</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                        
+                            <li class="index-item property">
+                                <a href="#property_initCustom">initCustom</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_scale">scale</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_skeleton">skeleton</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_skeletonJson">skeletonJson</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_skeletonposition">skeletonposition</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_spineAtlas">spineAtlas</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_spineAtlasData">spineAtlasData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_spineJsonData">spineJsonData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_spineJsonData">spineJsonData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_state">state</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_stateData">stateData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_textureCount">textureCount</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_vertices">vertices</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_xscale">xscale</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_yscale">yscale</a>
 
                                 
                                 
@@ -249,13 +400,65 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
             
 
             
-
-            
         </div>
 
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_draw" class="method item">
+    <h3 class="name"><code>draw</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l212"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:212</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_init" class="method item">
@@ -324,7 +527,7 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l24"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:24</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l25"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:25</code></a>
         
         </p>
 
@@ -368,7 +571,7 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
                     
 
                     <div class="param-description">
-                        <p>Spine</p>
+                        <p>Spine atlas file (libGDX)</p>
                     </div>
 
                     
@@ -383,7 +586,7 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
                     
 
                     <div class="param-description">
-                         
+                        <p>initial position</p>
                     </div>
 
                     
@@ -398,7 +601,7 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
                     
 
                     <div class="param-description">
-                         
+                        <p>scale animation experimental</p>
                     </div>
 
                     
@@ -429,9 +632,891 @@ http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skel
 </div>
 
                 
+                    <div id="method_initSkeleton" class="method item">
+    <h3 class="name"><code>initSkeleton</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l150"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:150</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_update" class="method item">
+    <h3 class="name"><code>update</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l201"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:201</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_updateDiff" class="method item">
+    <h3 class="name"><code>updateDiff</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l275"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:275</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_waitForTextures" class="method item">
+    <h3 class="name"><code>waitForTextures</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l140"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:140</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_initCustom" class="property item">
+    <h3 class="name"><code>initCustom</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l106"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:106</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>this is used for a callback for custom spine initialization.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_scale" class="property item">
+    <h3 class="name"><code>scale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l64"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:64</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_skeleton" class="property item">
+    <h3 class="name"><code>skeleton</code></h3>
+    <span class="type">spine.Skeleton</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l174"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:174</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_skeletonJson" class="property item">
+    <h3 class="name"><code>skeletonJson</code></h3>
+    <span class="type">spine.SkeletonJson</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l155"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:155</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_skeletonposition" class="property item">
+    <h3 class="name"><code>skeletonposition</code></h3>
+    <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l43"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:43</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_spineAtlas" class="property item">
+    <h3 class="name"><code>spineAtlas</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l113"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:113</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>this is used for a callback for custom animation configuration.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_spineAtlasData" class="property item">
+    <h3 class="name"><code>spineAtlasData</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l83"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:83</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_spineJsonData" class="property item">
+    <h3 class="name"><code>spineJsonData</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l99"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:99</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>spine animation json data loaded and parsed thru MediaAsset.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_spineJsonData" class="property item">
+    <h3 class="name"><code>spineJsonData</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l162"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:162</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_state" class="property item">
+    <h3 class="name"><code>state</code></h3>
+    <span class="type">spine.AnimationState</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l188"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:188</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_stateData" class="property item">
+    <h3 class="name"><code>stateData</code></h3>
+    <span class="type">spine.AnimationStateData</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l183"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:183</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_textureCount" class="property item">
+    <h3 class="name"><code>textureCount</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l76"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:76</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>counter for the spine image preloader</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_vertices" class="property item">
+    <h3 class="name"><code>vertices</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l70"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:70</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_xscale" class="property item">
+    <h3 class="name"><code>xscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l50"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:50</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>spine bone xscale</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_yscale" class="property item">
+    <h3 class="name"><code>yscale</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l57"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:57</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>spine bone yscale</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         
