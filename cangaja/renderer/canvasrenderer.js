@@ -42,8 +42,6 @@ CG.Class.extend('CanvasRenderer', {
             case "Button":
             case "Particle":
 
-                renderObject.updateDiff()
-
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.atlasimage) {
@@ -57,8 +55,6 @@ CG.Class.extend('CanvasRenderer', {
 
             case "SpineAnimation":
 
-                renderObject.updateDiff()
-
                 Game.b_ctx.globalAlpha = renderObject.alpha
 
                 Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
@@ -67,8 +63,6 @@ CG.Class.extend('CanvasRenderer', {
                 break;
 
             case "Animation":
-
-                renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
@@ -91,7 +85,6 @@ CG.Class.extend('CanvasRenderer', {
                     }
                 }
                 break;
-
 
             case "Font":
 
