@@ -7682,8 +7682,8 @@ spine.Bone.prototype = {
 			}
 			this.worldRotation = this.data.inheritRotation ? parent.worldRotation + this.rotation : this.rotation;
 		} else {
-			this.worldX = flipX ? -this.x : this.x;
-			this.worldY = (flipY != spine.Bone.yDown) ? -this.y : this.y;
+			this.worldX = this.x; // flipX ? -this.x : this.x;
+			this.worldY = this.y; //(flipY != spine.Bone.yDown) ? -this.y : this.y;
 			this.worldScaleX = this.scaleX;
 			this.worldScaleY = this.scaleY;
 			this.worldRotation = this.rotation;
@@ -9533,6 +9533,11 @@ CG.Class.extend('CanvasRenderer', {
 
         return this
     },
+    /**
+     * @description central draw method for all objects that draws to the canvas
+     * @method draw
+     * @param {object} renderObject the object to render
+     */
     draw: function (renderObject) {
         Game.b_ctx.save()
 
@@ -9543,9 +9548,6 @@ CG.Class.extend('CanvasRenderer', {
             case "Sprite":
             case "Button":
             case "Particle":
-//            case "SpineAnimation":
-
-                renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
@@ -9560,24 +9562,14 @@ CG.Class.extend('CanvasRenderer', {
 
             case "SpineAnimation":
 
-                renderObject.updateDiff()
-
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
-//                if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    Game.b_ctx.scale(renderObject.xscale, renderObject.yscale)
-                    Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
-//                } else {
-//                    Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-//                    Game.b_ctx.drawImage(renderObject.image, 0, 0, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
-//                }
+
+                Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
+
+                Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
                 break;
 
-
             case "Animation":
-
-                renderObject.updateDiff()
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
@@ -9600,7 +9592,6 @@ CG.Class.extend('CanvasRenderer', {
                     }
                 }
                 break;
-
 
             case "Font":
 
@@ -9859,27 +9850,79 @@ CG.Class.extend('Entity', {
      * @constructor
      * @method init
      * @param name {string} the name of the Entity
+     * @param position {CG.Point} position
      */
-    init:function (name) {
+    init: function (name, position) {
         /**
+         @description name of the object
          @property name {string}
          */
-        this.name = name || ''
+        this.name = (name) ? name : ''
         /**
+         @description visibility option
          @property visible {boolean}
          */
         this.visible = true
+        /**
+         @description Transform object for matrix transformation
+         @property transform {Transform}
+         */
+        this.transform = new Transform()
+        /**
+         @property position {CG.Point}
+         */
+        this.position = (position) ? position : new CG.Point(0, 0)
+        /**
+         @property width {Number}
+         */
+        this.width = 0
+        /**
+         @property height {Number}
+         */
+        this.height = 0
+        /**
+         @property dragable {boolean}
+         */
+        this.dragable = true
+        /**
+         @property rotation {Number}
+         */
+        this.rotation = 0
+        /**
+         @property xscale {Number}
+         */
+        this.xscale = 1
+        /**
+         @property yscale {Number}
+         */
+        this.yscale = 1
+        /**
+         @property hover {boolean}
+         */
+        this.hover = false
+        /**
+         @property boundingradius {Number}
+         */
+        this.boundingradius = 0     //radius for circular collision bounds
+        /**
+         @property mapcollision {boolean}
+         */
+        this.mapcollision = false
+
+        return this
     },
-    update:function () {
-        throw {
-            name:'Entity Error',
-            message:'Subclass has no update method.'
-        }
+    update: function () {
     },
-    draw:function () {
+    updateMatrix: function () {
+        this.transform.reset()
+        this.transform.translate(this.position.x, this.position.y)
+        this.transform.rotate(this.rotation * CG.Const_PI_180)
+        this.transform.scale(this.xscale, this.yscale)
+    },
+    draw: function () {
         throw {
-            name:'Entity Error',
-            message:'Subclass has no draw method.'
+            name: 'Entity Error',
+            message: 'Subclass has no draw method.'
         }
     },
     /**
@@ -9887,7 +9930,7 @@ CG.Class.extend('Entity', {
      * @method setImage
      * @param {image} image image path, image or atlasimage
      */
-    setImage:function (image) {
+    setImage: function (image) {
         this.atlasimage = false
         if (image) {
             if (image instanceof CG.AtlasImage) {
@@ -9919,6 +9962,184 @@ CG.Class.extend('Entity', {
                 this.height = this.image.height
             }
         }
+    },
+    /**
+     * @description returns the bounds of rotated rectangle
+     * @method AABB
+     * @return {object} returns the calculated bounds
+     */
+    AABB: function () {
+        //http://willperone.net/Code/coderr.php
+        var a = this.rotation * CG.Const_PI_180,
+            s = Math.sin(a),
+            c = Math.cos(a)
+
+        if (s < 0) s = -s
+        if (c < 0) c = -c
+        return {
+            bw: this.height * this.xscale * s + this.width * this.yscale * c,
+            bh: this.height * this.xscale * c + this.width * this.yscale * s
+        }
+    },
+    /**
+     * @description checks click inside of the rectangle, supports rotation
+     * @method ifClicked
+     * @return {true/false}
+     */
+    ifClicked: function () {
+        if (CG.mousedown && this.clickable) {
+            var dx = CG.mouse.x - this.position.x,
+                dy = CG.mouse.y - this.position.y,
+                h1 = Math.sqrt(dx * dx + dy * dy),
+                currA = Math.atan2(dy, dx),
+                newA = currA - (this.rotation * CG.Const_PI_180),
+                x2 = Math.cos(newA) * h1,
+                y2 = Math.sin(newA) * h1
+
+            if (x2 > -0.5 * (this.width * this.xscale) &&
+                x2 < 0.5 * (this.width * this.xscale) &&
+                y2 > -0.5 * (this.height * this.yscale) &&
+                y2 < 0.5 * (this.height * this.yscale)) {
+                this.clicked = true
+                CG.mousedown = false
+            } else {
+                this.clicked = false
+            }
+        }
+    },
+    /**
+     * @description checks if the mouse/pointer is over the rectangle
+     * @method ifMouseOver
+     */
+    ifMouseOver: function () {
+        var dx = CG.mouse.x - this.position.x,
+            dy = CG.mouse.y - this.position.y,
+            h1 = Math.sqrt(dx * dx + dy * dy),
+            currA = Math.atan2(dy, dx),
+            newA = currA - (this.rotation * CG.Const_PI_180),
+            x2 = Math.cos(newA) * h1,
+            y2 = Math.sin(newA) * h1
+
+        if (x2 > -0.5 * (this.width * this.xscale) &&
+            x2 < 0.5 * (this.width * this.xscale) &&
+            y2 > -0.5 * (this.height * this.yscale) &&
+            y2 < 0.5 * (this.height * this.yscale)) {
+            this.hover = true
+        } else {
+            this.hover = false
+        }
+    },
+    /**
+     * @description checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
+     * @method checkCollision
+     * @param objects {array} a array of objects to check for collision => Sprites, Animations, MapAreas
+     * @param callback {callback} what to do after collision?
+     */
+    checkCollision: function (objects, callback) {
+        objects.forEach(function (obj, index) {
+                if (obj.className == 'MapArea') {
+                    if ((this.position.y + this.AABB().bh / 2) >= obj.bound.y &&
+                        this.position.y - this.AABB().bh / 2 <= (obj.bound.y + obj.bound.height) &&
+                        (this.position.x + this.AABB().bw / 2) >= obj.bound.x &&
+                        this.position.x - this.AABB().bw / 2 <= (obj.bound.x + obj.bound.width )) {
+                        if (obj.type === 'outer') {
+
+                            w = 0.5 * (this.width + obj.bound.width)
+                            h = 0.5 * (this.height + obj.bound.height)
+                            dx = this.position.x - (obj.bound.width / 2 + obj.bound.x)
+                            dy = this.position.y - (obj.bound.height / 2 + obj.bound.y)
+
+                            if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+                                /* collision! */
+                                wy = w * dy;
+                                hx = h * dx;
+
+                                if (wy > hx) {
+                                    if (wy > -hx) {
+                                        direction = 'bottom'
+                                        overlap = ((this.position.y - this.AABB().bh / 2) - (obj.bound.y + obj.bound.height)) >> 0
+                                    } else {
+                                        direction = 'left'
+                                        overlap = ((this.position.x + this.AABB().bw / 2) - obj.bound.x) >> 0
+                                    }
+                                } else {
+                                    if (wy > -hx) {
+                                        direction = 'right'
+                                        overlap = ((this.position.x - this.AABB().bw / 2) - (obj.bound.x + obj.bound.width)) >> 0
+                                    } else {
+                                        direction = 'top'
+                                        overlap = ((this.position.y + this.AABB().bh / 2) - obj.bound.y) >> 0
+                                    }
+                                }
+                            }
+
+                            collision = {
+                                overlap: overlap,
+                                direction: direction
+                            }
+                            //callback arguments: this => the sprite, obj => the maparea if needed, collision => {collison direction, offset}
+                            callback(this, obj, collision)
+                        }
+                    }
+                }
+                else if (this.boundingradius > 0 && obj.boundingradius > 0) {
+                    //check boundingradius for circuar collision
+                    distx = this.position.x - obj.position.x
+                    disty = this.position.y - obj.position.y
+                    dist = Math.sqrt((distx * distx) + (disty * disty))
+                    if (dist <= (this.boundingradius / 2 * this.xscale + obj.boundingradius / 2 * obj.yscale)) {
+                        collision = false //dummy
+                        callback(this, obj, collision)
+                    }
+                }
+                else {
+                    //if boundingradius is 0, fallback to bounding collision
+                    if ((this.position.y + this.AABB().bh / 2) >= obj.position.y - obj.AABB().bh / 2 &&
+                        this.position.y - this.AABB().bh / 2 <= (obj.position.y + obj.AABB().bh / 2) &&
+                        (this.position.x + this.AABB().bw / 2) >= obj.position.x - obj.AABB().bw / 2 &&
+                        this.position.x - this.AABB().bw / 2 <= (obj.position.x + obj.AABB().bw / 2)) {
+
+                        w = 0.5 * (this.width + obj.width)
+                        h = 0.5 * (this.height + obj.height)
+                        dx = this.position.x - obj.position.x
+                        dy = this.position.y - obj.position.y
+
+                        if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+                            /* collision! */
+                            wy = w * dy;
+                            hx = h * dx;
+
+                            if (wy > hx) {
+                                if (wy > -hx) {
+                                    direction = 'bottom'
+                                    overlap = ((this.position.y - this.AABB().bh / 2) - (obj.position.y - obj.AABB().bh / 2)) >> 0
+                                } else {
+                                    direction = 'left'
+                                    overlap = ((this.position.x + this.AABB().bw / 2) - (obj.position.x + obj.AABB().bw / 2)) >> 0
+                                }
+                            } else {
+                                if (wy > -hx) {
+                                    direction = 'right'
+                                    overlap = ((this.position.x - this.AABB().bw / 2) - (obj.position.x - obj.AABB().bw / 2)) >> 0
+                                } else {
+                                    direction = 'top'
+                                    overlap = ((this.position.y + this.AABB().bh / 2) - (obj.position.y + obj.AABB().bh / 2)) >> 0
+                                }
+                            }
+                        }
+
+                        collision = {
+                            overlap: overlap,
+                            direction: direction
+                        }
+
+                        callback(this, obj, collision)
+                    }
+                }
+            },
+            this
+        )
+        return this
     }
 })
 
@@ -9929,9 +10150,9 @@ CG.Class.extend('Entity', {
  * CG.Point
  *
  * @class CG.Point
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Point', {
+CG.Class.extend('Point', {
     /**
      * @constructor
      * @method init
@@ -9981,262 +10202,13 @@ CG.Point.extend('Vector', {
 /**
  * @description
  *
- * CG.Rectangle for click and mouseover handling, collision detection and AABB function
- *
- * @class CG.Rectangle
- * @extends CG.Entity
- *
- */
-CG.Entity.extend('Rectangle', {
-    /**
-     * @constructor
-     * @method init
-     * @param position {CG.Point} position point
-     * @param width {Number} width the width of rectangle
-     * @param height {Number} height the height of rectangle
-     * @return {*}
-     */
-    init:function (position, width, height) {
-        /**
-         @property position {CG.Point}
-         */
-        this.position = position || new CG.Point(0, 0)
-        /**
-         @property width {Number}
-         */
-        this.width = width || 0
-        /**
-         @property height {Number}
-         */
-        this.height = height || 0
-        /**
-         @property clickable {boolean}
-         */
-        this.clickable = false
-        /**
-         @property dragable {boolean}
-         */
-        this.dragable = false
-        /**
-         @property rotation {Number}
-         */
-        this.rotation = 0
-        /**
-         @property xscale {Number}
-         */
-        this.xscale = 1
-        /**
-         @property yscale {Number}
-         */
-        this.yscale = 1
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
-        /**
-         @property hover {boolean}
-         */
-        this.hover = false
-
-        /**
-         @property boundingradius {Number}
-         */
-        this.boundingradius = 0     //radius for circular collision bounds
-        /**
-         @property mapcollision {boolean}
-         */
-        this.mapcollision = false
-
-        return this
-    },
-    /**
-     * @description returns the bounds of rotated rectangle
-     * @method AABB
-     * @return {object} returns the calculated bounds
-     */
-    AABB:function () {
-        //http://willperone.net/Code/coderr.php
-        a = this.rotation * CG.Const_PI_180
-        s = Math.sin(a);
-        c = Math.cos(a);
-        if (s < 0) s = -s;
-        if (c < 0) c = -c;
-        return {
-            bw:this.height * this.xscale * s + this.width * this.yscale * c,
-            bh:this.height * this.xscale * c + this.width * this.yscale * s
-        }
-    },
-    /**
-     * @description checks click inside of the rectangle, supports rotation
-     * @method ifClicked
-     * @return {true/false}
-     */
-    ifClicked:function () {
-        if (CG.mousedown && this.clickable) {
-            var dx = CG.mouse.x - this.position.x,
-                dy = CG.mouse.y - this.position.y
-            var h1 = Math.sqrt(dx * dx + dy * dy)
-            var currA = Math.atan2(dy, dx)
-            var newA = currA - (this.rotation * CG.Const_PI_180);
-            var x2 = Math.cos(newA) * h1
-            var y2 = Math.sin(newA) * h1
-            if (x2 > -0.5 * (this.width * this.xscale) &&
-                x2 < 0.5 * (this.width * this.xscale) &&
-                y2 > -0.5 * (this.height * this.yscale) &&
-                y2 < 0.5 * (this.height * this.yscale)) {
-                this.clicked = true
-                CG.mousedown = false
-            }
-        }
-        return false
-    },
-    /**
-     * @description checks if the mouse/pointer is over the rectangle
-     * @method ifMouseOver
-     */
-    ifMouseOver:function () {
-        var dx = CG.mouse.x - this.position.x,
-            dy = CG.mouse.y - this.position.y
-        var h1 = Math.sqrt(dx * dx + dy * dy)
-        var currA = Math.atan2(dy, dx)
-        var newA = currA - (this.rotation * CG.Const_PI_180)
-        var x2 = Math.cos(newA) * h1
-        var y2 = Math.sin(newA) * h1
-        if (x2 > -0.5 * (this.width * this.xscale) &&
-            x2 < 0.5 * (this.width * this.xscale) &&
-            y2 > -0.5 * (this.height * this.yscale) &&
-            y2 < 0.5 * (this.height * this.yscale)) {
-            this.hover = true
-        } else {
-            this.hover = false
-        }
-    },
-    /**
-     * @description checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/
-     * @method checkCollision
-     * @param objects {array} a array of objects to check for collision => Sprites, Animations, MapAreas
-     * @param callback {callback} what to do after collision?
-     */
-    checkCollision:function (objects, callback) {
-        objects.forEach(function (obj, index) {
-                if (obj.className == 'MapArea') {
-                    if ((this.position.y + this.AABB().bh / 2) >= obj.bound.y &&
-                        this.position.y - this.AABB().bh / 2 <= (obj.bound.y + obj.bound.height) &&
-                        (this.position.x + this.AABB().bw / 2) >= obj.bound.x &&
-                        this.position.x - this.AABB().bw / 2 <= (obj.bound.x + obj.bound.width )) {
-                        if (obj.type === 'outer') {
-
-                            w = 0.5 * (this.width + obj.bound.width)
-                            h = 0.5 * (this.height + obj.bound.height)
-                            dx = this.position.x - (obj.bound.width / 2 + obj.bound.x)
-                            dy = this.position.y - (obj.bound.height / 2 + obj.bound.y)
-
-                            if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
-                                /* collision! */
-                                wy = w * dy;
-                                hx = h * dx;
-
-                                if (wy > hx) {
-                                    if (wy > -hx) {
-                                        direction = 'bottom'
-                                        overlap = ((this.position.y - this.AABB().bh / 2) - (obj.bound.y + obj.bound.height)) >> 0
-                                    } else {
-                                        direction = 'CG.LEFT'
-                                        overlap = ((this.position.x + this.AABB().bw / 2) - obj.bound.x) >> 0
-                                    }
-                                } else {
-                                    if (wy > -hx) {
-                                        direction = 'right'
-                                        overlap = ((this.position.x - this.AABB().bw / 2) - (obj.bound.x + obj.bound.width)) >> 0
-                                    } else {
-                                        direction = 'top'
-                                        overlap = ((this.position.y + this.AABB().bh / 2) - obj.bound.y) >> 0
-                                    }
-                                }
-                            }
-
-                            collision = {
-                                overlap:overlap,
-                                direction:direction
-                            }
-                            //callback arguments: this => the sprite, obj => the maparea if needed, collision => {collison direction, offset}
-                            callback(this, obj, collision)
-                        }
-                    }
-                }
-                else if (this.boundingradius > 0 && obj.boundingradius > 0) {
-                    //check boundingradius for circuar collision
-                    distx = this.position.x - obj.position.x
-                    disty = this.position.y - obj.position.y
-                    dist = Math.sqrt((distx * distx) + (disty * disty))
-                    if (dist <= (this.boundingradius / 2 * this.xscale + obj.boundingradius / 2 * obj.yscale)) {
-                        collision = false //dummy
-                        callback(this, obj, collision)
-                    }
-                }
-                else {
-                    //if boundingradius is 0, fallback to bounding collision
-                    if ((this.position.y + this.AABB().bh / 2) >= obj.position.y - obj.AABB().bh / 2 &&
-                        this.position.y - this.AABB().bh / 2 <= (obj.position.y + obj.AABB().bh / 2) &&
-                        (this.position.x + this.AABB().bw / 2) >= obj.position.x - obj.AABB().bw / 2 &&
-                        this.position.x - this.AABB().bw / 2 <= (obj.position.x + obj.AABB().bw / 2)) {
-
-                        w = 0.5 * (this.width + obj.width)
-                        h = 0.5 * (this.height + obj.height)
-                        dx = this.position.x - obj.position.x
-                        dy = this.position.y - obj.position.y
-
-                        if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
-                            /* collision! */
-                            wy = w * dy;
-                            hx = h * dx;
-
-                            if (wy > hx) {
-                                if (wy > -hx) {
-                                    direction = 'bottom'
-                                    overlap = ((this.position.y - this.AABB().bh / 2) - (obj.position.y - obj.AABB().bh / 2)) >> 0
-                                } else {
-                                    direction = 'CG.LEFT'
-                                    overlap = ((this.position.x + this.AABB().bw / 2) - (obj.position.x + obj.AABB().bw / 2)) >> 0
-                                }
-                            } else {
-                                if (wy > -hx) {
-                                    direction = 'right'
-                                    overlap = ((this.position.x - this.AABB().bw / 2) - (obj.position.x - obj.AABB().bw / 2)) >> 0
-                                } else {
-                                    direction = 'top'
-                                    overlap = ((this.position.y + this.AABB().bh / 2) - (obj.position.y + obj.AABB().bh / 2)) >> 0
-                                }
-                            }
-                        }
-
-                        collision = {
-                            overlap:overlap,
-                            direction:direction
-                        }
-
-                        callback(this, obj, collision)
-                    }
-                }
-            },
-            this
-        )
-        return this
-    }
-
-})
-
-
-/**
- * @description
- *
  * CG.Bound is used at different places in the Cangaja FW.
  *
  * @class CG.Bound
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Bound', {
+CG.Class.extend('Bound', {
     /**
      * @constructor
      * @method init
@@ -10247,7 +10219,6 @@ CG.Entity.extend('Bound', {
      * @return {*}
      */
     init:function (x, y, width, height) {
-        this._super()
         /**
          * @property x
          * @type {Number}
@@ -10287,22 +10258,21 @@ CG.Entity.extend('Bound', {
  * @description
  *
  * CG.Buffer for separate canvas rendering/buffering
+ * @TODO to be removed?
  *
  * @class CG.Buffer
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Buffer', {
+CG.Class.extend('Buffer', {
     /**
      * @constructor
      * @method init
      * @param width {Number} width of the buffer
      * @param height {Number} height of the buffer
-     * @param buffername {string} buffername
      * @return {*}
      */
-    init:function (width, height, buffername) {
-        this._super(buffername)
+    init:function (width, height) {
         /**
          * @property b_canvas
          * @type {HTMLElement}
@@ -10341,9 +10311,9 @@ CG.Entity.extend('Buffer', {
  * CG.Sprite
  *
  * @class CG.Sprite
- * @extends CG.Rectangle
+ * @extends CG.Entity
  */
-CG.Rectangle.extend('Sprite', {
+CG.Entity.extend('Sprite', {
     /**
      * @method init
      * @constructor
@@ -10352,7 +10322,7 @@ CG.Rectangle.extend('Sprite', {
      * @return {*}
      */
     init:function (image, position) {
-        this._super(position, 0, 0)
+        this._super('', position)
         this.instanceOf = 'Sprite'
 
         /**
@@ -10375,10 +10345,6 @@ CG.Rectangle.extend('Sprite', {
          */
         this.xspeed = 0 //xspeed of the sprite
         /**
-         @property xscale {Number}
-         */
-        this.xscale = 1
-        /**
          @property xhandle {Number}
          */
         this.xhandle = 0
@@ -10386,10 +10352,6 @@ CG.Rectangle.extend('Sprite', {
          @property yspeed {Number}
          */
         this.yspeed = 0
-        /**
-         @property yscale {Number}
-         */
-        this.yscale = 1
         /**
          @property yhandle {Number}
          */
@@ -10399,10 +10361,6 @@ CG.Rectangle.extend('Sprite', {
          */
         this.boundsMode = false // false, bounce or slide
         /**
-         @property rotation {integer/float}
-         */
-        this.rotation = 0
-        /**
          @property rotationspeed {integer/float}
          */
         this.rotationspeed = 0
@@ -10410,11 +10368,6 @@ CG.Rectangle.extend('Sprite', {
          @property alpha {float}
          */
         this.alpha = 1
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
-
         /**
          @property followobject {boolean/object}
          */
@@ -10460,6 +10413,8 @@ CG.Rectangle.extend('Sprite', {
         if (this.boundsMode) {
             this.checkBound()
         }
+        this.updateDiff()
+        this.updateMatrix()
     },
     draw:function () {
 
@@ -10622,7 +10577,8 @@ CG.Rectangle.extend('Sprite', {
 /**
  * @description
  *
- * CG.SpineAnimation
+ * CG.SpineAnimation - this class is a little wrapper for spine animations (http://esotericsoftware.com). The implementation is not perfect at the moment
+ * and is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support
  *
  * @class CG.SpineAnimation
  * @extends CG.Entity
@@ -10646,12 +10602,13 @@ CG.Entity.extend('SpineAnimation', {
      * @constructor
      * @method init
      * @param spinejson     Spine json animation file
-     * @param spineatlas    Spine
-     * @param position
-     * @param scale
+     * @param spineatlas    Spine atlas file (libGDX)
+     * @param position      initial position
+     * @param scale         scale animation experimental
      * @param callback callback function
      */
     init: function (spinejson, spineatlas, position, scale, callback) {
+        this._super('')
 
         self = this
 
@@ -10659,32 +10616,81 @@ CG.Entity.extend('SpineAnimation', {
 
         this.lastTime = Date.now()
 
+        /**
+         * @description initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)
+         * @property skeletonposition
+         * @type {CG.Point}
+         */
         this.skeletonposition = position || new CG.Point(0, 0)
 
+        /**
+         * @description spine bone xscale
+         * @property xscale
+         * @type {Number}
+         */
         this.xscale = 1
 
+        /**
+         * @description spine bone yscale
+         * @property yscale
+         * @type {Number}
+         */
         this.yscale = 1
 
-        this.xpos = 0
-
-        this.ypos = 0
-
+        /**
+         * @property scale
+         * @type {Number}
+         */
         this.scale = scale || 1
 
+        /**
+         * @property vertices
+         * @type {Array}
+         */
         this.vertices = []
 
-        this.atlasimage = true
-
-        this.textures = []
-
+        /**
+         * @description counter for the spine image preloader
+         * @property textureCount
+         * @type {Number}
+         */
         this.textureCount = 0
 
-        this.spineAtlasData = spineatlas
+        /**
+         * @description data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.
+         * @property spineAtlasData
+         * @type {String}
+         */
+        if (spineatlas.type == 'text') {
+            this.spineAtlasData = spineatlas.data   //text data from mediaasset object
+            console.log('spine atlas: text (libGDX) used')
+        } else if (spineatlas.type == 'json') {
+            this.spineAtlasData = spineatlas.src    //pure json text for spine atlas loader?
+            console.log('spine atlas: json')
+            throw 'json format is not supported by spine-js runtime?'
+        } else {
+            throw 'check your atlas file format?'
+        }
 
-        this.spineJsonData = spinejson
+        /**
+         * @description spine animation json data loaded and parsed thru MediaAsset.
+         * @property spineJsonData
+         * @type {Object}
+         */
+        this.spineJsonData = spinejson.data
 
+        /**
+         * @description this is used for a callback for custom spine initialization.
+         * @property initCustom
+         * @type {Object}
+         */
         this.initCustom = callback
 
+        /**
+         * @description this is used for a callback for custom animation configuration.
+         * @property spineAtlas
+         * @type {Object}
+         */
         this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
             load: function (page, path) {
                 this.textureCount++
@@ -10707,6 +10713,9 @@ CG.Entity.extend('SpineAnimation', {
 
         this.waitForTextures();
     },
+    /**
+     * @method waitForTextures
+     */
     waitForTextures: function () {
         if (!this.textureCount) {
             this.initSkeleton()
@@ -10714,11 +10723,22 @@ CG.Entity.extend('SpineAnimation', {
             setTimeout(this.waitForTextures, 100)
         }
     },
+    /**
+     * @description initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).
+     * @method initSkeleton
+     */
     initSkeleton: function () {
-
+        /**
+         * @property skeletonJson
+         * @type {spine.SkeletonJson}
+         */
         this.skeletonJson = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(self.spineAtlas))
         this.skeletonJson.scale = this.scale    //experimental scale
 
+        /**
+         * @property spineJsonData
+         * @type {Object}
+         */
         if (typeof this.spineJsonData === 'object') {
             this.skeletonData = this.skeletonJson.readSkeletonData(this.spineJsonData)
         } else {
@@ -10727,14 +10747,24 @@ CG.Entity.extend('SpineAnimation', {
 
         spine.Bone.yDown = true
 
+        /**
+         * @property skeleton
+         * @type {spine.Skeleton}
+         */
         this.skeleton = new spine.Skeleton(this.skeletonData)
-
         this.skeleton.getRootBone().x = this.skeletonposition.x || 0
-        this.skeleton.getRootBone().y = this.skeletonposition.y * -1 || 0   //has spine a another origin (bottom left) than the canvas on y axis?
-
+        this.skeleton.getRootBone().y = this.skeletonposition.y || 0   //has spine a another origin (bottom left) than the canvas on y axis?
         this.skeleton.updateWorldTransform()
 
+        /**
+         * @property stateData
+         * @type {spine.AnimationStateData}
+         */
         this.stateData = new spine.AnimationStateData(this.skeletonData)
+        /**
+         * @property state
+         * @type {spine.AnimationState}
+         */
         this.state = new spine.AnimationState(this.stateData)
 
         //callback for custom initialization?
@@ -10744,8 +10774,10 @@ CG.Entity.extend('SpineAnimation', {
             // alert(trackIndex + " event: " + event.data.name)
         }
     },
+    /**
+     * @method update
+     */
     update: function () {
-
         var dt = (Date.now() - this.lastTime) / 1000
         this.lastTime = Date.now()
 
@@ -10753,6 +10785,10 @@ CG.Entity.extend('SpineAnimation', {
         this.state.apply(this.skeleton)
         this.skeleton.updateWorldTransform()
     },
+    /**
+     * @description this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.
+     * @method draw
+     */
     draw: function () {
         var drawOrder = this.skeleton.drawOrder
         for (var i = 0, n = drawOrder.length; i < n; i++) {
@@ -10763,28 +10799,36 @@ CG.Entity.extend('SpineAnimation', {
             attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 
             try {
+
                 this.alpha = slot.a //get alphe value from slot
                 this.position = new CG.Point(this.vertices[2], this.vertices[3])
+                this.xscale = bone.worldScaleX //* this.scale
+                this.yscale = bone.worldScaleY //* this.scale
+                this.rotation = -(bone.worldRotation + attachment.rotation)
+
+                this.updateDiff()
+                this.updateMatrix.call(this)
+
                 this.xoffset = attachment.rendererObject.x
                 this.yoffset = attachment.rendererObject.y
                 this.cutwidth = attachment.width
                 this.cutheight = attachment.height
-                this.xhandle = this.cutwidth / 2
-                this.yhandle = this.cutheight / 2
-                this.xscale = slot.data.boneData.scaleX //* this.scale
-                this.yscale = slot.data.boneData.scaleY //* this.scale
-                this.rotation = -(slot.bone.worldRotation + attachment.rotation)
+                this.xhandle = this.cutwidth / 2 * this.xscale
+                this.yhandle = this.cutheight / 2 * this.yscale
+                this.xpos = 0
+                this.ypos = 0
 
                 if (this.skeleton.flipX) {
 
                     this.xscale *= -1
-//                    this.xpos = this.cutwidth * -1
+                    this.xpos = this.cutwidth
                     this.rotation *= -1
                 }
 
                 if (this.skeleton.flipY) {
 
                     this.yscale *= -1
+                    this.ypos = this.cutheight
                     this.rotation *= -1
                 }
                 this.imagerotation = 0
@@ -10804,13 +10848,13 @@ CG.Entity.extend('SpineAnimation', {
 
 
     },
+    /**
+     * @method updateDiff
+     */
     updateDiff: function () {
 
     }
-})
-
-
-/**
+})/**
  * @description
  *
  * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
@@ -10882,9 +10926,10 @@ CG.Class.extend('AtlasImage', {
     }
 })/**
  *  @description
- *
  *  CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)
- *  No trimming at the moment, keep TexturePacker settings simple! TexturePacker parses the xml/json and generates new CG.atlasimage objects in the MediaAsset manager.
+ *  No trimming at the moment, keep TexturePacker settings simple! The rotation option of TexturePacker
+ *  will be dropped in future releases!
+ *  AtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.
  *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
  *  @class CG.AtlasTexturePacker
@@ -10955,6 +11000,7 @@ CG.Class.extend('AtlasTexturePacker', {
             )
             if (sprites[i].getAttribute('r') == 'y') {
                 atlasimage.rotation = 90
+                console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = 'xml'
@@ -10995,8 +11041,7 @@ CG.Class.extend('AtlasTexturePacker', {
             )
             if (image.rotated === true) {
                 atlasimage.rotation = 90
-                //            atlasimage.width = this.json.frames[i].frame.w,
-                //            atlasimage.height = this.json.frames[i].frame.h
+                console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
             }
             atlasimage.atlasimage = this.imagename
             atlasimage.source = 'json'
@@ -11041,15 +11086,8 @@ CG.Sprite.extend('Animation', {
      */
     init: function (image, position, startframe, endframe, framewidth, frameheight) {
         this._super(image, position)
-        this.instanceOf = 'Animation'
 
-        //from asset?
-        if (typeof image == 'string') {
-            this.image = new Image()
-            this.image.src = image
-        } else {
-            this.image = image
-        }
+        this.instanceOf = 'Animation'
 
         /**
          @property loop {boolean}
@@ -11164,7 +11202,6 @@ CG.Entity.extend('Bitmap', {
      * @return {*}
      */
     init:function (width, height) {
-        this._super(this)
         this.instanceOf = 'Bitmap'
         this.x = 0
         this.y = 0
@@ -11304,36 +11341,31 @@ CG.Sprite.extend('Button', {
          */
         this.font = font
         /**
+         @property text {string}
+         */
+        this.text = text
+
+        /**
          @property clickedCallback {callback}
          */
         this.clickedCallback = clickedCallback
-        /**
-         @property clicked {boolean}
-         */
-        this.clicked = false
         /**
          @property clickable {boolean}
          */
         this.clickable = true
         /**
-         @property visible {boolean}
+         @property clicked {boolean}
          */
-        this.visible = true
+        this.clicked = false
 
-        /**
-         @property text {string}
-         */
-        this.text = text
         return this
     },
     update: function () {
         this.ifClicked()
         this.ifMouseOver()
-        this.ifAttached()
 
         this.xhandle = (this.width * this.xscale / 2)
         this.yhandle = (this.height * this.yscale / 2)
-
 
         if (this.clicked) {
             if (this.clickedCallback) {
@@ -11341,6 +11373,8 @@ CG.Sprite.extend('Button', {
                 this.clickedCallback(this)
             }
         }
+        this.updateDiff()
+        this.updateMatrix()
     },
     draw: function () {
         if (this.visible == true) {
@@ -11361,10 +11395,10 @@ CG.Sprite.extend('Button', {
  * CG.Menu
  *
  * @class CG.Menu
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Menu', {
+CG.Class.extend('Menu', {
     /**
      * @method init
      * @constructor
@@ -11413,7 +11447,7 @@ CG.Entity.extend('Menu', {
     update:function () {
         this.buttons.forEach(function (button) {
             button.update()
-        }, this)
+        })
     },
 
     draw:function () {
@@ -11501,7 +11535,8 @@ CG.Class.extend('MediaAsset', {
         this.images.push({
             name:name || '', //optional
             path:path,
-            img:new Image()
+            img:new Image(),
+            type:'image'
         })
         return this
     },
@@ -11516,7 +11551,8 @@ CG.Class.extend('MediaAsset', {
         this.fonts.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'font'
         })
         return this
     },
@@ -11531,7 +11567,8 @@ CG.Class.extend('MediaAsset', {
         this.xmls.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'xml'
         })
         return this
     },
@@ -11546,7 +11583,9 @@ CG.Class.extend('MediaAsset', {
         this.jsons.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            src:'',
+            type:'json'
         })
         return this
     },
@@ -11561,7 +11600,8 @@ CG.Class.extend('MediaAsset', {
         this.texts.push({
             name:name || '', //optional
             path:path,
-            data:''
+            data:'',
+            type:'text'
         })
         return this
     },
@@ -11688,7 +11728,9 @@ CG.Class.extend('MediaAsset', {
             this.assetcurrent += 1
             this.startPreLoad()
         } else if (this.currjson < this.jsons.length) {
-            this.jsons[this.currjson].data = JSON.parse(loadString(this.jsons[this.currjson].path))
+            var src = loadString(this.jsons[this.currjson].path)
+            this.jsons[this.currjson].data = JSON.parse(src)
+            this.jsons[this.currjson].src = src
             console.log('json loaded: ' + this.jsons[this.currjson].path)
             this.currjson += 1
             this.assetcurrent += 1
@@ -12437,11 +12479,11 @@ CG.Class.extend('Director', {
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
  * @class CG.Screen
- * @extends CG.Entity
+ * @extends CG.Class
  *
  * @param {string} screenname the name of the screen
  */
-CG.Entity.extend('Screen', {
+CG.Class.extend('Screen', {
     /**
      * @constructor
      * @method init
@@ -12449,10 +12491,8 @@ CG.Entity.extend('Screen', {
      * @return {*}
      */
     init: function (screenname) {
-        this._super(screenname)
-        /**
-         @property position {CG.Point}
-         */
+        this.name = (screenname) ? screenname : ''
+
         this.position = new CG.Point(0, 0)
         /**
          * @property xscale
@@ -12529,9 +12569,9 @@ CG.Entity.extend('Screen', {
  * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
  * @class CG.Layer
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Layer', {
+CG.Class.extend('Layer', {
     /**
      * @constructor
      * @method init
@@ -12539,9 +12579,8 @@ CG.Entity.extend('Layer', {
      * @return {*}
      */
     init:function (layername) {
-        this._super(layername)
-
-        var self = this
+        this.name = (layername) ? layername : ''
+        this.visible = true
         this.elements = []
         this.elementsToDelete = []
         return this
@@ -13787,17 +13826,15 @@ CG.Entity.extend('Map', {
  * CG.Sequence container to collect/group CG.Translation objects
  *
  * @class CG.Sequence
- * @extends Entity
+ * @extends Class
  */
-CG.Entity.extend('Sequence', {
+CG.Class.extend('Sequence', {
     /**
      * @constructor
      * @method init
-     * @param sequencename
      * @return {*}
      */
-    init: function (sequencename) {
-        this._super(sequencename)
+    init: function () {
         /**
          * @property current
          * @type {Number}
@@ -13859,16 +13896,15 @@ CG.Entity.extend('Sequence', {
  * CG.Translate moving a object
  *
  * @class CG.Translate
- * @extends CG.Entity
+ * @extends CG.Class
  */
-CG.Entity.extend('Translate', {
+CG.Class.extend('Translate', {
     /**
      * @constructor
      * @method init
      * @return {*}
      */
     init:function () {
-        this._super()
         /**
          * @property type
          * @type {String}
@@ -14166,10 +14202,10 @@ CG.Entity.extend('Translate', {
  * CG.Morph to manipulate objects in size and so on
  *
  * @class CG.Morph
- * @extends CG.Entity
+ * @extends CG.Class
  *
  */
-CG.Entity.extend('Morph', {
+CG.Class.extend('Morph', {
     /**
      * @method init
      * @constructor
@@ -14259,11 +14295,6 @@ CG.Sprite.extend('Particle', {
          */
         this.fadeout = false
         /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 1
-        /**
          * @property gravity
          * @type {Number}
          */
@@ -14288,6 +14319,9 @@ CG.Sprite.extend('Particle', {
             this.rotation += this.rotationspeed
             this.xhandle = (this.width * this.xscale / 2)
             this.yhandle = (this.height * this.yscale / 2)
+
+            this.updateDiff()
+            this.updateMatrix()
         }
     },
     draw: function () {
