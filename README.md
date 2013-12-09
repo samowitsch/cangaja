@@ -44,6 +44,9 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Todo / wish list / bugs:
 
+* Terrain destruction "bugs":
+  - terrain destruction is very pragmatic. The terrain is deleted and replaced with another new generated terrain shape.
+  - in some circumstances when clipping hole vertices and terrain vertices overlap, poly2tri "crashes"
 * integrate gamepad stuff (http://www.html5rocks.com/en/tutorials/doodles/gamepad/ or https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library)
 * Oneway/onesided Platforms Box2d
     http://www.box2d.org/forum/viewtopic.php?f=3&t=4985
@@ -81,6 +84,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Changelog:
 
+* 2013-12-09 [added] - new class CG.Game
 * 2013-12-06 [change] - class inheritance clenaup
 * 2013-12-05 [feature] - basic spine support has landed ;o)
 * 2013-11-06 [bugfix] - patched ClipperLib, treat useragent ejecta as useragent safari for ejecta usage. Otherwise cangaja is not working in ejecta.
