@@ -364,6 +364,23 @@ Game.director.getScreenByName('sprites')
     )
 ```
 
+## spine example. creating a SpineAnimation object with MediaAsset loaded spine data.
+
+```js
+spineboy = new CG.SpineAnimation(
+    Game.asset.getJsonByName('spineboy-json'),
+    Game.asset.getTextByName('spineboy-atlas'),
+    new CG.Point(160, 550),
+    1,  //experimental scale
+    function (spineObject) {
+        spineObject.stateData.setMixByName("walk", "jump", 0.2);
+        spineObject.stateData.setMixByName("jump", "walk", 0.4);
+        spineObject.state.setAnimationByName(0, "walk", true, 0);
+    }
+)
+mainlayer.addElement(spineboy)
+```
+
 ## experimental Game object example
 
 ```js
