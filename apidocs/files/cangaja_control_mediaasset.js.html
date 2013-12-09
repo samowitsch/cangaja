@@ -87,6 +87,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Game.html">CG.Game</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
@@ -182,13 +184,10 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
     &#x2F;**
      * @method init
      * @constructor
-     * @param image {string} image path to background image of preloader
+     * @param obj {object} the game object CG.Game
      *&#x2F;
-    init:function (image) {
-        if (image !== &#x27;&#x27; &amp;&amp; typeof image !== &#x27;undefined&#x27;) {
-            this.image = new Image()
-            this.image.src = image
-        }
+    init:function (obj) {
+        this.obj = obj
 
         this.ready = false
         this.progress = 0
@@ -449,7 +448,7 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
         } else if (this.currimage == this.images.length &amp;&amp;
             this.assetcount == this.assetcurrent) {
             this.ready = true
-            Game.create()
+            this.obj.create()
         }
     },
     &#x2F;**
@@ -457,34 +456,34 @@ CG.Class.extend(&#x27;MediaAsset&#x27;, {
      * @description render a progress screen to the canvas
      *&#x2F;
     progressScreen:function () {
-        var x = (Game.bound.width - this.width) &#x2F; 2
-        var y = (Game.bound.height - this.height) &#x2F; 2
-        if (this.image) {
-            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
-        } else {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-        }
-        Game.ctx.save()
+        var x = (this.obj.bound.width - this.width) &#x2F; 2
+        var y = (this.obj.bound.height - this.height) &#x2F; 2
+&#x2F;&#x2F;        if (this.image) {
+&#x2F;&#x2F;            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
+&#x2F;&#x2F;        } else {
+&#x2F;&#x2F;            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+&#x2F;&#x2F;        }
+        this.obj.ctx.save()
 
-        Game.ctx.fillStyle = this.progresscolor;
-        Game.ctx.fillRect((Game.bound.width - this.width) &#x2F; 2, (Game.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * this.progress, this.height);
+        this.obj.ctx.fillStyle = this.progresscolor;
+        this.obj.ctx.fillRect((this.obj.bound.width - this.width) &#x2F; 2, (this.obj.bound.height - this.height) &#x2F; 2, this.width &#x2F; 100 * this.progress, this.height);
 
-        Game.ctx.strokeStyle = this.bordercolor
-        Game.ctx.shadowColor = this.shadowcolor
-        Game.ctx.shadowBlur = this.shadowblur
-        Game.ctx.shadowOffsetX = this.shadowoffsetx
-        Game.ctx.shadowOffsetY = this.shadowoffsety
-        Game.ctx.beginPath();
-        Game.ctx.moveTo(x + this.radius, y);
-        Game.ctx.lineTo(x + this.width - (1 * this.radius), y)
-        Game.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
-        Game.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
-        Game.ctx.lineTo(x + this.radius, 2 * this.radius + y)
-        Game.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
-        Game.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
-        Game.ctx.lineWidth = this.linewidth
-        Game.ctx.stroke()
-        Game.ctx.restore()
+        this.obj.ctx.strokeStyle = this.bordercolor
+        this.obj.ctx.shadowColor = this.shadowcolor
+        this.obj.ctx.shadowBlur = this.shadowblur
+        this.obj.ctx.shadowOffsetX = this.shadowoffsetx
+        this.obj.ctx.shadowOffsetY = this.shadowoffsety
+        this.obj.ctx.beginPath();
+        this.obj.ctx.moveTo(x + this.radius, y);
+        this.obj.ctx.lineTo(x + this.width - (1 * this.radius), y)
+        this.obj.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
+        this.obj.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
+        this.obj.ctx.lineTo(x + this.radius, 2 * this.radius + y)
+        this.obj.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
+        this.obj.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
+        this.obj.ctx.lineWidth = this.linewidth
+        this.obj.ctx.stroke()
+        this.obj.ctx.restore()
     }
 })
 

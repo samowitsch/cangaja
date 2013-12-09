@@ -281,6 +281,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "cangaja/game/game.js": {
+            "name": "cangaja/game/game.js",
+            "modules": {},
+            "classes": {
+                "CG.Game": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "cangaja/renderer/canvasrenderer.js": {
             "name": "cangaja/renderer/canvasrenderer.js",
             "modules": {},
@@ -432,6 +441,7 @@
                 "CG.Screen": 1,
                 "CG.Sequence": 1,
                 "CG.Translate": 1,
+                "CG.Game": 1,
                 "CG.CanvasRenderer": 1,
                 "CG.SpineAnimation": 1,
                 "CG.Animation": 1,
@@ -453,7 +463,7 @@
             "line": 1,
             "description": "CG is the base class of the cangaja framework.\nThis file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.",
             "example": [
-                "\n//Class example, how to start from scratch with simple inheritance\nCG.Class.extend(\"Entity\",{\n       init: function(){\n           this.myprop = 'set from constructor'\n       }\n    });\n\nCG.Entity.extend(\"Point\",{\n       init: function(x, y){\n           this._super()\n           this.x = x\n           this.y = y\n       }\n    });\n\nCG.Point.extend(\"Rectangle\",{\n       init: function(x, y, w, h){\n           this._super(x, y)\n           this.w = w\n           this.h = h\n       },\n       move: function(){\n\n       }\n    });"
+                "\n    //Class example, how to start from scratch with simple inheritance\n    CG.Class.extend(\"Entity\",{\n           init: function(){\n               this.myprop = 'set from constructor'\n           }\n        });\n\n    CG.Entity.extend(\"Point\",{\n           init: function(x, y){\n               this._super()\n               this.x = x\n               this.y = y\n           }\n        });\n\n    CG.Point.extend(\"Rectangle\",{\n           init: function(x, y, w, h){\n               this._super(x, y)\n               this.w = w\n               this.h = h\n           },\n           move: function(){\n\n           }\n    });"
             ],
             "itemtype": "main"
         }
@@ -896,6 +906,21 @@
             "line": 1,
             "description": "CG.Translate moving a object",
             "extends": "CG.Class"
+        },
+        "CG.Game": {
+            "name": "CG.Game",
+            "shortname": "CG.Game",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "cangaja/game/game.js",
+            "line": 1,
+            "description": "CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiatet object has to be 'Game'!",
+            "extends": "Class"
         },
         "CG.CanvasRenderer": {
             "name": "CG.CanvasRenderer",
@@ -4888,9 +4913,9 @@
             "is_constructor": 1,
             "params": [
                 {
-                    "name": "image",
-                    "description": "image path to background image of preloader",
-                    "type": "String"
+                    "name": "obj",
+                    "description": "the game object CG.Game",
+                    "type": "Object"
                 }
             ],
             "class": "CG.MediaAsset",
@@ -4898,7 +4923,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 62,
+            "line": 59,
             "itemtype": "method",
             "name": "addImage",
             "params": [
@@ -4920,7 +4945,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 78,
+            "line": 75,
             "itemtype": "method",
             "name": "addFont",
             "params": [
@@ -4942,7 +4967,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 94,
+            "line": 91,
             "itemtype": "method",
             "name": "addXml",
             "params": [
@@ -4964,7 +4989,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 110,
+            "line": 107,
             "itemtype": "method",
             "name": "addJson",
             "params": [
@@ -4986,7 +5011,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 127,
+            "line": 124,
             "itemtype": "method",
             "name": "addText",
             "params": [
@@ -5008,7 +5033,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 143,
+            "line": 140,
             "itemtype": "method",
             "name": "getImageByName",
             "params": [
@@ -5026,7 +5051,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 160,
+            "line": 157,
             "itemtype": "method",
             "name": "getImagesByName",
             "params": [
@@ -5044,7 +5069,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 181,
+            "line": 178,
             "itemtype": "method",
             "name": "getFontByName",
             "params": [
@@ -5062,7 +5087,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 194,
+            "line": 191,
             "itemtype": "method",
             "name": "getXmlByName",
             "params": [
@@ -5080,7 +5105,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 207,
+            "line": 204,
             "itemtype": "method",
             "name": "getJsonByName",
             "params": [
@@ -5098,7 +5123,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 220,
+            "line": 217,
             "itemtype": "method",
             "name": "getTextByName",
             "params": [
@@ -5116,7 +5141,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 233,
+            "line": 230,
             "itemtype": "method",
             "name": "startPreLoad",
             "class": "CG.MediaAsset",
@@ -5124,7 +5149,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 285,
+            "line": 282,
             "itemtype": "method",
             "name": "progressScreen",
             "description": "render a progress screen to the canvas",
@@ -5711,6 +5736,222 @@
                 "type": "This"
             },
             "class": "CG.Translate",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 10,
+            "itemtype": "method",
+            "name": "init",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "canvas",
+                    "description": ""
+                },
+                {
+                    "name": "options",
+                    "description": ""
+                }
+            ],
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 17,
+            "itemtype": "property",
+            "name": "canvas",
+            "type": "Object",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 31,
+            "itemtype": "property",
+            "name": "ctx",
+            "type": "Object",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 35,
+            "itemtype": "property",
+            "name": "fps",
+            "type": "Number",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 39,
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 43,
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 47,
+            "itemtype": "property",
+            "name": "width2",
+            "type": "Number",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 51,
+            "itemtype": "property",
+            "name": "height2",
+            "type": "Number",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 55,
+            "itemtype": "property",
+            "name": "b_canvas",
+            "type": "Object",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 61,
+            "itemtype": "property",
+            "name": "b_ctx",
+            "type": "Object",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 65,
+            "itemtype": "property",
+            "name": "asset",
+            "type": "CG.MediaAsset",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 69,
+            "itemtype": "property",
+            "name": "director",
+            "type": "CG.Director",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 73,
+            "itemtype": "property",
+            "name": "renderer",
+            "type": "CG.CanvasRenderer",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 77,
+            "itemtype": "property",
+            "name": "delta",
+            "type": "CG.Delta",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 81,
+            "itemtype": "property",
+            "name": "bound",
+            "type": "CG.Bound",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 88,
+            "description": "child classes that extends CG.Game defines here all needed stuff to preload with CG.MediaAsset.",
+            "itemtype": "method",
+            "name": "preload",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 94,
+            "description": "child classes that extends CG.Game could use this method to create all needed stuff.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 101,
+            "description": "this is the central (game) loop",
+            "itemtype": "method",
+            "name": "loop",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 113,
+            "description": "in this method all CG.Director elements are updated.",
+            "itemtype": "method",
+            "name": "_beforeUpdate",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 120,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 125,
+            "description": "in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.",
+            "itemtype": "method",
+            "name": "_beforeDraw",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 133,
+            "description": "",
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Game",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/game/game.js",
+            "line": 140,
+            "description": "this is the final draw method. it draws the b_canvas buffer to the canvas",
+            "itemtype": "method",
+            "name": "_afterDraw",
+            "class": "CG.Game",
             "module": "CG"
         },
         {

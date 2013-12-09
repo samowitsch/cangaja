@@ -87,6 +87,8 @@
             
                 <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
             
+                <li><a href="..&#x2F;classes/CG.Game.html">CG.Game</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
             
                 <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
@@ -190,30 +192,30 @@ This file includes a requestAnimationFrame polyfill. It uses the simple javascri
     <div class="example">
         <h4>Example:</h4>
         <div class="example-content">
-            <p>//Class example, how to start from scratch with simple inheritance
+            <pre class="code prettyprint"><code>//Class example, how to start from scratch with simple inheritance
 CG.Class.extend("Entity",{
        init: function(){
            this.myprop = 'set from constructor'
        }
-    });</p>
+    });
 
-<p>CG.Entity.extend("Point",{
+CG.Entity.extend("Point",{
        init: function(x, y){
            this._super()
            this.x = x
            this.y = y
        }
-    });</p>
+    });
 
-<p>CG.Point.extend("Rectangle",{
+CG.Point.extend("Rectangle",{
        init: function(x, y, w, h){
            this._super(x, y)
            this.w = w
            this.h = h
        },
-       move: function(){</p>
+       move: function(){
 
-<pre class="code prettyprint"><code>   }
+       }
 });
 </code></pre>
         </div>
@@ -362,6 +364,12 @@ CG.Class.extend("Entity",{
                 <li class="module-class">
                     <a href="..&#x2F;classes/CG.Font.html">
                         CG.Font
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="..&#x2F;classes/CG.Game.html">
+                        CG.Game
                     </a>
                 </li>
             
