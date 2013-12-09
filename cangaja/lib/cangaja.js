@@ -4,30 +4,30 @@
  * CG is the base class of the cangaja framework.
  * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
  @example
- //Class example, how to start from scratch with simple inheritance
- CG.Class.extend("Entity",{
-        init: function(){
-            this.myprop = 'set from constructor'
-        }
-     });
+     //Class example, how to start from scratch with simple inheritance
+     CG.Class.extend("Entity",{
+            init: function(){
+                this.myprop = 'set from constructor'
+            }
+         });
 
- CG.Entity.extend("Point",{
-        init: function(x, y){
-            this._super()
-            this.x = x
-            this.y = y
-        }
-     });
+     CG.Entity.extend("Point",{
+            init: function(x, y){
+                this._super()
+                this.x = x
+                this.y = y
+            }
+         });
 
- CG.Point.extend("Rectangle",{
-        init: function(x, y, w, h){
-            this._super(x, y)
-            this.w = w
-            this.h = h
-        },
-        move: function(){
+     CG.Point.extend("Rectangle",{
+            init: function(x, y, w, h){
+                this._super(x, y)
+                this.w = w
+                this.h = h
+            },
+            move: function(){
 
-        }
+            }
      });
  * @module CG
  * @main CG
@@ -177,7 +177,7 @@ var CG = CG || {
         }
 
         if (className) {
-            /* Save the class onto Q */
+            /* Save the class onto CG */
             CG[className] = Class;
 
             /* Let the class know its name */
@@ -190,7 +190,254 @@ var CG = CG || {
 }())
 
 
-// Last updated November 2011
+/**
+ * @description
+ *
+ * CG.Game - this class is the starting point.
+ @example
+     //Class example, how to start from scratch with simple inheritance
+     CG.Class.extend("Entity",{
+            init: function(){
+                this.myprop = 'set from constructor'
+            }
+         });
+
+     CG.Entity.extend("Point",{
+            init: function(x, y){
+                this._super()
+                this.x = x
+                this.y = y
+            }
+         });
+
+     CG.Point.extend("Rectangle",{
+            init: function(x, y, w, h){
+                this._super(x, y)
+                this.w = w
+                this.h = h
+            },
+            move: function(){
+
+            }
+     });
+ * @class CG.Game
+ * @extends Class
+ */
+
+CG.Class.extend('Game', {
+    /**
+     * @method init
+     * @constructor
+     * @param canvas
+     * @param options
+     */
+    init: function (canvas, options) {
+        /**
+         @property canvas {object}
+         */
+        switch (typeof canvas) {
+            case 'object':
+                this.canvas = canvas
+                break
+            case 'string':
+                this.canvas = document.getElementById(canvas)
+                break
+            default:
+                throw 'no canvas element defined'
+                break
+        }
+        /**
+         @property ctx {Object}
+         */
+        this.ctx = this.canvas.getContext('2d')
+        /**
+         @property fps {Number}
+         */
+        this.fps = 60
+        /**
+         @property width {Number}
+         */
+        this.width = this.canvas.width
+        /**
+         @property height {Number}
+         */
+        this.height = this.canvas.height
+        /**
+         @property width2 {Number}
+         */
+        this.width2 = this.width / 2
+        /**
+         @property height2 {Number}
+         */
+        this.height2 = this.height / 2
+        /**
+         @property b_canvas {Object}
+         */
+        this.b_canvas = document.createElement('canvas')
+        this.b_canvas.width = this.width
+        this.b_canvas.height = this.height
+        /**
+         @property b_ctx {Object}
+         */
+        this.b_ctx = this.b_canvas.getContext('2d')
+        /**
+         @property asset {CG.MediaAsset}
+         */
+        this.asset = new CG.MediaAsset(this)
+        /**
+         @property director {CG.Director}
+         */
+        this.director = new CG.Director()
+        /**
+         @property renderer {CG.CanvasRenderer}
+         */
+        this.renderer = new CG.CanvasRenderer()
+        /**
+         @property delta {CG.Delta}
+         */
+        this.delta = new CG.Delta(this.fps)
+        /**
+         @property bound {CG.Bound}
+         */
+        this.bound = new CG.Bound(0, 0, this.width, this.height)
+
+        this.preload()
+    },
+    /**
+     * @description child classes that instantiate CG.Game defines here all needed stuff to preload with CG.MediaAsset.
+     * @method preload
+     */
+    preload: function () {
+    },
+    /**
+     * @description child classes that instantiate CG.Game could use this method to create all needed stuff.
+     * @method create
+     */
+    create: function () {
+        this._loop()
+    },
+    /**
+     * @description this is the central (game) loop
+     * @method loop
+     */
+    loop: function () {
+        requestAnimationFrame(this.loop.bind(this))
+        this._beforeUpdate()
+        this.update()
+        this._beforeDraw()
+        this.draw()
+        this._afterDraw()
+    },
+    /**
+     * @description in this method all CG.Director elements are updated.
+     * @method _beforeUpdate
+     * @private
+     */
+    _beforeUpdate: function(){
+        this.director.update()
+    },
+    /**
+     * @method update
+     */
+    update: function () {
+    },
+    /**
+     * @description in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.
+     * @method _beforeDraw
+     * @private
+     */
+    _beforeDraw: function () {
+        this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+        this.director.draw()
+    },
+    /**
+     * @description
+     * @method draw
+     */
+    draw: function () {
+
+    },
+    /**
+     * @description this is the final method. it draws the b_canvas buffer to the canvas
+     * @method _afterDraw
+     * @private
+     */
+    _afterDraw: function () {
+        // draw buffer b_canvas to the canvas
+        this.ctx.drawImage(this.b_canvas, 0, 0)
+
+        // clear the b_canvas
+        this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+    }
+})
+
+
+/*
+
+
+ How to extend the game class
+
+
+ //extend the base game class
+ CG.Game.extend('MyGame', {
+ init: function (canvas, options) {
+ //call init from super class
+ this._super(canvas, options)
+ },
+ preload: function (){
+ this.asset
+ .addImage('media/font/small.png', 'small')
+ .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
+ .startPreLoad()
+
+ },
+ create: function () {
+
+ //after creation start game loop
+ this.loop()
+ },
+ update: function () {
+ //call super class to update director class
+ this._super()
+ },
+ draw: function () {
+ //call super class to draw director class
+ this._super()
+ }
+ })
+
+
+ var Game = new CG.MyGame('canvas')
+
+
+
+
+
+ CG.Game.extend('MyGame', {
+ preload: function (){
+ this.asset
+ .addImage('media/font/small.png', 'small')
+ .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
+ .startPreLoad()
+
+ },
+ create: function () {
+
+ //after creation start game loop
+ this.loop()
+ },
+ update: function () {
+ //call super class to update director class
+ this._super()
+ },
+ draw: function () {
+ //call super class to draw director class
+ this._super()
+ }
+ })
+
+
+ */// Last updated November 2011
 // By Simon Sarris
 // www.simonsarris.com
 // sarris@acm.org
@@ -11477,13 +11724,10 @@ CG.Class.extend('MediaAsset', {
     /**
      * @method init
      * @constructor
-     * @param image {string} image path to background image of preloader
+     * @param obj {object} the game object CG.Game
      */
-    init:function (image) {
-        if (image !== '' && typeof image !== 'undefined') {
-            this.image = new Image()
-            this.image.src = image
-        }
+    init:function (obj) {
+        this.obj = obj
 
         this.ready = false
         this.progress = 0
@@ -11744,7 +11988,7 @@ CG.Class.extend('MediaAsset', {
         } else if (this.currimage == this.images.length &&
             this.assetcount == this.assetcurrent) {
             this.ready = true
-            Game.create()
+            this.obj.create()
         }
     },
     /**
@@ -11752,34 +11996,34 @@ CG.Class.extend('MediaAsset', {
      * @description render a progress screen to the canvas
      */
     progressScreen:function () {
-        var x = (Game.bound.width - this.width) / 2
-        var y = (Game.bound.height - this.height) / 2
-        if (this.image) {
-            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
-        } else {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-        }
-        Game.ctx.save()
+        var x = (this.obj.bound.width - this.width) / 2
+        var y = (this.obj.bound.height - this.height) / 2
+//        if (this.image) {
+//            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
+//        } else {
+//            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+//        }
+        this.obj.ctx.save()
 
-        Game.ctx.fillStyle = this.progresscolor;
-        Game.ctx.fillRect((Game.bound.width - this.width) / 2, (Game.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
+        this.obj.ctx.fillStyle = this.progresscolor;
+        this.obj.ctx.fillRect((this.obj.bound.width - this.width) / 2, (this.obj.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
 
-        Game.ctx.strokeStyle = this.bordercolor
-        Game.ctx.shadowColor = this.shadowcolor
-        Game.ctx.shadowBlur = this.shadowblur
-        Game.ctx.shadowOffsetX = this.shadowoffsetx
-        Game.ctx.shadowOffsetY = this.shadowoffsety
-        Game.ctx.beginPath();
-        Game.ctx.moveTo(x + this.radius, y);
-        Game.ctx.lineTo(x + this.width - (1 * this.radius), y)
-        Game.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
-        Game.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
-        Game.ctx.lineTo(x + this.radius, 2 * this.radius + y)
-        Game.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
-        Game.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
-        Game.ctx.lineWidth = this.linewidth
-        Game.ctx.stroke()
-        Game.ctx.restore()
+        this.obj.ctx.strokeStyle = this.bordercolor
+        this.obj.ctx.shadowColor = this.shadowcolor
+        this.obj.ctx.shadowBlur = this.shadowblur
+        this.obj.ctx.shadowOffsetX = this.shadowoffsetx
+        this.obj.ctx.shadowOffsetY = this.shadowoffsety
+        this.obj.ctx.beginPath();
+        this.obj.ctx.moveTo(x + this.radius, y);
+        this.obj.ctx.lineTo(x + this.width - (1 * this.radius), y)
+        this.obj.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
+        this.obj.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
+        this.obj.ctx.lineTo(x + this.radius, 2 * this.radius + y)
+        this.obj.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
+        this.obj.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
+        this.obj.ctx.lineWidth = this.linewidth
+        this.obj.ctx.stroke()
+        this.obj.ctx.restore()
     }
 })
 
