@@ -1,132 +1,72 @@
-var renderStats
+var renderStats, canvas, abadi, small, gill, mainscreen, mainlayer, back, Game;
 
 //waiting to get started ;o)
 window.onload = function () {
 
     //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 800
+    canvas.height = 600
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        clock: new Clock(60),
-        path: '',
-        fps:60,
-        width:640,
-        height:480,
-        width2:640 / 2,
-        height2:480 / 2,
-        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas:{},
-        ctx:{},
-        b_canvas:{},
-        b_ctx:{},
-        asset:{}, //new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
-        director:new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta:new CG.Delta(60),
-        preload:function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
 
-            Game.asset = new CG.MediaAsset()
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
+    },
+    preload: function () {
+        this.asset.addImage('media/img/back1.jpg', 'back1')
+            .addImage('media/font/small.png', 'small')
+            .addFont('media/font/small.txt', 'small')
+            .addImage('media/font/gill.png', 'gill')
+            .addFont('media/font/gill.txt', 'gill')
+            .addImage('media/font/abadi_ez.png', 'abadi')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .startPreLoad()
+    },
+    create: function () {
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        gill = new CG.Font().loadFont(this.asset.getFontByName('gill'))
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-            //Asset preloading font files
-            Game.asset
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-                .addImage('media/img/back1.jpg', 'back1')
+        //sprite for the background
+        back = new CG.Sprite(this.asset.getImageByName('back1'), new CG.Point(this.width2, this.height2))
+        back.xscale = back.yscale = 1.3
+        back.name = 'back'
+        mainlayer.addElement(back)
 
-                .addImage('media/font/small.png', 'small')
-                .addFont('media/font/small.txt', 'small')
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-                .addImage('media/font/gill.png', 'gill')
-                .addFont('media/font/gill.txt', 'gill')
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        renderStats.update();
+    },
+    draw: function () {
+        var xpos = 10
+        var ypos = 10
 
-                .addImage('media/font/abadi_ez.png', 'abadi')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('This is a little font class demo!', xpos, ypos + 50)
+        small.drawText('With different fonts generated with Glyphdesigner.', xpos, ypos + 120)
+        small.drawText('It has only some basic features at the moment.', xpos, ypos + 120 + small.getLineHeight())
+        gill.drawText('äöüß?áà', xpos, ypos + 180)
+        gill.drawText('ÄÖÜ~§$%&', xpos, ypos + 180 + gill.getLineHeight())
 
-                .startPreLoad()
-        },
-        create:function () {
-
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            gill = new CG.Font().loadFont(Game.asset.getFontByName('gill'))
-
-
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
-
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
-
-            //sprite for the background
-            back = new CG.Sprite(Game.asset.getImageByName('back1'), new CG.Point(0, 0))
-            back.name = 'back'
-            mainlayer.addElement(back)
-
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop:function () {
-            Game.clock.tick()
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.run();
-            }
-        },
-        run:function () {
-            Game.update()
-            Game.draw()
-        },
-        update:function () {
-            //update here what ever you want
-        },
-        draw:function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            Game.director.draw()
-
-            var xpos = 10
-            var ypos = 10
-
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('This is a little font class demo!', xpos, ypos + 50)
-            small.drawText('With different fonts generated with Glyphdesigner.', xpos, ypos + 120)
-            small.drawText('It has only some basic features at the moment.', xpos, ypos + 120 + small.getLineHeight())
-            gill.drawText('äöüß?áà', xpos, ypos + 180)
-            gill.drawText('ÄÖÜ~§$%&', xpos, ypos + 180 + gill.getLineHeight())
-
-
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit:function () {
-        },
-        touchhandler:function () {
-        }
     }
-
-    return Game
-}())
+})
