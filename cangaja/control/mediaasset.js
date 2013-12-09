@@ -12,13 +12,10 @@ CG.Class.extend('MediaAsset', {
     /**
      * @method init
      * @constructor
-     * @param image {string} image path to background image of preloader
+     * @param obj {object} the game object CG.Game
      */
-    init:function (image) {
-        if (image !== '' && typeof image !== 'undefined') {
-            this.image = new Image()
-            this.image.src = image
-        }
+    init:function (obj) {
+        this.obj = obj
 
         this.ready = false
         this.progress = 0
@@ -279,7 +276,7 @@ CG.Class.extend('MediaAsset', {
         } else if (this.currimage == this.images.length &&
             this.assetcount == this.assetcurrent) {
             this.ready = true
-            Game.create()
+            this.obj.create()
         }
     },
     /**
@@ -287,34 +284,34 @@ CG.Class.extend('MediaAsset', {
      * @description render a progress screen to the canvas
      */
     progressScreen:function () {
-        var x = (Game.bound.width - this.width) / 2
-        var y = (Game.bound.height - this.height) / 2
-        if (this.image) {
-            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
-        } else {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-        }
-        Game.ctx.save()
+        var x = (this.obj.bound.width - this.width) / 2
+        var y = (this.obj.bound.height - this.height) / 2
+//        if (this.image) {
+//            Game.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height)
+//        } else {
+//            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+//        }
+        this.obj.ctx.save()
 
-        Game.ctx.fillStyle = this.progresscolor;
-        Game.ctx.fillRect((Game.bound.width - this.width) / 2, (Game.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
+        this.obj.ctx.fillStyle = this.progresscolor;
+        this.obj.ctx.fillRect((this.obj.bound.width - this.width) / 2, (this.obj.bound.height - this.height) / 2, this.width / 100 * this.progress, this.height);
 
-        Game.ctx.strokeStyle = this.bordercolor
-        Game.ctx.shadowColor = this.shadowcolor
-        Game.ctx.shadowBlur = this.shadowblur
-        Game.ctx.shadowOffsetX = this.shadowoffsetx
-        Game.ctx.shadowOffsetY = this.shadowoffsety
-        Game.ctx.beginPath();
-        Game.ctx.moveTo(x + this.radius, y);
-        Game.ctx.lineTo(x + this.width - (1 * this.radius), y)
-        Game.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
-        Game.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
-        Game.ctx.lineTo(x + this.radius, 2 * this.radius + y)
-        Game.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
-        Game.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
-        Game.ctx.lineWidth = this.linewidth
-        Game.ctx.stroke()
-        Game.ctx.restore()
+        this.obj.ctx.strokeStyle = this.bordercolor
+        this.obj.ctx.shadowColor = this.shadowcolor
+        this.obj.ctx.shadowBlur = this.shadowblur
+        this.obj.ctx.shadowOffsetX = this.shadowoffsetx
+        this.obj.ctx.shadowOffsetY = this.shadowoffsety
+        this.obj.ctx.beginPath();
+        this.obj.ctx.moveTo(x + this.radius, y);
+        this.obj.ctx.lineTo(x + this.width - (1 * this.radius), y)
+        this.obj.ctx.arcTo(x + this.width, y, x + this.width, y + this.radius, this.radius)
+        this.obj.ctx.arcTo(x + this.width, this.radius * 2 + y, x + this.width - (1 * this.radius), this.radius * 2 + y, this.radius)
+        this.obj.ctx.lineTo(x + this.radius, 2 * this.radius + y)
+        this.obj.ctx.arcTo(x, 2 * this.radius + y, x, y, this.radius)
+        this.obj.ctx.arcTo(x, y, 2 * this.radius + x, y, this.radius)
+        this.obj.ctx.lineWidth = this.linewidth
+        this.obj.ctx.stroke()
+        this.obj.ctx.restore()
     }
 })
 

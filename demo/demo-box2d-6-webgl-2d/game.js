@@ -14,7 +14,7 @@ Game = (function () {
         ctx: {},
         b_canvas: {},
         b_ctx: {},
-        asset: new CG.MediaAsset(),
+        asset: {},
         director: new CG.Director(),
         renderer: new CG.CanvasRenderer(),
         delta: new CG.Delta(60),
@@ -25,6 +25,7 @@ Game = (function () {
             Game.ctx = Game.b_ctx = Game.canvas.getContext('webgl-2d')
 
             //Asset preloading font files
+            Game.asset = new CG.MediaAsset(Game)
             Game.asset
                 .addImage('media/font/small.png', 'small')
                 .addFont('media/font/small.txt', 'small')

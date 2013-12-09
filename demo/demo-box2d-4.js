@@ -106,7 +106,7 @@ Game = (function () {
         ctx: {},
         b_canvas:{},
         b_ctx:{},
-        asset:{}, //new CG.MediaAsset('media/img/splash3.jpg'), //initialize media asset with background image
+        asset:{}, //new CG.MediaAsset(Game), //initialize media asset with background image
         director:new CG.Director(),
         renderer: new CG.CanvasRenderer(),
         delta:new CG.Delta(60),
@@ -114,7 +114,7 @@ Game = (function () {
             //canvas for ouput
             Game.canvas = document.getElementById('canvas')
             Game.ctx = Game.canvas.getContext('2d')
-            Game.asset = new CG.MediaAsset('media/img/splash3.jpg')
+            Game.asset = new CG.MediaAsset(Game)
 
             //frame buffer
             Game.b_canvas = document.createElement('canvas')
