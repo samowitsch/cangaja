@@ -1,152 +1,79 @@
-var renderStats
+var renderStats, mainscreen, mainlayer, Game, canvas, morph, morph2, abadi, small, spr1, spr2, xpos = 10, ypos = 10
 
-var mainscreen, mainlayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var mouseup
-var morph, morph2
-
-
-//waiting to get started ;o)
 window.onload = function () {
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps:60,
-        width:640,
-        height:480,
-        width2:640 / 2,
-        height2:480 / 2,
-        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas: {},
-        ctx:{},
-        b_canvas:{},
-        b_ctx:{},
-        asset:{}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director:new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta:new CG.Delta(60),
-        preload:function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game)
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
+    },
+    preload: function () {
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/img/glowball-50.png', 'glowball')
+            .startPreLoad()
+    },
+    create: function () {
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-            //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/glowball-50.png', 'glowball')
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-                .startPreLoad()
-        },
-        create:function () {
+        //some morph object
+        morph = new CG.Morph('sinus', 0.25, 1, 3)
+        mainlayer.addElement(morph)
+        morph2 = new CG.Morph('sinus', 1, 1000, 1)
+        mainlayer.addElement(morph2)
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+        //sprite 1
+        spr1 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(100, 200))
+        spr1.name = 'spr1'
+        spr1.xscale = 3
+        spr1.yscale = 3
+        mainlayer.addElement(spr1)
 
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+        //sprite 2
+        spr2 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(400, 240))
+        spr2.name = 'spr2'
+        spr2.xscale = 2
+        spr2.yscale = 2
+        mainlayer.addElement(spr2)
 
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            //some morph object
-            morph = new CG.Morph('sinus', 0.25, 1, 3)
-            mainlayer.addElement(morph)
-            morph2 = new CG.Morph('sinus', 1, 1000, 1)
-            mainlayer.addElement(morph2)
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        //use the screen and layer methods to get an objecz
+        mainscreen.getLayerByName('mainlayer').getElementByName('spr1').alpha = morph.getVal()
+        mainscreen.getLayerByName('mainlayer').getElementByName('spr1').xscale = morph.getVal()
 
-            //sprite 1
-            spr1 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(100, 200))
-            spr1.name = 'spr1'
-            spr1.xscale = 3
-            spr1.yscale = 3
-            mainlayer.addElement(spr1)
+        //or use an object stored via variable
+        spr1.yscale = morph.getVal()
+        spr2.rotation = morph2.getVal()
 
-            //sprite 2
-            spr2 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(400, 240))
-            spr2.name = 'spr2'
-            spr2.xscale = 2
-            spr2.yscale = 2
-            mainlayer.addElement(spr2)
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop:function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.run();
-            }
-        },
-        run:function () {
-            Game.update()
-            Game.draw()
-        },
-        update:function () {
-            //update here what ever you want
-
-            //use the screen and layer methods to get an objecz
-            mainscreen.getLayerByName('mainlayer').getElementByName('spr1').alpha = morph.getVal()
-            mainscreen.getLayerByName('mainlayer').getElementByName('spr1').xscale = morph.getVal()
-
-            //or use an object stored via variable
-            spr1.yscale = morph.getVal()
-            spr2.rotation = morph2.getVal()
-
-            //update all stuff attached to the director screen => layers => elements in layers
-            Game.director.update()
-        },
-        draw:function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
-
-            //draw all stuff attached to the director screen => layers => elements in layers
-            Game.director.draw()
-
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-
-            small.drawText('Morph class example.', xpos, ypos + 50)
-
-
-            small.drawText('Morph on alpha and size.', spr1.position.x + 20, spr1.position.y + 20)
-            small.drawText('Morph on rotation', spr2.position.x + 20, spr2.position.y + 20)
-
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit:function () {
-        },
-        touchhandler:function () {
-        }
+        renderStats.update();
+    },
+    draw: function () {
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Morph class example.', xpos, ypos + 50)
+        small.drawText('Morph on alpha and size.', spr1.position.x + 20, spr1.position.y + 20)
+        small.drawText('Morph on rotation', spr2.position.x + 20, spr2.position.y + 20)
     }
-
-    return Game
-}())
+})

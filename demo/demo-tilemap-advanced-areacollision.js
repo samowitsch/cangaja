@@ -1,238 +1,144 @@
-var renderStats
+var renderStats, mainscreen, mainlayer, canvas, Game, map, abadi, small,
+    tp = new CG.AtlasTexturePacker(), xpos = 10, ypos = 10,
+    collision = {direction: '', overlap: 0}
 
-var mainscreen, mainlayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var tp = new CG.AtlasTexturePacker()
-var collision = {direction: '', overlap: 0}
-
-
-//waiting to get started ;o)
 window.onload = function () {
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
-
-    //mouse move
-    can.addEventListener('mousemove', function (evt) {
-        var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
-        mousey = evt.clientY - canvas.offsetTop;
-    }, false);
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game)
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
+    },
+    preload: function () {
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/img/glowball-50.png', 'glowball')
+            .addImage('media/img/ballon.png', 'ballon')
+            .addImage('media/img/hunter.png', 'hunter')
+            //tiled map
+            .addJson('media/map/map-advanced-inner-outer.json', 'map1')
+            //texturepacker
+            .addImage('media/img/texturepacker.png', 'texturepacker')
+            .addJson('media/img/texturepacker.json', 'texturepacker-json')
+            .startPreLoad()
+    },
+    create: function () {
+        //create texturepacker image in asset
+        tp.loadJson(this.asset.getJsonByName('texturepacker-json'))
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //put the texturepacker TPImages to the asset
+        this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-            //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/ballon.png', 'ballon')
-                .addImage('media/img/hunter.png', 'hunter')
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
 
-                //tiled map
-                .addJson('media/map/map-advanced-inner-outer.json', 'map1')
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-                //texturepacker
-                .addImage('media/img/texturepacker.png', 'texturepacker')
-                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-                .startPreLoad()
-        },
-        create: function () {
+        //create tilemap
+        map = new CG.Map(640, 480)
+        map.loadMapJson(this.asset.getJsonByName('map1'))
 
-            //create texturepacker image in asset
-            tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
+        //assign sprite to group object b2 of tiled map
+        glowball = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(100, 450))
+        glowball.name = 'ballon'
+        glowball.boundsMode = 'bounce'
+        glowball.xspeed = -1
+        glowball.yspeed = 2
+        glowball.rotationspeed = 5
+        glowball.bound = map.getAreasByName('bound1')[0].bound
+        glowball.xscale = 0.5
+        glowball.yscale = 0.5
+        mainlayer.addElement(glowball)
 
-            //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
+        ballon = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(100, 250))
+        ballon.name = 'ballon'
+        ballon.boundsMode = 'bounce'
+        ballon.xspeed = 3
+        ballon.yspeed = -1
+        ballon.rotationspeed = 5
+        ballon.bound = map.getAreasByName('bound1')[0].bound
+        ballon.xscale = 0.1
+        ballon.yscale = 0.1
+        mainlayer.addElement(ballon)
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+        map.addElement(ballon)
 
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        ballon.checkCollision([glowball], this.callbacks.callbackCollision)
+        ballon.checkCollision(map.areas, this.callbacks.callbackMapAreaCollision)
+        glowball.checkCollision(map.areas, this.callbacks.callbackMapAreaCollision)
+        renderStats.update();
+    },
+    beforeDraw: function () {
+        //draw only layer 0
+        map.renderlayer = 0
+        map.drawMap(0, 0, 0, 0, this.bound.width, this.bound.height, this.callbacks.callbackMapCollision)
+        this._super()
+    },
+    draw: function () {
+        //draw only layer 1
+        map.renderlayer = 1
+        map.drawMap(0, 0, 0, 0, this.bound.width, this.bound.height, this.callbacks.callbackMapCollision)
 
-
-            //create tilemap
-            map = new CG.Map(640, 480)
-            map.loadMapJson(Game.asset.getJsonByName('map1'))
-
-            //assign sprite to group object b2 of tiled map
-            glowball = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(100, 450))
-            glowball.name = 'ballon'
-            glowball.boundsMode = 'bounce'
-            glowball.xspeed = -1
-            glowball.yspeed = 2
-            glowball.rotationspeed = 5
-            glowball.bound = map.getAreasByName('bound1')[0].bound
-            glowball.xscale = 0.5
-            glowball.yscale = 0.5
-            mainlayer.addElement(glowball)
-
-            ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(100, 250))
-            ballon.name = 'ballon'
-            ballon.boundsMode = 'bounce'
-            ballon.xspeed = 3
-            ballon.yspeed = -1
-            ballon.rotationspeed = 5
-            ballon.bound = map.getAreasByName('bound1')[0].bound
-            ballon.xscale = 0.1
-            ballon.yscale = 0.1
-            mainlayer.addElement(ballon)
-
-
-            map.addElement(ballon)
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.anim1();
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Map class example.', xpos, ypos + 56)
+        small.drawText('Use areamaps instead of single tiles for collision check.', xpos, ypos + 56 + small.getLineHeight())
+        small.drawText('Collision from ' + collision.direction + " with overlap of " + collision.overlap + "", xpos, ypos + 56 + (small.getLineHeight() * 2))
+        small.drawText('Collision to maparea', ballon.position.x - 40, ballon.position.y + 20)
+    },
+    callbacks: {
+        callbackCollision: function (ballon, glowball, coll) {
+            if (coll.direction == 'top') {
+                ballon.position.y -= coll.overlap
+                ballon.yspeed = ballon.yspeed * -1
+                glowball.yspeed = glowball.yspeed * -1
+            } else if (coll.direction == 'bottom') {
+                ballon.position.y += coll.overlap
+                ballon.yspeed = ballon.yspeed * -1
+                glowball.yspeed = glowball.yspeed * -1
+            } else if (coll.direction == 'left') {
+                ballon.position.x -= coll.overlap
+                ballon.xspeed = ballon.xspeed * -1
+                glowball.xspeed = glowball.xspeed * -1
+            } else if (coll.direction == 'right') {
+                ballon.position.x += coll.overlap
+                ballon.xspeed = ballon.xspeed * -1
+                glowball.xspeed = glowball.xspeed * -1
             }
         },
-        anim1: function () {
-            Game.update()
-            Game.draw()
+        callbackMapAreaCollision: function (obj, maparea, coll) {
+            if (coll.direction == 'top' || coll.direction == 'bottom') {
+                obj.position.y -= coll.overlap
+                obj.yspeed = obj.yspeed * -1
+            } else {
+                obj.position.x -= coll.overlap
+                obj.xspeed = obj.xspeed * -1
+            }
+            obj.rotationspeed *= -1
+
+            collision = coll
         },
-        update: function () {
-            //update here what ever you want
-
-            ballon.checkCollision([glowball], callbackCollision)
-
-            ballon.checkCollision(map.areas, callbackMapAreaCollision)
-            glowball.checkCollision(map.areas, callbackMapAreaCollision)
-
-//            map.checkAreasCollision([ballon], callbackAreasCollision)
-
-            Game.director.update()
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
-
-            //draw the map in the background
-            map.renderlayer = 0
-            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
-
-            //draw all elements that the director has
-            Game.director.draw()
-
-            //draw the map in the foreground
-            map.renderlayer = 1
-            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
-
-
-            //text stuff
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Map class example.', xpos, ypos + 56)
-            small.drawText('Use areamaps instead of single tiles for collision check.', xpos, ypos + 56 + small.getLineHeight())
-            small.drawText('Collision from ' + collision.direction + " with overlap of " + collision.overlap + "", xpos, ypos + 56 + (small.getLineHeight() * 2))
-            small.drawText('Collision to maparea', ballon.position.x - 40, ballon.position.y + 20)
-
-            // draw Game.b_canvas to the canvas
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-
-            // clear the Game.b_canvas
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
+        callbackMapCollision: function () {
         }
     }
-
-    return Game
-}())
-
-//example collision callback sprite to sprite
-function callbackCollision(ballon, glowball, coll) {
-    if (coll.direction == 'top') {
-        ballon.position.y -= coll.overlap
-        ballon.yspeed = ballon.yspeed * -1
-        glowball.yspeed = glowball.yspeed * -1
-    } else if (coll.direction == 'bottom') {
-        ballon.position.y += coll.overlap
-        ballon.yspeed = ballon.yspeed * -1
-        glowball.yspeed = glowball.yspeed * -1
-    } else if (coll.direction == 'CG.LEFT') {
-        ballon.position.x -= coll.overlap
-        ballon.xspeed = ballon.xspeed * -1
-        glowball.xspeed = glowball.xspeed * -1
-    } else if (coll.direction == 'right') {
-        ballon.position.x += coll.overlap
-        ballon.xspeed = ballon.xspeed * -1
-        glowball.xspeed = glowball.xspeed * -1
-    }
-}
-
-//example collision callback sprite to area maps
-function callbackMapAreaCollision(obj, maparea, coll) {
-    if (coll.direction == 'top' || coll.direction == 'bottom') {
-        obj.position.y -= coll.overlap
-        obj.yspeed = obj.yspeed * -1
-    } else {
-        obj.position.x -= coll.overlap
-        obj.xspeed = obj.xspeed * -1
-    }
-    obj.rotationspeed *= -1
-
-    collision = coll
-}
-
-function callbackMapCollision() {
-
-}
-
-
-function callbackAreasCollision(obj, area) {
-    console.log([obj, area])
-}
+})

@@ -1,9 +1,6 @@
-var renderStats, canvas, abadi, small, gill, mainscreen, mainlayer, back, Game;
+var renderStats, canvas, abadi, small, gill, mainscreen, mainlayer, back, Game, xpos = 10, ypos = 10
 
-//waiting to get started ;o)
 window.onload = function () {
-
-    //create canvas element programaticaly
     canvas = document.createElement('canvas')
     canvas.width = 800
     canvas.height = 600
@@ -12,7 +9,6 @@ window.onload = function () {
 
     Game = new CG.MyGame(canvas)
 };
-
 
 CG.Game.extend('MyGame', {
     init: function (canvas, options) {
@@ -58,15 +54,11 @@ CG.Game.extend('MyGame', {
         renderStats.update();
     },
     draw: function () {
-        var xpos = 10
-        var ypos = 10
-
         abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
         small.drawText('This is a little font class demo!', xpos, ypos + 50)
         small.drawText('With different fonts generated with Glyphdesigner.', xpos, ypos + 120)
         small.drawText('It has only some basic features at the moment.', xpos, ypos + 120 + small.getLineHeight())
         gill.drawText('äöüß?áà', xpos, ypos + 180)
         gill.drawText('ÄÖÜ~§$%&', xpos, ypos + 180 + gill.getLineHeight())
-
     }
 })

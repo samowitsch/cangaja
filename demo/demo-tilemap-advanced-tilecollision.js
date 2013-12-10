@@ -1,178 +1,98 @@
-var renderStats
+var renderStats, mainscreen, mainlayer, canvas, Game, abadi, small, map,
+    tp = new CG.AtlasTexturePacker(), ri = 0,
+    mapcollisiontext = '', xpos = 10, ypos = 10
 
-var mainscreen, mainlayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var tp = new CG.AtlasTexturePacker()
-
-var ri = 0
-var mapcollisiontext = ''
-
-
-//waiting to get started ;o)
 window.onload = function () {
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game)
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
+    },
+    preload: function () {
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/img/hunter.png', 'hunter')
+            //tiled map
+            .addXml('media/map/map-advanced.tmx', 'map1')
+            //texturepacker
+            .addImage('media/img/texturepacker.png', 'texturepacker')
+            .addJson('media/img/texturepacker.json', 'texturepacker-json')
+            .startPreLoad()
+    },
+    create: function () {
+        //create texturepacker image in asset
+        tp.loadJson(this.asset.getJsonByName('texturepacker-json'))
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //put the texturepacker TPImages to the asset
+        this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-            //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/hunter.png', 'hunter')
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
 
-                //tiled map
-                .addXml('media/map/map-advanced.tmx', 'map1')
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-                //texturepacker
-                .addImage('media/img/texturepacker.png', 'texturepacker')
-                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-                .startPreLoad()
-        },
-        create: function () {
+        rocket = new CG.Sprite(this.asset.getImageByName('rocket'), new CG.Point(this.width2, this.height2))
+        rocket.name = 'rocket'
+        rocket.boundingradius = 80
+        rocket.xscale = 0.5
+        rocket.yscale = 0.5
+        mainlayer.addElement(rocket)
 
-            //create texturepacker image in asset
-            tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
+        //create tilemap
+        map = new CG.Map(640, 480)
+        map.loadMapXml(this.asset.getXmlByName('map1'))
+            //add element to map object for collision detection, the collision check is called for every tile in the drawMap method
+            .addElement(rocket)
 
-            //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
+        //set layer 1 to check for collision
+        map.layertocheck = 1
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        //clear collisiontext
+        mapcollisiontext = ''
 
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
-
-            rocket = new CG.Sprite(Game.asset.getImageByName('rocket'), new CG.Point(Game.width2, Game.height2))
-            rocket.name = 'rocket'
-            rocket.boundingradius = 80
-            rocket.xscale = 0.5
-            rocket.yscale = 0.5
-            mainlayer.addElement(rocket)
-
-            //create tilemap
-            map = new CG.Map(640, 480)
-            map.loadMapXml(Game.asset.getXmlByName('map1'))
-
-                //add element to map object for collision detection, the collision check is called for every tile in the drawMap method
-                .addElement(rocket)
-
-            //set layer 1 to check for collision
-            map.layertocheck = 1
-
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.anim1();
+        var rocky = mainlayer.getElementByName('rocket')
+        ri += 0.007
+        rocky.position.x = this.bound.width / 2 + (this.bound.width / 3 * Math.cos(ri * 3 - Math.cos(ri))) >> 0
+        rocky.position.y = this.bound.height / 2 + (this.bound.height / 2 * -Math.sin(ri * 2.3 - Math.cos(ri))) >> 0
+        renderStats.update();
+    },
+    beforeDraw: function () {
+        map.drawMap(0, 0, 0, 0, this.bound.width, this.bound.height, this.callbacks.callbackMapCollision)
+        this._super()
+    },
+    draw: function () {
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Map class example.', xpos, ypos + 56)
+        small.drawText('This map example shows how to detect a sprite to tilemap collision.', xpos, ypos + 56 + small.getLineHeight())
+        small.drawText(mapcollisiontext, xpos, ypos + 56 + (small.getLineHeight() * 2))
+    },
+    callbacks: {
+        callbackMapCollision: function (sprite, tile) {
+            if (tile instanceof CG.MapTileProperties) {
+                mapcollisiontext = 'Collision: ' + sprite.name + ' hits ' + tile.name
             }
-        },
-        anim1: function () {
-            Game.update()
-            Game.draw()
-        },
-        update: function () {
-            //update here what ever you want
-
-            //clear collisiontext
-            mapcollisiontext = ''
-
-            var rocky = mainlayer.getElementByName('rocket')
-            ri += 0.007
-            rocky.position.x = Game.bound.width / 2 + (Game.bound.width / 3 * Math.cos(ri * 3 - Math.cos(ri))) >> 0
-            rocky.position.y = Game.bound.height / 2 + (Game.bound.height / 2 * -Math.sin(ri * 2.3 - Math.cos(ri))) >> 0
-
-            Game.director.update()
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
-
-            //draw the map in the background
-            map.drawMap(0, 0, 0, 0, Game.bound.width, Game.bound.height, callbackMapCollision)
-
-            //draw all elements that the director has
-            Game.director.draw()
-
-            //text stuff
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Map class example.', xpos, ypos + 56)
-            small.drawText('This map example shows how to detect a sprite to tilemap collision.', xpos, ypos + 56 + small.getLineHeight())
-            small.drawText(mapcollisiontext, xpos, ypos + 56 + (small.getLineHeight() * 2))
-
-            // draw Game.b_canvas to the canvas
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-
-            // clear the Game.b_canvas
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
         }
     }
-
-    return Game
-}())
-
-/**
- * callback for map collision detection.
- * for the moment the map object sends the depending sprite and the tile as arguments
- */
-function callbackMapCollision(sprite, tile) {
-    if (tile instanceof CG.MapTileProperties) {
-        mapcollisiontext = 'Collision: ' + sprite.name + ' hits ' + tile.name
-    }
-}
+})

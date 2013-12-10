@@ -1,130 +1,60 @@
-var renderStats
+var renderStats, mainscreen, mainlayer, canvas, Game, abadi, small, map, xpos = 10, ypos = 10
 
-var mainscreen, mainlayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var mouseup
-
-
-//waiting to get started ;o)
 window.onload = function () {
+    canvas = document.createElement('canvas')
+    canvas.width = 640
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 640
-    can.height = 480
-    can.id = 'canvas'
-    document.body.appendChild(can)
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: false,
-        b_ctx: false,
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game)
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
+    },
+    preload: function () {
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/img/glowball-50.png', 'glowball')
+            .addImage('media/img/hunter.png', 'hunter')
+            .addXml('media/map/isometric_grass_and_water.tmx', 'map1')
+            .startPreLoad()
+    },
+    create: function () {
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-            //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/hunter.png', 'hunter')
-                .addXml('media/map/isometric_grass_and_water.tmx', 'map1')
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
+        //create tilemap
+        map = new CG.Map(640, 480)
+        map.loadMapXml(this.asset.getXmlByName('map1'))
 
-                .startPreLoad()
-        },
-        create: function () {
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
-
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
-
-            //create tilemap
-            map = new CG.Map(640, 480)
-            map.loadMapXml(Game.asset.getXmlByName('map1'))
-
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.anim1();
-            }
-        },
-        anim1: function () {
-            Game.update()
-            Game.draw()
-        },
-        update: function () {
-            //update here what ever you want
-            Game.director.update()
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
-
-            map.drawMap(0, 0, -150, 300, Game.bound.width, Game.bound.height, callbackMapCollision)
-
-
-            Game.director.draw()
-
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Map class example. It uses a isometric tilemap.', xpos, ypos + 50)
-
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        renderStats.update();
+    },
+    draw: function () {
+        map.drawMap(0, 0, -150, 300, Game.bound.width, Game.bound.height, this.callbacks.callbackMapCollision)
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Map class example. It uses a isometric tilemap.', xpos, ypos + 50)
+    },
+    callbacks: {
+        callbackMapCollision: function(){
         }
     }
-
-    return Game
-}())
-
-function callbackMapCollision() {
-
-}
+})
