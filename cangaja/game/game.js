@@ -96,7 +96,7 @@ CG.Class.extend('Game', {
      * @method create
      */
     create: function () {
-        this._loop()
+        this.loop()
     },
     /**
      * @description this is the central (game) loop
@@ -104,17 +104,17 @@ CG.Class.extend('Game', {
      */
     loop: function () {
         requestAnimationFrame(this.loop.bind(this))
-        this._beforeUpdate()
+        this.beforeUpdate()
         this.update()
-        this._beforeDraw()
+        this.beforeDraw()
         this.draw()
-        this._afterDraw()
+        this.afterDraw()
     },
     /**
      * @description in this method all CG.Director elements are updated.
-     * @method _beforeUpdate
+     * @method beforeUpdate
      */
-    _beforeUpdate: function(){
+    beforeUpdate: function(){
         this.director.update()
     },
     /**
@@ -124,10 +124,9 @@ CG.Class.extend('Game', {
     },
     /**
      * @description in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.
-     * @method _beforeDraw
+     * @method beforeDraw
      */
-    _beforeDraw: function () {
-        this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+    beforeDraw: function () {
         this.director.draw()
     },
     /**
@@ -139,9 +138,11 @@ CG.Class.extend('Game', {
     },
     /**
      * @description this is the final draw method. it draws the b_canvas buffer to the canvas
-     * @method _afterDraw
+     * @method afterDraw
      */
-    _afterDraw: function () {
+    afterDraw: function () {
+        this.ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+
         // draw buffer b_canvas to the canvas
         this.ctx.drawImage(this.b_canvas, 0, 0)
 
