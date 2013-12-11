@@ -15,26 +15,55 @@ CG.Class.extend('MediaAsset', {
      * @param obj {object} the game object CG.Game
      */
     init:function (obj) {
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.obj = obj
-
+        /**
+         * @property ready
+         * @type {CG.Game}
+         * @protected
+         */
         this.ready = false
+        /**
+         * @property progress
+         * @type {Number}
+         */
         this.progress = 0
 
+        /**
+         * @property images
+         * @type {Array}
+         */
         this.images = []
         this.currimage = 0
 
-        this.sounds = []
-        this.currsound = 0
-
+        /**
+         * @property xmls
+         * @type {Array}
+         */
         this.xmls = []
         this.currxml = 0
 
+        /**
+         * @property jsons
+         * @type {Array}
+         */
         this.jsons = []
         this.currjson = 0
 
+        /**
+         * @property texts
+         * @type {Array}
+         */
         this.texts = []
         this.currtext = 0
 
+        /**
+         * @property fonts
+         * @type {Array}
+         */
         this.fonts = []
         this.currfont = 0
 
@@ -42,16 +71,56 @@ CG.Class.extend('MediaAsset', {
         this.assetcurrent = 0
 
         //progress
+        /**
+         * @property width
+         * @type {Number}
+         */
         this.width = 300
+        /**
+         * @property height
+         * @type {Number}
+         */
         this.height = 20
+        /**
+         * @property radius
+         * @type {Number}
+         */
         this.radius = 10
 
+        /**
+         * @property linewidth
+         * @type {Number}
+         */
         this.linewidth = 8
+        /**
+         * @property bordercolor
+         * @type {String}
+         */
         this.bordercolor = 'white'
+        /**
+         * @property progresscolor
+         * @type {String}
+         */
         this.progresscolor = 'red'
+        /**
+         * @property shadowcolor
+         * @type {String}
+         */
         this.shadowcolor = '#222'
+        /**
+         * @property shadowblur
+         * @type {Number}
+         */
         this.shadowblur = 6
+        /**
+         * @property shadowoffsetx
+         * @type {Number}
+         */
         this.shadowoffsetx = 2
+        /**
+         * @property shadowoffsety
+         * @type {Number}
+         */
         this.shadowoffsety = 2
 
 //return this
@@ -160,7 +229,7 @@ CG.Class.extend('MediaAsset', {
      * @return {*}
      */
     getImagesByName:function (name) {
-        names = []
+        var names = []
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
                 if (this.images[i] instanceof CG.AtlasImage) {

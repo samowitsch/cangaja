@@ -224,13 +224,17 @@ CG.Class.extend(&#x27;Menu&#x27;, {
     addButton:function (button) {
         this.buttons.push(button)
     },
-
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update:function () {
         this.buttons.forEach(function (button) {
             button.update()
         })
     },
-
+    &#x2F;**
+     * @method draw
+     *&#x2F;
     draw:function () {
         this.buttons.forEach(function (button) {
             button.position.x = this.x

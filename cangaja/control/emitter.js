@@ -287,6 +287,9 @@ CG.Entity.extend('Emitter', {
         }
         return particle
     },
+    /**
+     * @method update
+     */
 
     update:function () {
         if (this.visible) {
@@ -314,6 +317,9 @@ CG.Entity.extend('Emitter', {
             return this
         }
     },
+    /**
+     * @method draw
+     */
     draw:function () {
         if (this.visible) {
             for (var i = 0, l = this.particles.length; i < l; i++) {

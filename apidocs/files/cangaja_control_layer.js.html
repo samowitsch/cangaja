@@ -192,6 +192,9 @@ CG.Class.extend(&#x27;Layer&#x27;, {
         this.elementsToDelete = []
         return this
     },
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update:function () {
         if (this.visible == true) {
 &#x2F;&#x2F;            this.elements.forEach(function (element, index) {
@@ -213,6 +216,9 @@ CG.Class.extend(&#x27;Layer&#x27;, {
             }
         }
     },
+    &#x2F;**
+     * @method draw
+     *&#x2F;
     draw:function () {
         if (this.visible == true) {
 

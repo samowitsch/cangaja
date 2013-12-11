@@ -173,7 +173,7 @@
 &#x2F;**
  * @description
  *
- * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiatet object has to be &#x27;Game&#x27;!
+ * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be &#x27;Game&#x27;!
  * @class CG.Game
  * @extends Class
  *&#x2F;
@@ -268,7 +268,7 @@ CG.Class.extend(&#x27;Game&#x27;, {
      * @method create
      *&#x2F;
     create: function () {
-        this._loop()
+        this.loop()
     },
     &#x2F;**
      * @description this is the central (game) loop
@@ -276,17 +276,17 @@ CG.Class.extend(&#x27;Game&#x27;, {
      *&#x2F;
     loop: function () {
         requestAnimationFrame(this.loop.bind(this))
-        this._beforeUpdate()
+        this.beforeUpdate()
         this.update()
-        this._beforeDraw()
+        this.beforeDraw()
         this.draw()
-        this._afterDraw()
+        this.afterDraw()
     },
     &#x2F;**
      * @description in this method all CG.Director elements are updated.
-     * @method _beforeUpdate
+     * @method beforeUpdate
      *&#x2F;
-    _beforeUpdate: function(){
+    beforeUpdate: function(){
         this.director.update()
     },
     &#x2F;**
@@ -296,10 +296,9 @@ CG.Class.extend(&#x27;Game&#x27;, {
     },
     &#x2F;**
      * @description in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.
-     * @method _beforeDraw
+     * @method beforeDraw
      *&#x2F;
-    _beforeDraw: function () {
-        this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+    beforeDraw: function () {
         this.director.draw()
     },
     &#x2F;**
@@ -311,9 +310,11 @@ CG.Class.extend(&#x27;Game&#x27;, {
     },
     &#x2F;**
      * @description this is the final draw method. it draws the b_canvas buffer to the canvas
-     * @method _afterDraw
+     * @method afterDraw
      *&#x2F;
-    _afterDraw: function () {
+    afterDraw: function () {
+        this.ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+
         &#x2F;&#x2F; draw buffer b_canvas to the canvas
         this.ctx.drawImage(this.b_canvas, 0, 0)
 
@@ -321,74 +322,6 @@ CG.Class.extend(&#x27;Game&#x27;, {
         this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
     }
 })
-
-
-&#x2F;*
-
-
- How to extend the game class
-
-
- &#x2F;&#x2F;extend the base game class
- CG.Game.extend(&#x27;MyGame&#x27;, {
- init: function (canvas, options) {
- &#x2F;&#x2F;call init from super class
- this._super(canvas, options)
- },
- preload: function (){
- this.asset
- .addImage(&#x27;media&#x2F;font&#x2F;small.png&#x27;, &#x27;small&#x27;)
- .addJson(&#x27;media&#x2F;img&#x2F;spritetestphysics.json&#x27;, &#x27;spritetestphysics&#x27;)
- .startPreLoad()
-
- },
- create: function () {
-
- &#x2F;&#x2F;after creation start game loop
- this.loop()
- },
- update: function () {
- &#x2F;&#x2F;call super class to update director class
- this._super()
- },
- draw: function () {
- &#x2F;&#x2F;call super class to draw director class
- this._super()
- }
- })
-
-
- var Game = new CG.MyGame(&#x27;canvas&#x27;)
-
-
-
-
-
- CG.Game.extend(&#x27;MyGame&#x27;, {
- preload: function (){
- this.asset
- .addImage(&#x27;media&#x2F;font&#x2F;small.png&#x27;, &#x27;small&#x27;)
- .addJson(&#x27;media&#x2F;img&#x2F;spritetestphysics.json&#x27;, &#x27;spritetestphysics&#x27;)
- .startPreLoad()
-
- },
- create: function () {
-
- &#x2F;&#x2F;after creation start game loop
- this.loop()
- },
- update: function () {
- &#x2F;&#x2F;call super class to update director class
- this._super()
- },
- draw: function () {
- &#x2F;&#x2F;call super class to draw director class
- this._super()
- }
- })
-
-
- *&#x2F;
     </pre>
 </div>
 

@@ -40,6 +40,9 @@ CG.Class.extend('Sequence', {
         this.translations.push(translationobj)
         return this
     },
+    /**
+     * @method update
+     */
     update: function (callback) {
         if (this.current < this.translations.length) {
             if (this.translations[this.current].finished === false) {
@@ -55,9 +58,15 @@ CG.Class.extend('Sequence', {
             }
         }
     },
+    /**
+     * @method draw
+     */
     draw: function () {
 
     },
+    /**
+     * @method reset
+     */
     reset: function () {
         for (var i = 0, l = this.translations.length; i < l; i++) {
             this.translations[i].reset()

@@ -190,6 +190,10 @@ CG.Class.extend(&#x27;Screen&#x27;, {
     init: function (screenname) {
         this.name = (screenname) ? screenname : &#x27;&#x27;
 
+        &#x2F;**
+         * @property position
+         * @type {CG.Point}
+         *&#x2F;
         this.position = new CG.Point(0, 0)
         &#x2F;**
          * @property xscale
@@ -211,11 +215,17 @@ CG.Class.extend(&#x27;Screen&#x27;, {
     create: function () {
 
     },
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update: function () {
         for (var i = 0, l = this.layers.length; i &lt; l; i++) {
             this.layers[i].update()
         }
     },
+    &#x2F;**
+     * @method draw
+     *&#x2F;
     draw: function () {
         Game.b_ctx.save()
         if (this.xscale !== 1 || this.yscale !== 1) {
@@ -228,9 +238,7 @@ CG.Class.extend(&#x27;Screen&#x27;, {
             this.layers[i].draw()
         }
 
-
         Game.b_ctx.restore()
-
     },
 
     &#x2F;**
@@ -247,7 +255,7 @@ CG.Class.extend(&#x27;Screen&#x27;, {
      * @description find CG.Layer by name
      * @method getLayerByName
      * @param {string} layername find layer by name
-     * @return {false&#x2F;layer}
+     * @return {boolean&#x2F;layer}
      *&#x2F;
     getLayerByName: function (layername) {
         for (var i = 0, l = this.layers.length; i &lt; l; i++) {

@@ -184,7 +184,7 @@ CG.Class.extend(&#x27;Translate&#x27;, {
      * @method init
      * @return {*}
      *&#x2F;
-    init:function () {
+    init: function () {
         &#x2F;**
          * @property type
          * @type {String}
@@ -291,7 +291,7 @@ CG.Class.extend(&#x27;Translate&#x27;, {
      * @param endpoint {point} endpoint of tween
      * @return {this}
      *&#x2F;
-    initTween:function (obj, steps, startpoint, endpoint) {
+    initTween: function (obj, steps, startpoint, endpoint) {
         this.type = &#x27;tween&#x27;
         this.theobj = obj
         this.steps = steps
@@ -323,7 +323,7 @@ CG.Class.extend(&#x27;Translate&#x27;, {
      * @param rotation {Number} rotation
      * @return {this}
      *&#x2F;
-    initOval:function (obj, centerpoint, radius1, radius2, startangle, rotation) {
+    initOval: function (obj, centerpoint, radius1, radius2, startangle, rotation) {
         this.type = &#x27;oval&#x27;
         this.theobj = obj
         this.x1 = centerpoint.x
@@ -350,7 +350,7 @@ CG.Class.extend(&#x27;Translate&#x27;, {
      * @param control2 {CG.Point} control2 point for bézier calculation (optional)
      * @return {this}
      *&#x2F;
-    initBezier:function (obj, steps, startpoint, endpoint, control1, control2) {
+    initBezier: function (obj, steps, startpoint, endpoint, control1, control2) {
         this.type = &#x27;bezier&#x27;
         this.theobj = obj  &#x2F;&#x2F;first argument is always the object to handle
         this.steps = steps
@@ -387,9 +387,10 @@ CG.Class.extend(&#x27;Translate&#x27;, {
 
         return this
     },
-    draw:function () {
-    },
-    update:function () {
+    &#x2F;**
+     * @method update
+     *&#x2F;
+    update: function () {
         var obj = this.theobj
         switch (this.type) {
             case &#x27;bezier&#x27;:
@@ -419,10 +420,15 @@ CG.Class.extend(&#x27;Translate&#x27;, {
                 break
         }
     },
-    draw:function () {
-
+    &#x2F;**
+     * @method draw
+     *&#x2F;
+    draw: function () {
     },
-    reset:function () {
+    &#x2F;**
+     * @method reset
+     *&#x2F;
+    reset: function () {
         this.step = 0
         this.finished = false
     }

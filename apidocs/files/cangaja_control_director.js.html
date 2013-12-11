@@ -256,6 +256,9 @@ CG.Class.extend(&#x27;Director&#x27;, {
         this.color = &#x27;rgb(0,0,0)&#x27;
         return this
     },
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update: function () {
         &#x2F;&#x2F;handle screen fading
         switch (this.mode) {
@@ -339,6 +342,9 @@ CG.Class.extend(&#x27;Director&#x27;, {
         }
         this.screens[this.activescreen].update()
     },
+    &#x2F;**
+     * @method draw
+     *&#x2F;
     draw: function () {
         &#x2F;&#x2F;draw active screen
         this.screens[this.activescreen].draw()

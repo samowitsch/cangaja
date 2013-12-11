@@ -173,7 +173,7 @@
 &#x2F;**
  * @description
  *
- * CG.Morph to manipulate objects in size and so on
+ * CG.Morph to manipulate objects in size and so on.
  *
  * @class CG.Morph
  * @extends CG.Class
@@ -183,27 +183,56 @@ CG.Class.extend(&#x27;Morph&#x27;, {
     &#x2F;**
      * @method init
      * @constructor
-     * @param mode {string} mode type of the morph object
+     * @param mode {string} mode type of the morph object, at the moment only &quot;sinus&quot; possible ;o)
      * @param min {Number} min min value
      * @param max {Number} max max value
      * @param speed {Number} speed speed value
      *&#x2F;
     init:function (mode, min, max, speed) {
+        &#x2F;**
+         * @property mode
+         * @type {String}
+         *&#x2F;
         this.mode = mode
+        &#x2F;**
+         * @property min
+         * @type {Number}
+         *&#x2F;
         this.min = min
+        &#x2F;**
+         * @property max
+         * @type {Number}
+         *&#x2F;
         this.max = max
+        &#x2F;**
+         * @property speed
+         * @type {Number}
+         *&#x2F;
         this.speed = speed
+        &#x2F;**
+         * @property angle
+         * @type {Number}
+         *&#x2F;
         this.angle = 0
+        &#x2F;**
+         * @property rad
+         * @type {Number}
+         *&#x2F;
         this.rad = this.max - this.min
-        this.val = 0
+        &#x2F;**
+         * @property _val
+         * @type {Number}
+         * @protected
+         *&#x2F;
+        this._val = 0
     },
     update:function () {
         switch (this.mode) {
             case &#x27;sinus&#x27;:
                 var rad = this.angle * CG.Const_PI_180
-                this.val = this.rad * Math.sin(rad)
-                if (this.val &lt; 0) {
-                    this.val = this.val * -1
+                this._val = this.rad * Math.sin(rad)
+                if (this._val &lt; 0) {
+                    this._val = this._val * -1
                 }
                 this.angle += this.speed
 
@@ -223,7 +252,7 @@ CG.Class.extend(&#x27;Morph&#x27;, {
      * @return {float}
      *&#x2F;
     getVal:function () {
-        return this.val
+        return this._val
     }
 })
 

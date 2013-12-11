@@ -852,7 +852,7 @@
             "namespace": "",
             "file": "cangaja/control/morph.js",
             "line": 1,
-            "description": "CG.Morph to manipulate objects in size and so on",
+            "description": "CG.Morph to manipulate objects in size and so on.",
             "extends": "CG.Class"
         },
         "CG.Screen": {
@@ -919,7 +919,7 @@
             "namespace": "",
             "file": "cangaja/game/game.js",
             "line": 1,
-            "description": "CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiatet object has to be 'Game'!",
+            "description": "CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!",
             "extends": "Class"
         },
         "CG.CanvasRenderer": {
@@ -3627,6 +3627,26 @@
         {
             "file": "cangaja/box2d/b2d-world.js",
             "line": 137,
+            "description": "Checks if a B2D body Exists",
+            "itemtype": "method",
+            "name": "deleteBodyAt",
+            "params": [
+                {
+                    "name": "body",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "CG.B2DWorld",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-world.js",
+            "line": 157,
             "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
@@ -3662,7 +3682,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 156,
+            "line": 176,
             "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
@@ -3688,7 +3708,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 173,
+            "line": 193,
             "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
@@ -3729,7 +3749,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 193,
+            "line": 213,
             "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -3775,7 +3795,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 216,
+            "line": 236,
             "description": "createTerrain",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -3821,7 +3841,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 237,
+            "line": 257,
             "description": "createChainShape",
             "itemtype": "method",
             "name": "createChainShape",
@@ -3852,7 +3872,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 255,
+            "line": 275,
             "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
@@ -3902,7 +3922,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 277,
+            "line": 297,
             "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
@@ -3952,7 +3972,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 299,
+            "line": 319,
             "description": "Enables dragging B2D objects with the mouse.",
             "itemtype": "method",
             "name": "mouseDownAt",
@@ -3973,7 +3993,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 326,
+            "line": 346,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld",
@@ -3981,7 +4001,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 333,
+            "line": 353,
             "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
@@ -4006,7 +4026,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 366,
+            "line": 386,
             "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -4030,7 +4050,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 390,
+            "line": 410,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -4042,7 +4062,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 397,
+            "line": 417,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -4056,7 +4076,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 404,
+            "line": 424,
             "itemtype": "method",
             "name": "removeElementByUid",
             "params": [
@@ -4070,7 +4090,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 417,
+            "line": 437,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -4092,7 +4112,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 430,
+            "line": 450,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -4106,7 +4126,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 454,
+            "line": 474,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -4227,7 +4247,23 @@
         },
         {
             "file": "cangaja/control/director.js",
-            "line": 188,
+            "line": 87,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Director",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/director.js",
+            "line": 173,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Director",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/director.js",
+            "line": 194,
             "itemtype": "method",
             "name": "nextScreen",
             "example": [
@@ -4255,7 +4291,7 @@
         },
         {
             "file": "cangaja/control/director.js",
-            "line": 241,
+            "line": 247,
             "itemtype": "method",
             "name": "addScreen",
             "params": [
@@ -4270,7 +4306,7 @@
         },
         {
             "file": "cangaja/control/director.js",
-            "line": 250,
+            "line": 256,
             "itemtype": "method",
             "name": "getScreenByName",
             "params": [
@@ -4289,7 +4325,7 @@
         },
         {
             "file": "cangaja/control/director.js",
-            "line": 265,
+            "line": 271,
             "itemtype": "method",
             "name": "getIndexOfScreen",
             "params": [
@@ -4308,7 +4344,7 @@
         },
         {
             "file": "cangaja/control/director.js",
-            "line": 280,
+            "line": 286,
             "itemtype": "method",
             "name": "getActiveScreenName",
             "return": {
@@ -4648,7 +4684,23 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 325,
+            "line": 290,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Emitter",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/emitter.js",
+            "line": 320,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Emitter",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/emitter.js",
+            "line": 331,
             "description": "Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle",
             "itemtype": "method",
             "name": "searchInvisibleParticle",
@@ -4657,7 +4709,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 338,
+            "line": 344,
             "itemtype": "method",
             "name": "setEmitterPosition",
             "params": [
@@ -4672,7 +4724,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 348,
+            "line": 354,
             "itemtype": "method",
             "name": "setName",
             "params": [
@@ -4687,7 +4739,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 358,
+            "line": 364,
             "itemtype": "method",
             "name": "setCreationTime",
             "params": [
@@ -4702,7 +4754,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 367,
+            "line": 373,
             "itemtype": "method",
             "name": "setMaxParticles",
             "params": [
@@ -4717,7 +4769,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 376,
+            "line": 382,
             "itemtype": "method",
             "name": "setGravity",
             "params": [
@@ -4732,7 +4784,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 386,
+            "line": 392,
             "itemtype": "method",
             "name": "setParticleSpeed",
             "params": [
@@ -4747,7 +4799,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 396,
+            "line": 402,
             "itemtype": "method",
             "name": "setProtation",
             "params": [
@@ -4762,7 +4814,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 406,
+            "line": 412,
             "itemtype": "method",
             "name": "setPLifetime",
             "params": [
@@ -4777,7 +4829,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 416,
+            "line": 422,
             "itemtype": "method",
             "name": "activateFadeout",
             "description": "Activate fadeout of the particles depending on lifetime",
@@ -4786,7 +4838,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 425,
+            "line": 431,
             "itemtype": "method",
             "name": "deactivateFadeout",
             "description": "Deactivate fadeout of the particles depending on lifetime",
@@ -4795,7 +4847,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 434,
+            "line": 440,
             "itemtype": "method",
             "name": "getRandom",
             "params": [
@@ -4815,7 +4867,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 444,
+            "line": 450,
             "itemtype": "method",
             "name": "getX",
             "class": "CG.Emitter",
@@ -4823,7 +4875,7 @@
         },
         {
             "file": "cangaja/control/emitter.js",
-            "line": 451,
+            "line": 457,
             "itemtype": "method",
             "name": "getY",
             "class": "CG.Emitter",
@@ -4851,7 +4903,23 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 70,
+            "line": 23,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Layer",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/layer.js",
+            "line": 47,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Layer",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/layer.js",
+            "line": 76,
             "description": "Add new element to the layer. This could be a CG.Sprite, CG.Animation, CG.Button and so on. Every thing that has a update and draw method ;o)",
             "itemtype": "method",
             "name": "addElement",
@@ -4867,7 +4935,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 80,
+            "line": 86,
             "description": "Find element by name (the first one)",
             "itemtype": "method",
             "name": "getElementByName",
@@ -4887,7 +4955,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 95,
+            "line": 101,
             "description": "Find elements by name (if they have the same name ;o)",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -4923,7 +4991,171 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 59,
+            "line": 18,
+            "itemtype": "property",
+            "name": "obj",
+            "type": "{CG.Game}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 23,
+            "itemtype": "property",
+            "name": "ready",
+            "type": "{CG.Game}",
+            "access": "protected",
+            "tagname": "",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 29,
+            "itemtype": "property",
+            "name": "progress",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 35,
+            "itemtype": "property",
+            "name": "images",
+            "type": "{Array}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 42,
+            "itemtype": "property",
+            "name": "xmls",
+            "type": "{Array}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 49,
+            "itemtype": "property",
+            "name": "jsons",
+            "type": "{Array}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 56,
+            "itemtype": "property",
+            "name": "texts",
+            "type": "{Array}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 63,
+            "itemtype": "property",
+            "name": "fonts",
+            "type": "{Array}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 74,
+            "itemtype": "property",
+            "name": "width",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 79,
+            "itemtype": "property",
+            "name": "height",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 84,
+            "itemtype": "property",
+            "name": "radius",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 90,
+            "itemtype": "property",
+            "name": "linewidth",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 95,
+            "itemtype": "property",
+            "name": "bordercolor",
+            "type": "{String}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 100,
+            "itemtype": "property",
+            "name": "progresscolor",
+            "type": "{String}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 105,
+            "itemtype": "property",
+            "name": "shadowcolor",
+            "type": "{String}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 110,
+            "itemtype": "property",
+            "name": "shadowblur",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 115,
+            "itemtype": "property",
+            "name": "shadowoffsetx",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 120,
+            "itemtype": "property",
+            "name": "shadowoffsety",
+            "type": "{Number}",
+            "class": "CG.MediaAsset",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/mediaasset.js",
+            "line": 128,
             "itemtype": "method",
             "name": "addImage",
             "params": [
@@ -4945,7 +5177,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 75,
+            "line": 144,
             "itemtype": "method",
             "name": "addFont",
             "params": [
@@ -4967,7 +5199,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 91,
+            "line": 160,
             "itemtype": "method",
             "name": "addXml",
             "params": [
@@ -4989,7 +5221,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 107,
+            "line": 176,
             "itemtype": "method",
             "name": "addJson",
             "params": [
@@ -5011,7 +5243,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 124,
+            "line": 193,
             "itemtype": "method",
             "name": "addText",
             "params": [
@@ -5033,7 +5265,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 140,
+            "line": 209,
             "itemtype": "method",
             "name": "getImageByName",
             "params": [
@@ -5051,7 +5283,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 157,
+            "line": 226,
             "itemtype": "method",
             "name": "getImagesByName",
             "params": [
@@ -5069,7 +5301,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 178,
+            "line": 247,
             "itemtype": "method",
             "name": "getFontByName",
             "params": [
@@ -5087,7 +5319,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 191,
+            "line": 260,
             "itemtype": "method",
             "name": "getXmlByName",
             "params": [
@@ -5105,7 +5337,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 204,
+            "line": 273,
             "itemtype": "method",
             "name": "getJsonByName",
             "params": [
@@ -5123,7 +5355,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 217,
+            "line": 286,
             "itemtype": "method",
             "name": "getTextByName",
             "params": [
@@ -5141,7 +5373,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 230,
+            "line": 299,
             "itemtype": "method",
             "name": "startPreLoad",
             "class": "CG.MediaAsset",
@@ -5149,7 +5381,7 @@
         },
         {
             "file": "cangaja/control/mediaasset.js",
-            "line": 282,
+            "line": 351,
             "itemtype": "method",
             "name": "progressScreen",
             "description": "render a progress screen to the canvas",
@@ -5247,6 +5479,22 @@
             "module": "CG"
         },
         {
+            "file": "cangaja/control/menu.js",
+            "line": 55,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Menu",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/menu.js",
+            "line": 63,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Menu",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/control/morph.js",
             "line": 11,
             "itemtype": "method",
@@ -5255,7 +5503,7 @@
             "params": [
                 {
                     "name": "mode",
-                    "description": "mode type of the morph object",
+                    "description": "mode type of the morph object, at the moment only \"sinus\" possible ;o)",
                     "type": "String"
                 },
                 {
@@ -5279,7 +5527,72 @@
         },
         {
             "file": "cangaja/control/morph.js",
-            "line": 48,
+            "line": 20,
+            "itemtype": "property",
+            "name": "mode",
+            "type": "{String}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 25,
+            "itemtype": "property",
+            "name": "min",
+            "type": "{Number}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 30,
+            "itemtype": "property",
+            "name": "max",
+            "type": "{Number}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 35,
+            "itemtype": "property",
+            "name": "speed",
+            "type": "{Number}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 40,
+            "itemtype": "property",
+            "name": "angle",
+            "type": "{Number}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 45,
+            "itemtype": "property",
+            "name": "rad",
+            "type": "{Number}",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 50,
+            "itemtype": "property",
+            "name": "_val",
+            "type": "{Number}",
+            "access": "protected",
+            "tagname": "",
+            "class": "CG.Morph",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/morph.js",
+            "line": 77,
             "itemtype": "method",
             "name": "getVal",
             "return": {
@@ -5310,7 +5623,16 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 22,
+            "line": 21,
+            "itemtype": "property",
+            "name": "position",
+            "type": "{CG.Point}",
+            "class": "CG.Screen",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/screen.js",
+            "line": 26,
             "itemtype": "property",
             "name": "xscale",
             "type": "{Number}",
@@ -5319,7 +5641,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 27,
+            "line": 31,
             "itemtype": "property",
             "name": "yscale",
             "type": "{Number}",
@@ -5328,7 +5650,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 32,
+            "line": 36,
             "itemtype": "property",
             "name": "layers",
             "type": "{Array}",
@@ -5337,7 +5659,23 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 64,
+            "line": 46,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Screen",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/screen.js",
+            "line": 54,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Screen",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/screen.js",
+            "line": 72,
             "description": "add a CG.Layer object to the layer array",
             "itemtype": "method",
             "name": "addLayer",
@@ -5353,7 +5691,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 74,
+            "line": 82,
             "description": "find CG.Layer by name",
             "itemtype": "method",
             "name": "getLayerByName",
@@ -5366,7 +5704,7 @@
             ],
             "return": {
                 "description": "",
-                "type": "False/layer"
+                "type": "Boolean/layer"
             },
             "class": "CG.Screen",
             "module": "CG"
@@ -5428,6 +5766,30 @@
                 "description": "",
                 "type": "*"
             },
+            "class": "CG.Sequence",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/sequence.js",
+            "line": 43,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Sequence",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/sequence.js",
+            "line": 61,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Sequence",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/sequence.js",
+            "line": 67,
+            "itemtype": "method",
+            "name": "reset",
             "class": "CG.Sequence",
             "module": "CG"
         },
@@ -5739,6 +6101,30 @@
             "module": "CG"
         },
         {
+            "file": "cangaja/control/translate.js",
+            "line": 218,
+            "itemtype": "method",
+            "name": "update",
+            "class": "CG.Translate",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/translate.js",
+            "line": 251,
+            "itemtype": "method",
+            "name": "draw",
+            "class": "CG.Translate",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/control/translate.js",
+            "line": 256,
+            "itemtype": "method",
+            "name": "reset",
+            "class": "CG.Translate",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/game/game.js",
             "line": 10,
             "itemtype": "method",
@@ -5915,7 +6301,7 @@
             "line": 113,
             "description": "in this method all CG.Director elements are updated.",
             "itemtype": "method",
-            "name": "_beforeUpdate",
+            "name": "beforeUpdate",
             "class": "CG.Game",
             "module": "CG"
         },
@@ -5932,13 +6318,13 @@
             "line": 125,
             "description": "in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.",
             "itemtype": "method",
-            "name": "_beforeDraw",
+            "name": "beforeDraw",
             "class": "CG.Game",
             "module": "CG"
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 133,
+            "line": 132,
             "description": "",
             "itemtype": "method",
             "name": "draw",
@@ -5947,10 +6333,10 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 140,
+            "line": 139,
             "description": "this is the final draw method. it draws the b_canvas buffer to the canvas",
             "itemtype": "method",
-            "name": "_afterDraw",
+            "name": "afterDraw",
             "class": "CG.Game",
             "module": "CG"
         },

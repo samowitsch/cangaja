@@ -308,6 +308,13 @@ all physics and drawings.</p>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_deleteBodyAt">deleteBodyAt</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_getBodyAt">getBodyAt</a>
 
                                 
@@ -492,7 +499,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l430"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:430</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l450"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:450</code></a>
         
         </p>
 
@@ -678,7 +685,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l417"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:417</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l437"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:437</code></a>
         
         </p>
 
@@ -819,7 +826,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l137"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:137</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l157"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:157</code></a>
         
         </p>
 
@@ -1006,7 +1013,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l255"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:255</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l275"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:275</code></a>
         
         </p>
 
@@ -1213,7 +1220,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l237"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:237</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l257"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:257</code></a>
         
         </p>
 
@@ -1375,7 +1382,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l173"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:173</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l193"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:193</code></a>
         
         </p>
 
@@ -1549,7 +1556,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l156"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:156</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l176"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:176</code></a>
         
         </p>
 
@@ -1645,7 +1652,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>terrainpoly</code>
+                        <code>jsonpoly</code>
                     
                 </li>
             
@@ -1702,7 +1709,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l216"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:216</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l213"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:213</code></a>
         
         </p>
 
@@ -1713,7 +1720,9 @@ all physics and drawings.</p>
     </div>
 
     <div class="description">
-        <p>createTerrain</p>
+        <p>createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
+Box2D object. The polygonshape and some settings like density, bounce and friction are
+taken from the json file at the moment.</p>
     </div>
 
     
@@ -1754,14 +1763,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">terrainpoly</code>
-                        <span class="type">Array</span>
+                        <code class="param-name">jsonpoly</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>array of vertices to start terrain building</p>
+                        <p>json file from PhysicsEditor from asset</p>
                     </div>
 
                     
@@ -1858,7 +1867,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>jsonpoly</code>
+                        <code>terrainpoly</code>
                     
                 </li>
             
@@ -1915,7 +1924,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l193"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:193</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l236"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:236</code></a>
         
         </p>
 
@@ -1926,9 +1935,7 @@ all physics and drawings.</p>
     </div>
 
     <div class="description">
-        <p>createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
-Box2D object. The polygonshape and some settings like density, bounce and friction are
-taken from the json file at the moment.</p>
+        <p>createTerrain</p>
     </div>
 
     
@@ -1969,14 +1976,14 @@ taken from the json file at the moment.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">jsonpoly</code>
-                        <span class="type">String</span>
+                        <code class="param-name">terrainpoly</code>
+                        <span class="type">Array</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>json file from PhysicsEditor from asset</p>
+                        <p>array of vertices to start terrain building</p>
                     </div>
 
                     
@@ -2134,7 +2141,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l277"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:277</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l297"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:297</code></a>
         
         </p>
 
@@ -2290,6 +2297,109 @@ taken from the json file at the moment.</p>
             
                 <li class="arg">
                     
+                        <code>body</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l137"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:137</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Checks if a B2D body Exists</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">body</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_deleteBodyAt" class="method item">
+    <h3 class="name"><code>deleteBodyAt</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
                         <code>x</code>
                     
                 </li>
@@ -2333,7 +2443,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l366"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:366</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l386"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:386</code></a>
         
         </p>
 
@@ -2457,7 +2567,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l333"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:333</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l353"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:353</code></a>
         
         </p>
 
@@ -2575,7 +2685,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l454"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:454</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l474"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:474</code></a>
         
         </p>
 
@@ -2776,7 +2886,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l390"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:390</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l410"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:410</code></a>
         
         </p>
 
@@ -2858,7 +2968,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l299"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:299</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l319"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:319</code></a>
         
         </p>
 
@@ -2950,7 +3060,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l326"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:326</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l346"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:346</code></a>
         
         </p>
 
@@ -3014,7 +3124,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l397"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:397</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l417"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:417</code></a>
         
         </p>
 
@@ -3101,7 +3211,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l404"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:404</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l424"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:424</code></a>
         
         </p>
 

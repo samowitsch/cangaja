@@ -12,7 +12,7 @@ CG.Class.extend('Translate', {
      * @method init
      * @return {*}
      */
-    init:function () {
+    init: function () {
         /**
          * @property type
          * @type {String}
@@ -119,7 +119,7 @@ CG.Class.extend('Translate', {
      * @param endpoint {point} endpoint of tween
      * @return {this}
      */
-    initTween:function (obj, steps, startpoint, endpoint) {
+    initTween: function (obj, steps, startpoint, endpoint) {
         this.type = 'tween'
         this.theobj = obj
         this.steps = steps
@@ -151,7 +151,7 @@ CG.Class.extend('Translate', {
      * @param rotation {Number} rotation
      * @return {this}
      */
-    initOval:function (obj, centerpoint, radius1, radius2, startangle, rotation) {
+    initOval: function (obj, centerpoint, radius1, radius2, startangle, rotation) {
         this.type = 'oval'
         this.theobj = obj
         this.x1 = centerpoint.x
@@ -178,7 +178,7 @@ CG.Class.extend('Translate', {
      * @param control2 {CG.Point} control2 point for bézier calculation (optional)
      * @return {this}
      */
-    initBezier:function (obj, steps, startpoint, endpoint, control1, control2) {
+    initBezier: function (obj, steps, startpoint, endpoint, control1, control2) {
         this.type = 'bezier'
         this.theobj = obj  //first argument is always the object to handle
         this.steps = steps
@@ -215,9 +215,10 @@ CG.Class.extend('Translate', {
 
         return this
     },
-    draw:function () {
-    },
-    update:function () {
+    /**
+     * @method update
+     */
+    update: function () {
         var obj = this.theobj
         switch (this.type) {
             case 'bezier':
@@ -247,10 +248,15 @@ CG.Class.extend('Translate', {
                 break
         }
     },
-    draw:function () {
-
+    /**
+     * @method draw
+     */
+    draw: function () {
     },
-    reset:function () {
+    /**
+     * @method reset
+     */
+    reset: function () {
         this.step = 0
         this.finished = false
     }
