@@ -86,6 +86,9 @@ CG.Layer.extend('B2DWorld', {
         this.world.SetDebugDraw(debugDraw)
 
     },
+    /**
+     * @method update
+     */
     update: function () {
 
         this.world.Step(
@@ -106,6 +109,9 @@ CG.Layer.extend('B2DWorld', {
 
 
     },
+    /**
+     * @method draw
+     */
     draw: function () {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
