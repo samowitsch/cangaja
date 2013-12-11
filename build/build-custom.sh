@@ -8,10 +8,11 @@ echo ""
 
 cat ../cangaja/base/base.js \
 ../cangaja/game/game.js \
-../cangaja/lib-ext/keymaster.js \
-../cangaja/lib-ext/poly2tri.js \
-../cangaja/lib-ext/clipper.js \
-../cangaja/lib-ext/spine.js \
+../cangaja/lib-ext/math/transform.js \
+../cangaja/lib-ext/input/keymaster.js \
+../cangaja/lib-ext/math/poly2tri.js \
+../cangaja/lib-ext/math/clipper.js \
+../cangaja/lib-ext/spine/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
 ../cangaja/renderer/canvasrenderer.js \
@@ -22,6 +23,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/sprite/sprite.js \
+../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \
 ../cangaja/atlas/atlas-texturepacker.js \
 ../cangaja/sprite/animation.js \
@@ -80,8 +82,8 @@ echo ""
 
 
 #concat all libs
-cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/buzz.js ../cangaja/lib-ext/hammer.js ../cangaja/lib-ext/stats.js > ../cangaja/lib/cangaja.all.js
-echo "> generated lib version, added libs buzz and hammer."
+cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/input/hammer.js ../cangaja/lib-ext/sound/buzz.js ../cangaja/lib-ext/util/stats.js > ../cangaja/lib/cangaja.all.js
+echo "> generated lib version, added libs hammer, buzz and stats."
 echo ""
 
 #running yuicompressor
