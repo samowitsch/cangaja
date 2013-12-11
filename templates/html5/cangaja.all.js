@@ -11631,26 +11631,54 @@ CG.Class.extend('MediaAsset', {
      * @param obj {object} the game object CG.Game
      */
     init:function (obj) {
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.obj = obj
-
+        /**
+         * @property ready
+         * @type {CG.Game}
+         */
         this.ready = false
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.progress = 0
 
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.images = []
         this.currimage = 0
 
-        this.sounds = []
-        this.currsound = 0
-
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.xmls = []
         this.currxml = 0
 
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.jsons = []
         this.currjson = 0
 
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.texts = []
         this.currtext = 0
 
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.fonts = []
         this.currfont = 0
 
@@ -11658,16 +11686,56 @@ CG.Class.extend('MediaAsset', {
         this.assetcurrent = 0
 
         //progress
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.width = 300
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.height = 20
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.radius = 10
 
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.linewidth = 8
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.bordercolor = 'white'
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.progresscolor = 'red'
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.shadowcolor = '#222'
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.shadowblur = 6
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.shadowoffsetx = 2
+        /**
+         * @property obj
+         * @type {CG.Game}
+         */
         this.shadowoffsety = 2
 
 //return this
@@ -11776,7 +11844,7 @@ CG.Class.extend('MediaAsset', {
      * @return {*}
      */
     getImagesByName:function (name) {
-        names = []
+        var names = []
         for (var i = 0, l = this.images.length; i < l; i++) {
             if (this.images[i].name == name) {
                 if (this.images[i] instanceof CG.AtlasImage) {
@@ -14359,7 +14427,7 @@ CG.Class.extend('Morph', {
     /**
      * @method init
      * @constructor
-     * @param mode {string} mode type of the morph object
+     * @param mode {string} mode type of the morph object, at the moment only "sinus" possible ;o)
      * @param min {Number} min min value
      * @param max {Number} max max value
      * @param speed {Number} speed speed value
@@ -27913,6 +27981,26 @@ CG.Layer.extend('B2DWorld', {
         obj.id.uid = this.uid
         this.elements.push(obj)
     },
+     /**
+     * @description
+     *
+     * Checks if a B2D body Exists
+     *
+     * @method deleteBodyAt
+     * @param body {Object}
+     * @return {Boolean}
+     */
+    checkIfBodyExists: function (body) {
+        if (body) {
+            for (var i = 0, l = this.elements.length; i < l; i++) {
+                //if b2entity found delete entity and b2body
+                if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
+                    return true
+                }
+            }
+        }
+        return false
+    },
     /**
      * @description
      *
@@ -28186,7 +28274,7 @@ CG.Layer.extend('B2DWorld', {
      */
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
-            if (typeof this.elements[i].id !== 'undefined' && typeof this.elements[i] === 'object') {
+            if (typeof this.elements[i] === 'object' && typeof this.elements[i].id !== 'undefined') {
                 if(this.elements[i].id.uid === uid) {
                     this.elements.splice(i, 1);
                 }
