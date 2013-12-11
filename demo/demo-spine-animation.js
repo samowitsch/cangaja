@@ -1,239 +1,188 @@
-var renderStats
-var can
-
-var mainscreen, mainlayer
-
-var spineboy, goblins, dragon, powerup, spinosaurus
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var mouseup
-
+var renderStats, canvas, mainscreen, mainlayer, spineboy, goblins, dragon, powerup, spinosaurus, Game, abadi, small;
+var xpos = 10, ypos = 10
 
 //waiting to get started ;o)
 window.onload = function () {
 
     //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 800
-    can.height = 600
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 800
+    canvas.height = 600
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    can.addEventListener('mousedown', function (evt) {
-
-        //spineboy stuff
-        spineboy.state.setAnimationByName(0, "jump", false);
-        spineboy.state.addAnimationByName(0, "walk", true, 0);
-
-        //goblin stuff
-        if (goblins.skeleton.skin.name == 'goblin') {
-            goblins.skeleton.setSkinByName('goblingirl')
-        } else {
-            goblins.skeleton.setSkinByName('goblin')
-        }
-        goblins.skeleton.setSlotsToSetupPose()
-    }, false)
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: 800,
-        height: 600,
-        width2: 800 / 2,
-        height2: 600 / 2,
-        bound: new CG.Bound(0, 0, 800, 600).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById("canvas")
-            Game.ctx = Game.canvas.getContext("2d")
-            Game.asset = new CG.MediaAsset(Game)
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        //add needed eventlistener or use included hammer.js
+        this.canvas.addEventListener('mousedown', function (e) {
+            CG.mousedown = this.mousedown = true
 
-            //Asset preloading font files
-            Game.asset
-                .addFont('media/font/small.txt', 'small', 'small')
-                .addImage('media/font/small.png', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/font/abadi_ez.png', 'abadi_ez')
+            //spineboy stuff
+            spineboy.state.setAnimationByName(0, "jump", false);
+            spineboy.state.addAnimationByName(0, "walk", true, 0);
 
-                //preloading spineboy
-                .addText('media/spine/spineboy.atlas', 'spineboy-atlas')
-                .addJson('media/spine/spineboy.json', 'spineboy-json')
-                .addImage('media/spine/spineboy.png', 'spineboy')           //image preloading not nessecary SpineAnimation class has also a preloader
+            //goblin stuff
+            if (goblins.skeleton.skin.name == 'goblin') {
+                goblins.skeleton.setSkinByName('goblingirl')
+            } else {
+                goblins.skeleton.setSkinByName('goblin')
+            }
+            goblins.skeleton.setSlotsToSetupPose()
 
-                //preloading goblins
-                .addText('media/spine/goblins.atlas', 'goblins-atlas')
-                .addJson('media/spine/goblins.json', 'goblins-json')
-                .addImage('media/spine/goblins.png', 'goblins')           //image preloading not nessecary SpineAnimation class has also a preloader
+        }.bind(this), true);
 
-                //preloading powerup
-                .addText('media/spine/powerup.atlas', 'powerup-atlas')
-                .addJson('media/spine/powerup.json', 'powerup-json')
-                .addImage('media/spine/powerup.png', 'powerup')           //image preloading not nessecary SpineAnimation class has also a preloader
+        this.canvas.addEventListener('mouseup', function () {
+            CG.mousedown = this.mousedown = false
+        }.bind(this), true);
 
-                //preloading spinoraurus
-                .addText('media/spine/spinosaurus.atlas', 'spinosaurus-atlas')
-                .addJson('media/spine/spinosaurus.json', 'spinosaurus-json')
-                .addImage('media/spine/spinosaurus.png', 'spinosaurus')           //image preloading not nessecary SpineAnimation class has also a preloader
+        this.canvas.addEventListener('mousemove', function (evt) {
+            CG.mouse = this.mouse = {
+                x: evt.clientX - this.canvas.offsetLeft,
+                y: evt.clientY - this.canvas.offsetTop
+            }
+        }.bind(this), false)
+    },
+    preload: function () {
+        this.asset
+            .addFont('media/font/small.txt', 'small', 'small')
+            .addImage('media/font/small.png', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/font/abadi_ez.png', 'abadi_ez')
 
-                //preloading spinoraurus
-                .addText('media/spine/dragon.atlas', 'dragon-atlas')
-                .addJson('media/spine/dragon.json', 'dragon-json')
-                .addImage('media/spine/dragon.png', 'dragon')           //image preloading not nessecary SpineAnimation class has also a preloader
+            //preloading spineboy
+            .addText('media/spine/spineboy.atlas', 'spineboy-atlas')
+            .addJson('media/spine/spineboy.json', 'spineboy-json')
+            .addImage('media/spine/spineboy.png', 'spineboy')           //image preloading not nessecary SpineAnimation class has also a preloader
 
-                .startPreLoad()
-        },
-        create: function () {
+            //preloading goblins
+            .addText('media/spine/goblins.atlas', 'goblins-atlas')
+            .addJson('media/spine/goblins.json', 'goblins-json')
+            .addImage('media/spine/goblins.png', 'goblins')           //image preloading not nessecary SpineAnimation class has also a preloader
 
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+            //preloading powerup
+            .addText('media/spine/powerup.atlas', 'powerup-atlas')
+            .addJson('media/spine/powerup.json', 'powerup-json')
+            .addImage('media/spine/powerup.png', 'powerup')           //image preloading not nessecary SpineAnimation class has also a preloader
 
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
+            //preloading spinoraurus
+            .addText('media/spine/spinosaurus.atlas', 'spinosaurus-atlas')
+            .addJson('media/spine/spinosaurus.json', 'spinosaurus-json')
+            .addImage('media/spine/spinosaurus.png', 'spinosaurus')           //image preloading not nessecary SpineAnimation class has also a preloader
+
+            //preloading spinoraurus
+            .addText('media/spine/dragon.atlas', 'dragon-atlas')
+            .addJson('media/spine/dragon.json', 'dragon-json')
+            .addImage('media/spine/dragon.png', 'dragon')           //image preloading not nessecary SpineAnimation class has also a preloader
+
+            .startPreLoad()
+    },
+    create: function () {
+
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
 //            mainscreen.xscale = 0.5
 //            mainscreen.yscale = 0.5
-            mainlayer = new CG.Layer('mainlayer')
+        mainlayer = new CG.Layer('mainlayer')
 
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-
-            //spine animation
-            spinosaurus = new CG.SpineAnimation(
-                Game.asset.getJsonByName('spinosaurus-json'),
-                Game.asset.getTextByName('spinosaurus-atlas'),
-                new CG.Point(Game.width2, 600),
-                1,  //experimental scale
-                function (spineObject) {
+        //spine animation
+        spinosaurus = new CG.SpineAnimation(
+            this.asset.getJsonByName('spinosaurus-json'),
+            this.asset.getTextByName('spinosaurus-atlas'),
+            new CG.Point(this.width2, 600),
+            1,  //experimental scale
+            function (spineObject) {
 //                    spineObject.skeleton.setSkinByName("goblingirl");
-                    spineObject.skeleton.setSlotsToSetupPose();
-                    spineObject.state.setAnimationByName(0, "animation", true);
-                }
-            )
-            mainlayer.addElement(spinosaurus)
-
-            dragon = new CG.SpineAnimation(
-                Game.asset.getJsonByName('dragon-json'),
-                Game.asset.getTextByName('dragon-atlas'),
-                new CG.Point(Game.width2, 600),
-                1,  //experimental scale
-                function (spineObject) {
-//                    spineObject.skeleton.setSkinByName("goblingirl");
-                    spineObject.skeleton.setSlotsToSetupPose();
-                    spineObject.state.setAnimationByName(0, "flying", true);
-                }
-            )
-            mainlayer.addElement(dragon)
-
-            powerup = new CG.SpineAnimation(
-                Game.asset.getJsonByName('powerup-json'),
-                Game.asset.getTextByName('powerup-atlas'),
-                new CG.Point(200, 300),
-                1,  //experimental scale
-                function (spineObject) {
-//                    spineObject.skeleton.setSkinByName("goblingirl");
-                    spineObject.skeleton.setSlotsToSetupPose();
-                    spineObject.state.setAnimationByName(0, "animation", true);
-                }
-            )
-            mainlayer.addElement(powerup)
-
-
-            spineboy = new CG.SpineAnimation(
-                Game.asset.getJsonByName('spineboy-json'),
-                Game.asset.getTextByName('spineboy-atlas'),
-                new CG.Point(160, 550),
-                1,  //experimental scale
-                function (spineObject) {
-                    spineObject.stateData.setMixByName("walk", "jump", 0.2);
-                    spineObject.stateData.setMixByName("jump", "walk", 0.4);
-                    spineObject.state.setAnimationByName(0, "walk", true, 0);
-                }
-            )
-            mainlayer.addElement(spineboy)
-
-
-            goblins = new CG.SpineAnimation(
-                Game.asset.getJsonByName('goblins-json'),
-                Game.asset.getTextByName('goblins-atlas'),
-                new CG.Point(Game.width - 160, 550),
-                1,  //experimental scale
-                function (spineObject) {
-                    spineObject.skeleton.setSkinByName("goblingirl");
-                    spineObject.skeleton.setSlotsToSetupPose();
-                    spineObject.state.setAnimationByName(0, "walk", true);
-                }
-            )
-            mainlayer.addElement(goblins)
-
-
-
-
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            Game.update()
-            Game.draw()
-        },
-        update: function () {
-            //update here what ever you want
-            Game.director.update()
-
-            spineboy.skeleton.getRootBone().x += 3
-            if (spineboy.skeleton.getRootBone().x > 850) {
-                spineboy.skeleton.getRootBone().x = -100
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "animation", true);
             }
+        )
+        mainlayer.addElement(spinosaurus)
 
-            dragon.skeleton.getRootBone().x += 2
-            if (dragon.skeleton.getRootBone().x > 1100) {
-                dragon.skeleton.getRootBone().x = -350
+        dragon = new CG.SpineAnimation(
+            this.asset.getJsonByName('dragon-json'),
+            this.asset.getTextByName('dragon-atlas'),
+            new CG.Point(this.width2, 600),
+            1,  //experimental scale
+            function (spineObject) {
+//                    spineObject.skeleton.setSkinByName("goblingirl");
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "flying", true);
             }
+        )
+        mainlayer.addElement(dragon)
 
+        powerup = new CG.SpineAnimation(
+            this.asset.getJsonByName('powerup-json'),
+            this.asset.getTextByName('powerup-atlas'),
+            new CG.Point(200, 300),
+            1,  //experimental scale
+            function (spineObject) {
+//                    spineObject.skeleton.setSkinByName("goblingirl");
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "animation", true);
+            }
+        )
+        mainlayer.addElement(powerup)
 
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
+        spineboy = new CG.SpineAnimation(
+            this.asset.getJsonByName('spineboy-json'),
+            this.asset.getTextByName('spineboy-atlas'),
+            new CG.Point(160, 550),
+            1,  //experimental scale
+            function (spineObject) {
+                spineObject.stateData.setMixByName("walk", "jump", 0.2);
+                spineObject.stateData.setMixByName("jump", "walk", 0.4);
+                spineObject.state.setAnimationByName(0, "walk", true, 0);
+            }
+        )
+        mainlayer.addElement(spineboy)
 
-            Game.director.draw()
+        goblins = new CG.SpineAnimation(
+            this.asset.getJsonByName('goblins-json'),
+            this.asset.getTextByName('goblins-atlas'),
+            new CG.Point(this.width - 160, 550),
+            1,  //experimental scale
+            function (spineObject) {
+                spineObject.skeleton.setSkinByName("goblingirl");
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "walk", true);
+            }
+        )
+        mainlayer.addElement(goblins)
 
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            small.drawText('Spine Animation class example. Click with mouse in canvas.', xpos, ypos + 50)
-
-
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        spineboy.skeleton.getRootBone().x += 3
+        if (spineboy.skeleton.getRootBone().x > 850) {
+            spineboy.skeleton.getRootBone().x = -100
         }
-    }
 
-    return Game
-}())
+        dragon.skeleton.getRootBone().x += 2
+        if (dragon.skeleton.getRootBone().x > 1100) {
+            dragon.skeleton.getRootBone().x = -350
+        }
+        renderStats.update();
+    },
+    draw: function () {
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Spine Animation class example. Click with mouse in canvas.', xpos, ypos + 50)
+    }
+})

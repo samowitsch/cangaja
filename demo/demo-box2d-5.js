@@ -1,44 +1,17 @@
-var renderStats
+var renderStats, mainscreen, mainlayer, Game, canvas, abadi, small, b2world,
+    mousex = 0, mousey = 0, xpos = 10, ypos = 10,
+    tp = new CG.AtlasTexturePacker()
 
-var mainscreen, mainlayer
-
-var mousex = 0
-var mousey = 0
-var mousedown = false
-var tp = new CG.AtlasTexturePacker()
-var collision = {direction: '', overlap: 0}
-
-
-//waiting to get started ;o)
 window.onload = function () {
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = 1024
-    can.height = 768
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 1024
+    canvas.height = 768
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //mouse move
-
-
-    can.addEventListener('mousedown', function (e) {
-        mousedown = true;
-    }, true);
-
-    can.addEventListener('mouseup', function () {
-        mousedown = false;
-    }, true);
-
-    can.addEventListener('mousemove', function (evt) {
-        var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - canvas.offsetLeft;
-        mousey = evt.clientY - canvas.offsetTop;
-    }, false);
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
-
 
 CG.B2DWorld.extend('B2DTestbed', {
     init: function (name) {
@@ -89,102 +62,72 @@ CG.B2DWorld.extend('B2DTestbed', {
     }
 })
 
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: 1024,
-        height: 768,
-        width2: 1024 / 2,
-        height2: 768 / 2,
-        bound: new CG.Bound(0, 0, 1024, 768).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
-            //canvas for ouput
-            Game.canvas = document.getElementById('canvas')
-            Game.ctx = Game.canvas.getContext('2d')
-            Game.asset = new CG.MediaAsset(Game)
+        //add needed eventlistener or use included hammer.js
+        this.canvas.addEventListener('mousedown', function (e) {
+            CG.mousedown = this.mousedown = true
+        }.bind(this), true);
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
+        this.canvas.addEventListener('mouseup', function () {
+            CG.mousedown = this.mousedown = false
+        }.bind(this), true);
 
-            //Asset preloading font files
-            Game.asset.addFont('media/font/small.txt', 'small', 'small')
-                .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/glowball-50.png', 'glowball')
-                .addImage('media/img/ballon.png', 'ballon')
-                .addImage('media/img/hunter.png', 'hunter')
-                .addImage('media/img/back3.jpg', 'back3')
+        this.canvas.addEventListener('mousemove', function (evt) {
+            mousex = evt.clientX - this.canvas.offsetLeft
+            mousey = evt.clientY - this.canvas.offsetTop
+            CG.mouse = this.mouse = {
+                x: evt.clientX - this.canvas.offsetLeft,
+                y: evt.clientY - this.canvas.offsetTop
+            }
+        }.bind(this), false)
+    },
+    preload: function () {
+        this.asset
+            .addFont('media/font/small.txt', 'small', 'small')
+            .addFont('media/font/abadi_ez.txt', 'abadi')
+            .addImage('media/img/glowball-50.png', 'glowball')
+            .startPreLoad()
+    },
+    create: function () {
 
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
 
-                //tiled map
-                .addJson('media/map/map-advanced-inner-outer.json', 'map1')
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
 
-                //physics engine
-                .addJson('media/img/ballon.json', 'ballon')
-                .addJson('media/img/rainbow_256.json', 'rainbow_256')
-                .addJson('media/img/powerstar75.json', 'powerstar75')
+        //create Box2D World
+        b2world = new CG.B2DTestbed('box2d-world')
+        b2world.debug = 1
 
-                //texturepacker
-                .addImage('media/img/texturepacker.png', 'texturepacker')
-                .addJson('media/img/texturepacker.json', 'texturepacker-json')
+        //create circle element with image
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 510, -200, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 410, -300, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 210, -400, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
-                .startPreLoad()
-        },
-        create: function () {
+        var terrainPolys =
+            [
 
-            //create texturepacker image in asset
-            tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
+                {
+                    outer: [
+                        {x: 0, y: 100.5},
+                        {x: 1024, y: 100.5},
+                        {x: 1024, y: 768},
+                        {x: 0, y: 768}
+                    ],
 
-            //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
+                    holes: [
 
-            //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
-
-            //create Box2D World
-            b2world = new CG.B2DTestbed('box2d-world')
-            b2world.debug = 1
-
-            //create circle element with image
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 510, -200, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 410, -300, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 210, -400, box2d.b2BodyType.b2_dynamicBody)
-            b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 36, 110, 0, box2d.b2BodyType.b2_dynamicBody)
-
-            var terrainPolys =
-                [
-
-                    {
-                        outer: [
-                            {x: 0, y: 100.5},
-                            {x: 1024, y: 100.5},
-                            {x: 1024, y: 768},
-                            {x: 0, y: 768}
-                        ],
-
-                        holes: [
-
-                        ]
-                    }
+                    ]
+                }
 
 
 //                    {
@@ -277,81 +220,72 @@ Game = (function () {
 //                        holes: []
 //                    }
 
-            ]
+        ]
 
-            b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
+        b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
 
-            b2world.addContactListener({
-                BeginContact: function (idA, idB) {
-                    //console.log('BeginContact');
-                },
+        b2world.addContactListener({
+            BeginContact: function (idA, idB) {
+                //console.log('BeginContact');
+            },
 
-                PostSolve: function (idA, idB, impulse) {
-                    //console.log(['PostSolve', idA, idB, impulse]);
+            PostSolve: function (idA, idB, impulse) {
+                //console.log(['PostSolve', idA, idB, impulse]);
 //                    if (impulse < 0.1) return;
 //                    var entityA = world[idA];
 //                    var entityB = world[idB];
 //                    entityA.hit(impulse, entityB);
 //                    entityB.hit(impulse, entityA);
-                }
-            });
+            }
+        });
 
-            //add it to a CGLayer
-            mainlayer.addElement(b2world)
+        //add it to a CGLayer
+        mainlayer.addElement(b2world)
 
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
 
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.update()
-                Game.draw()
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        if (key.isPressed("g")) {
+            b = b2world.getBodyAt(this.mouse.x, this.mouse.y)
+            console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
+        }
+        if (key.isPressed("i")) {
+            body = b2world.getBodyAt(this.mouse.x, this.mouse.y)
+            b2world.applyImpulse(body, 270, 25)
+        }
+        if (key.isPressed("b")) {
+            b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, this.mouse.x, this.mouse.y, false)
+        }
+        if (key.isPressed("c")) {
+            b2world.elements[5].clipTerrain({points: 16, radius: 40, x: this.mouse.x, y: this.mouse.y})
+        }
+        if (key.isPressed("d")) {
+            if (b2world.debug == 0) {
+                b2world.debug = 1
+            } else {
+                b2world.debug = 0
             }
-        },
-        update: function () {
-            //update here what ever you want
-
-
-            if (key.isPressed("g")) {
-                b = b2world.getBodyAt(mousex, mousey)
-                console.log([b, b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
-            }
-            if (key.isPressed("i")) {
-                body = b2world.getBodyAt(mousex, mousey)
-                b2world.applyImpulse(body, 270, 25)
-            }
-            if (key.isPressed("b")) {
-                b2world.createCircle('glowball', Game.asset.getImageByName('glowball'), 40, mousex, mousey, false)
-            }
-            if (key.isPressed("c")) {
-                b2world.elements[5].clipTerrain({points: 16, radius: 40, x: mousex, y: mousey})
-            }
-            if (key.isPressed("d")) {
-                if (b2world.debug == 0) {
-                    b2world.debug = 1
-                } else {
-                    b2world.debug = 0
-                }
-            }
-            if (key.isPressed("left")) {
-                velo = b2world.elements[0].body.GetLinearVelocity()
-                velo.SelfAdd(new b2Vec2(-5, 0))
-                b2world.elements[0].body.SetLinearVelocity(velo)
-            }
-            if (key.isPressed("up")) {
-                b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
-            }
-            if (key.isPressed("right")) {
-                velo = b2world.elements[0].body.GetLinearVelocity()
-                velo.SelfAdd(new b2Vec2(5, 0))
-                b2world.elements[0].body.SetLinearVelocity(velo)
-            }
+        }
+        if (key.isPressed("left")) {
+            velo = b2world.elements[0].body.GetLinearVelocity()
+            velo.SelfAdd(new b2Vec2(-5, 0))
+            b2world.elements[0].body.SetLinearVelocity(velo)
+        }
+        if (key.isPressed("up")) {
+            b2world.elements[0].body.ApplyForce(new b2Vec2(0, -500), b2world.elements[0].body.GetWorldCenter())
+        }
+        if (key.isPressed("right")) {
+            velo = b2world.elements[0].body.GetLinearVelocity()
+            velo.SelfAdd(new b2Vec2(5, 0))
+            b2world.elements[0].body.SetLinearVelocity(velo)
+        }
 
 //                document.onkeydown = function (evt) {
 //                if (evt.keyCode == 71) { //g
@@ -398,37 +332,12 @@ Game = (function () {
 //
 ////                console.log(evt.keyCode)
 //            };
-
-            Game.director.update()
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-            var xpos = 10
-            var ypos = 10
-
-            //draw all elements that the director has
-            Game.director.draw()
-
-
-            //text stuff
-            abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Destructible Terrain.', xpos, ypos + 56)
-            small.drawText('C=clip hole, D=debugdraw on/off, B=new ball, I=impulse on body below mousepointer', xpos, ypos + 76)
-            small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length, xpos, ypos + 96)
-
-            // draw Game.b_canvas to the canvas
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
-
-            // clear the Game.b_canvas
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
-
-            renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
-        }
+        renderStats.update();
+    },
+    draw: function () {
+        abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        small.drawText('Destructible Terrain.', xpos, ypos + 56)
+        small.drawText('C=clip hole, D=debugdraw on/off, B=new ball, I=impulse on body below mousepointer', xpos, ypos + 76)
+        small.drawText('Triangles: ' + b2world.elements[5].terrainTriangles.length, xpos, ypos + 96)
     }
-
-    return Game
-})()
+})

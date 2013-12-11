@@ -1,49 +1,22 @@
-var renderStats, updateStats
-
-var mainscreen, mainlayer
-
-var can, canvas, ctx
+var renderStats, mainscreen, mainlayer, canvas, ctx, Game, b2world
 var sfxWhistle, sfxCrowd, sfxNet, sfxIntro
 
-var rightplayer, leftplayer, ball
-var startleft = false, startright = true
+var rightplayer, leftplayer, ball, startleft = false, startright = true
 
-var mousex = 0
-var mousey = 0
+var mousex = 0, mousey = 0
 var tp = new CG.AtlasTexturePacker()
-var collision = {direction: '', overlap: 0}
 
-var gw = 800, gh = 480
+var title = 'Tribute to blobby...'
 
-
-//waiting to get started ;o)
 window.onload = function () {
 
-    //create canvas element programaticaly
-    can = document.createElement('canvas')
-    can.width = gw
-    can.height = gh
-    can.id = 'canvas'
-    document.body.appendChild(can)
+    canvas = document.createElement('canvas')
+    canvas.width = 800
+    canvas.height = 480
+    canvas.id = 'canvas'
+    document.body.appendChild(canvas)
 
-    //mouse move
-
-
-    can.addEventListener('mousedown', function (e) {
-        CG.mousedown = true;
-    }, true);
-
-    can.addEventListener('mouseup', function () {
-        CG.mousedown = false;
-    }, true);
-
-    can.addEventListener('mousemove', function (evt) {
-        var rect = can.getBoundingClientRect(), root = document.documentElement;
-        mousex = evt.clientX - can.offsetLeft;
-        mousey = evt.clientY - can.offsetTop;
-    }, false);
-
-    Game.preload()
+    Game = new CG.MyGame(canvas)
 };
 
 /**
@@ -315,230 +288,182 @@ CG.B2DCircle.extend('B2DBall', {
 })
 
 
-// the Game object
-Game = (function () {
-    var Game = {
-        path: '',
-        fps: 60,
-        width: gw,
-        height: gh,
-        width2: gw / 2,
-        height2: gh / 2,
-        bound: new CG.Bound(0, 0, gw, gh).setName('game'),
-        canvas: {},
-        ctx: {},
-        b_canvas: {},
-        b_ctx: {},
-        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director: new CG.Director(),
-        renderer: new CG.CanvasRenderer(),
-        delta: new CG.Delta(60),
-        preload: function () {
+/**
+ * extend CG.Game
+ */
+CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        //call init from super class
+        this._super(canvas, options)
+        //add custom properties here or remove the init method
 
-            //sfx
-            sfxIntro = new buzz.sound('media/sfx/blobby-intro', {
-                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
-                preload: true,
-                autoplay: true,
-                loop: true
-            });
-            sfxCrowd = new buzz.sound('media/sfx/blobby-crowd', {
-                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
-                preload: true,
-                autoplay: false,
-                loop: false
-            });
-            sfxWhistle = new buzz.sound('media/sfx/blobby-whistle', {
-                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
-                preload: true,
-                autoplay: false,
-                loop: false
-            });
-            sfxNet = new buzz.sound('media/sfx/blobby-net', {
-                formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
-                preload: true,
-                autoplay: false,
-                loop: false
-            });
+        //add needed eventlistener or use included hammer.js
+        this.canvas.addEventListener('mousedown', function (e) {
+            CG.mousedown = this.mousedown = true
+        }.bind(this), true);
 
-            //canvas for ouput
-            Game.canvas = document.getElementById('canvas')
-            Game.ctx = Game.canvas.getContext('2d')
-            Game.asset = new CG.MediaAsset(Game)
+        this.canvas.addEventListener('mouseup', function () {
+            CG.mousedown = this.mousedown = false
+        }.bind(this), true);
 
-            //frame buffer
-            Game.b_canvas = document.createElement('canvas')
-            Game.b_ctx = Game.b_canvas.getContext('2d')
-            Game.b_canvas.width = Game.bound.width
-            Game.b_canvas.height = Game.bound.height
-
-            //Asset preloading font files
-            Game.asset.addFont('media/font/abadi_ez.txt', 'small', 'small')
-
-                //physics engine
-                .addJson('media/img/blobbies.json', 'blobbies')
-
-                .addImage('media/img/glowball-50.png', 'glowball')
-
-                .addImage('media/img/blobby-egg-left.png', 'blobby-egg-left')
-                .addImage('media/img/blobby-egg-right.png', 'blobby-egg-right')
-
-                .addImage('media/img/blobby-back.png', 'blobby-back')
-                .addImage('media/img/blobby-ctrl-right.png', 'ctrl-right')
-                .addImage('media/img/blobby-ctrl-left.png', 'ctrl-left')
-                .addImage('media/img/arrow-25.png', 'arrow')
-                .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
-                .addImage('media/img/beachvolleyball-shadow.png', 'beachvolleyball-shadow')
-
-                //font
-                .addImage('media/font/blobby-points.png', 'blobby-points')
-                .addFont('media/font/blobby-points.txt', 'blobby-points')
-
-                //texturepacker
-                .addImage('media/img/texturepacker.png', 'texturepacker')
-                .addJson('media/img/texturepacker.json', 'texturepacker-json')
-
-                .startPreLoad()
-        },
-        create: function () {
-
-            //create texturepacker image in asset
-            tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
-
-            //put the texturepacker TPImages to the asset
-            Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
-
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-
-            //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
-
-            back = new CG.Sprite(Game.asset.getImageByName('blobby-back'), new CG.Point(400, 240))
-            back.name = 'back'
-            mainlayer.addElement(back)
-
-
-            ctrlleft = new CG.Sprite(Game.asset.getImageByName('ctrl-left'), new CG.Point(0 + 40, Game.height - 30))
-            ctrlleft.name = 'ctrlleft'
-            mainlayer.addElement(ctrlleft)
-            ctrlright = new CG.Sprite(Game.asset.getImageByName('ctrl-right'), new CG.Point(Game.width - 40, Game.height - 30))
-            ctrlright.name = 'ctrlright'
-            mainlayer.addElement(ctrlright)
-
-
-            var opt = {sleep: false}
-            //create Box2D World
-            b2world = new CG.B2DTestbed('box2d-world', opt)
-
-            //add it to a CGLayer
-            mainlayer.addElement(b2world)
-
-            //add screen to Director
-            Game.director.addScreen(mainscreen.addLayer(mainlayer))
-
-            renderStats = new Stats()
-            document.body.appendChild(renderStats.domElement)
-
-            document.onkeydown = function (evt) {
-                var keyCode = evt.keyCode
-
-
-                if (keyCode == 70) { //f
-                    alert('FPS ?: ' + Game.delta.getFPS())
-                }
-
-                if (keyCode == 71) { //g
-                    b = b2world.getBodyAt(mousex, mousey)
-                    console.log([b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
-                }
-                if (keyCode == 73) { //i
-                    body = b2world.getBodyAt(mousex, mousey)
-                    b2world.applyImpulse(body, 270, 200)
-                }
-
-
-                if (keyCode == 65) { // a - left
-                    leftplayer.addVelocity(new b2Vec2(-3, 0))
-                }
-                if (keyCode == 87) { // w - up
-                    if (leftplayer.jump == false) {
-                        //self.applyImpulse(270, self.hor_impulse)
-                        leftplayer.addVelocity(new b2Vec2(0, -9))
-                        leftplayer.jump = true
-                    }
-                }
-                if (keyCode == 68) { // d - right
-                    leftplayer.addVelocity(new b2Vec2(3, 0))
-                }
-
-
-                if (keyCode == 37) { //left
-                    rightplayer.addVelocity(new b2Vec2(-3, 0))
-
-                }
-                if (keyCode == 38) { //up
-                    if (rightplayer.jump == false) {
-                        //self.applyImpulse(270, self.hor_impulse)
-                        rightplayer.addVelocity(new b2Vec2(0, -9))
-                        rightplayer.jump = true
-                    }
-                }
-                if (keyCode == 39) { //right
-                    rightplayer.addVelocity(new b2Vec2(3, 0))
-                }
-
-            };
-
-
-            Game.loop()
-        },
-        loop: function () {
-            requestAnimationFrame(Game.loop);
-            if (Game.asset.ready == true) {
-                Game.update()
-                Game.draw()
+        this.canvas.addEventListener('mousemove', function (evt) {
+            CG.mouse = this.mouse = {
+                x: evt.clientX - this.canvas.offsetLeft,
+                y: evt.clientY - this.canvas.offsetTop
             }
-        },
-        update: function () {
-            //update here what ever you want
-            Game.director.update()
+        }.bind(this), false)
+    },
+    preload: function () {
+        //sfx
+        sfxIntro = new buzz.sound('media/sfx/blobby-intro', {
+            formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
+            preload: true,
+            autoplay: true,
+            loop: true
+        });
+        sfxCrowd = new buzz.sound('media/sfx/blobby-crowd', {
+            formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
+            preload: true,
+            autoplay: false,
+            loop: false
+        });
+        sfxWhistle = new buzz.sound('media/sfx/blobby-whistle', {
+            formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
+            preload: true,
+            autoplay: false,
+            loop: false
+        });
+        sfxNet = new buzz.sound('media/sfx/blobby-net', {
+            formats: [ 'ogg', 'mp3'/*, 'aac', 'wav'*/ ],
+            preload: true,
+            autoplay: false,
+            loop: false
+        });
 
-            if (startleft == true) {
-                ball.body.SetPosition(new b2Vec2(4, 4.5))
-                //ball.body.SetAngularVelocity(0)
-                ball.body.SetSleepingAllowed()
-                ball.body.SetAngularVelocity(0)
-            } else if (startright == true) {
-                ball.body.SetPosition(new b2Vec2(16, 4.5))
-                //ball.body.SetAngularVelocity(0)
-                ball.body.SetSleepingAllowed()
-                ball.body.SetAngularVelocity(0)
+        this.asset
+            .addFont('media/font/abadi_ez.txt', 'abadi', 'abadi')
+
+            //physics engine
+            .addJson('media/img/blobbies.json', 'blobbies')
+
+            .addImage('media/img/blobby-egg-left.png', 'blobby-egg-left')
+            .addImage('media/img/blobby-egg-right.png', 'blobby-egg-right')
+
+            .addImage('media/img/blobby-back.png', 'blobby-back')
+            .addImage('media/img/blobby-ctrl-right.png', 'ctrl-right')
+            .addImage('media/img/blobby-ctrl-left.png', 'ctrl-left')
+            .addImage('media/img/arrow-25.png', 'arrow')
+            .addImage('media/img/beachvolleyball.png', 'beachvolleyball')
+            .addImage('media/img/beachvolleyball-shadow.png', 'beachvolleyball-shadow')
+
+            //font
+            .addImage('media/font/blobby-points.png', 'blobby-points')
+            .addFont('media/font/blobby-points.txt', 'blobby-points')
+
+            //texturepacker
+            .addImage('media/img/texturepacker.png', 'texturepacker')
+            .addJson('media/img/texturepacker.json', 'texturepacker-json')
+
+            .startPreLoad()
+    },
+    create: function () {
+        //create texturepacker image in asset
+        tp.loadJson(this.asset.getJsonByName('texturepacker-json'))
+
+        //put the texturepacker TPImages to the asset
+        this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
+
+        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+
+        //screen and layer
+        mainscreen = new CG.Screen('mainscreen')
+        mainlayer = new CG.Layer('mainlayer')
+
+        back = new CG.Sprite(this.asset.getImageByName('blobby-back'), new CG.Point(400, 240))
+        back.name = 'back'
+        mainlayer.addElement(back)
+
+
+        ctrlleft = new CG.Sprite(this.asset.getImageByName('ctrl-left'), new CG.Point(0 + 40, this.height - 30))
+        ctrlleft.name = 'ctrlleft'
+        mainlayer.addElement(ctrlleft)
+        ctrlright = new CG.Sprite(this.asset.getImageByName('ctrl-right'), new CG.Point(this.width - 40, this.height - 30))
+        ctrlright.name = 'ctrlright'
+        mainlayer.addElement(ctrlright)
+
+        var opt = {sleep: false}
+        //create Box2D World
+        b2world = new CG.B2DTestbed('box2d-world', opt)
+
+        //add it to a CGLayer
+        mainlayer.addElement(b2world)
+
+        //add screen to Director
+        this.director.addScreen(mainscreen.addLayer(mainlayer))
+
+        renderStats = new Stats()
+        document.body.appendChild(renderStats.domElement)
+
+        document.onkeydown = function (evt) {
+            var keyCode = evt.keyCode
+
+            if (keyCode == 71) { //g
+                b = b2world.getBodyAt(this.mouse.x, this.mouse.y)
+                console.log([b.m_userData.name, b.m_userData.uid, b.m_islandIndex])
             }
-        },
-        draw: function () {
-            Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+            if (keyCode == 73) { //i
+                body = b2world.getBodyAt(this.mouse.x, this.mouse.y)
+                b2world.applyImpulse(body, 270, 200)
+            }
 
-            //draw all elements that the director has
-            Game.director.draw()
+            if (keyCode == 65) { // a - left
+                leftplayer.addVelocity(new b2Vec2(-3, 0))
+            }
+            if (keyCode == 87) { // w - up
+                if (leftplayer.jump == false) {
+                    //self.applyImpulse(270, self.hor_impulse)
+                    leftplayer.addVelocity(new b2Vec2(0, -9))
+                    leftplayer.jump = true
+                }
+            }
+            if (keyCode == 68) { // d - right
+                leftplayer.addVelocity(new b2Vec2(3, 0))
+            }
 
-            //text stuff
-            var dummytext = 'Tribute to blobby...'
-            small.drawText(dummytext, Game.width2 - (small.getTextWidth(dummytext) / 2), 10)
+            if (keyCode == 37) { //left
+                rightplayer.addVelocity(new b2Vec2(-3, 0))
 
-            // draw Game.b_canvas to the canvas
-            Game.ctx.drawImage(Game.b_canvas, 0, 0)
+            }
+            if (keyCode == 38) { //up
+                if (rightplayer.jump == false) {
+                    //self.applyImpulse(270, self.hor_impulse)
+                    rightplayer.addVelocity(new b2Vec2(0, -9))
+                    rightplayer.jump = true
+                }
+            }
+            if (keyCode == 39) { //right
+                rightplayer.addVelocity(new b2Vec2(3, 0))
+            }
 
-            // clear the Game.b_canvas
-            Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
+        }.bind(this);
 
-            renderStats.update();
-        },
-        touchinit: function () {
-        },
-        touchhandler: function () {
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+        if (startleft == true) {
+            ball.body.SetPosition(new b2Vec2(4, 4.5))
+            //ball.body.SetAngularVelocity(0)
+            ball.body.SetSleepingAllowed()
+            ball.body.SetAngularVelocity(0)
+        } else if (startright == true) {
+            ball.body.SetPosition(new b2Vec2(16, 4.5))
+            //ball.body.SetAngularVelocity(0)
+            ball.body.SetSleepingAllowed()
+            ball.body.SetAngularVelocity(0)
         }
+    },
+    draw: function () {
+        abadi.drawText(title, this.width2 - (abadi.getTextWidth(title) / 2), 10)
     }
-
-    return Game
-}())
+})
