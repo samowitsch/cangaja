@@ -193,33 +193,7 @@ var CG = CG || {
 /**
  * @description
  *
- * CG.Game - this class is the starting point.
- @example
-     //Class example, how to start from scratch with simple inheritance
-     CG.Class.extend("Entity",{
-            init: function(){
-                this.myprop = 'set from constructor'
-            }
-         });
-
-     CG.Entity.extend("Point",{
-            init: function(x, y){
-                this._super()
-                this.x = x
-                this.y = y
-            }
-         });
-
-     CG.Point.extend("Rectangle",{
-            init: function(x, y, w, h){
-                this._super(x, y)
-                this.w = w
-                this.h = h
-            },
-            move: function(){
-
-            }
-     });
+ * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!
  * @class CG.Game
  * @extends Class
  */
@@ -304,17 +278,17 @@ CG.Class.extend('Game', {
         this.preload()
     },
     /**
-     * @description child classes that instantiate CG.Game defines here all needed stuff to preload with CG.MediaAsset.
+     * @description child classes that extends CG.Game defines here all needed stuff to preload with CG.MediaAsset.
      * @method preload
      */
     preload: function () {
     },
     /**
-     * @description child classes that instantiate CG.Game could use this method to create all needed stuff.
+     * @description child classes that extends CG.Game could use this method to create all needed stuff.
      * @method create
      */
     create: function () {
-        this._loop()
+        this.loop()
     },
     /**
      * @description this is the central (game) loop
@@ -322,18 +296,17 @@ CG.Class.extend('Game', {
      */
     loop: function () {
         requestAnimationFrame(this.loop.bind(this))
-        this._beforeUpdate()
+        this.beforeUpdate()
         this.update()
-        this._beforeDraw()
+        this.beforeDraw()
         this.draw()
-        this._afterDraw()
+        this.afterDraw()
     },
     /**
      * @description in this method all CG.Director elements are updated.
-     * @method _beforeUpdate
-     * @private
+     * @method beforeUpdate
      */
-    _beforeUpdate: function(){
+    beforeUpdate: function(){
         this.director.update()
     },
     /**
@@ -343,11 +316,9 @@ CG.Class.extend('Game', {
     },
     /**
      * @description in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.
-     * @method _beforeDraw
-     * @private
+     * @method beforeDraw
      */
-    _beforeDraw: function () {
-        this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+    beforeDraw: function () {
         this.director.draw()
     },
     /**
@@ -358,86 +329,19 @@ CG.Class.extend('Game', {
 
     },
     /**
-     * @description this is the final method. it draws the b_canvas buffer to the canvas
-     * @method _afterDraw
-     * @private
+     * @description this is the final draw method. it draws the b_canvas buffer to the canvas
+     * @method afterDraw
      */
-    _afterDraw: function () {
+    afterDraw: function () {
+        this.ctx.clearRect(0, 0, this.bound.width, this.bound.height)
+
         // draw buffer b_canvas to the canvas
         this.ctx.drawImage(this.b_canvas, 0, 0)
 
         // clear the b_canvas
         this.b_ctx.clearRect(0, 0, this.bound.width, this.bound.height)
     }
-})
-
-
-/*
-
-
- How to extend the game class
-
-
- //extend the base game class
- CG.Game.extend('MyGame', {
- init: function (canvas, options) {
- //call init from super class
- this._super(canvas, options)
- },
- preload: function (){
- this.asset
- .addImage('media/font/small.png', 'small')
- .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
- .startPreLoad()
-
- },
- create: function () {
-
- //after creation start game loop
- this.loop()
- },
- update: function () {
- //call super class to update director class
- this._super()
- },
- draw: function () {
- //call super class to draw director class
- this._super()
- }
- })
-
-
- var Game = new CG.MyGame('canvas')
-
-
-
-
-
- CG.Game.extend('MyGame', {
- preload: function (){
- this.asset
- .addImage('media/font/small.png', 'small')
- .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
- .startPreLoad()
-
- },
- create: function () {
-
- //after creation start game loop
- this.loop()
- },
- update: function () {
- //call super class to update director class
- this._super()
- },
- draw: function () {
- //call super class to draw director class
- this._super()
- }
- })
-
-
- */// Last updated November 2011
+})// Last updated November 2011
 // By Simon Sarris
 // www.simonsarris.com
 // sarris@acm.org
@@ -12737,6 +12641,10 @@ CG.Class.extend('Screen', {
     init: function (screenname) {
         this.name = (screenname) ? screenname : ''
 
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
         this.position = new CG.Point(0, 0)
         /**
          * @property xscale
@@ -12775,9 +12683,7 @@ CG.Class.extend('Screen', {
             this.layers[i].draw()
         }
 
-
         Game.b_ctx.restore()
-
     },
 
     /**
@@ -12794,7 +12700,7 @@ CG.Class.extend('Screen', {
      * @description find CG.Layer by name
      * @method getLayerByName
      * @param {string} layername find layer by name
-     * @return {false/layer}
+     * @return {boolean/layer}
      */
     getLayerByName: function (layername) {
         for (var i = 0, l = this.layers.length; i < l; i++) {
@@ -14443,7 +14349,7 @@ CG.Class.extend('Translate', {
 /**
  * @description
  *
- * CG.Morph to manipulate objects in size and so on
+ * CG.Morph to manipulate objects in size and so on.
  *
  * @class CG.Morph
  * @extends CG.Class
@@ -14459,21 +14365,50 @@ CG.Class.extend('Morph', {
      * @param speed {Number} speed speed value
      */
     init:function (mode, min, max, speed) {
+        /**
+         * @property mode
+         * @type {String}
+         */
         this.mode = mode
+        /**
+         * @property min
+         * @type {Number}
+         */
         this.min = min
+        /**
+         * @property max
+         * @type {Number}
+         */
         this.max = max
+        /**
+         * @property speed
+         * @type {Number}
+         */
         this.speed = speed
+        /**
+         * @property angle
+         * @type {Number}
+         */
         this.angle = 0
+        /**
+         * @property rad
+         * @type {Number}
+         */
         this.rad = this.max - this.min
-        this.val = 0
+        /**
+         * @property _val
+         * @type {Number}
+         * @protected
+         */
+        this._val = 0
     },
     update:function () {
         switch (this.mode) {
             case 'sinus':
                 var rad = this.angle * CG.Const_PI_180
-                this.val = this.rad * Math.sin(rad)
-                if (this.val < 0) {
-                    this.val = this.val * -1
+                this._val = this.rad * Math.sin(rad)
+                if (this._val < 0) {
+                    this._val = this._val * -1
                 }
                 this.angle += this.speed
 
@@ -14493,7 +14428,7 @@ CG.Class.extend('Morph', {
      * @return {float}
      */
     getVal:function () {
-        return this.val
+        return this._val
     }
 })
 
