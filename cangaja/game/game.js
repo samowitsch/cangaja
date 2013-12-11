@@ -1,7 +1,7 @@
 /**
  * @description
  *
- * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiatet object has to be 'Game'!
+ * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!
  * @class CG.Game
  * @extends Class
  */
