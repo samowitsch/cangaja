@@ -82,8 +82,8 @@ echo ""
 
 
 #concat all libs
-cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/buzz.js ../cangaja/lib-ext/hammer.js ../cangaja/lib-ext/stats.js > ../cangaja/lib/cangaja.all.js
-echo "> generated lib version, added libs buzz and hammer."
+cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/hammer.js ../cangaja/lib-ext/buzz.js ../cangaja/lib-ext/stats.js > ../cangaja/lib/cangaja.all.js
+echo "> generated lib version, added libs hammer, buzz and stats."
 echo ""
 
 #running yuicompressor

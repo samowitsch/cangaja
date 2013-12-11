@@ -4,7 +4,7 @@
  * Copyright (c) 2013 Jorik Tangelder <j.tangelder@gmail.com>;
  * Licensed under the MIT license */
 
-(function(window, undefined) {
+;(function(window, undefined) {
     'use strict';
 
 /**
