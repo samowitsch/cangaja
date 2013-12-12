@@ -13,17 +13,34 @@ CG.Class.extend('Layer', {
      * @param layername {string} the name of the layer
      * @return {*}
      */
-    init:function (layername) {
+    init: function (layername) {
+        /**
+         * @property name
+         * @type {String}
+         */
         this.name = (layername) ? layername : ''
+        /**
+         * @property visible
+         * @type {Boolean}
+         */
         this.visible = true
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = []
+        /**
+         * @property elementsToDelete
+         * @type {Array}
+         * @protected
+         */
         this.elementsToDelete = []
         return this
     },
     /**
      * @method update
      */
-    update:function () {
+    update: function () {
         if (this.visible == true) {
 //            this.elements.forEach(function (element, index) {
 //                element.update()
@@ -32,9 +49,9 @@ CG.Class.extend('Layer', {
 //                }
 //            }, this)
 
-            for(var i = 0, l = this.elements.length; i < l; i++){
+            for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].update()
-                if(this.elements[i].status == 1){
+                if (this.elements[i].status == 1) {
                     this.elementsToDelete.push(this.elements[i])
                 }
             }
@@ -47,7 +64,7 @@ CG.Class.extend('Layer', {
     /**
      * @method draw
      */
-    draw:function () {
+    draw: function () {
         if (this.visible == true) {
 
             //TODO ? place for CanvasRenderer ?
@@ -57,19 +74,19 @@ CG.Class.extend('Layer', {
 //            }, this)
 
 
-            for(var i = 0, l = this.elements.length; i < l; i++){
+            for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].draw()
             }
 
 
         }
     },
-    _deleteElements:function () {
+    _deleteElements: function () {
         this.elementsToDelete.reverse()
         this.elementsToDelete.forEach(this._deleteElement, this)
         this.elementsToDelete = []
     },
-    _deleteElement:function (elementToDelete) {
+    _deleteElement: function (elementToDelete) {
         this.elements.splice(elementToDelete, 1)
     },
 
@@ -78,7 +95,7 @@ CG.Class.extend('Layer', {
      * @method addElement
      * @param {obj} element to add to elements array
      */
-    addElement:function (element) {
+    addElement: function (element) {
         this.elements.push(element)
         return this
     },
@@ -89,7 +106,7 @@ CG.Class.extend('Layer', {
      * @param {string} elementname name of element to find in element array
      * @return {false/object} returns false or the searched object
      */
-    getElementByName:function (elementname) {
+    getElementByName: function (elementname) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
             if (this.elements[i].name == elementname) {
                 return this.elements[i]
@@ -104,7 +121,7 @@ CG.Class.extend('Layer', {
      * @param {string} elementname name of element to find in element array
      * @return {array} returns a array of objects
      */
-    getElementsByName:function (elementname) {
+    getElementsByName: function (elementname) {
         elements = []
         for (var i = 0, l = this.elements.length; i < l; i++) {
             if (this.elements[i].name == elementname) {
