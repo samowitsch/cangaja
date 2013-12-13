@@ -31,6 +31,11 @@ CG.Entity.extend('B2DEntity', {
          */
         this.body = {}
         /**
+         * @property alpha
+         * @type {Number}
+         */
+        this.alpha = 1
+        /**
          * @property x
          * @type {Number}
          */
