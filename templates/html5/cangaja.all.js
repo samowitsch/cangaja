@@ -11433,6 +11433,7 @@ CG.Entity.extend('Bitmap', {
         this.bitmap_ctx.beginPath()
         this.bitmap_ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
         this.bitmap_ctx.closePath()
+        this.bitmap_ctx.fillStyle = '#000000'
         this.bitmap_ctx.fill()
         this.bitmap_ctx.restore()
     },
@@ -11594,13 +11595,17 @@ CG.Class.extend('Menu', {
     addButton:function (button) {
         this.buttons.push(button)
     },
-
+    /**
+     * @method update
+     */
     update:function () {
         this.buttons.forEach(function (button) {
             button.update()
         })
     },
-
+    /**
+     * @method draw
+     */
     draw:function () {
         this.buttons.forEach(function (button) {
             button.position.x = this.x
@@ -11639,45 +11644,46 @@ CG.Class.extend('MediaAsset', {
         /**
          * @property ready
          * @type {CG.Game}
+         * @protected
          */
         this.ready = false
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property progress
+         * @type {Number}
          */
         this.progress = 0
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property images
+         * @type {Array}
          */
         this.images = []
         this.currimage = 0
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property xmls
+         * @type {Array}
          */
         this.xmls = []
         this.currxml = 0
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property jsons
+         * @type {Array}
          */
         this.jsons = []
         this.currjson = 0
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property texts
+         * @type {Array}
          */
         this.texts = []
         this.currtext = 0
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property fonts
+         * @type {Array}
          */
         this.fonts = []
         this.currfont = 0
@@ -11687,54 +11693,54 @@ CG.Class.extend('MediaAsset', {
 
         //progress
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property width
+         * @type {Number}
          */
         this.width = 300
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property height
+         * @type {Number}
          */
         this.height = 20
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property radius
+         * @type {Number}
          */
         this.radius = 10
 
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property linewidth
+         * @type {Number}
          */
         this.linewidth = 8
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property bordercolor
+         * @type {String}
          */
         this.bordercolor = 'white'
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property progresscolor
+         * @type {String}
          */
         this.progresscolor = 'red'
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property shadowcolor
+         * @type {String}
          */
         this.shadowcolor = '#222'
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property shadowblur
+         * @type {Number}
          */
         this.shadowblur = 6
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property shadowoffsetx
+         * @type {Number}
          */
         this.shadowoffsetx = 2
         /**
-         * @property obj
-         * @type {CG.Game}
+         * @property shadowoffsety
+         * @type {Number}
          */
         this.shadowoffsety = 2
 
@@ -12484,6 +12490,9 @@ CG.Class.extend('Director', {
         this.color = 'rgb(0,0,0)'
         return this
     },
+    /**
+     * @method update
+     */
     update: function () {
         //handle screen fading
         switch (this.mode) {
@@ -12567,6 +12576,9 @@ CG.Class.extend('Director', {
         }
         this.screens[this.activescreen].update()
     },
+    /**
+     * @method draw
+     */
     draw: function () {
         //draw active screen
         this.screens[this.activescreen].draw()
@@ -12734,11 +12746,17 @@ CG.Class.extend('Screen', {
     create: function () {
 
     },
+    /**
+     * @method update
+     */
     update: function () {
         for (var i = 0, l = this.layers.length; i < l; i++) {
             this.layers[i].update()
         }
     },
+    /**
+     * @method draw
+     */
     draw: function () {
         Game.b_ctx.save()
         if (this.xscale !== 1 || this.yscale !== 1) {
@@ -12796,14 +12814,34 @@ CG.Class.extend('Layer', {
      * @param layername {string} the name of the layer
      * @return {*}
      */
-    init:function (layername) {
+    init: function (layername) {
+        /**
+         * @property name
+         * @type {String}
+         */
         this.name = (layername) ? layername : ''
+        /**
+         * @property visible
+         * @type {Boolean}
+         */
         this.visible = true
+        /**
+         * @property elements
+         * @type {Array}
+         */
         this.elements = []
+        /**
+         * @property elementsToDelete
+         * @type {Array}
+         * @protected
+         */
         this.elementsToDelete = []
         return this
     },
-    update:function () {
+    /**
+     * @method update
+     */
+    update: function () {
         if (this.visible == true) {
 //            this.elements.forEach(function (element, index) {
 //                element.update()
@@ -12812,9 +12850,9 @@ CG.Class.extend('Layer', {
 //                }
 //            }, this)
 
-            for(var i = 0, l = this.elements.length; i < l; i++){
+            for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].update()
-                if(this.elements[i].status == 1){
+                if (this.elements[i].status == 1) {
                     this.elementsToDelete.push(this.elements[i])
                 }
             }
@@ -12824,7 +12862,10 @@ CG.Class.extend('Layer', {
             }
         }
     },
-    draw:function () {
+    /**
+     * @method draw
+     */
+    draw: function () {
         if (this.visible == true) {
 
             //TODO ? place for CanvasRenderer ?
@@ -12834,19 +12875,19 @@ CG.Class.extend('Layer', {
 //            }, this)
 
 
-            for(var i = 0, l = this.elements.length; i < l; i++){
+            for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].draw()
             }
 
 
         }
     },
-    _deleteElements:function () {
+    _deleteElements: function () {
         this.elementsToDelete.reverse()
         this.elementsToDelete.forEach(this._deleteElement, this)
         this.elementsToDelete = []
     },
-    _deleteElement:function (elementToDelete) {
+    _deleteElement: function (elementToDelete) {
         this.elements.splice(elementToDelete, 1)
     },
 
@@ -12855,7 +12896,7 @@ CG.Class.extend('Layer', {
      * @method addElement
      * @param {obj} element to add to elements array
      */
-    addElement:function (element) {
+    addElement: function (element) {
         this.elements.push(element)
         return this
     },
@@ -12866,7 +12907,7 @@ CG.Class.extend('Layer', {
      * @param {string} elementname name of element to find in element array
      * @return {false/object} returns false or the searched object
      */
-    getElementByName:function (elementname) {
+    getElementByName: function (elementname) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
             if (this.elements[i].name == elementname) {
                 return this.elements[i]
@@ -12881,7 +12922,7 @@ CG.Class.extend('Layer', {
      * @param {string} elementname name of element to find in element array
      * @return {array} returns a array of objects
      */
-    getElementsByName:function (elementname) {
+    getElementsByName: function (elementname) {
         elements = []
         for (var i = 0, l = this.elements.length; i < l; i++) {
             if (this.elements[i].name == elementname) {
@@ -14080,6 +14121,9 @@ CG.Class.extend('Sequence', {
         this.translations.push(translationobj)
         return this
     },
+    /**
+     * @method update
+     */
     update: function (callback) {
         if (this.current < this.translations.length) {
             if (this.translations[this.current].finished === false) {
@@ -14095,9 +14139,15 @@ CG.Class.extend('Sequence', {
             }
         }
     },
+    /**
+     * @method draw
+     */
     draw: function () {
 
     },
+    /**
+     * @method reset
+     */
     reset: function () {
         for (var i = 0, l = this.translations.length; i < l; i++) {
             this.translations[i].reset()
@@ -14122,7 +14172,7 @@ CG.Class.extend('Translate', {
      * @method init
      * @return {*}
      */
-    init:function () {
+    init: function () {
         /**
          * @property type
          * @type {String}
@@ -14229,7 +14279,7 @@ CG.Class.extend('Translate', {
      * @param endpoint {point} endpoint of tween
      * @return {this}
      */
-    initTween:function (obj, steps, startpoint, endpoint) {
+    initTween: function (obj, steps, startpoint, endpoint) {
         this.type = 'tween'
         this.theobj = obj
         this.steps = steps
@@ -14261,7 +14311,7 @@ CG.Class.extend('Translate', {
      * @param rotation {Number} rotation
      * @return {this}
      */
-    initOval:function (obj, centerpoint, radius1, radius2, startangle, rotation) {
+    initOval: function (obj, centerpoint, radius1, radius2, startangle, rotation) {
         this.type = 'oval'
         this.theobj = obj
         this.x1 = centerpoint.x
@@ -14288,7 +14338,7 @@ CG.Class.extend('Translate', {
      * @param control2 {CG.Point} control2 point for bézier calculation (optional)
      * @return {this}
      */
-    initBezier:function (obj, steps, startpoint, endpoint, control1, control2) {
+    initBezier: function (obj, steps, startpoint, endpoint, control1, control2) {
         this.type = 'bezier'
         this.theobj = obj  //first argument is always the object to handle
         this.steps = steps
@@ -14325,9 +14375,10 @@ CG.Class.extend('Translate', {
 
         return this
     },
-    draw:function () {
-    },
-    update:function () {
+    /**
+     * @method update
+     */
+    update: function () {
         var obj = this.theobj
         switch (this.type) {
             case 'bezier':
@@ -14357,10 +14408,15 @@ CG.Class.extend('Translate', {
                 break
         }
     },
-    draw:function () {
-
+    /**
+     * @method draw
+     */
+    draw: function () {
     },
-    reset:function () {
+    /**
+     * @method reset
+     */
+    reset: function () {
         this.step = 0
         this.finished = false
     }
@@ -14870,6 +14926,9 @@ CG.Entity.extend('Emitter', {
         }
         return particle
     },
+    /**
+     * @method update
+     */
 
     update:function () {
         if (this.visible) {
@@ -14897,6 +14956,9 @@ CG.Entity.extend('Emitter', {
             return this
         }
     },
+    /**
+     * @method draw
+     */
     draw:function () {
         if (this.visible) {
             for (var i = 0, l = this.particles.length; i < l; i++) {
@@ -26750,6 +26812,11 @@ CG.Entity.extend('B2DEntity', {
          */
         this.body = {}
         /**
+         * @property alpha
+         * @type {Number}
+         */
+        this.alpha = 1
+        /**
          * @property x
          * @type {Number}
          */
@@ -27327,7 +27394,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 
                 this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
             } catch (e) {
-                console.log(e)
+                console.log('error createTerrain', e)
             }
         }
 
@@ -27464,12 +27531,6 @@ CG.B2DEntity.extend('B2DTerrain', {
             circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
-    },
-    update: function () {
-
-    },
-    draw: function () {
-
     }
 })
 
@@ -27933,6 +27994,9 @@ CG.Layer.extend('B2DWorld', {
         this.world.SetDebugDraw(debugDraw)
 
     },
+    /**
+     * @method update
+     */
     update: function () {
 
         this.world.Step(
@@ -27953,6 +28017,9 @@ CG.Layer.extend('B2DWorld', {
 
 
     },
+    /**
+     * @method draw
+     */
     draw: function () {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
@@ -27971,7 +28038,7 @@ CG.Layer.extend('B2DWorld', {
     /**
      * @description
      *
-     * Custom extended objects can be added to the B2DWork with this method.
+     * Custom extended objects can be added to the B2DWorld with this method.
      *
      * @method addCustom
      * @param obj      object    custom B2D object
@@ -28175,7 +28242,7 @@ CG.Layer.extend('B2DWorld', {
     mouseDownAt: function (x, y) {
         if (!this.mouseJoint) {
             var body = this.getBodyAt(x, y)
-            console.log(body)
+
             if (body) {
                 var md = new b2MouseJointDef()
                 md.bodyA = this.world.m_groundBody
@@ -28326,7 +28393,6 @@ CG.Layer.extend('B2DWorld', {
     getBodySpec: function (b) {
         return {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle(), c: {x: b.GetWorldCenter().x, y: b.GetWorldCenter().y}};
     }
-
 })
 
 
