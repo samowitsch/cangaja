@@ -111,7 +111,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 
                 this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
             } catch (e) {
-                console.log(e)
+                console.log('error createTerrain', e)
             }
         }
 
@@ -248,12 +248,6 @@ CG.B2DEntity.extend('B2DTerrain', {
             circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
-    },
-    update: function () {
-
-    },
-    draw: function () {
-
     }
 })
 
