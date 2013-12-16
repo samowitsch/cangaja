@@ -9,7 +9,7 @@ CG.Game.extend('MyGame', {
         //add custom properties here or remove the init method
 
         //add needed eventlistener or use included hammer.js
-        this.canvas.addEventListener('mousedown', function (e) {
+        this.canvas.addEventListener('mousedown', function (evt) {
             CG.mousedown = this.mousedown = true
             mousex = (evt.clientX - this.canvas.offsetLeft) / 2 >> 0
             mousey = (evt.clientY - this.canvas.offsetTop) / 2 >> 0
