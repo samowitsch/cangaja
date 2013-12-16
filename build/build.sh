@@ -10,8 +10,8 @@ cat ../cangaja/base/base.js \
 ../cangaja/game/game.js \
 ../cangaja/lib-ext/math/transform.js \
 ../cangaja/lib-ext/input/keymaster.js \
-../cangaja/lib-ext/math/poly2tri.js \
-../cangaja/lib-ext/math/clipper.js \
+../cangaja/lib-ext/math/poly2tri/poly2tri.js \
+../cangaja/lib-ext/math/clipper/clipper.js \
 ../cangaja/lib-ext/spine/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
