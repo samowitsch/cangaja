@@ -1,4 +1,4 @@
-var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, mousedown = false, leftplayer, xpos = 10, ypos = 10,
+var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, currentx = 0, currenty = 0, mousedown = false, leftplayer, xpos = 10, ypos = 10,
     tp = new CG.AtlasTexturePacker(),
     terrainBody, clipPoints = 12, clipRadius = 20, b2world
 
@@ -11,6 +11,12 @@ CG.Game.extend('MyGame', {
         //add needed eventlistener or use included hammer.js
         this.canvas.addEventListener('mousedown', function (e) {
             CG.mousedown = this.mousedown = true
+            mousex = (evt.clientX - this.canvas.offsetLeft) / 2 >> 0
+            mousey = (evt.clientY - this.canvas.offsetTop) / 2 >> 0
+            CG.mouse = this.mouse = {
+                x: (evt.clientX - this.canvas.offsetLeft) / 2 >> 0,
+                y: (evt.clientY - this.canvas.offsetTop) / 2 >> 0
+            }
         }.bind(this), true);
 
         this.canvas.addEventListener('mouseup', function () {
@@ -18,11 +24,11 @@ CG.Game.extend('MyGame', {
         }.bind(this), true);
 
         this.canvas.addEventListener('mousemove', function (evt) {
-            mousex = (evt.clientX - this.canvas.offsetLeft) / 2
-            mousey = (evt.clientY - this.canvas.offsetTop) / 2
+            mousex = (evt.clientX - this.canvas.offsetLeft) / 2 >> 0
+            mousey = (evt.clientY - this.canvas.offsetTop) / 2 >> 0
             CG.mouse = this.mouse = {
-                x: (evt.clientX - this.canvas.offsetLeft) / 2,
-                y: (evt.clientY - this.canvas.offsetTop) / 2
+                x: (evt.clientX - this.canvas.offsetLeft) / 2 >> 0,
+                y: (evt.clientY - this.canvas.offsetTop) / 2 >> 0
             }
         }.bind(this), false)
     },
@@ -179,10 +185,12 @@ CG.Game.extend('MyGame', {
         this.loop()
     },
     update: function () {
-        if (this.mousedown == true) {
+        if (this.mousedown == true && (currentx !== this.mouse.x || currenty !== this.mouse.y)) {
             bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
             terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})
             b2world.getStaticBodyListAt(this.mouse.x, this.mouse.y, 16, 0)
+            currentx = this.mouse.x
+            currenty = this.mouse.y
         }
         renderStats.update();
     },
