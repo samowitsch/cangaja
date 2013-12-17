@@ -1,4 +1,4 @@
-var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, currentx = 0, currenty = 0, mousedown = false, leftplayer, xpos = 10, ypos = 10,
+var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, currentx = 0, currenty = 0, mousedown = false, leftplayer, xpos = 10, ypos = 0,
     tp = new CG.AtlasTexturePacker(),
     terrainBody, clipPoints = 12, clipRadius = 20, b2world
 
@@ -202,9 +202,8 @@ CG.Game.extend('MyGame', {
     },
     draw: function () {
         abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-        small.drawText('Destructible Terrain.', xpos, ypos + 45)
-        small.drawText('C=clip hole, O=debugdraw on/off, B=new ball, I=impulse on body below mousepointer, WASD=Player', xpos, ypos + 65)
-        small.drawText('Triangles: ' + terrainBody.terrainTriangles.length + ', box2d bodycount:' + b2world.world.GetBodyCount() + ', CG.B2World elements:' + b2world.elements.length, xpos, ypos + 85)
+        small.drawText('C=clip hole, O=debugdraw on/off, B=new ball, I=impulse on body below mousepointer, WASD=Player', xpos, ypos + 45)
+        small.drawText('Triangles: ' + terrainBody.terrainTriangles.length + ', box2d bodycount:' + b2world.world.GetBodyCount() + ', CG.B2World elements:' + b2world.elements.length, xpos, ypos + 65)
 
     }
 })
