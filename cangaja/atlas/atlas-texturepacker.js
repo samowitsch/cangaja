@@ -16,7 +16,8 @@ CG.Class.extend('AtlasTexturePacker', {
      * @return {*}
      */
     init:function () {
-        if (typeof(ejecta) == 'undefined') {
+        //ejecta and cocoonjs has no DOMParser!
+        if (typeof ejecta === 'undefined' && !navigator.isCocoonJS) {
             this.xml = ''
             this.xmlDoc = ''
             this.parser = new DOMParser() || {}

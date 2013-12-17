@@ -96,8 +96,8 @@ CG.Entity.extend('Map', {
          * @type {String}
          */
         this.atlastranscol = '' //
-        //ejecta has no DOMParser!
-        if (typeof(ejecta) == 'undefined') {
+        //ejecta and cocoonjs has no DOMParser!
+        if (typeof ejecta === 'undefined' && !navigator.isCocoonJS) {
             /**
              * @property xml
              * @type {String}
