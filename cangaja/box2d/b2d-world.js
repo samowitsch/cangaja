@@ -448,8 +448,8 @@ CG.Layer.extend('B2DWorld', {
      */
     applyImpulse: function (body, degrees, power) {
         if (body) {
-            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
-                Math.sin(degrees * (Math.PI / 180)) * power),
+            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                Math.sin(degrees * CG.Const_PI_180) * power),
                 body.GetWorldCenter());
         }
     },
