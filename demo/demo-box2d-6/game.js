@@ -126,7 +126,7 @@ CG.Game.extend('MyGame', {
                 b2world.applyImpulse(body, 270, 10)
             }
             if (evt.keyCode == 66) { //b
-                b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 40, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
+                b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
             }
             if (evt.keyCode == 67 || this.mousedown == true) { //c
                 bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
