@@ -130,7 +130,7 @@ CG.Game.extend('MyGame', {
         b2world.debug = 1
 
         //create circle element with image
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, 310, -200, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 310, -200, box2d.b2BodyType.b2_dynamicBody)
 
         //create box element with image
         b2world.createBox('btn-back', this.asset.getImageByName('btn-back'), 420, -500, box2d.b2BodyType.b2_dynamicBody)
@@ -185,7 +185,7 @@ CG.Game.extend('MyGame', {
                 b2world.createPolyBody('powerstar75', this.asset.getImageByName('powerstar75'), this.asset.getJsonByName('powerstar75'), this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody, false)
             }
             if (evt.keyCode == 66) { //b new ball
-                b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
+                b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
             }
             if (evt.keyCode == 68) { //d
                 body = b2world.deleteBodyAt(this.mouse.x, this.mouse.y)

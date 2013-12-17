@@ -40,7 +40,7 @@ CG.Game.extend('MyGame', {
             .addImage('media/img/TestTerrain.png', 'testTerrain')
             .addImage('media/img/TerrainBackground.png', 'back')
             .addImage('media/img/spritetestphysics.png', 'spritetestphysics')
-            .addImage('media/img/rock.png', 'rock')
+            .addImage('media/img/colorwheel.png', 'colorwheel')
             .addJson('media/img/spritetestphysics.json', 'spritetestphysics')
             .startPreLoad()
     },
@@ -69,14 +69,14 @@ CG.Game.extend('MyGame', {
             var x = Math.random() * this.width
             var y = Math.random() * this.height
             if (y < 90) y += 90;
-            b2world.createCircle('rock', this.asset.getImageByName('rock'), 16, x, y, box2d.b2BodyType.b2_staticBody)
+            b2world.createCircle('rock', this.asset.getImageByName('colorwheel'), 8, x, y, box2d.b2BodyType.b2_staticBody)
         }
 
         //dynamic basketball-25s:
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 25, 340, -800, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 25, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 25, 320, -400, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 25, 330, -600, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 340, -800, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 320, -400, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 330, -600, box2d.b2BodyType.b2_dynamicBody)
 
         //a bitmap that hides the background sprite
         bitmap = new CG.Bitmap(this.width, this.height)

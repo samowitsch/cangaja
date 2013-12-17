@@ -113,9 +113,9 @@ CG.Game.extend('MyGame', {
         b2world.debug = 1
 
         //create circle element with image
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, 310, -200, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, 210, -100, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, 110, 0, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 310, -200, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 210, -100, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
 
         b2world.createLine('testline1', new CG.Point(100, 100), new CG.Point(300, 150))
@@ -153,7 +153,7 @@ CG.Game.extend('MyGame', {
                 b2world.applyImpulse(body, 270, 25)
             }
             if (evt.keyCode == 66) { //b
-                b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody, false)
+                b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody, false)
             }
             if (evt.keyCode == 68) { //d
                 body = b2world.deleteBodyAt(this.mouse.x, this.mouse.y)

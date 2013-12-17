@@ -107,11 +107,11 @@ CG.Game.extend('MyGame', {
         b2world.debug = 1
 
         //create circle element with image
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 510, -200, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 410, -300, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 210, -400, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 36, 110, 0, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 510, -200, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 410, -300, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 310, -100, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 210, -400, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 110, 0, box2d.b2BodyType.b2_dynamicBody)
 
         var terrainPolys =
             [
@@ -261,7 +261,7 @@ CG.Game.extend('MyGame', {
             b2world.applyImpulse(body, 270, 25)
         }
         if (key.isPressed("b")) {
-            b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 40, this.mouse.x, this.mouse.y, false)
+            b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, this.mouse.x, this.mouse.y, false)
         }
         if (key.isPressed("c")) {
             b2world.elements[5].clipTerrain({points: 16, radius: 40, x: this.mouse.x, y: this.mouse.y})

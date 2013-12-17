@@ -28,7 +28,7 @@ CG.B2DEntity.extend('B2DCircle', {
          * @property radius
          * @type {Number}
          */
-        this.radius = this.width / 2
+        this.radius = radius
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
