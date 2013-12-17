@@ -8,20 +8,20 @@ CG.Game.extend('MyGame', {
         //add custom properties here or remove the init method
 
         //add needed eventlistener or use included hammer.js
-        this.canvas.addEventListener('mousedown', function (e) {
+        this.canvas.addEventListener('touchstart', function (evt) {
             CG.mousedown = this.mousedown = true
             console.log(CG.mousedown);
         }.bind(this), true);
 
-        this.canvas.addEventListener('mouseup', function () {
+        this.canvas.addEventListener('touchend', function (evt) {
             CG.mousedown = this.mousedown = false
             console.log(CG.mousedown);
         }.bind(this), true);
 
-        this.canvas.addEventListener('mousemove', function (evt) {
+        this.canvas.addEventListener('touchmove', function (evt) {
             CG.mouse = this.mouse = {
-                x: evt.clientX - this.canvas.offsetLeft,
-                y: evt.clientY - this.canvas.offsetTop
+                x: evt.touches[0].pageX,
+                y: evt.touches[0].pageY
             }
             console.log(JSON.stringify(this.mouse));
         }.bind(this), false)
@@ -66,9 +66,9 @@ CG.Game.extend('MyGame', {
 })
 
 
-
-
-canvas = document.createElement('canvas')
+// Screencanvas
+// http://support.ludei.com/hc/en-us/articles/200862486-Screencanvas
+canvas = document.createElement(navigator.isCocoonJS ? 'screencanvas' : 'canvas')
 canvas.id = 'canvas'
 document.body.appendChild(canvas)
 
