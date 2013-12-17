@@ -671,15 +671,30 @@ Sweep.edgeEventByPoints = function(tcx, ep, eq, triangle, point) {
     var p1 = triangle.pointCCW(point);
     var o1 = orient2d(eq, p1, ep);
     if (o1 === Orientation.COLLINEAR) {
-        // TODO integrate here changes from C++ version
-        throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p1, ep]);
+        // @TODO integrate here changes from C++ version => added code from C++ version (experimental)
+        if (triangle.containsPoint(eq, p1)){
+            triangle.markConstrainedEdgeByPoints(eq, p1)
+            tcx.edge_event.constrained_edge.q = p1
+            triangle = triangle.neighborAcross(point)
+//            EdgeEvent(tcx, ep, p1, triangle, p1)
+        } else {
+            throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p1, ep]);
+        }
     }
 
     var p2 = triangle.pointCW(point);
     var o2 = orient2d(eq, p2, ep);
     if (o2 === Orientation.COLLINEAR) {
-        // TODO integrate here changes from C++ version
-        throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p2, ep]);
+        // @TODO integrate here changes from C++ version => added code from C++ version (experimental)
+        if (triangle.containsPoint(eq, p2)){
+            triangle.markConstrainedEdgeByPoints(eq, p2)
+            tcx.edge_event.constrained_edge.q = p2
+            triangle = triangle.neighborAcross(point)
+//            EdgeEvent(tcx, ep, p2, triangle, p2)
+
+        } else {
+            throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p2, ep]);
+        }
     }
 
     if (o1 === o2) {
@@ -1361,7 +1376,7 @@ var SweepContext = function(contour, options) {
     this.points_ = (options.cloneArrays ? contour.slice(0) : contour);
     this.edge_list = [];
 
-    // Bounding box of all points. Computed at the start of the triangulation, 
+    // Bounding box of all points. Computed at the start of the triangulation,
     // it is stored in case it is needed by the caller.
     this.pmin_ = this.pmax_ = null;
 
