@@ -1,5 +1,7 @@
 #!/bin/bash
 
+path=src
+
 #chmod ugo+x combine.sh 
 
 #concat box2dhtml5 version
@@ -58,7 +60,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/box2d/b2d-chainshape.js \
 ../cangaja/box2d/b2d-rope.js \
 ../cangaja/box2d/b2d-bridge.js \
-../cangaja/box2d/b2d-world.js > ../src/cangaja.js
+../cangaja/box2d/b2d-world.js > ../$path/cangaja.js
 
 
 echo "> Files merged."
@@ -68,12 +70,12 @@ echo ""
 
 
 #running yuicompressor
-java -jar yuicompressor-2.4.8.jar ../src/cangaja.js -o ../src/cangaja.min.js --charset utf-8
+java -jar yuicompressor-2.4.8.jar ../$path/cangaja.js -o ../$path/cangaja.min.js --charset utf-8
 echo "> Minified standard version (yuicompressor)."
 echo ""
 
 #running closure compiler
-#java -jar compiler.jar --js=../src/cangaja.js --js_output_file=../src/cangaja-closure.min.js
+#java -jar compiler.jar --js=../$path/cangaja.js --js_output_file=../$path/cangaja-closure.min.js
 #echo "> Minified standard version (closure compiler)."
 #echo ""
 
@@ -82,17 +84,17 @@ echo ""
 
 
 #concat all libs
-cat ../cangaja/lib/cangaja.js ../cangaja/lib-ext/input/hammer.js ../cangaja/lib-ext/sound/buzz.js ../cangaja/lib-ext/util/stats.js > ../src/cangaja.all.js
+cat ../$path/cangaja.js ../cangaja/lib-ext/input/hammer.js ../cangaja/lib-ext/sound/buzz.js ../cangaja/lib-ext/util/stats.js > ../$path/cangaja.all.js
 echo "> generated lib version, added libs hammer, buzz and stats."
 echo ""
 
 #running yuicompressor
-java -jar yuicompressor-2.4.8.jar ../src/cangaja.all.js -o ../src/cangaja.all.min.js --charset utf-8
+java -jar yuicompressor-2.4.8.jar ../$path/cangaja.all.js -o ../$path/cangaja.all.min.js --charset utf-8
 echo "> Minified lib version (yuicompressor)."
 echo ""
 
 #running closure compiler
-#java -jar compiler.jar --js=../src/cangaja.all.js --js_output_file=../src/cangaja-closure.all.min.js
+#java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/cangaja-closure.all.min.js
 #echo "> Minified lib version (closure compiler)."
 #echo ""
 
@@ -100,15 +102,15 @@ echo ""
 
 
 #add intro to minified file
-#cat ../cangaja/base/intro.js ../src/cangaja.min.js > ../src/cangaja.min.js
+#cat ../cangaja/base/intro.js ../$path/cangaja.min.js > ../$path/cangaja.min.js
 #echo "> Added intro to minified file."
 #echo ""
 
 #copy also to the template folders
-#cp ../src/cangaja.all.js ../templates/html5/cangaja.all.js
-#cp ../src/cangaja.all.min.js ../templates/html5/cangaja.all.min.js
-#cp ../src/cangaja.all.js ../templates/ejecta/cangaja.all.js
-#cp ../src/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
+#cp ../$path/cangaja.all.js ../templates/html5/cangaja.all.js
+#cp ../$path/cangaja.all.min.js ../templates/html5/cangaja.all.min.js
+#cp ../$path/cangaja.all.js ../templates/ejecta/cangaja.all.js
+#cp ../$path/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
 
 #echo "> copied cangaja lib to template folders (html5 & ejecta)"
 #echo ""
