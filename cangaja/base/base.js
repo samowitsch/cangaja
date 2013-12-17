@@ -113,7 +113,7 @@ var CG = CG || {
 
     /* Create a new Class that inherits from this class */
     CG.Class.extend = function (className, prop, classMethods) {
-        /* No name, don't add onto Q */
+        /* No name, don't add onto CG */
         if (!typeof className === "string") {
             classMethods = prop;
             prop = className;
