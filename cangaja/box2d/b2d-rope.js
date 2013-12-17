@@ -96,8 +96,8 @@ CG.B2DEntity.extend('B2DRope', {
         this.fixtureDef.restitution = 0.2
         this.fixtureDef.friction = 0.2
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 / (180 / Math.PI)
-        this.jointDef.upperAngle = 25 / (180 / Math.PI)
+        this.jointDef.lowerAngle = -25 / CG.Const_180_PI
+        this.jointDef.upperAngle = 25 / CG.Const_180_PI
         this.jointDef.enableLimit = true
 
 
