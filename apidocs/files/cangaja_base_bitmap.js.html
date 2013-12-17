@@ -194,12 +194,34 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      *&#x2F;
     init:function (width, height) {
         this.instanceOf = &#x27;Bitmap&#x27;
+        &#x2F;**
+         @property x {Number}
+         *&#x2F;
         this.x = 0
+        &#x2F;**
+         @property y {Number}
+         *&#x2F;
         this.y = 0
+        &#x2F;**
+         @property bitmap_canvas {Object}
+         *&#x2F;
         this.bitmap_canvas = document.createElement(&#x27;canvas&#x27;)
+        &#x2F;**
+         @property bitmap_canvas.width {Number}
+         *&#x2F;
         this.bitmap_canvas.width = width
+        &#x2F;**
+         @property bitmap_canvas.height {Number}
+         *&#x2F;
         this.bitmap_canvas.height = height
+        &#x2F;**
+         @property bitmap_ctx {Context}
+         *&#x2F;
         this.bitmap_ctx = this.bitmap_canvas.getContext(&#x27;2d&#x27;)
+        &#x2F;**
+         @property bitmap_ctx.fillStyle {String}
+         *&#x2F;
+        this.bitmap_ctx.fillStyle = &#x27;#000000&#x27;
         return this
     },
     &#x2F;**

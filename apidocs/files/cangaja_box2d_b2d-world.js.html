@@ -258,6 +258,9 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
         this.world.SetDebugDraw(debugDraw)
 
     },
+    &#x2F;**
+     * @method update
+     *&#x2F;
     update: function () {
 
         this.world.Step(
@@ -278,6 +281,9 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
 
 
     },
+    &#x2F;**
+     * @method draw
+     *&#x2F;
     draw: function () {
         Game.b_ctx.save()
         Game.b_ctx.translate(this.x, this.y)
@@ -296,7 +302,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
     &#x2F;**
      * @description
      *
-     * Custom extended objects can be added to the B2DWork with this method.
+     * Custom extended objects can be added to the B2DWorld with this method.
      *
      * @method addCustom
      * @param obj      object    custom B2D object
@@ -500,7 +506,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
     mouseDownAt: function (x, y) {
         if (!this.mouseJoint) {
             var body = this.getBodyAt(x, y)
-            console.log(body)
+
             if (body) {
                 var md = new b2MouseJointDef()
                 md.bodyA = this.world.m_groundBody
@@ -651,7 +657,6 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
     getBodySpec: function (b) {
         return {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle(), c: {x: b.GetWorldCenter().x, y: b.GetWorldCenter().y}};
     }
-
 })
 
 

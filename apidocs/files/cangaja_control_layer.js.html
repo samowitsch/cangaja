@@ -185,17 +185,34 @@ CG.Class.extend(&#x27;Layer&#x27;, {
      * @param layername {string} the name of the layer
      * @return {*}
      *&#x2F;
-    init:function (layername) {
+    init: function (layername) {
+        &#x2F;**
+         * @property name
+         * @type {String}
+         *&#x2F;
         this.name = (layername) ? layername : &#x27;&#x27;
+        &#x2F;**
+         * @property visible
+         * @type {Boolean}
+         *&#x2F;
         this.visible = true
+        &#x2F;**
+         * @property elements
+         * @type {Array}
+         *&#x2F;
         this.elements = []
+        &#x2F;**
+         * @property elementsToDelete
+         * @type {Array}
+         * @protected
+         *&#x2F;
         this.elementsToDelete = []
         return this
     },
     &#x2F;**
      * @method update
      *&#x2F;
-    update:function () {
+    update: function () {
         if (this.visible == true) {
 &#x2F;&#x2F;            this.elements.forEach(function (element, index) {
 &#x2F;&#x2F;                element.update()
@@ -204,9 +221,9 @@ CG.Class.extend(&#x27;Layer&#x27;, {
 &#x2F;&#x2F;                }
 &#x2F;&#x2F;            }, this)
 
-            for(var i = 0, l = this.elements.length; i &lt; l; i++){
+            for (var i = 0, l = this.elements.length; i &lt; l; i++) {
                 this.elements[i].update()
-                if(this.elements[i].status == 1){
+                if (this.elements[i].status == 1) {
                     this.elementsToDelete.push(this.elements[i])
                 }
             }
@@ -219,7 +236,7 @@ CG.Class.extend(&#x27;Layer&#x27;, {
     &#x2F;**
      * @method draw
      *&#x2F;
-    draw:function () {
+    draw: function () {
         if (this.visible == true) {
 
             &#x2F;&#x2F;TODO ? place for CanvasRenderer ?
@@ -229,19 +246,19 @@ CG.Class.extend(&#x27;Layer&#x27;, {
 &#x2F;&#x2F;            }, this)
 
 
-            for(var i = 0, l = this.elements.length; i &lt; l; i++){
+            for (var i = 0, l = this.elements.length; i &lt; l; i++) {
                 this.elements[i].draw()
             }
 
 
         }
     },
-    _deleteElements:function () {
+    _deleteElements: function () {
         this.elementsToDelete.reverse()
         this.elementsToDelete.forEach(this._deleteElement, this)
         this.elementsToDelete = []
     },
-    _deleteElement:function (elementToDelete) {
+    _deleteElement: function (elementToDelete) {
         this.elements.splice(elementToDelete, 1)
     },
 
@@ -250,7 +267,7 @@ CG.Class.extend(&#x27;Layer&#x27;, {
      * @method addElement
      * @param {obj} element to add to elements array
      *&#x2F;
-    addElement:function (element) {
+    addElement: function (element) {
         this.elements.push(element)
         return this
     },
@@ -261,7 +278,7 @@ CG.Class.extend(&#x27;Layer&#x27;, {
      * @param {string} elementname name of element to find in element array
      * @return {false&#x2F;object} returns false or the searched object
      *&#x2F;
-    getElementByName:function (elementname) {
+    getElementByName: function (elementname) {
         for (var i = 0, l = this.elements.length; i &lt; l; i++) {
             if (this.elements[i].name == elementname) {
                 return this.elements[i]
@@ -276,7 +293,7 @@ CG.Class.extend(&#x27;Layer&#x27;, {
      * @param {string} elementname name of element to find in element array
      * @return {array} returns a array of objects
      *&#x2F;
-    getElementsByName:function (elementname) {
+    getElementsByName: function (elementname) {
         elements = []
         for (var i = 0, l = this.elements.length; i &lt; l; i++) {
             if (this.elements[i].name == elementname) {

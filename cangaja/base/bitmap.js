@@ -22,12 +22,33 @@ CG.Entity.extend('Bitmap', {
      */
     init:function (width, height) {
         this.instanceOf = 'Bitmap'
+        /**
+         @property x {Number}
+         */
         this.x = 0
+        /**
+         @property y {Number}
+         */
         this.y = 0
+        /**
+         @property bitmap_canvas {Object}
+         */
         this.bitmap_canvas = document.createElement('canvas')
+        /**
+         @property bitmap_canvas.width {Number}
+         */
         this.bitmap_canvas.width = width
+        /**
+         @property bitmap_canvas.height {Number}
+         */
         this.bitmap_canvas.height = height
+        /**
+         @property bitmap_ctx {Context}
+         */
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
+        /**
+         @property bitmap_ctx.fillStyle {String}
+         */
         this.bitmap_ctx.fillStyle = '#000000'
         return this
     },

@@ -183,6 +183,8 @@
 &#x2F;&#x2F;@TODO code cleanup and description
 &#x2F;&#x2F;@TODO comment to polygon winding order for clipper (outer == CW; holes == CCW)
 
+&#x2F;&#x2F;@TODO known pol2tri exceptions ;o(: &#x27;Cannot call method &#x27;slice&#x27; of undefined&#x27;, &#x27;poly2tri Intersecting Constraints&#x27;
+
 CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
     &#x2F;**
      * @method init
@@ -269,9 +271,14 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
     createTerrain: function () {
         this.body = this.world.CreateBody(this.bodyDef)
 
-        for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            try {
-                var swctx = new poly2tri.SweepContext(this.terrainPoly[part].outer, {cloneArrays: true})
+        try {
+            for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
+
+                var outer = this.terrainPoly[part].outer
+                if (typeof outer === &#x27;undefined&#x27;)
+                    continue
+
+                var swctx = new poly2tri.SweepContext(outer, {cloneArrays: true})
 
                 if (this.terrainPoly[part].holes.length &gt; 0) {
                     for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
@@ -282,22 +289,23 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
                 swctx.triangulate();
 
                 this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
-            } catch (e) {
-                console.log(e)
+
             }
-        }
 
-        for (var i = 0, l = this.terrainTriangles.length; i &lt; l; i++) {
-            this.bodyShapePoly = new b2PolygonShape
-            this.bodyShapePoly.bounce = 0.5
-            this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
-            this.fixDef.density = 0.5
-            this.fixDef.friction = 0.5
-            &#x2F;&#x2F;this.fixDef.restitution = 0
-            &#x2F;&#x2F;this.fixDef.density = 10
+            for (var i = 0, l = this.terrainTriangles.length; i &lt; l; i++) {
+                this.bodyShapePoly = new b2PolygonShape
+                this.bodyShapePoly.bounce = 0.5
+                this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
+                this.fixDef.density = 0.5
+                this.fixDef.friction = 0.5
+                &#x2F;&#x2F;this.fixDef.restitution = 0
+                &#x2F;&#x2F;this.fixDef.density = 10
 
-            this.fixDef.shape = this.bodyShapePoly
-            this.body.CreateFixture(this.fixDef)
+                this.fixDef.shape = this.bodyShapePoly
+                this.body.CreateFixture(this.fixDef)
+            }
+        } catch (e) {
+            console.log(&#x27;error: createTerrain()&#x27;, e)
         }
     },
     &#x2F;**
@@ -420,12 +428,6 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
             circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
-    },
-    update: function () {
-
-    },
-    draw: function () {
-
     }
 })
 
