@@ -27825,8 +27825,8 @@ CG.B2DEntity.extend('B2DRope', {
         this.fixtureDef.restitution = 0.2
         this.fixtureDef.friction = 0.2
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 / (180 / Math.PI)
-        this.jointDef.upperAngle = 25 / (180 / Math.PI)
+        this.jointDef.lowerAngle = -25 / CG.Const_180_PI
+        this.jointDef.upperAngle = 25 / CG.Const_180_PI
         this.jointDef.enableLimit = true
 
 
@@ -27963,8 +27963,8 @@ CG.B2DEntity.extend('B2DBridge', {
         this.fixtureDef.restitution = 0.2
         this.fixtureDef.friction = 0.2
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 / (180 / Math.PI)
-        this.jointDef.upperAngle = 25 / (180 / Math.PI)
+        this.jointDef.lowerAngle = -25 / CG.Const_180_PI
+        this.jointDef.upperAngle = 25 / CG.Const_180_PI
         this.jointDef.enableLimit = true
 
         for (var i = 0, l = this.segments; i < l; i++) {
@@ -28446,8 +28446,8 @@ CG.Layer.extend('B2DWorld', {
      */
     applyImpulse: function (body, degrees, power) {
         if (body) {
-            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
-                Math.sin(degrees * (Math.PI / 180)) * power),
+            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                Math.sin(degrees * CG.Const_PI_180) * power),
                 body.GetWorldCenter());
         }
     },
