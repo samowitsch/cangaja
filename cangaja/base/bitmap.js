@@ -28,6 +28,7 @@ CG.Entity.extend('Bitmap', {
         this.bitmap_canvas.width = width
         this.bitmap_canvas.height = height
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
+        this.bitmap_ctx.fillStyle = '#000000'
         return this
     },
     /**
@@ -101,7 +102,6 @@ CG.Entity.extend('Bitmap', {
         this.bitmap_ctx.beginPath()
         this.bitmap_ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
         this.bitmap_ctx.closePath()
-        this.bitmap_ctx.fillStyle = '#000000'
         this.bitmap_ctx.fill()
         this.bitmap_ctx.restore()
     },
