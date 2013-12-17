@@ -22,10 +22,6 @@ CG.Class.extend('Buffer', {
          * @type {HTMLElement}
          */
         this.b_canvas = document.createElement('canvas')
-//    if(typeof(ejecta) !== 'undefined'){
-//        this.b_canvas.width = w
-//        this.b_canvas.height = h
-//    }else{
 
         /**
          * @property b_canvas.width
@@ -37,7 +33,6 @@ CG.Class.extend('Buffer', {
          * @type {*}
          */
         this.b_canvas.height = height
-//    }
 
         /**
          * @property b_ctx
