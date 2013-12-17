@@ -186,11 +186,17 @@ CG.Game.extend('MyGame', {
     },
     update: function () {
         if (this.mousedown == true && (currentx !== this.mouse.x || currenty !== this.mouse.y)) {
-            bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
-            terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})
-            b2world.getStaticBodyListAt(this.mouse.x, this.mouse.y, 16, 0)
-            currentx = this.mouse.x
-            currenty = this.mouse.y
+
+            //speed up some thing with no pixelperfect clipping
+            var offset = 10
+            if ((((currentx - this.mouse.x) <= -offset) || ((currentx - this.mouse.x) >= offset)) ||
+                (((currenty - this.mouse.y) <= -offset) || ((currenty - this.mouse.y) >= offset))) {
+                bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
+                terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})
+                b2world.getStaticBodyListAt(this.mouse.x, this.mouse.y, 16, 0)
+                currentx = this.mouse.x
+                currenty = this.mouse.y
+            }
         }
         renderStats.update();
     },
