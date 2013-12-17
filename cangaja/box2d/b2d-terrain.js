@@ -99,9 +99,14 @@ CG.B2DEntity.extend('B2DTerrain', {
     createTerrain: function () {
         this.body = this.world.CreateBody(this.bodyDef)
 
-        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            try {
-                var swctx = new poly2tri.SweepContext(this.terrainPoly[part].outer, {cloneArrays: true})
+        try {
+            for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
+
+                var outer = this.terrainPoly[part].outer
+                if (typeof outer === 'undefined')
+                    continue
+
+                var swctx = new poly2tri.SweepContext(outer, {cloneArrays: true})
 
                 if (this.terrainPoly[part].holes.length > 0) {
                     for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
@@ -112,22 +117,23 @@ CG.B2DEntity.extend('B2DTerrain', {
                 swctx.triangulate();
 
                 this.terrainTriangles = this.terrainTriangles.concat(swctx.getTriangles() || [])
-            } catch (e) {
-                console.log('error createTerrain', e)
+
             }
-        }
 
-        for (var i = 0, l = this.terrainTriangles.length; i < l; i++) {
-            this.bodyShapePoly = new b2PolygonShape
-            this.bodyShapePoly.bounce = 0.5
-            this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
-            this.fixDef.density = 0.5
-            this.fixDef.friction = 0.5
-            //this.fixDef.restitution = 0
-            //this.fixDef.density = 10
+            for (var i = 0, l = this.terrainTriangles.length; i < l; i++) {
+                this.bodyShapePoly = new b2PolygonShape
+                this.bodyShapePoly.bounce = 0.5
+                this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
+                this.fixDef.density = 0.5
+                this.fixDef.friction = 0.5
+                //this.fixDef.restitution = 0
+                //this.fixDef.density = 10
 
-            this.fixDef.shape = this.bodyShapePoly
-            this.body.CreateFixture(this.fixDef)
+                this.fixDef.shape = this.bodyShapePoly
+                this.body.CreateFixture(this.fixDef)
+            }
+        } catch (e) {
+            console.log('error: createTerrain()', e)
         }
     },
     /**
