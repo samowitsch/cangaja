@@ -10,11 +10,11 @@ echo ""
 
 cat ../cangaja/base/base.js \
 ../cangaja/game/game.js \
-../cangaja/lib-ext/math/transform.js \
-../cangaja/lib-ext/input/keymaster.js \
-../cangaja/lib-ext/math/poly2tri/poly2tri.js \
-../cangaja/lib-ext/math/clipper/clipper.js \
-../cangaja/lib-ext/spine/spine.js \
+../libs/math/transform.js \
+../libs/input/keymaster.js \
+../libs/math/poly2tri/poly2tri.js \
+../libs/math/clipper/clipper.js \
+../libs/spine/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
 ../cangaja/renderer/canvasrenderer.js \
@@ -48,8 +48,8 @@ cat ../cangaja/base/base.js \
 ../cangaja/control/morph.js \
 ../cangaja/sprite/particle.js \
 ../cangaja/control/emitter.js \
-../cangaja/lib-ext/box2dhtml5/box2d-html5.js \
-../cangaja/lib-ext/box2dhtml5/b2DebugDraw.js \
+../libs/box2dhtml5/box2d-html5.js \
+../libs/box2dhtml5/b2DebugDraw.js \
 ../cangaja/box2d/b2d-vars-html5.js \
 ../cangaja/box2d/b2d-entity.js \
 ../cangaja/box2d/b2d-circle.js \
@@ -84,7 +84,7 @@ echo ""
 
 
 #concat all libs
-cat ../$path/cangaja.js ../cangaja/lib-ext/input/hammer.js ../cangaja/lib-ext/sound/buzz.js ../cangaja/lib-ext/util/stats.js > ../$path/cangaja.all.js
+cat ../$path/cangaja.js ../libs/input/hammer.js ../libs/sound/buzz.js ../libs/util/stats.js > ../$path/cangaja.all.js
 echo "> generated lib version, added libs hammer, buzz and stats."
 echo ""
 
