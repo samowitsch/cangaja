@@ -54,7 +54,6 @@ cangaja is a javascript canvas project that i have started to explore the html c
     http://gamedev.stackexchange.com/questions/47828/box2d-with-lines
     http://www.iforce2d.net/b2dtut/one-way-walls
 
-* implement Game into Cangaja as class?
 * develop something similar to DiddyData. A config file to define files to preload and screens an layers to generate
 * sprite positioning bug in slide demo?
 * eliminate Array.forEach
@@ -167,6 +166,7 @@ cangaja is a javascript canvas project that i have started to explore the html c
       + Button
       + Particle
     + SpineAnimation
+  + Game
   + Layer
     + B2DWorld
   + MapPoints
