@@ -11,7 +11,7 @@
 //@TODO code cleanup and description
 //@TODO comment to polygon winding order for clipper (outer == CW; holes == CCW)
 
-//@TODO known pol2tri exceptions ;o(: 'Cannot call method 'slice' of undefined', 'poly2tri Intersecting Constraints'
+//@TODO known pol2tri exceptions ;o(: 'Cannot call method 'slice' of undefined', 'poly2tri Intersecting Constraints', 'poly2tri Invalid Triangle.index() call', '"null" is not an object (evaluating 'pb.y')'
 
 CG.B2DEntity.extend('B2DTerrain', {
     /**
