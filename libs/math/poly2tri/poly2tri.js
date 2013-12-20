@@ -403,41 +403,49 @@ var Orientation = {
  * </pre>
  */
 function orient2d(pa, pb, pc) {
-    var detleft = (pa.x - pc.x) * (pb.y - pc.y);
-    var detright = (pa.y - pc.y) * (pb.x - pc.x);
-    var val = detleft - detright;
-    if (val > -(EPSILON) && val < (EPSILON)) {
-        return Orientation.COLLINEAR;
-    } else if (val > 0) {
-        return Orientation.CCW;
-    } else {
-        return Orientation.CW;
+    try {
+        var detleft = (pa.x - pc.x) * (pb.y - pc.y);
+        var detright = (pa.y - pc.y) * (pb.x - pc.x);
+        var val = detleft - detright;
+        if (val > -(EPSILON) && val < (EPSILON)) {
+            return Orientation.COLLINEAR;
+        } else if (val > 0) {
+            return Orientation.CCW;
+        } else {
+            return Orientation.CW;
+        }
+    } catch (e) {
+        console.log('orient2d', e, pa, pb, pc)
     }
 }
 
 function inScanArea(pa, pb, pc, pd) {
-    var pdx = pd.x;
-    var pdy = pd.y;
-    var adx = pa.x - pdx;
-    var ady = pa.y - pdy;
-    var bdx = pb.x - pdx;
-    var bdy = pb.y - pdy;
+    try {
+        var pdx = pd.x;
+        var pdy = pd.y;
+        var adx = pa.x - pdx;
+        var ady = pa.y - pdy;
+        var bdx = pb.x - pdx;
+        var bdy = pb.y - pdy;
 
-    var adxbdy = adx * bdy;
-    var bdxady = bdx * ady;
-    var oabd = adxbdy - bdxady;
+        var adxbdy = adx * bdy;
+        var bdxady = bdx * ady;
+        var oabd = adxbdy - bdxady;
 
-    if (oabd <= (EPSILON)) {
-        return false;
+        if (oabd <= (EPSILON)) {
+            return false;
+        }
+
+        var cdx = pc.x - pdx;
+        var cdy = pc.y - pdy;
+
+        var cdxady = cdx * ady;
+        var adxcdy = adx * cdy;
+        var ocad = cdxady - adxcdy;
+
+    } catch (e) {
+        console.log('inScanArea', e, pa, pb, pc, pd)
     }
-
-    var cdx = pc.x - pdx;
-    var cdy = pc.y - pdy;
-
-    var cdxady = cdx * ady;
-    var adxcdy = adx * cdy;
-    var ocad = cdxady - adxcdy;
-
     if (ocad <= (EPSILON)) {
         return false;
     }
@@ -1259,11 +1267,11 @@ Sweep.flipEdgeEvent = function(tcx, ep, eq, t, p) {
     var op = ot.oppositePoint(t, p);
 
     // Additional check from Java version (see issue #88)
-    if (t.getConstrainedEdgeAcross(p)) {
-        var index = t.index(p);
-        throw new PointError("poly2tri Intersecting Constraints",
-                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
-    }
+//    if (t.getConstrainedEdgeAcross(p)) {
+//        var index = t.index(p);
+//        throw new PointError("poly2tri Intersecting Constraints",
+//                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
+//    }
 
     if (inScanArea(p, t.pointCCW(p), t.pointCW(p), op)) {
         // Lets rotate shared edge one vertex CW
