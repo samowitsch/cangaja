@@ -41,9 +41,12 @@ cangaja is a javascript canvas project that i have started to explore the html c
 [Ejecta]: http://impactjs.com/ejecta
 [Box2DHtml5]: https://code.google.com/p/box2d-html5/
 [Spine]: http://esotericsoftware.com
+[FizzX]: http://allanbishop.com/fizzx/index.html
+[FizzX Importer]: http://allanbishop.com/fizzx/importers.html
 
 ## Todo / wish list / bugs:
 
+* add support for [FizzX] Box2D Editor, port [FizzX Importer] to javascript for cangaja?
 * Terrain destruction "bugs":
   - terrain destruction is very pragmatic. The terrain is deleted and replaced with another new generated terrain shape.
   - in some circumstances when clipping hole vertices and terrain vertices overlap, poly2tri "crashes"
