@@ -1138,41 +1138,49 @@ var Orientation = {
  * </pre>
  */
 function orient2d(pa, pb, pc) {
-    var detleft = (pa.x - pc.x) * (pb.y - pc.y);
-    var detright = (pa.y - pc.y) * (pb.x - pc.x);
-    var val = detleft - detright;
-    if (val > -(EPSILON) && val < (EPSILON)) {
-        return Orientation.COLLINEAR;
-    } else if (val > 0) {
-        return Orientation.CCW;
-    } else {
-        return Orientation.CW;
+    try {
+        var detleft = (pa.x - pc.x) * (pb.y - pc.y);
+        var detright = (pa.y - pc.y) * (pb.x - pc.x);
+        var val = detleft - detright;
+        if (val > -(EPSILON) && val < (EPSILON)) {
+            return Orientation.COLLINEAR;
+        } else if (val > 0) {
+            return Orientation.CCW;
+        } else {
+            return Orientation.CW;
+        }
+    } catch (e) {
+        console.log('orient2d', e, pa, pb, pc)
     }
 }
 
 function inScanArea(pa, pb, pc, pd) {
-    var pdx = pd.x;
-    var pdy = pd.y;
-    var adx = pa.x - pdx;
-    var ady = pa.y - pdy;
-    var bdx = pb.x - pdx;
-    var bdy = pb.y - pdy;
+    try {
+        var pdx = pd.x;
+        var pdy = pd.y;
+        var adx = pa.x - pdx;
+        var ady = pa.y - pdy;
+        var bdx = pb.x - pdx;
+        var bdy = pb.y - pdy;
 
-    var adxbdy = adx * bdy;
-    var bdxady = bdx * ady;
-    var oabd = adxbdy - bdxady;
+        var adxbdy = adx * bdy;
+        var bdxady = bdx * ady;
+        var oabd = adxbdy - bdxady;
 
-    if (oabd <= (EPSILON)) {
-        return false;
+        if (oabd <= (EPSILON)) {
+            return false;
+        }
+
+        var cdx = pc.x - pdx;
+        var cdy = pc.y - pdy;
+
+        var cdxady = cdx * ady;
+        var adxcdy = adx * cdy;
+        var ocad = cdxady - adxcdy;
+
+    } catch (e) {
+        console.log('inScanArea', e, pa, pb, pc, pd)
     }
-
-    var cdx = pc.x - pdx;
-    var cdy = pc.y - pdy;
-
-    var cdxady = cdx * ady;
-    var adxcdy = adx * cdy;
-    var ocad = cdxady - adxcdy;
-
     if (ocad <= (EPSILON)) {
         return false;
     }
@@ -1994,11 +2002,11 @@ Sweep.flipEdgeEvent = function(tcx, ep, eq, t, p) {
     var op = ot.oppositePoint(t, p);
 
     // Additional check from Java version (see issue #88)
-    if (t.getConstrainedEdgeAcross(p)) {
-        var index = t.index(p);
-        throw new PointError("poly2tri Intersecting Constraints",
-                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
-    }
+//    if (t.getConstrainedEdgeAcross(p)) {
+//        var index = t.index(p);
+//        throw new PointError("poly2tri Intersecting Constraints",
+//                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
+//    }
 
     if (inScanArea(p, t.pointCCW(p), t.pointCW(p), op)) {
         // Lets rotate shared edge one vertex CW
@@ -27376,7 +27384,13 @@ CG.B2DEntity.extend('B2DPolygon', {
 //@TODO code cleanup and description
 //@TODO comment to polygon winding order for clipper (outer == CW; holes == CCW)
 
-//@TODO known pol2tri exceptions ;o(: 'Cannot call method 'slice' of undefined', 'poly2tri Intersecting Constraints'
+/*@TODO known pol2tri exceptions ;o(:
+ 'Cannot call method 'slice' of undefined',
+ 'poly2tri Intersecting Constraints',
+ 'poly2tri Invalid Triangle.index() call',
+ '"null" is not an object (evaluating 'pb.y')',
+ poly2tri Invalid Triangle.legalize() call
+*/
 
 CG.B2DEntity.extend('B2DTerrain', {
     /**
@@ -27396,6 +27410,14 @@ CG.B2DEntity.extend('B2DTerrain', {
     init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
         this.instanceOf = 'B2DTerrain'
+
+        /**
+         * @description bitmap for terrain
+         * @property bitmap
+         * @type {CG.Bitmap}
+         */
+        this.bitmap = new CG.Bitmap(Game.width, Game.height)
+        this.bitmap.loadImage(image)
         /**
          * @property polys
          * @type {Array}
@@ -27498,7 +27520,12 @@ CG.B2DEntity.extend('B2DTerrain', {
                 this.body.CreateFixture(this.fixDef)
             }
         } catch (e) {
+            alert('oh no')
             console.log('error: createTerrain()', e)
+            console.log(e.message)
+            console.log(e.stack)
+            console.log(this.terrainPoly)
+            console.log(this.terrainTriangles)
         }
     },
     /**
@@ -27554,6 +27581,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 //        this.cleanTerrain()
         this.deleteTerrain()
         this.createTerrain()
+        this.bitmap.clearCircle(opt.x, opt.y, opt.radius)
     },
     /**
      * @description this method uses the Clipper Lighten method to reduce vertices for better triangulation
@@ -27621,6 +27649,37 @@ CG.B2DEntity.extend('B2DTerrain', {
             circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
+    },
+
+    draw: function(){
+
+        Game.renderer.draw(this.bitmap)
+
+    },
+
+    // converts polygons to SVG path string
+    polys2SvgImage: function (poly, scale) {
+        var path = "", i, j;
+        if (!scale)
+            scale = 1;
+        for (i = 0; i < poly.length; i++) {
+            for (j = 0; j < poly[i].length; j++) {
+                if (!j)
+                    path += "M";
+                else
+                    path += "L";
+                path += (poly[i][j].X / scale) + ", " + (poly[i][j].Y / scale);
+            }
+            path += "Z";
+        }
+        return path;
+
+        /*
+         svg = '<svg style="" width="800" height="600">';
+         svg += '<defs><pattern id="back" patternUnits="userSpaceOnUse" width="990" height="534"><image xlink:href="imagetest.png" x="0" y="0" width="990" height="534"/></pattern></defs>';
+         svg += '<path stroke="" fill="url(#back)" stroke-width="" d="' + polys2path(solution_polygons, scale) + '"/>';
+         svg += '</svg>';
+         */
     }
 })
 
