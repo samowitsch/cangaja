@@ -62,26 +62,11 @@ CG.Game.extend('MyGame', {
         b2world = new CG.B2DTestbed('box2d-world')
         b2world.debug = 0
 
-        //create circle element with image
-        //static rocks
-
-        for (var i = 0; i < 50; i++) {
-            var x = Math.random() * this.width
-            var y = Math.random() * this.height
-            if (y < 90) y += 90;
-            b2world.createCircle('rock', this.asset.getImageByName('colorwheel'), 8, x, y, box2d.b2BodyType.b2_staticBody)
-        }
-
         //dynamic basketball-25s:
         b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 340, -800, box2d.b2BodyType.b2_dynamicBody)
         b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 310, -100, box2d.b2BodyType.b2_dynamicBody)
         b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 320, -400, box2d.b2BodyType.b2_dynamicBody)
         b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 330, -600, box2d.b2BodyType.b2_dynamicBody)
-
-        //a bitmap that hides the background sprite
-        bitmap = new CG.Bitmap(this.width, this.height)
-        bitmap.loadImage(this.asset.getImageByName('testTerrain'))
-        mainlayer.addElement(bitmap)
 
         var terrainPolys =
             [
@@ -98,7 +83,7 @@ CG.Game.extend('MyGame', {
                 }
             ]
 
-        terrainBody = b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
+        terrainBody = b2world.createTerrain('terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
 
         b2world.addContactListener({
             BeginContact: function (idA, idB) {
@@ -110,6 +95,17 @@ CG.Game.extend('MyGame', {
 
         //add it to a CGLayer
         mainlayer.addElement(b2world)
+
+        //create circle element with image
+        //static rocks
+
+        for (var i = 0; i < 50; i++) {
+            var x = Math.random() * this.width
+            var y = Math.random() * this.height
+            if (y < 90) y += 90;
+            b2world.createCircle('rock', this.asset.getImageByName('colorwheel'), 8, x, y, box2d.b2BodyType.b2_staticBody)
+        }
+
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
@@ -129,7 +125,6 @@ CG.Game.extend('MyGame', {
                 b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
             }
             if (evt.keyCode == 67 || this.mousedown == true) { //c
-                bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})
                 b2world.getStaticBodyListAt(this.mouse.x, this.mouse.y, 16, 0)
             }
@@ -149,16 +144,13 @@ CG.Game.extend('MyGame', {
                 clonk.addVelocity(new b2Vec2(0, -5))
             }
             if (evt.keyCode == 83) { // s - down
-                bitmap.clearCircle(clonk.body.GetPosition().x * 40 + 40, clonk.body.GetPosition().y * 40 + 40, clipRadius)
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 + 40, y: clonk.body.GetPosition().y * 40 + 40})
                 b2world.getStaticBodyListAt(clonk.body.GetPosition().x * 40, clonk.body.GetPosition().y * 40, 16, 0)
             }
             if (evt.keyCode == 83 && evt.keyCode == 65) { // s - down && a-left
-                bitmap.clearCircle(clonk.body.GetPosition().x * 40 - 10, clonk.body.GetPosition().y * 40 + 40, clipRadius)
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 - 10, y: clonk.body.GetPosition().y * 40 + 40})
             }
             if (evt.keyCode == 83 && evt.keyCode == 68) { // s - down && d-right
-                bitmap.clearCircle(clonk.body.GetPosition().x * 40 + 50, clonk.body.GetPosition().y * 40 + 40, clipRadius)
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: clonk.body.GetPosition().x * 40 + 50, y: clonk.body.GetPosition().y * 40 + 40})
             }
             if (evt.keyCode == 68) { // d - right
@@ -191,7 +183,6 @@ CG.Game.extend('MyGame', {
             var offset = 10
             if ((((currentx - this.mouse.x) <= -offset) || ((currentx - this.mouse.x) >= offset)) ||
                 (((currenty - this.mouse.y) <= -offset) || ((currenty - this.mouse.y) >= offset))) {
-                bitmap.clearCircle(this.mouse.x, this.mouse.y, clipRadius)
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})
                 b2world.getStaticBodyListAt(this.mouse.x, this.mouse.y, 16, 0)
                 currentx = this.mouse.x

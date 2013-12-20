@@ -11,7 +11,13 @@
 //@TODO code cleanup and description
 //@TODO comment to polygon winding order for clipper (outer == CW; holes == CCW)
 
-//@TODO known pol2tri exceptions ;o(: 'Cannot call method 'slice' of undefined', 'poly2tri Intersecting Constraints', 'poly2tri Invalid Triangle.index() call', '"null" is not an object (evaluating 'pb.y')'
+/*@TODO known pol2tri exceptions ;o(:
+ 'Cannot call method 'slice' of undefined',
+ 'poly2tri Intersecting Constraints',
+ 'poly2tri Invalid Triangle.index() call',
+ '"null" is not an object (evaluating 'pb.y')',
+ poly2tri Invalid Triangle.legalize() call
+*/
 
 CG.B2DEntity.extend('B2DTerrain', {
     /**
@@ -31,6 +37,14 @@ CG.B2DEntity.extend('B2DTerrain', {
     init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
         this.instanceOf = 'B2DTerrain'
+
+        /**
+         * @description bitmap for terrain
+         * @property bitmap
+         * @type {CG.Bitmap}
+         */
+        this.bitmap = new CG.Bitmap(Game.width, Game.height)
+        this.bitmap.loadImage(image)
         /**
          * @property polys
          * @type {Array}
@@ -134,6 +148,10 @@ CG.B2DEntity.extend('B2DTerrain', {
             }
         } catch (e) {
             console.log('error: createTerrain()', e)
+            console.log(e.message)
+            console.log(e.stack)
+            console.log(this.terrainPoly)
+            console.log(this.terrainTriangles)
         }
     },
     /**
@@ -189,6 +207,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 //        this.cleanTerrain()
         this.deleteTerrain()
         this.createTerrain()
+        this.bitmap.clearCircle(opt.x, opt.y, opt.radius)
     },
     /**
      * @description this method uses the Clipper Lighten method to reduce vertices for better triangulation
@@ -256,6 +275,37 @@ CG.B2DEntity.extend('B2DTerrain', {
             circleArray.push({x: opts.x + opts.radius * Math.cos(angle * i), y: opts.y + opts.radius * Math.sin(angle * i)})
         }
         return circleArray.reverse()
+    },
+
+    draw: function(){
+
+        Game.renderer.draw(this.bitmap)
+
+    },
+
+    // converts polygons to SVG path string
+    polys2SvgImage: function (poly, scale) {
+        var path = "", i, j;
+        if (!scale)
+            scale = 1;
+        for (i = 0; i < poly.length; i++) {
+            for (j = 0; j < poly[i].length; j++) {
+                if (!j)
+                    path += "M";
+                else
+                    path += "L";
+                path += (poly[i][j].X / scale) + ", " + (poly[i][j].Y / scale);
+            }
+            path += "Z";
+        }
+        return path;
+
+        /*
+         svg = '<svg style="" width="800" height="600">';
+         svg += '<defs><pattern id="back" patternUnits="userSpaceOnUse" width="990" height="534"><image xlink:href="imagetest.png" x="0" y="0" width="990" height="534"/></pattern></defs>';
+         svg += '<path stroke="" fill="url(#back)" stroke-width="" d="' + polys2path(solution_polygons, scale) + '"/>';
+         svg += '</svg>';
+         */
     }
 })
 
