@@ -1,0 +1,88 @@
+<box2d>
+  <images>
+    <image path="file:///Users/csg/Dropbox/cangaja/demo/media/fizzx/sun.png" name="sun" x="668" y="-159" rotation="0" scaleX="1" scaleY="1" zDepth="35" pinned="false" body="body4" atlas="null"/>
+    <image path="file:///Users/csg/Dropbox/cangaja/demo/media/fizzx/powerstar75.png" name="star" x="430" y="-316" rotation="0" scaleX="1" scaleY="1" zDepth="36" pinned="false" body="star" atlas="null"/>
+    <image path="file:///Users/csg/Dropbox/cangaja/demo/media/fizzx/btn-back.png" name="button" x="178" y="-186" rotation="0" scaleX="1" scaleY="1" zDepth="37" pinned="false" body="platform2" atlas="null"/>
+  </images>
+  <bodies>
+    <body name="star" x="429" y="-319" type="dynamic" bullet="false" image="star">
+      <fixtures>
+        <fixture name="20" shapeType="circleShape" restitution="1" density="1" friction="1" circleX="0" circleY="0" circleRadius="18.027756377319943" isSensor="false"/>
+      </fixtures>
+    </body>
+    <body name="body4" x="671" y="-156" type="dynamic" bullet="false" image="sun">
+      <fixtures>
+        <fixture name="340" shapeType="circleShape" restitution="1" density="1" friction="1" circleX="-4" circleY="1" circleRadius="100" isSensor="false"/>
+      </fixtures>
+    </body>
+    <body name="ground" x="144" y="-442" type="static" bullet="false" image="null">
+      <fixtures>
+        <fixture name="4" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="-595" y="19"/>
+          <vertex x="908" y="19"/>
+          <vertex x="908" y="-18"/>
+          <vertex x="-595" y="-18"/>
+        </fixture>
+      </fixtures>
+    </body>
+    <body name="body1" x="-14" y="327" type="dynamic" bullet="false" image="null">
+      <fixtures>
+        <fixture name="41" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="3" y="84"/>
+          <vertex x="83" y="30"/>
+          <vertex x="66" y="-39"/>
+          <vertex x="-12" y="-54"/>
+          <vertex x="-83" y="20"/>
+        </fixture>
+      </fixtures>
+    </body>
+    <body name="platform1" x="176" y="-188" type="static" bullet="false" image="button">
+      <fixtures>
+        <fixture name="22" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="-99" y="22"/>
+          <vertex x="100" y="22"/>
+          <vertex x="100" y="-17"/>
+          <vertex x="-98" y="-17"/>
+        </fixture>
+      </fixtures>
+    </body>
+    <body name="platform3" x="-200" y="-164" type="static" bullet="false" image="button">
+      <fixtures>
+        <fixture name="10" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="-95" y="19"/>
+          <vertex x="103" y="19"/>
+          <vertex x="103" y="-19"/>
+          <vertex x="-95" y="-19"/>
+        </fixture>
+      </fixtures>
+    </body>
+    <body name="body2" x="-225" y="221" type="dynamic" bullet="false" image="null">
+      <fixtures>
+        <fixture name="28" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="-136" y="42"/>
+          <vertex x="140" y="42"/>
+          <vertex x="140" y="-44"/>
+          <vertex x="-136" y="-44"/>
+        </fixture>
+      </fixtures>
+    </body>
+    <body name="platform2" x="-5" y="-380" type="static" bullet="false" image="button">
+      <fixtures>
+        <fixture name="16" shapeType="polygonShape" restitution="1" density="1" friction="1" isSensor="false">
+          <vertex x="-100" y="20"/>
+          <vertex x="97" y="20"/>
+          <vertex x="97" y="-19"/>
+          <vertex x="-100" y="-19"/>
+        </fixture>
+      </fixtures>
+    </body>
+  </bodies>
+  <joints>
+    <joint name="joint1" x="-206" y="299" collideConnected="false" bodyA="body1" bodyB="body2" enableMotor="false" motorSpeed="1" maxMotorTorque="1" type="RevoluteJoint" lowerAngle="-360" upperAngle="360" enableLimit="false"/>
+    <joint name="joint2" type="WeldJoint" collideConnected="true" x="378" y="-30" bodyA="platform1" bodyB="body4"/>
+  </joints>
+  <metaData/>
+  <settings>
+    <setting isLocked="true"/>
+  </settings>
+</box2d>
