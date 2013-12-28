@@ -20,7 +20,28 @@ CG.Class.extend('B2DFizzXLoader', {
         /**
          @property json {string}
          */
-        this.json = json
+        this.json = JSON.parse(json, function (key, value) {
+            if (typeof value === "string") {
+                if (value.match(/^[-+]?\d+$/)) {      //check for integer
+                    return parseInt(value)
+                } else if (value.match(/^[-+]?\d+\.\d+$/)) {   //check for float
+                    return parseFloat(value)
+                } else {      //strings
+                    switch (value) {
+                        case "true":
+                            return true
+                            break
+                        case "false":
+                            return false
+                            break
+                        case "null":
+                            return null
+                            break
+                    }
+                }
+            }
+            return value
+        })
         /**
          @property world {CG.B2DWorld}
          */
@@ -28,24 +49,53 @@ CG.Class.extend('B2DFizzXLoader', {
         /**
          @property offsetx {Number}
          */
-        this.json = offsetx
+        this.offsetx = offsetx
         /**
          @property offsety {Number}
          */
-        this.json = offsety
+        this.offsety = offsety
 
         this.bodiesMap = []
         this.jointsMap = []
         this.imageMap = []
         this.atlasMap = []
+
+        this.loadImages()
+        this.loadBodies()
+        this.loadJoints()
+    },
+    loadBodies: function () {
+        console.log('### start bodies')
+        for (var b = 0, lb = this.json.box2d.bodies.body.length; b < lb; b++) {
+            var body = this.json.box2d.bodies.body[b]
+            console.log('body:', body.name, 'image:', body.image, body)
+            var fixtures = body.fixtures.fixture
+            console.log('-- fixtures', fixtures.length)
+            for (var f = 0, fl = fixtures.length; f < fl; f++) {
+                console.log('--- fixture #' + (f + 1), fixtures[f])
+            }
+
+        }
+
+    },
+    loadImages: function () {
+        console.log('### start images')
+        for (var i = 0, li = this.json.box2d.images.image.length; i < li; i++) {
+            var image = this.json.box2d.images.image[i]
+            console.log('-- image #' + ( i + 1 ), image)
+        }
+    },
+    loadJoints: function () {
+        console.log('### start joints')
+        for (var j = 0, lj = this.json.box2d.joints.joint.length; j < lj; j++) {
+            var joint = this.json.box2d.joints.joint[j]
+            console.log('-- joint #' + (j + 1), joint)
+        }
     }
 })
 
-
-
-
-
 /*
+
 //Example is using LibGDX with the Artemis Entity System Framework
 public class FizzXLoader {
 
