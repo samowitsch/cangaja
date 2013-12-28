@@ -60,7 +60,8 @@ cat ../cangaja/base/base.js \
 ../cangaja/box2d/b2d-chainshape.js \
 ../cangaja/box2d/b2d-rope.js \
 ../cangaja/box2d/b2d-bridge.js \
-../cangaja/box2d/b2d-world.js > ../$path/cangaja.js
+../cangaja/box2d/b2d-world.js \
+../cangaja/box2d/b2d-fizzx-loader.js > ../$path/cangaja.js
 
 
 echo "> Files merged."
