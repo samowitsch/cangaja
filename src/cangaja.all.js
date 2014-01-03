@@ -10117,9 +10117,17 @@ CG.Class.extend('Entity', {
          */
         this.xscale = 1
         /**
+         @property xhandle {Number}
+         */
+        this.xhandle = 0
+        /**
          @property yscale {Number}
          */
         this.yscale = 1
+        /**
+         @property yhandle {Number}
+         */
+        this.yhandle = 0
         /**
          @property hover {boolean}
          */
@@ -10169,21 +10177,31 @@ CG.Class.extend('Entity', {
                 if (this.imagerotation !== 0) {
                     this.cutwidth = image.height
                     this.cutheight = image.width
+                    this.xhandle = this.height / 2
+                    this.yhandle = this.width / 2
                 } else {
                     this.cutwidth = image.width
                     this.cutheight = image.height
+                    this.xhandle = this.width / 2
+                    this.yhandle = this.height / 2
                 }
             } else if (typeof image == 'string' && image != '') {
                 //path to image
                 this.image = new Image()
                 this.image.src = image
-                this.width = this.image.width
-                this.height = this.image.height
+                this.image.onload = function () {
+                    this.width = this.image.width
+                    this.height = this.image.height
+                    this.xhandle = this.width / 2
+                    this.yhandle = this.height / 2
+                }
             } else {
                 //image from MediaAsset
                 this.image = image
                 this.width = this.image.width
                 this.height = this.image.height
+                this.xhandle = this.width / 2
+                this.yhandle = this.height / 2
             }
         }
     },
@@ -10564,17 +10582,9 @@ CG.Entity.extend('Sprite', {
          */
         this.xspeed = 0 //xspeed of the sprite
         /**
-         @property xhandle {Number}
-         */
-        this.xhandle = 0
-        /**
          @property yspeed {Number}
          */
         this.yspeed = 0
-        /**
-         @property yhandle {Number}
-         */
-        this.yhandle = 0
         /**
          @property boundsMode {false/string}
          */
@@ -26931,16 +26941,7 @@ CG.Entity.extend('B2DEntity', {
          * @type {b2World}
          */
         this.world = world
-        /**
-         * @property xhandle
-         * @type {Number}
-         */
-        this.xhandle = (this.width / 2)
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = (this.height / 2)
+
         if (!this.bodyDef) {
             /**
              * @property bodyDef
@@ -27070,6 +27071,12 @@ CG.Entity.extend('B2DEntity', {
      */
     setPosition: function (b2Vec2) {
         this.body.SetPosition(b2Vec2)
+    },
+    /**
+     * @method getPosition
+     */
+    getPosition: function () {
+        return this.body.GetPosition()
     }
 
 })
