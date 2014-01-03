@@ -89,11 +89,7 @@ CG.Game.extend('MyGame', {
             .addFont('media/font/small.txt', 'small', 'small')
             .addFont('media/font/abadi_ez.txt', 'abadi')
             .addImage('media/img/glowball-50.png', 'glowball')
-            .addImage('media/img/hunter.png', 'hunter')
             .addImage('media/img/back3.jpg', 'back3')
-
-            //tiled map
-            .addJson('media/map/map-advanced-inner-outer.json', 'map1')
 
             //physics engine
             .addJson('media/img/ballon.json', 'ballon')
