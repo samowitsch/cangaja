@@ -21,7 +21,7 @@ CG.Entity.extend('B2DEntity', {
      * @return {*}
      */
 
-    init:function (name, image, world, x, y, scale) {
+    init: function (name, image, world, x, y, scale) {
         this._super()
         this.instanceOf = 'B2DEntity'
         this.setImage(image)
@@ -54,7 +54,7 @@ CG.Entity.extend('B2DEntity', {
          * @property id
          * @type {Object}
          */
-        this.id = {name:name, uid:0}
+        this.id = {name: name, uid: 0}
         /**
          * @property world
          * @type {b2World}
@@ -70,7 +70,7 @@ CG.Entity.extend('B2DEntity', {
          * @type {Number}
          */
         this.yhandle = (this.height / 2)
-        if(!this.bodyDef){
+        if (!this.bodyDef) {
             /**
              * @property bodyDef
              * @type {b2BodyDef}
@@ -88,7 +88,7 @@ CG.Entity.extend('B2DEntity', {
             this.bodyDef.awake = true
         }
 
-        if(!this.fixDef) {
+        if (!this.fixDef) {
             /**
              * @property fixDef
              * @type {b2FixtureDef}
@@ -133,7 +133,7 @@ CG.Entity.extend('B2DEntity', {
      * @param impulse
      * @param source
      */
-    hit:function (impulse, source) {
+    hit: function (impulse, source) {
         this.isHit = true;
         if (this.strength) {
             this.strength -= impulse;
@@ -142,13 +142,65 @@ CG.Entity.extend('B2DEntity', {
             }
         }
     },
-    update:function () {
+    update: function () {
     },
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this)
 
+    },
+    /**
+     * @method addVelocity
+     * @param b2Vec2
+     */
+    addVelocity: function (b2Vec2) {
+        var v = this.body.GetLinearVelocity();
+
+        v.SelfAdd(b2Vec2);
+
+        //check for max horizontal and vertical velocities and then set
+        if (Math.abs(v.y) > this.max_ver_vel) {
+            v.y = this.max_ver_vel * v.y / Math.abs(v.y);
+        }
+
+        if (Math.abs(v.x) > this.max_hor_vel) {
+            v.x = this.max_hor_vel * v.x / Math.abs(v.x);
+        }
+
+        //set the new velocity
+        this.body.SetLinearVelocity(v);
+
+//        if (vel.y < 0) {
+//            this.jump = true
+//        }
+    },
+    /**
+     * @method applyImpulse
+     * @param degrees
+     * @param power
+     */
+    applyImpulse: function (degrees, power) {
+        if (this.body) {
+            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                Math.sin(degrees * CG.Const_PI_180) * power),
+                this.body.GetWorldCenter())
+        }
+    },
+    /**
+     * @method setType
+     * @param b2BodyType
+     */
+    setType: function (b2BodyType) {
+        this.body.SetType(b2BodyType)
+    },
+    /**
+     * @method setPosition
+     * @param b2Vec2
+     */
+    setPosition: function (b2Vec2) {
+        this.body.SetPosition(b2Vec2)
     }
+
 })
 
 
