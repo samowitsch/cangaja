@@ -55,9 +55,17 @@ CG.Class.extend('Entity', {
          */
         this.xscale = 1
         /**
+         @property xhandle {Number}
+         */
+        this.xhandle = 0
+        /**
          @property yscale {Number}
          */
         this.yscale = 1
+        /**
+         @property yhandle {Number}
+         */
+        this.yhandle = 0
         /**
          @property hover {boolean}
          */
@@ -107,21 +115,31 @@ CG.Class.extend('Entity', {
                 if (this.imagerotation !== 0) {
                     this.cutwidth = image.height
                     this.cutheight = image.width
+                    this.xhandle = this.height / 2
+                    this.yhandle = this.width / 2
                 } else {
                     this.cutwidth = image.width
                     this.cutheight = image.height
+                    this.xhandle = this.width / 2
+                    this.yhandle = this.height / 2
                 }
             } else if (typeof image == 'string' && image != '') {
                 //path to image
                 this.image = new Image()
                 this.image.src = image
-                this.width = this.image.width
-                this.height = this.image.height
+                this.image.onload = function () {
+                    this.width = this.image.width
+                    this.height = this.image.height
+                    this.xhandle = this.width / 2
+                    this.yhandle = this.height / 2
+                }
             } else {
                 //image from MediaAsset
                 this.image = image
                 this.width = this.image.width
                 this.height = this.image.height
+                this.xhandle = this.width / 2
+                this.yhandle = this.height / 2
             }
         }
     },

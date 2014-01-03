@@ -38,17 +38,9 @@ CG.Entity.extend('Sprite', {
          */
         this.xspeed = 0 //xspeed of the sprite
         /**
-         @property xhandle {Number}
-         */
-        this.xhandle = 0
-        /**
          @property yspeed {Number}
          */
         this.yspeed = 0
-        /**
-         @property yhandle {Number}
-         */
-        this.yhandle = 0
         /**
          @property boundsMode {false/string}
          */

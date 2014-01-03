@@ -60,16 +60,7 @@ CG.Entity.extend('B2DEntity', {
          * @type {b2World}
          */
         this.world = world
-        /**
-         * @property xhandle
-         * @type {Number}
-         */
-        this.xhandle = (this.width / 2)
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = (this.height / 2)
+
         if (!this.bodyDef) {
             /**
              * @property bodyDef
@@ -199,6 +190,12 @@ CG.Entity.extend('B2DEntity', {
      */
     setPosition: function (b2Vec2) {
         this.body.SetPosition(b2Vec2)
+    },
+    /**
+     * @method getPosition
+     */
+    getPosition: function () {
+        return this.body.GetPosition()
     }
 
 })
