@@ -26892,7 +26892,7 @@ CG.Entity.extend('B2DEntity', {
      * @return {*}
      */
 
-    init:function (name, image, world, x, y, scale) {
+    init: function (name, image, world, x, y, scale) {
         this._super()
         this.instanceOf = 'B2DEntity'
         this.setImage(image)
@@ -26925,7 +26925,7 @@ CG.Entity.extend('B2DEntity', {
          * @property id
          * @type {Object}
          */
-        this.id = {name:name, uid:0}
+        this.id = {name: name, uid: 0}
         /**
          * @property world
          * @type {b2World}
@@ -26941,7 +26941,7 @@ CG.Entity.extend('B2DEntity', {
          * @type {Number}
          */
         this.yhandle = (this.height / 2)
-        if(!this.bodyDef){
+        if (!this.bodyDef) {
             /**
              * @property bodyDef
              * @type {b2BodyDef}
@@ -26959,7 +26959,7 @@ CG.Entity.extend('B2DEntity', {
             this.bodyDef.awake = true
         }
 
-        if(!this.fixDef) {
+        if (!this.fixDef) {
             /**
              * @property fixDef
              * @type {b2FixtureDef}
@@ -27004,7 +27004,7 @@ CG.Entity.extend('B2DEntity', {
      * @param impulse
      * @param source
      */
-    hit:function (impulse, source) {
+    hit: function (impulse, source) {
         this.isHit = true;
         if (this.strength) {
             this.strength -= impulse;
@@ -27013,13 +27013,65 @@ CG.Entity.extend('B2DEntity', {
             }
         }
     },
-    update:function () {
+    update: function () {
     },
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this)
 
+    },
+    /**
+     * @method addVelocity
+     * @param b2Vec2
+     */
+    addVelocity: function (b2Vec2) {
+        var v = this.body.GetLinearVelocity();
+
+        v.SelfAdd(b2Vec2);
+
+        //check for max horizontal and vertical velocities and then set
+        if (Math.abs(v.y) > this.max_ver_vel) {
+            v.y = this.max_ver_vel * v.y / Math.abs(v.y);
+        }
+
+        if (Math.abs(v.x) > this.max_hor_vel) {
+            v.x = this.max_hor_vel * v.x / Math.abs(v.x);
+        }
+
+        //set the new velocity
+        this.body.SetLinearVelocity(v);
+
+//        if (vel.y < 0) {
+//            this.jump = true
+//        }
+    },
+    /**
+     * @method applyImpulse
+     * @param degrees
+     * @param power
+     */
+    applyImpulse: function (degrees, power) {
+        if (this.body) {
+            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                Math.sin(degrees * CG.Const_PI_180) * power),
+                this.body.GetWorldCenter())
+        }
+    },
+    /**
+     * @method setType
+     * @param b2BodyType
+     */
+    setType: function (b2BodyType) {
+        this.body.SetType(b2BodyType)
+    },
+    /**
+     * @method setPosition
+     * @param b2Vec2
+     */
+    setPosition: function (b2Vec2) {
+        this.body.SetPosition(b2Vec2)
     }
+
 })
 
 
@@ -28137,7 +28189,7 @@ CG.Layer.extend('B2DWorld', {
             scale: this.scale,
             canvas: Game.b_canvas,
             ctx: Game.b_ctx,
-            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit | box2d.b2DrawFlags.e_centerOfMassBit
+            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit
         })
         this.world.SetDebugDraw(debugDraw)
 
@@ -28606,11 +28658,14 @@ CG.Class.extend('B2DFizzXLoader', {
         this.imageMap = []
         this.atlasMap = []
 
-        this.loadBodies()
         this.loadImages()
+        this.loadBodies()
         this.loadJoints()
-
     },
+    /**
+     * @description
+     * @method loadBodies
+     */
     loadBodies: function () {
         console.log('### start bodies')
         for (var b = 0, lb = this.json.box2d.bodies.body.length; b < lb; b++) {
@@ -28625,6 +28680,10 @@ CG.Class.extend('B2DFizzXLoader', {
         }
 
     },
+    /**
+     * @description is this method needed? use MediaAsset loader instead or extend MediaAsset with in game "preloading"?
+     * @method loadImages
+     */
     loadImages: function () {
         console.log('### start images')
         for (var i = 0, li = this.json.box2d.images.image.length; i < li; i++) {
@@ -28632,6 +28691,10 @@ CG.Class.extend('B2DFizzXLoader', {
             console.log('-- image #' + ( i + 1 ), image)
         }
     },
+    /**
+     * @description
+     * @method loadJoints
+     */
     loadJoints: function () {
         console.log('### start joints')
         for (var j = 0, lj = this.json.box2d.joints.joint.length; j < lj; j++) {
