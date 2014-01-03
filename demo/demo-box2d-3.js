@@ -1,7 +1,7 @@
 var renderStats, mainscreen, mainlayer, canvas, ctx, Game, b2world
 var sfxWhistle, sfxCrowd, sfxNet, sfxIntro
 
-var rightplayer, leftplayer, ball, startleft = false, startright = true
+var rightplayer, leftplayer, ball, start = true, startleft = false, startright = true, contact = false, diff = 0
 
 var mousex = 0, mousey = 0
 var tp = new CG.AtlasTexturePacker()
@@ -35,7 +35,8 @@ CG.B2DWorld.extend('B2DTestbed', {
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))             //net part
         this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))   //net part
 
-        ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 38, 310, -200, this.scale, box2d.b2BodyType.b2_dynamicBody)
+        ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 38, 310, -200, this.scale, box2d.b2BodyType.b2_staticBody)
+        ball.body.SetPosition(new b2Vec2(16, 4.5))
         this.addCustom(ball)
 
         rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 175, 230, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
@@ -45,18 +46,23 @@ CG.B2DWorld.extend('B2DTestbed', {
 
         this.addContactListener({
             BeginContact: function (idA, idB) {
-                if ((idA.GetUserData().name == 'blobby-egg-left' || idA.GetUserData().name == 'blobby-egg-right') && idB.GetUserData().name == 'beachvolleyball') {
-                    startleft = startright = false
-                }
+            },
+
+            PostSolve: function (idA, idB, impulse) {
                 //beachvolleyball hits the ground
                 if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'beachvolleyball') {
-                    if (ball.body.GetPosition().x * 40 > 400) {
+                    if (ball.getPosition().x * 40 > 400) {
                         startleft = true
+//                        ball.setPosition(new b2Vec2(4, 4.5))
+//                        ball.setType(box2d.b2BodyType.b2_staticBody)
                     } else {
                         startright = true
+//                        ball.setPosition(new b2Vec2(16, 4.5))
+//                        ball.setType(box2d.b2BodyType.b2_staticBody)
                     }
                     sfxWhistle.play()
                     sfxCrowd.play()
+                    start = true
                 }
                 //ball hits net
                 if (idA.GetUserData().name == 'N' && idB.GetUserData().name == 'beachvolleyball') {
@@ -73,7 +79,6 @@ CG.B2DWorld.extend('B2DTestbed', {
 
                 //players contact with beachvolleyball
                 if ((idA.GetUserData().name == 'blobby-egg-left' || idA.GetUserData().name == 'blobby-egg-right') && idB.GetUserData().name == 'beachvolleyball') {
-                    //console.log(['PostSolve', idA, idB, impulse]);
                     b2world.elements[idA.GetUserData().uid - 1].points += 1
                     if (idA.GetUserData().name == 'blobby-egg-right') {
                         leftplayer.points = 0
@@ -86,18 +91,21 @@ CG.B2DWorld.extend('B2DTestbed', {
                             //alert('leftplayer lost to much contacts')
                         }
                     }
+                    startleft = startright = false
+
+                    contact = true
+
+                    if (idA.GetUserData().name == 'blobby-egg-right')
+                        diff = (idA.GetPosition().x - idA.GetLocalCenter().x) - (idB.GetPosition().x - idB.GetLocalCenter().x)
+                    if (idA.GetUserData().name == 'blobby-egg-left')
+                        diff = (idB.GetPosition().x - idB.GetLocalCenter().x) - (idA.GetPosition().x - idA.GetLocalCenter().x)
                 }
-            },
 
-            PostSolve: function (idA, idB, impulse) {
-
-//                    var entityA = world[idA];
-//                    var entityB = world[idB];
             },
             PreSolve: function (contact, oldManifold) {
-//                console.log([contact, oldManifold])
                 var fixtureA = contact.GetFixtureA();
                 var fixtureB = contact.GetFixtureB();
+//                console.log(contact, fixtureA, fixtureB, oldManifold)
             }
         });
 
@@ -169,34 +177,6 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.ballcontacts = 0
 
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
-    },
-    addVelocity: function (vel) {
-        var v = this.body.GetLinearVelocity();
-
-        v.SelfAdd(vel);
-
-        //check for max horizontal and vertical velocities and then set
-        if (Math.abs(v.y) > this.max_ver_vel) {
-            v.y = this.max_ver_vel * v.y / Math.abs(v.y);
-        }
-
-        if (Math.abs(v.x) > this.max_hor_vel) {
-            v.x = this.max_hor_vel * v.x / Math.abs(v.x);
-        }
-
-        //set the new velocity
-        this.body.SetLinearVelocity(v);
-
-//        if (vel.y < 0) {
-//            this.jump = true
-//        }
-    },
-    applyImpulse: function (degrees, power) {
-        if (this.body) {
-            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
-                Math.sin(degrees * (Math.PI / 180)) * power),
-                this.body.GetWorldCenter());
-        }
     }
 })
 
@@ -279,7 +259,7 @@ CG.B2DCircle.extend('B2DBall', {
         this._super()
         this.arrow.position.x = this.body.GetPosition().x * this.scale
         this.shadow.position.x = this.body.GetPosition().x * this.scale
-        if (this.body.GetPosition().y* this.scale < 100) {
+        if (this.body.GetPosition().y * this.scale < 100) {
             this.shadow.xscale = this.shadow.yscale = 0.2
         } else {
             this.shadow.xscale = this.shadow.yscale = ( this.body.GetPosition().y * this.scale) / 400
@@ -421,7 +401,6 @@ CG.Game.extend('MyGame', {
             }
             if (keyCode == 87) { // w - up
                 if (leftplayer.jump == false) {
-                    //self.applyImpulse(270, self.hor_impulse)
                     leftplayer.addVelocity(new b2Vec2(0, -9))
                     leftplayer.jump = true
                 }
@@ -436,7 +415,6 @@ CG.Game.extend('MyGame', {
             }
             if (keyCode == 38) { //up
                 if (rightplayer.jump == false) {
-                    //self.applyImpulse(270, self.hor_impulse)
                     rightplayer.addVelocity(new b2Vec2(0, -9))
                     rightplayer.jump = true
                 }
@@ -451,16 +429,22 @@ CG.Game.extend('MyGame', {
         this.loop()
     },
     update: function () {
-        if (startleft == true) {
-            ball.body.SetPosition(new b2Vec2(4, 4.5))
-            //ball.body.SetAngularVelocity(0)
-            ball.body.SetSleepingAllowed()
-            ball.body.SetAngularVelocity(0)
-        } else if (startright == true) {
-            ball.body.SetPosition(new b2Vec2(16, 4.5))
-            //ball.body.SetAngularVelocity(0)
-            ball.body.SetSleepingAllowed()
-            ball.body.SetAngularVelocity(0)
+        if (contact && start) {
+            ball.setType(box2d.b2BodyType.b2_dynamicBody)
+            ball.addVelocity(new b2Vec2(diff * 3, -12))
+            contact = false
+            start = false
+        }
+        if (startleft) {
+            ball.setPosition(new b2Vec2(4, 4.5))
+            ball.setType(box2d.b2BodyType.b2_staticBody)
+            startleft = false
+            start = true
+        } else if (startright) {
+            ball.setPosition(new b2Vec2(16, 4.5))
+            ball.setType(box2d.b2BodyType.b2_staticBody)
+            startright = false
+            start = true
         }
     },
     draw: function () {
