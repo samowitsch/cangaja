@@ -27400,7 +27400,6 @@ CG.B2DEntity.extend('B2DPolygon', {
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                //value from physics editor
             //this.fixDef.restitution = 0
-            //this.fixDef.density = 10
 
             this.fixDef.shape = this.bodyShapePoly
             this.body.CreateFixture(this.fixDef)
@@ -27570,10 +27569,6 @@ CG.B2DEntity.extend('B2DTerrain', {
                 this.bodyShapePoly = new b2PolygonShape
                 this.bodyShapePoly.bounce = 0.5
                 this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
-                this.fixDef.density = 0.5
-                this.fixDef.friction = 0.5
-                //this.fixDef.restitution = 0
-                //this.fixDef.density = 10
 
                 this.fixDef.shape = this.bodyShapePoly
                 this.body.CreateFixture(this.fixDef)
