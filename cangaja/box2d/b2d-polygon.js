@@ -114,10 +114,10 @@ CG.B2DEntity.extend('B2DPolygon', {
     getPolysFromJson:function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i < l; i++) {
-            poly = this.jsondata[i].shape
+            var poly = this.jsondata[i].shape
             var temp = []
             for (var i2 = 0, l2 = poly.length; i2 < l2; i2 = i2 + 2) {
-                vec = new b2Vec2(poly[i2] / this.scale, poly[i2 + 1] / this.scale)
+                var vec = new b2Vec2(poly[i2] / this.scale, poly[i2 + 1] / this.scale)
                 temp.push(vec)
             }
             vecs.push(temp)
