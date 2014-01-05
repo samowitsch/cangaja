@@ -16,31 +16,6 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.angularDamping = 0
 
         this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
-    },
-    addVelocity: function (vel) {
-        var v = this.body.GetLinearVelocity();
-
-        v.SelfAdd(vel);
-
-        //check for max horizontal and vertical velocities and then set
-        if (Math.abs(v.y) > this.max_ver_vel) {
-            v.y = this.max_ver_vel * v.y / Math.abs(v.y);
-        }
-
-        if (Math.abs(v.x) > this.max_hor_vel) {
-            v.x = this.max_hor_vel * v.x / Math.abs(v.x);
-        }
-
-        //set the new velocity
-        this.body.SetLinearVelocity(v);
-
-    },
-    applyImpulse: function (degrees, power) {
-        if (this.body) {
-            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * (Math.PI / 180)) * power,
-                Math.sin(degrees * (Math.PI / 180)) * power),
-                this.body.GetWorldCenter());
-        }
     }
 })
 
