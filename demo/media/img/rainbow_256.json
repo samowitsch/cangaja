@@ -3,87 +3,87 @@
 		"rainbow_256": [
 			
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   203.5, 139  ,  202.5, 122  ,  255.5, 117  ,  219, 145.5  ,  215, 147.5  ,  208, 146.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   36, 148.5  ,  30, 145.5  ,  51.5, 122  ,  50.5, 140  ,  46.5, 147  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   246, 145.5  ,  219, 145.5  ,  255.5, 117  ,  255.5, 139  ,  252.5, 143  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   8, 145.5  ,  0, 141.5  ,  -0.5, 88  ,  5.5, 73  ,  18.5, 54  ,  56, 107.5  ,  51.5, 122  ,  30, 145.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   198.5, 108  ,  255.5, 117  ,  202.5, 122  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   186.5, 89  ,  214, 29.5  ,  230, 45.5  ,  253.5, 109  ,  255.5, 117  ,  198.5, 108  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   253.5, 109  ,  230, 45.5  ,  248.5, 73  ,  255.5, 94  ,  255.5, 105  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   115, -0.5  ,  115, 60.5  ,  106, 62.5  ,  18.5, 54  ,  19.5, 50  ,  39.5, 30  ,  59, 16.5  ,  88, 4.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   173.5, 76  ,  116, -0.5  ,  140, -0.5  ,  154, 1.5  ,  185, 11.5  ,  200, 19.5  ,  214, 29.5  ,  186.5, 89  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   56, 107.5  ,  18.5, 54  ,  68, 88.5  ,  57.5, 107  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   18.5, 54  ,  81, 75.5  ,  68, 88.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   18.5, 54  ,  90, 69.5  ,  81, 75.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   18.5, 54  ,  106, 62.5  ,  90, 69.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   115, -0.5  ,  139, 60.5  ,  115, 60.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   115, -0.5  ,  151, 63.5  ,  139, 60.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   115, -0.5  ,  116, -0.5  ,  164, 69.5  ,  151, 63.5  ]
 				}  ,
 				{
-					"density": 10, "friction": 20, "bounce": 20, 
+					"density": 0.05, "friction": 20, "bounce": 20, 
 					"filter": { "categoryBits": 1, "maskBits": 65535 },
 					"shape": [   164, 69.5  ,  116, -0.5  ,  173.5, 76  ]
 				}  
