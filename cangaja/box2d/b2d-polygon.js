@@ -24,7 +24,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @param bullet    {Boolean}     bullet option
      * @return {*}
      */
-    init:function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
+    init: function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
         this.instanceOf = 'B2DPolygon'
         /**
@@ -38,16 +38,6 @@ CG.B2DEntity.extend('B2DPolygon', {
          */
 //        this.jsondata = jsonpoly.data[jsonpoly.name]
         this.jsondata = jsonpoly.data[name]
-        /**
-         * @property xhandle
-          * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
         /**
          * @property vecs
          * @type {Array}
@@ -94,6 +84,7 @@ CG.B2DEntity.extend('B2DPolygon', {
         for (var i = 0, l = this.vecs.length; i < l; i++) {
             this.bodyShapePoly = new b2PolygonShape
             this.bodyShapePoly.bounce = this.jsondata[i].restitution        //value from physics editor
+            this.makeVecsCentroid(this.vecs[i])
             this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                //value from physics editor
@@ -111,7 +102,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @method getPolysFromJson
      * @return {Array}
      */
-    getPolysFromJson:function () {
+    getPolysFromJson: function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i < l; i++) {
             var poly = this.jsondata[i].shape
@@ -123,6 +114,21 @@ CG.B2DEntity.extend('B2DPolygon', {
             vecs.push(temp)
         }
         return vecs
+    },
+    /**
+     * The origin of the vertices from physicseditor is top/left. This method makes the vecs centroid (centered origin) depending on image size.
+     * @todo put this stuff into getPolysFromJson?
+     *
+     * @method makeVecsCentroid
+     * @param vecs
+     */
+    makeVecsCentroid: function (vecs) {
+        var xcenter = this.xhandle / this.scale,
+            ycenter = this.yhandle / this.scale
+        for (var p = 0, pl = vecs.length; p < pl; p++) {
+            vecs[p].x = vecs[p].x - xcenter
+            vecs[p].y = vecs[p].y - ycenter
+        }
     }
 })
 

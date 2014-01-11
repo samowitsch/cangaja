@@ -39,9 +39,9 @@ CG.B2DWorld.extend('B2DTestbed', {
         ball.body.SetPosition(new b2Vec2(16, 4.5))
         this.addCustom(ball)
 
-        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 175, 230, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 115, 305, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
         this.addCustom(rightplayer)
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 50, 230, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 110, 305, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
         this.addCustom(leftplayer)
 
         this.addContactListener({
@@ -200,7 +200,7 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
     },
     update: function () {
         this._super()
-        this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
+        this.shadow.position.x = (this.body.GetPosition().x) * this.scale
         this.shadow.xscale = this.shadow.yscale = (this.body.GetPosition().y * this.scale) / 250
     }
 })
@@ -224,7 +224,7 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
     },
     update: function () {
         this._super()
-        this.shadow.position.x = (this.body.GetPosition().x + 1.45) * this.scale
+        this.shadow.position.x = (this.body.GetPosition().x) * this.scale
         this.shadow.xscale = this.shadow.yscale = (this.body.GetPosition().y * this.scale) / 250
     }
 })
