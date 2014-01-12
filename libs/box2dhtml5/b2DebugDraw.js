@@ -22,12 +22,12 @@ goog.provide('box2d.Render');
 
 //goog.require('goog.string.format');
 
-/** 
- * This class implements debug drawing callbacks that are 
- * invoked inside b2World::Step. 
- * @export 
+/**
+ * This class implements debug drawing callbacks that are
+ * invoked inside b2World::Step.
+ * @export
  * @constructor
- * @extends {box2d.b2Draw} 
+ * @extends {box2d.b2Draw}
  * @param {object} opts
  */
 box2d.b2DebugDraw = function (opts)
@@ -37,25 +37,25 @@ box2d.b2DebugDraw = function (opts)
     this.scale = opts.scale
 	this.m_canvas = opts.canvas || false
 	this.m_ctx = opts.ctx || false
-    this.m_settings = opts.flags || box2d.b2DrawFlags.e_shapeBit
+    this.m_settings = opts.flags || (box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_centerOfMassBit)
     this.alpha = opts.alpha || 0.5
 }
 
 goog.inherits(box2d.b2DebugDraw, box2d.b2Draw);
 
 /**
- * @export 
- * @type {HTMLCanvasElement} 
+ * @export
+ * @type {HTMLCanvasElement}
  */
 box2d.b2DebugDraw.prototype.m_canvas = null;
 /**
- * @export 
- * @type {CanvasRenderingContext2D} 
+ * @export
+ * @type {CanvasRenderingContext2D}
  */
 box2d.b2DebugDraw.prototype.m_ctx = null;
 /**
- * @export 
- * @type {box2d.Settings} 
+ * @export
+ * @type {box2d.Settings}
  */
 box2d.b2DebugDraw.prototype.m_settings = null;
 
@@ -64,9 +64,9 @@ box2d.b2DebugDraw.prototype.alpha = 0.5;
 
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Transform} xf 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Transform} xf
  */
 box2d.b2DebugDraw.prototype.PushTransform = function (xf)
 {
@@ -78,9 +78,9 @@ box2d.b2DebugDraw.prototype.PushTransform = function (xf)
 }
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Transform} xf 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Transform} xf
  */
 box2d.b2DebugDraw.prototype.PopTransform = function (xf)
 {
@@ -89,11 +89,11 @@ box2d.b2DebugDraw.prototype.PopTransform = function (xf)
 }
 
 /**
- * @export 
- * @return {void} 
- * @param {Array.<box2d.b2Vec2>} vertices 
- * @param {number} vertexCount 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {Array.<box2d.b2Vec2>} vertices
+ * @param {number} vertexCount
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawPolygon = function (vertices, vertexCount, color)
 {
@@ -101,8 +101,9 @@ box2d.b2DebugDraw.prototype.DrawPolygon = function (vertices, vertexCount, color
 
 	var ctx = this.m_ctx;
 
+    ctx.globalAlpha = 1
 	ctx.beginPath();
-	ctx.moveTo(vertices[0].x, vertices[0].y);
+	ctx.moveTo(vertices[0].x * this.scale, vertices[0].y * this.scale);
 	for (var i = 1; i < vertexCount; i++)
 	{
 		ctx.lineTo(vertices[i].x * this.scale, vertices[i].y * this.scale);
@@ -113,11 +114,11 @@ box2d.b2DebugDraw.prototype.DrawPolygon = function (vertices, vertexCount, color
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {Array.<box2d.b2Vec2>} vertices 
- * @param {number} vertexCount 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {Array.<box2d.b2Vec2>} vertices
+ * @param {number} vertexCount
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawSolidPolygon = function (vertices, vertexCount, color)
 {
@@ -139,11 +140,11 @@ box2d.b2DebugDraw.prototype.DrawSolidPolygon = function (vertices, vertexCount, 
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Vec2} center 
- * @param {number} radius 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Vec2} center
+ * @param {number} radius
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawCircle = function (center, radius, color)
 {
@@ -158,12 +159,12 @@ box2d.b2DebugDraw.prototype.DrawCircle = function (center, radius, color)
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Vec2} center 
- * @param {number} radius 
- * @param {box2d.b2Vec2} axis 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Vec2} center
+ * @param {number} radius
+ * @param {box2d.b2Vec2} axis
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawSolidCircle = function (center, radius, axis, color)
 {
@@ -184,11 +185,11 @@ box2d.b2DebugDraw.prototype.DrawSolidCircle = function (center, radius, axis, co
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Vec2} p1 
- * @param {box2d.b2Vec2} p2 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Vec2} p1
+ * @param {box2d.b2Vec2} p2
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawSegment = function (p1, p2, color)
 {
@@ -202,9 +203,9 @@ box2d.b2DebugDraw.prototype.DrawSegment = function (p1, p2, color)
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Transform} xf 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Transform} xf
  */
 box2d.b2DebugDraw.prototype.DrawTransform = function (xf)
 {
@@ -214,13 +215,13 @@ box2d.b2DebugDraw.prototype.DrawTransform = function (xf)
 
 	ctx.beginPath();
 	ctx.moveTo(0, 0);
-	ctx.lineTo(1, 0);
+	ctx.lineTo(10, 0);
 	ctx.strokeStyle = box2d.b2Color.RED.MakeStyleString(1);
 	ctx.stroke();
 
 	ctx.beginPath();
 	ctx.moveTo(0, 0);
-	ctx.lineTo(0, 1);
+	ctx.lineTo(0, 10);
 	ctx.strokeStyle = box2d.b2Color.GREEN.MakeStyleString(1);
 	ctx.stroke();
 
@@ -228,11 +229,11 @@ box2d.b2DebugDraw.prototype.DrawTransform = function (xf)
 };
 
 /**
- * @export 
- * @return {void} 
- * @param {box2d.b2Vec2} p 
- * @param {number} size 
- * @param {box2d.b2Color} color 
+ * @export
+ * @return {void}
+ * @param {box2d.b2Vec2} p
+ * @param {number} size
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawPoint = function (p, size, color)
 {
@@ -246,11 +247,11 @@ box2d.b2DebugDraw.prototype.DrawPoint = function (p, size, color)
 }
 
 /**
- * @export 
- * @param {number} x 
- * @param {number} y 
+ * @export
+ * @param {number} x
+ * @param {number} y
  * @param {string} format
- * @param {...string|number} var_args 
+ * @param {...string|number} var_args
  */
 box2d.b2DebugDraw.prototype.DrawString = function (x, y, format, var_args)
 {
@@ -270,11 +271,11 @@ box2d.b2DebugDraw.prototype.DrawString = function (x, y, format, var_args)
 box2d.b2DebugDraw.prototype.DrawString.s_color = new box2d.b2Color(0.9, 0.6, 0.6);
 
 /**
- * @export 
- * @param {number} x 
- * @param {number} y 
+ * @export
+ * @param {number} x
+ * @param {number} y
  * @param {string} format
- * @param {...string|number} var_args 
+ * @param {...string|number} var_args
  */
 box2d.b2DebugDraw.prototype.DrawStringWorld = function (x, y, format, var_args)
 {
@@ -313,10 +314,10 @@ box2d.b2DebugDraw.prototype.DrawStringWorld.s_cc = new box2d.b2Vec2();
 box2d.b2DebugDraw.prototype.DrawStringWorld.s_color = new box2d.b2Color(0.5, 0.9, 0.5);
 
 /**
- * @export 
+ * @export
  * @return {void} 
- * @param {box2d.b2AABB} aabb 
- * @param {box2d.b2Color} color 
+ * @param {box2d.b2AABB} aabb
+ * @param {box2d.b2Color} color
  */
 box2d.b2DebugDraw.prototype.DrawAABB = function (aabb, color)
 {
