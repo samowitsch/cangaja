@@ -81,7 +81,7 @@ CG.Layer.extend('B2DWorld', {
             scale: this.scale,
             canvas: Game.b_canvas,
             ctx: Game.b_ctx,
-            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit
+            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit | box2d.b2DrawFlags.e_centerOfMassBit
         })
         this.world.SetDebugDraw(debugDraw)
 
