@@ -90,7 +90,9 @@ CG.Entity.extend('Bitmap', {
      * @method drawImageToBuffer
      */
     drawImageToBuffer:function () {
-        this.bitmap_ctx.drawImage(this.image, 0, 0)
+        if (this.image) {
+            this.bitmap_ctx.drawImage(this.image, 0, 0)
+        }
         return this
     },
 
