@@ -86,6 +86,8 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Changelog:
 
+* 2014-01-12 [bugfix] - fixed DebugDraw
+             [change] - B2DPolygon origin is now midhandle
 * 2013-12-09 [added] - new class CG.Game
 * 2013-12-06 [change] - class inheritance clenaup
 * 2013-12-05 [feature] - basic spine support has landed ;o)
