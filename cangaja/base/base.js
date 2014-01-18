@@ -56,6 +56,34 @@ var CG = CG || {
     end: {x: 0, y: 0}
 };
 
+/**
+ Extends a destination object with a source object (modifies destination object)
+
+ @method CG._extend
+ @param {Object} dest - destination object
+ @param {Object} source - source object
+ @return {Object} returns the dest object
+ @for Cangaja
+ */
+CG._extend = function(dest,source) {
+    if(!source) { return dest; }
+    for (var prop in source) {
+        dest[prop] = source[prop];
+    }
+    return dest;
+};
+
+/**
+ Return a shallow copy of an object. Sub-objects (and sub-arrays) are not cloned. (uses extend internally)
+
+ @method CG._clone
+ @param {Object} obj - object to clone
+ @return {Object} cloned object
+ @for Cangaja
+ */
+CG._clone = function(obj) {
+    return Q._extend({},obj);
+};
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
