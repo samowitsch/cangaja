@@ -346,7 +346,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
      * y - y pos for clipping
      *
      * @method clipTerrain
-     * @param opt
+     * @param {object} opt
      *&#x2F;
     clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
@@ -441,6 +441,12 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
     },
     &#x2F;**
      * @description creates a ccw wise circle vertices array for clipping
+     *
+     * Options:
+     * points - number of points of circle,
+     * radius - radius for circle,
+     * x - x position for circle,
+     * y - y position for circle
      *
      * @method createCircle
      * @param {object} opts example {points: 16, radius: 30, x: 320, y: 240}

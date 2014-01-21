@@ -27637,7 +27637,7 @@ CG.B2DEntity.extend('B2DTerrain', {
      * y - y pos for clipping
      *
      * @method clipTerrain
-     * @param opt
+     * @param {object} opt
      */
     clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
@@ -28292,11 +28292,13 @@ CG.Layer.extend('B2DWorld', {
      *
      * @method addCustom
      * @param obj      object    custom B2D object
+     * @return {Object}
      */
     addCustom: function (obj) {
         this.uid = this.uid + 1
         obj.id.uid = this.uid
         this.elements.push(obj)
+        return obj
     },
      /**
      * @description
@@ -28329,6 +28331,7 @@ CG.Layer.extend('B2DWorld', {
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
      * @param stat    {Boolean}     is the body static or dynamic
+     * @return {CG.B2DRectangle}
      */
     createBox: function (id, image, x, y, stat) {
         this.uid = this.uid + 1
@@ -28346,6 +28349,7 @@ CG.Layer.extend('B2DWorld', {
      * @param id      {String}    id or name to identify
      * @param start   {CG.Point}  start o fline
      * @param end     {CG.Point}  end of line
+     * @return {CG.B2DLine}
      */
     createLine: function (id, start, end) {
         this.uid = this.uid + 1
@@ -28366,6 +28370,7 @@ CG.Layer.extend('B2DWorld', {
      * @param x       {Number}     the x position
      * @param y       {Number}     the y position
      * @param stat    {Boolean}     is the body static or dynamic
+     * @return {CG.B2DCircle}
      */
     createCircle: function (id, image, radius, x, y, stat) {
         this.uid = this.uid + 1
@@ -28389,6 +28394,7 @@ CG.Layer.extend('B2DWorld', {
      * @param y         {Number}     the y position
      * @param stat      {Boolean}     is the body static or dynamic
      * @param bullet    {Boolean}     bullet option
+     * @return {CG.B2DPolygon}
      */
     createPolyBody: function (id, image, jsonpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
@@ -28410,6 +28416,7 @@ CG.Layer.extend('B2DWorld', {
      * @param y         {Number}     the y position
      * @param stat      {Boolean}     is the body static or dynamic
      * @param bullet    {Boolean}     bullet option
+     * @return {CG.B2DTerrain}
      */
     createTerrain: function (id, image, terrainpoly, x, y, stat, bullet) {
         this.uid = this.uid + 1
@@ -28428,6 +28435,7 @@ CG.Layer.extend('B2DWorld', {
      * @param vertices  {array}      vertices for chainshape CG.Point array
      * @param x         {Number}     the x position
      * @param y         {Number}     the y position
+     * @return {CG.B2DChainShape}
      */
     createChainShape: function (id, vertices, x, y, stat) {
         this.uid = this.uid + 1
@@ -28449,7 +28457,7 @@ CG.Layer.extend('B2DWorld', {
      * @param length        {Number}     the length/width of the bridge
      * @param segments      {Number}     segments of the bridge
      * @param segmentHeight {Number}     height of a segment
-     * @return {*}
+     * @return {CG.B2DBridge}
      */
     createBridge: function (id, image, x, y, length, segments, segmentHeight) {
         this.uid = this.uid + 1
@@ -28471,7 +28479,7 @@ CG.Layer.extend('B2DWorld', {
      * @param length        {Number}     the length/width of the bridge
      * @param segments      {Number}     segments of the bridge
      * @param segmentHeight {Number}     height of a segment
-     * @return {*}
+     * @return {CG.B2DRope}
      */
     createRope: function (id, image, x, y, length, segments, segmentHeight) {
         this.uid = this.uid + 1

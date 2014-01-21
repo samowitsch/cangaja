@@ -3780,7 +3780,8 @@
             "params": [
                 {
                     "name": "opt",
-                    "description": ""
+                    "description": "",
+                    "type": "Object"
                 }
             ],
             "class": "CG.B2DTerrain",
@@ -3820,7 +3821,7 @@
         {
             "file": "cangaja/box2d/b2d-terrain.js",
             "line": 266,
-            "description": "creates a ccw wise circle vertices array for clipping",
+            "description": "creates a ccw wise circle vertices array for clipping\n\nOptions:\npoints - number of points of circle,\nradius - radius for circle,\nx - x position for circle,\ny - y position for circle",
             "itemtype": "method",
             "name": "createCircle",
             "params": [
@@ -3967,12 +3968,16 @@
                     "description": "object    custom B2D object"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 143,
+            "line": 145,
             "description": "Checks if a B2D body Exists",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -3992,7 +3997,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 163,
+            "line": 165,
             "description": "createBox creates a basic Box2D rectangle with some default settings.",
             "itemtype": "method",
             "name": "createBox",
@@ -4023,12 +4028,16 @@
                     "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DRectangle"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 182,
+            "line": 185,
             "description": "createLine creates a basic Box2D line with some default settings.",
             "itemtype": "method",
             "name": "createLine",
@@ -4049,12 +4058,16 @@
                     "type": "CG.Point"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DLine"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 199,
+            "line": 203,
             "description": "createCircle creates a basic Box2D circle with some default settings",
             "itemtype": "method",
             "name": "createCircle",
@@ -4090,12 +4103,16 @@
                     "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DCircle"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 219,
+            "line": 224,
             "description": "createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this\nBox2D object. The polygonshape and some settings like density, bounce and friction are\ntaken from the json file at the moment.",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -4136,12 +4153,16 @@
                     "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DPolygon"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 242,
+            "line": 248,
             "description": "createTerrain",
             "itemtype": "method",
             "name": "createPolyBody",
@@ -4182,12 +4203,16 @@
                     "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DTerrain"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 263,
+            "line": 270,
             "description": "createChainShape",
             "itemtype": "method",
             "name": "createChainShape",
@@ -4213,12 +4238,16 @@
                     "type": "Number"
                 }
             ],
+            "return": {
+                "description": "",
+                "type": "CG.B2DChainShape"
+            },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 281,
+            "line": 289,
             "description": "This method creates a B2D bridge. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createBridge",
@@ -4261,14 +4290,14 @@
             ],
             "return": {
                 "description": "",
-                "type": "*"
+                "type": "CG.B2DBridge"
             },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 303,
+            "line": 311,
             "description": "This method creates a B2D rope. Just play with the params to get a good result!",
             "itemtype": "method",
             "name": "createRope",
@@ -4311,14 +4340,14 @@
             ],
             "return": {
                 "description": "",
-                "type": "*"
+                "type": "CG.B2DRope"
             },
             "class": "CG.B2DWorld",
             "module": "CG"
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 325,
+            "line": 333,
             "description": "Enables dragging B2D objects with the mouse.",
             "itemtype": "method",
             "name": "mouseDownAt",
@@ -4339,7 +4368,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 352,
+            "line": 360,
             "itemtype": "method",
             "name": "mouseUp",
             "class": "CG.B2DWorld",
@@ -4347,7 +4376,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 359,
+            "line": 367,
             "description": "Get a B2D body at the give x, y position.",
             "itemtype": "method",
             "name": "getBodyAt",
@@ -4372,7 +4401,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 392,
+            "line": 400,
             "description": "Deletes a B2D body at the given x, y position",
             "itemtype": "method",
             "name": "deleteBodyAt",
@@ -4396,7 +4425,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 416,
+            "line": 424,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -4408,7 +4437,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 423,
+            "line": 431,
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -4422,7 +4451,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 430,
+            "line": 438,
             "itemtype": "method",
             "name": "removeElementByUid",
             "params": [
@@ -4436,7 +4465,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 443,
+            "line": 451,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -4458,7 +4487,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 456,
+            "line": 464,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -4472,7 +4501,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 480,
+            "line": 488,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -7304,7 +7333,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 27,
+            "line": 26,
             "itemtype": "property",
             "name": "bound",
             "type": "CG.Bound",
@@ -7313,7 +7342,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 31,
+            "line": 30,
             "itemtype": "property",
             "name": "diffpoint",
             "type": "CG.Point",
@@ -7322,7 +7351,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 36,
+            "line": 35,
             "itemtype": "property",
             "name": "xspeed",
             "type": "Number",
@@ -7331,7 +7360,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 40,
+            "line": 39,
             "itemtype": "property",
             "name": "yspeed",
             "type": "Number",
@@ -7340,7 +7369,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 44,
+            "line": 43,
             "itemtype": "property",
             "name": "boundsMode",
             "type": "False/string",
@@ -7349,7 +7378,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 48,
+            "line": 47,
             "itemtype": "property",
             "name": "rotationspeed",
             "type": "Integer/float",
@@ -7358,7 +7387,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 52,
+            "line": 51,
             "itemtype": "property",
             "name": "alpha",
             "type": "Float",
@@ -7367,7 +7396,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 56,
+            "line": 55,
             "itemtype": "property",
             "name": "followobject",
             "type": "Boolean/object",
@@ -7376,7 +7405,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 60,
+            "line": 59,
             "itemtype": "property",
             "name": "followspeed",
             "type": "Boolean/integer",
@@ -7385,7 +7414,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 64,
+            "line": 63,
             "itemtype": "property",
             "name": "followsteps",
             "type": "Boolean/integer",
@@ -7394,7 +7423,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 69,
+            "line": 68,
             "itemtype": "property",
             "name": "attachedobject",
             "type": "Boolean",
@@ -7403,7 +7432,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 73,
+            "line": 72,
             "itemtype": "property",
             "name": "offsetx",
             "type": "Number",
@@ -7412,7 +7441,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 77,
+            "line": 76,
             "itemtype": "property",
             "name": "offsety",
             "type": "Number",
@@ -7421,7 +7450,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 110,
+            "line": 109,
             "description": "Checks the bound if a boundMode (bounce or slide) is set",
             "itemtype": "method",
             "name": "checkBound",
@@ -7430,7 +7459,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 153,
+            "line": 152,
             "description": "calculate offset if bound is moving",
             "itemtype": "method",
             "name": "updateDiff",
@@ -7439,7 +7468,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 167,
+            "line": 166,
             "description": "is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different",
             "itemtype": "method",
             "name": "follow",
@@ -7448,7 +7477,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 201,
+            "line": 200,
             "description": "set the bound of the sprite",
             "itemtype": "method",
             "name": "setBound",
@@ -7464,7 +7493,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 212,
+            "line": 211,
             "description": "if there is a attached object get its position",
             "itemtype": "method",
             "name": "ifAttached",
@@ -7473,7 +7502,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 223,
+            "line": 222,
             "description": "attach a reference of the given object to this object",
             "itemtype": "method",
             "name": "attachObject",
@@ -7482,7 +7511,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 232,
+            "line": 231,
             "description": "removes the attached object reference",
             "itemtype": "method",
             "name": "removeAttachedObject",
@@ -7491,7 +7520,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 241,
+            "line": 240,
             "description": "set the x offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetX",
@@ -7500,7 +7529,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 250,
+            "line": 249,
             "description": "set the y offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetY",
