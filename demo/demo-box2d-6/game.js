@@ -1,6 +1,23 @@
 var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, currentx = 0, currenty = 0, mousedown = false, leftplayer, xpos = 10, ypos = 0,
     tp = new CG.AtlasTexturePacker(),
-    terrainBody, clipPoints = 12, clipRadius = 20, b2world
+    terrainBody, clipPoints = 12, clipRadius = 20, b2world, terrainBody, myTerrain
+
+CG.B2DTerrain.extend('MyTerrain', {
+    init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
+        //custom bodydef
+        this.bodyDef = new b2BodyDef
+        this.bodyDef.allowSleep = true
+        this.bodyDef.awake = true
+
+        //custom fixture def
+        this.fixDef = new b2FixtureDef
+        this.fixDef.density = 2
+        this.fixDef.friction = 1
+        this.fixDef.restitution = 1
+
+        this._super(world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet)
+    }
+})
 
 CG.Game.extend('MyGame', {
     init: function (canvas, options) {
@@ -54,7 +71,7 @@ CG.Game.extend('MyGame', {
         mainlayer = new CG.Layer('mainlayer')
 
         //sprite for the background
-        back = new CG.Sprite(this.asset.getImageByName('back'), new CG.Point(this.width2, this.height2))
+        var back = new CG.Sprite(this.asset.getImageByName('back'), new CG.Point(this.width2, this.height2))
         back.name = 'back'
         mainlayer.addElement(back)
 
@@ -83,7 +100,10 @@ CG.Game.extend('MyGame', {
                 }
             ]
 
-        terrainBody = b2world.createTerrain('terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
+//        terrainBody = b2world.createTerrain('terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
+
+        myTerrain = new CG.MyTerrain(b2world.world, 'terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, 40, box2d.b2BodyType.b2_staticBody, false)
+        terrainBody = b2world.addCustom(myTerrain)
 
         b2world.addContactListener({
             BeginContact: function (idA, idB) {
