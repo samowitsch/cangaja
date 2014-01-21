@@ -10593,7 +10593,6 @@ CG.Entity.extend('Sprite', {
         /**
          @property atlasimage {boolean}
          */
-        this.atlasimage = false
         this.setImage(image)
 
         /**
@@ -27631,6 +27630,12 @@ CG.B2DEntity.extend('B2DTerrain', {
     /**
      * @description Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW
      *
+     * Options:
+     * points - points for clipping,
+     * radius - radius for clipping,
+     * x - x pos for clipping,
+     * y - y pos for clipping
+     *
      * @method clipTerrain
      * @param opt
      */
@@ -27727,6 +27732,12 @@ CG.B2DEntity.extend('B2DTerrain', {
     },
     /**
      * @description creates a ccw wise circle vertices array for clipping
+     *
+     * Options:
+     * points - number of points of circle,
+     * radius - radius for circle,
+     * x - x position for circle,
+     * y - y position for circle
      *
      * @method createCircle
      * @param {object} opts example {points: 16, radius: 30, x: 320, y: 240}
