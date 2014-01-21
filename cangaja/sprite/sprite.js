@@ -21,7 +21,6 @@ CG.Entity.extend('Sprite', {
         /**
          @property atlasimage {boolean}
          */
-        this.atlasimage = false
         this.setImage(image)
 
         /**
