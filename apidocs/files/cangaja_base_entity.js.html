@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -227,9 +231,17 @@ CG.Class.extend(&#x27;Entity&#x27;, {
          *&#x2F;
         this.xscale = 1
         &#x2F;**
+         @property xhandle {Number}
+         *&#x2F;
+        this.xhandle = 0
+        &#x2F;**
          @property yscale {Number}
          *&#x2F;
         this.yscale = 1
+        &#x2F;**
+         @property yhandle {Number}
+         *&#x2F;
+        this.yhandle = 0
         &#x2F;**
          @property hover {boolean}
          *&#x2F;
@@ -279,21 +291,31 @@ CG.Class.extend(&#x27;Entity&#x27;, {
                 if (this.imagerotation !== 0) {
                     this.cutwidth = image.height
                     this.cutheight = image.width
+                    this.xhandle = this.height &#x2F; 2
+                    this.yhandle = this.width &#x2F; 2
                 } else {
                     this.cutwidth = image.width
                     this.cutheight = image.height
+                    this.xhandle = this.width &#x2F; 2
+                    this.yhandle = this.height &#x2F; 2
                 }
             } else if (typeof image == &#x27;string&#x27; &amp;&amp; image != &#x27;&#x27;) {
                 &#x2F;&#x2F;path to image
                 this.image = new Image()
                 this.image.src = image
-                this.width = this.image.width
-                this.height = this.image.height
+                this.image.onload = function () {
+                    this.width = this.image.width
+                    this.height = this.image.height
+                    this.xhandle = this.width &#x2F; 2
+                    this.yhandle = this.height &#x2F; 2
+                }
             } else {
                 &#x2F;&#x2F;image from MediaAsset
                 this.image = image
                 this.width = this.image.width
                 this.height = this.image.height
+                this.xhandle = this.width &#x2F; 2
+                this.yhandle = this.height &#x2F; 2
             }
         }
     },

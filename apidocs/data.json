@@ -30,7 +30,9 @@
                 "CG": 1
             },
             "classes": {},
-            "fors": {},
+            "fors": {
+                "Cangaja": 1
+            },
             "namespaces": {}
         },
         "cangaja/base/bitmap.js": {
@@ -142,6 +144,15 @@
             "modules": {},
             "classes": {
                 "CG.B2DEntity": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "cangaja/box2d/b2d-fizzx-loader.js": {
+            "name": "cangaja/box2d/b2d-fizzx-loader.js",
+            "modules": {},
+            "classes": {
+                "CG.B2DFizzXLoader": 1
             },
             "fors": {},
             "namespaces": {}
@@ -415,6 +426,7 @@
             "classes": {
                 "CG.AtlasImage": 1,
                 "CG.AtlasTexturePacker": 1,
+                "Cangaja": 1,
                 "CG.Bitmap": 1,
                 "CG.Bound": 1,
                 "CG.Buffer": 1,
@@ -426,6 +438,7 @@
                 "CG.B2DChainShape": 1,
                 "CG.B2DCirlce": 1,
                 "CG.B2DEntity": 1,
+                "CG.B2DFizzXLoader": 1,
                 "CG.B2DLine": 1,
                 "CG.B2DPolygon": 1,
                 "CG.B2DRectangle": 1,
@@ -456,7 +469,9 @@
                 "CG.MapTileLayer": 1,
                 "CG.MapTileProperties": 1
             },
-            "fors": {},
+            "fors": {
+                "Cangaja": 1
+            },
             "namespaces": {},
             "tag": "main",
             "file": "cangaja/tilemap/maptileproperties.js",
@@ -496,6 +511,17 @@
             "line": 1,
             "description": "CG.AtlasTexturePacker class supports loading xml and json files from . . . TexturePacker ;o)\nNo trimming at the moment, keep TexturePacker settings simple! The rotation option of TexturePacker\nwill be dropped in future releases!\nAtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.\nThese atlasimages are only handled within Sprite, Particle and Button class.",
             "extends": "Class"
+        },
+        "Cangaja": {
+            "name": "Cangaja",
+            "shortname": "Cangaja",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": ""
         },
         "CG.Bitmap": {
             "name": "CG.Bitmap",
@@ -664,6 +690,21 @@
             "line": 1,
             "description": "B2DEntity is the base class with properties for all B2D objects.\nThis class handles also the drawings for all classes.",
             "extends": "CG.Entity"
+        },
+        "CG.B2DFizzXLoader": {
+            "name": "CG.B2DFizzXLoader",
+            "shortname": "CG.B2DFizzXLoader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 1,
+            "description": "CG.B2DFizzXLoader",
+            "extends": "CG.Class"
         },
         "CG.B2DLine": {
             "name": "CG.B2DLine",
@@ -1332,6 +1373,51 @@
             "class": "CG.AtlasTexturePacker"
         },
         {
+            "file": "cangaja/base/base.js",
+            "line": 59,
+            "description": "Extends a destination object with a source object (modifies destination object)",
+            "itemtype": "method",
+            "name": "CG._extend",
+            "params": [
+                {
+                    "name": "dest",
+                    "description": "- destination object",
+                    "type": "Object"
+                },
+                {
+                    "name": "source",
+                    "description": "- source object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "returns the dest object",
+                "type": "Object"
+            },
+            "class": "Cangaja",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/base.js",
+            "line": 76,
+            "description": "Return a shallow copy of an object. Sub-objects (and sub-arrays) are not cloned. (uses extend internally)",
+            "itemtype": "method",
+            "name": "CG._clone",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "- object to clone",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "cloned object",
+                "type": "Object"
+            },
+            "class": "Cangaja",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/base/bitmap.js",
             "line": 16,
             "itemtype": "method",
@@ -1453,7 +1539,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 98,
+            "line": 100,
             "itemtype": "method",
             "name": "clearRect",
             "params": [
@@ -1483,7 +1569,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 113,
+            "line": 115,
             "itemtype": "method",
             "name": "clearCircle",
             "params": [
@@ -1508,7 +1594,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 130,
+            "line": 132,
             "itemtype": "method",
             "name": "getPixel",
             "params": [
@@ -1532,7 +1618,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 141,
+            "line": 143,
             "itemtype": "method",
             "name": "getPixels",
             "params": [
@@ -1991,7 +2077,7 @@
             "file": "cangaja/base/entity.js",
             "line": 57,
             "itemtype": "property",
-            "name": "yscale",
+            "name": "xhandle",
             "type": "Number",
             "class": "CG.Entity",
             "module": "CG"
@@ -2000,8 +2086,8 @@
             "file": "cangaja/base/entity.js",
             "line": 61,
             "itemtype": "property",
-            "name": "hover",
-            "type": "Boolean",
+            "name": "yscale",
+            "type": "Number",
             "class": "CG.Entity",
             "module": "CG"
         },
@@ -2009,7 +2095,7 @@
             "file": "cangaja/base/entity.js",
             "line": 65,
             "itemtype": "property",
-            "name": "boundingradius",
+            "name": "yhandle",
             "type": "Number",
             "class": "CG.Entity",
             "module": "CG"
@@ -2018,6 +2104,24 @@
             "file": "cangaja/base/entity.js",
             "line": 69,
             "itemtype": "property",
+            "name": "hover",
+            "type": "Boolean",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 73,
+            "itemtype": "property",
+            "name": "boundingradius",
+            "type": "Number",
+            "class": "CG.Entity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/entity.js",
+            "line": 77,
+            "itemtype": "property",
             "name": "mapcollision",
             "type": "Boolean",
             "class": "CG.Entity",
@@ -2025,7 +2129,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 90,
+            "line": 98,
             "description": "initialize image for object. for now => sprite, particle, buffer, bitmap and button use it",
             "itemtype": "method",
             "name": "setImage",
@@ -2041,7 +2145,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 128,
+            "line": 146,
             "description": "returns the bounds of rotated rectangle",
             "itemtype": "method",
             "name": "AABB",
@@ -2054,7 +2158,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 146,
+            "line": 164,
             "description": "checks click inside of the rectangle, supports rotation",
             "itemtype": "method",
             "name": "ifClicked",
@@ -2067,7 +2171,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 172,
+            "line": 190,
             "description": "checks if the mouse/pointer is over the rectangle",
             "itemtype": "method",
             "name": "ifMouseOver",
@@ -2076,7 +2180,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 194,
+            "line": 212,
             "description": "checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/",
             "itemtype": "method",
             "name": "checkCollision",
@@ -2686,25 +2790,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 63,
-            "itemtype": "property",
-            "name": "xhandle",
-            "type": "{Number}",
-            "class": "CG.B2DEntity",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-entity.js",
-            "line": 68,
-            "itemtype": "property",
-            "name": "yhandle",
-            "type": "{Number}",
-            "class": "CG.B2DEntity",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-entity.js",
-            "line": 74,
+            "line": 65,
             "itemtype": "property",
             "name": "bodyDef",
             "type": "{b2BodyDef}",
@@ -2713,7 +2799,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 79,
+            "line": 70,
             "itemtype": "property",
             "name": "bodyDef.alowSleep",
             "type": "{Boolean}",
@@ -2722,7 +2808,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 84,
+            "line": 75,
             "itemtype": "property",
             "name": "bodyDef.awake",
             "type": "{Boolean}",
@@ -2731,7 +2817,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 92,
+            "line": 83,
             "itemtype": "property",
             "name": "fixDef",
             "type": "{b2FixtureDef}",
@@ -2740,7 +2826,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 97,
+            "line": 88,
             "itemtype": "property",
             "name": "fixDef.density",
             "type": "{Number}",
@@ -2749,7 +2835,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 102,
+            "line": 93,
             "itemtype": "property",
             "name": "fixDef.friction",
             "type": "{Number}",
@@ -2758,7 +2844,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 107,
+            "line": 98,
             "itemtype": "property",
             "name": "fixDef.restitution",
             "type": "{Number}",
@@ -2767,7 +2853,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 113,
+            "line": 104,
             "itemtype": "property",
             "name": "isHit",
             "type": "{Boolean}",
@@ -2776,7 +2862,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 118,
+            "line": 109,
             "itemtype": "property",
             "name": "strength",
             "type": "{Number}",
@@ -2785,7 +2871,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 123,
+            "line": 114,
             "itemtype": "property",
             "name": "dead",
             "type": "{Boolean}",
@@ -2794,7 +2880,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 131,
+            "line": 122,
             "itemtype": "method",
             "name": "hit",
             "params": [
@@ -2808,6 +2894,168 @@
                 }
             ],
             "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 143,
+            "itemtype": "method",
+            "name": "addVelocity",
+            "params": [
+                {
+                    "name": "b2Vec2",
+                    "description": ""
+                }
+            ],
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 168,
+            "itemtype": "method",
+            "name": "applyImpulse",
+            "params": [
+                {
+                    "name": "degrees",
+                    "description": ""
+                },
+                {
+                    "name": "power",
+                    "description": ""
+                }
+            ],
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 180,
+            "itemtype": "method",
+            "name": "setType",
+            "params": [
+                {
+                    "name": "b2BodyType",
+                    "description": ""
+                }
+            ],
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 187,
+            "itemtype": "method",
+            "name": "setPosition",
+            "params": [
+                {
+                    "name": "b2Vec2",
+                    "description": ""
+                }
+            ],
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 194,
+            "itemtype": "method",
+            "name": "getPosition",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 11,
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "json",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "world",
+                    "description": "",
+                    "type": "CG.B2DWorld"
+                },
+                {
+                    "name": "offsetx",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "offsety",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 20,
+            "itemtype": "property",
+            "name": "json",
+            "type": "String",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 45,
+            "itemtype": "property",
+            "name": "world",
+            "type": "CG.B2DWorld",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 49,
+            "itemtype": "property",
+            "name": "offsetx",
+            "type": "Number",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 53,
+            "itemtype": "property",
+            "name": "offsety",
+            "type": "Number",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 67,
+            "description": "",
+            "itemtype": "method",
+            "name": "loadBodies",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 85,
+            "description": "is this method needed? use MediaAsset loader instead or extend MediaAsset with in game \"preloading\"?",
+            "itemtype": "method",
+            "name": "loadImages",
+            "class": "CG.B2DFizzXLoader",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-fizzx-loader.js",
+            "line": 96,
+            "description": "",
+            "itemtype": "method",
+            "name": "loadJoints",
+            "class": "CG.B2DFizzXLoader",
             "module": "CG"
         },
         {
@@ -3012,24 +3260,6 @@
             "file": "cangaja/box2d/b2d-polygon.js",
             "line": 41,
             "itemtype": "property",
-            "name": "xhandle",
-            "type": "{Number}",
-            "class": "CG.B2DPolygon",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 46,
-            "itemtype": "property",
-            "name": "yhandle",
-            "type": "{Number}",
-            "class": "CG.B2DPolygon",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 51,
-            "itemtype": "property",
             "name": "vecs",
             "type": "{Array}",
             "class": "CG.B2DPolygon",
@@ -3037,7 +3267,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 58,
+            "line": 48,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -3046,7 +3276,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 64,
+            "line": 54,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DPolygon",
@@ -3054,7 +3284,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 68,
+            "line": 58,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -3063,7 +3293,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 73,
+            "line": 63,
             "itemtype": "property",
             "name": "bullet",
             "type": "{*}",
@@ -3072,7 +3302,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 78,
+            "line": 68,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{*}",
@@ -3081,7 +3311,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 88,
+            "line": 78,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -3090,7 +3320,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 109,
+            "line": 99,
             "description": "extract the polygons out of the PhysicsEditor json file and collect them into an array",
             "itemtype": "method",
             "name": "getPolysFromJson",
@@ -3098,6 +3328,24 @@
                 "description": "",
                 "type": "Array"
             },
+            "class": "CG.B2DPolygon",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-polygon.js",
+            "line": 118,
+            "description": "The origin of the vertices from physicseditor is top/left. This method makes the vecs centroid (centered origin) depending on image size.",
+            "todo": [
+                "put this stuff into getPolysFromJson?"
+            ],
+            "itemtype": "method",
+            "name": "makeVecsCentroid",
+            "params": [
+                {
+                    "name": "vecs",
+                    "description": ""
+                }
+            ],
             "class": "CG.B2DPolygon",
             "module": "CG"
         },
@@ -3339,7 +3587,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 17,
+            "line": 23,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -3399,7 +3647,17 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 34,
+            "line": 41,
+            "description": "bitmap for terrain",
+            "itemtype": "property",
+            "name": "bitmap",
+            "type": "{CG.Bitmap}",
+            "class": "CG.B2DTerrain",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-terrain.js",
+            "line": 48,
             "itemtype": "property",
             "name": "polys",
             "type": "{Array}",
@@ -3408,7 +3666,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 39,
+            "line": 53,
             "itemtype": "property",
             "name": "terrainpoly",
             "type": "{*}",
@@ -3417,7 +3675,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 44,
+            "line": 58,
             "description": "the generated triangles generated thru clipper and poly2tri",
             "itemtype": "property",
             "name": "terrainTriangles",
@@ -3427,7 +3685,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 50,
+            "line": 64,
             "itemtype": "property",
             "name": "holes",
             "type": "{Array}",
@@ -3436,7 +3694,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 55,
+            "line": 69,
             "itemtype": "property",
             "name": "xhandle",
             "type": "{Number}",
@@ -3445,7 +3703,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 60,
+            "line": 74,
             "itemtype": "property",
             "name": "yhandle",
             "type": "{Number}",
@@ -3454,7 +3712,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 66,
+            "line": 80,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -3463,7 +3721,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 71,
+            "line": 85,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DTerrain",
@@ -3471,7 +3729,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 75,
+            "line": 89,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -3480,7 +3738,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 80,
+            "line": 94,
             "itemtype": "property",
             "name": "bullet",
             "type": "{*}",
@@ -3489,7 +3747,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 85,
+            "line": 99,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{*}",
@@ -3498,7 +3756,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 96,
+            "line": 110,
             "itemtype": "method",
             "name": "createTerrain",
             "class": "CG.B2DTerrain",
@@ -3506,7 +3764,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 139,
+            "line": 153,
             "description": "deletes the terrain",
             "itemtype": "method",
             "name": "deleteTerrain",
@@ -3515,8 +3773,8 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 149,
-            "description": "Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW",
+            "line": 163,
+            "description": "Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW\n\nOptions:\npoints - points for clipping,\nradius - radius for clipping,\nx - x pos for clipping,\ny - y pos for clipping",
             "itemtype": "method",
             "name": "clipTerrain",
             "params": [
@@ -3530,7 +3788,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 193,
+            "line": 214,
             "description": "this method uses the Clipper Lighten method to reduce vertices for better triangulation",
             "itemtype": "method",
             "name": "lightenTerrain",
@@ -3539,7 +3797,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 212,
+            "line": 233,
             "description": "Experimental not working yet. Try to use the Clipperlib Clean method",
             "itemtype": "method",
             "name": "cleanTerrain",
@@ -3548,7 +3806,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 231,
+            "line": 252,
             "description": "extract the triangles out of poly2tri array",
             "itemtype": "method",
             "name": "getPolysFromJson",
@@ -3561,7 +3819,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 245,
+            "line": 266,
             "description": "creates a ccw wise circle vertices array for clipping",
             "itemtype": "method",
             "name": "createCircle",
@@ -7075,7 +7333,7 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 40,
             "itemtype": "property",
-            "name": "xhandle",
+            "name": "yspeed",
             "type": "Number",
             "class": "CG.Sprite",
             "module": "CG"
@@ -7084,24 +7342,6 @@
             "file": "cangaja/sprite/sprite.js",
             "line": 44,
             "itemtype": "property",
-            "name": "yspeed",
-            "type": "Number",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 48,
-            "itemtype": "property",
-            "name": "yhandle",
-            "type": "Number",
-            "class": "CG.Sprite",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/sprite/sprite.js",
-            "line": 52,
-            "itemtype": "property",
             "name": "boundsMode",
             "type": "False/string",
             "class": "CG.Sprite",
@@ -7109,7 +7349,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 56,
+            "line": 48,
             "itemtype": "property",
             "name": "rotationspeed",
             "type": "Integer/float",
@@ -7118,7 +7358,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 60,
+            "line": 52,
             "itemtype": "property",
             "name": "alpha",
             "type": "Float",
@@ -7127,7 +7367,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 64,
+            "line": 56,
             "itemtype": "property",
             "name": "followobject",
             "type": "Boolean/object",
@@ -7136,7 +7376,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 68,
+            "line": 60,
             "itemtype": "property",
             "name": "followspeed",
             "type": "Boolean/integer",
@@ -7145,7 +7385,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 72,
+            "line": 64,
             "itemtype": "property",
             "name": "followsteps",
             "type": "Boolean/integer",
@@ -7154,7 +7394,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 77,
+            "line": 69,
             "itemtype": "property",
             "name": "attachedobject",
             "type": "Boolean",
@@ -7163,7 +7403,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 81,
+            "line": 73,
             "itemtype": "property",
             "name": "offsetx",
             "type": "Number",
@@ -7172,7 +7412,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 85,
+            "line": 77,
             "itemtype": "property",
             "name": "offsety",
             "type": "Number",
@@ -7181,7 +7421,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 118,
+            "line": 110,
             "description": "Checks the bound if a boundMode (bounce or slide) is set",
             "itemtype": "method",
             "name": "checkBound",
@@ -7190,7 +7430,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 161,
+            "line": 153,
             "description": "calculate offset if bound is moving",
             "itemtype": "method",
             "name": "updateDiff",
@@ -7199,7 +7439,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 175,
+            "line": 167,
             "description": "is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different",
             "itemtype": "method",
             "name": "follow",
@@ -7208,7 +7448,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 209,
+            "line": 201,
             "description": "set the bound of the sprite",
             "itemtype": "method",
             "name": "setBound",
@@ -7224,7 +7464,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 220,
+            "line": 212,
             "description": "if there is a attached object get its position",
             "itemtype": "method",
             "name": "ifAttached",
@@ -7233,7 +7473,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 231,
+            "line": 223,
             "description": "attach a reference of the given object to this object",
             "itemtype": "method",
             "name": "attachObject",
@@ -7242,7 +7482,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 240,
+            "line": 232,
             "description": "removes the attached object reference",
             "itemtype": "method",
             "name": "removeAttachedObject",
@@ -7251,7 +7491,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 249,
+            "line": 241,
             "description": "set the x offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetX",
@@ -7260,7 +7500,7 @@
         },
         {
             "file": "cangaja/sprite/sprite.js",
-            "line": 258,
+            "line": 250,
             "description": "set the y offset of the attached object to this object",
             "itemtype": "method",
             "name": "setAttachedOffsetY",
@@ -8556,15 +8796,15 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:130"
+            "line": " cangaja/base/bitmap.js:132"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:141"
+            "line": " cangaja/base/bitmap.js:143"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/box2d/b2d-terrain.js:245"
+            "line": " cangaja/box2d/b2d-terrain.js:266"
         },
         {
             "message": "unknown tag: xtend",

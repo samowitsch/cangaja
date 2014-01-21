@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -193,7 +197,7 @@ CG.Entity.extend(&#x27;B2DEntity&#x27;, {
      * @return {*}
      *&#x2F;
 
-    init:function (name, image, world, x, y, scale) {
+    init: function (name, image, world, x, y, scale) {
         this._super()
         this.instanceOf = &#x27;B2DEntity&#x27;
         this.setImage(image)
@@ -226,23 +230,14 @@ CG.Entity.extend(&#x27;B2DEntity&#x27;, {
          * @property id
          * @type {Object}
          *&#x2F;
-        this.id = {name:name, uid:0}
+        this.id = {name: name, uid: 0}
         &#x2F;**
          * @property world
          * @type {b2World}
          *&#x2F;
         this.world = world
-        &#x2F;**
-         * @property xhandle
-         * @type {Number}
-         *&#x2F;
-        this.xhandle = (this.width &#x2F; 2)
-        &#x2F;**
-         * @property yhandle
-         * @type {Number}
-         *&#x2F;
-        this.yhandle = (this.height &#x2F; 2)
-        if(!this.bodyDef){
+
+        if (!this.bodyDef) {
             &#x2F;**
              * @property bodyDef
              * @type {b2BodyDef}
@@ -260,7 +255,7 @@ CG.Entity.extend(&#x27;B2DEntity&#x27;, {
             this.bodyDef.awake = true
         }
 
-        if(!this.fixDef) {
+        if (!this.fixDef) {
             &#x2F;**
              * @property fixDef
              * @type {b2FixtureDef}
@@ -305,7 +300,7 @@ CG.Entity.extend(&#x27;B2DEntity&#x27;, {
      * @param impulse
      * @param source
      *&#x2F;
-    hit:function (impulse, source) {
+    hit: function (impulse, source) {
         this.isHit = true;
         if (this.strength) {
             this.strength -= impulse;
@@ -314,13 +309,71 @@ CG.Entity.extend(&#x27;B2DEntity&#x27;, {
             }
         }
     },
-    update:function () {
+    update: function () {
     },
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this)
 
+    },
+    &#x2F;**
+     * @method addVelocity
+     * @param b2Vec2
+     *&#x2F;
+    addVelocity: function (b2Vec2) {
+        var v = this.body.GetLinearVelocity();
+
+        v.SelfAdd(b2Vec2);
+
+        &#x2F;&#x2F;check for max horizontal and vertical velocities and then set
+        if (Math.abs(v.y) &gt; this.max_ver_vel) {
+            v.y = this.max_ver_vel * v.y &#x2F; Math.abs(v.y);
+        }
+
+        if (Math.abs(v.x) &gt; this.max_hor_vel) {
+            v.x = this.max_hor_vel * v.x &#x2F; Math.abs(v.x);
+        }
+
+        &#x2F;&#x2F;set the new velocity
+        this.body.SetLinearVelocity(v);
+
+&#x2F;&#x2F;        if (vel.y &lt; 0) {
+&#x2F;&#x2F;            this.jump = true
+&#x2F;&#x2F;        }
+    },
+    &#x2F;**
+     * @method applyImpulse
+     * @param degrees
+     * @param power
+     *&#x2F;
+    applyImpulse: function (degrees, power) {
+        if (this.body) {
+            this.body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                Math.sin(degrees * CG.Const_PI_180) * power),
+                this.body.GetWorldCenter())
+        }
+    },
+    &#x2F;**
+     * @method setType
+     * @param b2BodyType
+     *&#x2F;
+    setType: function (b2BodyType) {
+        this.body.SetType(b2BodyType)
+    },
+    &#x2F;**
+     * @method setPosition
+     * @param b2Vec2
+     *&#x2F;
+    setPosition: function (b2Vec2) {
+        this.body.SetPosition(b2Vec2)
+    },
+    &#x2F;**
+     * @method getPosition
+     *&#x2F;
+    getPosition: function () {
+        return this.body.GetPosition()
     }
+
 })
 
 

@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -262,7 +266,9 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @method drawImageToBuffer
      *&#x2F;
     drawImageToBuffer:function () {
-        this.bitmap_ctx.drawImage(this.image, 0, 0)
+        if (this.image) {
+            this.bitmap_ctx.drawImage(this.image, 0, 0)
+        }
         return this
     },
 

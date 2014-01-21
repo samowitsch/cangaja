@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.AtlasImage - Cangaja API</title>
+    <title>CG.B2DFizzXLoader - Cangaja API</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -170,19 +170,19 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.AtlasImage Class</h1>
+                        <h1>CG.B2DFizzXLoader Class</h1>
 <div class="box meta">
     
 
     
         <div class="extends">
-            Extends Class
+            Extends CG.Class
         </div>
     
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l1"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l1"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:1</code></a>
         </div>
     
 
@@ -198,7 +198,7 @@
 
 
 <div class="box intro">
-    <p>CG.AtlasImage class. It is needed when using TexturePacker atlas files.</p>
+    <p>CG.B2DFizzXLoader</p>
 </div>
 
 
@@ -234,6 +234,27 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_loadBodies">loadBodies</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_loadImages">loadImages</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_loadJoints">loadJoints</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -245,70 +266,28 @@
                     <ul class="index-list properties extends">
                         
                             <li class="index-item property">
-                                <a href="#property_atlasimage">atlasimage</a>
+                                <a href="#property_json">json</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_atlasname">atlasname</a>
+                                <a href="#property_offsetx">offsetx</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_height">height</a>
+                                <a href="#property_offsety">offsety</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_image">image</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_name">name</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_rotation">rotation</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_source">source</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_width">width</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_xoffset">xoffset</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_yoffset">yoffset</a>
+                                <a href="#property_world">world</a>
 
                                 
                                 
@@ -337,31 +316,25 @@
             
                 <li class="arg">
                     
-                        <code>image</code>
+                        <code>json</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>xoffset</code>
+                        <code>world</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>yoffset</code>
+                        <code>offsetx</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>width</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>height</code>
+                        <code>offsety</code>
                     
                 </li>
             
@@ -394,7 +367,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l10"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:10</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l11"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:11</code></a>
         
         </p>
 
@@ -416,14 +389,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">image</code>
-                        <span class="type">Image</span>
+                        <code class="param-name">json</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>imgpath, image object or atlasimage object to use</p>
+                         
                     </div>
 
                     
@@ -431,14 +404,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">xoffset</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">world</code>
+                        <span class="type"><a href="../classes/CG.B2DWorld.html" class="crosslink">CG.B2DWorld</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>xoffset of image in atlas file</p>
+                         
                     </div>
 
                     
@@ -446,14 +419,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">yoffset</code>
+                        <code class="param-name">offsetx</code>
                         <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>yoffset of image in atlas file</p>
+                         
                     </div>
 
                     
@@ -461,29 +434,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">width</code>
+                        <code class="param-name">offsety</code>
                         <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>width of image in atlas file</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">height</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height of image in atlas file</p>
+                         
                     </div>
 
                     
@@ -491,6 +449,168 @@
             
             </ul>
         </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_loadBodies" class="method item">
+    <h3 class="name"><code>loadBodies</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l67"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:67</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_loadImages" class="method item">
+    <h3 class="name"><code>loadImages</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l85"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:85</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>is this method needed? use MediaAsset loader instead or extend MediaAsset with in game "preloading"?</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_loadJoints" class="method item">
+    <h3 class="name"><code>loadJoints</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l96"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:96</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
     
 
     
@@ -507,8 +627,8 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_atlasimage" class="property item">
-    <h3 class="name"><code>atlasimage</code></h3>
+                    <div id="property_json" class="property item">
+    <h3 class="name"><code>json</code></h3>
     <span class="type">String</span>
 
     
@@ -530,7 +650,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l25"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:25</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l20"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:20</code></a>
         
         </p>
 
@@ -551,52 +671,8 @@
 </div>
 
                 
-                    <div id="property_atlasname" class="property item">
-    <h3 class="name"><code>atlasname</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l30"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:30</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_height" class="property item">
-    <h3 class="name"><code>height</code></h3>
+                    <div id="property_offsetx" class="property item">
+    <h3 class="name"><code>offsetx</code></h3>
     <span class="type">Number</span>
 
     
@@ -618,7 +694,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l60"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:60</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l49"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:49</code></a>
         
         </p>
 
@@ -639,96 +715,8 @@
 </div>
 
                 
-                    <div id="property_image" class="property item">
-    <h3 class="name"><code>image</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l35"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:35</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_name" class="property item">
-    <h3 class="name"><code>name</code></h3>
-    <span class="type">String</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l40"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:40</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_rotation" class="property item">
-    <h3 class="name"><code>rotation</code></h3>
+                    <div id="property_offsety" class="property item">
+    <h3 class="name"><code>offsety</code></h3>
     <span class="type">Number</span>
 
     
@@ -750,7 +738,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l65"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:65</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l53"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:53</code></a>
         
         </p>
 
@@ -771,9 +759,9 @@
 </div>
 
                 
-                    <div id="property_source" class="property item">
-    <h3 class="name"><code>source</code></h3>
-    <span class="type">String</span>
+                    <div id="property_world" class="property item">
+    <h3 class="name"><code>world</code></h3>
+    <span class="type"><a href="../classes/CG.B2DWorld.html" class="crosslink">CG.B2DWorld</a></span>
 
     
 
@@ -794,139 +782,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l20"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:20</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_width" class="property item">
-    <h3 class="name"><code>width</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l55"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:55</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_xoffset" class="property item">
-    <h3 class="name"><code>xoffset</code></h3>
-    <span class="type">Number</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l45"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:45</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_yoffset" class="property item">
-    <h3 class="name"><code>yoffset</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l50"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:50</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-fizzx-loader.js.html#l45"><code>cangaja&#x2F;box2d&#x2F;b2d-fizzx-loader.js:45</code></a>
         
         </p>
 

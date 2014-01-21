@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -276,8 +280,8 @@ CG.B2DEntity.extend(&#x27;B2DBridge&#x27;, {
         this.fixtureDef.restitution = 0.2
         this.fixtureDef.friction = 0.2
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 &#x2F; (180 &#x2F; Math.PI)
-        this.jointDef.upperAngle = 25 &#x2F; (180 &#x2F; Math.PI)
+        this.jointDef.lowerAngle = -25 &#x2F; CG.Const_180_PI
+        this.jointDef.upperAngle = 25 &#x2F; CG.Const_180_PI
         this.jointDef.enableLimit = true
 
         for (var i = 0, l = this.segments; i &lt; l; i++) {

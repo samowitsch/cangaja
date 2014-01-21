@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -196,7 +200,7 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
      * @param bullet    {Boolean}     bullet option
      * @return {*}
      *&#x2F;
-    init:function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
+    init: function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
         this._super(name, image, world, x, y, scale)
         this.instanceOf = &#x27;B2DPolygon&#x27;
         &#x2F;**
@@ -210,16 +214,6 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
          *&#x2F;
 &#x2F;&#x2F;        this.jsondata = jsonpoly.data[jsonpoly.name]
         this.jsondata = jsonpoly.data[name]
-        &#x2F;**
-         * @property xhandle
-          * @type {Number}
-         *&#x2F;
-        this.xhandle = 0
-        &#x2F;**
-         * @property yhandle
-         * @type {Number}
-         *&#x2F;
-        this.yhandle = 0
         &#x2F;**
          * @property vecs
          * @type {Array}
@@ -266,11 +260,11 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
         for (var i = 0, l = this.vecs.length; i &lt; l; i++) {
             this.bodyShapePoly = new b2PolygonShape
             this.bodyShapePoly.bounce = this.jsondata[i].restitution        &#x2F;&#x2F;value from physics editor
+            this.makeVecsCentroid(this.vecs[i])
             this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  &#x2F;&#x2F;value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                &#x2F;&#x2F;value from physics editor
             &#x2F;&#x2F;this.fixDef.restitution = 0
-            &#x2F;&#x2F;this.fixDef.density = 10
 
             this.fixDef.shape = this.bodyShapePoly
             this.body.CreateFixture(this.fixDef)
@@ -284,18 +278,33 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
      * @method getPolysFromJson
      * @return {Array}
      *&#x2F;
-    getPolysFromJson:function () {
+    getPolysFromJson: function () {
         var vecs = []
         for (var i = 0, l = this.jsondata.length; i &lt; l; i++) {
-            poly = this.jsondata[i].shape
+            var poly = this.jsondata[i].shape
             var temp = []
             for (var i2 = 0, l2 = poly.length; i2 &lt; l2; i2 = i2 + 2) {
-                vec = new b2Vec2(poly[i2] &#x2F; this.scale, poly[i2 + 1] &#x2F; this.scale)
+                var vec = new b2Vec2(poly[i2] &#x2F; this.scale, poly[i2 + 1] &#x2F; this.scale)
                 temp.push(vec)
             }
             vecs.push(temp)
         }
         return vecs
+    },
+    &#x2F;**
+     * The origin of the vertices from physicseditor is top&#x2F;left. This method makes the vecs centroid (centered origin) depending on image size.
+     * @todo put this stuff into getPolysFromJson?
+     *
+     * @method makeVecsCentroid
+     * @param vecs
+     *&#x2F;
+    makeVecsCentroid: function (vecs) {
+        var xcenter = this.xhandle &#x2F; this.scale,
+            ycenter = this.yhandle &#x2F; this.scale
+        for (var p = 0, pl = vecs.length; p &lt; pl; p++) {
+            vecs[p].x = vecs[p].x - xcenter
+            vecs[p].y = vecs[p].y - ycenter
+        }
     }
 })
 

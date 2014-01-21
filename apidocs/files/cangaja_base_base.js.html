@@ -41,6 +41,8 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
+            
                 <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
             
                 <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
@@ -54,6 +56,8 @@
                 <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+            
+                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
             
                 <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
             
@@ -228,6 +232,34 @@ var CG = CG || {
     end: {x: 0, y: 0}
 };
 
+&#x2F;**
+ Extends a destination object with a source object (modifies destination object)
+
+ @method CG._extend
+ @param {Object} dest - destination object
+ @param {Object} source - source object
+ @return {Object} returns the dest object
+ @for Cangaja
+ *&#x2F;
+CG._extend = function(dest,source) {
+    if(!source) { return dest; }
+    for (var prop in source) {
+        dest[prop] = source[prop];
+    }
+    return dest;
+};
+
+&#x2F;**
+ Return a shallow copy of an object. Sub-objects (and sub-arrays) are not cloned. (uses extend internally)
+
+ @method CG._clone
+ @param {Object} obj - object to clone
+ @return {Object} cloned object
+ @for Cangaja
+ *&#x2F;
+CG._clone = function(obj) {
+    return Q._extend({},obj);
+};
 
 &#x2F;&#x2F; http:&#x2F;&#x2F;paulirish.com&#x2F;2011&#x2F;requestanimationframe-for-smart-animating&#x2F;
 &#x2F;&#x2F; http:&#x2F;&#x2F;my.opera.com&#x2F;emoller&#x2F;blog&#x2F;2011&#x2F;12&#x2F;20&#x2F;requestanimationframe-for-smart-er-animating

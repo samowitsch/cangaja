@@ -8,6 +8,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.B2DChainShape",
         "CG.B2DCirlce",
         "CG.B2DEntity",
+        "CG.B2DFizzXLoader",
         "CG.B2DLine",
         "CG.B2DPolygon",
         "CG.B2DRectangle",
@@ -42,7 +43,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Sprite",
         "CG.Text",
         "CG.Translate",
-        "CG.Vector"
+        "CG.Vector",
+        "Cangaja"
     ],
     "modules": [
         "CG"
