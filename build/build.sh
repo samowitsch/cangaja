@@ -13,7 +13,7 @@ cat ../cangaja/base/base.js \
 ../libs/math/transform.js \
 ../libs/input/keymaster.js \
 ../libs/math/poly2tri/poly2tri.js \
-../libs/math/clipper/clipper.js \
+../libs/math/clipper/v5/clipper.js \
 ../libs/spine/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \

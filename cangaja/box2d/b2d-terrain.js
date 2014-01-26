@@ -163,8 +163,14 @@ CG.B2DEntity.extend('B2DTerrain', {
     /**
      * @description Using Clipper to clip a hole in a given polygonshape. Important: the outer polygon points have to be in CW orientation, the hole polygons must ordered in CCW
      *
+     * Options:
+     * points - points for clipping,
+     * radius - radius for clipping,
+     * x - x pos for clipping,
+     * y - y pos for clipping
+     *
      * @method clipTerrain
-     * @param opt
+     * @param {object} opt
      */
     clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
@@ -186,12 +192,27 @@ CG.B2DEntity.extend('B2DTerrain', {
                     clip_polygons.push(this.terrainPoly[part].holes[i])
                 }
             }
+
             var cpr = new ClipperLib.Clipper()
             cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
             cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
 
             var solution_polygons = new ClipperLib.ExPolygons()
             cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+
+
+
+//            var cpr = new ClipperLib.Clipper()
+//            cpr.AddPaths(subj_polygons, ClipperLib.PolyType.ptSubject, true)
+//            cpr.AddPaths(clip_polygons, ClipperLib.PolyType.ptClip, true)
+//            var solution_polytree = new ClipperLib.PolyTree();
+//            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polytree, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+//
+//            var solution_polygons = new ClipperLib.ExPolygons()
+//            ClipperLib.Clipper.PolyTreeToPaths(solution_polytree, solution_polygons)
+
+            console.log('clipTerrain:', subj_polygons, clip_polygons, solution_polygons)
+
             if (solution_polygons.length > 0) {
                 for (var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++) {
                     tempPolys.push(solution_polygons[spoly])
@@ -259,6 +280,12 @@ CG.B2DEntity.extend('B2DTerrain', {
     },
     /**
      * @description creates a ccw wise circle vertices array for clipping
+     *
+     * Options:
+     * points - number of points of circle,
+     * radius - radius for circle,
+     * x - x position for circle,
+     * y - y position for circle
      *
      * @method createCircle
      * @param {object} opts example {points: 16, radius: 30, x: 320, y: 240}
