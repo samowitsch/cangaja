@@ -12,7 +12,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/game/game.js \
 ../libs/math/transform.js \
 ../libs/input/keymaster.js \
-../libs/math/poly2tri/poly2tri.js \
+../libs/math/poly2tri/poly2tri-1.3.3.js \
 ../libs/math/clipper/v6/clipper.js \
 ../libs/spine/spine.js \
 ../cangaja/base/clock.js \

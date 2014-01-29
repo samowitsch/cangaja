@@ -203,15 +203,17 @@ CG.B2DEntity.extend('B2DTerrain', {
 
 
             var cpr = new ClipperLib.Clipper()
-            var polytree = new ClipperLib.PolyTree();
+            cpr.PreserveCollinear = true
+            cpr.StrictlySimple = true
+            var polytree = new ClipperLib.PolyTree()
             cpr.AddPaths(subj_polygons, ClipperLib.PolyType.ptSubject, true)
             cpr.AddPaths(clip_polygons, ClipperLib.PolyType.ptClip, true)
             cpr.Execute(ClipperLib.ClipType.ctDifference, polytree, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
 
             var solution_polygons = ClipperLib.JS.PolyTreeToExPolygons(polytree);
 
-            console.log('clipTerrain:', subj_polygons, clip_polygons)
-            console.log('solution_polygons:', solution_polygons)
+//            console.log('clipTerrain:', subj_polygons, clip_polygons)
+//            console.log('solution_polygons:', solution_polygons)
 
             if (solution_polygons.length > 0) {
                 for (var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++) {
@@ -235,11 +237,11 @@ CG.B2DEntity.extend('B2DTerrain', {
         var tolerance = 0.02
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
+            var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
@@ -254,11 +256,11 @@ CG.B2DEntity.extend('B2DTerrain', {
         var cleandelta = 0.1
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
+            var temp = ClipperLib.JS.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
+                    var temp = ClipperLib.JS.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
