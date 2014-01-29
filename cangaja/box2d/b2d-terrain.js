@@ -193,25 +193,25 @@ CG.B2DEntity.extend('B2DTerrain', {
                 }
             }
 
-            var cpr = new ClipperLib.Clipper()
-            cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
-            cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
-
-            var solution_polygons = new ClipperLib.ExPolygons()
-            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
-
-
-
 //            var cpr = new ClipperLib.Clipper()
-//            cpr.AddPaths(subj_polygons, ClipperLib.PolyType.ptSubject, true)
-//            cpr.AddPaths(clip_polygons, ClipperLib.PolyType.ptClip, true)
-//            var solution_polytree = new ClipperLib.PolyTree();
-//            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polytree, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+//            cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
+//            cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
 //
 //            var solution_polygons = new ClipperLib.ExPolygons()
-//            ClipperLib.Clipper.PolyTreeToPaths(solution_polytree, solution_polygons)
+//            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
 
-            console.log('clipTerrain:', subj_polygons, clip_polygons, solution_polygons)
+
+
+            var cpr = new ClipperLib.Clipper()
+            var polytree = new ClipperLib.PolyTree();
+            cpr.AddPaths(subj_polygons, ClipperLib.PolyType.ptSubject, true)
+            cpr.AddPaths(clip_polygons, ClipperLib.PolyType.ptClip, true)
+            cpr.Execute(ClipperLib.ClipType.ctDifference, polytree, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+
+            var solution_polygons = ClipperLib.JS.PolyTreeToExPolygons(polytree);
+
+            console.log('clipTerrain:', subj_polygons, clip_polygons)
+            console.log('solution_polygons:', solution_polygons)
 
             if (solution_polygons.length > 0) {
                 for (var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++) {
@@ -220,7 +220,7 @@ CG.B2DEntity.extend('B2DTerrain', {
             }
         }
         this.terrainPoly = tempPolys
-        this.lightenTerrain()
+//        this.lightenTerrain()
 //        this.cleanTerrain()
         this.deleteTerrain()
         this.createTerrain()
