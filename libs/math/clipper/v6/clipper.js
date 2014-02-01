@@ -6805,7 +6805,7 @@
       {
         result[j] = {
           x: polygon[i][j].x,
-          y: polygon[i][j].Y
+          y: polygon[i][j].y
         };
       }
       results[i] = result;
@@ -6851,7 +6851,7 @@
           poly.push(
           {
             x: poly[0].x,
-            y: poly[0].Y
+            y: poly[0].y
           });
           plen = poly.length;
         }
@@ -6893,18 +6893,18 @@
         poly2.push(
         {
           x: poly[0].x,
-          y: poly[0].Y
+          y: poly[0].y
         });
         for (j = 1; j < plen - 1; j++)
           if (!rem[j]) poly2.push(
           {
             x: poly[j].x,
-            y: poly[j].Y
+            y: poly[j].y
           });
         poly2.push(
         {
           x: poly[plen - 1].x,
-          y: poly[plen - 1].Y
+          y: poly[plen - 1].y
         });
         // if the first point was added to the end, remove it
         if (addlast) poly.pop();
