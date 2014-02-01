@@ -222,7 +222,7 @@ CG.B2DEntity.extend('B2DTerrain', {
             }
         }
         this.terrainPoly = tempPolys
-//        this.lightenTerrain()
+        this.lightenTerrain()
 //        this.cleanTerrain()
         this.deleteTerrain()
         this.createTerrain()
