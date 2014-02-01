@@ -64,6 +64,10 @@ CG.Class.extend('B2DFizzXLoader', {
         this.loadBodies()
         this.loadJoints()
     },
+    /**
+     * @description
+     * @method loadBodies
+     */
     loadBodies: function () {
         console.log('### start bodies')
         for (var b = 0, lb = this.json.box2d.bodies.body.length; b < lb; b++) {
@@ -78,6 +82,10 @@ CG.Class.extend('B2DFizzXLoader', {
         }
 
     },
+    /**
+     * @description is this method needed? use MediaAsset loader instead or extend MediaAsset with in game "preloading"?
+     * @method loadImages
+     */
     loadImages: function () {
         console.log('### start images')
         for (var i = 0, li = this.json.box2d.images.image.length; i < li; i++) {
@@ -85,6 +93,10 @@ CG.Class.extend('B2DFizzXLoader', {
             console.log('-- image #' + ( i + 1 ), image)
         }
     },
+    /**
+     * @description
+     * @method loadJoints
+     */
     loadJoints: function () {
         console.log('### start joints')
         for (var j = 0, lj = this.json.box2d.joints.joint.length; j < lj; j++) {
