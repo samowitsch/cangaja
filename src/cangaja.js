@@ -761,11 +761,163 @@ Transform.prototype.transformPoint = function(px, py) {
   if(typeof module !== 'undefined') module.exports = key;
 
 })(this);
-!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.poly2tri=e():"undefined"!=typeof global?global.poly2tri=e():"undefined"!=typeof self&&(self.poly2tri=e())}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.poly2tri=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+module.exports={"version": "1.3.3"}
+},{}],2:[function(_dereq_,module,exports){
 /*
  * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
  * http://code.google.com/p/poly2tri/
- *
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
+
+/* jshint maxcomplexity:11 */
+
+"use strict";
+
+
+/*
+ * Note
+ * ====
+ * the structure of this JavaScript version of poly2tri intentionally follows
+ * as closely as possible the structure of the reference C++ version, to make it 
+ * easier to keep the 2 versions in sync.
+ */
+
+
+// -------------------------------------------------------------------------Node
+
+/**
+ * Advancing front node
+ * @param {Point} p any "Point like" object with {x,y} (duck typing)
+ * @param {Triangle} t triangle (optionnal)
+ */
+var Node = function(p, t) {
+    this.point = p;
+    this.triangle = t || null;
+
+    this.next = null; // Node
+    this.prev = null; // Node
+
+    this.value = p.x;
+};
+
+// ---------------------------------------------------------------AdvancingFront
+var AdvancingFront = function(head, tail) {
+    this.head_ = head; // Node
+    this.tail_ = tail; // Node
+    this.search_node_ = head; // Node
+};
+
+AdvancingFront.prototype.head = function() {
+    return this.head_;
+};
+
+AdvancingFront.prototype.setHead = function(node) {
+    this.head_ = node;
+};
+
+AdvancingFront.prototype.tail = function() {
+    return this.tail_;
+};
+
+AdvancingFront.prototype.setTail = function(node) {
+    this.tail_ = node;
+};
+
+AdvancingFront.prototype.search = function() {
+    return this.search_node_;
+};
+
+AdvancingFront.prototype.setSearch = function(node) {
+    this.search_node_ = node;
+};
+
+AdvancingFront.prototype.findSearchNode = function(/*x*/) {
+    // TODO: implement BST index
+    return this.search_node_;
+};
+
+AdvancingFront.prototype.locateNode = function(x) {
+    var node = this.search_node_;
+
+    /* jshint boss:true */
+    if (x < node.value) {
+        while (node = node.prev) {
+            if (x >= node.value) {
+                this.search_node_ = node;
+                return node;
+            }
+        }
+    } else {
+        while (node = node.next) {
+            if (x < node.value) {
+                this.search_node_ = node.prev;
+                return node.prev;
+            }
+        }
+    }
+    return null;
+};
+
+AdvancingFront.prototype.locatePoint = function(point) {
+    var px = point.x;
+    var node = this.findSearchNode(px);
+    var nx = node.point.x;
+
+    if (px === nx) {
+        // Here we are comparing point references, not values
+        if (point !== node.point) {
+            // We might have two nodes with same x value for a short time
+            if (point === node.prev.point) {
+                node = node.prev;
+            } else if (point === node.next.point) {
+                node = node.next;
+            } else {
+                throw new Error('poly2tri Invalid AdvancingFront.locatePoint() call');
+            }
+        }
+    } else if (px < nx) {
+        /* jshint boss:true */
+        while (node = node.prev) {
+            if (point === node.point) {
+                break;
+            }
+        }
+    } else {
+        while (node = node.next) {
+            if (point === node.point) {
+                break;
+            }
+        }
+    }
+
+    if (node) {
+        this.search_node_ = node;
+    }
+    return node;
+};
+
+
+// ----------------------------------------------------------------------Exports
+
+module.exports = AdvancingFront;
+module.exports.Node = Node;
+
+
+},{}],3:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
  * All rights reserved.
  * 
  * Distributed under the 3-clause BSD License, see LICENSE.txt
@@ -782,7 +934,7 @@ Transform.prototype.transformPoint = function(px, py) {
  * easier to keep the 2 versions in sync.
  */
 
-
+var xy = _dereq_('./xy');
 
 // ------------------------------------------------------------------------Point
 /**
@@ -805,7 +957,7 @@ var Point = function(x, y) {
  * For pretty printing ex. <i>"(5;42)"</i>)
  */
 Point.prototype.toString = function() {
-    return ("(" + this.x + ";" + this.y + ")");
+    return xy.toStringBase(this);
 };
 
 /**
@@ -976,42 +1128,10 @@ Point.cross = function(a, b) {
  * with {x,y} (duck typing).
  */
 
-
-/**
- * Point pretty printing ex. <i>"(5;42)"</i>)
- * @param   p   any "Point like" object with {x,y} 
- * @returns {String}
- */
-Point.toString = function(p) {
-    // Try a custom toString first, and fallback to Point.prototype.toString if none
-    var s = p.toString();
-    return (s === '[object Object]' ? Point.prototype.toString.call(p) : s);
-};
-
-/**
- * Compare two points component-wise.
- * @param   a,b   any "Point like" objects with {x,y} 
- * @return <code>&lt; 0</code> if <code>a &lt; b</code>, 
- *         <code>&gt; 0</code> if <code>a &gt; b</code>, 
- *         <code>0</code> otherwise.
- */
-Point.compare = function(a, b) {
-    if (a.y === b.y) {
-        return a.x - b.x;
-    } else {
-        return a.y - b.y;
-    }
-};
-Point.cmp = Point.compare; // backward compatibility
-
-/**
- * Test two Point objects for equality.
- * @param   a,b   any "Point like" objects with {x,y} 
- * @return <code>True</code> if <code>a == b</code>, <code>false</code> otherwise.
- */
-Point.equals = function(a, b) {
-    return a.x === b.x && a.y === b.y;
-};
+Point.toString = xy.toString;
+Point.compare = xy.compare;
+Point.cmp = xy.compare; // backward compatibility
+Point.equals = xy.equals;
 
 /**
  * Peform the dot product on two vectors.
@@ -1027,10 +1147,53 @@ Point.dot = function(a, b) {
 
 module.exports = Point;
 
-},{}],2:[function(require,module,exports){
+},{"./xy":10}],4:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
+
+"use strict";
+
+/*
+ * Class added in the JavaScript version (was not present in the c++ version)
+ */
+
+var xy = _dereq_('./xy');
+
+/**
+ * Custom exception class to indicate invalid Point values
+ * @param {String} message          error message
+ * @param {array<Point>} points     invalid points
+ */
+var PointError = function(message, points) {
+    this.name = "PointError";
+    this.points = points = points || [];
+    this.message = message || "Invalid Points!";
+    for (var i = 0; i < points.length; i++) {
+        this.message += " " + xy.toString(points[i]);
+    }
+};
+PointError.prototype = new Error();
+PointError.prototype.constructor = PointError;
+
+
+module.exports = PointError;
+
+},{"./xy":10}],5:[function(_dereq_,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*
  * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
  * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
  *
  * All rights reserved.
  *
@@ -1059,9 +1222,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* jshint maxcomplexity:11 */
-
 "use strict";
+
+/*
+ * Public API for poly2tri.js
+ * ==========================
+ */
+
 
 /*
  * for Browser + <script> : 
@@ -1074,6 +1241,36 @@ exports.noConflict = function() {
     return exports;
 };
 
+exports.VERSION = _dereq_('../dist/version.json').version;
+
+exports.PointError = _dereq_('./pointerror');
+exports.Point = _dereq_('./point');
+exports.Triangle = _dereq_('./triangle');
+exports.SweepContext = _dereq_('./sweepcontext');
+
+
+// Backward compatibility
+var sweep = _dereq_('./sweep');
+exports.triangulate = sweep.triangulate;
+exports.sweep = {Triangulate: sweep.triangulate};
+
+},{"../dist/version.json":1,"./point":3,"./pointerror":4,"./sweep":6,"./sweepcontext":7,"./triangle":8}],6:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
+
+/* jshint latedef:nofunc, maxcomplexity:9 */
+
+"use strict";
+
 
 /*
  * Note
@@ -1081,312 +1278,63 @@ exports.noConflict = function() {
  * the structure of this JavaScript version of poly2tri intentionally follows
  * as closely as possible the structure of the reference C++ version, to make it 
  * easier to keep the 2 versions in sync.
+ *
+ * This 'Sweep' module is present in order to keep this JavaScript version 
+ * as close as possible to the reference C++ version, even though almost all
+ * functions could be declared as methods on the SweepContext object.
  */
 
-
-
-var Point = require('./point');
-var Triangle = require('./triangle');
-
-
-// -------------------------------------------------------------------PointError
-
-/**
- * Custom exception class to indicate invalid Point values
- * @param {String} message          error message
- * @param {array<Point>} points     invalid points
- */
-// Class added in the JavaScript version (was not present in the c++ version)
-var PointError = function(message, points) {
-    this.name = "PointError";
-    this.points = points = points || [];
-    this.message = message || "Invalid Points!";
-    for (var i = 0; i < points.length; i++) {
-        this.message += " " + Point.toString(points[i]);
-    }
-};
-PointError.prototype = new Error();
-PointError.prototype.constructor = PointError;
-
-
-// -------------------------------------------------------------------------Edge
-/**
- * Represents a simple polygon's edge
- * @param {Point} p1
- * @param {Point} p2
- */
-var Edge = function(p1, p2) {
-    this.p = p1;
-    this.q = p2;
-
-    if (p1.y > p2.y) {
-        this.q = p1;
-        this.p = p2;
-    } else if (p1.y === p2.y) {
-        if (p1.x > p2.x) {
-            this.q = p1;
-            this.p = p2;
-        } else if (p1.x === p2.x) {
-            throw new PointError('poly2tri Invalid Edge constructor: repeated points!', [p1]);
-        }
-    }
-
-    if (!this.q._p2t_edge_list) {
-        this.q._p2t_edge_list = [];
-    }
-    this.q._p2t_edge_list.push(this);
-};
+var PointError = _dereq_('./pointerror');
+var Triangle = _dereq_('./triangle');
+var Node = _dereq_('./advancingfront').Node;
 
 
 // ------------------------------------------------------------------------utils
+
+var utils = _dereq_('./utils');
+
 var PI_3div4 = 3 * Math.PI / 4;
-var PI_2 = Math.PI / 2;
-var EPSILON = 1e-12;
+var PI_div2 = Math.PI / 2;
+var EPSILON = utils.EPSILON;
 
-/* 
- * Inital triangle factor, seed triangle will extend 30% of
- * PointSet width to both left and right.
- */
-var kAlpha = 0.3;
-
-var Orientation = {
-    "CW": 1,
-    "CCW": -1,
-    "COLLINEAR": 0
-};
-
-/**
- * Forumla to calculate signed area<br>
- * Positive if CCW<br>
- * Negative if CW<br>
- * 0 if collinear<br>
- * <pre>
- * A[P1,P2,P3]  =  (x1*y2 - y1*x2) + (x2*y3 - y2*x3) + (x3*y1 - y3*x1)
- *              =  (x1-x3)*(y2-y3) - (y1-y3)*(x2-x3)
- * </pre>
- */
-function orient2d(pa, pb, pc) {
-    try {
-        var detleft = (pa.x - pc.x) * (pb.y - pc.y);
-        var detright = (pa.y - pc.y) * (pb.x - pc.x);
-        var val = detleft - detright;
-        if (val > -(EPSILON) && val < (EPSILON)) {
-            return Orientation.COLLINEAR;
-        } else if (val > 0) {
-            return Orientation.CCW;
-        } else {
-            return Orientation.CW;
-        }
-    } catch (e) {
-        console.log('orient2d', e, pa, pb, pc)
-    }
-}
-
-function inScanArea(pa, pb, pc, pd) {
-    try {
-        var pdx = pd.x;
-        var pdy = pd.y;
-        var adx = pa.x - pdx;
-        var ady = pa.y - pdy;
-        var bdx = pb.x - pdx;
-        var bdy = pb.y - pdy;
-
-        var adxbdy = adx * bdy;
-        var bdxady = bdx * ady;
-        var oabd = adxbdy - bdxady;
-
-        if (oabd <= (EPSILON)) {
-            return false;
-        }
-
-        var cdx = pc.x - pdx;
-        var cdy = pc.y - pdy;
-
-        var cdxady = cdx * ady;
-        var adxcdy = adx * cdy;
-        var ocad = cdxady - adxcdy;
-
-    } catch (e) {
-        console.log('inScanArea', e, pa, pb, pc, pd)
-    }
-    if (ocad <= (EPSILON)) {
-        return false;
-    }
-
-    return true;
-}
-
-// ---------------------------------------------------------------AdvancingFront
-/**
- * Advancing front node
- * @param {Point} p any "Point like" object with {x,y} (duck typing)
- * @param {Triangle} t triangle (optionnal)
- */
-var Node = function(p, t) {
-    this.point = p;
-    this.triangle = t || null;
-
-    this.next = null; // Node
-    this.prev = null; // Node
-
-    this.value = p.x;
-};
-
-var AdvancingFront = function(head, tail) {
-    this.head_ = head; // Node
-    this.tail_ = tail; // Node
-    this.search_node_ = head; // Node
-};
-
-AdvancingFront.prototype.head = function() {
-    return this.head_;
-};
-
-AdvancingFront.prototype.setHead = function(node) {
-    this.head_ = node;
-};
-
-AdvancingFront.prototype.tail = function() {
-    return this.tail_;
-};
-
-AdvancingFront.prototype.setTail = function(node) {
-    this.tail_ = node;
-};
-
-AdvancingFront.prototype.search = function() {
-    return this.search_node_;
-};
-
-AdvancingFront.prototype.setSearch = function(node) {
-    this.search_node_ = node;
-};
-
-AdvancingFront.prototype.findSearchNode = function(/*x*/) {
-    // TODO: implement BST index
-    return this.search_node_;
-};
-
-AdvancingFront.prototype.locateNode = function(x) {
-    var node = this.search_node_;
-
-    /* jshint boss:true */
-    if (x < node.value) {
-        while (node = node.prev) {
-            if (x >= node.value) {
-                this.search_node_ = node;
-                return node;
-            }
-        }
-    } else {
-        while (node = node.next) {
-            if (x < node.value) {
-                this.search_node_ = node.prev;
-                return node.prev;
-            }
-        }
-    }
-    return null;
-};
-
-AdvancingFront.prototype.locatePoint = function(point) {
-    var px = point.x;
-    var node = this.findSearchNode(px);
-    var nx = node.point.x;
-
-    if (px === nx) {
-        // Here we are comparing point references, not values
-        if (point !== node.point) {
-            // We might have two nodes with same x value for a short time
-            if (point === node.prev.point) {
-                node = node.prev;
-            } else if (point === node.next.point) {
-                node = node.next;
-            } else {
-                throw new Error('poly2tri Invalid AdvancingFront.locatePoint() call');
-            }
-        }
-    } else if (px < nx) {
-        /* jshint boss:true */
-        while (node = node.prev) {
-            if (point === node.point) {
-                break;
-            }
-        }
-    } else {
-        while (node = node.next) {
-            if (point === node.point) {
-                break;
-            }
-        }
-    }
-
-    if (node) {
-        this.search_node_ = node;
-    }
-    return node;
-};
-
-// ------------------------------------------------------------------------Basin
-var Basin = function() {
-    this.left_node = null; // Node
-    this.bottom_node = null; // Node
-    this.right_node = null; // Node
-    this.width = 0.0; // number
-    this.left_highest = false;
-};
-
-Basin.prototype.clear = function() {
-    this.left_node = null;
-    this.bottom_node = null;
-    this.right_node = null;
-    this.width = 0.0;
-    this.left_highest = false;
-};
-
-// --------------------------------------------------------------------EdgeEvent
-var EdgeEvent = function() {
-    this.constrained_edge = null; // Edge
-    this.right = false;
-};
+var Orientation = utils.Orientation;
+var orient2d = utils.orient2d;
+var inScanArea = utils.inScanArea;
 
 
 // ------------------------------------------------------------------------Sweep
 
 /**
- * The 'Sweep' object is present in order to keep this JavaScript version 
- * as close as possible to the reference C++ version, even though almost
- * all Sweep methods could be declared as members of the SweepContext object.
- */
-var Sweep = {};
-
-
-/**
  * Triangulate the polygon with holes and Steiner points.
+ * Do this AFTER you've added the polyline, holes, and Steiner points
  * @param   tcx SweepContext object.
  */
-Sweep.triangulate = function(tcx) {
+function triangulate(tcx) {
     tcx.initTriangulation();
     tcx.createAdvancingFront();
     // Sweep points; build mesh
-    Sweep.sweepPoints(tcx);
+    sweepPoints(tcx);
     // Clean up
-    Sweep.finalizationPolygon(tcx);
-};
+    finalizationPolygon(tcx);
+}
 
-Sweep.sweepPoints = function(tcx) {
+/**
+ * Start sweeping the Y-sorted point set from bottom to top
+ * @param   tcx SweepContext object.
+ */
+function sweepPoints(tcx) {
     var i, len = tcx.pointCount();
     for (i = 1; i < len; ++i) {
         var point = tcx.getPoint(i);
-        var node = Sweep.pointEvent(tcx, point);
+        var node = pointEvent(tcx, point);
         var edges = point._p2t_edge_list;
         for (var j = 0; edges && j < edges.length; ++j) {
-            Sweep.edgeEventByEdge(tcx, edges[j], node);
+            edgeEventByEdge(tcx, edges[j], node);
         }
     }
-};
+}
 
-Sweep.finalizationPolygon = function(tcx) {
+function finalizationPolygon(tcx) {
     // Get an Internal triangle to start with
     var t = tcx.front().head().next.triangle;
     var p = tcx.front().head().next.point;
@@ -1396,76 +1344,63 @@ Sweep.finalizationPolygon = function(tcx) {
 
     // Collect interior triangles constrained by edges
     tcx.meshClean(t);
-};
+}
 
 /**
  * Find closes node to the left of the new point and
  * create a new triangle. If needed new holes and basins
  * will be filled to.
  */
-Sweep.pointEvent = function(tcx, point) {
+function pointEvent(tcx, point) {
     var node = tcx.locateNode(point);
-    var new_node = Sweep.newFrontTriangle(tcx, point, node);
+    var new_node = newFrontTriangle(tcx, point, node);
 
     // Only need to check +epsilon since point never have smaller
     // x value than node due to how we fetch nodes from the front
     if (point.x <= node.point.x + (EPSILON)) {
-        Sweep.fill(tcx, node);
+        fill(tcx, node);
     }
 
     //tcx.AddNode(new_node);
 
-    Sweep.fillAdvancingFront(tcx, new_node);
+    fillAdvancingFront(tcx, new_node);
     return new_node;
-};
+}
 
-Sweep.edgeEventByEdge = function(tcx, edge, node) {
+function edgeEventByEdge(tcx, edge, node) {
     tcx.edge_event.constrained_edge = edge;
     tcx.edge_event.right = (edge.p.x > edge.q.x);
 
-    if (Sweep.isEdgeSideOfTriangle(node.triangle, edge.p, edge.q)) {
+    if (isEdgeSideOfTriangle(node.triangle, edge.p, edge.q)) {
         return;
     }
 
     // For now we will do all needed filling
     // TODO: integrate with flip process might give some better performance
     //       but for now this avoid the issue with cases that needs both flips and fills
-    Sweep.fillEdgeEvent(tcx, edge, node);
-    Sweep.edgeEventByPoints(tcx, edge.p, edge.q, node.triangle, edge.q);
-};
+    fillEdgeEvent(tcx, edge, node);
+    edgeEventByPoints(tcx, edge.p, edge.q, node.triangle, edge.q);
+}
 
-Sweep.edgeEventByPoints = function(tcx, ep, eq, triangle, point) {
-    if (Sweep.isEdgeSideOfTriangle(triangle, ep, eq)) {
+function edgeEventByPoints(tcx, ep, eq, triangle, point) {
+    if (isEdgeSideOfTriangle(triangle, ep, eq)) {
         return;
     }
 
     var p1 = triangle.pointCCW(point);
     var o1 = orient2d(eq, p1, ep);
     if (o1 === Orientation.COLLINEAR) {
-        // @TODO integrate here changes from C++ version => added code from C++ version (experimental)
-        if (triangle.containsPoint(eq, p1)){
-            triangle.markConstrainedEdgeByPoints(eq, p1)
-            tcx.edge_event.constrained_edge.q = p1
-            triangle = triangle.neighborAcross(point)
-//            EdgeEvent(tcx, ep, p1, triangle, p1)
-        } else {
-            throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p1, ep]);
-        }
+        // TODO integrate here changes from C++ version
+        // (C++ repo revision 09880a869095 dated March 8, 2011)
+        throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p1, ep]);
     }
 
     var p2 = triangle.pointCW(point);
     var o2 = orient2d(eq, p2, ep);
     if (o2 === Orientation.COLLINEAR) {
-        // @TODO integrate here changes from C++ version => added code from C++ version (experimental)
-        if (triangle.containsPoint(eq, p2)){
-            triangle.markConstrainedEdgeByPoints(eq, p2)
-            tcx.edge_event.constrained_edge.q = p2
-            triangle = triangle.neighborAcross(point)
-//            EdgeEvent(tcx, ep, p2, triangle, p2)
-
-        } else {
-            throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p2, ep]);
-        }
+        // TODO integrate here changes from C++ version
+        // (C++ repo revision 09880a869095 dated March 8, 2011)
+        throw new PointError('poly2tri EdgeEvent: Collinear not supported!', [eq, p2, ep]);
     }
 
     if (o1 === o2) {
@@ -1476,14 +1411,14 @@ Sweep.edgeEventByPoints = function(tcx, ep, eq, triangle, point) {
         } else {
             triangle = triangle.neighborCW(point);
         }
-        Sweep.edgeEventByPoints(tcx, ep, eq, triangle, point);
+        edgeEventByPoints(tcx, ep, eq, triangle, point);
     } else {
         // This triangle crosses constraint so lets flippin start!
-        Sweep.flipEdgeEvent(tcx, ep, eq, triangle, point);
+        flipEdgeEvent(tcx, ep, eq, triangle, point);
     }
-};
+}
 
-Sweep.isEdgeSideOfTriangle = function(triangle, ep, eq) {
+function isEdgeSideOfTriangle(triangle, ep, eq) {
     var index = triangle.edgeIndex(ep, eq);
     if (index !== -1) {
         triangle.markConstrainedEdgeByIndex(index);
@@ -1494,9 +1429,12 @@ Sweep.isEdgeSideOfTriangle = function(triangle, ep, eq) {
         return true;
     }
     return false;
-};
+}
 
-Sweep.newFrontTriangle = function(tcx, point, node) {
+/**
+ * Creates a new front triangle and legalize it
+ */
+function newFrontTriangle(tcx, point, node) {
     var triangle = new Triangle(point, node.point, node.next.point);
 
     triangle.markNeighbor(node.triangle);
@@ -1508,19 +1446,19 @@ Sweep.newFrontTriangle = function(tcx, point, node) {
     node.next.prev = new_node;
     node.next = new_node;
 
-    if (!Sweep.legalize(tcx, triangle)) {
+    if (!legalize(tcx, triangle)) {
         tcx.mapTriangleToNodes(triangle);
     }
 
     return new_node;
-};
+}
 
 /**
  * Adds a triangle to the advancing front to fill a hole.
  * @param tcx
  * @param node - middle node, that is the bottom of the hole
  */
-Sweep.fill = function(tcx, node) {
+function fill(tcx, node) {
     var triangle = new Triangle(node.prev.point, node.point, node.next.point);
 
     // TODO: should copy the constrained_edge value from neighbor triangles
@@ -1536,61 +1474,68 @@ Sweep.fill = function(tcx, node) {
 
 
     // If it was legalized the triangle has already been mapped
-    if (!Sweep.legalize(tcx, triangle)) {
+    if (!legalize(tcx, triangle)) {
         tcx.mapTriangleToNodes(triangle);
     }
 
     //tcx.removeNode(node);
-};
+}
 
 /**
  * Fills holes in the Advancing Front
  */
-Sweep.fillAdvancingFront = function(tcx, n) {
+function fillAdvancingFront(tcx, n) {
     // Fill right holes
     var node = n.next;
     var angle;
     while (node.next) {
-        angle = Sweep.holeAngle(node);
-        if (angle > PI_2 || angle < -(PI_2)) {
+        // TODO integrate here changes from C++ version
+        // (C++ repo revision acf81f1f1764 dated April 7, 2012)
+        angle = holeAngle(node);
+        if (angle > PI_div2 || angle < -(PI_div2)) {
             break;
         }
-        Sweep.fill(tcx, node);
+        fill(tcx, node);
         node = node.next;
     }
 
     // Fill left holes
     node = n.prev;
     while (node.prev) {
-        angle = Sweep.holeAngle(node);
-        if (angle > PI_2 || angle < -(PI_2)) {
+        // TODO integrate here changes from C++ version
+        // (C++ repo revision acf81f1f1764 dated April 7, 2012)
+        angle = holeAngle(node);
+        if (angle > PI_div2 || angle < -(PI_div2)) {
             break;
         }
-        Sweep.fill(tcx, node);
+        fill(tcx, node);
         node = node.prev;
     }
 
     // Fill right basins
     if (n.next && n.next.next) {
-        angle = Sweep.basinAngle(n);
+        angle = basinAngle(n);
         if (angle < PI_3div4) {
-            Sweep.fillBasin(tcx, n);
+            fillBasin(tcx, n);
         }
     }
-};
+}
 
-Sweep.basinAngle = function(node) {
+/**
+ * The basin angle is decided against the horizontal line [1,0]
+ */
+function basinAngle(node) {
     var ax = node.point.x - node.next.next.point.x;
     var ay = node.point.y - node.next.next.point.y;
     return Math.atan2(ay, ax);
-};
+}
 
 /**
  *
  * @param node - middle node
  * @return the angle between 3 front nodes
  */
-Sweep.holeAngle = function(node) {
+function holeAngle(node) {
     /* Complex plane
      * ab = cosA +i*sinA
      * ab = (ax + ay*i)(bx + by*i) = (ax*bx + ay*by) + i(ax*by-ay*bx)
@@ -1604,12 +1549,12 @@ Sweep.holeAngle = function(node) {
     var bx = node.prev.point.x - node.point.x;
     var by = node.prev.point.y - node.point.y;
     return Math.atan2(ax * by - ay * bx, ax * bx + ay * by);
-};
+}
 
 /**
  * Returns true if triangle was legalized
  */
-Sweep.legalize = function(tcx, t) {
+function legalize(tcx, t) {
     // To legalize a triangle we start by finding if any of the three edges
     // violate the Delaunay condition
     for (var i = 0; i < 3; ++i) {
@@ -1629,25 +1574,25 @@ Sweep.legalize = function(tcx, t) {
                 continue;
             }
 
-            var inside = Sweep.inCircle(p, t.pointCCW(p), t.pointCW(p), op);
+            var inside = inCircle(p, t.pointCCW(p), t.pointCW(p), op);
             if (inside) {
                 // Lets mark this shared edge as Delaunay
                 t.delaunay_edge[i] = true;
                 ot.delaunay_edge[oi] = true;
 
                 // Lets rotate shared edge one vertex CW to legalize it
-                Sweep.rotateTrianglePair(t, p, ot, op);
+                rotateTrianglePair(t, p, ot, op);
 
                 // We now got one valid Delaunay Edge shared by two triangles
                 // This gives us 4 new edges to check for Delaunay
 
                 // Make sure that triangle to node mapping is done only one time for a specific triangle
-                var not_legalized = !Sweep.legalize(tcx, t);
+                var not_legalized = !legalize(tcx, t);
                 if (not_legalized) {
                     tcx.mapTriangleToNodes(t);
                 }
 
-                not_legalized = !Sweep.legalize(tcx, ot);
+                not_legalized = !legalize(tcx, ot);
                 if (not_legalized) {
                     tcx.mapTriangleToNodes(ot);
                 }
@@ -1665,7 +1610,7 @@ Sweep.legalize = function(tcx, t) {
         }
     }
     return false;
-};
+}
 
 /**
  * <b>Requirement</b>:<br>
@@ -1691,7 +1636,7 @@ Sweep.legalize = function(tcx, t) {
  * @param pd - point opposite a
  * @return true if d is inside circle, false if on circle edge
  */
-Sweep.inCircle = function(pa, pb, pc, pd) {
+function inCircle(pa, pb, pc, pd) {
     var adx = pa.x - pd.x;
     var ady = pa.y - pd.y;
     var bdx = pb.x - pd.x;
@@ -1723,7 +1668,7 @@ Sweep.inCircle = function(pa, pb, pc, pd) {
 
     var det = alift * (bdxcdy - cdxbdy) + blift * ocad + clift * oabd;
     return det > 0;
-};
+}
 
 /**
  * Rotates a triangle pair one vertex CW
@@ -1739,7 +1684,7 @@ Sweep.inCircle = function(pa, pb, pc, pd) {
  *       n4                    n4
  * </pre>
  */
-Sweep.rotateTrianglePair = function(t, p, ot, op) {
+function rotateTrianglePair(t, p, ot, op) {
     var n1, n2, n3, n4;
     n1 = t.neighborCCW(p);
     n2 = t.neighborCW(p);
@@ -1793,7 +1738,7 @@ Sweep.rotateTrianglePair = function(t, p, ot, op) {
         ot.markNeighbor(n4);
     }
     t.markNeighbor(ot);
-};
+}
 
 /**
  * Fills a basin that has formed on the Advancing Front to the right
@@ -1804,7 +1749,7 @@ Sweep.rotateTrianglePair = function(t, p, ot, op) {
  * @param tcx
  * @param node - starting node, this or next node will be left node
  */
-Sweep.fillBasin = function(tcx, node) {
+function fillBasin(tcx, node) {
     if (orient2d(node.point, node.next.point, node.next.next.point) === Orientation.CCW) {
         tcx.basin.left_node = node.next.next;
     } else {
@@ -1833,8 +1778,8 @@ Sweep.fillBasin = function(tcx, node) {
     tcx.basin.width = tcx.basin.right_node.point.x - tcx.basin.left_node.point.x;
     tcx.basin.left_highest = tcx.basin.left_node.point.y > tcx.basin.right_node.point.y;
 
-    Sweep.fillBasinReq(tcx, tcx.basin.bottom_node);
-};
+    fillBasinReq(tcx, tcx.basin.bottom_node);
+}
 
 /**
  * Recursive algorithm to fill a Basin with triangles
@@ -1842,13 +1787,13 @@ Sweep.fillBasin = function(tcx, node) {
  * @param tcx
  * @param node - bottom_node
  */
-Sweep.fillBasinReq = function(tcx, node) {
+function fillBasinReq(tcx, node) {
     // if shallow stop filling
-    if (Sweep.isShallow(tcx, node)) {
+    if (isShallow(tcx, node)) {
         return;
     }
 
-    Sweep.fill(tcx, node);
+    fill(tcx, node);
 
     var o;
     if (node.prev === tcx.basin.left_node && node.next === tcx.basin.right_node) {
@@ -1874,10 +1819,10 @@ Sweep.fillBasinReq = function(tcx, node) {
         }
     }
 
-    Sweep.fillBasinReq(tcx, node);
-};
+    fillBasinReq(tcx, node);
+}
 
-Sweep.isShallow = function(tcx, node) {
+function isShallow(tcx, node) {
     var height;
     if (tcx.basin.left_highest) {
         height = tcx.basin.left_node.point.y - node.point.y;
@@ -1890,137 +1835,137 @@ Sweep.isShallow = function(tcx, node) {
         return true;
     }
     return false;
-};
+}
 
-Sweep.fillEdgeEvent = function(tcx, edge, node) {
+function fillEdgeEvent(tcx, edge, node) {
     if (tcx.edge_event.right) {
-        Sweep.fillRightAboveEdgeEvent(tcx, edge, node);
+        fillRightAboveEdgeEvent(tcx, edge, node);
     } else {
-        Sweep.fillLeftAboveEdgeEvent(tcx, edge, node);
+        fillLeftAboveEdgeEvent(tcx, edge, node);
     }
-};
+}
 
-Sweep.fillRightAboveEdgeEvent = function(tcx, edge, node) {
+function fillRightAboveEdgeEvent(tcx, edge, node) {
     while (node.next.point.x < edge.p.x) {
         // Check if next node is below the edge
         if (orient2d(edge.q, node.next.point, edge.p) === Orientation.CCW) {
-            Sweep.fillRightBelowEdgeEvent(tcx, edge, node);
+            fillRightBelowEdgeEvent(tcx, edge, node);
         } else {
             node = node.next;
         }
     }
-};
+}
 
-Sweep.fillRightBelowEdgeEvent = function(tcx, edge, node) {
+function fillRightBelowEdgeEvent(tcx, edge, node) {
     if (node.point.x < edge.p.x) {
         if (orient2d(node.point, node.next.point, node.next.next.point) === Orientation.CCW) {
             // Concave
-            Sweep.fillRightConcaveEdgeEvent(tcx, edge, node);
+            fillRightConcaveEdgeEvent(tcx, edge, node);
         } else {
             // Convex
-            Sweep.fillRightConvexEdgeEvent(tcx, edge, node);
+            fillRightConvexEdgeEvent(tcx, edge, node);
             // Retry this one
-            Sweep.fillRightBelowEdgeEvent(tcx, edge, node);
+            fillRightBelowEdgeEvent(tcx, edge, node);
         }
     }
-};
+}
 
-Sweep.fillRightConcaveEdgeEvent = function(tcx, edge, node) {
-    Sweep.fill(tcx, node.next);
+function fillRightConcaveEdgeEvent(tcx, edge, node) {
+    fill(tcx, node.next);
     if (node.next.point !== edge.p) {
         // Next above or below edge?
         if (orient2d(edge.q, node.next.point, edge.p) === Orientation.CCW) {
             // Below
             if (orient2d(node.point, node.next.point, node.next.next.point) === Orientation.CCW) {
                 // Next is concave
-                Sweep.fillRightConcaveEdgeEvent(tcx, edge, node);
+                fillRightConcaveEdgeEvent(tcx, edge, node);
             } else {
                 // Next is convex
                 /* jshint noempty:false */
             }
         }
     }
-};
+}
 
-Sweep.fillRightConvexEdgeEvent = function(tcx, edge, node) {
+function fillRightConvexEdgeEvent(tcx, edge, node) {
     // Next concave or convex?
     if (orient2d(node.next.point, node.next.next.point, node.next.next.next.point) === Orientation.CCW) {
         // Concave
-        Sweep.fillRightConcaveEdgeEvent(tcx, edge, node.next);
+        fillRightConcaveEdgeEvent(tcx, edge, node.next);
     } else {
         // Convex
         // Next above or below edge?
         if (orient2d(edge.q, node.next.next.point, edge.p) === Orientation.CCW) {
             // Below
-            Sweep.fillRightConvexEdgeEvent(tcx, edge, node.next);
+            fillRightConvexEdgeEvent(tcx, edge, node.next);
         } else {
             // Above
             /* jshint noempty:false */
         }
     }
-};
+}
 
-Sweep.fillLeftAboveEdgeEvent = function(tcx, edge, node) {
+function fillLeftAboveEdgeEvent(tcx, edge, node) {
     while (node.prev.point.x > edge.p.x) {
         // Check if next node is below the edge
         if (orient2d(edge.q, node.prev.point, edge.p) === Orientation.CW) {
-            Sweep.fillLeftBelowEdgeEvent(tcx, edge, node);
+            fillLeftBelowEdgeEvent(tcx, edge, node);
         } else {
             node = node.prev;
         }
     }
-};
+}
 
-Sweep.fillLeftBelowEdgeEvent = function(tcx, edge, node) {
+function fillLeftBelowEdgeEvent(tcx, edge, node) {
     if (node.point.x > edge.p.x) {
         if (orient2d(node.point, node.prev.point, node.prev.prev.point) === Orientation.CW) {
             // Concave
-            Sweep.fillLeftConcaveEdgeEvent(tcx, edge, node);
+            fillLeftConcaveEdgeEvent(tcx, edge, node);
         } else {
             // Convex
-            Sweep.fillLeftConvexEdgeEvent(tcx, edge, node);
+            fillLeftConvexEdgeEvent(tcx, edge, node);
             // Retry this one
-            Sweep.fillLeftBelowEdgeEvent(tcx, edge, node);
+            fillLeftBelowEdgeEvent(tcx, edge, node);
         }
     }
-};
+}
 
-Sweep.fillLeftConvexEdgeEvent = function(tcx, edge, node) {
+function fillLeftConvexEdgeEvent(tcx, edge, node) {
     // Next concave or convex?
     if (orient2d(node.prev.point, node.prev.prev.point, node.prev.prev.prev.point) === Orientation.CW) {
         // Concave
-        Sweep.fillLeftConcaveEdgeEvent(tcx, edge, node.prev);
+        fillLeftConcaveEdgeEvent(tcx, edge, node.prev);
     } else {
         // Convex
         // Next above or below edge?
         if (orient2d(edge.q, node.prev.prev.point, edge.p) === Orientation.CW) {
             // Below
-            Sweep.fillLeftConvexEdgeEvent(tcx, edge, node.prev);
+            fillLeftConvexEdgeEvent(tcx, edge, node.prev);
         } else {
             // Above
             /* jshint noempty:false */
         }
     }
-};
+}
 
-Sweep.fillLeftConcaveEdgeEvent = function(tcx, edge, node) {
-    Sweep.fill(tcx, node.prev);
+function fillLeftConcaveEdgeEvent(tcx, edge, node) {
+    fill(tcx, node.prev);
     if (node.prev.point !== edge.p) {
         // Next above or below edge?
         if (orient2d(edge.q, node.prev.point, edge.p) === Orientation.CW) {
             // Below
             if (orient2d(node.point, node.prev.point, node.prev.prev.point) === Orientation.CW) {
                 // Next is concave
-                Sweep.fillLeftConcaveEdgeEvent(tcx, edge, node);
+                fillLeftConcaveEdgeEvent(tcx, edge, node);
             } else {
                 // Next is convex
                 /* jshint noempty:false */
             }
         }
     }
-};
+}
 
-Sweep.flipEdgeEvent = function(tcx, ep, eq, t, p) {
+function flipEdgeEvent(tcx, ep, eq, t, p) {
     var ot = t.neighborAcross(p);
     if (!ot) {
         // If we want to integrate the fillEdgeEvent do it here
@@ -2030,15 +1975,15 @@ Sweep.flipEdgeEvent = function(tcx, ep, eq, t, p) {
     var op = ot.oppositePoint(t, p);
 
     // Additional check from Java version (see issue #88)
-//    if (t.getConstrainedEdgeAcross(p)) {
-//        var index = t.index(p);
-//        throw new PointError("poly2tri Intersecting Constraints",
-//                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
-//    }
+    if (t.getConstrainedEdgeAcross(p)) {
+        var index = t.index(p);
+        throw new PointError("poly2tri Intersecting Constraints",
+                [p, op, t.getPoint((index + 1) % 3), t.getPoint((index + 2) % 3)]);
+    }
 
     if (inScanArea(p, t.pointCCW(p), t.pointCW(p), op)) {
         // Lets rotate shared edge one vertex CW
-        Sweep.rotateTrianglePair(t, p, ot, op);
+        rotateTrianglePair(t, p, ot, op);
         tcx.mapTriangleToNodes(t);
         tcx.mapTriangleToNodes(ot);
 
@@ -2051,31 +1996,43 @@ Sweep.flipEdgeEvent = function(tcx, ep, eq, t, p) {
             if (eq === tcx.edge_event.constrained_edge.q && ep === tcx.edge_event.constrained_edge.p) {
                 t.markConstrainedEdgeByPoints(ep, eq);
                 ot.markConstrainedEdgeByPoints(ep, eq);
-                Sweep.legalize(tcx, t);
-                Sweep.legalize(tcx, ot);
+                legalize(tcx, t);
+                legalize(tcx, ot);
             } else {
                 // XXX: I think one of the triangles should be legalized here?
                 /* jshint noempty:false */
             }
         } else {
             var o = orient2d(eq, op, ep);
-            t = Sweep.nextFlipTriangle(tcx, o, t, ot, p, op);
-            Sweep.flipEdgeEvent(tcx, ep, eq, t, p);
+            t = nextFlipTriangle(tcx, o, t, ot, p, op);
+            flipEdgeEvent(tcx, ep, eq, t, p);
         }
     } else {
-        var newP = Sweep.nextFlipPoint(ep, eq, ot, op);
-        Sweep.flipScanEdgeEvent(tcx, ep, eq, t, ot, newP);
-        Sweep.edgeEventByPoints(tcx, ep, eq, t, p);
+        var newP = nextFlipPoint(ep, eq, ot, op);
+        flipScanEdgeEvent(tcx, ep, eq, t, ot, newP);
+        edgeEventByPoints(tcx, ep, eq, t, p);
     }
-};
+}
 
-Sweep.nextFlipTriangle = function(tcx, o, t, ot, p, op) {
+/**
+ * After a flip we have two triangles and know that only one will still be
+ * intersecting the edge. So decide which to contiune with and legalize the other
+ *
+ * @param tcx
+ * @param o - should be the result of an orient2d( eq, op, ep )
+ * @param t - triangle 1
+ * @param ot - triangle 2
+ * @param p - a point shared by both triangles
+ * @param op - another point shared by both triangles
+ * @return returns the triangle still intersecting the edge
+ */
+function nextFlipTriangle(tcx, o, t, ot, p, op) {
     var edge_index;
     if (o === Orientation.CCW) {
         // ot is not crossing edge after flip
         edge_index = ot.edgeIndex(p, op);
         ot.delaunay_edge[edge_index] = true;
-        Sweep.legalize(tcx, ot);
+        legalize(tcx, ot);
         ot.clearDelunayEdges();
         return t;
     }
@@ -2084,12 +2041,17 @@ Sweep.nextFlipTriangle = function(tcx, o, t, ot, p, op) {
     edge_index = t.edgeIndex(p, op);
 
     t.delaunay_edge[edge_index] = true;
-    Sweep.legalize(tcx, t);
+    legalize(tcx, t);
     t.clearDelunayEdges();
     return ot;
-};
+}
 
-Sweep.nextFlipPoint = function(ep, eq, ot, op) {
+/**
+ * When we need to traverse from one triangle to the next we need
+ * the point in current triangle that is the opposite point to the next
+ * triangle.
+ */
+function nextFlipPoint(ep, eq, ot, op) {
     var o2d = orient2d(eq, op, ep);
     if (o2d === Orientation.CW) {
         // Right
@@ -2100,9 +2062,22 @@ Sweep.nextFlipPoint = function(ep, eq, ot, op) {
     } else {
         throw new PointError("poly2tri [Unsupported] nextFlipPoint: opposing point on constrained edge!", [eq, op, ep]);
     }
-};
+}
 
-Sweep.flipScanEdgeEvent = function(tcx, ep, eq, flip_triangle, t, p) {
+/**
+ * Scan part of the FlipScan algorithm<br>
+ * When a triangle pair isn't flippable we will scan for the next
+ * point that is inside the flip triangle scan area. When found
+ * we generate a new flipEdgeEvent
+ *
+ * @param tcx
+ * @param ep - last point on the edge we are traversing
+ * @param eq - first point on the edge we are traversing
+ * @param flipTriangle - the current triangle sharing the point eq with edge
+ * @param t
+ * @param p
+ */
+function flipScanEdgeEvent(tcx, ep, eq, flip_triangle, t, p) {
     var ot = t.neighborAcross(p);
     if (!ot) {
         // If we want to integrate the fillEdgeEvent do it here
@@ -2113,7 +2088,7 @@ Sweep.flipScanEdgeEvent = function(tcx, ep, eq, flip_triangle, t, p) {
 
     if (inScanArea(eq, flip_triangle.pointCCW(eq), flip_triangle.pointCW(eq), op)) {
         // flip with new edge op.eq
-        Sweep.flipEdgeEvent(tcx, eq, op, ot, op);
+        flipEdgeEvent(tcx, eq, op, ot, op);
         // TODO: Actually I just figured out that it should be possible to
         //       improve this by getting the next ot and op before the the above
         //       flip and continue the flipScanEdgeEvent here
@@ -2122,16 +2097,116 @@ Sweep.flipScanEdgeEvent = function(tcx, ep, eq, flip_triangle, t, p) {
         // Turns out at first glance that this is somewhat complicated
         // so it will have to wait.
     } else {
-        var newP = Sweep.nextFlipPoint(ep, eq, ot, op);
-        Sweep.flipScanEdgeEvent(tcx, ep, eq, flip_triangle, ot, newP);
+        var newP = nextFlipPoint(ep, eq, ot, op);
+        flipScanEdgeEvent(tcx, ep, eq, flip_triangle, ot, newP);
     }
+}
+
+
+// ----------------------------------------------------------------------Exports
+
+exports.triangulate = triangulate;
+
+},{"./advancingfront":2,"./pointerror":4,"./triangle":8,"./utils":9}],7:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
+
+/* jshint maxcomplexity:6 */
+
+"use strict";
+
+
+/*
+ * Note
+ * ====
+ * the structure of this JavaScript version of poly2tri intentionally follows
+ * as closely as possible the structure of the reference C++ version, to make it 
+ * easier to keep the 2 versions in sync.
+ */
+
+var PointError = _dereq_('./pointerror');
+var Point = _dereq_('./point');
+var Triangle = _dereq_('./triangle');
+var sweep = _dereq_('./sweep');
+var AdvancingFront = _dereq_('./advancingfront');
+var Node = AdvancingFront.Node;
+
+
+// ------------------------------------------------------------------------utils
+
+/* 
+ * Initial triangle factor, seed triangle will extend 30% of
+ * PointSet width to both left and right.
+ */
+var kAlpha = 0.3;
+
+
+// -------------------------------------------------------------------------Edge
+/**
+ * Represents a simple polygon's edge
+ * @param {Point} p1
+ * @param {Point} p2
+ */
+var Edge = function(p1, p2) {
+    this.p = p1;
+    this.q = p2;
+
+    if (p1.y > p2.y) {
+        this.q = p1;
+        this.p = p2;
+    } else if (p1.y === p2.y) {
+        if (p1.x > p2.x) {
+            this.q = p1;
+            this.p = p2;
+        } else if (p1.x === p2.x) {
+            throw new PointError('poly2tri Invalid Edge constructor: repeated points!', [p1]);
+        }
+    }
+
+    if (!this.q._p2t_edge_list) {
+        this.q._p2t_edge_list = [];
+    }
+    this.q._p2t_edge_list.push(this);
 };
 
+
+// ------------------------------------------------------------------------Basin
+var Basin = function() {
+    this.left_node = null; // Node
+    this.bottom_node = null; // Node
+    this.right_node = null; // Node
+    this.width = 0.0; // number
+    this.left_highest = false;
+};
+
+Basin.prototype.clear = function() {
+    this.left_node = null;
+    this.bottom_node = null;
+    this.right_node = null;
+    this.width = 0.0;
+    this.left_highest = false;
+};
+
+// --------------------------------------------------------------------EdgeEvent
+var EdgeEvent = function() {
+    this.constrained_edge = null; // Edge
+    this.right = false;
+};
 
 // ----------------------------------------------------SweepContext (public API)
 /**
  * Constructor for the triangulation context.
- * It accepts a simple polyline, which defines the constrained edges.
+ * It accepts a simple polyline (with non repeating points), 
+ * which defines the constrained edges.
  * Possible options are:
  *    cloneArrays:  if true, do a shallow copy of the Array parameters 
  *                  (contour, holes). Points inside arrays are never copied.
@@ -2147,7 +2222,7 @@ var SweepContext = function(contour, options) {
     this.points_ = (options.cloneArrays ? contour.slice(0) : contour);
     this.edge_list = [];
 
-    // Bounding box of all points. Computed at the start of the triangulation,
+    // Bounding box of all points. Computed at the start of the triangulation, 
     // it is stored in case it is needed by the caller.
     this.pmin_ = this.pmax_ = null;
 
@@ -2210,11 +2285,12 @@ SweepContext.prototype.addPoints = function(points) {
 
 /**
  * Triangulate the polygon with holes and Steiner points.
+ * Do this AFTER you've added the polyline, holes, and Steiner points
  */
-// Shortcut method for Sweep.triangulate(SweepContext).
+// Shortcut method for sweep.triangulate(SweepContext).
 // Method added in the JavaScript version (was not present in the c++ version)
 SweepContext.prototype.triangulate = function() {
-    Sweep.triangulate(this);
+    sweep.triangulate(this);
     return this; // for chaining
 };
 
@@ -2387,21 +2463,17 @@ SweepContext.prototype.meshClean = function(triangle) {
     }
 };
 
-// ---------------------------------------------------------Exports (public API)
+// ----------------------------------------------------------------------Exports
 
-exports.PointError = PointError;
-exports.Point = Point;
-exports.Triangle = Triangle;
-exports.SweepContext = SweepContext;
+module.exports = SweepContext;
 
-// Backward compatibility
-exports.triangulate = Sweep.triangulate;
-exports.sweep = {Triangulate: Sweep.triangulate};
-
-},{"./point":1,"./triangle":3}],3:[function(require,module,exports){
+},{"./advancingfront":2,"./point":3,"./pointerror":4,"./sweep":6,"./triangle":8}],8:[function(_dereq_,module,exports){
 /*
  * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
  * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
  *
  * All rights reserved.
  * 
@@ -2421,7 +2493,7 @@ exports.sweep = {Triangulate: Sweep.triangulate};
  * easier to keep the 2 versions in sync.
  */
 
-var Point = require("./point");
+var xy = _dereq_("./xy");
 
 
 // ---------------------------------------------------------------------Triangle
@@ -2450,7 +2522,7 @@ var Triangle = function(a, b, c) {
 /**
  * For pretty printing ex. <i>"[(5;42)(10;20)(21;30)]"</i>)
  */
-var p2s = Point.toString;
+var p2s = xy.toString;
 Triangle.prototype.toString = function() {
     return ("[" + p2s(this.points_[0]) + p2s(this.points_[1]) + p2s(this.points_[2]) + "]");
 };
@@ -2460,6 +2532,11 @@ Triangle.prototype.getPoint = function(index) {
 };
 // for backward compatibility
 Triangle.prototype.GetPoint = Triangle.prototype.getPoint;
+
+// Method added in the JavaScript version (was not present in the c++ version)
+Triangle.prototype.getPoints = function() {
+    return this.points_;
+};
 
 Triangle.prototype.getNeighbor = function(index) {
     return this.neighbors_[index];
@@ -2829,129 +2906,317 @@ Triangle.prototype.markConstrainedEdgeByPoints = function(p, q) {
 
 module.exports = Triangle;
 
-},{"./point":1}]},{},[2])
-(2)
-});
-;/*******************************************************************************
-*                                                                              *
-* Author    :  Angus Johnson                                                   *
-* Version   :  5.0.2                                                           *
-* Date      :  30 December 2012                                                *
-* Website   :  http://www.angusj.com                                           *
-* Copyright :  Angus Johnson 2010-2012                                         *
-*                                                                              *
-* License:                                                                     *
-* Use, modification & distribution is subject to Boost Software License Ver 1. *
-* http://www.boost.org/LICENSE_1_0.txt                                         *
-*                                                                              *
-* Attributions:                                                                *
-* The code in this library is an extension of Bala Vatti's clipping algorithm: *
-* "A generic solution to polygon clipping"                                     *
-* Communications of the ACM, Vol 35, Issue 7 (July 1992) pp 56-63.             *
-* http://portal.acm.org/citation.cfm?id=129906                                 *
-*                                                                              *
-* Computer graphics and geometric modeling: implementation and algorithms      *
-* By Max K. Agoston                                                            *
-* Springer; 1 edition (January 4, 2005)                                        *
-* http://books.google.com/books?q=vatti+clipping+agoston                       *
-*                                                                              *
-* See also:                                                                    *
-* "Polygon Offsetting by Computing Winding Numbers"                            *
-* Paper no. DETC2005-85513 pp. 565-575                                         *
-* ASME 2005 International Design Engineering Technical Conferences             *
-* and Computers and Information in Engineering Conference (IDETC/CIE2005)      *
-* September 24�28, 2005 , Long Beach, California, USA                          *
-* http://www.me.berkeley.edu/~mcmains/pubs/DAC05OffsetPolygon.pdf              *
-*                                                                              *
-*******************************************************************************/
+},{"./xy":10}],9:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
 
-/*******************************************************************************
-*                                                                              *
-* Author    :  Timo                                                            *
-* Version   :  5.0.2.2                                                         *
-* Date      :  11 September 2013                                               *
-*                                                                              *
-* This is a translation of the C# Clipper library to Javascript.               *
-* Int128 struct of C# is implemented using JSBN of Tom Wu.                     *
-* Because Javascript lacks support for 64-bit integers, the space              *
-* is a little more restricted than in C# version.                              *
-*                                                                              *
-* C# version has support for coordinate space:                                 *
-* +-4611686018427387903 ( sqrt(2^127 -1)/2 )                                   *
-* while Javascript version has support for space:                              *
-* +-4503599627370495 ( sqrt(2^106 -1)/2 )                                      *
-*                                                                              *
-* Tom Wu's JSBN proved to be the fastest big integer library:                  *
-* http://jsperf.com/big-integer-library-test                                   *
-*                                                                              *
-* This class can be made simpler when (if ever) 64-bit integer support comes.  *
-*                                                                              *
-*******************************************************************************/
+"use strict";
 
+/*
+ * Note
+ * ====
+ * the structure of this JavaScript version of poly2tri intentionally follows
+ * as closely as possible the structure of the reference C++ version, to make it 
+ * easier to keep the 2 versions in sync.
+ */
+
+var EPSILON = 1e-12;
+
+var Orientation = {
+    "CW": 1,
+    "CCW": -1,
+    "COLLINEAR": 0
+};
+
+/**
+ * Forumla to calculate signed area<br>
+ * Positive if CCW<br>
+ * Negative if CW<br>
+ * 0 if collinear<br>
+ * <pre>
+ * A[P1,P2,P3]  =  (x1*y2 - y1*x2) + (x2*y3 - y2*x3) + (x3*y1 - y3*x1)
+ *              =  (x1-x3)*(y2-y3) - (y1-y3)*(x2-x3)
+ * </pre>
+ * 
+ * @param   pa,pb,pc   any "Point like" objects with {x,y} (duck typing)
+ */
+function orient2d(pa, pb, pc) {
+    var detleft = (pa.x - pc.x) * (pb.y - pc.y);
+    var detright = (pa.y - pc.y) * (pb.x - pc.x);
+    var val = detleft - detright;
+    if (val > -(EPSILON) && val < (EPSILON)) {
+        return Orientation.COLLINEAR;
+    } else if (val > 0) {
+        return Orientation.CCW;
+    } else {
+        return Orientation.CW;
+    }
+}
+
+/**
+ *  
+ * @param   pa,pb,pc,pd   any "Point like" objects with {x,y} (duck typing)
+ */
+function inScanArea(pa, pb, pc, pd) {
+    var oadb = (pa.x - pb.x) * (pd.y - pb.y) - (pd.x - pb.x) * (pa.y - pb.y);
+    if (oadb >= -EPSILON) {
+        return false;
+    }
+
+    var oadc = (pa.x - pc.x) * (pd.y - pc.y) - (pd.x - pc.x) * (pa.y - pc.y);
+    if (oadc <= EPSILON) {
+        return false;
+    }
+    return true;
+}
+
+
+// ----------------------------------------------------------------------Exports
+
+module.exports = {
+    EPSILON: EPSILON,
+    Orientation: Orientation,
+    orient2d: orient2d,
+    inScanArea: inScanArea
+};
+
+},{}],10:[function(_dereq_,module,exports){
+/*
+ * Poly2Tri Copyright (c) 2009-2013, Poly2Tri Contributors
+ * http://code.google.com/p/poly2tri/
+ * 
+ * poly2tri.js (JavaScript port) (c) 2009-2013, Poly2Tri Contributors
+ * https://github.com/r3mi/poly2tri.js
+ * 
+ * All rights reserved.
+ * 
+ * Distributed under the 3-clause BSD License, see LICENSE.txt
+ */
+
+"use strict";
+
+/*
+ * The following functions operate on "Point" or any "Point like" object 
+ * with {x,y} (duck typing).
+ */
+
+
+/**
+ * Point pretty printing ex. <i>"(5;42)"</i>)
+ * @param   p   any "Point like" object with {x,y} 
+ * @returns {String}
+ */
+function toStringBase(p) {
+    return ("(" + p.x + ";" + p.y + ")");
+}
+function toString(p) {
+    // Try a custom toString first, and fallback to own implementation if none
+    var s = p.toString();
+    return (s === '[object Object]' ? toStringBase(p) : s);
+}
+
+/**
+ * Compare two points component-wise. Ordered by y axis first, then x axis.
+ * @param   a,b   any "Point like" objects with {x,y} 
+ * @return <code>&lt; 0</code> if <code>a &lt; b</code>, 
+ *         <code>&gt; 0</code> if <code>a &gt; b</code>, 
+ *         <code>0</code> otherwise.
+ */
+function compare(a, b) {
+    if (a.y === b.y) {
+        return a.x - b.x;
+    } else {
+        return a.y - b.y;
+    }
+}
+
+/**
+ * Test two Point objects for equality.
+ * @param   a,b   any "Point like" objects with {x,y} 
+ * @return <code>True</code> if <code>a == b</code>, <code>false</code> otherwise.
+ */
+function equals(a, b) {
+    return a.x === b.x && a.y === b.y;
+}
+
+
+module.exports = {
+    toString: toString,
+    toStringBase: toStringBase,
+    compare: compare,
+    equals: equals
+};
+
+},{}]},{},[5])
+(5)
+});// rev 452
+/********************************************************************************
+ *                                                                              *
+ * Author    :  Angus Johnson                                                   *
+ * Version   :  6.1.3                                                           *
+ * Date      :  19 January 2014                                                 *
+ * Website   :  http://www.angusj.com                                           *
+ * Copyright :  Angus Johnson 2010-2014                                         *
+ *                                                                              *
+ * License:                                                                     *
+ * Use, modification & distribution is subject to Boost Software License Ver 1. *
+ * http://www.boost.org/LICENSE_1_0.txt                                         *
+ *                                                                              *
+ * Attributions:                                                                *
+ * The code in this library is an extension of Bala Vatti's clipping algorithm: *
+ * "A generic solution to polygon clipping"                                     *
+ * Communications of the ACM, Vol 35, Issue 7 (July 1992) pp 56-63.             *
+ * http://portal.acm.org/citation.cfm?id=129906                                 *
+ *                                                                              *
+ * Computer graphics and geometric modeling: implementation and algorithms      *
+ * By Max K. Agoston                                                            *
+ * Springer; 1 edition (January 4, 2005)                                        *
+ * http://books.google.com/books?q=vatti+clipping+agoston                       *
+ *                                                                              *
+ * See also:                                                                    *
+ * "Polygon Offsetting by Computing Winding Numbers"                            *
+ * Paper no. DETC2005-85513 pp. 565-575                                         *
+ * ASME 2005 International Design Engineering Technical Conferences             *
+ * and Computers and Information in Engineering Conference (IDETC/CIE2005)      *
+ * September 24-28, 2005 , Long Beach, California, USA                          *
+ * http://www.me.berkeley.edu/~mcmains/pubs/DAC05OffsetPolygon.pdf              *
+ *                                                                              *
+ *******************************************************************************/
 /*******************************************************************************
-*                                                                              *
-* Basic JavaScript BN library - subset useful for RSA encryption.              *
-* http://www-cs-students.stanford.edu/~tjw/jsbn/                               *
-* Copyright (c) 2005  Tom Wu                                                   *
-* All Rights Reserved.                                                         *
-* See "LICENSE" for details:                                                   *
-* http://www-cs-students.stanford.edu/~tjw/jsbn/LICENSE                        *
-*                                                                              *
-*******************************************************************************/
+ *                                                                              *
+ * Author    :  Timo                                                            *
+ * Version   :  6.1.3.1                                                         *
+ * Date      :  21 January 2014                                                 *
+ *                                                                              *
+ * This is a translation of the C# Clipper library to Javascript.               *
+ * Int128 struct of C# is implemented using JSBN of Tom Wu.                     *
+ * Because Javascript lacks support for 64-bit integers, the space              *
+ * is a little more restricted than in C# version.                              *
+ *                                                                              *
+ * C# version has support for coordinate space:                                 *
+ * +-4611686018427387903 ( sqrt(2^127 -1)/2 )                                   *
+ * while Javascript version has support for space:                              *
+ * +-4503599627370495 ( sqrt(2^106 -1)/2 )                                      *
+ *                                                                              *
+ * Tom Wu's JSBN proved to be the fastest big integer library:                  *
+ * http://jsperf.com/big-integer-library-test                                   *
+ *                                                                              *
+ * This class can be made simpler when (if ever) 64-bit integer support comes.  *
+ *                                                                              *
+ *******************************************************************************/
+/*******************************************************************************
+ *                                                                              *
+ * Basic JavaScript BN library - subset useful for RSA encryption.              *
+ * http://www-cs-students.stanford.edu/~tjw/jsbn/                               *
+ * Copyright (c) 2005  Tom Wu                                                   *
+ * All Rights Reserved.                                                         *
+ * See "LICENSE" for details:                                                   *
+ * http://www-cs-students.stanford.edu/~tjw/jsbn/LICENSE                        *
+ *                                                                              *
+ *******************************************************************************/
 (function ()
 {
-  // "use strict";
-  // Browser test to speedup performance critical functions
-  var nav = navigator.userAgent.toString().toLowerCase();
-  var browser = {};
-  if ( nav.indexOf("chrome") != -1 && nav.indexOf("chromium") == -1 ) browser.chrome = 1; else browser.chrome = 0;
-  if ( nav.indexOf("chromium") != -1 ) browser.chromium = 1; else browser.chromium = 0;
-  if ( nav.indexOf("safari") != -1 && nav.indexOf("chrome") == -1 && nav.indexOf("chromium") == -1 ) browser.safari = 1; else browser.safari = 0;
-  if ( nav.indexOf("firefox") != -1 ) browser.firefox = 1; else browser.firefox = 0;
-  if ( nav.indexOf("firefox/17") != -1 ) browser.firefox17 = 1; else browser.firefox17 = 0;   
-  if ( nav.indexOf("firefox/15") != -1 ) browser.firefox15 = 1; else browser.firefox15 = 0;
-  if ( nav.indexOf("firefox/3") != -1 ) browser.firefox3 = 1; else browser.firefox3 = 0;
-  if ( nav.indexOf("opera") != -1 ) browser.opera = 1; else browser.opera = 0;
-  if ( nav.indexOf("msie 10") != -1 ) browser.msie10 = 1; else browser.msie10 = 0;
-  if ( nav.indexOf("msie 9") != -1 ) browser.msie9 = 1; else browser.msie9 = 0;
-  if ( nav.indexOf("msie 8") != -1 ) browser.msie8 = 1; else browser.msie8 = 0;
-  if ( nav.indexOf("msie 7") != -1 ) browser.msie7 = 1; else browser.msie7 = 0;
-  if ( nav.indexOf("msie ") != -1 ) browser.msie = 1; else browser.msie = 0;
-
-  // patch, treat ejecta as safari
-  if ( nav.indexOf("ejecta") != -1 ) browser.safari = 1; else browser.safari = 0;
+  "use strict";
+  //use_int32: When enabled 32bit ints are used instead of 64bit ints. This
+  //improve performance but coordinate values are limited to the range +/- 46340
+  var use_int32 = false;
+  //use_xyz: adds a Z member to IntPoint. Adds a minor cost to performance.
+  var use_xyz = false;
+  //UseLines: Enables line clipping. Adds a very minor cost to performance.
+  var use_lines = true;
+  //use_deprecated: Enables support for the obsolete OffsetPaths() function
+  //which has been replace with the ClipperOffset class.
+  var use_deprecated = false;
 
   var ClipperLib = {};
+  var isNode = false;
+  if (typeof module !== 'undefined' && module.exports)
+  {
+    module.exports = ClipperLib;
+    isNode = true;
+  }
+  else
+  {
+    if (typeof (document) !== "undefined") window.ClipperLib = ClipperLib;
+    else self['ClipperLib'] = ClipperLib;
+  }
+  var navigator_appName;
+  if (!isNode)
+  {
+    var nav = navigator.userAgent.toString().toLowerCase();
+    navigator_appName = navigator.appName;
+  }
+  else
+  {
+    var nav = "chrome"; // Node.js uses Chrome's V8 engine
+    navigator_appName = "Netscape"; // Firefox, Chrome and Safari returns "Netscape", so Node.js should also
+  }
+  // Browser test to speedup performance critical functions
+  var browser = {};
+  if (nav.indexOf("chrome") != -1 && nav.indexOf("chromium") == -1) browser.chrome = 1;
+  else browser.chrome = 0;
+  if (nav.indexOf("chromium") != -1) browser.chromium = 1;
+  else browser.chromium = 0;
+  if (nav.indexOf("safari") != -1 && nav.indexOf("chrome") == -1 && nav.indexOf("chromium") == -1) browser.safari = 1;
+  else browser.safari = 0;
+  if (nav.indexOf("firefox") != -1) browser.firefox = 1;
+  else browser.firefox = 0;
+  if (nav.indexOf("firefox/17") != -1) browser.firefox17 = 1;
+  else browser.firefox17 = 0;
+  if (nav.indexOf("firefox/15") != -1) browser.firefox15 = 1;
+  else browser.firefox15 = 0;
+  if (nav.indexOf("firefox/3") != -1) browser.firefox3 = 1;
+  else browser.firefox3 = 0;
+  if (nav.indexOf("opera") != -1) browser.opera = 1;
+  else browser.opera = 0;
+  if (nav.indexOf("msie 10") != -1) browser.msie10 = 1;
+  else browser.msie10 = 0;
+  if (nav.indexOf("msie 9") != -1) browser.msie9 = 1;
+  else browser.msie9 = 0;
+  if (nav.indexOf("msie 8") != -1) browser.msie8 = 1;
+  else browser.msie8 = 0;
+  if (nav.indexOf("msie 7") != -1) browser.msie7 = 1;
+  else browser.msie7 = 0;
+  if (nav.indexOf("msie ") != -1) browser.msie = 1;
+  else browser.msie = 0;
+  // patch, treat ejecta as safari
+  if ( nav.indexOf("ejecta") != -1 ) browser.safari = 1; else browser.safari = 0;
   ClipperLib.biginteger_used = null;
-  
+  // Copyright (c) 2005  Tom Wu
+  // All Rights Reserved.
+  // See "LICENSE" for details.
+  // Basic JavaScript BN library - subset useful for RSA encryption.
   // Bits per digit
   var dbits;
   // JavaScript engine analysis
   var canary = 0xdeadbeefcafe;
   var j_lm = ((canary & 0xffffff) == 0xefcafe);
   // (public) Constructor
-  function Int128(a, b, c)
+  function BigInteger(a, b, c)
   {
     // This test variable can be removed,
     // but at least for performance tests it is useful piece of knowledge
-    // This is the only ClipperLib related variable in Int128 library
+    // This is the only ClipperLib related variable in BigInteger library
     ClipperLib.biginteger_used = 1;
-    if (a != null) if ("number" == typeof a)
-    {
-    	this.fromString(Math.floor(a)
-        .toString(), 10); //this.fromNumber(a,b,c);
-    }
+    if (a != null)
+      if ("number" == typeof a && "undefined" == typeof (b)) this.fromInt(a); // faster conversion
+      else if ("number" == typeof a) this.fromNumber(a, b, c);
     else if (b == null && "string" != typeof a) this.fromString(a, 256);
-    else
-    {
-      if (a.indexOf(".") != -1) a = a.substring(0, a.indexOf("."));
-      this.fromString(a, b);
-    }
+    else this.fromString(a, b);
   }
-  // return new, unset Int128
+  // return new, unset BigInteger
   function nbi()
   {
-    return new Int128(null);
+    return new BigInteger(null);
   }
   // am: Compute w_j += (x*this_i), propagate carries,
   // c is initial carry, returns final carry.
@@ -3005,31 +3270,31 @@ module.exports = Triangle;
     }
     return c;
   }
-  if (j_lm && (navigator.appName == "Microsoft Internet Explorer"))
+  if (j_lm && (navigator_appName == "Microsoft Internet Explorer"))
   {
-    Int128.prototype.am = am2;
+    BigInteger.prototype.am = am2;
     dbits = 30;
   }
-  else if (j_lm && (navigator.appName != "Netscape"))
+  else if (j_lm && (navigator_appName != "Netscape"))
   {
-    Int128.prototype.am = am1;
+    BigInteger.prototype.am = am1;
     dbits = 26;
   }
   else
   { // Mozilla/Netscape seems to prefer am3
-    Int128.prototype.am = am3;
+    BigInteger.prototype.am = am3;
     dbits = 28;
   }
-  Int128.prototype.DB = dbits;
-  Int128.prototype.DM = ((1 << dbits) - 1);
-  Int128.prototype.DV = (1 << dbits);
+  BigInteger.prototype.DB = dbits;
+  BigInteger.prototype.DM = ((1 << dbits) - 1);
+  BigInteger.prototype.DV = (1 << dbits);
   var BI_FP = 52;
-  Int128.prototype.FV = Math.pow(2, BI_FP);
-  Int128.prototype.F1 = BI_FP - dbits;
-  Int128.prototype.F2 = 2 * dbits - BI_FP;
+  BigInteger.prototype.FV = Math.pow(2, BI_FP);
+  BigInteger.prototype.F1 = BI_FP - dbits;
+  BigInteger.prototype.F2 = 2 * dbits - BI_FP;
   // Digit conversions
   var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
-  var BI_RC = [];
+  var BI_RC = new Array();
   var rr, vv;
   rr = "0".charCodeAt(0);
   for (vv = 0; vv <= 9; ++vv) BI_RC[rr++] = vv;
@@ -3100,13 +3365,15 @@ module.exports = Triangle;
         continue;
       }
       mi = false;
-      if (sh == 0) this[this.t++] = x;
+      if (sh == 0)
+        this[this.t++] = x;
       else if (sh + k > this.DB)
       {
         this[this.t - 1] |= (x & ((1 << (this.DB - sh)) - 1)) << sh;
         this[this.t++] = (x >> (this.DB - sh));
       }
-      else this[this.t - 1] |= x << sh;
+      else
+        this[this.t - 1] |= x << sh;
       sh += k;
       if (sh >= this.DB) sh -= this.DB;
     }
@@ -3116,7 +3383,7 @@ module.exports = Triangle;
       if (sh > 0) this[this.t - 1] |= ((1 << (this.DB - sh)) - 1) << sh;
     }
     this.clamp();
-    if (mi) Int128.ZERO.subTo(this, this);
+    if (mi) BigInteger.ZERO.subTo(this, this);
   }
   // (protected) clamp off excess high words
   function bnpClamp()
@@ -3127,8 +3394,7 @@ module.exports = Triangle;
   // (public) return string representation in given radix
   function bnToString(b)
   {
-    if (this.s < 0) return "-" + this.negate()
-      .toString(b);
+    if (this.s < 0) return "-" + this.negate().toString(b);
     var k;
     if (b == 16) k = 4;
     else if (b == 8) k = 3;
@@ -3174,7 +3440,7 @@ module.exports = Triangle;
   function bnNegate()
   {
     var r = nbi();
-    Int128.ZERO.subTo(this, r);
+    BigInteger.ZERO.subTo(this, r);
     return r;
   }
   // (public) |this|
@@ -3190,7 +3456,8 @@ module.exports = Triangle;
     var i = this.t;
     r = i - a.t;
     if (r != 0) return (this.s < 0) ? -r : r;
-    while (--i >= 0) if ((r = this[i] - a[i]) != 0) return r;
+    while (--i >= 0)
+      if ((r = this[i] - a[i]) != 0) return r;
     return 0;
   }
   // returns bit length of the integer x
@@ -3342,7 +3609,7 @@ module.exports = Triangle;
     for (i = 0; i < y.t; ++i) r[i + x.t] = x.am(0, y[i], r, i, 0, x.t);
     r.s = 0;
     r.clamp();
-    if (this.s != a.s) Int128.ZERO.subTo(r, r);
+    if (this.s != a.s) BigInteger.ZERO.subTo(r, r);
   }
   // (protected) r = this^2, r != this (HAC 14.16)
   function bnpSquareTo(r)
@@ -3407,7 +3674,7 @@ module.exports = Triangle;
       r[r.t++] = 1;
       r.subTo(t, r);
     }
-    Int128.ONE.dlShiftTo(ys, t);
+    BigInteger.ONE.dlShiftTo(ys, t);
     t.subTo(y, y); // "negative" y so we can replace sub with am later
     while (y.t < ys) y[y.t++] = 0;
     while (--j >= 0)
@@ -3424,20 +3691,19 @@ module.exports = Triangle;
     if (q != null)
     {
       r.drShiftTo(ys, q);
-      if (ts != ms) Int128.ZERO.subTo(q, q);
+      if (ts != ms) BigInteger.ZERO.subTo(q, q);
     }
     r.t = ys;
     r.clamp();
     if (nsh > 0) r.rShiftTo(nsh, r); // Denormalize remainder
-    if (ts < 0) Int128.ZERO.subTo(r, r);
+    if (ts < 0) BigInteger.ZERO.subTo(r, r);
   }
   // (public) this mod a
   function bnMod(a)
   {
     var r = nbi();
-    this.abs()
-      .divRemTo(a, null, r);
-    if (this.s < 0 && r.compareTo(Int128.ZERO) > 0) a.subTo(r, r);
+    this.abs().divRemTo(a, null, r);
+    if (this.s < 0 && r.compareTo(BigInteger.ZERO) > 0) a.subTo(r, r);
     return r;
   }
   // Modular reduction using "classic" algorithm
@@ -3517,10 +3783,9 @@ module.exports = Triangle;
   function montConvert(x)
   {
     var r = nbi();
-    x.abs()
-      .dlShiftTo(this.m.t, r);
+    x.abs().dlShiftTo(this.m.t, r);
     r.divRemTo(this.m, null, r);
-    if (x.s < 0 && r.compareTo(Int128.ZERO) > 0) this.m.subTo(r, r);
+    if (x.s < 0 && r.compareTo(BigInteger.ZERO) > 0) this.m.subTo(r, r);
     return r;
   }
   // x/R mod m
@@ -3535,7 +3800,7 @@ module.exports = Triangle;
   function montReduce(x)
   {
     while (x.t <= this.mt2) // pad x so am has enough room later
-    x[x.t++] = 0;
+      x[x.t++] = 0;
     for (var i = 0; i < this.m.t; ++i)
     {
       // faster way of calculating u0 = x[i]*mp mod DV
@@ -3580,7 +3845,7 @@ module.exports = Triangle;
   // (protected) this^e, e < 2^32, doing sqr and mul with "r" (HAC 14.79)
   function bnpExp(e, z)
   {
-    if (e > 0xffffffff || e < 1) return Int128.ONE;
+    if (e > 0xffffffff || e < 1) return BigInteger.ONE;
     var r = nbi(),
       r2 = nbi(),
       g = z.convert(this),
@@ -3608,37 +3873,37 @@ module.exports = Triangle;
     return this.exp(e, z);
   }
   // protected
-  Int128.prototype.copyTo = bnpCopyTo;
-  Int128.prototype.fromInt = bnpFromInt;
-  Int128.prototype.fromString = bnpFromString;
-  Int128.prototype.clamp = bnpClamp;
-  Int128.prototype.dlShiftTo = bnpDLShiftTo;
-  Int128.prototype.drShiftTo = bnpDRShiftTo;
-  Int128.prototype.lShiftTo = bnpLShiftTo;
-  Int128.prototype.rShiftTo = bnpRShiftTo;
-  Int128.prototype.subTo = bnpSubTo;
-  Int128.prototype.multiplyTo = bnpMultiplyTo;
-  Int128.prototype.squareTo = bnpSquareTo;
-  Int128.prototype.divRemTo = bnpDivRemTo;
-  Int128.prototype.invDigit = bnpInvDigit;
-  Int128.prototype.isEven = bnpIsEven;
-  Int128.prototype.exp = bnpExp;
+  BigInteger.prototype.copyTo = bnpCopyTo;
+  BigInteger.prototype.fromInt = bnpFromInt;
+  BigInteger.prototype.fromString = bnpFromString;
+  BigInteger.prototype.clamp = bnpClamp;
+  BigInteger.prototype.dlShiftTo = bnpDLShiftTo;
+  BigInteger.prototype.drShiftTo = bnpDRShiftTo;
+  BigInteger.prototype.lShiftTo = bnpLShiftTo;
+  BigInteger.prototype.rShiftTo = bnpRShiftTo;
+  BigInteger.prototype.subTo = bnpSubTo;
+  BigInteger.prototype.multiplyTo = bnpMultiplyTo;
+  BigInteger.prototype.squareTo = bnpSquareTo;
+  BigInteger.prototype.divRemTo = bnpDivRemTo;
+  BigInteger.prototype.invDigit = bnpInvDigit;
+  BigInteger.prototype.isEven = bnpIsEven;
+  BigInteger.prototype.exp = bnpExp;
   // public
-  Int128.prototype.toString = bnToString;
-  Int128.prototype.negate = bnNegate;
-  Int128.prototype.abs = bnAbs;
-  Int128.prototype.compareTo = bnCompareTo;
-  Int128.prototype.bitLength = bnBitLength;
-  Int128.prototype.mod = bnMod;
-  Int128.prototype.modPowInt = bnModPowInt;
+  BigInteger.prototype.toString = bnToString;
+  BigInteger.prototype.negate = bnNegate;
+  BigInteger.prototype.abs = bnAbs;
+  BigInteger.prototype.compareTo = bnCompareTo;
+  BigInteger.prototype.bitLength = bnBitLength;
+  BigInteger.prototype.mod = bnMod;
+  BigInteger.prototype.modPowInt = bnModPowInt;
   // "constants"
-  Int128.ZERO = nbv(0);
-  Int128.ONE = nbv(1);
+  BigInteger.ZERO = nbv(0);
+  BigInteger.ONE = nbv(1);
   // Copyright (c) 2005-2009  Tom Wu
   // All Rights Reserved.
   // See "LICENSE" for details.
   // Extended JavaScript BN functions, required for RSA private ops.
-  // Version 1.1: new Int128("0", 10) returns "proper" zero
+  // Version 1.1: new BigInteger("0", 10) returns "proper" zero
   // Version 1.2: square() API, isProbablePrime fix
   // (public)
   function bnClone()
@@ -3696,13 +3961,10 @@ module.exports = Triangle;
     this.divRemTo(d, y, z);
     while (y.signum() > 0)
     {
-      r = (a + z.intValue())
-        .toString(b)
-        .substr(1) + r;
+      r = (a + z.intValue()).toString(b).substr(1) + r;
       y.divRemTo(d, y, z);
     }
-    return z.intValue()
-      .toString(b) + r;
+    return z.intValue().toString(b) + r;
   }
   // (protected) convert from radix string
   function bnpFromRadix(s, b)
@@ -3736,32 +3998,32 @@ module.exports = Triangle;
       this.dMultiply(Math.pow(b, j));
       this.dAddOffset(w, 0);
     }
-    if (mi) Int128.ZERO.subTo(this, this);
+    if (mi) BigInteger.ZERO.subTo(this, this);
   }
   // (protected) alternate constructor
   function bnpFromNumber(a, b, c)
   {
     if ("number" == typeof b)
     {
-      // new Int128(int,int,RNG)
+      // new BigInteger(int,int,RNG)
       if (a < 2) this.fromInt(1);
       else
       {
         this.fromNumber(a, c);
         if (!this.testBit(a - 1)) // force MSB set
-        this.bitwiseTo(Int128.ONE.shiftLeft(a - 1), op_or, this);
+          this.bitwiseTo(BigInteger.ONE.shiftLeft(a - 1), op_or, this);
         if (this.isEven()) this.dAddOffset(1, 0); // force odd
         while (!this.isProbablePrime(b))
         {
           this.dAddOffset(2, 0);
-          if (this.bitLength() > a) this.subTo(Int128.ONE.shiftLeft(a - 1), this);
+          if (this.bitLength() > a) this.subTo(BigInteger.ONE.shiftLeft(a - 1), this);
         }
       }
     }
     else
     {
-      // new Int128(int,RNG)
-      var x = [],
+      // new BigInteger(int,RNG)
+      var x = new Array(),
         t = a & 7;
       x.length = (a >> 3) + 1;
       b.nextBytes(x);
@@ -3774,13 +4036,14 @@ module.exports = Triangle;
   function bnToByteArray()
   {
     var i = this.t,
-      r = [];
+      r = new Array();
     r[0] = this.s;
     var p = this.DB - (i * this.DB) % 8,
       d, k = 0;
     if (i-- > 0)
     {
-      if (p < this.DB && (d = this[i] >> p) != (this.s & this.DM) >> p) r[k++] = d | (this.s << (this.DB - p));
+      if (p < this.DB && (d = this[i] >> p) != (this.s & this.DM) >> p)
+        r[k++] = d | (this.s << (this.DB - p));
       while (i >= 0)
       {
         if (p < 8)
@@ -3944,7 +4207,7 @@ module.exports = Triangle;
   function bnGetLowestSetBit()
   {
     for (var i = 0; i < this.t; ++i)
-    if (this[i] != 0) return i * this.DB + lbit(this[i]);
+      if (this[i] != 0) return i * this.DB + lbit(this[i]);
     if (this.s < 0) return this.t * this.DB;
     return -1;
   }
@@ -3977,7 +4240,7 @@ module.exports = Triangle;
   // (protected) this op (1<<n)
   function bnpChangeBit(n, op)
   {
-    var r = Int128.ONE.shiftLeft(n);
+    var r = BigInteger.ONE.shiftLeft(n);
     this.bitwiseTo(r, op, r);
     return r;
   }
@@ -4155,7 +4418,7 @@ module.exports = Triangle;
     r.s = 0; // assumes a,this >= 0
     while (--i >= 0) r[i] = 0;
     for (i = Math.max(n - this.t, 0); i < a.t; ++i)
-    r[this.t + i - n] = this.am(n - i, a[i], r, 0, 0, this.t + i - n);
+      r[this.t + i - n] = this.am(n - i, a[i], r, 0, 0, this.t + i - n);
     r.clamp();
     r.drShiftTo(1, r);
   }
@@ -4165,7 +4428,7 @@ module.exports = Triangle;
     // setup Barrett
     this.r2 = nbi();
     this.q3 = nbi();
-    Int128.ONE.dlShiftTo(2 * m.t, this.r2);
+    BigInteger.ONE.dlShiftTo(2 * m.t, this.r2);
     this.mu = this.r2.divide(m);
     this.m = m;
   }
@@ -4231,11 +4494,14 @@ module.exports = Triangle;
     else if (i < 144) k = 4;
     else if (i < 768) k = 5;
     else k = 6;
-    if (i < 8) z = new Classic(m);
-    else if (m.isEven()) z = new Barrett(m);
-    else z = new Montgomery(m);
+    if (i < 8)
+      z = new Classic(m);
+    else if (m.isEven())
+      z = new Barrett(m);
+    else
+      z = new Montgomery(m);
     // precomputation
-    var g = [],
+    var g = new Array(),
       n = 3,
       k1 = k - 1,
       km = (1 << k) - 1;
@@ -4356,15 +4622,17 @@ module.exports = Triangle;
     if (n <= 0) return 0;
     var d = this.DV % n,
       r = (this.s < 0) ? n - 1 : 0;
-    if (this.t > 0) if (d == 0) r = this[0] % n;
-    else for (var i = this.t - 1; i >= 0; --i) r = (d * r + this[i]) % n;
+    if (this.t > 0)
+      if (d == 0) r = this[0] % n;
+      else
+        for (var i = this.t - 1; i >= 0; --i) r = (d * r + this[i]) % n;
     return r;
   }
   // (public) 1/this % m (HAC 14.61)
   function bnModInverse(m)
   {
     var ac = m.isEven();
-    if ((this.isEven() && ac) || m.signum() == 0) return Int128.ZERO;
+    if ((this.isEven() && ac) || m.signum() == 0) return BigInteger.ZERO;
     var u = m.clone(),
       v = this.clone();
     var a = nbv(1),
@@ -4416,7 +4684,7 @@ module.exports = Triangle;
         d.subTo(b, d);
       }
     }
-    if (v.compareTo(Int128.ONE) != 0) return Int128.ZERO;
+    if (v.compareTo(BigInteger.ONE) != 0) return BigInteger.ZERO;
     if (d.compareTo(m) >= 0) return d.subtract(m);
     if (d.signum() < 0) d.addTo(m, d);
     else return d;
@@ -4432,7 +4700,7 @@ module.exports = Triangle;
     if (x.t == 1 && x[0] <= lowprimes[lowprimes.length - 1])
     {
       for (i = 0; i < lowprimes.length; ++i)
-      if (x[0] == lowprimes[i]) return true;
+        if (x[0] == lowprimes[i]) return true;
       return false;
     }
     if (x.isEven()) return false;
@@ -4443,14 +4711,15 @@ module.exports = Triangle;
         j = i + 1;
       while (j < lowprimes.length && m < lplim) m *= lowprimes[j++];
       m = x.modInt(m);
-      while (i < j) if (m % lowprimes[i++] == 0) return false;
+      while (i < j)
+        if (m % lowprimes[i++] == 0) return false;
     }
     return x.millerRabin(t);
   }
   // (protected) true if probably prime (HAC 4.24, Miller-Rabin)
   function bnpMillerRabin(t)
   {
-    var n1 = this.subtract(Int128.ONE);
+    var n1 = this.subtract(BigInteger.ONE);
     var k = n1.getLowestSetBit();
     if (k <= 0) return false;
     var r = n1.shiftRight(k);
@@ -4462,13 +4731,13 @@ module.exports = Triangle;
       //Pick bases at random, instead of starting at 2
       a.fromInt(lowprimes[Math.floor(Math.random() * lowprimes.length)]);
       var y = a.modPow(r, this);
-      if (y.compareTo(Int128.ONE) != 0 && y.compareTo(n1) != 0)
+      if (y.compareTo(BigInteger.ONE) != 0 && y.compareTo(n1) != 0)
       {
         var j = 1;
         while (j++ < k && y.compareTo(n1) != 0)
         {
           y = y.modPowInt(2, this);
-          if (y.compareTo(Int128.ONE) == 0) return false;
+          if (y.compareTo(BigInteger.ONE) == 0) return false;
         }
         if (y.compareTo(n1) != 0) return false;
       }
@@ -4476,65 +4745,281 @@ module.exports = Triangle;
     return true;
   }
   // protected
-  Int128.prototype.chunkSize = bnpChunkSize;
-  Int128.prototype.toRadix = bnpToRadix;
-  Int128.prototype.fromRadix = bnpFromRadix;
-  Int128.prototype.fromNumber = bnpFromNumber;
-  Int128.prototype.bitwiseTo = bnpBitwiseTo;
-  Int128.prototype.changeBit = bnpChangeBit;
-  Int128.prototype.addTo = bnpAddTo;
-  Int128.prototype.dMultiply = bnpDMultiply;
-  Int128.prototype.dAddOffset = bnpDAddOffset;
-  Int128.prototype.multiplyLowerTo = bnpMultiplyLowerTo;
-  Int128.prototype.multiplyUpperTo = bnpMultiplyUpperTo;
-  Int128.prototype.modInt = bnpModInt;
-  Int128.prototype.millerRabin = bnpMillerRabin;
+  BigInteger.prototype.chunkSize = bnpChunkSize;
+  BigInteger.prototype.toRadix = bnpToRadix;
+  BigInteger.prototype.fromRadix = bnpFromRadix;
+  BigInteger.prototype.fromNumber = bnpFromNumber;
+  BigInteger.prototype.bitwiseTo = bnpBitwiseTo;
+  BigInteger.prototype.changeBit = bnpChangeBit;
+  BigInteger.prototype.addTo = bnpAddTo;
+  BigInteger.prototype.dMultiply = bnpDMultiply;
+  BigInteger.prototype.dAddOffset = bnpDAddOffset;
+  BigInteger.prototype.multiplyLowerTo = bnpMultiplyLowerTo;
+  BigInteger.prototype.multiplyUpperTo = bnpMultiplyUpperTo;
+  BigInteger.prototype.modInt = bnpModInt;
+  BigInteger.prototype.millerRabin = bnpMillerRabin;
   // public
-  Int128.prototype.clone = bnClone;
-  Int128.prototype.intValue = bnIntValue;
-  Int128.prototype.byteValue = bnByteValue;
-  Int128.prototype.shortValue = bnShortValue;
-  Int128.prototype.signum = bnSigNum;
-  Int128.prototype.toByteArray = bnToByteArray;
-  Int128.prototype.equals = bnEquals;
-  Int128.prototype.min = bnMin;
-  Int128.prototype.max = bnMax;
-  Int128.prototype.and = bnAnd;
-  Int128.prototype.or = bnOr;
-  Int128.prototype.xor = bnXor;
-  Int128.prototype.andNot = bnAndNot;
-  Int128.prototype.not = bnNot;
-  Int128.prototype.shiftLeft = bnShiftLeft;
-  Int128.prototype.shiftRight = bnShiftRight;
-  Int128.prototype.getLowestSetBit = bnGetLowestSetBit;
-  Int128.prototype.bitCount = bnBitCount;
-  Int128.prototype.testBit = bnTestBit;
-  Int128.prototype.setBit = bnSetBit;
-  Int128.prototype.clearBit = bnClearBit;
-  Int128.prototype.flipBit = bnFlipBit;
-  Int128.prototype.add = bnAdd;
-  Int128.prototype.subtract = bnSubtract;
-  Int128.prototype.multiply = bnMultiply;
-  Int128.prototype.divide = bnDivide;
-  Int128.prototype.remainder = bnRemainder;
-  Int128.prototype.divideAndRemainder = bnDivideAndRemainder;
-  Int128.prototype.modPow = bnModPow;
-  Int128.prototype.modInverse = bnModInverse;
-  Int128.prototype.pow = bnPow;
-  Int128.prototype.gcd = bnGCD;
-  Int128.prototype.isProbablePrime = bnIsProbablePrime;
+  BigInteger.prototype.clone = bnClone;
+  BigInteger.prototype.intValue = bnIntValue;
+  BigInteger.prototype.byteValue = bnByteValue;
+  BigInteger.prototype.shortValue = bnShortValue;
+  BigInteger.prototype.signum = bnSigNum;
+  BigInteger.prototype.toByteArray = bnToByteArray;
+  BigInteger.prototype.equals = bnEquals;
+  BigInteger.prototype.min = bnMin;
+  BigInteger.prototype.max = bnMax;
+  BigInteger.prototype.and = bnAnd;
+  BigInteger.prototype.or = bnOr;
+  BigInteger.prototype.xor = bnXor;
+  BigInteger.prototype.andNot = bnAndNot;
+  BigInteger.prototype.not = bnNot;
+  BigInteger.prototype.shiftLeft = bnShiftLeft;
+  BigInteger.prototype.shiftRight = bnShiftRight;
+  BigInteger.prototype.getLowestSetBit = bnGetLowestSetBit;
+  BigInteger.prototype.bitCount = bnBitCount;
+  BigInteger.prototype.testBit = bnTestBit;
+  BigInteger.prototype.setBit = bnSetBit;
+  BigInteger.prototype.clearBit = bnClearBit;
+  BigInteger.prototype.flipBit = bnFlipBit;
+  BigInteger.prototype.add = bnAdd;
+  BigInteger.prototype.subtract = bnSubtract;
+  BigInteger.prototype.multiply = bnMultiply;
+  BigInteger.prototype.divide = bnDivide;
+  BigInteger.prototype.remainder = bnRemainder;
+  BigInteger.prototype.divideAndRemainder = bnDivideAndRemainder;
+  BigInteger.prototype.modPow = bnModPow;
+  BigInteger.prototype.modInverse = bnModInverse;
+  BigInteger.prototype.pow = bnPow;
+  BigInteger.prototype.gcd = bnGCD;
+  BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
   // JSBN-specific extension
-  Int128.prototype.square = bnSquare;
-  
+  BigInteger.prototype.square = bnSquare;
+  var Int128 = BigInteger;
+  // BigInteger interfaces not implemented in jsbn:
+  // BigInteger(int signum, byte[] magnitude)
+  // double doubleValue()
+  // float floatValue()
+  // int hashCode()
+  // long longValue()
+  // static BigInteger valueOf(long val)
+  // Helper functions to make BigInteger functions callable with two parameters
+  // as in original C# Clipper
+  Int128.prototype.IsNegative = function ()
+  {
+    if (this.compareTo(Int128.ZERO) == -1) return true;
+    else return false;
+  };
+  Int128.op_Equality = function (val1, val2)
+  {
+    if (val1.compareTo(val2) == 0) return true;
+    else return false;
+  };
+  Int128.op_Inequality = function (val1, val2)
+  {
+    if (val1.compareTo(val2) != 0) return true;
+    else return false;
+  };
+  Int128.op_GreaterThan = function (val1, val2)
+  {
+    if (val1.compareTo(val2) > 0) return true;
+    else return false;
+  };
+  Int128.op_LessThan = function (val1, val2)
+  {
+    if (val1.compareTo(val2) < 0) return true;
+    else return false;
+  };
+  Int128.op_Addition = function (lhs, rhs)
+  {
+    return new Int128(lhs).add(new Int128(rhs));
+  };
+  Int128.op_Subtraction = function (lhs, rhs)
+  {
+    return new Int128(lhs).subtract(new Int128(rhs));
+  };
+  Int128.Int128Mul = function (lhs, rhs)
+  {
+    return new Int128(lhs).multiply(new Int128(rhs));
+  };
+  Int128.op_Division = function (lhs, rhs)
+  {
+    return lhs.divide(rhs);
+  };
+  Int128.prototype.ToDouble = function ()
+  {
+    return parseFloat(this.toString()); // This could be something faster
+  };
   // end of Int128 section
-  
   /*
   // Uncomment the following two lines if you want to use Int128 outside ClipperLib
   if (typeof(document) !== "undefined") window.Int128 = Int128;
   else self.Int128 = Int128;
   */
-  
+  // ---------------------------------------------  
   // Here starts the actual Clipper library:
+  // Helper function to support Inheritance in Javascript
+  if (typeof (Inherit) == 'undefined')
+  {
+    var Inherit = function (ce, ce2)
+    {
+      var p;
+      if (typeof (Object.getOwnPropertyNames) == 'undefined')
+      {
+        for (p in ce2.prototype)
+          if (typeof (ce.prototype[p]) == 'undefined' || ce.prototype[p] == Object.prototype[p]) ce.prototype[p] = ce2.prototype[p];
+        for (p in ce2)
+          if (typeof (ce[p]) == 'undefined') ce[p] = ce2[p];
+        ce.$baseCtor = ce2;
+      }
+      else
+      {
+        var props = Object.getOwnPropertyNames(ce2.prototype);
+        for (var i = 0; i < props.length; i++)
+          if (typeof (Object.getOwnPropertyDescriptor(ce.prototype, props[i])) == 'undefined') Object.defineProperty(ce.prototype, props[i], Object.getOwnPropertyDescriptor(ce2.prototype, props[i]));
+        for (p in ce2)
+          if (typeof (ce[p]) == 'undefined') ce[p] = ce2[p];
+        ce.$baseCtor = ce2;
+      }
+    };
+  }
+  ClipperLib.Path = function ()
+  {
+    return [];
+  };
+  ClipperLib.Paths = function ()
+  {
+    return []; // Was previously [[]], but caused problems when pushed
+  };
+  // Preserves the calling way of original C# Clipper
+  // Is essential due to compatibility, because DoublePoint is public class in original C# version
+  ClipperLib.DoublePoint = function ()
+  {
+    var a = arguments;
+    this.x = 0;
+    this.y = 0;
+    // public DoublePoint(DoublePoint dp)
+    // public DoublePoint(IntPoint ip)
+    if (a.length == 1)
+    {
+      this.x = a[0].x; 
+      this.y = a[0].y; 
+    }
+    else if (a.length == 2)
+    {
+      this.x = a[0];
+      this.y = a[1];
+    }
+  }; // This is internal faster function when called without arguments
+  ClipperLib.DoublePoint0 = function ()
+  {
+    this.x = 0;
+    this.y = 0;
+  };
+  // This is internal faster function when called with 1 argument (dp or ip)
+  ClipperLib.DoublePoint1 = function (dp)
+  {
+    this.x = dp.x; 
+    this.y = dp.y; 
+  };
+  // This is internal faster function when called with 2 arguments (x and y)
+  ClipperLib.DoublePoint2 = function (x, y)
+  {
+    this.x = x;
+    this.y = y;
+  };
+  // PolyTree & PolyNode start
+  // -------------------------------
+  ClipperLib.PolyNode = function ()
+  {
+    this.m_Parent = null;
+    this.m_polygon = new ClipperLib.Path();
+    this.m_Index = 0;
+    this.m_jointype = 0;
+    this.m_endtype = 0;
+    this.m_Childs = [];
+    this.IsOpen = false;
+  };
+  ClipperLib.PolyNode.prototype.IsHoleNode = function ()
+  {
+    var result = true;
+    var node = this.m_Parent;
+    while (node !== null)
+    {
+      result = !result;
+      node = node.m_Parent;
+    }
+    return result;
+  };
+  ClipperLib.PolyNode.prototype.ChildCount = function ()
+  {
+    return this.m_Childs.length;
+  };
+  ClipperLib.PolyNode.prototype.Contour = function ()
+  {
+    return this.m_polygon;
+  };
+  ClipperLib.PolyNode.prototype.AddChild = function (Child)
+  {
+    var cnt = this.m_Childs.length;
+    this.m_Childs.push(Child);
+    Child.m_Parent = this;
+    Child.m_Index = cnt;
+  };
+  ClipperLib.PolyNode.prototype.GetNext = function ()
+  {
+    if (this.m_Childs.length > 0)
+      return this.m_Childs[0];
+    else
+      return this.GetNextSiblingUp();
+  };
+  ClipperLib.PolyNode.prototype.GetNextSiblingUp = function ()
+  {
+    if (this.m_Parent === null)
+      return null;
+    else if (this.m_Index == this.m_Parent.m_Childs.length - 1)
+      return this.m_Parent.GetNextSiblingUp();
+    else
+      return this.m_Parent.m_Childs[this.m_Index + 1];
+  };
+  ClipperLib.PolyNode.prototype.Childs = function ()
+  {
+    return this.m_Childs;
+  };
+  ClipperLib.PolyNode.prototype.Parent = function ()
+  {
+    return this.m_Parent;
+  };
+  ClipperLib.PolyNode.prototype.IsHole = function ()
+  {
+    return this.IsHoleNode();
+  };
+  // PolyTree : PolyNode
+  ClipperLib.PolyTree = function ()
+  {
+    this.m_AllPolys = [];
+    ClipperLib.PolyNode.call(this);
+  };
+  ClipperLib.PolyTree.prototype.Clear = function ()
+  {
+    for (var i = 0, ilen = this.m_AllPolys.length; i < ilen; i++)
+      this.m_AllPolys[i] = null;
+    this.m_AllPolys.length = 0;
+    this.m_Childs.length = 0;
+  };
+  ClipperLib.PolyTree.prototype.GetFirst = function ()
+  {
+    if (this.m_Childs.length > 0)
+      return this.m_Childs[0];
+    else
+      return null;
+  };
+  ClipperLib.PolyTree.prototype.Total = function ()
+  {
+    return this.m_AllPolys.length;
+  };
+  Inherit(ClipperLib.PolyTree, ClipperLib.PolyNode);
+  // -------------------------------
+  // PolyTree & PolyNode end
   ClipperLib.Math_Abs_Int64 = ClipperLib.Math_Abs_Int32 = ClipperLib.Math_Abs_Double = function (a)
   {
     return Math.abs(a);
@@ -4548,11 +5033,13 @@ module.exports = Triangle;
   cast_32 speedtest: http://jsperf.com/truncate-float-to-integer/2
   -----------------------------------
   */
-  if (browser.msie || browser.opera || browser.safari) ClipperLib.Cast_Int32 = function (a) {
+  if (browser.msie || browser.opera || browser.safari) ClipperLib.Cast_Int32 = function (a)
+  {
     return a | 0;
   };
-  else ClipperLib.Cast_Int32 = function (a) { // eg. browser.chrome || browser.chromium || browser.firefox
-    return ~~a;
+  else ClipperLib.Cast_Int32 = function (a)
+  { // eg. browser.chrome || browser.chromium || browser.firefox
+    return~~ a;
   };
   /*
   --------------------------
@@ -4568,63 +5055,212 @@ module.exports = Triangle;
   Safari: to_floor_or_ceil
   --------------------------
   */
-  if (browser.chrome) ClipperLib.Cast_Int64 = function (a) {
+  if (browser.chrome) ClipperLib.Cast_Int64 = function (a)
+  {
     if (a < -2147483648 || a > 2147483647)
-    return a < 0 ? Math.ceil(a): Math.floor(a);
-    else return ~~a;
+      return a < 0 ? Math.ceil(a) : Math.floor(a);
+    else return~~ a;
   };
-  else if (browser.firefox && typeof(Number.toInteger) == "function") ClipperLib.Cast_Int64 = function(a) {
+  else if (browser.firefox && typeof (Number.toInteger) == "function") ClipperLib.Cast_Int64 = function (a)
+  {
     return Number.toInteger(a);
   };
-  else if (browser.msie7 || browser.msie8) ClipperLib.Cast_Int64 = function(a) {
+  else if (browser.msie7 || browser.msie8) ClipperLib.Cast_Int64 = function (a)
+  {
     return parseInt(a, 10);
   };
-  else if (browser.msie) ClipperLib.Cast_Int64 = function (a) {
+  else if (browser.msie) ClipperLib.Cast_Int64 = function (a)
+  {
     if (a < -2147483648 || a > 2147483647)
-    return a < 0 ? Math.ceil(a): Math.floor(a);
+      return a < 0 ? Math.ceil(a) : Math.floor(a);
     return a | 0;
   };
   // eg. browser.chromium || browser.firefox || browser.opera || browser.safari
-  else ClipperLib.Cast_Int64 = function(a) {
-    return a < 0 ? Math.ceil(a): Math.floor(a);
+  else ClipperLib.Cast_Int64 = function (a)
+  {
+    return a < 0 ? Math.ceil(a) : Math.floor(a);
   };
   ClipperLib.Clear = function (a)
   {
     a.length = 0;
   };
-  ClipperLib.MaxSteps = 64; // How many steps at maximum in arc in BuildArc() function
+  //ClipperLib.MaxSteps = 64; // How many steps at maximum in arc in BuildArc() function
   ClipperLib.PI = 3.141592653589793;
   ClipperLib.PI2 = 2 * 3.141592653589793;
   ClipperLib.IntPoint = function ()
   {
-    var a = arguments;
-    if (a.length == 1)
+    var a = arguments,
+      alen = a.length;
+    this.x = 0;
+    this.y = 0;
+    if (use_xyz)
     {
-      this.x = a[0].x;
-      this.y = a[0].y;
-
+      this.z = 0;
+      if (alen == 3) // public IntPoint(cInt x, cInt y, cInt z = 0)
+      {
+        this.x = a[0];
+        this.y = a[1];
+        this.z = a[2];
+      }
+      else if (alen == 2) // public IntPoint(cInt x, cInt y)
+      {
+        this.x = a[0];
+        this.y = a[1];
+        this.z = 0;
+      }
+      else if (alen == 1)
+      {
+        if (a[0] instanceof ClipperLib.DoublePoint) // public IntPoint(DoublePoint dp)
+        {
+          var dp = a[0];
+          this.x = ClipperLib.Clipper.Round(dp.x);
+          this.y = ClipperLib.Clipper.Round(dp.y);
+          this.z = 0;
+        }
+        else // public IntPoint(IntPoint pt)
+        {
+          var pt = a[0];
+          if (typeof (pt.z) == "undefined") pt.z = 0;
+          this.x = pt.x; 
+          this.y = pt.y; 
+          this.z = pt.z;
+        }
+      }
+      else // public IntPoint()
+      {
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+      }
     }
-    if (a.length == 2)
+    else // if (!use_xyz)
     {
-      this.x = a[0];
-      this.y = a[1];
+      if (alen == 2) // public IntPoint(cInt X, cInt Y)
+      {
+        this.x = a[0];
+        this.y = a[1];
+      }
+      else if (alen == 1)
+      {
+        if (a[0] instanceof ClipperLib.DoublePoint) // public IntPoint(DoublePoint dp)
+        {
+          var dp = a[0];
+          this.x = ClipperLib.Clipper.Round(dp.x);
+          this.y = ClipperLib.Clipper.Round(dp.y);
+        }
+        else // public IntPoint(IntPoint pt)
+        {
+          var pt = a[0];
+          this.x = pt.x; 
+          this.y = pt.y; 
+        }
+      }
+      else // public IntPoint(IntPoint pt)
+      {
+        this.x = 0;
+        this.y = 0;
+      }
     }
   };
-  ClipperLib.IntRect = function ()
+  ClipperLib.IntPoint.op_Equality = function (a, b)
   {
-    var a = arguments;
-    if (a.length == 4) // function (l, t, r, b)
+    //return a == b;
+    return a.x == b.x && a.y == b.y; 
+  };
+  ClipperLib.IntPoint.op_Inequality = function (a, b)
+  {
+    //return a != b;
+    return a.x != b.x || a.y != b.y; 
+  };
+  /*
+  ClipperLib.IntPoint.prototype.Equals = function (obj)
+  {
+    if (obj === null)
+        return false;
+    if (obj instanceof ClipperLib.IntPoint)
     {
-      var l = a[0],
-        t = a[1],
-        r = a[2],
-        b = a[3];
-      this.left = l;
-      this.top = t;
-      this.right = r;
-      this.bottom = b;
+        var a = Cast(obj, ClipperLib.IntPoint);
+        return (this.x == a.x) && (this.y == a.y);
     }
     else
+        return false;
+  };
+*/
+  if (use_xyz)
+  {
+    ClipperLib.IntPoint0 = function ()
+    {
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
+    };
+    ClipperLib.IntPoint1 = function (pt)
+    {
+      this.x = pt.x; 
+      this.y = pt.y; 
+      this.z = pt.z;
+    };
+    ClipperLib.IntPoint1dp = function (dp)
+    {
+      this.x = ClipperLib.Clipper.Round(dp.x);
+      this.y = ClipperLib.Clipper.Round(dp.y);
+      this.z = 0;
+    };
+    ClipperLib.IntPoint2 = function (x, y)
+    {
+      this.x = x;
+      this.y = y;
+      this.z = 0;
+    };
+    ClipperLib.IntPoint3 = function (x, y, z)
+    {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+    };
+  }
+  else // if (!use_xyz)
+  {
+    ClipperLib.IntPoint0 = function ()
+    {
+      this.x = 0;
+      this.y = 0;
+    };
+    ClipperLib.IntPoint1 = function (pt)
+    {
+      this.x = pt.x; 
+      this.y = pt.y; 
+    };
+    ClipperLib.IntPoint1dp = function (dp)
+    {
+      this.x = ClipperLib.Clipper.Round(dp.x);
+      this.y = ClipperLib.Clipper.Round(dp.y);
+    };
+    ClipperLib.IntPoint2 = function (x, y)
+    {
+      this.x = x;
+      this.y = y;
+    };
+  }
+  ClipperLib.IntRect = function ()
+  {
+    var a = arguments,
+      alen = a.length;
+    if (alen == 4) // function (l, t, r, b)
+    {
+      this.left = a[0];
+      this.top = a[1];
+      this.right = a[2];
+      this.bottom = a[3];
+    }
+    else if (alen == 1) // function (ir)
+    {
+      this.left = ir.left;
+      this.top = ir.top;
+      this.right = ir.right;
+      this.bottom = ir.bottom;
+    }
+    else // function ()
     {
       this.left = 0;
       this.top = 0;
@@ -4632,24 +5268,26 @@ module.exports = Triangle;
       this.bottom = 0;
     }
   };
-  ClipperLib.Polygon = function ()
+  ClipperLib.IntRect0 = function ()
   {
-    return [];
+    this.left = 0;
+    this.top = 0;
+    this.right = 0;
+    this.bottom = 0;
   };
-  ClipperLib.Polygons = function ()
+  ClipperLib.IntRect1 = function (ir)
   {
-    return []; // Was previously [[]], but caused problems when pushed
+    this.left = ir.left;
+    this.top = ir.top;
+    this.right = ir.right;
+    this.bottom = ir.bottom;
   };
-  ClipperLib.ExPolygons = function ()
+  ClipperLib.IntRect4 = function (l, t, r, b)
   {
-    var a = [];
-    a.exPolygons = true; // this is needed to make "overloading" possible in Execute
-    return a;
-  }  
-  ClipperLib.ExPolygon = function ()
-  {
-    this.outer = null;
-    this.holes = null;
+    this.left = l;
+    this.top = t;
+    this.right = r;
+    this.bottom = b;
   };
   ClipperLib.ClipType = {
     ctIntersection: 0,
@@ -4672,16 +5310,23 @@ module.exports = Triangle;
     jtRound: 1,
     jtMiter: 2
   };
-  
-  ClipperLib.EdgeSide = {
-    esLeft: 1,
-    esRight: 2
+  ClipperLib.EndType = {
+    etOpenSquare: 0,
+    etOpenRound: 1,
+    etOpenButt: 2,
+    etClosedLine: 3,
+    etClosedPolygon: 4
   };
-  ClipperLib.Protects = {
-    ipNone: 0,
-    ipLeft: 1,
-    ipRight: 2,
-    ipBoth: 3
+  if (use_deprecated)
+    ClipperLib.EndType_ = {
+      etSquare: 0,
+      etRound: 1,
+      etButt: 2,
+      etClosed: 3
+    };
+  ClipperLib.EdgeSide = {
+    esLeft: 0,
+    esRight: 1
   };
   ClipperLib.Direction = {
     dRightToLeft: 0,
@@ -4689,505 +5334,786 @@ module.exports = Triangle;
   };
   ClipperLib.TEdge = function ()
   {
-    this.xbot = 0;
-    this.ybot = 0;
-    this.xcurr = 0;
-    this.ycurr = 0;
-    this.xtop = 0;
-    this.ytop = 0;
-    this.dx = 0;
-    this.deltaX = 0;
-    this.deltaY = 0;
-    this.tmpX = 0;
-    this.polyType = ClipperLib.PolyType.ptSubject;
-    this.side = null; //= ClipperLib.EdgeSide.esNeither;
-    this.windDelta = 0;
-    this.windCnt = 0;
-    this.windCnt2 = 0;
-    this.outIdx = 0;
-    this.next = null;
-    this.prev = null;
-    this.nextInLML = null;
-    this.nextInAEL = null;
-    this.prevInAEL = null;
-    this.nextInSEL = null;
-    this.prevInSEL = null;
+    this.Bot = new ClipperLib.IntPoint();
+    this.Curr = new ClipperLib.IntPoint();
+    this.Top = new ClipperLib.IntPoint();
+    this.Delta = new ClipperLib.IntPoint();
+    this.Dx = 0;
+    this.PolyTyp = ClipperLib.PolyType.ptSubject;
+    this.Side = ClipperLib.EdgeSide.esLeft;
+    this.WindDelta = 0;
+    this.WindCnt = 0;
+    this.WindCnt2 = 0;
+    this.OutIdx = 0;
+    this.Next = null;
+    this.Prev = null;
+    this.NextInLML = null;
+    this.NextInAEL = null;
+    this.PrevInAEL = null;
+    this.NextInSEL = null;
+    this.PrevInSEL = null;
   };
   ClipperLib.IntersectNode = function ()
   {
-    this.edge1 = null;
-    this.edge2 = null;
-    this.pt = null;
-    this.next = null;
+    this.Edge1 = null;
+    this.Edge2 = null;
+    this.Pt = new ClipperLib.IntPoint();
+  };
+  ClipperLib.MyIntersectNodeSort = function () {};
+  ClipperLib.MyIntersectNodeSort.Compare = function (node1, node2)
+  {
+    return (node2.Pt.y - node1.Pt.y);
   };
   ClipperLib.LocalMinima = function ()
   {
     this.y = 0;
-    this.leftBound = null;
-    this.rightBound = null;
-    this.next = null;
+    this.LeftBound = null;
+    this.RightBound = null;
+    this.Next = null;
   };
   ClipperLib.Scanbeam = function ()
   {
     this.y = 0;
-    this.next = null;
+    this.Next = null;
   };
   ClipperLib.OutRec = function ()
   {
-    this.idx = 0;
-    this.isHole = false;
+    this.Idx = 0;
+    this.IsHole = false;
+    this.IsOpen = false;
     this.FirstLeft = null;
-    this.AppendLink = null;
-    this.pts = null;
-    this.bottomPt = null;
+    this.Pts = null;
+    this.BottomPt = null;
+    this.PolyNode = null;
   };
   ClipperLib.OutPt = function ()
   {
-    this.idx = 0;
-    this.pt = null;
-    this.next = null;
-    this.prev = null;
+    this.Idx = 0;
+    this.Pt = new ClipperLib.IntPoint();
+    this.Next = null;
+    this.Prev = null;
   };
-  ClipperLib.JoinRec = function ()
+  ClipperLib.Join = function ()
   {
-    this.pt1a = null;
-    this.pt1b = null;
-    this.poly1Idx = 0;
-    this.pt2a = null;
-    this.pt2b = null;
-    this.poly2Idx = 0;
-  };
-  ClipperLib.HorzJoinRec = function ()
-  {
-    this.edge = null;
-    this.savedIdx = 0;
+    this.OutPt1 = null;
+    this.OutPt2 = null;
+    this.OffPt = new ClipperLib.IntPoint();
   };
   ClipperLib.ClipperBase = function ()
   {
     this.m_MinimaList = null;
     this.m_CurrentLM = null;
-    this.m_edges = [
-      []
-    ]; // 2-dimensional array
+    this.m_edges = new Array();
     this.m_UseFullRange = false;
+    this.m_HasOpenPaths = false;
+    this.PreserveCollinear = false;
+    this.m_MinimaList = null;
+    this.m_CurrentLM = null;
+    this.m_UseFullRange = false;
+    this.m_HasOpenPaths = false;
   };
-  // Ranges are in original C# too high for Javascript (in current state 2012 December):
+  // Ranges are in original C# too high for Javascript (in current state 2013 september):
   // protected const double horizontal = -3.4E+38;
-  // internal const Int64 loRange = 0x3FFFFFFF; // = 1073741823 = sqrt(2^63 -1)/2
-  // internal const Int64 hiRange = 0x3FFFFFFFFFFFFFFFL; // = 4611686018427387903 = sqrt(2^127 -1)/2
-  // So had to adjust them to more suitable:
-  ClipperLib.ClipperBase.horizontal = -9007199254740992; //-2^53
-  ClipperLib.ClipperBase.loRange = 47453132; // sqrt(2^53 -1)/2
-  ClipperLib.ClipperBase.hiRange = 4503599627370495; // sqrt(2^106 -1)/2
+  // internal const cInt loRange = 0x3FFFFFFF; // = 1073741823 = sqrt(2^63 -1)/2
+  // internal const cInt hiRange = 0x3FFFFFFFFFFFFFFFL; // = 4611686018427387903 = sqrt(2^127 -1)/2
+  // So had to adjust them to more suitable for Javascript.
   // If JS some day supports truly 64-bit integers, then these ranges can be as in C#
   // and biginteger library can be more simpler (as then 128bit can be represented as two 64bit numbers)
-  ClipperLib.ClipperBase.PointsEqual = function (pt1, pt2)
+  ClipperLib.ClipperBase.horizontal = -9007199254740992; //-2^53
+  ClipperLib.ClipperBase.Skip = -2;
+  ClipperLib.ClipperBase.Unassigned = -1;
+  ClipperLib.ClipperBase.tolerance = 1E-20;
+  if (use_int32)
   {
-    return (pt1.x == pt2.x && pt1.y == pt2.y);
+    ClipperLib.ClipperBase.loRange = 46340;
+    ClipperLib.ClipperBase.hiRange = 46340;
+  }
+  else
+  {
+    ClipperLib.ClipperBase.loRange = 47453132; // sqrt(2^53 -1)/2
+    ClipperLib.ClipperBase.hiRange = 4503599627370495; // sqrt(2^106 -1)/2
+  }
+  ClipperLib.ClipperBase.near_zero = function (val)
+  {
+    return (val > -ClipperLib.ClipperBase.tolerance) && (val < ClipperLib.ClipperBase.tolerance);
+  };
+  ClipperLib.ClipperBase.IsHorizontal = function (e)
+  {
+    return e.Delta.y === 0;
   };
   ClipperLib.ClipperBase.prototype.PointIsVertex = function (pt, pp)
   {
     var pp2 = pp;
     do {
-      if (ClipperLib.ClipperBase.PointsEqual(pp2.pt, pt)) return true;
-      pp2 = pp2.next;
+      if (ClipperLib.IntPoint.op_Equality(pp2.Pt, pt))
+        return true;
+      pp2 = pp2.Next;
     }
-    while (pp2 != pp);
+    while (pp2 != pp)
     return false;
   };
-  ClipperLib.ClipperBase.prototype.PointInPolygon = function (pt, pp, UseFulllongRange)
+  ClipperLib.ClipperBase.prototype.PointOnLineSegment = function (pt, linePt1, linePt2, UseFullRange)
+  {
+    if (UseFullRange)
+      return ((pt.x == linePt1.x) && (pt.y == linePt1.y)) ||
+        ((pt.x == linePt2.x) && (pt.y == linePt2.y)) ||
+        (((pt.x > linePt1.x) == (pt.x < linePt2.x)) &&
+        ((pt.y > linePt1.y) == (pt.y < linePt2.y)) &&
+        (Int128.op_Equality(Int128.Int128Mul((pt.x - linePt1.x), (linePt2.y - linePt1.y)),
+          Int128.Int128Mul((linePt2.x - linePt1.x), (pt.y - linePt1.y)))));
+    else
+      return ((pt.x == linePt1.x) && (pt.y == linePt1.y)) || ((pt.x == linePt2.x) && (pt.y == linePt2.y)) || (((pt.x > linePt1.x) == (pt.x < linePt2.x)) && ((pt.y > linePt1.y) == (pt.y < linePt2.y)) && ((pt.x - linePt1.x) * (linePt2.y - linePt1.y) == (linePt2.x - linePt1.x) * (pt.y - linePt1.y)));
+  };
+  ClipperLib.ClipperBase.prototype.PointOnPolygon = function (pt, pp, UseFullRange)
   {
     var pp2 = pp;
-    var result = false;
-    if (UseFulllongRange)
+    while (true)
     {
-      do {
-        if ((((pp2.pt.y <= pt.y) && (pt.y < pp2.prev.pt.y)) || ((pp2.prev.pt.y <= pt.y) && (pt.y < pp2.pt.y))) && new Int128(pt.x - pp2.pt.x)
-          .compareTo(
-        new Int128(pp2.prev.pt.x - pp2.pt.x)
-          .multiply(new Int128(pt.y - pp2.pt.y))
-          .divide(
-        new Int128(pp2.prev.pt.y - pp2.pt.y))) < 0) result = !result;
-        pp2 = pp2.next;
-      }
-      while (pp2 != pp);
+      if (this.PointOnLineSegment(pt, pp2.Pt, pp2.Next.Pt, UseFullRange))
+        return true;
+      pp2 = pp2.Next;
+      if (pp2 == pp)
+        break;
     }
-    else
-    {
-      do {
-        if ((((pp2.pt.y <= pt.y) && (pt.y < pp2.prev.pt.y)) || ((pp2.prev.pt.y <= pt.y) && (pt.y < pp2.pt.y))) && (pt.x - pp2.pt.x < (pp2.prev.pt.x - pp2.pt.x) * (pt.y - pp2.pt.y) / (pp2.prev.pt.y - pp2.pt.y))) result = !result;
-        pp2 = pp2.next;
-      }
-      while (pp2 != pp);
-    }
-    return result;
+    return false;
   };
   ClipperLib.ClipperBase.prototype.SlopesEqual = ClipperLib.ClipperBase.SlopesEqual = function ()
   {
-    var a = arguments;
+    var a = arguments,
+      alen = a.length;
     var e1, e2, pt1, pt2, pt3, pt4, UseFullRange;
-    if (a.length == 3) // function (e1, e2, UseFullRange)
+    if (alen == 3) // function (e1, e2, UseFullRange)
     {
-      e1 = a[0], e2 = a[1], UseFullRange = a[2];
-      if (UseFullRange) return new Int128(e1.deltaY)
-        .multiply(new Int128(e2.deltaX))
-        .toString() == new Int128(e1.deltaX)
-        .multiply(new Int128(e2.deltaY))
-        .toString();
-      else return (e1.deltaY) * (e2.deltaX) == (e1.deltaX) * (e2.deltaY);
+      e1 = a[0];
+      e2 = a[1];
+      UseFullRange = a[2];
+      if (UseFullRange)
+        return Int128.op_Equality(Int128.Int128Mul(e1.Delta.y, e2.Delta.x), Int128.Int128Mul(e1.Delta.x, e2.Delta.y));
+      else
+        return ClipperLib.Cast_Int64((e1.Delta.y) * (e2.Delta.x)) == ClipperLib.Cast_Int64((e1.Delta.x) * (e2.Delta.y));
     }
-    else if (a.length == 4) // function (pt1, pt2, pt3, UseFullRange)
+    else if (alen == 4) // function (pt1, pt2, pt3, UseFullRange)
     {
-      pt1 = a[0], pt2 = a[1], pt3 = a[2], UseFullRange = a[3];
-      if (UseFullRange) return new Int128(pt1.y - pt2.y)
-        .multiply(new Int128(pt2.x - pt3.x))
-        .toString() == new Int128(pt1.x - pt2.x)
-        .multiply(new Int128(pt2.y - pt3.y))
-        .toString();
-      else return (pt1.y - pt2.y) * (pt2.x - pt3.x) - (pt1.x - pt2.x) * (pt2.y - pt3.y) == 0;
+      pt1 = a[0];
+      pt2 = a[1];
+      pt3 = a[2];
+      UseFullRange = a[3];
+      if (UseFullRange)
+        return Int128.op_Equality(Int128.Int128Mul(pt1.y - pt2.y, pt2.x - pt3.x), Int128.Int128Mul(pt1.x - pt2.x, pt2.y - pt3.y));
+      else
+        return ClipperLib.Cast_Int64((pt1.y - pt2.y) * (pt2.x - pt3.x)) - ClipperLib.Cast_Int64((pt1.x - pt2.x) * (pt2.y - pt3.y)) === 0;
     }
-    else if (a.length == 5) // function (pt1, pt2, pt3, pt4, UseFullRange)
+    else // function (pt1, pt2, pt3, pt4, UseFullRange)
     {
-      pt1 = a[0], pt2 = a[1], pt3 = a[2], pt4 = a[3], UseFullRange = a[4];
-      if (UseFullRange) return new Int128(pt1.y - pt2.y)
-        .multiply(new Int128(pt3.x - pt4.x))
-        .toString() == new Int128(pt1.x - pt2.x)
-        .multiply(new Int128(pt3.y - pt4.y))
-        .toString();
-      else return (pt1.y - pt2.y) * (pt3.x - pt4.x) - (pt1.x - pt2.x) * (pt3.y - pt4.y) == 0;
+      pt1 = a[0];
+      pt2 = a[1];
+      pt3 = a[2];
+      pt4 = a[3];
+      UseFullRange = a[4];
+      if (UseFullRange)
+        return Int128.op_Equality(Int128.Int128Mul(pt1.y - pt2.y, pt3.x - pt4.x), Int128.Int128Mul(pt1.x - pt2.x, pt3.y - pt4.y));
+      else
+        return ClipperLib.Cast_Int64((pt1.y - pt2.y) * (pt3.x - pt4.x)) - ClipperLib.Cast_Int64((pt1.x - pt2.x) * (pt3.y - pt4.y)) === 0;
     }
+  };
+  ClipperLib.ClipperBase.SlopesEqual3 = function (e1, e2, UseFullRange)
+  {
+    if (UseFullRange)
+      return Int128.op_Equality(Int128.Int128Mul(e1.Delta.y, e2.Delta.x), Int128.Int128Mul(e1.Delta.x, e2.Delta.y));
+    else
+      return ClipperLib.Cast_Int64((e1.Delta.y) * (e2.Delta.x)) == ClipperLib.Cast_Int64((e1.Delta.x) * (e2.Delta.y));
+  };
+  ClipperLib.ClipperBase.SlopesEqual4 = function (pt1, pt2, pt3, UseFullRange)
+  {
+    if (UseFullRange)
+      return Int128.op_Equality(Int128.Int128Mul(pt1.y - pt2.y, pt2.x - pt3.x), Int128.Int128Mul(pt1.x - pt2.x, pt2.y - pt3.y));
+    else
+      return ClipperLib.Cast_Int64((pt1.y - pt2.y) * (pt2.x - pt3.x)) - ClipperLib.Cast_Int64((pt1.x - pt2.x) * (pt2.y - pt3.y)) === 0;
+  };
+  ClipperLib.ClipperBase.SlopesEqual5 = function (pt1, pt2, pt3, pt4, UseFullRange)
+  {
+    if (UseFullRange)
+      return Int128.op_Equality(Int128.Int128Mul(pt1.y - pt2.y, pt3.x - pt4.x), Int128.Int128Mul(pt1.x - pt2.x, pt3.y - pt4.y));
+    else
+      return ClipperLib.Cast_Int64((pt1.y - pt2.y) * (pt3.x - pt4.x)) - ClipperLib.Cast_Int64((pt1.x - pt2.x) * (pt3.y - pt4.y)) === 0;
   };
   ClipperLib.ClipperBase.prototype.Clear = function ()
   {
     this.DisposeLocalMinimaList();
-    for (var i = 0; i < this.m_edges.length; ++i)
+    for (var i = 0, ilen = this.m_edges.length; i < ilen; ++i)
     {
-      for (var j = 0; j < this.m_edges[i].length; ++j)
-      this.m_edges[i][j] = null;
+      for (var j = 0, jlen = this.m_edges[i].length; j < jlen; ++j)
+        this.m_edges[i][j] = null;
       ClipperLib.Clear(this.m_edges[i]);
     }
     ClipperLib.Clear(this.m_edges);
     this.m_UseFullRange = false;
+    this.m_HasOpenPaths = false;
   };
   ClipperLib.ClipperBase.prototype.DisposeLocalMinimaList = function ()
   {
-    while (this.m_MinimaList != null)
+    while (this.m_MinimaList !== null)
     {
-      var tmpLm = this.m_MinimaList.next;
+      var tmpLm = this.m_MinimaList.Next;
       this.m_MinimaList = null;
       this.m_MinimaList = tmpLm;
     }
     this.m_CurrentLM = null;
   };
-  ClipperLib.ClipperBase.prototype.AddPolygons = function (ppg, polyType)
+  ClipperLib.ClipperBase.prototype.RangeTest = function (Pt, useFullRange)
   {
-    var result = false;
-    var res = false;
-    if (!(ppg instanceof Array)) return result;
-    for (var i = 0; i < ppg.length; ++i)
+    if (useFullRange.Value)
     {
-    	res = this.AddPolygon(ppg[i], polyType, true);
-      if (res && res != "exceed") result = true;
-      else if (res == "exceed") break;
+      if (Pt.x > ClipperLib.ClipperBase.hiRange || Pt.y > ClipperLib.ClipperBase.hiRange || -Pt.x > ClipperLib.ClipperBase.hiRange || -Pt.y > ClipperLib.ClipperBase.hiRange)
+        ClipperLib.Error("Coordinate outside allowed range in RangeTest().");
     }
-    if (res == "exceed") ClipperLib.Error("Coordinate exceeds range bounds in AddPolygons().");
-    return result;
+    else if (Pt.x > ClipperLib.ClipperBase.loRange || Pt.y > ClipperLib.ClipperBase.loRange || -Pt.x > ClipperLib.ClipperBase.loRange || -Pt.y > ClipperLib.ClipperBase.loRange)
+    {
+      useFullRange.Value = true;
+      this.RangeTest(Pt, useFullRange);
+    }
   };
-  ClipperLib.ClipperBase.prototype.AddPolygon = function (pg, polyType, multiple)
+  ClipperLib.ClipperBase.prototype.InitEdge = function (e, eNext, ePrev, pt)
   {
-  	if (!(pg instanceof Array)) return false;
-    var len = pg.length;
-    if (len < 3) return false;
-    var p = new ClipperLib.Polygon();
-    p.push(new ClipperLib.IntPoint(pg[0].x, pg[0].y));
-    var j = 0;
-    var i;
-  	var exceed = false;
-    for (i = 1; i < len; ++i)
-    {
-      var maxVal;
-      if (this.m_UseFullRange) maxVal = ClipperLib.ClipperBase.hiRange;
-      else maxVal = ClipperLib.ClipperBase.loRange;
-      if (ClipperLib.Math_Abs_Int64(pg[i].x) > maxVal || ClipperLib.Math_Abs_Int64(pg[i].y) > maxVal)
-      {
-        if (ClipperLib.Math_Abs_Int64(pg[i].x) > ClipperLib.ClipperBase.hiRange || ClipperLib.Math_Abs_Int64(pg[i].y) > ClipperLib.ClipperBase.hiRange)
-        {
-        	if (typeof(multiple) != "undefined") return "exceed"; 
-        	exceed = true;
-        	break;
-        }
-        maxVal = ClipperLib.ClipperBase.hiRange;
-        this.m_UseFullRange = true;
-      }
-      if (ClipperLib.ClipperBase.PointsEqual(p[j], pg[i])) continue;
-      else if (j > 0 && this.SlopesEqual(p[j - 1], p[j], pg[i], this.m_UseFullRange))
-      {
-        if (ClipperLib.ClipperBase.PointsEqual(p[j - 1], pg[i])) j--;
-      }
-      else j++;
-      if (j < p.length) p[j] = pg[i];
-      else p.push(new ClipperLib.IntPoint(pg[i].x, pg[i].y));
-    }
-  	if (exceed && typeof(multiple) == "undefined")
-    ClipperLib.Error("Coordinate exceeds range bounds in AddPolygon()");
-
-    if (j < 2) return false;
-    len = j + 1;
-    while (len > 2)
-    {
-      if (ClipperLib.ClipperBase.PointsEqual(p[j], p[0])) j--;
-      else if (ClipperLib.ClipperBase.PointsEqual(p[0], p[1]) || this.SlopesEqual(p[j], p[0], p[1], this.m_UseFullRange)) p[0] = p[j--];
-      else if (this.SlopesEqual(p[j - 1], p[j], p[0], this.m_UseFullRange)) j--;
-      else if (this.SlopesEqual(p[0], p[1], p[2], this.m_UseFullRange))
-      {
-        for (i = 2; i <= j; ++i)
-        p[i - 1] = p[i];
-        j--;
-      }
-      else break;
-      len--;
-    }
-
-    if (len < 3) return false;
-    var edges = [];
-    for (i = 0; i < len; i++)
-    edges.push(new ClipperLib.TEdge());
-    this.m_edges.push(edges);
-    edges[0].xcurr = p[0].x;
-    edges[0].ycurr = p[0].y;
-    this.InitEdge(edges[len - 1], edges[0], edges[len - 2], p[len - 1], polyType);
-    for (i = len - 2; i > 0; --i)
-    this.InitEdge(edges[i], edges[i + 1], edges[i - 1], p[i], polyType);
-    this.InitEdge(edges[0], edges[1], edges[len - 1], p[0], polyType);
-    var e = edges[0];
-    var eHighest = e;
-    do {
-      e.xcurr = e.xbot;
-      e.ycurr = e.ybot;
-      if (e.ytop < eHighest.ytop) eHighest = e;
-      e = e.next;
-    }
-    while (e != edges[0]);
-    if (eHighest.windDelta > 0) eHighest = eHighest.next;
-    if (eHighest.dx == ClipperLib.ClipperBase.horizontal) eHighest = eHighest.next;
-    e = eHighest;
-    do {
-      e = this.AddBoundsToLML(e);
-    }
-    while (e != eHighest);
-    return true;
+    e.Next = eNext;
+    e.Prev = ePrev;
+    //e.Curr = pt;
+    e.Curr.x = pt.x; 
+    e.Curr.y = pt.y; 
+    e.OutIdx = -1;
   };
-  ClipperLib.ClipperBase.prototype.InitEdge = function (e, eNext, ePrev, pt, polyType)
+  ClipperLib.ClipperBase.prototype.InitEdge2 = function (e, polyType)
   {
-    e.next = eNext;
-    e.prev = ePrev;
-    e.xcurr = pt.x;
-    e.ycurr = pt.y;
-    if (e.ycurr >= e.next.ycurr)
+    if (e.Curr.y >= e.Next.Curr.y)
     {
-      e.xbot = e.xcurr;
-      e.ybot = e.ycurr;
-      e.xtop = e.next.xcurr;
-      e.ytop = e.next.ycurr;
-      e.windDelta = 1;
+      //e.Bot = e.Curr;
+      e.Bot.x = e.Curr.x; 
+      e.Bot.y = e.Curr.y; 
+      //e.Top = e.Next.Curr;
+      e.Top.x = e.Next.Curr.x; 
+      e.Top.y = e.Next.Curr.y; 
     }
     else
     {
-      e.xtop = e.xcurr;
-      e.ytop = e.ycurr;
-      e.xbot = e.next.xcurr;
-      e.ybot = e.next.ycurr;
-      e.windDelta = -1;
+      //e.Top = e.Curr;
+      e.Top.x = e.Curr.x; 
+      e.Top.y = e.Curr.y; 
+      //e.Bot = e.Next.Curr;
+      e.Bot.x = e.Next.Curr.x; 
+      e.Bot.y = e.Next.Curr.y; 
     }
     this.SetDx(e);
-    e.polyType = polyType;
-    e.outIdx = -1;
+    e.PolyTyp = polyType;
+  };
+  ClipperLib.ClipperBase.prototype.FindNextLocMin = function (E)
+  {
+    var E2;
+    for (;;)
+    {
+      while (ClipperLib.IntPoint.op_Inequality(E.Bot, E.Prev.Bot) || ClipperLib.IntPoint.op_Equality(E.Curr, E.Top))
+        E = E.Next;
+      if (E.Dx != ClipperLib.ClipperBase.horizontal && E.Prev.Dx != ClipperLib.ClipperBase.horizontal)
+        break;
+      while (E.Prev.Dx == ClipperLib.ClipperBase.horizontal)
+        E = E.Prev;
+      E2 = E;
+      while (E.Dx == ClipperLib.ClipperBase.horizontal)
+        E = E.Next;
+      if (E.Top.y == E.Prev.Bot.y)
+        continue;
+      //ie just an intermediate horz.
+      if (E2.Prev.Bot.x < E.Bot.x)
+        E = E2;
+      break;
+    }
+    return E;
+  };
+  ClipperLib.ClipperBase.prototype.ProcessBound = function (E, IsClockwise)
+  {
+    var EStart = E,
+      Result = E;
+    var Horz;
+    var StartX;
+    if (E.Dx == ClipperLib.ClipperBase.horizontal)
+    {
+      //it's possible for adjacent overlapping horz edges to start heading left
+      //before finishing right, so ...
+      if (IsClockwise)
+        StartX = E.Prev.Bot.x; 
+      else
+        StartX = E.Next.Bot.x; 
+      if (E.Bot.x != StartX)
+        this.ReverseHorizontal(E);
+    }
+    if (Result.OutIdx != ClipperLib.ClipperBase.Skip)
+    {
+      if (IsClockwise)
+      {
+        while (Result.Top.y == Result.Next.Bot.y && Result.Next.OutIdx != ClipperLib.ClipperBase.Skip)
+          Result = Result.Next;
+        if (Result.Dx == ClipperLib.ClipperBase.horizontal && Result.Next.OutIdx != ClipperLib.ClipperBase.Skip)
+        {
+          //nb: at the top of a bound, horizontals are added to the bound
+          //only when the preceding edge attaches to the horizontal's left vertex
+          //unless a Skip edge is encountered when that becomes the top divide
+          Horz = Result;
+          while (Horz.Prev.Dx == ClipperLib.ClipperBase.horizontal)
+            Horz = Horz.Prev;
+          if (Horz.Prev.Top.x == Result.Next.Top.x)
+          {
+            if (!IsClockwise)
+              Result = Horz.Prev;
+          }
+          else if (Horz.Prev.Top.x > Result.Next.Top.x)
+            Result = Horz.Prev;
+        }
+        while (E != Result)
+        {
+          E.NextInLML = E.Next;
+          if (E.Dx == ClipperLib.ClipperBase.horizontal && E != EStart && E.Bot.x != E.Prev.Top.x)
+            this.ReverseHorizontal(E);
+          E = E.Next;
+        }
+        if (E.Dx == ClipperLib.ClipperBase.horizontal && E != EStart && E.Bot.x != E.Prev.Top.x)
+          this.ReverseHorizontal(E);
+        Result = Result.Next;
+        //move to the edge just beyond current bound
+      }
+      else
+      {
+        while (Result.Top.y == Result.Prev.Bot.y && Result.Prev.OutIdx != ClipperLib.ClipperBase.Skip)
+          Result = Result.Prev;
+        if (Result.Dx == ClipperLib.ClipperBase.horizontal && Result.Prev.OutIdx != ClipperLib.ClipperBase.Skip)
+        {
+          Horz = Result;
+          while (Horz.Next.Dx == ClipperLib.ClipperBase.horizontal)
+            Horz = Horz.Next;
+          if (Horz.Next.Top.x == Result.Prev.Top.x)
+          {
+            if (!IsClockwise)
+              Result = Horz.Next;
+          }
+          else if (Horz.Next.Top.x > Result.Prev.Top.x)
+            Result = Horz.Next;
+        }
+        while (E != Result)
+        {
+          E.NextInLML = E.Prev;
+          if (E.Dx == ClipperLib.ClipperBase.horizontal && E != EStart && E.Bot.x != E.Next.Top.x)
+            this.ReverseHorizontal(E);
+          E = E.Prev;
+        }
+        if (E.Dx == ClipperLib.ClipperBase.horizontal && E != EStart && E.Bot.x != E.Next.Top.x)
+          this.ReverseHorizontal(E);
+        Result = Result.Prev;
+        //move to the edge just beyond current bound
+      }
+    }
+    if (Result.OutIdx == ClipperLib.ClipperBase.Skip)
+    {
+      //if edges still remain in the current bound beyond the skip edge then
+      //create another LocMin and call ProcessBound once more
+      E = Result;
+      if (IsClockwise)
+      {
+        while (E.Top.y == E.Next.Bot.y)
+          E = E.Next;
+        //don't include top horizontals when parsing a bound a second time,
+        //they will be contained in the opposite bound ...
+        while (E != Result && E.Dx == ClipperLib.ClipperBase.horizontal)
+          E = E.Prev;
+      }
+      else
+      {
+        while (E.Top.y == E.Prev.Bot.y)
+          E = E.Prev;
+        while (E != Result && E.Dx == ClipperLib.ClipperBase.horizontal)
+          E = E.Next;
+      }
+      if (E == Result)
+      {
+        if (IsClockwise)
+          Result = E.Next;
+        else
+          Result = E.Prev;
+      }
+      else
+      {
+        //there are more edges in the bound beyond result starting with E
+        if (IsClockwise)
+          E = Result.Next;
+        else
+          E = Result.Prev;
+        var locMin = new ClipperLib.LocalMinima();
+        locMin.Next = null;
+        locMin.y = E.Bot.y; 
+        locMin.LeftBound = null;
+        locMin.RightBound = E;
+        locMin.RightBound.WindDelta = 0;
+        Result = this.ProcessBound(locMin.RightBound, IsClockwise);
+        this.InsertLocalMinima(locMin);
+      }
+    }
+    return Result;
+  };
+  ClipperLib.ClipperBase.prototype.AddPath = function (pg, polyType, Closed)
+  {
+    if (use_lines)
+    {
+      if (!Closed && polyType == ClipperLib.PolyType.ptClip)
+        ClipperLib.Error("AddPath: Open paths must be subject.");
+    }
+    else
+    {
+      if (!Closed)
+        ClipperLib.Error("AddPath: Open paths have been disabled.");
+    }
+    var highI = pg.length - 1;
+    if (Closed)
+      while (highI > 0 && (ClipperLib.IntPoint.op_Equality(pg[highI], pg[0])))
+    --highI;
+    while (highI > 0 && (ClipperLib.IntPoint.op_Equality(pg[highI], pg[highI - 1])))
+    --highI;
+    if ((Closed && highI < 2) || (!Closed && highI < 1))
+      return false;
+    //create a new edge array ...
+    var edges = new Array();
+    for (var i = 0; i <= highI; i++)
+      edges.push(new ClipperLib.TEdge());
+    var IsFlat = true;
+    //1. Basic (first) edge initialization ...
+
+    //edges[1].Curr = pg[1];
+    edges[1].Curr.x = pg[1].x; 
+    edges[1].Curr.y = pg[1].y; 
+    (function ()
+    {
+      var $1 = {
+        Value: this.m_UseFullRange
+      };
+      var $res = this.RangeTest(pg[0], $1);
+      this.m_UseFullRange = $1.Value;
+      return $res;
+    }).call(this);
+    (function ()
+    {
+      var $1 = {
+        Value: this.m_UseFullRange
+      };
+      var $res = this.RangeTest(pg[highI], $1);
+      this.m_UseFullRange = $1.Value;
+      return $res;
+    }).call(this);
+    this.InitEdge(edges[0], edges[1], edges[highI], pg[0]);
+    this.InitEdge(edges[highI], edges[0], edges[highI - 1], pg[highI]);
+    for (var i = highI - 1; i >= 1; --i)
+    {
+      (function ()
+      {
+        var $1 = {
+          Value: this.m_UseFullRange
+        };
+        var $res = this.RangeTest(pg[i], $1);
+        this.m_UseFullRange = $1.Value;
+        return $res;
+      }).call(this);
+      this.InitEdge(edges[i], edges[i + 1], edges[i - 1], pg[i]);
+    }
+
+    var eStart = edges[0];
+    //2. Remove duplicate vertices, and (when closed) collinear edges ...
+    var E = eStart,
+      eLoopStop = eStart;
+    for (;;)
+    {
+      if (ClipperLib.IntPoint.op_Equality(E.Curr, E.Next.Curr))
+      {
+        if (E == E.Next)
+          break;
+        if (E == eStart)
+          eStart = E.Next;
+        E = this.RemoveEdge(E);
+        eLoopStop = E;
+        continue;
+      }
+      if (E.Prev == E.Next)
+        break;
+      else if (Closed && ClipperLib.ClipperBase.SlopesEqual(E.Prev.Curr, E.Curr, E.Next.Curr, this.m_UseFullRange) && (!this.PreserveCollinear || !this.Pt2IsBetweenPt1AndPt3(E.Prev.Curr, E.Curr, E.Next.Curr)))
+      {
+        //Collinear edges are allowed for open paths but in closed paths
+        //the default is to merge adjacent collinear edges into a single edge.
+        //However, if the PreserveCollinear property is enabled, only overlapping
+        //collinear edges (ie spikes) will be removed from closed paths.
+        if (E == eStart)
+          eStart = E.Next;
+        E = this.RemoveEdge(E);
+        E = E.Prev;
+        eLoopStop = E;
+        continue;
+      }
+      E = E.Next;
+      if (E == eLoopStop)
+        break;
+    }
+    if ((!Closed && (E == E.Next)) || (Closed && (E.Prev == E.Next)))
+      return false;
+    if (!Closed)
+    {
+      this.m_HasOpenPaths = true;
+      eStart.Prev.OutIdx = ClipperLib.ClipperBase.Skip;
+    }
+    //3. Do second stage of edge initialization ...
+    var eHighest = eStart;
+    E = eStart;
+    do {
+      this.InitEdge2(E, polyType);
+      E = E.Next;
+      if (IsFlat && E.Curr.y != eStart.Curr.y)
+        IsFlat = false;
+    }
+    while (E != eStart)
+    //4. Finally, add edge bounds to LocalMinima list ...
+    //Totally flat paths must be handled differently when adding them
+    //to LocalMinima list to avoid endless loops etc ...
+    if (IsFlat)
+    {
+      if (Closed)
+        return false;
+      E.Prev.OutIdx = ClipperLib.ClipperBase.Skip;
+      if (E.Prev.Bot.x < E.Prev.Top.x)
+        this.ReverseHorizontal(E.Prev);
+      var locMin = new ClipperLib.LocalMinima();
+      locMin.Next = null;
+      locMin.y = E.Bot.y; 
+      locMin.LeftBound = null;
+      locMin.RightBound = E;
+      locMin.RightBound.Side = ClipperLib.EdgeSide.esRight;
+      locMin.RightBound.WindDelta = 0;
+      while (E.Next.OutIdx != ClipperLib.ClipperBase.Skip)
+      {
+        E.NextInLML = E.Next;
+        if (E.Bot.x != E.Prev.Top.x)
+          this.ReverseHorizontal(E);
+        E = E.Next;
+      }
+      this.InsertLocalMinima(locMin);
+      this.m_edges.push(edges);
+      return true;
+    }
+    this.m_edges.push(edges);
+    var clockwise;
+    var EMin = null;
+    for (;;)
+    {
+      E = this.FindNextLocMin(E);
+      if (E == EMin)
+        break;
+      else if (EMin == null)
+        EMin = E;
+      //E and E.Prev now share a local minima (left aligned if horizontal).
+      //Compare their slopes to find which starts which bound ...
+      var locMin = new ClipperLib.LocalMinima();
+      locMin.Next = null;
+      locMin.y = E.Bot.y; 
+      if (E.Dx < E.Prev.Dx)
+      {
+        locMin.LeftBound = E.Prev;
+        locMin.RightBound = E;
+        clockwise = false;
+        //Q.nextInLML = Q.prev
+      }
+      else
+      {
+        locMin.LeftBound = E;
+        locMin.RightBound = E.Prev;
+        clockwise = true;
+        //Q.nextInLML = Q.next
+      }
+      locMin.LeftBound.Side = ClipperLib.EdgeSide.esLeft;
+      locMin.RightBound.Side = ClipperLib.EdgeSide.esRight;
+      if (!Closed)
+        locMin.LeftBound.WindDelta = 0;
+      else if (locMin.LeftBound.Next == locMin.RightBound)
+        locMin.LeftBound.WindDelta = -1;
+      else
+        locMin.LeftBound.WindDelta = 1;
+      locMin.RightBound.WindDelta = -locMin.LeftBound.WindDelta;
+      E = this.ProcessBound(locMin.LeftBound, clockwise);
+      var E2 = this.ProcessBound(locMin.RightBound, !clockwise);
+      if (locMin.LeftBound.OutIdx == ClipperLib.ClipperBase.Skip)
+        locMin.LeftBound = null;
+      else if (locMin.RightBound.OutIdx == ClipperLib.ClipperBase.Skip)
+        locMin.RightBound = null;
+      this.InsertLocalMinima(locMin);
+      if (!clockwise)
+        E = E2;
+    }
+    return true;
+  };
+  ClipperLib.ClipperBase.prototype.AddPaths = function (ppg, polyType, closed)
+  {
+    //  console.log("-------------------------------------------");
+    //  console.log(JSON.stringify(ppg));
+    var result = false;
+    for (var i = 0, ilen = ppg.length; i < ilen; ++i)
+      if (this.AddPath(ppg[i], polyType, closed))
+        result = true;
+    return result;
+  };
+  //------------------------------------------------------------------------------
+  ClipperLib.ClipperBase.prototype.Pt2IsBetweenPt1AndPt3 = function (pt1, pt2, pt3)
+  {
+    if ((ClipperLib.IntPoint.op_Equality(pt1, pt3)) || (ClipperLib.IntPoint.op_Equality(pt1, pt2)) ||
+      (ClipperLib.IntPoint.op_Equality(pt3, pt2)))
+      return false;
+    else if (pt1.x != pt3.x)
+      return (pt2.x > pt1.x) == (pt2.x < pt3.x);
+    else
+      return (pt2.y > pt1.y) == (pt2.y < pt3.y);
+  };
+  ClipperLib.ClipperBase.prototype.RemoveEdge = function (e)
+  {
+    //removes e from double_linked_list (but without removing from memory)
+    e.Prev.Next = e.Next;
+    e.Next.Prev = e.Prev;
+    var result = e.Next;
+    e.Prev = null; //flag as removed (see ClipperBase.Clear)
+    return result;
   };
   ClipperLib.ClipperBase.prototype.SetDx = function (e)
   {
-    e.deltaX = (e.xtop - e.xbot);
-    e.deltaY = (e.ytop - e.ybot);
-    if (e.deltaY == 0) e.dx = ClipperLib.ClipperBase.horizontal;
-    else e.dx = (e.deltaX) / (e.deltaY);
-  };
-  ClipperLib.ClipperBase.prototype.AddBoundsToLML = function (e)
-  {
-    e.nextInLML = null;
-    e = e.next;
-    for (;;)
-    {
-      if (e.dx == ClipperLib.ClipperBase.horizontal)
-      {
-        if (e.next.ytop < e.ytop && e.next.xbot > e.prev.xbot) break;
-        if (e.xtop != e.prev.xbot) this.SwapX(e);
-        e.nextInLML = e.prev;
-      }
-      else if (e.ycurr == e.prev.ycurr) break;
-      else e.nextInLML = e.prev;
-      e = e.next;
-    }
-    var newLm = new ClipperLib.LocalMinima();
-    newLm.next = null;
-    newLm.y = e.prev.ybot;
-    if (e.dx == ClipperLib.ClipperBase.horizontal)
-    {
-      if (e.xbot != e.prev.xbot) this.SwapX(e);
-      newLm.leftBound = e.prev;
-      newLm.rightBound = e;
-    }
-    else if (e.dx < e.prev.dx)
-    {
-      newLm.leftBound = e.prev;
-      newLm.rightBound = e;
-    }
-    else
-    {
-      newLm.leftBound = e;
-      newLm.rightBound = e.prev;
-    }
-    newLm.leftBound.side = ClipperLib.EdgeSide.esLeft;
-    newLm.rightBound.side = ClipperLib.EdgeSide.esRight;
-    this.InsertLocalMinima(newLm);
-    for (;;)
-    {
-      if (e.next.ytop == e.ytop && e.next.dx != ClipperLib.ClipperBase.horizontal) break;
-      e.nextInLML = e.next;
-      e = e.next;
-      if (e.dx == ClipperLib.ClipperBase.horizontal && e.xbot != e.prev.xtop) this.SwapX(e);
-    }
-    return e.next;
+    e.Delta.x = (e.Top.x - e.Bot.x);
+    e.Delta.y = (e.Top.y - e.Bot.y);
+    if (e.Delta.y === 0) e.Dx = ClipperLib.ClipperBase.horizontal;
+    else e.Dx = (e.Delta.x) / (e.Delta.y);
   };
   ClipperLib.ClipperBase.prototype.InsertLocalMinima = function (newLm)
   {
-    if (this.m_MinimaList == null)
+    if (this.m_MinimaList === null)
     {
       this.m_MinimaList = newLm;
     }
     else if (newLm.y >= this.m_MinimaList.y)
     {
-      newLm.next = this.m_MinimaList;
+      newLm.Next = this.m_MinimaList;
       this.m_MinimaList = newLm;
     }
     else
     {
       var tmpLm = this.m_MinimaList;
-      while (tmpLm.next != null && (newLm.y < tmpLm.next.y))
-      tmpLm = tmpLm.next;
-      newLm.next = tmpLm.next;
-      tmpLm.next = newLm;
+      while (tmpLm.Next !== null && (newLm.y < tmpLm.Next.y))
+        tmpLm = tmpLm.Next;
+      newLm.Next = tmpLm.Next;
+      tmpLm.Next = newLm;
     }
   };
   ClipperLib.ClipperBase.prototype.PopLocalMinima = function ()
   {
-    if (this.m_CurrentLM == null) return;
-    this.m_CurrentLM = this.m_CurrentLM.next;
+    if (this.m_CurrentLM === null)
+      return;
+    this.m_CurrentLM = this.m_CurrentLM.Next;
   };
-  ClipperLib.ClipperBase.prototype.SwapX = function (e)
+  ClipperLib.ClipperBase.prototype.ReverseHorizontal = function (e)
   {
-    e.xcurr = e.xtop;
-    e.xtop = e.xbot;
-    e.xbot = e.xcurr;
+    //swap horizontal edges' top and bottom x's so they follow the natural
+    //progression of the bounds - ie so their xbots will align with the
+    //adjoining lower edge. [Helpful in the ProcessHorizontal() method.]
+    var tmp = e.Top.x; 
+    e.Top.x = e.Bot.x; 
+    e.Bot.x = tmp;
+    if (use_xyz)
+    {
+      tmp = e.Top.z;
+      e.Top.z = e.Bot.z;
+      e.Bot.z = tmp;
+    }
   };
   ClipperLib.ClipperBase.prototype.Reset = function ()
   {
     this.m_CurrentLM = this.m_MinimaList;
+    if (this.m_CurrentLM == null)
+      return;
+    //ie nothing to process
+    //reset all edges ...
     var lm = this.m_MinimaList;
     while (lm != null)
     {
-      var e = lm.leftBound;
-      while (e != null)
+      var e = lm.LeftBound;
+      if (e != null)
       {
-        e.xcurr = e.xbot;
-        e.ycurr = e.ybot;
-        e.side = ClipperLib.EdgeSide.esLeft;
-        e.outIdx = -1;
-        e = e.nextInLML;
+        //e.Curr = e.Bot;
+        e.Curr.x = e.Bot.x; 
+        e.Curr.y = e.Bot.y; 
+        e.Side = ClipperLib.EdgeSide.esLeft;
+        e.OutIdx = ClipperLib.ClipperBase.Unassigned;
       }
-      e = lm.rightBound;
-      while (e != null)
+      e = lm.RightBound;
+      if (e != null)
       {
-        e.xcurr = e.xbot;
-        e.ycurr = e.ybot;
-        e.side = ClipperLib.EdgeSide.esRight;
-        e.outIdx = -1;
-        e = e.nextInLML;
+        //e.Curr = e.Bot;
+        e.Curr.x = e.Bot.x; 
+        e.Curr.y = e.Bot.y; 
+        e.Side = ClipperLib.EdgeSide.esRight;
+        e.OutIdx = ClipperLib.ClipperBase.Unassigned;
       }
-      lm = lm.next;
+      lm = lm.Next;
     }
-    return;
   };
-  ClipperLib.ClipperBase.prototype.GetBounds = function ()
+  ClipperLib.Clipper = function (InitOptions) // public Clipper(int InitOptions = 0)
   {
-    var result = new ClipperLib.IntRect();
-    var lm = this.m_MinimaList;
-    if (lm == null) return result;
-    result.left = lm.leftBound.xbot;
-    result.top = lm.leftBound.ybot;
-    result.right = lm.leftBound.xbot;
-    result.bottom = lm.leftBound.ybot;
-    while (lm != null)
-    {
-      if (lm.leftBound.ybot > result.bottom) result.bottom = lm.leftBound.ybot;
-      var e = lm.leftBound;
-      for (;;)
-      {
-        var bottomE = e;
-        while (e.nextInLML != null)
-        {
-          if (e.xbot < result.left) result.left = e.xbot;
-          if (e.xbot > result.right) result.right = e.xbot;
-          e = e.nextInLML;
-        }
-        if (e.xbot < result.left) result.left = e.xbot;
-        if (e.xbot > result.right) result.right = e.xbot;
-        if (e.xtop < result.left) result.left = e.xtop;
-        if (e.xtop > result.right) result.right = e.xtop;
-        if (e.ytop < result.top) result.top = e.ytop;
-        if (bottomE == lm.leftBound) e = lm.rightBound;
-        else break;
-      }
-      lm = lm.next;
-    }
-    return result;
-  };
-  ClipperLib.Clipper = function ()
-  {
+    if (typeof (InitOptions) == "undefined") InitOptions = 0;
     this.m_PolyOuts = null;
     this.m_ClipType = ClipperLib.ClipType.ctIntersection;
     this.m_Scanbeam = null;
     this.m_ActiveEdges = null;
     this.m_SortedEdges = null;
-    this.m_IntersectNodes = null;
+    this.m_IntersectList = null;
+    this.m_IntersectNodeComparer = null;
     this.m_ExecuteLocked = false;
     this.m_ClipFillType = ClipperLib.PolyFillType.pftEvenOdd;
     this.m_SubjFillType = ClipperLib.PolyFillType.pftEvenOdd;
     this.m_Joins = null;
-    this.m_HorizJoins = null;
-    this.m_ReverseOutput = false;
-    this.m_UsingExPolygons = false;
+    this.m_GhostJoins = null;
+    this.m_UsingPolyTree = false;
+    this.ReverseSolution = false;
+    this.StrictlySimple = false;
     ClipperLib.ClipperBase.call(this);
     this.m_Scanbeam = null;
     this.m_ActiveEdges = null;
     this.m_SortedEdges = null;
-    this.m_IntersectNodes = null;
+    this.m_IntersectList = new Array();
+    this.m_IntersectNodeComparer = ClipperLib.MyIntersectNodeSort.Compare;
     this.m_ExecuteLocked = false;
-    this.m_PolyOuts = [];
-    this.m_Joins = [];
-    this.m_HorizJoins = [];
-    this.m_ReverseOutput = false;
-    this.m_UsingExPolygons = false;
+    this.m_UsingPolyTree = false;
+    this.m_PolyOuts = new Array();
+    this.m_Joins = new Array();
+    this.m_GhostJoins = new Array();
+    this.ReverseSolution = (1 & InitOptions) !== 0;
+    this.StrictlySimple = (2 & InitOptions) !== 0;
+    this.PreserveCollinear = (4 & InitOptions) !== 0;
+    if (use_xyz)
+    {
+      this.ZFillFunction = null; // function (IntPoint vert1, IntPoint vert2, ref IntPoint intersectPt);
+    }
   };
+  ClipperLib.Clipper.ioReverseSolution = 1;
+  ClipperLib.Clipper.ioStrictlySimple = 2;
+  ClipperLib.Clipper.ioPreserveCollinear = 4;
+
   ClipperLib.Clipper.prototype.Clear = function ()
   {
-    if (this.m_edges.length == 0) return;
+    if (this.m_edges.length === 0)
+      return;
+    //avoids problems with ClipperBase destructor
     this.DisposeAllPolyPts();
     ClipperLib.ClipperBase.prototype.Clear.call(this);
   };
+
   ClipperLib.Clipper.prototype.DisposeScanbeamList = function ()
   {
-    while (this.m_Scanbeam != null)
+    while (this.m_Scanbeam !== null)
     {
-      var sb2 = this.m_Scanbeam.next;
+      var sb2 = this.m_Scanbeam.Next;
       this.m_Scanbeam = null;
       this.m_Scanbeam = sb2;
     }
@@ -5198,357 +6124,389 @@ module.exports = Triangle;
     this.m_Scanbeam = null;
     this.m_ActiveEdges = null;
     this.m_SortedEdges = null;
-    this.DisposeAllPolyPts();
+
     var lm = this.m_MinimaList;
-    while (lm != null)
+    while (lm !== null)
     {
       this.InsertScanbeam(lm.y);
-      this.InsertScanbeam(lm.leftBound.ytop);
-      lm = lm.next;
+      lm = lm.Next;
     }
-  };
-  ClipperLib.Clipper.prototype.get_ReverseSolution = function ()
-  {
-    return this.m_ReverseOutput;
-  };
-  ClipperLib.Clipper.prototype.set_ReverseSolution = function (value)
-  {
-    this.m_ReverseOutput = value;
   };
   ClipperLib.Clipper.prototype.InsertScanbeam = function (Y)
   {
-    var newSb;
-    if (this.m_Scanbeam == null)
+    if (this.m_Scanbeam === null)
     {
       this.m_Scanbeam = new ClipperLib.Scanbeam();
-      this.m_Scanbeam.next = null;
+      this.m_Scanbeam.Next = null;
       this.m_Scanbeam.y = Y;
     }
     else if (Y > this.m_Scanbeam.y)
     {
-      newSb = new ClipperLib.Scanbeam();
+      var newSb = new ClipperLib.Scanbeam();
       newSb.y = Y;
-      newSb.next = this.m_Scanbeam;
+      newSb.Next = this.m_Scanbeam;
       this.m_Scanbeam = newSb;
     }
     else
     {
       var sb2 = this.m_Scanbeam;
-      while (sb2.next != null && (Y <= sb2.next.y))
-      sb2 = sb2.next;
-      if (Y == sb2.y) return;
-      newSb = new ClipperLib.Scanbeam();
+      while (sb2.Next !== null && (Y <= sb2.Next.y))
+        sb2 = sb2.Next;
+      if (Y == sb2.y)
+        return;
+      //ie ignores duplicates
+      var newSb = new ClipperLib.Scanbeam();
       newSb.y = Y;
-      newSb.next = sb2.next;
-      sb2.next = newSb;
+      newSb.Next = sb2.Next;
+      sb2.Next = newSb;
     }
   };
-  ClipperLib.Clipper.prototype.Execute = function (clipType, solution, subjFillType, clipFillType)
+  // ************************************
+  ClipperLib.Clipper.prototype.Execute = function ()
   {
-    var succeeded;
-    if (arguments.length == 2)
+    var a = arguments,
+      alen = a.length,
+      ispolytree = a[1] instanceof ClipperLib.PolyTree;
+    if (alen == 4 && !ispolytree) // function (clipType, solution, subjFillType, clipFillType)
     {
-      subjFillType = ClipperLib.PolyFillType.pftEvenOdd;
-      clipFillType = ClipperLib.PolyFillType.pftEvenOdd;
-    }
-    if ( typeof(solution.exPolygons) == "undefined") // hacky way to test if solution is not exPolygons
-    {
-      if (this.m_ExecuteLocked) return false;
+      var clipType = a[0],
+        solution = a[1],
+        subjFillType = a[2],
+        clipFillType = a[3];
+      if (this.m_ExecuteLocked)
+        return false;
+      if (this.m_HasOpenPaths)
+        ClipperLib.Error("Error: PolyTree struct is need for open path clipping.");
       this.m_ExecuteLocked = true;
       ClipperLib.Clear(solution);
       this.m_SubjFillType = subjFillType;
       this.m_ClipFillType = clipFillType;
       this.m_ClipType = clipType;
-      this.m_UsingExPolygons = false;
-      succeeded = this.ExecuteInternal();
-      if (succeeded)
+      this.m_UsingPolyTree = false;
+      try
       {
-        this.BuildResult(solution);
+        var succeeded = this.ExecuteInternal();
+        //build the return polygons ...
+        if (succeeded) this.BuildResult(solution);
       }
-      this.m_ExecuteLocked = false;
+      finally
+      {
+        this.DisposeAllPolyPts();
+        this.m_ExecuteLocked = false;
+      }
       return succeeded;
     }
-    else
+    else if (alen == 4 && ispolytree) // function (clipType, polytree, subjFillType, clipFillType)
     {
-      if (this.m_ExecuteLocked) return false;
+      var clipType = a[0],
+        polytree = a[1],
+        subjFillType = a[2],
+        clipFillType = a[3];
+      if (this.m_ExecuteLocked)
+        return false;
       this.m_ExecuteLocked = true;
-      ClipperLib.Clear(solution);
       this.m_SubjFillType = subjFillType;
       this.m_ClipFillType = clipFillType;
       this.m_ClipType = clipType;
-      this.m_UsingExPolygons = true;
-      succeeded = this.ExecuteInternal();
-      if (succeeded)
+      this.m_UsingPolyTree = true;
+      try
       {
-        this.BuildResultEx(solution);
+        var succeeded = this.ExecuteInternal();
+        //build the return polygons ...
+        if (succeeded) this.BuildResult2(polytree);
       }
-      this.m_ExecuteLocked = false;
+      finally
+      {
+        this.DisposeAllPolyPts();
+        this.m_ExecuteLocked = false;
+      }
       return succeeded;
     }
-  };
-  ClipperLib.Clipper.prototype.PolySort = function (or1, or2)
-  {
-    if (or1 == or2) return 0;
-    else if (or1.pts == null || or2.pts == null)
+    else if (alen == 2 && !ispolytree) // function (clipType, solution)
     {
-      if ((or1.pts == null) != (or2.pts == null))
-      {
-        return or1.pts == null ? 1 : -1;
-      }
-      else return 0;
+      var clipType = a[0],
+        solution = a[1];
+      return this.Execute(clipType, solution, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
     }
-    var i1, i2;
-    if (or1.isHole) i1 = or1.FirstLeft.idx;
-    else i1 = or1.idx;
-    if (or2.isHole) i2 = or2.FirstLeft.idx;
-    else i2 = or2.idx;
-    var result = i1 - i2;
-    if (result == 0 && (or1.isHole != or2.isHole))
+    else if (alen == 2 && ispolytree) // function (clipType, polytree)
     {
-      return or1.isHole ? 1 : -1;
+      var clipType = a[0],
+        polytree = a[1];
+      return this.Execute(clipType, polytree, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
     }
-    return result;
-  };
-  ClipperLib.Clipper.prototype.FindAppendLinkEnd = function (outRec)
-  {
-    while (outRec.AppendLink != null)
-    outRec = outRec.AppendLink;
-    return outRec;
   };
   ClipperLib.Clipper.prototype.FixHoleLinkage = function (outRec)
   {
-    var tmp;
-    if (outRec.bottomPt != null) tmp = this.m_PolyOuts[outRec.bottomPt.idx].FirstLeft;
-    else tmp = outRec.FirstLeft;
-    if (outRec == tmp) ClipperLib.Error("HoleLinkage error");
-    if (tmp != null)
-    {
-      if (tmp.AppendLink != null) tmp = this.FindAppendLinkEnd(tmp);
-      if (tmp == outRec) tmp = null;
-      else if (tmp.isHole)
-      {
-        this.FixHoleLinkage(tmp);
-        tmp = tmp.FirstLeft;
-      }
-    }
-    outRec.FirstLeft = tmp;
-    if (tmp == null) outRec.isHole = false;
-    outRec.AppendLink = null;
+    //skip if an outermost polygon or
+    //already already points to the correct FirstLeft ...
+    if (outRec.FirstLeft === null || (outRec.IsHole != outRec.FirstLeft.IsHole && outRec.FirstLeft.Pts !== null))
+      return;
+    var orfl = outRec.FirstLeft;
+    while (orfl !== null && ((orfl.IsHole == outRec.IsHole) || orfl.Pts === null))
+      orfl = orfl.FirstLeft;
+    outRec.FirstLeft = orfl;
   };
   ClipperLib.Clipper.prototype.ExecuteInternal = function ()
   {
-    var succeeded;
     try
     {
       this.Reset();
-      if (this.m_CurrentLM == null) return true;
+      if (this.m_CurrentLM === null)
+        return false;
       var botY = this.PopScanbeam();
       do {
         this.InsertLocalMinimaIntoAEL(botY);
-        ClipperLib.Clear(this.m_HorizJoins);
-        this.ProcessHorizontals();
+        ClipperLib.Clear(this.m_GhostJoins);
+        this.ProcessHorizontals(false);
+        if (this.m_Scanbeam === null)
+          break;
         var topY = this.PopScanbeam();
-        succeeded = this.ProcessIntersections(botY, topY);
-        if (!succeeded) break;
+        //console.log("boty:" + botY + ", topy:" + topY);
+        if (!this.ProcessIntersections(botY, topY))
+          return false;
         this.ProcessEdgesAtTopOfScanbeam(topY);
         botY = topY;
       }
-      while (this.m_Scanbeam != null);
-    }
-    catch ($$e1)
-    {
-      succeeded = false;
-    }
-    if (succeeded)
-    {
-      var outRec;
-      for (var i = 0; i < this.m_PolyOuts.length; i++)
+      while (this.m_Scanbeam !== null || this.m_CurrentLM !== null)
+      //fix orientations ...
+      for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
       {
-        outRec = this.m_PolyOuts[i];
-        if (outRec.pts == null) continue;
-        this.FixupOutPolygon(outRec);
-        if (outRec.pts == null) continue;
-        if (outRec.isHole && this.m_UsingExPolygons) this.FixHoleLinkage(outRec);
-        
-        if ((outRec.isHole ^ this.m_ReverseOutput) ==  (this.Area(outRec, this.m_UseFullRange) > 0))
-        this.ReversePolyPtLinks(outRec.pts);
+        var outRec = this.m_PolyOuts[i];
+        if (outRec.Pts === null || outRec.IsOpen)
+          continue;
+        if ((outRec.IsHole ^ this.ReverseSolution) == (this.Area(outRec) > 0))
+          this.ReversePolyPtLinks(outRec.Pts);
       }
       this.JoinCommonEdges();
-      if (this.m_UsingExPolygons) this.m_PolyOuts.sort(this.PolySort);
+      for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
+      {
+        var outRec = this.m_PolyOuts[i];
+        if (outRec.Pts !== null && !outRec.IsOpen)
+          this.FixupOutPolygon(outRec);
+      }
+      if (this.StrictlySimple)
+        this.DoSimplePolygons();
+      return true;
     }
-    ClipperLib.Clear(this.m_Joins);
-    ClipperLib.Clear(this.m_HorizJoins);
-    return succeeded;
+    finally
+    {
+      ClipperLib.Clear(this.m_Joins);
+      ClipperLib.Clear(this.m_GhostJoins);
+    }
   };
   ClipperLib.Clipper.prototype.PopScanbeam = function ()
   {
-    var Y = this.m_Scanbeam.y;
+    var Y = this.m_Scanbeam.y; 
     var sb2 = this.m_Scanbeam;
-    this.m_Scanbeam = this.m_Scanbeam.next;
+    this.m_Scanbeam = this.m_Scanbeam.Next;
     sb2 = null;
     return Y;
   };
   ClipperLib.Clipper.prototype.DisposeAllPolyPts = function ()
   {
-    for (var i = 0; i < this.m_PolyOuts.length; ++i)
-    this.DisposeOutRec(i);
+    for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; ++i)
+      this.DisposeOutRec(i);
     ClipperLib.Clear(this.m_PolyOuts);
   };
   ClipperLib.Clipper.prototype.DisposeOutRec = function (index)
   {
     var outRec = this.m_PolyOuts[index];
-    if (outRec.pts != null) this.DisposeOutPts(outRec.pts);
+    if (outRec.Pts !== null)
+      this.DisposeOutPts(outRec.Pts);
     outRec = null;
     this.m_PolyOuts[index] = null;
   };
   ClipperLib.Clipper.prototype.DisposeOutPts = function (pp)
   {
-    if (pp == null) return;
+    if (pp === null)
+      return;
     var tmpPp = null;
-    pp.prev.next = null;
-    while (pp != null)
+    pp.Prev.Next = null;
+    while (pp !== null)
     {
       tmpPp = pp;
-      pp = pp.next;
+      pp = pp.Next;
       tmpPp = null;
     }
   };
-  ClipperLib.Clipper.prototype.AddJoin = function (e1, e2, e1OutIdx, e2OutIdx)
+  ClipperLib.Clipper.prototype.AddJoin = function (Op1, Op2, OffPt)
   {
-    var jr = new ClipperLib.JoinRec();
-    if (e1OutIdx >= 0) jr.poly1Idx = e1OutIdx;
-    else jr.poly1Idx = e1.outIdx;
-    jr.pt1a = new ClipperLib.IntPoint(e1.xcurr, e1.ycurr);
-    jr.pt1b = new ClipperLib.IntPoint(e1.xtop, e1.ytop);
-    if (e2OutIdx >= 0) jr.poly2Idx = e2OutIdx;
-    else jr.poly2Idx = e2.outIdx;
-    jr.pt2a = new ClipperLib.IntPoint(e2.xcurr, e2.ycurr);
-    jr.pt2b = new ClipperLib.IntPoint(e2.xtop, e2.ytop);
-    this.m_Joins.push(jr);
+    var j = new ClipperLib.Join();
+    j.OutPt1 = Op1;
+    j.OutPt2 = Op2;
+    //j.OffPt = OffPt;
+    j.OffPt.x = OffPt.x; 
+    j.OffPt.y = OffPt.y; 
+    this.m_Joins.push(j);
   };
-  ClipperLib.Clipper.prototype.AddHorzJoin = function (e, idx)
+  ClipperLib.Clipper.prototype.AddGhostJoin = function (Op, OffPt)
   {
-    var hj = new ClipperLib.HorzJoinRec();
-    hj.edge = e;
-    hj.savedIdx = idx;
-    this.m_HorizJoins.push(hj);
+    var j = new ClipperLib.Join();
+    j.OutPt1 = Op;
+    //j.OffPt = OffPt;
+    j.OffPt.x = OffPt.x; 
+    j.OffPt.y = OffPt.y; 
+    this.m_GhostJoins.push(j);
   };
+  if (use_xyz)
+  {
+    ClipperLib.Clipper.prototype.SetZ = function (pt, e)
+    {
+      pt.z = 0;
+      if (this.ZFillFunction !== null)
+      {
+        //put the 'preferred' point as first parameter ...
+        if (e.OutIdx < 0)
+          this.ZFillFunction(e.Bot, e.Top, pt); //outside a path so presume entering
+        else
+          this.ZFillFunction(e.Top, e.Bot, pt); //inside a path so presume exiting
+      }
+    };
+    //------------------------------------------------------------------------------
+  }
   ClipperLib.Clipper.prototype.InsertLocalMinimaIntoAEL = function (botY)
   {
-    var pt, pt2;
-    while (this.m_CurrentLM != null && (this.m_CurrentLM.y == botY))
+    while (this.m_CurrentLM !== null && (this.m_CurrentLM.y == botY))
     {
-      var lb = this.m_CurrentLM.leftBound;
-      var rb = this.m_CurrentLM.rightBound;
-      this.InsertEdgeIntoAEL(lb);
-      this.InsertScanbeam(lb.ytop);
-      this.InsertEdgeIntoAEL(rb);
-      if (this.IsEvenOddFillType(lb))
+      var lb = this.m_CurrentLM.LeftBound;
+      var rb = this.m_CurrentLM.RightBound;
+      this.PopLocalMinima();
+      var Op1 = null;
+      if (lb === null)
       {
-        lb.windDelta = 1;
-        rb.windDelta = 1;
+        this.InsertEdgeIntoAEL(rb, null);
+        this.SetWindingCount(rb);
+        if (this.IsContributing(rb))
+          Op1 = this.AddOutPt(rb, rb.Bot);
+      }
+      else if (rb == null)
+      {
+        this.InsertEdgeIntoAEL(lb, null);
+        this.SetWindingCount(lb);
+        if (this.IsContributing(lb))
+          Op1 = this.AddOutPt(lb, lb.Bot);
+        this.InsertScanbeam(lb.Top.y);
       }
       else
       {
-        rb.windDelta = -lb.windDelta;
+        this.InsertEdgeIntoAEL(lb, null);
+        this.InsertEdgeIntoAEL(rb, lb);
+        this.SetWindingCount(lb);
+        rb.WindCnt = lb.WindCnt;
+        rb.WindCnt2 = lb.WindCnt2;
+        if (this.IsContributing(lb))
+          Op1 = this.AddLocalMinPoly(lb, rb, lb.Bot);
+        this.InsertScanbeam(lb.Top.y);
       }
-      this.SetWindingCount(lb);
-      rb.windCnt = lb.windCnt;
-      rb.windCnt2 = lb.windCnt2;
-      if (rb.dx == ClipperLib.ClipperBase.horizontal)
+      if (rb != null)
       {
-        this.AddEdgeToSEL(rb);
-        this.InsertScanbeam(rb.nextInLML.ytop);
+        if (ClipperLib.ClipperBase.IsHorizontal(rb))
+          this.AddEdgeToSEL(rb);
+        else
+          this.InsertScanbeam(rb.Top.y);
       }
-      else this.InsertScanbeam(rb.ytop);
-      if (this.IsContributing(lb)) this.AddLocalMinPoly(lb, rb, new ClipperLib.IntPoint(lb.xcurr, this.m_CurrentLM.y));
-      if (rb.outIdx >= 0)
+      if (lb == null || rb == null) continue;
+      //if output polygons share an Edge with a horizontal rb, they'll need joining later ...
+      if (Op1 !== null && ClipperLib.ClipperBase.IsHorizontal(rb) && this.m_GhostJoins.length > 0 && rb.WindDelta !== 0)
       {
-        if (rb.dx == ClipperLib.ClipperBase.horizontal)
+        for (var i = 0, ilen = this.m_GhostJoins.length; i < ilen; i++)
         {
-          for (var i = 0; i < this.m_HorizJoins.length; i++)
+          //if the horizontal Rb and a 'ghost' horizontal overlap, then convert
+          //the 'ghost' join to a real join ready for later ...
+          var j = this.m_GhostJoins[i];
+          if (this.HorzSegmentsOverlap(j.OutPt1.Pt, j.OffPt, rb.Bot, rb.Top))
+            this.AddJoin(j.OutPt1, Op1, j.OffPt);
+        }
+      }
+      if (lb.OutIdx >= 0 && lb.PrevInAEL !== null &&
+        lb.PrevInAEL.Curr.x == lb.Bot.x &&
+        lb.PrevInAEL.OutIdx >= 0 &&
+        ClipperLib.ClipperBase.SlopesEqual(lb.PrevInAEL, lb, this.m_UseFullRange) &&
+        lb.WindDelta !== 0 && lb.PrevInAEL.WindDelta !== 0)
+      {
+        var Op2 = this.AddOutPt(lb.PrevInAEL, lb.Bot);
+        this.AddJoin(Op1, Op2, lb.Top);
+      }
+      if (lb.NextInAEL != rb)
+      {
+        if (rb.OutIdx >= 0 && rb.PrevInAEL.OutIdx >= 0 &&
+          ClipperLib.ClipperBase.SlopesEqual(rb.PrevInAEL, rb, this.m_UseFullRange) &&
+          rb.WindDelta !== 0 && rb.PrevInAEL.WindDelta !== 0)
+        {
+          var Op2 = this.AddOutPt(rb.PrevInAEL, rb.Bot);
+          this.AddJoin(Op1, Op2, rb.Top);
+        }
+        var e = lb.NextInAEL;
+        if (e !== null)
+          while (e != rb)
           {
-            pt = new ClipperLib.IntPoint(), pt2 = new ClipperLib.IntPoint();
-            var hj = this.m_HorizJoins[i];
-            if ((function ()
-            {
-              pt = {
-                Value: pt
-              };
-              pt2 = {
-                Value: pt2
-              };
-              var $res = this.GetOverlapSegment(new ClipperLib.IntPoint(hj.edge.xbot, hj.edge.ybot),
-              new ClipperLib.IntPoint(hj.edge.xtop, hj.edge.ytop),
-              new ClipperLib.IntPoint(rb.xbot, rb.ybot),
-              new ClipperLib.IntPoint(rb.xtop, rb.ytop),
-              pt, pt2);
-              pt = pt.Value;
-              pt2 = pt2.Value;
-              return $res;
-            })
-              .call(this)) this.AddJoin(hj.edge, rb, hj.savedIdx, -1);
+            //nb: For calculating winding counts etc, IntersectEdges() assumes
+            //that param1 will be to the right of param2 ABOVE the intersection ...
+            this.IntersectEdges(rb, e, lb.Curr, false);
+            //order important here
+            e = e.NextInAEL;
           }
-        }
       }
-      if (lb.nextInAEL != rb)
-      {
-        if (rb.outIdx >= 0 && rb.prevInAEL.outIdx >= 0 && this.SlopesEqual(rb.prevInAEL, rb, this.m_UseFullRange)) this.AddJoin(rb, rb.prevInAEL, -1, -1);
-        var e = lb.nextInAEL;
-        pt = new ClipperLib.IntPoint(lb.xcurr, lb.ycurr);
-        while (e != rb)
-        {
-          if (e == null) ClipperLib.Error("InsertLocalMinimaIntoAEL: missing rightbound!");
-          this.IntersectEdges(rb, e, pt, ClipperLib.Protects.ipNone);
-          e = e.nextInAEL;
-        }
-      }
-      this.PopLocalMinima();
     }
   };
-  ClipperLib.Clipper.prototype.InsertEdgeIntoAEL = function (edge)
+  ClipperLib.Clipper.prototype.InsertEdgeIntoAEL = function (edge, startEdge)
   {
-    edge.prevInAEL = null;
-    edge.nextInAEL = null;
-    if (this.m_ActiveEdges == null)
+    if (this.m_ActiveEdges === null)
     {
+      edge.PrevInAEL = null;
+      edge.NextInAEL = null;
       this.m_ActiveEdges = edge;
     }
-    else if (this.E2InsertsBeforeE1(this.m_ActiveEdges, edge))
+    else if (startEdge === null && this.E2InsertsBeforeE1(this.m_ActiveEdges, edge))
     {
-      edge.nextInAEL = this.m_ActiveEdges;
-      this.m_ActiveEdges.prevInAEL = edge;
+      edge.PrevInAEL = null;
+      edge.NextInAEL = this.m_ActiveEdges;
+      this.m_ActiveEdges.PrevInAEL = edge;
       this.m_ActiveEdges = edge;
     }
     else
     {
-      var e = this.m_ActiveEdges;
-      while (e.nextInAEL != null && !this.E2InsertsBeforeE1(e.nextInAEL, edge))
-      e = e.nextInAEL;
-      edge.nextInAEL = e.nextInAEL;
-      if (e.nextInAEL != null) e.nextInAEL.prevInAEL = edge;
-      edge.prevInAEL = e;
-      e.nextInAEL = edge;
+      if (startEdge === null)
+        startEdge = this.m_ActiveEdges;
+      while (startEdge.NextInAEL !== null && !this.E2InsertsBeforeE1(startEdge.NextInAEL, edge))
+        startEdge = startEdge.NextInAEL;
+      edge.NextInAEL = startEdge.NextInAEL;
+      if (startEdge.NextInAEL !== null)
+        startEdge.NextInAEL.PrevInAEL = edge;
+      edge.PrevInAEL = startEdge;
+      startEdge.NextInAEL = edge;
     }
   };
   ClipperLib.Clipper.prototype.E2InsertsBeforeE1 = function (e1, e2)
   {
-    return e2.xcurr == e1.xcurr ? e2.dx > e1.dx : e2.xcurr < e1.xcurr;
+    if (e2.Curr.x == e1.Curr.x)
+    {
+      if (e2.Top.y > e1.Top.y)
+        return e2.Top.x < ClipperLib.Clipper.TopX(e1, e2.Top.y);
+      else
+        return e1.Top.x > ClipperLib.Clipper.TopX(e2, e1.Top.y);
+    }
+    else
+      return e2.Curr.x < e1.Curr.x; 
   };
   ClipperLib.Clipper.prototype.IsEvenOddFillType = function (edge)
   {
-    if (edge.polyType == ClipperLib.PolyType.ptSubject) return this.m_SubjFillType == ClipperLib.PolyFillType.pftEvenOdd;
-    else return this.m_ClipFillType == ClipperLib.PolyFillType.pftEvenOdd;
+    if (edge.PolyTyp == ClipperLib.PolyType.ptSubject)
+      return this.m_SubjFillType == ClipperLib.PolyFillType.pftEvenOdd;
+    else
+      return this.m_ClipFillType == ClipperLib.PolyFillType.pftEvenOdd;
   };
   ClipperLib.Clipper.prototype.IsEvenOddAltFillType = function (edge)
   {
-    if (edge.polyType == ClipperLib.PolyType.ptSubject) return this.m_ClipFillType == ClipperLib.PolyFillType.pftEvenOdd;
-    else return this.m_SubjFillType == ClipperLib.PolyFillType.pftEvenOdd;
+    if (edge.PolyTyp == ClipperLib.PolyType.ptSubject)
+      return this.m_ClipFillType == ClipperLib.PolyFillType.pftEvenOdd;
+    else
+      return this.m_SubjFillType == ClipperLib.PolyFillType.pftEvenOdd;
   };
   ClipperLib.Clipper.prototype.IsContributing = function (edge)
   {
     var pft, pft2;
-    if (edge.polyType == ClipperLib.PolyType.ptSubject)
+    if (edge.PolyTyp == ClipperLib.PolyType.ptSubject)
     {
       pft = this.m_SubjFillType;
       pft2 = this.m_ClipFillType;
@@ -5560,134 +6518,201 @@ module.exports = Triangle;
     }
     switch (pft)
     {
-      case ClipperLib.PolyFillType.pftEvenOdd:
-      case ClipperLib.PolyFillType.pftNonZero:
-        if (ClipperLib.Math_Abs_Int32(edge.windCnt) != 1) return false;
-        break;
-      case ClipperLib.PolyFillType.pftPositive:
-        if (edge.windCnt != 1) return false;
-        break;
-      default:
-        if (edge.windCnt != -1) return false;
-        break;
+    case ClipperLib.PolyFillType.pftEvenOdd:
+      if (edge.WindDelta === 0 && edge.WindCnt != 1)
+        return false;
+      break;
+    case ClipperLib.PolyFillType.pftNonZero:
+      if (Math.abs(edge.WindCnt) != 1)
+        return false;
+      break;
+    case ClipperLib.PolyFillType.pftPositive:
+      if (edge.WindCnt != 1)
+        return false;
+      break;
+    default:
+      if (edge.WindCnt != -1)
+        return false;
+      break;
     }
     switch (this.m_ClipType)
     {
-      case ClipperLib.ClipType.ctIntersection:
+    case ClipperLib.ClipType.ctIntersection:
+      switch (pft2)
+      {
+      case ClipperLib.PolyFillType.pftEvenOdd:
+      case ClipperLib.PolyFillType.pftNonZero:
+        return (edge.WindCnt2 !== 0);
+      case ClipperLib.PolyFillType.pftPositive:
+        return (edge.WindCnt2 > 0);
+      default:
+        return (edge.WindCnt2 < 0);
+      }
+    case ClipperLib.ClipType.ctUnion:
+      switch (pft2)
+      {
+      case ClipperLib.PolyFillType.pftEvenOdd:
+      case ClipperLib.PolyFillType.pftNonZero:
+        return (edge.WindCnt2 === 0);
+      case ClipperLib.PolyFillType.pftPositive:
+        return (edge.WindCnt2 <= 0);
+      default:
+        return (edge.WindCnt2 >= 0);
+      }
+    case ClipperLib.ClipType.ctDifference:
+      if (edge.PolyTyp == ClipperLib.PolyType.ptSubject)
         switch (pft2)
         {
-          case ClipperLib.PolyFillType.pftEvenOdd:
-          case ClipperLib.PolyFillType.pftNonZero:
-            return (edge.windCnt2 != 0);
-          case ClipperLib.PolyFillType.pftPositive:
-            return (edge.windCnt2 > 0);
-          default:
-            return (edge.windCnt2 < 0);
+        case ClipperLib.PolyFillType.pftEvenOdd:
+        case ClipperLib.PolyFillType.pftNonZero:
+          return (edge.WindCnt2 === 0);
+        case ClipperLib.PolyFillType.pftPositive:
+          return (edge.WindCnt2 <= 0);
+        default:
+          return (edge.WindCnt2 >= 0);
         }
-        break;
-      case ClipperLib.ClipType.ctUnion:
+      else
         switch (pft2)
         {
-          case ClipperLib.PolyFillType.pftEvenOdd:
-          case ClipperLib.PolyFillType.pftNonZero:
-            return (edge.windCnt2 == 0);
-          case ClipperLib.PolyFillType.pftPositive:
-            return (edge.windCnt2 <= 0);
-          default:
-            return (edge.windCnt2 >= 0);
+        case ClipperLib.PolyFillType.pftEvenOdd:
+        case ClipperLib.PolyFillType.pftNonZero:
+          return (edge.WindCnt2 !== 0);
+        case ClipperLib.PolyFillType.pftPositive:
+          return (edge.WindCnt2 > 0);
+        default:
+          return (edge.WindCnt2 < 0);
         }
-        break;
-      case ClipperLib.ClipType.ctDifference:
-        if (edge.polyType == ClipperLib.PolyType.ptSubject) switch (pft2)
+    case ClipperLib.ClipType.ctXor:
+      if (edge.WindDelta === 0)
+        switch (pft2)
         {
-          case ClipperLib.PolyFillType.pftEvenOdd:
-          case ClipperLib.PolyFillType.pftNonZero:
-            return (edge.windCnt2 == 0);
-          case ClipperLib.PolyFillType.pftPositive:
-            return (edge.windCnt2 <= 0);
-          default:
-            return (edge.windCnt2 >= 0);
+        case ClipperLib.PolyFillType.pftEvenOdd:
+        case ClipperLib.PolyFillType.pftNonZero:
+          return (edge.WindCnt2 === 0);
+        case ClipperLib.PolyFillType.pftPositive:
+          return (edge.WindCnt2 <= 0);
+        default:
+          return (edge.WindCnt2 >= 0);
         }
-        else switch (pft2)
-        {
-          case ClipperLib.PolyFillType.pftEvenOdd:
-          case ClipperLib.PolyFillType.pftNonZero:
-            return (edge.windCnt2 != 0);
-          case ClipperLib.PolyFillType.pftPositive:
-            return (edge.windCnt2 > 0);
-          default:
-            return (edge.windCnt2 < 0);
-        }
+      else
+        return true;
     }
     return true;
   };
   ClipperLib.Clipper.prototype.SetWindingCount = function (edge)
   {
-    var e = edge.prevInAEL;
-    while (e != null && e.polyType != edge.polyType)
-    e = e.prevInAEL;
-    if (e == null)
+    var e = edge.PrevInAEL;
+    //find the edge of the same polytype that immediately preceeds 'edge' in AEL
+    while (e !== null && ((e.PolyTyp != edge.PolyTyp) || (e.WindDelta === 0)))
+      e = e.PrevInAEL;
+    if (e === null)
     {
-      edge.windCnt = edge.windDelta;
-      edge.windCnt2 = 0;
+      edge.WindCnt = (edge.WindDelta === 0 ? 1 : edge.WindDelta);
+      edge.WindCnt2 = 0;
       e = this.m_ActiveEdges;
+      //ie get ready to calc WindCnt2
+    }
+    else if (edge.WindDelta === 0 && this.m_ClipType != ClipperLib.ClipType.ctUnion)
+    {
+      edge.WindCnt = 1;
+      edge.WindCnt2 = e.WindCnt2;
+      e = e.NextInAEL;
+      //ie get ready to calc WindCnt2
     }
     else if (this.IsEvenOddFillType(edge))
     {
-      edge.windCnt = 1;
-      edge.windCnt2 = e.windCnt2;
-      e = e.nextInAEL;
-    }
-    else
-    {
-      if (e.windCnt * e.windDelta < 0)
+      //EvenOdd filling ...
+      if (edge.WindDelta === 0)
       {
-        if (ClipperLib.Math_Abs_Int32(e.windCnt) > 1)
+        //are we inside a subj polygon ...
+        var Inside = true;
+        var e2 = e.PrevInAEL;
+        while (e2 !== null)
         {
-          if (e.windDelta * edge.windDelta < 0) edge.windCnt = e.windCnt;
-          else edge.windCnt = e.windCnt + edge.windDelta;
+          if (e2.PolyTyp == e.PolyTyp && e2.WindDelta !== 0)
+            Inside = !Inside;
+          e2 = e2.PrevInAEL;
         }
-        else edge.windCnt = e.windCnt + e.windDelta + edge.windDelta;
+        edge.WindCnt = (Inside ? 0 : 1);
       }
       else
       {
-        if (ClipperLib.Math_Abs_Int32(e.windCnt) > 1 && e.windDelta * edge.windDelta < 0) edge.windCnt = e.windCnt;
-        else if (e.windCnt + edge.windDelta == 0) edge.windCnt = e.windCnt;
-        else edge.windCnt = e.windCnt + edge.windDelta;
+        edge.WindCnt = edge.WindDelta;
       }
-      edge.windCnt2 = e.windCnt2;
-      e = e.nextInAEL;
+      edge.WindCnt2 = e.WindCnt2;
+      e = e.NextInAEL;
+      //ie get ready to calc WindCnt2
     }
+    else
+    {
+      //nonZero, Positive or Negative filling ...
+      if (e.WindCnt * e.WindDelta < 0)
+      {
+        //prev edge is 'decreasing' WindCount (WC) toward zero
+        //so we're outside the previous polygon ...
+        if (Math.abs(e.WindCnt) > 1)
+        {
+          //outside prev poly but still inside another.
+          //when reversing direction of prev poly use the same WC 
+          if (e.WindDelta * edge.WindDelta < 0)
+            edge.WindCnt = e.WindCnt;
+          else
+            edge.WindCnt = e.WindCnt + edge.WindDelta;
+        }
+        else
+          edge.WindCnt = (edge.WindDelta === 0 ? 1 : edge.WindDelta);
+      }
+      else
+      {
+        //prev edge is 'increasing' WindCount (WC) away from zero
+        //so we're inside the previous polygon ...
+        if (edge.WindDelta === 0)
+          edge.WindCnt = (e.WindCnt < 0 ? e.WindCnt - 1 : e.WindCnt + 1);
+        else if (e.WindDelta * edge.WindDelta < 0)
+          edge.WindCnt = e.WindCnt;
+        else
+          edge.WindCnt = e.WindCnt + edge.WindDelta;
+      }
+      edge.WindCnt2 = e.WindCnt2;
+      e = e.NextInAEL;
+      //ie get ready to calc WindCnt2
+    }
+    //update WindCnt2 ...
     if (this.IsEvenOddAltFillType(edge))
     {
+      //EvenOdd filling ...
       while (e != edge)
       {
-        edge.windCnt2 = (edge.windCnt2 == 0) ? 1 : 0;
-        e = e.nextInAEL;
+        if (e.WindDelta !== 0)
+          edge.WindCnt2 = (edge.WindCnt2 === 0 ? 1 : 0);
+        e = e.NextInAEL;
       }
     }
     else
     {
+      //nonZero, Positive or Negative filling ...
       while (e != edge)
       {
-        edge.windCnt2 += e.windDelta;
-        e = e.nextInAEL;
+        edge.WindCnt2 += e.WindDelta;
+        e = e.NextInAEL;
       }
     }
   };
   ClipperLib.Clipper.prototype.AddEdgeToSEL = function (edge)
   {
-    if (this.m_SortedEdges == null)
+    //SEL pointers in PEdge are reused to build a list of horizontal edges.
+    //However, we don't need to worry about order with horizontal edge processing.
+    if (this.m_SortedEdges === null)
     {
       this.m_SortedEdges = edge;
-      edge.prevInSEL = null;
-      edge.nextInSEL = null;
+      edge.PrevInSEL = null;
+      edge.NextInSEL = null;
     }
     else
     {
-      edge.nextInSEL = this.m_SortedEdges;
-      edge.prevInSEL = null;
-      this.m_SortedEdges.prevInSEL = edge;
+      edge.NextInSEL = this.m_SortedEdges;
+      edge.PrevInSEL = null;
+      this.m_SortedEdges.PrevInSEL = edge;
       this.m_SortedEdges = edge;
     }
   };
@@ -5695,577 +6720,669 @@ module.exports = Triangle;
   {
     var e = this.m_ActiveEdges;
     this.m_SortedEdges = e;
-    if (this.m_ActiveEdges == null) return;
-    this.m_SortedEdges.prevInSEL = null;
-    e = e.nextInAEL;
-    while (e != null)
+    while (e !== null)
     {
-      e.prevInSEL = e.prevInAEL;
-      e.prevInSEL.nextInSEL = e;
-      e.nextInSEL = null;
-      e = e.nextInAEL;
+      e.PrevInSEL = e.PrevInAEL;
+      e.NextInSEL = e.NextInAEL;
+      e = e.NextInAEL;
     }
   };
   ClipperLib.Clipper.prototype.SwapPositionsInAEL = function (edge1, edge2)
   {
-    var next, prev;
-    if (edge1.nextInAEL == null && edge1.prevInAEL == null) return;
-    if (edge2.nextInAEL == null && edge2.prevInAEL == null) return;
-    if (edge1.nextInAEL == edge2)
+    //check that one or other edge hasn't already been removed from AEL ...
+    if (edge1.NextInAEL == edge1.PrevInAEL || edge2.NextInAEL == edge2.PrevInAEL)
+      return;
+    if (edge1.NextInAEL == edge2)
     {
-      next = edge2.nextInAEL;
-      if (next != null) next.prevInAEL = edge1;
-      prev = edge1.prevInAEL;
-      if (prev != null) prev.nextInAEL = edge2;
-      edge2.prevInAEL = prev;
-      edge2.nextInAEL = edge1;
-      edge1.prevInAEL = edge2;
-      edge1.nextInAEL = next;
+      var next = edge2.NextInAEL;
+      if (next !== null)
+        next.PrevInAEL = edge1;
+      var prev = edge1.PrevInAEL;
+      if (prev !== null)
+        prev.NextInAEL = edge2;
+      edge2.PrevInAEL = prev;
+      edge2.NextInAEL = edge1;
+      edge1.PrevInAEL = edge2;
+      edge1.NextInAEL = next;
     }
-    else if (edge2.nextInAEL == edge1)
+    else if (edge2.NextInAEL == edge1)
     {
-      next = edge1.nextInAEL;
-      if (next != null) next.prevInAEL = edge2;
-      prev = edge2.prevInAEL;
-      if (prev != null) prev.nextInAEL = edge1;
-      edge1.prevInAEL = prev;
-      edge1.nextInAEL = edge2;
-      edge2.prevInAEL = edge1;
-      edge2.nextInAEL = next;
+      var next = edge1.NextInAEL;
+      if (next !== null)
+        next.PrevInAEL = edge2;
+      var prev = edge2.PrevInAEL;
+      if (prev !== null)
+        prev.NextInAEL = edge1;
+      edge1.PrevInAEL = prev;
+      edge1.NextInAEL = edge2;
+      edge2.PrevInAEL = edge1;
+      edge2.NextInAEL = next;
     }
     else
     {
-      next = edge1.nextInAEL;
-      prev = edge1.prevInAEL;
-      edge1.nextInAEL = edge2.nextInAEL;
-      if (edge1.nextInAEL != null) edge1.nextInAEL.prevInAEL = edge1;
-      edge1.prevInAEL = edge2.prevInAEL;
-      if (edge1.prevInAEL != null) edge1.prevInAEL.nextInAEL = edge1;
-      edge2.nextInAEL = next;
-      if (edge2.nextInAEL != null) edge2.nextInAEL.prevInAEL = edge2;
-      edge2.prevInAEL = prev;
-      if (edge2.prevInAEL != null) edge2.prevInAEL.nextInAEL = edge2;
+      var next = edge1.NextInAEL;
+      var prev = edge1.PrevInAEL;
+      edge1.NextInAEL = edge2.NextInAEL;
+      if (edge1.NextInAEL !== null)
+        edge1.NextInAEL.PrevInAEL = edge1;
+      edge1.PrevInAEL = edge2.PrevInAEL;
+      if (edge1.PrevInAEL !== null)
+        edge1.PrevInAEL.NextInAEL = edge1;
+      edge2.NextInAEL = next;
+      if (edge2.NextInAEL !== null)
+        edge2.NextInAEL.PrevInAEL = edge2;
+      edge2.PrevInAEL = prev;
+      if (edge2.PrevInAEL !== null)
+        edge2.PrevInAEL.NextInAEL = edge2;
     }
-    if (edge1.prevInAEL == null) this.m_ActiveEdges = edge1;
-    else if (edge2.prevInAEL == null) this.m_ActiveEdges = edge2;
+    if (edge1.PrevInAEL === null)
+      this.m_ActiveEdges = edge1;
+    else if (edge2.PrevInAEL === null)
+      this.m_ActiveEdges = edge2;
   };
   ClipperLib.Clipper.prototype.SwapPositionsInSEL = function (edge1, edge2)
   {
-    var next, prev;
-    if (edge1.nextInSEL == null && edge1.prevInSEL == null) return;
-    if (edge2.nextInSEL == null && edge2.prevInSEL == null) return;
-    if (edge1.nextInSEL == edge2)
+    if (edge1.NextInSEL === null && edge1.PrevInSEL === null)
+      return;
+    if (edge2.NextInSEL === null && edge2.PrevInSEL === null)
+      return;
+    if (edge1.NextInSEL == edge2)
     {
-      next = edge2.nextInSEL;
-      if (next != null) next.prevInSEL = edge1;
-      prev = edge1.prevInSEL;
-      if (prev != null) prev.nextInSEL = edge2;
-      edge2.prevInSEL = prev;
-      edge2.nextInSEL = edge1;
-      edge1.prevInSEL = edge2;
-      edge1.nextInSEL = next;
+      var next = edge2.NextInSEL;
+      if (next !== null)
+        next.PrevInSEL = edge1;
+      var prev = edge1.PrevInSEL;
+      if (prev !== null)
+        prev.NextInSEL = edge2;
+      edge2.PrevInSEL = prev;
+      edge2.NextInSEL = edge1;
+      edge1.PrevInSEL = edge2;
+      edge1.NextInSEL = next;
     }
-    else if (edge2.nextInSEL == edge1)
+    else if (edge2.NextInSEL == edge1)
     {
-      next = edge1.nextInSEL;
-      if (next != null) next.prevInSEL = edge2;
-      prev = edge2.prevInSEL;
-      if (prev != null) prev.nextInSEL = edge1;
-      edge1.prevInSEL = prev;
-      edge1.nextInSEL = edge2;
-      edge2.prevInSEL = edge1;
-      edge2.nextInSEL = next;
+      var next = edge1.NextInSEL;
+      if (next !== null)
+        next.PrevInSEL = edge2;
+      var prev = edge2.PrevInSEL;
+      if (prev !== null)
+        prev.NextInSEL = edge1;
+      edge1.PrevInSEL = prev;
+      edge1.NextInSEL = edge2;
+      edge2.PrevInSEL = edge1;
+      edge2.NextInSEL = next;
     }
     else
     {
-      next = edge1.nextInSEL;
-      prev = edge1.prevInSEL;
-      edge1.nextInSEL = edge2.nextInSEL;
-      if (edge1.nextInSEL != null) edge1.nextInSEL.prevInSEL = edge1;
-      edge1.prevInSEL = edge2.prevInSEL;
-      if (edge1.prevInSEL != null) edge1.prevInSEL.nextInSEL = edge1;
-      edge2.nextInSEL = next;
-      if (edge2.nextInSEL != null) edge2.nextInSEL.prevInSEL = edge2;
-      edge2.prevInSEL = prev;
-      if (edge2.prevInSEL != null) edge2.prevInSEL.nextInSEL = edge2;
+      var next = edge1.NextInSEL;
+      var prev = edge1.PrevInSEL;
+      edge1.NextInSEL = edge2.NextInSEL;
+      if (edge1.NextInSEL !== null)
+        edge1.NextInSEL.PrevInSEL = edge1;
+      edge1.PrevInSEL = edge2.PrevInSEL;
+      if (edge1.PrevInSEL !== null)
+        edge1.PrevInSEL.NextInSEL = edge1;
+      edge2.NextInSEL = next;
+      if (edge2.NextInSEL !== null)
+        edge2.NextInSEL.PrevInSEL = edge2;
+      edge2.PrevInSEL = prev;
+      if (edge2.PrevInSEL !== null)
+        edge2.PrevInSEL.NextInSEL = edge2;
     }
-    if (edge1.prevInSEL == null) this.m_SortedEdges = edge1;
-    else if (edge2.prevInSEL == null) this.m_SortedEdges = edge2;
+    if (edge1.PrevInSEL === null)
+      this.m_SortedEdges = edge1;
+    else if (edge2.PrevInSEL === null)
+      this.m_SortedEdges = edge2;
   };
   ClipperLib.Clipper.prototype.AddLocalMaxPoly = function (e1, e2, pt)
   {
     this.AddOutPt(e1, pt);
-    if (e1.outIdx == e2.outIdx)
+    if (e2.WindDelta == 0) this.AddOutPt(e2, pt);
+    if (e1.OutIdx == e2.OutIdx)
     {
-      e1.outIdx = -1;
-      e2.outIdx = -1;
+      e1.OutIdx = -1;
+      e2.OutIdx = -1;
     }
-    else if (e1.outIdx < e2.outIdx) this.AppendPolygon(e1, e2);
-    else this.AppendPolygon(e2, e1);
+    else if (e1.OutIdx < e2.OutIdx)
+      this.AppendPolygon(e1, e2);
+    else
+      this.AppendPolygon(e2, e1);
   };
   ClipperLib.Clipper.prototype.AddLocalMinPoly = function (e1, e2, pt)
   {
+    var result;
     var e, prevE;
-    if (e2.dx == ClipperLib.ClipperBase.horizontal || (e1.dx > e2.dx))
+    if (ClipperLib.ClipperBase.IsHorizontal(e2) || (e1.Dx > e2.Dx))
     {
-      this.AddOutPt(e1, pt);
-      e2.outIdx = e1.outIdx;
-      e1.side = ClipperLib.EdgeSide.esLeft;
-      e2.side = ClipperLib.EdgeSide.esRight;
+      result = this.AddOutPt(e1, pt);
+      e2.OutIdx = e1.OutIdx;
+      e1.Side = ClipperLib.EdgeSide.esLeft;
+      e2.Side = ClipperLib.EdgeSide.esRight;
       e = e1;
-      if (e.prevInAEL == e2) prevE = e2.prevInAEL;
-      else prevE = e.prevInAEL;
+      if (e.PrevInAEL == e2)
+        prevE = e2.PrevInAEL;
+      else
+        prevE = e.PrevInAEL;
     }
     else
     {
-      this.AddOutPt(e2, pt);
-      e1.outIdx = e2.outIdx;
-      e1.side = ClipperLib.EdgeSide.esRight;
-      e2.side = ClipperLib.EdgeSide.esLeft;
+      result = this.AddOutPt(e2, pt);
+      e1.OutIdx = e2.OutIdx;
+      e1.Side = ClipperLib.EdgeSide.esRight;
+      e2.Side = ClipperLib.EdgeSide.esLeft;
       e = e2;
-      if (e.prevInAEL == e1) prevE = e1.prevInAEL;
-      else prevE = e.prevInAEL;
+      if (e.PrevInAEL == e1)
+        prevE = e1.PrevInAEL;
+      else
+        prevE = e.PrevInAEL;
     }
-    if (prevE != null && prevE.outIdx >= 0 && (ClipperLib.Clipper.TopX(prevE, pt.y) == ClipperLib.Clipper.TopX(e, pt.y)) && this.SlopesEqual(e, prevE, this.m_UseFullRange)) this.AddJoin(e, prevE, -1, -1);
+    if (prevE !== null && prevE.OutIdx >= 0 && (ClipperLib.Clipper.TopX(prevE, pt.y) == ClipperLib.Clipper.TopX(e, pt.y)) && ClipperLib.ClipperBase.SlopesEqual(e, prevE, this.m_UseFullRange) && (e.WindDelta !== 0) && (prevE.WindDelta !== 0))
+    {
+      var outPt = this.AddOutPt(prevE, pt);
+      this.AddJoin(result, outPt, e.Top);
+    }
+    return result;
   };
   ClipperLib.Clipper.prototype.CreateOutRec = function ()
   {
     var result = new ClipperLib.OutRec();
-    result.idx = -1;
-    result.isHole = false;
+    result.Idx = -1;
+    result.IsHole = false;
+    result.IsOpen = false;
     result.FirstLeft = null;
-    result.AppendLink = null;
-    result.pts = null;
-    result.bottomPt = null;
+    result.Pts = null;
+    result.BottomPt = null;
+    result.PolyNode = null;
+    this.m_PolyOuts.push(result);
+    result.Idx = this.m_PolyOuts.length - 1;
     return result;
   };
   ClipperLib.Clipper.prototype.AddOutPt = function (e, pt)
   {
-    var outRec, op;
-    var ToFront = (e.side == ClipperLib.EdgeSide.esLeft);
-    if (e.outIdx < 0)
+    var ToFront = (e.Side == ClipperLib.EdgeSide.esLeft);
+    if (e.OutIdx < 0)
     {
-      outRec = this.CreateOutRec();
-      this.m_PolyOuts.push(outRec);
-      outRec.idx = this.m_PolyOuts.length - 1;
-      e.outIdx = outRec.idx;
-      op = new ClipperLib.OutPt();
-      outRec.pts = op;
-      outRec.bottomPt = op;
-      op.pt = pt;
-      op.idx = outRec.idx;
-      op.next = op;
-      op.prev = op;
-      this.SetHoleState(e, outRec);
+      var outRec = this.CreateOutRec();
+      outRec.IsOpen = (e.WindDelta === 0);
+      var newOp = new ClipperLib.OutPt();
+      outRec.Pts = newOp;
+      newOp.Idx = outRec.Idx;
+      //newOp.Pt = pt;
+      newOp.Pt.x = pt.x; 
+      newOp.Pt.y = pt.y; 
+      newOp.Next = newOp;
+      newOp.Prev = newOp;
+      if (!outRec.IsOpen)
+        this.SetHoleState(e, outRec);
+      if (use_xyz)
+      {
+        if (ClipperLib.IntPoint.op_Equality(pt, e.Bot))
+        {
+          //newOp.Pt = e.Bot;
+          newOp.Pt.x = e.Bot.x; 
+          newOp.Pt.y = e.Bot.y; 
+          newOp.Pt.z = e.Bot.z;
+        }
+        else if (ClipperLib.IntPoint.op_Equality(pt, e.Top))
+        {
+          //newOp.Pt = e.Top;
+          newOp.Pt.x = e.Top.x; 
+          newOp.Pt.y = e.Top.y; 
+          newOp.Pt.z = e.Top.z;
+        }
+        else
+          this.SetZ(newOp.Pt, e);
+      }
+      e.OutIdx = outRec.Idx;
+      //nb: do this after SetZ !
+      return newOp;
     }
     else
     {
-      outRec = this.m_PolyOuts[e.outIdx];
-      op = outRec.pts;
-      var op2;
-      if (ToFront && ClipperLib.ClipperBase.PointsEqual(pt, op.pt) || (!ToFront && ClipperLib.ClipperBase.PointsEqual(pt, op.prev.pt))) return;
-      op2 = new ClipperLib.OutPt();
-      op2.pt = pt;
-      op2.idx = outRec.idx;
-      if (op2.pt.y == outRec.bottomPt.pt.y && op2.pt.x < outRec.bottomPt.pt.x) outRec.bottomPt = op2;
-      op2.next = op;
-      op2.prev = op.prev;
-      op2.prev.next = op2;
-      op.prev = op2;
-      if (ToFront) outRec.pts = op2;
+      var outRec = this.m_PolyOuts[e.OutIdx];
+      //OutRec.Pts is the 'Left-most' point & OutRec.Pts.Prev is the 'Right-most'
+      var op = outRec.Pts;
+      if (ToFront && ClipperLib.IntPoint.op_Equality(pt, op.Pt))
+        return op;
+      else if (!ToFront && ClipperLib.IntPoint.op_Equality(pt, op.Prev.Pt))
+        return op.Prev;
+      var newOp = new ClipperLib.OutPt();
+      newOp.Idx = outRec.Idx;
+      //newOp.Pt = pt;
+      newOp.Pt.x = pt.x; 
+      newOp.Pt.y = pt.y; 
+      newOp.Next = op;
+      newOp.Prev = op.Prev;
+      newOp.Prev.Next = newOp;
+      op.Prev = newOp;
+      if (ToFront)
+        outRec.Pts = newOp;
+      if (use_xyz)
+      {
+        if (ClipperLib.IntPoint.op_Equality(pt, e.Bot))
+        {
+          //newOp.Pt = e.Bot;
+          newOp.Pt.x = e.Bot.x; 
+          newOp.Pt.y = e.Bot.y; 
+          newOp.Pt.z = e.Bot.z;
+        }
+        else if (ClipperLib.IntPoint.op_Equality(pt, e.Top))
+        {
+          //newOp.Pt = e.Top;
+          newOp.Pt.x = e.Top.x; 
+          newOp.Pt.y = e.Top.y; 
+          newOp.Pt.z = e.Top.z;
+        }
+        else
+          this.SetZ(newOp.Pt, e);
+      }
+      return newOp;
     }
   };
   ClipperLib.Clipper.prototype.SwapPoints = function (pt1, pt2)
   {
-    var tmp = pt1.Value;
-    pt1.Value = pt2.Value;
-    pt2.Value = tmp;
+    var tmp = new ClipperLib.IntPoint(pt1.Value);
+    //pt1.Value = pt2.Value;
+    pt1.Value.x = pt2.Value.x; 
+    pt1.Value.y = pt2.Value.y; 
+    //pt2.Value = tmp;
+    pt2.Value.x = tmp.x; 
+    pt2.Value.y = tmp.y; 
   };
-  ClipperLib.Clipper.prototype.GetOverlapSegment = function (pt1a, pt1b, pt2a, pt2b, pt1, pt2)
+  ClipperLib.Clipper.prototype.HorzSegmentsOverlap = function (Pt1a, Pt1b, Pt2a, Pt2b)
   {
-    if (ClipperLib.Math_Abs_Int64(pt1a.x - pt1b.x) > ClipperLib.Math_Abs_Int64(pt1a.y - pt1b.y))
-    {
-      if (pt1a.x > pt1b.x)
-      (function ()
-      {
-        pt1a = {
-          Value: pt1a
-        };
-        pt1b = {
-          Value: pt1b
-        };
-        var $res = this.SwapPoints(pt1a, pt1b);
-        pt1a = pt1a.Value;
-        pt1b = pt1b.Value;
-        return $res;
-      })
-        .call(this);
-      if (pt2a.x > pt2b.x)
-      (function ()
-      {
-        pt2a = {
-          Value: pt2a
-        };
-        pt2b = {
-          Value: pt2b
-        };
-        var $res = this.SwapPoints(pt2a, pt2b);
-        pt2a = pt2a.Value;
-        pt2b = pt2b.Value;
-        return $res;
-      })
-        .call(this);
-      if (pt1a.x > pt2a.x) pt1.Value = pt1a;
-      else pt1.Value = pt2a;
-      if (pt1b.x < pt2b.x) pt2.Value = pt1b;
-      else pt2.Value = pt2b;
-      return pt1.Value.x < pt2.Value.x;
-    }
+    //precondition: both segments are horizontal
+    if ((Pt1a.x > Pt2a.x) == (Pt1a.x < Pt2b.x))
+      return true;
+    else if ((Pt1b.x > Pt2a.x) == (Pt1b.x < Pt2b.x))
+      return true;
+    else if ((Pt2a.x > Pt1a.x) == (Pt2a.x < Pt1b.x))
+      return true;
+    else if ((Pt2b.x > Pt1a.x) == (Pt2b.x < Pt1b.x))
+      return true;
+    else if ((Pt1a.x == Pt2a.x) && (Pt1b.x == Pt2b.x))
+      return true;
+    else if ((Pt1a.x == Pt2b.x) && (Pt1b.x == Pt2a.x))
+      return true;
     else
-    {
-      if (pt1a.y < pt1b.y)
-      (function ()
-      {
-        pt1a = {
-          Value: pt1a
-        };
-        pt1b = {
-          Value: pt1b
-        };
-        var $res = this.SwapPoints(pt1a, pt1b);
-        pt1a = pt1a.Value;
-        pt1b = pt1b.Value;
-        return $res;
-      })
-        .call(this);
-      if (pt2a.y < pt2b.y)
-      (function ()
-      {
-        pt2a = {
-          Value: pt2a
-        };
-        pt2b = {
-          Value: pt2b
-        };
-        var $res = this.SwapPoints(pt2a, pt2b);
-        pt2a = pt2a.Value;
-        pt2b = pt2b.Value;
-        return $res;
-      })
-        .call(this);
-      if (pt1a.y < pt2a.y) pt1.Value = pt1a;
-      else pt1.Value = pt2a;
-      if (pt1b.y > pt2b.y) pt2.Value = pt1b;
-      else pt2.Value = pt2b;
-      return pt1.Value.y > pt2.Value.y;
-    }
-  };
-  ClipperLib.Clipper.prototype.FindSegment = function (pp, UseFullInt64Range, pt1, pt2)
-  {
-    if (pp.Value == null) return false;
-    var pp2 = pp.Value;
-    var pt1a = new ClipperLib.IntPoint(pt1.Value);
-    var pt2a = new ClipperLib.IntPoint(pt2.Value);
-    do {
-        // Timo's comment: for some reason calling SlopesEqual() below uses big integers
-        // So although coordinates are low (eg. 900), big integers are sometimes used.
-        // => Fixed according to changes in original Clipper ver 5.1.2 (25 February 2013)
-      if (this.SlopesEqual(pt1a, pt2a, pp.Value.pt, pp.Value.prev.pt, UseFullInt64Range) && this.SlopesEqual(pt1a, pt2a, pp.Value.pt, UseFullInt64Range) && this.GetOverlapSegment(pt1a, pt2a, pp.Value.pt, pp.Value.prev.pt, pt1, pt2)) return true;
-      pp.Value = pp.Value.next;
-    }
-    while (pp.Value != pp2);
-    return false;
-  };
-  ClipperLib.Clipper.prototype.Pt3IsBetweenPt1AndPt2 = function (pt1, pt2, pt3)
-  {
-    if (ClipperLib.ClipperBase.PointsEqual(pt1, pt3) || ClipperLib.ClipperBase.PointsEqual(pt2, pt3)) return true;
-    else if (pt1.x != pt2.x) return (pt1.x < pt3.x) == (pt3.x < pt2.x);
-    else return (pt1.y < pt3.y) == (pt3.y < pt2.y);
+      return false;
   };
   ClipperLib.Clipper.prototype.InsertPolyPtBetween = function (p1, p2, pt)
   {
     var result = new ClipperLib.OutPt();
-    result.pt = pt;
-    if (p2 == p1.next)
+    //result.Pt = pt;
+    result.Pt.x = pt.x; 
+    result.Pt.y = pt.y; 
+    if (p2 == p1.Next)
     {
-      p1.next = result;
-      p2.prev = result;
-      result.next = p2;
-      result.prev = p1;
+      p1.Next = result;
+      p2.Prev = result;
+      result.Next = p2;
+      result.Prev = p1;
     }
     else
     {
-      p2.next = result;
-      p1.prev = result;
-      result.next = p1;
-      result.prev = p2;
+      p2.Next = result;
+      p1.Prev = result;
+      result.Next = p1;
+      result.Prev = p2;
     }
     return result;
   };
   ClipperLib.Clipper.prototype.SetHoleState = function (e, outRec)
   {
     var isHole = false;
-    var e2 = e.prevInAEL;
-    while (e2 != null)
+    var e2 = e.PrevInAEL;
+    while (e2 !== null)
     {
-      if (e2.outIdx >= 0)
+      if (e2.OutIdx >= 0 && e2.WindDelta != 0)
       {
         isHole = !isHole;
-        if (outRec.FirstLeft == null) outRec.FirstLeft = this.m_PolyOuts[e2.outIdx];
+        if (outRec.FirstLeft === null)
+          outRec.FirstLeft = this.m_PolyOuts[e2.OutIdx];
       }
-      e2 = e2.prevInAEL;
+      e2 = e2.PrevInAEL;
     }
-    if (isHole) outRec.isHole = true;
+    if (isHole)
+      outRec.IsHole = true;
   };
   ClipperLib.Clipper.prototype.GetDx = function (pt1, pt2)
   {
-    if (pt1.y == pt2.y) return ClipperLib.ClipperBase.horizontal;
-    else return (pt2.x - pt1.x) / (pt2.y - pt1.y);
+    if (pt1.y == pt2.y)
+      return ClipperLib.ClipperBase.horizontal;
+    else
+      return (pt2.x - pt1.x) / (pt2.y - pt1.y);
   };
   ClipperLib.Clipper.prototype.FirstIsBottomPt = function (btmPt1, btmPt2)
   {
-    var p = btmPt1.prev;
-    while (ClipperLib.ClipperBase.PointsEqual(p.pt, btmPt1.pt) && (p != btmPt1))
-    p = p.prev;
-    var dx1p = ClipperLib.Math_Abs_Double(this.GetDx(btmPt1.pt, p.pt));
-    p = btmPt1.next;
-    while (ClipperLib.ClipperBase.PointsEqual(p.pt, btmPt1.pt) && (p != btmPt1))
-    p = p.next;
-    var dx1n = ClipperLib.Math_Abs_Double(this.GetDx(btmPt1.pt, p.pt));
-    p = btmPt2.prev;
-    while (ClipperLib.ClipperBase.PointsEqual(p.pt, btmPt2.pt) && (p != btmPt2))
-    p = p.prev;
-    var dx2p = ClipperLib.Math_Abs_Double(this.GetDx(btmPt2.pt, p.pt));
-    p = btmPt2.next;
-    while (ClipperLib.ClipperBase.PointsEqual(p.pt, btmPt2.pt) && (p != btmPt2))
-    p = p.next;
-    var dx2n = ClipperLib.Math_Abs_Double(this.GetDx(btmPt2.pt, p.pt));
+    var p = btmPt1.Prev;
+    while ((ClipperLib.IntPoint.op_Equality(p.Pt, btmPt1.Pt)) && (p != btmPt1))
+      p = p.Prev;
+    var dx1p = Math.abs(this.GetDx(btmPt1.Pt, p.Pt));
+    p = btmPt1.Next;
+    while ((ClipperLib.IntPoint.op_Equality(p.Pt, btmPt1.Pt)) && (p != btmPt1))
+      p = p.Next;
+    var dx1n = Math.abs(this.GetDx(btmPt1.Pt, p.Pt));
+    p = btmPt2.Prev;
+    while ((ClipperLib.IntPoint.op_Equality(p.Pt, btmPt2.Pt)) && (p != btmPt2))
+      p = p.Prev;
+    var dx2p = Math.abs(this.GetDx(btmPt2.Pt, p.Pt));
+    p = btmPt2.Next;
+    while ((ClipperLib.IntPoint.op_Equality(p.Pt, btmPt2.Pt)) && (p != btmPt2))
+      p = p.Next;
+    var dx2n = Math.abs(this.GetDx(btmPt2.Pt, p.Pt));
     return (dx1p >= dx2p && dx1p >= dx2n) || (dx1n >= dx2p && dx1n >= dx2n);
   };
   ClipperLib.Clipper.prototype.GetBottomPt = function (pp)
   {
     var dups = null;
-    var p = pp.next;
+    var p = pp.Next;
     while (p != pp)
     {
-      if (p.pt.y > pp.pt.y)
+      if (p.Pt.y > pp.Pt.y)
       {
         pp = p;
         dups = null;
       }
-      else if (p.pt.y == pp.pt.y && p.pt.x <= pp.pt.x)
+      else if (p.Pt.y == pp.Pt.y && p.Pt.x <= pp.Pt.x)
       {
-        if (p.pt.x < pp.pt.x)
+        if (p.Pt.x < pp.Pt.x)
         {
           dups = null;
           pp = p;
         }
         else
         {
-          if (p.next != pp && p.prev != pp) dups = p;
+          if (p.Next != pp && p.Prev != pp)
+            dups = p;
         }
       }
-      p = p.next;
+      p = p.Next;
     }
-    if (dups != null)
+    if (dups !== null)
     {
+      //there appears to be at least 2 vertices at bottomPt so ...
       while (dups != p)
       {
-        if (!this.FirstIsBottomPt(p, dups)) pp = dups;
-        dups = dups.next;
-        while (!ClipperLib.ClipperBase.PointsEqual(dups.pt, pp.pt))
-        dups = dups.next;
+        if (!this.FirstIsBottomPt(p, dups))
+          pp = dups;
+        dups = dups.Next;
+        while (ClipperLib.IntPoint.op_Inequality(dups.Pt, pp.Pt))
+          dups = dups.Next;
       }
     }
     return pp;
   };
   ClipperLib.Clipper.prototype.GetLowermostRec = function (outRec1, outRec2)
   {
-    var bPt1 = outRec1.bottomPt;
-    var bPt2 = outRec2.bottomPt;
-    if (bPt1.pt.y > bPt2.pt.y) return outRec1;
-    else if (bPt1.pt.y < bPt2.pt.y) return outRec2;
-    else if (bPt1.pt.x < bPt2.pt.x) return outRec1;
-    else if (bPt1.pt.x > bPt2.pt.x) return outRec2;
-    else if (bPt1.next == bPt1) return outRec2;
-    else if (bPt2.next == bPt2) return outRec1;
-    else if (this.FirstIsBottomPt(bPt1, bPt2)) return outRec1;
-    else return outRec2;
+    //work out which polygon fragment has the correct hole state ...
+    if (outRec1.BottomPt === null)
+      outRec1.BottomPt = this.GetBottomPt(outRec1.Pts);
+    if (outRec2.BottomPt === null)
+      outRec2.BottomPt = this.GetBottomPt(outRec2.Pts);
+    var bPt1 = outRec1.BottomPt;
+    var bPt2 = outRec2.BottomPt;
+    if (bPt1.Pt.y > bPt2.Pt.y)
+      return outRec1;
+    else if (bPt1.Pt.y < bPt2.Pt.y)
+      return outRec2;
+    else if (bPt1.Pt.x < bPt2.Pt.x)
+      return outRec1;
+    else if (bPt1.Pt.x > bPt2.Pt.x)
+      return outRec2;
+    else if (bPt1.Next == bPt1)
+      return outRec2;
+    else if (bPt2.Next == bPt2)
+      return outRec1;
+    else if (this.FirstIsBottomPt(bPt1, bPt2))
+      return outRec1;
+    else
+      return outRec2;
   };
   ClipperLib.Clipper.prototype.Param1RightOfParam2 = function (outRec1, outRec2)
   {
     do {
       outRec1 = outRec1.FirstLeft;
-      if (outRec1 == outRec2) return true;
+      if (outRec1 == outRec2)
+        return true;
     }
-    while (outRec1 != null);
+    while (outRec1 !== null)
     return false;
+  };
+  ClipperLib.Clipper.prototype.GetOutRec = function (idx)
+  {
+    var outrec = this.m_PolyOuts[idx];
+    while (outrec != this.m_PolyOuts[outrec.Idx])
+      outrec = this.m_PolyOuts[outrec.Idx];
+    return outrec;
   };
   ClipperLib.Clipper.prototype.AppendPolygon = function (e1, e2)
   {
-    var outRec1 = this.m_PolyOuts[e1.outIdx];
-    var outRec2 = this.m_PolyOuts[e2.outIdx];
+    //get the start and ends of both output polygons ...
+    var outRec1 = this.m_PolyOuts[e1.OutIdx];
+    var outRec2 = this.m_PolyOuts[e2.OutIdx];
     var holeStateRec;
-    if (this.Param1RightOfParam2(outRec1, outRec2)) holeStateRec = outRec2;
-    else if (this.Param1RightOfParam2(outRec2, outRec1)) holeStateRec = outRec1;
-    else holeStateRec = this.GetLowermostRec(outRec1, outRec2);
-    var p1_lft = outRec1.pts;
-    var p1_rt = p1_lft.prev;
-    var p2_lft = outRec2.pts;
-    var p2_rt = p2_lft.prev;
+    if (this.Param1RightOfParam2(outRec1, outRec2))
+      holeStateRec = outRec2;
+    else if (this.Param1RightOfParam2(outRec2, outRec1))
+      holeStateRec = outRec1;
+    else
+      holeStateRec = this.GetLowermostRec(outRec1, outRec2);
+    var p1_lft = outRec1.Pts;
+    var p1_rt = p1_lft.Prev;
+    var p2_lft = outRec2.Pts;
+    var p2_rt = p2_lft.Prev;
     var side;
-    var i;
-    if (e1.side == ClipperLib.EdgeSide.esLeft)
+    //join e2 poly onto e1 poly and delete pointers to e2 ...
+    if (e1.Side == ClipperLib.EdgeSide.esLeft)
     {
-      if (e2.side == ClipperLib.EdgeSide.esLeft)
+      if (e2.Side == ClipperLib.EdgeSide.esLeft)
       {
+        //z y x a b c
         this.ReversePolyPtLinks(p2_lft);
-        p2_lft.next = p1_lft;
-        p1_lft.prev = p2_lft;
-        p1_rt.next = p2_rt;
-        p2_rt.prev = p1_rt;
-        outRec1.pts = p2_rt;
+        p2_lft.Next = p1_lft;
+        p1_lft.Prev = p2_lft;
+        p1_rt.Next = p2_rt;
+        p2_rt.Prev = p1_rt;
+        outRec1.Pts = p2_rt;
       }
       else
       {
-        p2_rt.next = p1_lft;
-        p1_lft.prev = p2_rt;
-        p2_lft.prev = p1_rt;
-        p1_rt.next = p2_lft;
-        outRec1.pts = p2_lft;
+        //x y z a b c
+        p2_rt.Next = p1_lft;
+        p1_lft.Prev = p2_rt;
+        p2_lft.Prev = p1_rt;
+        p1_rt.Next = p2_lft;
+        outRec1.Pts = p2_lft;
       }
       side = ClipperLib.EdgeSide.esLeft;
     }
     else
     {
-      if (e2.side == ClipperLib.EdgeSide.esRight)
+      if (e2.Side == ClipperLib.EdgeSide.esRight)
       {
+        //a b c z y x
         this.ReversePolyPtLinks(p2_lft);
-        p1_rt.next = p2_rt;
-        p2_rt.prev = p1_rt;
-        p2_lft.next = p1_lft;
-        p1_lft.prev = p2_lft;
+        p1_rt.Next = p2_rt;
+        p2_rt.Prev = p1_rt;
+        p2_lft.Next = p1_lft;
+        p1_lft.Prev = p2_lft;
       }
       else
       {
-        p1_rt.next = p2_lft;
-        p2_lft.prev = p1_rt;
-        p1_lft.prev = p2_rt;
-        p2_rt.next = p1_lft;
+        //a b c x y z
+        p1_rt.Next = p2_lft;
+        p2_lft.Prev = p1_rt;
+        p1_lft.Prev = p2_rt;
+        p2_rt.Next = p1_lft;
       }
       side = ClipperLib.EdgeSide.esRight;
     }
+    outRec1.BottomPt = null;
     if (holeStateRec == outRec2)
     {
-      outRec1.bottomPt = outRec2.bottomPt;
-      outRec1.bottomPt.idx = outRec1.idx;
-      if (outRec2.FirstLeft != outRec1) outRec1.FirstLeft = outRec2.FirstLeft;
-      outRec1.isHole = outRec2.isHole;
+      if (outRec2.FirstLeft != outRec1)
+        outRec1.FirstLeft = outRec2.FirstLeft;
+      outRec1.IsHole = outRec2.IsHole;
     }
-    outRec2.pts = null;
-    outRec2.bottomPt = null;
-    outRec2.AppendLink = outRec1;
-    var OKIdx = e1.outIdx;
-    var ObsoleteIdx = e2.outIdx;
-    e1.outIdx = -1;
-    e2.outIdx = -1;
+    outRec2.Pts = null;
+    outRec2.BottomPt = null;
+    outRec2.FirstLeft = outRec1;
+    var OKIdx = e1.OutIdx;
+    var ObsoleteIdx = e2.OutIdx;
+    e1.OutIdx = -1;
+    //nb: safe because we only get here via AddLocalMaxPoly
+    e2.OutIdx = -1;
     var e = this.m_ActiveEdges;
-    while (e != null)
+    while (e !== null)
     {
-      if (e.outIdx == ObsoleteIdx)
+      if (e.OutIdx == ObsoleteIdx)
       {
-        e.outIdx = OKIdx;
-        e.side = side;
+        e.OutIdx = OKIdx;
+        e.Side = side;
         break;
       }
-      e = e.nextInAEL;
+      e = e.NextInAEL;
     }
-    for (i = 0; i < this.m_Joins.length; ++i)
-    {
-      if (this.m_Joins[i].poly1Idx == ObsoleteIdx) this.m_Joins[i].poly1Idx = OKIdx;
-      if (this.m_Joins[i].poly2Idx == ObsoleteIdx) this.m_Joins[i].poly2Idx = OKIdx;
-    }
-    for (i = 0; i < this.m_HorizJoins.length; ++i)
-    {
-      if (this.m_HorizJoins[i].savedIdx == ObsoleteIdx) this.m_HorizJoins[i].savedIdx = OKIdx;
-    }
+    outRec2.Idx = outRec1.Idx;
   };
   ClipperLib.Clipper.prototype.ReversePolyPtLinks = function (pp)
   {
-    if (pp == null) return;
+    if (pp === null)
+      return;
     var pp1;
     var pp2;
     pp1 = pp;
     do {
-      pp2 = pp1.next;
-      pp1.next = pp1.prev;
-      pp1.prev = pp2;
+      pp2 = pp1.Next;
+      pp1.Next = pp1.Prev;
+      pp1.Prev = pp2;
       pp1 = pp2;
     }
-    while (pp1 != pp);
+    while (pp1 != pp)
   };
   ClipperLib.Clipper.SwapSides = function (edge1, edge2)
   {
-    var side = edge1.side;
-    edge1.side = edge2.side;
-    edge2.side = side;
+    var side = edge1.Side;
+    edge1.Side = edge2.Side;
+    edge2.Side = side;
   };
   ClipperLib.Clipper.SwapPolyIndexes = function (edge1, edge2)
   {
-    var outIdx = edge1.outIdx;
-    edge1.outIdx = edge2.outIdx;
-    edge2.outIdx = outIdx;
+    var outIdx = edge1.OutIdx;
+    edge1.OutIdx = edge2.OutIdx;
+    edge2.OutIdx = outIdx;
   };
-  ClipperLib.Clipper.prototype.DoEdge1 = function (edge1, edge2, pt)
+  ClipperLib.Clipper.prototype.IntersectEdges = function (e1, e2, pt, protect)
   {
-    this.AddOutPt(edge1, pt);
-    ClipperLib.Clipper.SwapSides(edge1, edge2);
-    ClipperLib.Clipper.SwapPolyIndexes(edge1, edge2);
-  };
-  ClipperLib.Clipper.prototype.DoEdge2 = function (edge1, edge2, pt)
-  {
-    this.AddOutPt(edge2, pt);
-    ClipperLib.Clipper.SwapSides(edge1, edge2);
-    ClipperLib.Clipper.SwapPolyIndexes(edge1, edge2);
-  };
-  ClipperLib.Clipper.prototype.DoBothEdges = function (edge1, edge2, pt)
-  {
-    this.AddOutPt(edge1, pt);
-    this.AddOutPt(edge2, pt);
-    ClipperLib.Clipper.SwapSides(edge1, edge2);
-    ClipperLib.Clipper.SwapPolyIndexes(edge1, edge2);
-  };
-  ClipperLib.Clipper.prototype.IntersectEdges = function (e1, e2, pt, protects)
-  {
-    var e1stops = (ClipperLib.Protects.ipLeft & protects) == 0 && e1.nextInLML == null && e1.xtop == pt.x && e1.ytop == pt.y;
-    var e2stops = (ClipperLib.Protects.ipRight & protects) == 0 && e2.nextInLML == null && e2.xtop == pt.x && e2.ytop == pt.y;
-    var e1Contributing = (e1.outIdx >= 0);
-    var e2contributing = (e2.outIdx >= 0);
-    if (e1.polyType == e2.polyType)
+    //e1 will be to the left of e2 BELOW the intersection. Therefore e1 is before
+    //e2 in AEL except when e1 is being inserted at the intersection point ...
+    var e1stops = !protect && e1.NextInLML === null &&
+      e1.Top.x == pt.x && e1.Top.y == pt.y; 
+    var e2stops = !protect && e2.NextInLML === null &&
+      e2.Top.x == pt.x && e2.Top.y == pt.y; 
+    var e1Contributing = (e1.OutIdx >= 0);
+    var e2Contributing = (e2.OutIdx >= 0);
+    if (use_lines)
+    {
+      //if either edge is on an OPEN path ...
+      if (e1.WindDelta === 0 || e2.WindDelta === 0)
+      {
+        //ignore subject-subject open path intersections UNLESS they
+        //are both open paths, AND they are both 'contributing maximas' ...
+        if (e1.WindDelta === 0 && e2.WindDelta === 0)
+        {
+          if ((e1stops || e2stops) && e1Contributing && e2Contributing)
+            this.AddLocalMaxPoly(e1, e2, pt);
+        }
+        //if intersecting a subj line with a subj poly ...
+        else if (e1.PolyTyp == e2.PolyTyp &&
+          e1.WindDelta != e2.WindDelta && this.m_ClipType == ClipperLib.ClipType.ctUnion)
+        {
+          if (e1.WindDelta === 0)
+          {
+            if (e2Contributing)
+            {
+              this.AddOutPt(e1, pt);
+              if (e1Contributing)
+                e1.OutIdx = -1;
+            }
+          }
+          else
+          {
+            if (e1Contributing)
+            {
+              this.AddOutPt(e2, pt);
+              if (e2Contributing)
+                e2.OutIdx = -1;
+            }
+          }
+        }
+        else if (e1.PolyTyp != e2.PolyTyp)
+        {
+          if ((e1.WindDelta === 0) && Math.abs(e2.WindCnt) == 1 &&
+            (this.m_ClipType != ClipperLib.ClipType.ctUnion || e2.WindCnt2 === 0))
+          {
+            this.AddOutPt(e1, pt);
+            if (e1Contributing)
+              e1.OutIdx = -1;
+          }
+          else if ((e2.WindDelta === 0) && (Math.abs(e1.WindCnt) == 1) &&
+            (this.m_ClipType != ClipperLib.ClipType.ctUnion || e1.WindCnt2 === 0))
+          {
+            this.AddOutPt(e2, pt);
+            if (e2Contributing)
+              e2.OutIdx = -1;
+          }
+        }
+        if (e1stops)
+          if (e1.OutIdx < 0)
+            this.DeleteFromAEL(e1);
+          else
+            ClipperLib.Error("Error intersecting polylines");
+        if (e2stops)
+          if (e2.OutIdx < 0)
+            this.DeleteFromAEL(e2);
+          else
+            ClipperLib.Error("Error intersecting polylines");
+        return;
+      }
+    }
+    //update winding counts...
+    //assumes that e1 will be to the Right of e2 ABOVE the intersection
+    if (e1.PolyTyp == e2.PolyTyp)
     {
       if (this.IsEvenOddFillType(e1))
       {
-        var oldE1WindCnt = e1.windCnt;
-        e1.windCnt = e2.windCnt;
-        e2.windCnt = oldE1WindCnt;
+        var oldE1WindCnt = e1.WindCnt;
+        e1.WindCnt = e2.WindCnt;
+        e2.WindCnt = oldE1WindCnt;
       }
       else
       {
-        if (e1.windCnt + e2.windDelta == 0) e1.windCnt = -e1.windCnt;
-        else e1.windCnt += e2.windDelta;
-        if (e2.windCnt - e1.windDelta == 0) e2.windCnt = -e2.windCnt;
-        else e2.windCnt -= e1.windDelta;
+        if (e1.WindCnt + e2.WindDelta === 0)
+          e1.WindCnt = -e1.WindCnt;
+        else
+          e1.WindCnt += e2.WindDelta;
+        if (e2.WindCnt - e1.WindDelta === 0)
+          e2.WindCnt = -e2.WindCnt;
+        else
+          e2.WindCnt -= e1.WindDelta;
       }
     }
     else
     {
-      if (!this.IsEvenOddFillType(e2)) e1.windCnt2 += e2.windDelta;
-      else e1.windCnt2 = (e1.windCnt2 == 0) ? 1 : 0;
-      if (!this.IsEvenOddFillType(e1)) e2.windCnt2 -= e1.windDelta;
-      else e2.windCnt2 = (e2.windCnt2 == 0) ? 1 : 0;
+      if (!this.IsEvenOddFillType(e2))
+        e1.WindCnt2 += e2.WindDelta;
+      else
+        e1.WindCnt2 = (e1.WindCnt2 === 0) ? 1 : 0;
+      if (!this.IsEvenOddFillType(e1))
+        e2.WindCnt2 -= e1.WindDelta;
+      else
+        e2.WindCnt2 = (e2.WindCnt2 === 0) ? 1 : 0;
     }
     var e1FillType, e2FillType, e1FillType2, e2FillType2;
-    if (e1.polyType == ClipperLib.PolyType.ptSubject)
+    if (e1.PolyTyp == ClipperLib.PolyType.ptSubject)
     {
       e1FillType = this.m_SubjFillType;
       e1FillType2 = this.m_ClipFillType;
@@ -6275,7 +7392,7 @@ module.exports = Triangle;
       e1FillType = this.m_ClipFillType;
       e1FillType2 = this.m_SubjFillType;
     }
-    if (e2.polyType == ClipperLib.PolyType.ptSubject)
+    if (e2.PolyTyp == ClipperLib.PolyType.ptSubject)
     {
       e2FillType = this.m_SubjFillType;
       e2FillType2 = this.m_ClipFillType;
@@ -6288,558 +7405,725 @@ module.exports = Triangle;
     var e1Wc, e2Wc;
     switch (e1FillType)
     {
-      case ClipperLib.PolyFillType.pftPositive:
-        e1Wc = e1.windCnt;
-        break;
-      case ClipperLib.PolyFillType.pftNegative:
-        e1Wc = -e1.windCnt;
-        break;
-      default:
-        e1Wc = ClipperLib.Math_Abs_Int32(e1.windCnt);
-        break;
+    case ClipperLib.PolyFillType.pftPositive:
+      e1Wc = e1.WindCnt;
+      break;
+    case ClipperLib.PolyFillType.pftNegative:
+      e1Wc = -e1.WindCnt;
+      break;
+    default:
+      e1Wc = Math.abs(e1.WindCnt);
+      break;
     }
     switch (e2FillType)
     {
-      case ClipperLib.PolyFillType.pftPositive:
-        e2Wc = e2.windCnt;
-        break;
-      case ClipperLib.PolyFillType.pftNegative:
-        e2Wc = -e2.windCnt;
-        break;
-      default:
-        e2Wc = ClipperLib.Math_Abs_Int32(e2.windCnt);
-        break;
+    case ClipperLib.PolyFillType.pftPositive:
+      e2Wc = e2.WindCnt;
+      break;
+    case ClipperLib.PolyFillType.pftNegative:
+      e2Wc = -e2.WindCnt;
+      break;
+    default:
+      e2Wc = Math.abs(e2.WindCnt);
+      break;
     }
-    if (e1Contributing && e2contributing)
+    if (e1Contributing && e2Contributing)
     {
-      if (e1stops || e2stops || (e1Wc != 0 && e1Wc != 1) || (e2Wc != 0 && e2Wc != 1) || (e1.polyType != e2.polyType && this.m_ClipType != ClipperLib.ClipType.ctXor)) this.AddLocalMaxPoly(e1, e2, pt);
-      else this.DoBothEdges(e1, e2, pt);
+      if (e1stops || e2stops || (e1Wc !== 0 && e1Wc != 1) || (e2Wc !== 0 && e2Wc != 1) ||
+        (e1.PolyTyp != e2.PolyTyp && this.m_ClipType != ClipperLib.ClipType.ctXor))
+        this.AddLocalMaxPoly(e1, e2, pt);
+      else
+      {
+        this.AddOutPt(e1, pt);
+        this.AddOutPt(e2, pt);
+        ClipperLib.Clipper.SwapSides(e1, e2);
+        ClipperLib.Clipper.SwapPolyIndexes(e1, e2);
+      }
     }
     else if (e1Contributing)
     {
-      if ((e2Wc == 0 || e2Wc == 1) && (this.m_ClipType != ClipperLib.ClipType.ctIntersection || e2.polyType == ClipperLib.PolyType.ptSubject || (e2.windCnt2 != 0))) this.DoEdge1(e1, e2, pt);
+      if (e2Wc === 0 || e2Wc == 1)
+      {
+        this.AddOutPt(e1, pt);
+        ClipperLib.Clipper.SwapSides(e1, e2);
+        ClipperLib.Clipper.SwapPolyIndexes(e1, e2);
+      }
     }
-    else if (e2contributing)
+    else if (e2Contributing)
     {
-      if ((e1Wc == 0 || e1Wc == 1) && (this.m_ClipType != ClipperLib.ClipType.ctIntersection || e1.polyType == ClipperLib.PolyType.ptSubject || (e1.windCnt2 != 0))) this.DoEdge2(e1, e2, pt);
+      if (e1Wc === 0 || e1Wc == 1)
+      {
+        this.AddOutPt(e2, pt);
+        ClipperLib.Clipper.SwapSides(e1, e2);
+        ClipperLib.Clipper.SwapPolyIndexes(e1, e2);
+      }
     }
-    else if ((e1Wc == 0 || e1Wc == 1) && (e2Wc == 0 || e2Wc == 1) && !e1stops && !e2stops)
+    else if ((e1Wc === 0 || e1Wc == 1) &&
+      (e2Wc === 0 || e2Wc == 1) && !e1stops && !e2stops)
     {
+      //neither edge is currently contributing ...
       var e1Wc2, e2Wc2;
       switch (e1FillType2)
       {
-        case ClipperLib.PolyFillType.pftPositive:
-          e1Wc2 = e1.windCnt2;
-          break;
-        case ClipperLib.PolyFillType.pftNegative:
-          e1Wc2 = -e1.windCnt2;
-          break;
-        default:
-          e1Wc2 = ClipperLib.Math_Abs_Int32(e1.windCnt2);
-          break;
+      case ClipperLib.PolyFillType.pftPositive:
+        e1Wc2 = e1.WindCnt2;
+        break;
+      case ClipperLib.PolyFillType.pftNegative:
+        e1Wc2 = -e1.WindCnt2;
+        break;
+      default:
+        e1Wc2 = Math.abs(e1.WindCnt2);
+        break;
       }
       switch (e2FillType2)
       {
-        case ClipperLib.PolyFillType.pftPositive:
-          e2Wc2 = e2.windCnt2;
-          break;
-        case ClipperLib.PolyFillType.pftNegative:
-          e2Wc2 = -e2.windCnt2;
-          break;
-        default:
-          e2Wc2 = ClipperLib.Math_Abs_Int32(e2.windCnt2);
-          break;
+      case ClipperLib.PolyFillType.pftPositive:
+        e2Wc2 = e2.WindCnt2;
+        break;
+      case ClipperLib.PolyFillType.pftNegative:
+        e2Wc2 = -e2.WindCnt2;
+        break;
+      default:
+        e2Wc2 = Math.abs(e2.WindCnt2);
+        break;
       }
-      if (e1.polyType != e2.polyType) this.AddLocalMinPoly(e1, e2, pt);
-      else if (e1Wc == 1 && e2Wc == 1) switch (this.m_ClipType)
-      {
+      if (e1.PolyTyp != e2.PolyTyp)
+        this.AddLocalMinPoly(e1, e2, pt);
+      else if (e1Wc == 1 && e2Wc == 1)
+        switch (this.m_ClipType)
+        {
         case ClipperLib.ClipType.ctIntersection:
-          if (e1Wc2 > 0 && e2Wc2 > 0) this.AddLocalMinPoly(e1, e2, pt);
+          if (e1Wc2 > 0 && e2Wc2 > 0)
+            this.AddLocalMinPoly(e1, e2, pt);
           break;
         case ClipperLib.ClipType.ctUnion:
-          if (e1Wc2 <= 0 && e2Wc2 <= 0) this.AddLocalMinPoly(e1, e2, pt);
+          if (e1Wc2 <= 0 && e2Wc2 <= 0)
+            this.AddLocalMinPoly(e1, e2, pt);
           break;
         case ClipperLib.ClipType.ctDifference:
-          if (((e1.polyType == ClipperLib.PolyType.ptClip) && (e1Wc2 > 0) && (e2Wc2 > 0)) || ((e1.polyType == ClipperLib.PolyType.ptSubject) && (e1Wc2 <= 0) && (e2Wc2 <= 0))) this.AddLocalMinPoly(e1, e2, pt);
+          if (((e1.PolyTyp == ClipperLib.PolyType.ptClip) && (e1Wc2 > 0) && (e2Wc2 > 0)) ||
+            ((e1.PolyTyp == ClipperLib.PolyType.ptSubject) && (e1Wc2 <= 0) && (e2Wc2 <= 0)))
+            this.AddLocalMinPoly(e1, e2, pt);
           break;
         case ClipperLib.ClipType.ctXor:
           this.AddLocalMinPoly(e1, e2, pt);
           break;
-      }
-      else ClipperLib.Clipper.SwapSides(e1, e2);
+        }
+      else
+        ClipperLib.Clipper.SwapSides(e1, e2);
     }
-    if ((e1stops != e2stops) && ((e1stops && (e1.outIdx >= 0)) || (e2stops && (e2.outIdx >= 0))))
+    if ((e1stops != e2stops) &&
+      ((e1stops && (e1.OutIdx >= 0)) || (e2stops && (e2.OutIdx >= 0))))
     {
       ClipperLib.Clipper.SwapSides(e1, e2);
       ClipperLib.Clipper.SwapPolyIndexes(e1, e2);
     }
-    if (e1stops) this.DeleteFromAEL(e1);
-    if (e2stops) this.DeleteFromAEL(e2);
+    //finally, delete any non-contributing maxima edges  ...
+    if (e1stops)
+      this.DeleteFromAEL(e1);
+    if (e2stops)
+      this.DeleteFromAEL(e2);
   };
   ClipperLib.Clipper.prototype.DeleteFromAEL = function (e)
   {
-    var AelPrev = e.prevInAEL;
-    var AelNext = e.nextInAEL;
-    if (AelPrev == null && AelNext == null && (e != this.m_ActiveEdges)) return;
-    if (AelPrev != null) AelPrev.nextInAEL = AelNext;
-    else this.m_ActiveEdges = AelNext;
-    if (AelNext != null) AelNext.prevInAEL = AelPrev;
-    e.nextInAEL = null;
-    e.prevInAEL = null;
+    var AelPrev = e.PrevInAEL;
+    var AelNext = e.NextInAEL;
+    if (AelPrev === null && AelNext === null && (e != this.m_ActiveEdges))
+      return;
+    //already deleted
+    if (AelPrev !== null)
+      AelPrev.NextInAEL = AelNext;
+    else
+      this.m_ActiveEdges = AelNext;
+    if (AelNext !== null)
+      AelNext.PrevInAEL = AelPrev;
+    e.NextInAEL = null;
+    e.PrevInAEL = null;
   };
   ClipperLib.Clipper.prototype.DeleteFromSEL = function (e)
   {
-    var SelPrev = e.prevInSEL;
-    var SelNext = e.nextInSEL;
-    if (SelPrev == null && SelNext == null && (e != this.m_SortedEdges)) return;
-    if (SelPrev != null) SelPrev.nextInSEL = SelNext;
-    else this.m_SortedEdges = SelNext;
-    if (SelNext != null) SelNext.prevInSEL = SelPrev;
-    e.nextInSEL = null;
-    e.prevInSEL = null;
+    var SelPrev = e.PrevInSEL;
+    var SelNext = e.NextInSEL;
+    if (SelPrev === null && SelNext === null && (e != this.m_SortedEdges))
+      return;
+    //already deleted
+    if (SelPrev !== null)
+      SelPrev.NextInSEL = SelNext;
+    else
+      this.m_SortedEdges = SelNext;
+    if (SelNext !== null)
+      SelNext.PrevInSEL = SelPrev;
+    e.NextInSEL = null;
+    e.PrevInSEL = null;
   };
   ClipperLib.Clipper.prototype.UpdateEdgeIntoAEL = function (e)
   {
-    if (e.Value.nextInLML == null) ClipperLib.Error("UpdateEdgeIntoAEL: invalid call");
-    var AelPrev = e.Value.prevInAEL;
-    var AelNext = e.Value.nextInAEL;
-    e.Value.nextInLML.outIdx = e.Value.outIdx;
-    if (AelPrev != null) AelPrev.nextInAEL = e.Value.nextInLML;
-    else this.m_ActiveEdges = e.Value.nextInLML;
-    if (AelNext != null) AelNext.prevInAEL = e.Value.nextInLML;
-    e.Value.nextInLML.side = e.Value.side;
-    e.Value.nextInLML.windDelta = e.Value.windDelta;
-    e.Value.nextInLML.windCnt = e.Value.windCnt;
-    e.Value.nextInLML.windCnt2 = e.Value.windCnt2;
-    e.Value = e.Value.nextInLML;
-    e.Value.prevInAEL = AelPrev;
-    e.Value.nextInAEL = AelNext;
-    if (e.Value.dx != ClipperLib.ClipperBase.horizontal) this.InsertScanbeam(e.Value.ytop);
+    if (e.Value.NextInLML === null)
+      ClipperLib.Error("UpdateEdgeIntoAEL: invalid call");
+    var AelPrev = e.Value.PrevInAEL;
+    var AelNext = e.Value.NextInAEL;
+    e.Value.NextInLML.OutIdx = e.Value.OutIdx;
+    if (AelPrev !== null)
+      AelPrev.NextInAEL = e.Value.NextInLML;
+    else
+      this.m_ActiveEdges = e.Value.NextInLML;
+    if (AelNext !== null)
+      AelNext.PrevInAEL = e.Value.NextInLML;
+    e.Value.NextInLML.Side = e.Value.Side;
+    e.Value.NextInLML.WindDelta = e.Value.WindDelta;
+    e.Value.NextInLML.WindCnt = e.Value.WindCnt;
+    e.Value.NextInLML.WindCnt2 = e.Value.WindCnt2;
+    e.Value = e.Value.NextInLML;
+    //    e.Value.Curr = e.Value.Bot;
+    e.Value.Curr.x = e.Value.Bot.x; 
+    e.Value.Curr.y = e.Value.Bot.y; 
+    e.Value.PrevInAEL = AelPrev;
+    e.Value.NextInAEL = AelNext;
+    if (!ClipperLib.ClipperBase.IsHorizontal(e.Value))
+      this.InsertScanbeam(e.Value.Top.y);
   };
-  ClipperLib.Clipper.prototype.ProcessHorizontals = function ()
+  ClipperLib.Clipper.prototype.ProcessHorizontals = function (isTopOfScanbeam)
   {
     var horzEdge = this.m_SortedEdges;
-    while (horzEdge != null)
+    while (horzEdge !== null)
     {
       this.DeleteFromSEL(horzEdge);
-      this.ProcessHorizontal(horzEdge);
+      this.ProcessHorizontal(horzEdge, isTopOfScanbeam);
       horzEdge = this.m_SortedEdges;
     }
   };
-  ClipperLib.Clipper.prototype.ProcessHorizontal = function (horzEdge)
+  ClipperLib.Clipper.prototype.GetHorzDirection = function (HorzEdge, Dir, Left, Right)
   {
-    var Direction;
+    if (HorzEdge.Bot.x < HorzEdge.Top.x)
+    {
+      Left.Value = HorzEdge.Bot.x; 
+      Right.Value = HorzEdge.Top.x; 
+      Dir.Value = ClipperLib.Direction.dLeftToRight;
+    }
+    else
+    {
+      Left.Value = HorzEdge.Top.x; 
+      Right.Value = HorzEdge.Bot.x; 
+      Dir.Value = ClipperLib.Direction.dRightToLeft;
+    }
+  };
+  ClipperLib.Clipper.prototype.PrepareHorzJoins = function (horzEdge, isTopOfScanbeam)
+  {
+    //get the last Op for this horizontal edge
+    //the point may be anywhere along the horizontal ...
+    var outPt = this.m_PolyOuts[horzEdge.OutIdx].Pts;
+    if (horzEdge.Side != ClipperLib.EdgeSide.esLeft)
+      outPt = outPt.Prev;
+    //First, match up overlapping horizontal edges (eg when one polygon's
+    //intermediate horz edge overlaps an intermediate horz edge of another, or
+    //when one polygon sits on top of another) ...
+    //for (var i = 0, ilen = this.m_GhostJoins.length; i < ilen; ++i) {
+    //  var j = this.m_GhostJoins[i];
+    //  if (this.HorzSegmentsOverlap(j.OutPt1.Pt, j.OffPt, horzEdge.Bot, horzEdge.Top))
+    //    this.AddJoin(j.OutPt1, outPt, j.OffPt);
+    //}
+
+    //Also, since horizontal edges at the top of one SB are often removed from
+    //the AEL before we process the horizontal edges at the bottom of the next,
+    //we need to create 'ghost' Join records of 'contrubuting' horizontals that
+    //we can compare with horizontals at the bottom of the next SB.
+    if (isTopOfScanbeam)
+      if (ClipperLib.IntPoint.op_Equality(outPt.Pt, horzEdge.Top))
+        this.AddGhostJoin(outPt, horzEdge.Bot);
+      else
+        this.AddGhostJoin(outPt, horzEdge.Top);
+  };
+  ClipperLib.Clipper.prototype.ProcessHorizontal = function (horzEdge, isTopOfScanbeam)
+  {
+    var dir;
     var horzLeft, horzRight;
-    if (horzEdge.xcurr < horzEdge.xtop)
+    (function ()
     {
-      horzLeft = horzEdge.xcurr;
-      horzRight = horzEdge.xtop;
-      Direction = ClipperLib.Direction.dLeftToRight;
-    }
-    else
+      dir = {
+        Value: dir
+      };
+      horzLeft = {
+        Value: horzLeft
+      };
+      horzRight = {
+        Value: horzRight
+      };
+      var $res = this.GetHorzDirection(horzEdge, dir, horzLeft, horzRight);
+      dir = dir.Value;
+      horzLeft = horzLeft.Value;
+      horzRight = horzRight.Value;
+      return $res;
+    }).call(this);
+    var eLastHorz = horzEdge,
+      eMaxPair = null;
+    while (eLastHorz.NextInLML !== null && ClipperLib.ClipperBase.IsHorizontal(eLastHorz.NextInLML))
+      eLastHorz = eLastHorz.NextInLML;
+    if (eLastHorz.NextInLML === null)
+      eMaxPair = this.GetMaximaPair(eLastHorz);
+    for (;;)
     {
-      horzLeft = horzEdge.xtop;
-      horzRight = horzEdge.xcurr;
-      Direction = ClipperLib.Direction.dRightToLeft;
-    }
-    var eMaxPair;
-    if (horzEdge.nextInLML != null) eMaxPair = null;
-    else eMaxPair = this.GetMaximaPair(horzEdge);
-    var e = this.GetNextInAEL(horzEdge, Direction);
-    while (e != null)
-    {
-      var eNext = this.GetNextInAEL(e, Direction);
-      if (eMaxPair != null || ((Direction == ClipperLib.Direction.dLeftToRight) && (e.xcurr <= horzRight)) || ((Direction == ClipperLib.Direction.dRightToLeft) && (e.xcurr >= horzLeft)))
+      var IsLastHorz = (horzEdge == eLastHorz);
+      var e = this.GetNextInAEL(horzEdge, dir);
+      while (e !== null)
       {
-        if (e.xcurr == horzEdge.xtop && eMaxPair == null)
+        //Break if we've got to the end of an intermediate horizontal edge ...
+        //nb: Smaller Dx's are to the right of larger Dx's ABOVE the horizontal.
+        if (e.Curr.x == horzEdge.Top.x && horzEdge.NextInLML !== null && e.Dx < horzEdge.NextInLML.Dx)
+          break;
+        var eNext = this.GetNextInAEL(e, dir);
+        //saves eNext for later
+        if ((dir == ClipperLib.Direction.dLeftToRight && e.Curr.x <= horzRight) || (dir == ClipperLib.Direction.dRightToLeft && e.Curr.x >= horzLeft))
         {
-          if (this.SlopesEqual(e, horzEdge.nextInLML, this.m_UseFullRange))
+
+          if (horzEdge.OutIdx >= 0 && horzEdge.WindDelta != 0)
+            this.PrepareHorzJoins(horzEdge, isTopOfScanbeam);
+
+          //so far we're still in range of the horizontal Edge  but make sure
+          //we're at the last of consec. horizontals when matching with eMaxPair
+          if (e == eMaxPair && IsLastHorz)
           {
-            if (horzEdge.outIdx >= 0 && e.outIdx >= 0) this.AddJoin(horzEdge.nextInLML, e, horzEdge.outIdx, -1);
-            break;
+            if (dir == ClipperLib.Direction.dLeftToRight)
+              this.IntersectEdges(horzEdge, e, e.Top, false);
+            else
+              this.IntersectEdges(e, horzEdge, e.Top, false);
+            if (eMaxPair.OutIdx >= 0)
+              ClipperLib.Error("ProcessHorizontal error");
+            return;
           }
-          else if (e.dx < horzEdge.nextInLML.dx) break;
+          else if (dir == ClipperLib.Direction.dLeftToRight)
+          {
+            var Pt = new ClipperLib.IntPoint(e.Curr.x, horzEdge.Curr.y);
+            this.IntersectEdges(horzEdge, e, Pt, true);
+          }
+          else
+          {
+            var Pt = new ClipperLib.IntPoint(e.Curr.x, horzEdge.Curr.y);
+            this.IntersectEdges(e, horzEdge, Pt, true);
+          }
+          this.SwapPositionsInAEL(horzEdge, e);
         }
-        if (e == eMaxPair)
-        {
-          if (Direction == ClipperLib.Direction.dLeftToRight) this.IntersectEdges(horzEdge, e, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), 0);
-          else this.IntersectEdges(e, horzEdge, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), 0);
-          if (eMaxPair.outIdx >= 0) ClipperLib.Error("ProcessHorizontal error");
-          return;
-        }
-        else if (e.dx == ClipperLib.ClipperBase.horizontal && !this.IsMinima(e) && !(e.xcurr > e.xtop))
-        {
-          if (Direction == ClipperLib.Direction.dLeftToRight) this.IntersectEdges(horzEdge, e, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), (this.IsTopHorz(horzEdge, e.xcurr)) ? ClipperLib.Protects.ipLeft : ClipperLib.Protects.ipBoth);
-          else this.IntersectEdges(e, horzEdge, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), (this.IsTopHorz(horzEdge, e.xcurr)) ? ClipperLib.Protects.ipRight : ClipperLib.Protects.ipBoth);
-        }
-        else if (Direction == ClipperLib.Direction.dLeftToRight)
-        {
-          this.IntersectEdges(horzEdge, e, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), (this.IsTopHorz(horzEdge, e.xcurr)) ? ClipperLib.Protects.ipLeft : ClipperLib.Protects.ipBoth);
-        }
-        else
-        {
-          this.IntersectEdges(e, horzEdge, new ClipperLib.IntPoint(e.xcurr, horzEdge.ycurr), (this.IsTopHorz(horzEdge, e.xcurr)) ? ClipperLib.Protects.ipRight : ClipperLib.Protects.ipBoth);
-        }
-        this.SwapPositionsInAEL(horzEdge, e);
+        else if ((dir == ClipperLib.Direction.dLeftToRight && e.Curr.x >= horzRight) || (dir == ClipperLib.Direction.dRightToLeft && e.Curr.x <= horzLeft))
+          break;
+        e = eNext;
       }
-      else if ((Direction == ClipperLib.Direction.dLeftToRight && e.xcurr > horzRight && horzEdge.nextInSEL == null) || (Direction == ClipperLib.Direction.dRightToLeft && e.xcurr < horzLeft && horzEdge.nextInSEL == null)) break;
-      e = eNext;
-    }
-    if (horzEdge.nextInLML != null)
-    {
-      if (horzEdge.outIdx >= 0) this.AddOutPt(horzEdge, new ClipperLib.IntPoint(horzEdge.xtop, horzEdge.ytop));
-      (function ()
+      //end while
+      if (horzEdge.OutIdx >= 0 && horzEdge.WindDelta !== 0)
+        this.PrepareHorzJoins(horzEdge, isTopOfScanbeam);
+      if (horzEdge.NextInLML !== null && ClipperLib.ClipperBase.IsHorizontal(horzEdge.NextInLML))
       {
-        horzEdge = {
-          Value: horzEdge
-        };
-        var $res = this.UpdateEdgeIntoAEL(horzEdge);
-        horzEdge = horzEdge.Value;
-        return $res;
-      })
-        .call(this);
+        (function ()
+        {
+          horzEdge = {
+            Value: horzEdge
+          };
+          var $res = this.UpdateEdgeIntoAEL(horzEdge);
+          horzEdge = horzEdge.Value;
+          return $res;
+        }).call(this);
+        if (horzEdge.OutIdx >= 0)
+          this.AddOutPt(horzEdge, horzEdge.Bot);
+        (function ()
+        {
+          dir = {
+            Value: dir
+          };
+          horzLeft = {
+            Value: horzLeft
+          };
+          horzRight = {
+            Value: horzRight
+          };
+          var $res = this.GetHorzDirection(horzEdge, dir, horzLeft, horzRight);
+          dir = dir.Value;
+          horzLeft = horzLeft.Value;
+          horzRight = horzRight.Value;
+          return $res;
+        }).call(this);
+      }
+      else
+        break;
+    }
+    //end for (;;)
+    if (horzEdge.NextInLML !== null)
+    {
+      if (horzEdge.OutIdx >= 0)
+      {
+        var op1 = this.AddOutPt(horzEdge, horzEdge.Top);
+        (function ()
+        {
+          horzEdge = {
+            Value: horzEdge
+          };
+          var $res = this.UpdateEdgeIntoAEL(horzEdge);
+          horzEdge = horzEdge.Value;
+          return $res;
+        }).call(this);
+        if (horzEdge.WindDelta === 0)
+          return;
+        //nb: HorzEdge is no longer horizontal here
+        var ePrev = horzEdge.PrevInAEL;
+        var eNext = horzEdge.NextInAEL;
+        if (ePrev !== null && ePrev.Curr.x == horzEdge.Bot.x &&
+          ePrev.Curr.y == horzEdge.Bot.y && ePrev.WindDelta !== 0 &&
+          (ePrev.OutIdx >= 0 && ePrev.Curr.y > ePrev.Top.y &&
+            ClipperLib.ClipperBase.SlopesEqual(horzEdge, ePrev, this.m_UseFullRange)))
+        {
+          var op2 = this.AddOutPt(ePrev, horzEdge.Bot);
+          this.AddJoin(op1, op2, horzEdge.Top);
+        }
+        else if (eNext !== null && eNext.Curr.x == horzEdge.Bot.x &&
+          eNext.Curr.y == horzEdge.Bot.y && eNext.WindDelta !== 0 &&
+          eNext.OutIdx >= 0 && eNext.Curr.y > eNext.Top.y &&
+          ClipperLib.ClipperBase.SlopesEqual(horzEdge, eNext, this.m_UseFullRange))
+        {
+          var op2 = this.AddOutPt(eNext, horzEdge.Bot);
+          this.AddJoin(op1, op2, horzEdge.Top);
+        }
+      }
+      else
+        (function ()
+        {
+          horzEdge = {
+            Value: horzEdge
+          };
+          var $res = this.UpdateEdgeIntoAEL(horzEdge);
+          horzEdge = horzEdge.Value;
+          return $res;
+        }).call(this);
+    }
+    else if (eMaxPair !== null)
+    {
+      if (eMaxPair.OutIdx >= 0)
+      {
+        if (dir == ClipperLib.Direction.dLeftToRight)
+          this.IntersectEdges(horzEdge, eMaxPair, horzEdge.Top, false);
+        else
+          this.IntersectEdges(eMaxPair, horzEdge, horzEdge.Top, false);
+        if (eMaxPair.OutIdx >= 0)
+          ClipperLib.Error("ProcessHorizontal error");
+      }
+      else
+      {
+        this.DeleteFromAEL(horzEdge);
+        this.DeleteFromAEL(eMaxPair);
+      }
     }
     else
     {
-      if (horzEdge.outIdx >= 0) this.IntersectEdges(horzEdge, eMaxPair, new ClipperLib.IntPoint(horzEdge.xtop, horzEdge.ycurr), ClipperLib.Protects.ipBoth);
-      this.DeleteFromAEL(eMaxPair);
+      if (horzEdge.OutIdx >= 0)
+        this.AddOutPt(horzEdge, horzEdge.Top);
       this.DeleteFromAEL(horzEdge);
     }
   };
-  ClipperLib.Clipper.prototype.IsTopHorz = function (horzEdge, XPos)
-  {
-    var e = this.m_SortedEdges;
-    while (e != null)
-    {
-      if ((XPos >= Math.min(e.xcurr, e.xtop)) && (XPos <= Math.max(e.xcurr, e.xtop))) return false;
-      e = e.nextInSEL;
-    }
-    return true;
-  };
   ClipperLib.Clipper.prototype.GetNextInAEL = function (e, Direction)
   {
-    return Direction == ClipperLib.Direction.dLeftToRight ? e.nextInAEL : e.prevInAEL;
+    return Direction == ClipperLib.Direction.dLeftToRight ? e.NextInAEL : e.PrevInAEL;
   };
   ClipperLib.Clipper.prototype.IsMinima = function (e)
   {
-    return e != null && (e.prev.nextInLML != e) && (e.next.nextInLML != e);
+    return e !== null && (e.Prev.NextInLML != e) && (e.Next.NextInLML != e);
   };
   ClipperLib.Clipper.prototype.IsMaxima = function (e, Y)
   {
-    return (e != null && e.ytop == Y && e.nextInLML == null);
+    return (e !== null && e.Top.y == Y && e.NextInLML === null);
   };
   ClipperLib.Clipper.prototype.IsIntermediate = function (e, Y)
   {
-    return (e.ytop == Y && e.nextInLML != null);
+    return (e.Top.y == Y && e.NextInLML !== null);
   };
   ClipperLib.Clipper.prototype.GetMaximaPair = function (e)
   {
-    if (!this.IsMaxima(e.next, e.ytop) || (e.next.xtop != e.xtop)) return e.prev;
-    else return e.next;
+    var result = null;
+    if ((ClipperLib.IntPoint.op_Equality(e.Next.Top, e.Top)) && e.Next.NextInLML === null)
+      result = e.Next;
+    else if ((ClipperLib.IntPoint.op_Equality(e.Prev.Top, e.Top)) && e.Prev.NextInLML === null)
+      result = e.Prev;
+    if (result !== null && (result.OutIdx == -2 || (result.NextInAEL == result.PrevInAEL && !ClipperLib.ClipperBase.IsHorizontal(result))))
+      return null;
+    return result;
   };
   ClipperLib.Clipper.prototype.ProcessIntersections = function (botY, topY)
   {
-    if (this.m_ActiveEdges == null) return true;
+    if (this.m_ActiveEdges == null)
+      return true;
     try
     {
       this.BuildIntersectList(botY, topY);
-      if (this.m_IntersectNodes == null) return true;
-      if (this.FixupIntersections()) this.ProcessIntersectList();
-      else return false;
+      if (this.m_IntersectList.length == 0)
+        return true;
+      if (this.m_IntersectList.length == 1 || this.FixupIntersectionOrder())
+        this.ProcessIntersectList();
+      else
+        return false;
     }
     catch ($$e2)
     {
       this.m_SortedEdges = null;
-      this.DisposeIntersectNodes();
+      this.m_IntersectList.length = 0;
       ClipperLib.Error("ProcessIntersections error");
     }
+    this.m_SortedEdges = null;
     return true;
   };
   ClipperLib.Clipper.prototype.BuildIntersectList = function (botY, topY)
   {
-    if (this.m_ActiveEdges == null) return;
+    if (this.m_ActiveEdges === null)
+      return;
+    //prepare for sorting ...
     var e = this.m_ActiveEdges;
-    e.tmpX = ClipperLib.Clipper.TopX(e, topY);
+    //console.log(JSON.stringify(JSON.decycle( e )));
     this.m_SortedEdges = e;
-    this.m_SortedEdges.prevInSEL = null;
-    e = e.nextInAEL;
-    while (e != null)
+    while (e !== null)
     {
-      e.prevInSEL = e.prevInAEL;
-      e.prevInSEL.nextInSEL = e;
-      e.nextInSEL = null;
-      e.tmpX = ClipperLib.Clipper.TopX(e, topY);
-      e = e.nextInAEL;
+      e.PrevInSEL = e.PrevInAEL;
+      e.NextInSEL = e.NextInAEL;
+      e.Curr.x = ClipperLib.Clipper.TopX(e, topY);
+      e = e.NextInAEL;
     }
+    //bubblesort ...
     var isModified = true;
-    while (isModified && this.m_SortedEdges != null)
+    while (isModified && this.m_SortedEdges !== null)
     {
       isModified = false;
       e = this.m_SortedEdges;
-      while (e.nextInSEL != null)
+      while (e.NextInSEL !== null)
       {
-        var eNext = e.nextInSEL;
+        var eNext = e.NextInSEL;
         var pt = new ClipperLib.IntPoint();
-        if (e.tmpX > eNext.tmpX && (function ()
+        //console.log("e.Curr.x: " + e.Curr.x + " eNext.Curr.X" + eNext.Curr.x);
+        if (e.Curr.x > eNext.Curr.x)
         {
-          pt = {
-            Value: pt
-          };
-          var $res = this.IntersectPoint(e, eNext, pt);
-          pt = pt.Value;
-          return $res;
-        })
-          .call(this))
-        {
+          if (!(function ()
+          {
+            pt = {
+              Value: pt
+            };
+            var $res = this.IntersectPoint(e, eNext, pt);
+            pt = pt.Value;
+            //console.log("pt: "+JSON.stringify(JSON.decycle( pt )));
+            return $res;
+          }).call(this) && e.Curr.x > eNext.Curr.x + 1)
+          {
+            //console.log("e.Curr.x: "+JSON.stringify(JSON.decycle( e.Curr.x )));
+            //console.log("eNext.Curr.X+1: "+JSON.stringify(JSON.decycle( eNext.Curr.X+1)));
+            ClipperLib.Error("Intersection error");
+          }
           if (pt.y > botY)
           {
             pt.y = botY;
-            pt.x = ClipperLib.Clipper.TopX(e, pt.y);
+            if (Math.abs(e.Dx) > Math.abs(eNext.Dx))
+              pt.x = ClipperLib.Clipper.TopX(eNext, botY);
+            else
+              pt.x = ClipperLib.Clipper.TopX(e, botY);
           }
-          this.AddIntersectNode(e, eNext, pt);
+          var newNode = new ClipperLib.IntersectNode();
+          newNode.Edge1 = e;
+          newNode.Edge2 = eNext;
+          //newNode.Pt = pt;
+          newNode.Pt.x = pt.x; 
+          newNode.Pt.y = pt.y; 
+          this.m_IntersectList.push(newNode);
           this.SwapPositionsInSEL(e, eNext);
           isModified = true;
         }
-        else e = eNext;
+        else
+          e = eNext;
       }
-      if (e.prevInSEL != null) e.prevInSEL.nextInSEL = null;
-      else break;
+      if (e.PrevInSEL !== null)
+        e.PrevInSEL.NextInSEL = null;
+      else
+        break;
     }
     this.m_SortedEdges = null;
   };
-  ClipperLib.Clipper.prototype.FixupIntersections = function ()
+  ClipperLib.Clipper.prototype.EdgesAdjacent = function (inode)
   {
-    if (this.m_IntersectNodes.next == null) return true;
+    return (inode.Edge1.NextInSEL == inode.Edge2) || (inode.Edge1.PrevInSEL == inode.Edge2);
+  };
+  ClipperLib.Clipper.IntersectNodeSort = function (node1, node2)
+  {
+    //the following typecast is safe because the differences in Pt.y will
+    //be limited to the height of the scanbeam.
+    return (node2.Pt.y - node1.Pt.y);
+  };
+  ClipperLib.Clipper.prototype.FixupIntersectionOrder = function ()
+  {
+    //pre-condition: intersections are sorted bottom-most first.
+    //Now it's crucial that intersections are made only between adjacent edges,
+    //so to ensure this the order of intersections may need adjusting ...
+    this.m_IntersectList.sort(this.m_IntersectNodeComparer);
     this.CopyAELToSEL();
-    var int1 = this.m_IntersectNodes;
-    var int2 = this.m_IntersectNodes.next;
-    while (int2 != null)
+    var cnt = this.m_IntersectList.length;
+    for (var i = 0; i < cnt; i++)
     {
-      var e1 = int1.edge1;
-      var e2;
-      if (e1.prevInSEL == int1.edge2) e2 = e1.prevInSEL;
-      else if (e1.nextInSEL == int1.edge2) e2 = e1.nextInSEL;
-      else
+      if (!this.EdgesAdjacent(this.m_IntersectList[i]))
       {
-        while (int2 != null)
-        {
-          if (int2.edge1.nextInSEL == int2.edge2 || int2.edge1.prevInSEL == int2.edge2) break;
-          else int2 = int2.next;
-        }
-        if (int2 == null) return false;
-        this.SwapIntersectNodes(int1, int2);
-        e1 = int1.edge1;
-        e2 = int1.edge2;
+        var j = i + 1;
+        while (j < cnt && !this.EdgesAdjacent(this.m_IntersectList[j]))
+          j++;
+        if (j == cnt)
+          return false;
+        var tmp = this.m_IntersectList[i];
+        this.m_IntersectList[i] = this.m_IntersectList[j];
+        this.m_IntersectList[j] = tmp;
       }
-      this.SwapPositionsInSEL(e1, e2);
-      int1 = int1.next;
-      int2 = int1.next;
+      this.SwapPositionsInSEL(this.m_IntersectList[i].Edge1, this.m_IntersectList[i].Edge2);
     }
-    this.m_SortedEdges = null;
-    return (int1.edge1.prevInSEL == int1.edge2 || int1.edge1.nextInSEL == int1.edge2);
+    return true;
   };
   ClipperLib.Clipper.prototype.ProcessIntersectList = function ()
   {
-    while (this.m_IntersectNodes != null)
+    for (var i = 0, ilen = this.m_IntersectList.length; i < ilen; i++)
     {
-      var iNode = this.m_IntersectNodes.next;
-      this.IntersectEdges(this.m_IntersectNodes.edge1, this.m_IntersectNodes.edge2, this.m_IntersectNodes.pt, ClipperLib.Protects.ipBoth);
-      this.SwapPositionsInAEL(this.m_IntersectNodes.edge1, this.m_IntersectNodes.edge2);
-      this.m_IntersectNodes = null;
-      this.m_IntersectNodes = iNode;
+      var iNode = this.m_IntersectList[i];
+      this.IntersectEdges(iNode.Edge1, iNode.Edge2, iNode.Pt, true);
+      this.SwapPositionsInAEL(iNode.Edge1, iNode.Edge2);
     }
+    this.m_IntersectList.length = 0;
   };
   /*
   --------------------------------
   Round speedtest: http://jsperf.com/fastest-round
   --------------------------------
   */
-  var R1=function(a) { return a < 0 ? Math.ceil(a - 0.5): Math.round(a)};
-  var R2=function(a) { return a < 0 ? Math.ceil(a - 0.5): Math.floor(a + 0.5)};
-  var R3=function(a) { return a < 0 ? -Math.round(Math.abs(a)): Math.round(a)};
-  var R4=function(a) {
-    if (a < 0) {
+  var R1 = function (a)
+  {
+    return a < 0 ? Math.ceil(a - 0.5) : Math.round(a)
+  };
+  var R2 = function (a)
+  {
+    return a < 0 ? Math.ceil(a - 0.5) : Math.floor(a + 0.5)
+  };
+  var R3 = function (a)
+  {
+    return a < 0 ? -Math.round(Math.abs(a)) : Math.round(a)
+  };
+  var R4 = function (a)
+  {
+    if (a < 0)
+    {
       a -= 0.5;
-      return a < -2147483648 ? Math.ceil(a): a | 0;
-    } else {
+      return a < -2147483648 ? Math.ceil(a) : a | 0;
+    }
+    else
+    {
       a += 0.5;
-      return a > 2147483647 ? Math.floor(a): a | 0;
+      return a > 2147483647 ? Math.floor(a) : a | 0;
     }
   };
   if (browser.msie) ClipperLib.Clipper.Round = R1;
   else if (browser.chromium) ClipperLib.Clipper.Round = R3;
   else if (browser.safari) ClipperLib.Clipper.Round = R4;
   else ClipperLib.Clipper.Round = R2; // eg. browser.chrome || browser.firefox || browser.opera
-
   ClipperLib.Clipper.TopX = function (edge, currentY)
   {
-    if (currentY == edge.ytop) return edge.xtop;
-    return edge.xbot + ClipperLib.Clipper.Round(edge.dx * (currentY - edge.ybot));
-  };
-  ClipperLib.Clipper.prototype.AddIntersectNode = function (e1, e2, pt)
-  {
-    var newNode = new ClipperLib.IntersectNode();
-    newNode.edge1 = e1;
-    newNode.edge2 = e2;
-    newNode.pt = pt;
-    newNode.next = null;
-    if (this.m_IntersectNodes == null) this.m_IntersectNodes = newNode;
-    else if (this.ProcessParam1BeforeParam2(newNode, this.m_IntersectNodes))
-    {
-      newNode.next = this.m_IntersectNodes;
-      this.m_IntersectNodes = newNode;
-    }
-    else
-    {
-      var iNode = this.m_IntersectNodes;
-      while (iNode.next != null && this.ProcessParam1BeforeParam2(iNode.next, newNode))
-      iNode = iNode.next;
-      newNode.next = iNode.next;
-      iNode.next = newNode;
-    }
-  };
-  ClipperLib.Clipper.prototype.ProcessParam1BeforeParam2 = function (node1, node2)
-  {
-    var result;
-    if (node1.pt.y == node2.pt.y)
-    {
-      if (node1.edge1 == node2.edge1 || node1.edge2 == node2.edge1)
-      {
-        result = node2.pt.x > node1.pt.x;
-        return node2.edge1.dx > 0 ? !result : result;
-      }
-      else if (node1.edge1 == node2.edge2 || node1.edge2 == node2.edge2)
-      {
-        result = node2.pt.x > node1.pt.x;
-        return node2.edge2.dx > 0 ? !result : result;
-      }
-      else return node2.pt.x > node1.pt.x;
-    }
-    else return node1.pt.y > node2.pt.y;
-  };
-  ClipperLib.Clipper.prototype.SwapIntersectNodes = function (int1, int2)
-  {
-    var e1 = int1.edge1;
-    var e2 = int1.edge2;
-    var p = int1.pt;
-    int1.edge1 = int2.edge1;
-    int1.edge2 = int2.edge2;
-    int1.pt = int2.pt;
-    int2.edge1 = e1;
-    int2.edge2 = e2;
-    int2.pt = p;
+    //if (edge.Bot == edge.Curr) alert ("edge.Bot = edge.Curr");
+    //if (edge.Bot == edge.Top) alert ("edge.Bot = edge.Top");
+    if (currentY == edge.Top.y)
+      return edge.Top.x; 
+    return edge.Bot.x + ClipperLib.Clipper.Round(edge.Dx * (currentY - edge.Bot.y));
   };
   ClipperLib.Clipper.prototype.IntersectPoint = function (edge1, edge2, ip)
   {
+    ip.Value = new ClipperLib.IntPoint();
     var b1, b2;
-    if (this.SlopesEqual(edge1, edge2, this.m_UseFullRange)) return false;
-    else if (edge1.dx == 0)
+    //nb: with very large coordinate values, it's possible for SlopesEqual() to 
+    //return false but for the edge.Dx value be equal due to double precision rounding.
+    if (ClipperLib.ClipperBase.SlopesEqual(edge1, edge2, this.m_UseFullRange) || edge1.Dx == edge2.Dx)
     {
-      ip.Value.x = edge1.xbot;
-      if (edge2.dx == ClipperLib.ClipperBase.horizontal)
+      if (edge2.Bot.y > edge1.Bot.y)
       {
-        ip.Value.y = edge2.ybot;
+        ip.Value.x = edge2.Bot.x; 
+        ip.Value.y = edge2.Bot.y; 
       }
       else
       {
-        b2 = edge2.ybot - (edge2.xbot / edge2.dx);
-        ip.Value.y = ClipperLib.Clipper.Round(ip.Value.x / edge2.dx + b2);
+        ip.Value.x = edge1.Bot.x; 
+        ip.Value.y = edge1.Bot.y; 
+      }
+      return false;
+    }
+    else if (edge1.Delta.x === 0)
+    {
+      ip.Value.x = edge1.Bot.x; 
+      if (ClipperLib.ClipperBase.IsHorizontal(edge2))
+      {
+        ip.Value.y = edge2.Bot.y; 
+      }
+      else
+      {
+        b2 = edge2.Bot.y - (edge2.Bot.x / edge2.Dx);
+        ip.Value.y = ClipperLib.Clipper.Round(ip.Value.x / edge2.Dx + b2);
       }
     }
-    else if (edge2.dx == 0)
+    else if (edge2.Delta.x === 0)
     {
-      ip.Value.x = edge2.xbot;
-      if (edge1.dx == ClipperLib.ClipperBase.horizontal)
+      ip.Value.x = edge2.Bot.x; 
+      if (ClipperLib.ClipperBase.IsHorizontal(edge1))
       {
-        ip.Value.y = edge1.ybot;
+        ip.Value.y = edge1.Bot.y; 
       }
       else
       {
-        b1 = edge1.ybot - (edge1.xbot / edge1.dx);
-        ip.Value.y = ClipperLib.Clipper.Round(ip.Value.x / edge1.dx + b1);
+        b1 = edge1.Bot.y - (edge1.Bot.x / edge1.Dx);
+        ip.Value.y = ClipperLib.Clipper.Round(ip.Value.x / edge1.Dx + b1);
       }
     }
     else
     {
-      b1 = edge1.xbot - edge1.ybot * edge1.dx;
-      b2 = edge2.xbot - edge2.ybot * edge2.dx;
-      var q = (b2 - b1) / (edge1.dx - edge2.dx);
+      b1 = edge1.Bot.x - edge1.Bot.y * edge1.Dx;
+      b2 = edge2.Bot.x - edge2.Bot.y * edge2.Dx;
+      var q = (b2 - b1) / (edge1.Dx - edge2.Dx);
       ip.Value.y = ClipperLib.Clipper.Round(q);
-      if (ClipperLib.Math_Abs_Double(edge1.dx) < ClipperLib.Math_Abs_Double(edge2.dx)) ip.Value.x = ClipperLib.Clipper.Round(edge1.dx * q + b1);
-      else ip.Value.x = ClipperLib.Clipper.Round(edge2.dx * q + b2);
+      if (Math.abs(edge1.Dx) < Math.abs(edge2.Dx))
+        ip.Value.x = ClipperLib.Clipper.Round(edge1.Dx * q + b1);
+      else
+        ip.Value.x = ClipperLib.Clipper.Round(edge2.Dx * q + b2);
     }
-    if (ip.Value.y < edge1.ytop || ip.Value.y < edge2.ytop)
+    if (ip.Value.y < edge1.Top.y || ip.Value.y < edge2.Top.y)
     {
-      if (edge1.ytop > edge2.ytop)
+      if (edge1.Top.y > edge2.Top.y)
       {
-        ip.Value.x = edge1.xtop;
-        ip.Value.y = edge1.ytop;
-        return ClipperLib.Clipper.TopX(edge2, edge1.ytop) < edge1.xtop;
+        ip.Value.y = edge1.Top.y; 
+        ip.Value.x = ClipperLib.Clipper.TopX(edge2, edge1.Top.y);
+        return ip.Value.x < edge1.Top.x; 
       }
       else
-      {
-        ip.Value.x = edge2.xtop;
-        ip.Value.y = edge2.ytop;
-        return ClipperLib.Clipper.TopX(edge1, edge2.ytop) > edge2.xtop;
-      }
+        ip.Value.y = edge2.Top.y; 
+      if (Math.abs(edge1.Dx) < Math.abs(edge2.Dx))
+        ip.Value.x = ClipperLib.Clipper.TopX(edge1, ip.Value.y);
+      else
+        ip.Value.x = ClipperLib.Clipper.TopX(edge2, ip.Value.y);
     }
-    else return true;
-  };
-  ClipperLib.Clipper.prototype.DisposeIntersectNodes = function ()
-  {
-    while (this.m_IntersectNodes != null)
-    {
-      var iNode = this.m_IntersectNodes.next;
-      this.m_IntersectNodes = null;
-      this.m_IntersectNodes = iNode;
-    }
+    return true;
   };
   ClipperLib.Clipper.prototype.ProcessEdgesAtTopOfScanbeam = function (topY)
   {
     var e = this.m_ActiveEdges;
-    var ePrev;
-    while (e != null)
+    while (e !== null)
     {
-      if (this.IsMaxima(e, topY) && this.GetMaximaPair(e)
-        .dx != ClipperLib.ClipperBase.horizontal)
+      //1. process maxima, treating them as if they're 'bent' horizontal edges,
+      //   but exclude maxima with horizontal edges. nb: e can't be a horizontal.
+      var IsMaximaEdge = this.IsMaxima(e, topY);
+      if (IsMaximaEdge)
       {
-        ePrev = e.prevInAEL;
-        this.DoMaxima(e, topY);
-        if (ePrev == null) e = this.m_ActiveEdges;
-        else e = ePrev.nextInAEL;
+        var eMaxPair = this.GetMaximaPair(e);
+        IsMaximaEdge = (eMaxPair === null || !ClipperLib.ClipperBase.IsHorizontal(eMaxPair));
+      }
+      if (IsMaximaEdge)
+      {
+        var ePrev = e.PrevInAEL;
+        this.DoMaxima(e);
+        if (ePrev === null)
+          e = this.m_ActiveEdges;
+        else
+          e = ePrev.NextInAEL;
       }
       else
       {
-        if (this.IsIntermediate(e, topY) && e.nextInLML.dx == ClipperLib.ClipperBase.horizontal)
+        //2. promote horizontal edges, otherwise update Curr.x and Curr.y ...
+        if (this.IsIntermediate(e, topY) && ClipperLib.ClipperBase.IsHorizontal(e.NextInLML))
         {
-          if (e.outIdx >= 0)
-          {
-            this.AddOutPt(e, new ClipperLib.IntPoint(e.xtop, e.ytop));
-            for (var i = 0; i < this.m_HorizJoins.length; ++i)
-            {
-              var pt = new ClipperLib.IntPoint(),
-                pt2 = new ClipperLib.IntPoint();
-              var hj = this.m_HorizJoins[i];
-              if ((function ()
-              {
-                pt = {
-                  Value: pt
-                };
-                pt2 = {
-                  Value: pt2
-                };
-                var $res = this.GetOverlapSegment(new ClipperLib.IntPoint(hj.edge.xbot, hj.edge.ybot),
-                new ClipperLib.IntPoint(hj.edge.xtop, hj.edge.ytop),
-                new ClipperLib.IntPoint(e.nextInLML.xbot, e.nextInLML.ybot),
-                new ClipperLib.IntPoint(e.nextInLML.xtop, e.nextInLML.ytop), pt, pt2);
-                pt = pt.Value;
-                pt2 = pt2.Value;
-                return $res;
-              })
-                .call(this)) this.AddJoin(hj.edge, e.nextInLML, hj.savedIdx, e.outIdx);
-            }
-            this.AddHorzJoin(e.nextInLML, e.outIdx);
-          }
           (function ()
           {
             e = {
@@ -6848,25 +8132,43 @@ module.exports = Triangle;
             var $res = this.UpdateEdgeIntoAEL(e);
             e = e.Value;
             return $res;
-          })
-            .call(this);
+          }).call(this);
+          if (e.OutIdx >= 0)
+            this.AddOutPt(e, e.Bot);
           this.AddEdgeToSEL(e);
         }
         else
         {
-          e.xcurr = ClipperLib.Clipper.TopX(e, topY);
-          e.ycurr = topY;
+          e.Curr.x = ClipperLib.Clipper.TopX(e, topY);
+          e.Curr.y = topY;
         }
-        e = e.nextInAEL;
+        if (this.StrictlySimple)
+        {
+          var ePrev = e.PrevInAEL;
+          if ((e.OutIdx >= 0) && (e.WindDelta !== 0) && ePrev !== null &&
+            (ePrev.OutIdx >= 0) && (ePrev.Curr.x == e.Curr.x) &&
+            (ePrev.WindDelta !== 0))
+          {
+            var op = this.AddOutPt(ePrev, e.Curr);
+            var op2 = this.AddOutPt(e, e.Curr);
+            this.AddJoin(op, op2, e.Curr);
+            //StrictlySimple (type-3) join
+          }
+        }
+        e = e.NextInAEL;
       }
     }
-    this.ProcessHorizontals();
+    //3. Process horizontals at the Top of the scanbeam ...
+    this.ProcessHorizontals(true);
+    //4. Promote intermediate vertices ...
     e = this.m_ActiveEdges;
-    while (e != null)
+    while (e !== null)
     {
       if (this.IsIntermediate(e, topY))
       {
-        if (e.outIdx >= 0) this.AddOutPt(e, new ClipperLib.IntPoint(e.xtop, e.ytop));
+        var op = null;
+        if (e.OutIdx >= 0)
+          op = this.AddOutPt(e, e.Top);
         (function ()
         {
           e = {
@@ -6875,860 +8177,1640 @@ module.exports = Triangle;
           var $res = this.UpdateEdgeIntoAEL(e);
           e = e.Value;
           return $res;
-        })
-          .call(this);
-        ePrev = e.prevInAEL;
-        var eNext = e.nextInAEL;
-        if (ePrev != null && ePrev.xcurr == e.xbot && ePrev.ycurr == e.ybot && e.outIdx >= 0 && ePrev.outIdx >= 0 && ePrev.ycurr > ePrev.ytop && this.SlopesEqual(e, ePrev, this.m_UseFullRange))
+        }).call(this);
+        //if output polygons share an edge, they'll need joining later ...
+        var ePrev = e.PrevInAEL;
+        var eNext = e.NextInAEL;
+        if (ePrev !== null && ePrev.Curr.x == e.Bot.x &&
+          ePrev.Curr.y == e.Bot.y && op !== null &&
+          ePrev.OutIdx >= 0 && ePrev.Curr.y > ePrev.Top.y &&
+          ClipperLib.ClipperBase.SlopesEqual(e, ePrev, this.m_UseFullRange) &&
+          (e.WindDelta !== 0) && (ePrev.WindDelta !== 0))
         {
-          this.AddOutPt(ePrev, new ClipperLib.IntPoint(e.xbot, e.ybot));
-          this.AddJoin(e, ePrev, -1, -1);
+          var op2 = this.AddOutPt(ePrev, e.Bot);
+          this.AddJoin(op, op2, e.Top);
         }
-        else if (eNext != null && eNext.xcurr == e.xbot && eNext.ycurr == e.ybot && e.outIdx >= 0 && eNext.outIdx >= 0 && eNext.ycurr > eNext.ytop && this.SlopesEqual(e, eNext, this.m_UseFullRange))
+        else if (eNext !== null && eNext.Curr.x == e.Bot.x &&
+          eNext.Curr.y == e.Bot.y && op !== null &&
+          eNext.OutIdx >= 0 && eNext.Curr.y > eNext.Top.y &&
+          ClipperLib.ClipperBase.SlopesEqual(e, eNext, this.m_UseFullRange) &&
+          (e.WindDelta !== 0) && (eNext.WindDelta !== 0))
         {
-          this.AddOutPt(eNext, new ClipperLib.IntPoint(e.xbot, e.ybot));
-          this.AddJoin(e, eNext, -1, -1);
+          var op2 = this.AddOutPt(eNext, e.Bot);
+          this.AddJoin(op, op2, e.Top);
         }
       }
-      e = e.nextInAEL;
+      e = e.NextInAEL;
     }
   };
-  ClipperLib.Clipper.prototype.DoMaxima = function (e, topY)
+  ClipperLib.Clipper.prototype.DoMaxima = function (e)
   {
     var eMaxPair = this.GetMaximaPair(e);
-    var X = e.xtop;
-    var eNext = e.nextInAEL;
-    while (eNext != eMaxPair)
+    if (eMaxPair === null)
     {
-      if (eNext == null) ClipperLib.Error("DoMaxima error");
-      this.IntersectEdges(e, eNext, new ClipperLib.IntPoint(X, topY), ClipperLib.Protects.ipBoth);
-      eNext = eNext.nextInAEL;
+      if (e.OutIdx >= 0)
+        this.AddOutPt(e, e.Top);
+      this.DeleteFromAEL(e);
+      return;
     }
-    if (e.outIdx < 0 && eMaxPair.outIdx < 0)
+    var eNext = e.NextInAEL;
+    var use_lines = true;
+    while (eNext !== null && eNext != eMaxPair)
+    {
+      this.IntersectEdges(e, eNext, e.Top, true);
+      this.SwapPositionsInAEL(e, eNext);
+      eNext = e.NextInAEL;
+    }
+    if (e.OutIdx == -1 && eMaxPair.OutIdx == -1)
     {
       this.DeleteFromAEL(e);
       this.DeleteFromAEL(eMaxPair);
     }
-    else if (e.outIdx >= 0 && eMaxPair.outIdx >= 0)
+    else if (e.OutIdx >= 0 && eMaxPair.OutIdx >= 0)
     {
-      this.IntersectEdges(e, eMaxPair, new ClipperLib.IntPoint(X, topY), ClipperLib.Protects.ipNone);
+      this.IntersectEdges(e, eMaxPair, e.Top, false);
     }
-    else ClipperLib.Error("DoMaxima error");
+    else if (use_lines && e.WindDelta === 0)
+    {
+      if (e.OutIdx >= 0)
+      {
+        this.AddOutPt(e, e.Top);
+        e.OutIdx = -1;
+      }
+      this.DeleteFromAEL(e);
+      if (eMaxPair.OutIdx >= 0)
+      {
+        this.AddOutPt(eMaxPair, e.Top);
+        eMaxPair.OutIdx = -1;
+      }
+      this.DeleteFromAEL(eMaxPair);
+    }
+    else
+      ClipperLib.Error("DoMaxima error");
   };
-  ClipperLib.Clipper.ReversePolygons = function (polys)
+  ClipperLib.Clipper.ReversePaths = function (polys)
   {
-    var len = polys.length,
-      poly;
-    for (var i = 0; i < len; i++)
-    {
-      if (polys[i] instanceof Array) polys[i].reverse();
-    }
+    for (var i = 0, len = polys.length; i < len; i++)
+      polys[i].reverse();
   };
   ClipperLib.Clipper.Orientation = function (poly)
   {
-    return this.Area(poly) >= 0;
+    return ClipperLib.Clipper.Area(poly) >= 0;
   };
   ClipperLib.Clipper.prototype.PointCount = function (pts)
   {
-    if (pts == null) return 0;
+    if (pts === null)
+      return 0;
     var result = 0;
     var p = pts;
     do {
       result++;
-      p = p.next;
+      p = p.Next;
     }
-    while (p != pts);
+    while (p != pts)
     return result;
   };
   ClipperLib.Clipper.prototype.BuildResult = function (polyg)
   {
     ClipperLib.Clear(polyg);
-    var outRec, len = this.m_PolyOuts.length;
-    for (var i = 0; i < len; i++)
+    for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
     {
-      outRec = this.m_PolyOuts[i];
-      if (outRec.pts == null) continue;
-      var p = outRec.pts;
+      var outRec = this.m_PolyOuts[i];
+      if (outRec.Pts === null)
+        continue;
+      var p = outRec.Pts.Prev;
       var cnt = this.PointCount(p);
-      if (cnt < 3) continue;
-      var pg = new ClipperLib.Polygon(cnt);
+      if (cnt < 2)
+        continue;
+      var pg = new Array(cnt);
       for (var j = 0; j < cnt; j++)
       {
-        //pg.push(p.pt);
-        pg.push(new ClipperLib.IntPoint(p.pt.x, p.pt.y)); // Have to create new point, because the point can be a reference to other point
-        p = p.prev;
+        pg[j] = p.Pt;
+        p = p.Prev;
       }
       polyg.push(pg);
     }
   };
-  ClipperLib.Clipper.prototype.BuildResultEx = function (polyg)
+  ClipperLib.Clipper.prototype.BuildResult2 = function (polytree)
   {
-    ClipperLib.Clear(polyg);
-    var i = 0;
-    while (i < this.m_PolyOuts.length)
+    polytree.Clear();
+    //add each output polygon/contour to polytree ...
+    //polytree.m_AllPolys.set_Capacity(this.m_PolyOuts.length);
+    for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
     {
-      var outRec = this.m_PolyOuts[i++];
-      if (outRec.pts == null) break;
-      var p = outRec.pts;
-      var cnt = this.PointCount(p);
-      if (cnt < 3) continue;
-      var epg = new ClipperLib.ExPolygon();
-      epg.outer = new ClipperLib.Polygon();
-      epg.holes = new ClipperLib.Polygons();
+      var outRec = this.m_PolyOuts[i];
+      var cnt = this.PointCount(outRec.Pts);
+      if ((outRec.IsOpen && cnt < 2) || (!outRec.IsOpen && cnt < 3))
+        continue;
+      this.FixHoleLinkage(outRec);
+      var pn = new ClipperLib.PolyNode();
+      polytree.m_AllPolys.push(pn);
+      outRec.PolyNode = pn;
+      pn.m_polygon.length = cnt;
+      var op = outRec.Pts.Prev;
       for (var j = 0; j < cnt; j++)
       {
-        //epg.outer.push(p.pt);
-        epg.outer.push(new ClipperLib.IntPoint(p.pt.x, p.pt.y)); // Have to create new point, because the point can be a reference to other point
-        p = p.prev;
+        pn.m_polygon[j] = op.Pt;
+        op = op.Prev;
       }
-      while (i < this.m_PolyOuts.length)
+    }
+    //fixup PolyNode links etc ...
+    //polytree.m_Childs.set_Capacity(this.m_PolyOuts.length);
+    for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
+    {
+      var outRec = this.m_PolyOuts[i];
+      if (outRec.PolyNode === null)
+        continue;
+      else if (outRec.IsOpen)
       {
-        outRec = this.m_PolyOuts[i];
-        if (outRec.pts == null || !outRec.isHole) break;
-        var pg = new ClipperLib.Polygon();
-        p = outRec.pts;
-        do {
-          //pg.push(p.pt);
-          pg.push(new ClipperLib.IntPoint(p.pt.x, p.pt.y)); // Have to create new point, because the point can be a reference to other point
-          p = p.prev;
-        }
-        while (p != outRec.pts);
-        epg.holes.push(pg);
-        i++;
+        outRec.PolyNode.IsOpen = true;
+        polytree.AddChild(outRec.PolyNode);
       }
-      polyg.push(epg);
+      else if (outRec.FirstLeft !== null && outRec.FirstLeft.PolyNode != null)
+        outRec.FirstLeft.PolyNode.AddChild(outRec.PolyNode);
+      else
+        polytree.AddChild(outRec.PolyNode);
     }
   };
   ClipperLib.Clipper.prototype.FixupOutPolygon = function (outRec)
   {
+    //FixupOutPolygon() - removes duplicate points and simplifies consecutive
+    //parallel edges by removing the middle vertex.
     var lastOK = null;
-    outRec.pts = outRec.bottomPt;
-    var pp = outRec.bottomPt;
+    outRec.BottomPt = null;
+    var pp = outRec.Pts;
     for (;;)
     {
-      if (pp.prev == pp || pp.prev == pp.next)
+      if (pp.Prev == pp || pp.Prev == pp.Next)
       {
         this.DisposeOutPts(pp);
-        outRec.pts = null;
-        outRec.bottomPt = null;
+        outRec.Pts = null;
         return;
       }
-      if (ClipperLib.ClipperBase.PointsEqual(pp.pt, pp.next.pt) || this.SlopesEqual(pp.prev.pt, pp.pt, pp.next.pt, this.m_UseFullRange))
+      //test for duplicate points and collinear edges ...
+      if ((ClipperLib.IntPoint.op_Equality(pp.Pt, pp.Next.Pt)) || (ClipperLib.IntPoint.op_Equality(pp.Pt, pp.Prev.Pt)) ||
+        (ClipperLib.ClipperBase.SlopesEqual(pp.Prev.Pt, pp.Pt, pp.Next.Pt, this.m_UseFullRange) &&
+          (!this.PreserveCollinear || !this.Pt2IsBetweenPt1AndPt3(pp.Prev.Pt, pp.Pt, pp.Next.Pt))))
       {
         lastOK = null;
         var tmp = pp;
-        if (pp == outRec.bottomPt) outRec.bottomPt = null;
-        pp.prev.next = pp.next;
-        pp.next.prev = pp.prev;
-        pp = pp.prev;
+        pp.Prev.Next = pp.Next;
+        pp.Next.Prev = pp.Prev;
+        pp = pp.Prev;
         tmp = null;
       }
-      else if (pp == lastOK) break;
+      else if (pp == lastOK)
+        break;
       else
       {
-        if (lastOK == null) lastOK = pp;
-        pp = pp.next;
+        if (lastOK === null)
+          lastOK = pp;
+        pp = pp.Next;
       }
     }
-    if (outRec.bottomPt == null)
-    {
-      outRec.bottomPt = this.GetBottomPt(pp);
-      outRec.bottomPt.idx = outRec.idx;
-      outRec.pts = outRec.bottomPt;
-    }
+    outRec.Pts = pp;
   };
-  ClipperLib.Clipper.prototype.JoinPoints = function (j, p1, p2)
+  ClipperLib.Clipper.prototype.DupOutPt = function (outPt, InsertAfter)
   {
-    p1.Value = null;
-    p2.Value = null;
-    var outRec1 = this.m_PolyOuts[j.poly1Idx];
-    var outRec2 = this.m_PolyOuts[j.poly2Idx];
-    if (outRec1 == null || outRec2 == null) return false;
-    var pp1a = outRec1.pts;
-    var pp2a = outRec2.pts;
-    var pt1 = j.pt2a,
-      pt2 = j.pt2b;
-    var pt3 = j.pt1a,
-      pt4 = j.pt1b;
-    if (!(function ()
+    var result = new ClipperLib.OutPt();
+    //result.Pt = outPt.Pt;
+    result.Pt.x = outPt.Pt.x; 
+    result.Pt.y = outPt.Pt.y; 
+    result.Idx = outPt.Idx;
+    if (InsertAfter)
     {
-      pp1a = {
-        Value: pp1a
-      };
-      pt1 = {
-        Value: pt1
-      };
-      pt2 = {
-        Value: pt2
-      };
-      var $res = this.FindSegment(pp1a, this.m_UseFullRange, pt1, pt2);
-      pp1a = pp1a.Value;
-      pt1 = pt1.Value;
-      pt2 = pt2.Value;
-      return $res;
-    })
-      .call(this)) return false;
-    if (outRec1 == outRec2)
-    {
-      pp2a = pp1a.next;
-      if (!(function ()
-      {
-        pp2a = {
-          Value: pp2a
-        };
-        pt3 = {
-          Value: pt3
-        };
-        pt4 = {
-          Value: pt4
-        };
-        var $res = this.FindSegment(pp2a, this.m_UseFullRange, pt3, pt4);
-        pp2a = pp2a.Value;
-        pt3 = pt3.Value;
-        pt4 = pt4.Value;
-        return $res;
-      })
-        .call(this) || (pp2a == pp1a)) return false;
+      result.Next = outPt.Next;
+      result.Prev = outPt;
+      outPt.Next.Prev = result;
+      outPt.Next = result;
     }
-    else if (!(function ()
+    else
     {
-      pp2a = {
-        Value: pp2a
-      };
-      pt3 = {
-        Value: pt3
-      };
-      pt4 = {
-        Value: pt4
-      };
-      var $res = this.FindSegment(pp2a, this.m_UseFullRange, pt3, pt4);
-      pp2a = pp2a.Value;
-      pt3 = pt3.Value;
-      pt4 = pt4.Value;
-      return $res;
-    })
-      .call(this)) return false;
-    if (!(function ()
+      result.Prev = outPt.Prev;
+      result.Next = outPt;
+      outPt.Prev.Next = result;
+      outPt.Prev = result;
+    }
+    return result;
+  };
+  ClipperLib.Clipper.prototype.GetOverlap = function (a1, a2, b1, b2, Left, Right)
+  {
+    if (a1 < a2)
     {
-      pt1 = {
-        Value: pt1
-      };
-      pt2 = {
-        Value: pt2
-      };
-      var $res = this.GetOverlapSegment(pt1.Value, pt2.Value, pt3, pt4, pt1, pt2);
-      pt1 = pt1.Value;
-      pt2 = pt2.Value;
-      return $res;
-    })
-      .call(this))
+      if (b1 < b2)
+      {
+        Left.Value = Math.max(a1, b1);
+        Right.Value = Math.min(a2, b2);
+      }
+      else
+      {
+        Left.Value = Math.max(a1, b2);
+        Right.Value = Math.min(a2, b1);
+      }
+    }
+    else
     {
+      if (b1 < b2)
+      {
+        Left.Value = Math.max(a2, b1);
+        Right.Value = Math.min(a1, b2);
+      }
+      else
+      {
+        Left.Value = Math.max(a2, b2);
+        Right.Value = Math.min(a1, b1);
+      }
+    }
+    return Left.Value < Right.Value;
+  };
+  ClipperLib.Clipper.prototype.JoinHorz = function (op1, op1b, op2, op2b, Pt, DiscardLeft)
+  {
+    var Dir1 = (op1.Pt.x > op1b.Pt.x ? ClipperLib.Direction.dRightToLeft : ClipperLib.Direction.dLeftToRight);
+    var Dir2 = (op2.Pt.x > op2b.Pt.x ? ClipperLib.Direction.dRightToLeft : ClipperLib.Direction.dLeftToRight);
+    if (Dir1 == Dir2)
       return false;
-    }
-    var p3, p4, prev = pp1a.prev;
-    if (ClipperLib.ClipperBase.PointsEqual(pp1a.pt, pt1)) p1.Value = pp1a;
-    else if (ClipperLib.ClipperBase.PointsEqual(prev.pt, pt1)) p1.Value = prev;
-    else p1.Value = this.InsertPolyPtBetween(pp1a, prev, pt1);
-    if (ClipperLib.ClipperBase.PointsEqual(pp1a.pt, pt2)) p2.Value = pp1a;
-    else if (ClipperLib.ClipperBase.PointsEqual(prev.pt, pt2)) p2.Value = prev;
-    else if ((p1.Value == pp1a) || (p1.Value == prev)) p2.Value = this.InsertPolyPtBetween(pp1a, prev, pt2);
-    else if (this.Pt3IsBetweenPt1AndPt2(pp1a.pt, p1.Value.pt, pt2)) p2.Value = this.InsertPolyPtBetween(pp1a, p1.Value, pt2);
-    else p2.Value = this.InsertPolyPtBetween(p1.Value, prev, pt2);
-    prev = pp2a.prev;
-    if (ClipperLib.ClipperBase.PointsEqual(pp2a.pt, pt1)) p3 = pp2a;
-    else if (ClipperLib.ClipperBase.PointsEqual(prev.pt, pt1)) p3 = prev;
-    else p3 = this.InsertPolyPtBetween(pp2a, prev, pt1);
-    if (ClipperLib.ClipperBase.PointsEqual(pp2a.pt, pt2)) p4 = pp2a;
-    else if (ClipperLib.ClipperBase.PointsEqual(prev.pt, pt2)) p4 = prev;
-    else if ((p3 == pp2a) || (p3 == prev)) p4 = this.InsertPolyPtBetween(pp2a, prev, pt2);
-    else if (this.Pt3IsBetweenPt1AndPt2(pp2a.pt, p3.pt, pt2)) p4 = this.InsertPolyPtBetween(pp2a, p3, pt2);
-    else p4 = this.InsertPolyPtBetween(p3, prev, pt2);
-    if (p1.Value.next == p2.Value && p3.prev == p4)
+    //When DiscardLeft, we want Op1b to be on the Left of Op1, otherwise we
+    //want Op1b to be on the Right. (And likewise with Op2 and Op2b.)
+    //So, to facilitate this while inserting Op1b and Op2b ...
+    //when DiscardLeft, make sure we're AT or RIGHT of Pt before adding Op1b,
+    //otherwise make sure we're AT or LEFT of Pt. (Likewise with Op2b.)
+    if (Dir1 == ClipperLib.Direction.dLeftToRight)
     {
-      p1.Value.next = p3;
-      p3.prev = p1.Value;
-      p2.Value.prev = p4;
-      p4.next = p2.Value;
-      return true;
+      while (op1.Next.Pt.x <= Pt.x &&
+        op1.Next.Pt.x >= op1.Pt.x && op1.Next.Pt.y == Pt.y)
+        op1 = op1.Next;
+      if (DiscardLeft && (op1.Pt.x != Pt.x))
+        op1 = op1.Next;
+      op1b = this.DupOutPt(op1, !DiscardLeft);
+      if (ClipperLib.IntPoint.op_Inequality(op1b.Pt, Pt))
+      {
+        op1 = op1b;
+        //op1.Pt = Pt;
+        op1.Pt.x = Pt.x; 
+        op1.Pt.y = Pt.y; 
+        op1b = this.DupOutPt(op1, !DiscardLeft);
+      }
     }
-    else if (p1.Value.prev == p2.Value && p3.next == p4)
+    else
     {
-      p1.Value.prev = p3;
-      p3.next = p1.Value;
-      p2.Value.next = p4;
-      p4.prev = p2.Value;
-      return true;
+      while (op1.Next.Pt.x >= Pt.x &&
+        op1.Next.Pt.x <= op1.Pt.x && op1.Next.Pt.y == Pt.y)
+        op1 = op1.Next;
+      if (!DiscardLeft && (op1.Pt.x != Pt.x))
+        op1 = op1.Next;
+      op1b = this.DupOutPt(op1, DiscardLeft);
+      if (ClipperLib.IntPoint.op_Inequality(op1b.Pt, Pt))
+      {
+        op1 = op1b;
+        //op1.Pt = Pt;
+        op1.Pt.x = Pt.x; 
+        op1.Pt.y = Pt.y; 
+        op1b = this.DupOutPt(op1, DiscardLeft);
+      }
     }
-    else return false;
+    if (Dir2 == ClipperLib.Direction.dLeftToRight)
+    {
+      while (op2.Next.Pt.x <= Pt.x &&
+        op2.Next.Pt.x >= op2.Pt.x && op2.Next.Pt.y == Pt.y)
+        op2 = op2.Next;
+      if (DiscardLeft && (op2.Pt.x != Pt.x))
+        op2 = op2.Next;
+      op2b = this.DupOutPt(op2, !DiscardLeft);
+      if (ClipperLib.IntPoint.op_Inequality(op2b.Pt, Pt))
+      {
+        op2 = op2b;
+        //op2.Pt = Pt;
+        op2.Pt.x = Pt.x; 
+        op2.Pt.y = Pt.y; 
+        op2b = this.DupOutPt(op2, !DiscardLeft);
+      }
+    }
+    else
+    {
+      while (op2.Next.Pt.x >= Pt.x &&
+        op2.Next.Pt.x <= op2.Pt.x && op2.Next.Pt.y == Pt.y)
+        op2 = op2.Next;
+      if (!DiscardLeft && (op2.Pt.x != Pt.x))
+        op2 = op2.Next;
+      op2b = this.DupOutPt(op2, DiscardLeft);
+      if (ClipperLib.IntPoint.op_Inequality(op2b.Pt, Pt))
+      {
+        op2 = op2b;
+        //op2.Pt = Pt;
+        op2.Pt.x = Pt.x; 
+        op2.Pt.y = Pt.y; 
+        op2b = this.DupOutPt(op2, DiscardLeft);
+      }
+    }
+    if ((Dir1 == ClipperLib.Direction.dLeftToRight) == DiscardLeft)
+    {
+      op1.Prev = op2;
+      op2.Next = op1;
+      op1b.Next = op2b;
+      op2b.Prev = op1b;
+    }
+    else
+    {
+      op1.Next = op2;
+      op2.Prev = op1;
+      op1b.Prev = op2b;
+      op2b.Next = op1b;
+    }
+    return true;
   };
-  ClipperLib.Clipper.prototype.FixupJoinRecs = function (j, pt, startIdx)
+  ClipperLib.Clipper.prototype.JoinPoints = function (j, outRec1, outRec2)
   {
-    for (var k = startIdx; k < this.m_Joins.length; k++)
+    var op1 = j.OutPt1,
+      op1b = new ClipperLib.OutPt();
+    var op2 = j.OutPt2,
+      op2b = new ClipperLib.OutPt();
+    //There are 3 kinds of joins for output polygons ...
+    //1. Horizontal joins where Join.OutPt1 & Join.OutPt2 are a vertices anywhere
+    //along (horizontal) collinear edges (& Join.OffPt is on the same horizontal).
+    //2. Non-horizontal joins where Join.OutPt1 & Join.OutPt2 are at the same
+    //location at the Bottom of the overlapping segment (& Join.OffPt is above).
+    //3. StrictlySimple joins where edges touch but are not collinear and where
+    //Join.OutPt1, Join.OutPt2 & Join.OffPt all share the same point.
+    var isHorizontal = (j.OutPt1.Pt.y == j.OffPt.y);
+    if (isHorizontal && (ClipperLib.IntPoint.op_Equality(j.OffPt, j.OutPt1.Pt)) && (ClipperLib.IntPoint.op_Equality(j.OffPt, j.OutPt2.Pt)))
     {
-      var j2 = this.m_Joins[k];
-      if (j2.poly1Idx == j.poly1Idx && this.PointIsVertex(j2.pt1a, pt)) j2.poly1Idx = j.poly2Idx;
-      if (j2.poly2Idx == j.poly1Idx && this.PointIsVertex(j2.pt2a, pt)) j2.poly2Idx = j.poly2Idx;
+      //Strictly Simple join ...
+      op1b = j.OutPt1.Next;
+      while (op1b != op1 && (ClipperLib.IntPoint.op_Equality(op1b.Pt, j.OffPt)))
+        op1b = op1b.Next;
+      var reverse1 = (op1b.Pt.y > j.OffPt.y);
+      op2b = j.OutPt2.Next;
+      while (op2b != op2 && (ClipperLib.IntPoint.op_Equality(op2b.Pt, j.OffPt)))
+        op2b = op2b.Next;
+      var reverse2 = (op2b.Pt.y > j.OffPt.y);
+      if (reverse1 == reverse2)
+        return false;
+      if (reverse1)
+      {
+        op1b = this.DupOutPt(op1, false);
+        op2b = this.DupOutPt(op2, true);
+        op1.Prev = op2;
+        op2.Next = op1;
+        op1b.Next = op2b;
+        op2b.Prev = op1b;
+        j.OutPt1 = op1;
+        j.OutPt2 = op1b;
+        return true;
+      }
+      else
+      {
+        op1b = this.DupOutPt(op1, true);
+        op2b = this.DupOutPt(op2, false);
+        op1.Next = op2;
+        op2.Prev = op1;
+        op1b.Prev = op2b;
+        op2b.Next = op1b;
+        j.OutPt1 = op1;
+        j.OutPt2 = op1b;
+        return true;
+      }
     }
-  };
-  ClipperLib.Clipper.prototype.JoinCommonEdges = function ()
-  {
-    var k, orec;
-    for (var i = 0; i < this.m_Joins.length; i++)
+    else if (isHorizontal)
     {
-      var j = this.m_Joins[i];
-      var p1, p2;
+      //treat horizontal joins differently to non-horizontal joins since with
+      //them we're not yet sure where the overlapping is. OutPt1.Pt & OutPt2.Pt
+      //may be anywhere along the horizontal edge.
+      op1b = op1;
+      while (op1.Prev.Pt.y == op1.Pt.y && op1.Prev != op1b && op1.Prev != op2)
+        op1 = op1.Prev;
+      while (op1b.Next.Pt.y == op1b.Pt.y && op1b.Next != op1 && op1b.Next != op2)
+        op1b = op1b.Next;
+      if (op1b.Next == op1 || op1b.Next == op2)
+        return false;
+      //a flat 'polygon'
+      op2b = op2;
+      while (op2.Prev.Pt.y == op2.Pt.y && op2.Prev != op2b && op2.Prev != op1b)
+        op2 = op2.Prev;
+      while (op2b.Next.Pt.y == op2b.Pt.y && op2b.Next != op2 && op2b.Next != op1)
+        op2b = op2b.Next;
+      if (op2b.Next == op2 || op2b.Next == op1)
+        return false;
+      //a flat 'polygon'
+      var Left, Right;
+      //Op1 -. Op1b & Op2 -. Op2b are the extremites of the horizontal edges
       if (!(function ()
       {
-        p1 = {
-          Value: p1
+        Left = {
+          Value: Left
         };
-        p2 = {
-          Value: p2
+        Right = {
+          Value: Right
         };
-        var $res = this.JoinPoints(j, p1, p2);
-        p1 = p1.Value;
-        p2 = p2.Value;
+        var $res = this.GetOverlap(op1.Pt.x, op1b.Pt.x, op2.Pt.x, op2b.Pt.x, Left, Right);
+        Left = Left.Value;
+        Right = Right.Value;
         return $res;
-      })
-        .call(this)) continue;
-      var outRec1 = this.m_PolyOuts[j.poly1Idx];
-      var outRec2 = this.m_PolyOuts[j.poly2Idx];
-      if (outRec1 == outRec2)
+      }).call(this))
+        return false;
+      //DiscardLeftSide: when overlapping edges are joined, a spike will created
+      //which needs to be cleaned up. However, we don't want Op1 or Op2 caught up
+      //on the discard Side as either may still be needed for other joins ...
+      var Pt = new ClipperLib.IntPoint();
+      var DiscardLeftSide;
+      if (op1.Pt.x >= Left && op1.Pt.x <= Right)
       {
-        outRec1.pts = this.GetBottomPt(p1);
-        outRec1.bottomPt = outRec1.pts;
-        outRec1.bottomPt.idx = outRec1.idx;
-        outRec2 = this.CreateOutRec();
-        this.m_PolyOuts.push(outRec2);
-        outRec2.idx = this.m_PolyOuts.length - 1;
-        j.poly2Idx = outRec2.idx;
-        outRec2.pts = this.GetBottomPt(p2);
-        outRec2.bottomPt = outRec2.pts;
-        outRec2.bottomPt.idx = outRec2.idx;
-        if (this.PointInPolygon(outRec2.pts.pt, outRec1.pts, this.m_UseFullRange))
-        {
-          outRec2.isHole = !outRec1.isHole;
-          outRec2.FirstLeft = outRec1;
-          this.FixupJoinRecs(j, p2, i + 1);
-          this.FixupOutPolygon(outRec1);
-          this.FixupOutPolygon(outRec2);
-          
-          if ((outRec2.isHole ^ this.m_ReverseOutput) == (this.Area(outRec2, this.m_UseFullRange) > 0))
-          this.ReversePolyPtLinks(outRec2.pts);
-        }
-        else if (this.PointInPolygon(outRec1.pts.pt, outRec2.pts, this.m_UseFullRange))
-        {
-          outRec2.isHole = outRec1.isHole;
-          outRec1.isHole = !outRec2.isHole;
-          outRec2.FirstLeft = outRec1.FirstLeft;
-          outRec1.FirstLeft = outRec2;
-          this.FixupJoinRecs(j, p2, i + 1);
-          this.FixupOutPolygon(outRec1);
-          this.FixupOutPolygon(outRec2);
-          
-          if ((outRec1.isHole ^ this.m_ReverseOutput) == (this.Area(outRec1, this.m_UseFullRange) > 0))
-          this.ReversePolyPtLinks(outRec1.pts);
+        //Pt = op1.Pt;
+        Pt.x = op1.Pt.x; 
+        Pt.y = op1.Pt.y; 
+        DiscardLeftSide = (op1.Pt.x > op1b.Pt.x);
+      }
+      else if (op2.Pt.x >= Left && op2.Pt.x <= Right)
+      {
+        //Pt = op2.Pt;
+        Pt.x = op2.Pt.x; 
+        Pt.y = op2.Pt.y; 
+        DiscardLeftSide = (op2.Pt.x > op2b.Pt.x);
+      }
+      else if (op1b.Pt.x >= Left && op1b.Pt.x <= Right)
+      {
+        //Pt = op1b.Pt;
+        Pt.x = op1b.Pt.x; 
+        Pt.y = op1b.Pt.y; 
+        DiscardLeftSide = op1b.Pt.x > op1.Pt.x; 
+      }
+      else
+      {
+        //Pt = op2b.Pt;
+        Pt.x = op2b.Pt.x; 
+        Pt.y = op2b.Pt.y; 
+        DiscardLeftSide = (op2b.Pt.x > op2.Pt.x);
+      }
+      j.OutPt1 = op1;
+      j.OutPt2 = op2;
+      return this.JoinHorz(op1, op1b, op2, op2b, Pt, DiscardLeftSide);
+    }
+    else
+    {
+      //nb: For non-horizontal joins ...
+      //    1. Jr.OutPt1.Pt.y == Jr.OutPt2.Pt.Y
+      //    2. Jr.OutPt1.Pt > Jr.OffPt.Y
+      //make sure the polygons are correctly oriented ...
+      op1b = op1.Next;
+      while ((ClipperLib.IntPoint.op_Equality(op1b.Pt, op1.Pt)) && (op1b != op1))
+        op1b = op1b.Next;
+      var Reverse1 = ((op1b.Pt.y > op1.Pt.y) || !ClipperLib.ClipperBase.SlopesEqual(op1.Pt, op1b.Pt, j.OffPt, this.m_UseFullRange));
+      if (Reverse1)
+      {
+        op1b = op1.Prev;
+        while ((ClipperLib.IntPoint.op_Equality(op1b.Pt, op1.Pt)) && (op1b != op1))
+          op1b = op1b.Prev;
+        if ((op1b.Pt.y > op1.Pt.y) || !ClipperLib.ClipperBase.SlopesEqual(op1.Pt, op1b.Pt, j.OffPt, this.m_UseFullRange))
+          return false;
+      }
+      op2b = op2.Next;
+      while ((ClipperLib.IntPoint.op_Equality(op2b.Pt, op2.Pt)) && (op2b != op2))
+        op2b = op2b.Next;
+      var Reverse2 = ((op2b.Pt.y > op2.Pt.y) || !ClipperLib.ClipperBase.SlopesEqual(op2.Pt, op2b.Pt, j.OffPt, this.m_UseFullRange));
+      if (Reverse2)
+      {
+        op2b = op2.Prev;
+        while ((ClipperLib.IntPoint.op_Equality(op2b.Pt, op2.Pt)) && (op2b != op2))
+          op2b = op2b.Prev;
+        if ((op2b.Pt.y > op2.Pt.y) || !ClipperLib.ClipperBase.SlopesEqual(op2.Pt, op2b.Pt, j.OffPt, this.m_UseFullRange))
+          return false;
+      }
+      if ((op1b == op1) || (op2b == op2) || (op1b == op2b) ||
+        ((outRec1 == outRec2) && (Reverse1 == Reverse2)))
+        return false;
+      if (Reverse1)
+      {
+        op1b = this.DupOutPt(op1, false);
+        op2b = this.DupOutPt(op2, true);
+        op1.Prev = op2;
+        op2.Next = op1;
+        op1b.Next = op2b;
+        op2b.Prev = op1b;
+        j.OutPt1 = op1;
+        j.OutPt2 = op1b;
+        return true;
+      }
+      else
+      {
+        op1b = this.DupOutPt(op1, true);
+        op2b = this.DupOutPt(op2, false);
+        op1.Next = op2;
+        op2.Prev = op1;
+        op1b.Prev = op2b;
+        op2b.Next = op1b;
+        j.OutPt1 = op1;
+        j.OutPt2 = op1b;
+        return true;
+      }
+    }
+  };
+  ClipperLib.Clipper.GetBounds = function (paths)
+  {
+    var i = 0,
+      cnt = paths.length;
+    while (i < cnt && paths[i].length == 0) i++;
+    if (i == cnt) return new ClipperLib.IntRect(0, 0, 0, 0);
+    var result = new ClipperLib.IntRect();
+    result.left = paths[i][0].x; 
+    result.right = result.left;
+    result.top = paths[i][0].y; 
+    result.bottom = result.top;
+    for (; i < cnt; i++)
+      for (var j = 0, jlen = paths[i].length; j < jlen; j++)
+      {
+        if (paths[i][j].x < result.left) result.left = paths[i][j].x; 
+        else if (paths[i][j].x > result.right) result.right = paths[i][j].x; 
+        if (paths[i][j].y < result.top) result.top = paths[i][j].y; 
+        else if (paths[i][j].y > result.bottom) result.bottom = paths[i][j].y; 
+      }
+    return result;
+  }
+  ClipperLib.Clipper.prototype.GetBounds2 = function (ops)
+  {
+    var opStart = ops;
+    var result = new ClipperLib.IntRect();
+    result.left = ops.Pt.x; 
+    result.right = ops.Pt.x; 
+    result.top = ops.Pt.y; 
+    result.bottom = ops.Pt.y; 
+    ops = ops.Next;
+    while (ops != opStart)
+    {
+      if (ops.Pt.x < result.left)
+        result.left = ops.Pt.x; 
+      if (ops.Pt.x > result.right)
+        result.right = ops.Pt.x; 
+      if (ops.Pt.y < result.top)
+        result.top = ops.Pt.y; 
+      if (ops.Pt.y > result.bottom)
+        result.bottom = ops.Pt.y; 
+      ops = ops.Next;
+    }
+    return result;
+  };
 
-          if (this.m_UsingExPolygons && outRec1.isHole) for (k = 0; k < this.m_PolyOuts.length; ++k)
+  ClipperLib.Clipper.PointInPolygon = function (pt, path)
+  {
+    //returns 0 if false, +1 if true, -1 if pt ON polygon boundary
+    //http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.88.5498&rep=rep1&type=pdf
+    var result = 0,
+      cnt = path.length;
+    if (cnt < 3)
+      return 0;
+    var ip = path[0];
+    for (var i = 1; i <= cnt; ++i)
+    {
+      var ipNext = (i == cnt ? path[0] : path[i]);
+      if (ipNext.y == pt.y)
+      {
+        if ((ipNext.x == pt.x) || (ip.y == pt.y && ((ipNext.x > pt.x) == (ip.x < pt.x))))
+          return -1;
+      }
+      if ((ip.y < pt.y) != (ipNext.y < pt.y))
+      {
+        if (ip.x >= pt.x)
+        {
+          if (ipNext.x > pt.x)
+            result = 1 - result;
+          else
           {
-            orec = this.m_PolyOuts[k];
-            if (orec.isHole && orec.bottomPt != null && orec.FirstLeft == outRec1) orec.FirstLeft = outRec2;
+            var d = (ip.x - pt.x) * (ipNext.y - pt.y) - (ipNext.x - pt.x) * (ip.y - pt.y);
+            if (d == 0)
+              return -1;
+            else if ((d > 0) == (ipNext.y > ip.y))
+              result = 1 - result;
           }
         }
         else
         {
-          outRec2.isHole = outRec1.isHole;
-          outRec2.FirstLeft = outRec1.FirstLeft;
-          this.FixupJoinRecs(j, p2, i + 1);
-          this.FixupOutPolygon(outRec1);
-          this.FixupOutPolygon(outRec2);
-          
-          if (this.m_UsingExPolygons && outRec2.pts != null) for (k = 0; k < this.m_PolyOuts.length; ++k)
+          if (ipNext.x > pt.x)
           {
-            orec = this.m_PolyOuts[k];
-            if (orec.isHole && orec.bottomPt != null && orec.FirstLeft == outRec1 && this.PointInPolygon(orec.bottomPt.pt, outRec2.pts, this.m_UseFullRange)) orec.FirstLeft = outRec2;
+            var d = (ip.x - pt.x) * (ipNext.y - pt.y) - (ipNext.x - pt.x) * (ip.y - pt.y);
+            if (d == 0)
+              return -1;
+            else if ((d > 0) == (ipNext.y > ip.y))
+              result = 1 - result;
           }
         }
       }
-      else
-      {
-        if (this.m_UsingExPolygons) for (k = 0; k < this.m_PolyOuts.length; ++k)
-        if (this.m_PolyOuts[k].isHole && this.m_PolyOuts[k].bottomPt != null && this.m_PolyOuts[k].FirstLeft == outRec2) this.m_PolyOuts[k].FirstLeft = outRec1;
-        this.FixupOutPolygon(outRec1);
-        if (outRec1.pts != null)
-        {
-        	outRec1.isHole = this.Area(outRec1, this.m_UseFullRange) < 0;
-          if (outRec1.isHole && outRec1.FirstLeft == null) outRec1.FirstLeft = outRec2.FirstLeft;
-        }
-        var OKIdx = outRec1.idx;
-        var ObsoleteIdx = outRec2.idx;
-        outRec2.pts = null;
-        outRec2.bottomPt = null;
-        outRec2.AppendLink = outRec1;
-        for (k = i + 1; k < this.m_Joins.length; k++)
-        {
-          var j2 = this.m_Joins[k];
-          if (j2.poly1Idx == ObsoleteIdx) j2.poly1Idx = OKIdx;
-          if (j2.poly2Idx == ObsoleteIdx) j2.poly2Idx = OKIdx;
-        }
-      }
-    }
-  };
-  ClipperLib.Clipper.FullRangeNeeded = function (pts)
-  {
-    var result = false;
-    for (var i = 0; i < pts.length; i++) {
-      if (ClipperLib.Math_Abs_Int64(pts[i].x) > ClipperLib.ClipperBase.hiRange || ClipperLib.Math_Abs_Int64(pts[i].y) > ClipperLib.ClipperBase.hiRange) 
-      ClipperLib.Error("Coordinate exceeds range bounds in FullRangeNeeded().");
-      else if (ClipperLib.Math_Abs_Int64(pts[i].x) > ClipperLib.ClipperBase.loRange || ClipperLib.Math_Abs_Int64(pts[i].y) > ClipperLib.ClipperBase.loRange)
-      {
-        result = true;
-      }
+      ip = ipNext;
     }
     return result;
   };
-  ClipperLib.Clipper.prototype.Area = ClipperLib.Clipper.Area = function ()
+      
+  ClipperLib.Clipper.prototype.PointInPolygon = function (pt, op)
   {
-    var arg = arguments;
-    var i, a;
-    if (arg.length == 1) // function ( poly )
+    //returns 0 if false, +1 if true, -1 if pt ON polygon boundary
+    //http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.88.5498&rep=rep1&type=pdf
+    var result = 0;
+    var startOp = op;
+    for (;;)
     {
-      var poly = arg[0];
-      var highI = poly.length - 1;
-      if (highI < 2) return 0;
-      if (ClipperLib.Clipper.FullRangeNeeded(poly))
+      var poly0x = op.Pt.x,
+        poly0y = op.Pt.y; 
+      var poly1x = op.Next.Pt.x,
+        poly1y = op.Next.Pt.y; 
+      if (poly1y == pt.y)
       {
-        a = new Int128( poly[highI].x + poly[0].x ).multiply( new Int128(poly[0].y - poly[highI].y) );
-        for (i = 1; i <= highI; ++i)
-        a = a.add( new Int128( poly[i - 1].x + poly[i].x ).multiply( new Int128( poly[i].y - poly[i - 1].y ) ) );
-        return parseFloat(a.toString()) / 2;
+        if ((poly1x == pt.x) || (poly0y == pt.y && ((poly1x > pt.x) == (poly0x < pt.x))))
+          return -1;
       }
-      else
+      if ((poly0y < pt.y) != (poly1y < pt.y))
       {
-        var area = (poly[highI].x + poly[0].x) * (poly[0].y - poly[highI].y);
-        for (i = 1; i <= highI; ++i)
-          area += (poly[i - 1].x + poly[i].x) * (poly[i].y - poly[i -1].y);
-        return area / 2;
-      }
-    }
-    else if (arg.length == 2) //  function (outRec, UseFull64BitRange)
-    {
-      var outRec = arg[0];
-      var UseFull64BitRange = arg[1];
-      var op = outRec.pts;
-      if (op == null) return 0;
-      if (UseFull64BitRange)
-      {
-        a = new Int128(Int128.ZERO);
-        do {
-      	  a = a.add(new Int128( op.pt.x + op.prev.pt.x ).multiply( new Int128 ( op.prev.pt.y - op.pt.y ) ) );
-          op = op.next;
-        } while (op != outRec.pts);
-        return parseFloat(a.toString()) / 2; // This could be something faster!
-      }
-      else
-      {
-        a = 0;
-        do {
-          a = a + (op.pt.x + op.prev.pt.x) * (op.prev.pt.y - op.pt.y);
-          op = op.next;
+        if (poly0x >= pt.x)
+        {
+          if (poly1x > pt.x)
+            result = 1 - result;
+          else
+          {
+            var d = (poly0x - pt.x) * (poly1y - pt.y) - (poly1x - pt.x) * (poly0y - pt.y);
+            if (d == 0)
+              return -1;
+            if ((d > 0) == (poly1y > poly0y))
+              result = 1 - result;
+          }
         }
-        while (op != outRec.pts);
-        return a / 2;
+        else
+        {
+          if (poly1x > pt.x)
+          {
+            var d = (poly0x - pt.x) * (poly1y - pt.y) - (poly1x - pt.x) * (poly0y - pt.y);
+            if (d == 0)
+              return -1;
+            if ((d > 0) == (poly1y > poly0y))
+              result = 1 - result;
+          }
+        }
       }
-    }
-  };
-  ClipperLib.Clipper.BuildArc = function (pt, a1, a2, r)
-  {
-  	var steps = Math.sqrt(ClipperLib.Math_Abs_Double(r)) * ClipperLib.Math_Abs_Double(a2 - a1);
-    
-    steps = steps / 4; // to avoid overload
-    
-    // If you want to make steps independent of scaling factor (scale have to be set),
-    // the following line does the trick:
-    // steps = steps / Math.sqrt(scale) * 2;
-    
-    // If you want that changing scale factor has some influence to steps, uncomment also the following line:
-    // It may be desirable, that bigger precision ( = bigger scaling factor) needs more steps.
-    // steps += Math.pow(scale, 0.2);
-
-    if (steps < 6) steps = 6;
-    if (steps > 64) steps = ClipperLib.MaxSteps; // to avoid overload
-    
-    // if (steps > 1048576) steps = 1048576; // 0x100000
-    // if (steps > ClipperLib.MaxSteps) steps = ClipperLib.MaxSteps; // 0x100000
-    // Had to change 1048576 to lower value, because when coordinates are near or above lorange, program starts hanging
-    // Adjust this value to meet your needs, maybe 10 is enough for most purposes
-    var n = ClipperLib.Cast_Int32(steps);
-    var result = new ClipperLib.Polygon();
-    var da = (a2 - a1) / (n - 1);
-    var a = a1;
-    for (var i = 0; i < n; ++i)
-    {
-      result.push(new ClipperLib.IntPoint(pt.x + ClipperLib.Clipper.Round(Math.cos(a) * r), pt.y + ClipperLib.Clipper.Round(Math.sin(a) * r)));
-      a += da;
+      op = op.Next;
+      if (startOp == op)
+        break;
     }
     return result;
   };
 
-  ClipperLib.Clipper.GetUnitNormal = function (pt1, pt2)
+  ClipperLib.Clipper.prototype.Poly2ContainsPoly1 = function (outPt1, outPt2)
+  {
+    var op = outPt1;
+    do {
+      var res = this.PointInPolygon(op.Pt, outPt2);
+      if (res >= 0)
+        return res != 0;
+      op = op.Next;
+    }
+    while (op != outPt1)
+    return true;
+  };
+  ClipperLib.Clipper.prototype.FixupFirstLefts1 = function (OldOutRec, NewOutRec)
+  {
+    for (var i = 0, ilen = this.m_PolyOuts.length; i < ilen; i++)
+    {
+      var outRec = this.m_PolyOuts[i];
+      if (outRec.Pts !== null && outRec.FirstLeft == OldOutRec)
+      {
+        if (this.Poly2ContainsPoly1(outRec.Pts, NewOutRec.Pts))
+          outRec.FirstLeft = NewOutRec;
+      }
+    }
+  };
+  ClipperLib.Clipper.prototype.FixupFirstLefts2 = function (OldOutRec, NewOutRec)
+  {
+    for (var $i2 = 0, $t2 = this.m_PolyOuts, $l2 = $t2.length, outRec = $t2[$i2]; $i2 < $l2; $i2++, outRec = $t2[$i2])
+      if (outRec.FirstLeft == OldOutRec)
+        outRec.FirstLeft = NewOutRec;
+  };
+  ClipperLib.Clipper.ParseFirstLeft = function (FirstLeft)
+  {
+    while (FirstLeft != null && FirstLeft.Pts == null)
+      FirstLeft = FirstLeft.FirstLeft;
+    return FirstLeft;
+  };
+  ClipperLib.Clipper.prototype.JoinCommonEdges = function ()
+  {
+    for (var i = 0, ilen = this.m_Joins.length; i < ilen; i++)
+    {
+      var join = this.m_Joins[i];
+      var outRec1 = this.GetOutRec(join.OutPt1.Idx);
+      var outRec2 = this.GetOutRec(join.OutPt2.Idx);
+      if (outRec1.Pts == null || outRec2.Pts == null)
+        continue;
+      //get the polygon fragment with the correct hole state (FirstLeft)
+      //before calling JoinPoints() ...
+      var holeStateRec;
+      if (outRec1 == outRec2)
+        holeStateRec = outRec1;
+      else if (this.Param1RightOfParam2(outRec1, outRec2))
+        holeStateRec = outRec2;
+      else if (this.Param1RightOfParam2(outRec2, outRec1))
+        holeStateRec = outRec1;
+      else
+        holeStateRec = this.GetLowermostRec(outRec1, outRec2);
+
+      if (!this.JoinPoints(join, outRec1, outRec2)) continue;
+
+      if (outRec1 == outRec2)
+      {
+        //instead of joining two polygons, we've just created a new one by
+        //splitting one polygon into two.
+        outRec1.Pts = join.OutPt1;
+        outRec1.BottomPt = null;
+        outRec2 = this.CreateOutRec();
+        outRec2.Pts = join.OutPt2;
+        //update all OutRec2.Pts Idx's ...
+        this.UpdateOutPtIdxs(outRec2);
+        //We now need to check every OutRec.FirstLeft pointer. If it points
+        //to OutRec1 it may need to point to OutRec2 instead ...
+        if (this.m_UsingPolyTree)
+          for (var j = 0, jlen = this.m_PolyOuts.length; j < jlen - 1; j++)
+          {
+            var oRec = this.m_PolyOuts[j];
+            if (oRec.Pts == null || ClipperLib.Clipper.ParseFirstLeft(oRec.FirstLeft) != outRec1 || oRec.IsHole == outRec1.IsHole)
+              continue;
+            if (this.Poly2ContainsPoly1(oRec.Pts, join.OutPt2))
+              oRec.FirstLeft = outRec2;
+          }
+        if (this.Poly2ContainsPoly1(outRec2.Pts, outRec1.Pts))
+        {
+          //outRec2 is contained by outRec1 ...
+          outRec2.IsHole = !outRec1.IsHole;
+          outRec2.FirstLeft = outRec1;
+          //fixup FirstLeft pointers that may need reassigning to OutRec1
+          if (this.m_UsingPolyTree)
+            this.FixupFirstLefts2(outRec2, outRec1);
+          if ((outRec2.IsHole ^ this.ReverseSolution) == (this.Area(outRec2) > 0))
+            this.ReversePolyPtLinks(outRec2.Pts);
+        }
+        else if (this.Poly2ContainsPoly1(outRec1.Pts, outRec2.Pts))
+        {
+          //outRec1 is contained by outRec2 ...
+          outRec2.IsHole = outRec1.IsHole;
+          outRec1.IsHole = !outRec2.IsHole;
+          outRec2.FirstLeft = outRec1.FirstLeft;
+          outRec1.FirstLeft = outRec2;
+          //fixup FirstLeft pointers that may need reassigning to OutRec1
+          if (this.m_UsingPolyTree)
+            this.FixupFirstLefts2(outRec1, outRec2);
+          if ((outRec1.IsHole ^ this.ReverseSolution) == (this.Area(outRec1) > 0))
+            this.ReversePolyPtLinks(outRec1.Pts);
+        }
+        else
+        {
+          //the 2 polygons are completely separate ...
+          outRec2.IsHole = outRec1.IsHole;
+          outRec2.FirstLeft = outRec1.FirstLeft;
+          //fixup FirstLeft pointers that may need reassigning to OutRec2
+          if (this.m_UsingPolyTree)
+            this.FixupFirstLefts1(outRec1, outRec2);
+        }
+      }
+      else
+      {
+        //joined 2 polygons together ...
+        outRec2.Pts = null;
+        outRec2.BottomPt = null;
+        outRec2.Idx = outRec1.Idx;
+        outRec1.IsHole = holeStateRec.IsHole;
+        if (holeStateRec == outRec2)
+          outRec1.FirstLeft = outRec2.FirstLeft;
+        outRec2.FirstLeft = outRec1;
+        //fixup FirstLeft pointers that may need reassigning to OutRec1
+        if (this.m_UsingPolyTree)
+          this.FixupFirstLefts2(outRec2, outRec1);
+      }
+    }
+  };
+  ClipperLib.Clipper.prototype.UpdateOutPtIdxs = function (outrec)
+  {
+    var op = outrec.Pts;
+    do {
+      op.Idx = outrec.Idx;
+      op = op.Prev;
+    }
+    while (op != outrec.Pts)
+  };
+  ClipperLib.Clipper.prototype.DoSimplePolygons = function ()
+  {
+    var i = 0;
+    while (i < this.m_PolyOuts.length)
+    {
+      var outrec = this.m_PolyOuts[i++];
+      var op = outrec.Pts;
+      if (op === null)
+        continue;
+      do //for each Pt in Polygon until duplicate found do ...
+      {
+        var op2 = op.Next;
+        while (op2 != outrec.Pts)
+        {
+          if ((ClipperLib.IntPoint.op_Equality(op.Pt, op2.Pt)) && op2.Next != op && op2.Prev != op)
+          {
+            //split the polygon into two ...
+            var op3 = op.Prev;
+            var op4 = op2.Prev;
+            op.Prev = op4;
+            op4.Next = op;
+            op2.Prev = op3;
+            op3.Next = op2;
+            outrec.Pts = op;
+            var outrec2 = this.CreateOutRec();
+            outrec2.Pts = op2;
+            this.UpdateOutPtIdxs(outrec2);
+            if (this.Poly2ContainsPoly1(outrec2.Pts, outrec.Pts))
+            {
+              //OutRec2 is contained by OutRec1 ...
+              outrec2.IsHole = !outrec.IsHole;
+              outrec2.FirstLeft = outrec;
+            }
+            else if (this.Poly2ContainsPoly1(outrec.Pts, outrec2.Pts))
+            {
+              //OutRec1 is contained by OutRec2 ...
+              outrec2.IsHole = outrec.IsHole;
+              outrec.IsHole = !outrec2.IsHole;
+              outrec2.FirstLeft = outrec.FirstLeft;
+              outrec.FirstLeft = outrec2;
+            }
+            else
+            {
+              //the 2 polygons are separate ...
+              outrec2.IsHole = outrec.IsHole;
+              outrec2.FirstLeft = outrec.FirstLeft;
+            }
+            op2 = op;
+            //ie get ready for the next iteration
+          }
+          op2 = op2.Next;
+        }
+        op = op.Next;
+      }
+      while (op != outrec.Pts)
+    }
+  };
+  ClipperLib.Clipper.Area = function (poly)
+  {
+    var cnt = poly.length;
+    if (cnt < 3)
+      return 0;
+    var a = 0;
+    for (var i = 0, j = cnt - 1; i < cnt; ++i)
+    {
+      a += (poly[j].x + poly[i].x) * (poly[j].y - poly[i].y);
+      j = i;
+    }
+    return -a * 0.5;
+  };
+  ClipperLib.Clipper.prototype.Area = function (outRec)
+  {
+    var op = outRec.Pts;
+    if (op == null)
+      return 0;
+    var a = 0;
+    do {
+      a = a + (op.Prev.Pt.x + op.Pt.x) * (op.Prev.Pt.y - op.Pt.y);
+      op = op.Next;
+    }
+    while (op != outRec.Pts)
+    return a * 0.5;
+  };
+  if (use_deprecated)
+  {
+    ClipperLib.Clipper.OffsetPaths = function (polys, delta, jointype, endtype, MiterLimit)
+    {
+      var result = new ClipperLib.Paths();
+      var co = new ClipperLib.ClipperOffset(MiterLimit, MiterLimit);
+      co.AddPaths(polys, jointype, endtype);
+      co.Execute(result, delta);
+      return result;
+    };
+  }
+  ClipperLib.Clipper.SimplifyPolygon = function (poly, fillType)
+  {
+    var result = new Array();
+    var c = new ClipperLib.Clipper(0);
+    c.StrictlySimple = true;
+    c.AddPath(poly, ClipperLib.PolyType.ptSubject, true);
+    c.Execute(ClipperLib.ClipType.ctUnion, result, fillType, fillType);
+    return result;
+  };
+  ClipperLib.Clipper.SimplifyPolygons = function (polys, fillType)
+  {
+    if (typeof (fillType) == "undefined") fillType = ClipperLib.PolyFillType.pftEvenOdd;
+    var result = new Array();
+    var c = new ClipperLib.Clipper(0);
+    c.StrictlySimple = true;
+    c.AddPaths(polys, ClipperLib.PolyType.ptSubject, true);
+    c.Execute(ClipperLib.ClipType.ctUnion, result, fillType, fillType);
+    return result;
+  };
+  ClipperLib.Clipper.DistanceSqrd = function (pt1, pt2)
+  {
+    var dx = (pt1.x - pt2.x);
+    var dy = (pt1.y - pt2.y);
+    return (dx * dx + dy * dy);
+  };
+  ClipperLib.Clipper.DistanceFromLineSqrd = function (pt, ln1, ln2)
+  {
+    //The equation of a line in general form (Ax + By + C = 0)
+    //given 2 points (x¹,y¹) & (x²,y²) is ...
+    //(y¹ - y²)x + (x² - x¹)y + (y² - y¹)x¹ - (x² - x¹)y¹ = 0
+    //A = (y¹ - y²); B = (x² - x¹); C = (y² - y¹)x¹ - (x² - x¹)y¹
+    //perpendicular distance of point (x³,y³) = (Ax³ + By³ + C)/Sqrt(A² + B²)
+    //see http://en.wikipedia.org/wiki/Perpendicular_distance
+    var A = ln1.y - ln2.y; 
+    var B = ln2.x - ln1.x; 
+    var C = A * ln1.x + B * ln1.y; 
+    C = A * pt.x + B * pt.y - C;
+    return (C * C) / (A * A + B * B);
+  };
+  ClipperLib.Clipper.SlopesNearCollinear = function (pt1, pt2, pt3, distSqrd)
+  {
+    return ClipperLib.Clipper.DistanceFromLineSqrd(pt2, pt1, pt3) < distSqrd;
+  };
+  ClipperLib.Clipper.PointsAreClose = function (pt1, pt2, distSqrd)
+  {
+    var dx = pt1.x - pt2.x; 
+    var dy = pt1.y - pt2.y; 
+    return ((dx * dx) + (dy * dy) <= distSqrd);
+  };
+  //------------------------------------------------------------------------------
+  ClipperLib.Clipper.ExcludeOp = function (op)
+  {
+    var result = op.Prev;
+    result.Next = op.Next;
+    op.Next.Prev = result;
+    result.Idx = 0;
+    return result;
+  };
+  ClipperLib.Clipper.CleanPolygon = function (path, distance)
+  {
+    if (typeof (distance) == "undefined") distance = 1.415;
+    //distance = proximity in units/pixels below which vertices will be stripped. 
+    //Default ~= sqrt(2) so when adjacent vertices or semi-adjacent vertices have 
+    //both x & y coords within 1 unit, then the second vertex will be stripped.
+    var cnt = path.length;
+    if (cnt == 0)
+      return new Array();
+    var outPts = new Array(cnt);
+    for (var i = 0; i < cnt; ++i)
+      outPts[i] = new ClipperLib.OutPt();
+    for (var i = 0; i < cnt; ++i)
+    {
+      outPts[i].Pt = path[i];
+      outPts[i].Next = outPts[(i + 1) % cnt];
+      outPts[i].Next.Prev = outPts[i];
+      outPts[i].Idx = 0;
+    }
+    var distSqrd = distance * distance;
+    var op = outPts[0];
+    while (op.Idx == 0 && op.Next != op.Prev)
+    {
+      if (ClipperLib.Clipper.PointsAreClose(op.Pt, op.Prev.Pt, distSqrd))
+      {
+        op = ClipperLib.Clipper.ExcludeOp(op);
+        cnt--;
+      }
+      else if (ClipperLib.Clipper.PointsAreClose(op.Prev.Pt, op.Next.Pt, distSqrd))
+      {
+        ClipperLib.Clipper.ExcludeOp(op.Next);
+        op = ClipperLib.Clipper.ExcludeOp(op);
+        cnt -= 2;
+      }
+      else if (ClipperLib.Clipper.SlopesNearCollinear(op.Prev.Pt, op.Pt, op.Next.Pt, distSqrd))
+      {
+        op = ClipperLib.Clipper.ExcludeOp(op);
+        cnt--;
+      }
+      else
+      {
+        op.Idx = 1;
+        op = op.Next;
+      }
+    }
+    if (cnt < 3)
+      cnt = 0;
+    var result = new Array(cnt);
+    for (var i = 0; i < cnt; ++i)
+    {
+      result[i] = new ClipperLib.IntPoint(op.Pt);
+      op = op.Next;
+    }
+    outPts = null;
+    return result;
+  };
+  ClipperLib.Clipper.CleanPolygons = function (polys, distance)
+  {
+    var result = new Array(polys.length);
+    for (var i = 0, ilen = polys.length; i < ilen; i++)
+      result[i] = ClipperLib.Clipper.CleanPolygon(polys[i], distance);
+    return result;
+  };
+  ClipperLib.Clipper.Minkowski = function (pattern, path, IsSum, IsClosed)
+  {
+    var delta = (IsClosed ? 1 : 0);
+    var polyCnt = pattern.length;
+    var pathCnt = path.length;
+    var result = new Array();
+    if (IsSum)
+      for (var i = 0; i < pathCnt; i++)
+      {
+        var p = new Array(polyCnt);
+        for (var j = 0, jlen = pattern.length, ip = pattern[j]; j < jlen; j++, ip = pattern[j])
+          p[j] = new ClipperLib.IntPoint(path[i].x + ip.x, path[i].y + ip.y);
+        result.push(p);
+      }
+    else
+      for (var i = 0; i < pathCnt; i++)
+      {
+        var p = new Array(polyCnt);
+        for (var j = 0, jlen = pattern.length, ip = pattern[j]; j < jlen; j++, ip = pattern[j])
+          p[j] = new ClipperLib.IntPoint(path[i].x - ip.x, path[i].y - ip.y);
+        result.push(p);
+      }
+    var quads = new Array();
+    for (var i = 0; i < pathCnt - 1 + delta; i++)
+      for (var j = 0; j < polyCnt; j++)
+      {
+        var quad = new Array();
+        quad.push(result[i % pathCnt][j % polyCnt]);
+        quad.push(result[(i + 1) % pathCnt][j % polyCnt]);
+        quad.push(result[(i + 1) % pathCnt][(j + 1) % polyCnt]);
+        quad.push(result[i % pathCnt][(j + 1) % polyCnt]);
+        if (!ClipperLib.Clipper.Orientation(quad))
+          quad.reverse();
+        quads.push(quad);
+      }
+    var c = new ClipperLib.Clipper(0);
+    c.AddPaths(quads, ClipperLib.PolyType.ptSubject, true);
+    c.Execute(ClipperLib.ClipType.ctUnion, result, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero);
+    return result;
+  };
+
+  ClipperLib.Clipper.MinkowskiSum = function ()
+  {
+    var a = arguments,
+      alen = a.length;
+    if (alen == 3) // MinkowskiSum(Path pattern, path, pathIsClosed)
+    {
+      var pattern = a[0],
+        path = a[1],
+        pathIsClosed = a[2];
+      return ClipperLib.Clipper.Minkowski(pattern, path, true, pathIsClosed);
+    }
+    else if (alen == 4) // MinkowskiSum(pattern, paths, pathFillType, pathIsClosed)
+    {
+      var pattern = a[0],
+        paths = a[1],
+        pathFillType = a[2],
+        pathIsClosed = a[3];
+      var c = new ClipperLib.Clipper(),
+        tmp;
+      for (var i = 0, ilen = paths.length; i < ilen; ++i)
+      {
+        var tmp = ClipperLib.Clipper.Minkowski(pattern, paths[i], true, pathIsClosed);
+        c.AddPaths(tmp, ClipperLib.PolyType.ptSubject, true);
+      }
+      if (pathIsClosed) c.AddPaths(paths, ClipperLib.PolyType.ptClip, true);
+      var solution = new ClipperLib.Paths();
+      c.Execute(ClipperLib.ClipType.ctUnion, solution, pathFillType, pathFillType);
+      return solution;
+    }
+  };
+
+  ClipperLib.Clipper.MinkowskiDiff = function (pattern, path, pathIsClosed)
+  {
+    return ClipperLib.Clipper.Minkowski(pattern, path, false, pathIsClosed);
+  };
+
+  ClipperLib.Clipper.PolyTreeToPaths = function (polytree)
+  {
+    var result = new Array();
+    //result.set_Capacity(polytree.get_Total());
+    ClipperLib.Clipper.AddPolyNodeToPaths(polytree, ClipperLib.Clipper.NodeType.ntAny, result);
+    return result;
+  };
+  ClipperLib.Clipper.AddPolyNodeToPaths = function (polynode, nt, paths)
+  {
+    var match = true;
+    switch (nt)
+    {
+    case ClipperLib.Clipper.NodeType.ntOpen:
+      return;
+    case ClipperLib.Clipper.NodeType.ntClosed:
+      match = !polynode.IsOpen;
+      break;
+    default:
+      break;
+    }
+    if (polynode.m_polygon.length > 0 && match)
+      paths.push(polynode.m_polygon);
+    for (var $i3 = 0, $t3 = polynode.Childs(), $l3 = $t3.length, pn = $t3[$i3]; $i3 < $l3; $i3++, pn = $t3[$i3])
+      ClipperLib.Clipper.AddPolyNodeToPaths(pn, nt, paths);
+  };
+  ClipperLib.Clipper.OpenPathsFromPolyTree = function (polytree)
+  {
+    var result = new ClipperLib.Paths();
+    //result.set_Capacity(polytree.ChildCount());
+    for (var i = 0, ilen = polytree.ChildCount(); i < ilen; i++)
+      if (polytree.Childs()[i].IsOpen)
+        result.push(polytree.Childs()[i].m_polygon);
+    return result;
+  };
+  ClipperLib.Clipper.ClosedPathsFromPolyTree = function (polytree)
+  {
+    var result = new ClipperLib.Paths();
+    //result.set_Capacity(polytree.Total());
+    ClipperLib.Clipper.AddPolyNodeToPaths(polytree, ClipperLib.Clipper.NodeType.ntClosed, result);
+    return result;
+  };
+  Inherit(ClipperLib.Clipper, ClipperLib.ClipperBase);
+  ClipperLib.Clipper.NodeType = {
+    ntAny: 0,
+    ntOpen: 1,
+    ntClosed: 2
+  };
+  ClipperLib.ClipperOffset = function (miterLimit, arcTolerance)
+  {
+    if (typeof (miterLimit) == "undefined") miterLimit = 2;
+    if (typeof (arcTolerance) == "undefined") arcTolerance = ClipperLib.ClipperOffset.def_arc_tolerance;
+    this.m_destPolys = new ClipperLib.Paths();
+    this.m_srcPoly = new ClipperLib.Path();
+    this.m_destPoly = new ClipperLib.Path();
+    this.m_normals = new Array();
+    this.m_delta = 0;
+    this.m_sinA = 0;
+    this.m_sin = 0;
+    this.m_cos = 0;
+    this.m_miterLim = 0;
+    this.m_StepsPerRad = 0;
+    this.m_lowest = new ClipperLib.IntPoint();
+    this.m_polyNodes = new ClipperLib.PolyNode();
+    this.MiterLimit = miterLimit;
+    this.ArcTolerance = arcTolerance;
+    this.m_lowest.x = -1;
+  };
+  ClipperLib.ClipperOffset.two_pi = 6.28318530717959;
+  ClipperLib.ClipperOffset.def_arc_tolerance = 0.25;
+  ClipperLib.ClipperOffset.prototype.Clear = function ()
+  {
+    ClipperLib.Clear(this.m_polyNodes.Childs());
+    this.m_lowest.x = -1;
+  };
+  ClipperLib.ClipperOffset.Round = ClipperLib.Clipper.Round;
+  ClipperLib.ClipperOffset.prototype.AddPath = function (path, joinType, endType)
+  {
+    var highI = path.length - 1;
+    if (highI < 0)
+      return;
+    var newNode = new ClipperLib.PolyNode();
+    newNode.m_jointype = joinType;
+    newNode.m_endtype = endType;
+    //strip duplicate points from path and also get index to the lowest point ...
+    if (endType == ClipperLib.EndType.etClosedLine || endType == ClipperLib.EndType.etClosedPolygon)
+      while (highI > 0 && ClipperLib.IntPoint.op_Equality(path[0], path[highI]))
+        highI--;
+    //newNode.m_polygon.set_Capacity(highI + 1);
+    newNode.m_polygon.push(path[0]);
+    var j = 0,
+      k = 0;
+    for (var i = 1; i <= highI; i++)
+      if (ClipperLib.IntPoint.op_Inequality(newNode.m_polygon[j], path[i]))
+      {
+        j++;
+        newNode.m_polygon.push(path[i]);
+        if (path[i].y > newNode.m_polygon[k].y || (path[i].y == newNode.m_polygon[k].y && path[i].x < newNode.m_polygon[k].x))
+          k = j;
+      }
+    if ((endType == ClipperLib.EndType.etClosedPolygon && j < 2) || (endType != ClipperLib.EndType.etClosedPolygon && j < 0))
+      return;
+    this.m_polyNodes.AddChild(newNode);
+    //if this path's lowest pt is lower than all the others then update m_lowest
+    if (endType != ClipperLib.EndType.etClosedPolygon)
+      return;
+    if (this.m_lowest.x < 0)
+      this.m_lowest = new ClipperLib.IntPoint(0, k);
+    else
+    {
+      var ip = this.m_polyNodes.Childs()[this.m_lowest.x].m_polygon[this.m_lowest.y];
+      if (newNode.m_polygon[k].y > ip.y || (newNode.m_polygon[k].y == ip.y && newNode.m_polygon[k].x < ip.x))
+        this.m_lowest = new ClipperLib.IntPoint(this.m_polyNodes.ChildCount() - 1, k);
+    }
+  };
+  ClipperLib.ClipperOffset.prototype.AddPaths = function (paths, joinType, endType)
+  {
+    for (var i = 0, ilen = paths.length; i < ilen; i++)
+      this.AddPath(paths[i], joinType, endType);
+  };
+  ClipperLib.ClipperOffset.prototype.FixOrientations = function ()
+  {
+    //fixup orientations of all closed paths if the orientation of the
+    //closed path with the lowermost vertex is wrong ...
+    if (this.m_lowest.x >= 0 && !ClipperLib.Clipper.Orientation(this.m_polyNodes.Childs()[this.m_lowest.x].m_polygon))
+    {
+      for (var i = 0; i < this.m_polyNodes.ChildCount(); i++)
+      {
+        var node = this.m_polyNodes.Childs()[i];
+        if (node.m_endtype == ClipperLib.EndType.etClosedPolygon || (node.m_endtype == ClipperLib.EndType.etClosedLine && ClipperLib.Clipper.Orientation(node.m_polygon)))
+          node.m_polygon.reverse();
+      }
+    }
+    else
+    {
+      for (var i = 0; i < this.m_polyNodes.ChildCount(); i++)
+      {
+        var node = this.m_polyNodes.Childs()[i];
+        if (node.m_endtype == ClipperLib.EndType.etClosedLine && !ClipperLib.Clipper.Orientation(node.m_polygon))
+          node.m_polygon.reverse();
+      }
+    }
+  };
+  ClipperLib.ClipperOffset.GetUnitNormal = function (pt1, pt2)
   {
     var dx = (pt2.x - pt1.x);
     var dy = (pt2.y - pt1.y);
-    if ((dx == 0) && (dy == 0)) return new ClipperLib.Clipper.DoublePoint(0, 0);
+    if ((dx == 0) && (dy == 0))
+      return new ClipperLib.DoublePoint(0, 0);
     var f = 1 / Math.sqrt(dx * dx + dy * dy);
     dx *= f;
     dy *= f;
-    return new ClipperLib.Clipper.DoublePoint(dy, -dx);
+    return new ClipperLib.DoublePoint(dy, -dx);
   };
-  ClipperLib.Clipper.prototype.OffsetPolygons = function (poly, delta, jointype, MiterLimit, AutoFix)
+  ClipperLib.ClipperOffset.prototype.DoOffset = function (delta)
   {
-    var a = arguments;
-    if (a.length == 4) AutoFix = true;
-    else if (a.length == 3)
+    this.m_destPolys = new Array();
+    this.m_delta = delta;
+    //if Zero offset, just copy any CLOSED polygons to m_p and return ...
+    if (ClipperLib.ClipperBase.near_zero(delta))
     {
-      MiterLimit = 2;
-      AutoFix = true;
-    }
-    else if (a.length == 2)
-    {
-      jointype = ClipperLib.JoinType.jtSquare;
-      MiterLimit = 2;
-      AutoFix = true;
-    }
-    if (isNaN(delta)) ClipperLib.Error("Delta is not a number");
-    else if (isNaN(MiterLimit)) ClipperLib.Error("MiterLimit is not a number");
-    var result = {};
-    new ClipperLib.Clipper.PolyOffsetBuilder(poly, result, delta, jointype, MiterLimit, AutoFix);
-    if (result.Value) result = result.Value;
-    else result = [[]];
-    return result;
-  };
-  ClipperLib.Clipper.prototype.SimplifyPolygon = function (poly, fillType)
-  {
-    var result = new ClipperLib.Polygons();
-    var c = new ClipperLib.Clipper();
-    if (c.AddPolygon(poly, ClipperLib.PolyType.ptSubject))
-    c.Execute(ClipperLib.ClipType.ctUnion, result, fillType, fillType);
-    return result;
-  };
-  ClipperLib.Clipper.prototype.SimplifyPolygons = function (polys, fillType)
-  {
-    var result = new ClipperLib.Polygons();
-    var c = new ClipperLib.Clipper();
-    if(c.AddPolygons(polys, ClipperLib.PolyType.ptSubject))
-    c.Execute(ClipperLib.ClipType.ctUnion, result, fillType, fillType);
-    return result;
-  };
-  var ce = ClipperLib.Clipper;
-  var ce2 = ClipperLib.ClipperBase;
-  var p;
-  if (typeof (Object.getOwnPropertyNames) == 'undefined')
-  {
-    for (p in ce2.prototype)
-    if (typeof (ce.prototype[p]) == 'undefined' || ce.prototype[p] == Object.prototype[p]) ce.prototype[p] = ce2.prototype[p];
-    for (p in ce2)
-    if (typeof (ce[p]) == 'undefined') ce[p] = ce2[p];
-    ce.$baseCtor = ce2;
-  }
-  else
-  {
-    var props = Object.getOwnPropertyNames(ce2.prototype);
-    for (var i = 0; i < props.length; i++)
-    if (typeof (Object.getOwnPropertyDescriptor(ce.prototype, props[i])) == 'undefined') Object.defineProperty(ce.prototype, props[i], Object.getOwnPropertyDescriptor(ce2.prototype, props[i]));
-    for (p in ce2)
-    if (typeof (ce[p]) == 'undefined') ce[p] = ce2[p];
-    ce.$baseCtor = ce2;
-  }
-  ClipperLib.Clipper.DoublePoint = function (x, y)
-  {
-    this.x = x;
-    this.y = y;
-  };
-  
-  ClipperLib.Clipper.PolyOffsetBuilder = function (pts, solution, delta, jointype, MiterLimit, AutoFix)
-  {
-    this.pts = null; // Polygons
-    this.currentPoly = null; // Polygon
-    this.normals = null;
-    this.delta = 0;
-    this.m_R = 0;
-    this.m_i = 0;
-    this.m_j = 0;
-    this.m_k = 0;
-    this.botPt = null; // This is "this." because it is ref in original c# code
-    if (delta == 0)
-    {
-      solution.Value = pts;
+      //this.m_destPolys.set_Capacity(this.m_polyNodes.ChildCount);
+      for (var i = 0; i < this.m_polyNodes.ChildCount(); i++)
+      {
+        var node = this.m_polyNodes.Childs()[i];
+        if (node.m_endtype == ClipperLib.EndType.etClosedPolygon)
+          this.m_destPolys.push(node.m_polygon);
+      }
       return;
     }
-    this.pts = pts;
-    this.delta = delta;
-    var i, j;
-    //AutoFix - fixes polygon orientation if necessary and removes 
-    //duplicate vertices. Can be set false when you're sure that polygon
-    //orientation is correct and that there are no duplicate vertices.
-    if (AutoFix)
+    //see offset_triginometry3.svg in the documentation folder ...
+    if (this.MiterLimit > 2)
+      this.m_miterLim = 2 / (this.MiterLimit * this.MiterLimit);
+    else
+      this.m_miterLim = 0.5;
+    var y;
+    if (this.ArcTolerance <= 0)
+      y = ClipperLib.ClipperOffset.def_arc_tolerance;
+    else if (this.ArcTolerance > Math.abs(delta) * ClipperLib.ClipperOffset.def_arc_tolerance)
+      y = Math.abs(delta) * ClipperLib.ClipperOffset.def_arc_tolerance;
+    else
+      y = this.ArcTolerance;
+    //see offset_triginometry2.svg in the documentation folder ...
+    var steps = 3.14159265358979 / Math.acos(1 - y / Math.abs(delta));
+    this.m_sin = Math.sin(ClipperLib.ClipperOffset.two_pi / steps);
+    this.m_cos = Math.cos(ClipperLib.ClipperOffset.two_pi / steps);
+    this.m_StepsPerRad = steps / ClipperLib.ClipperOffset.two_pi;
+    if (delta < 0)
+      this.m_sin = -this.m_sin;
+    //this.m_destPolys.set_Capacity(this.m_polyNodes.ChildCount * 2);
+    for (var i = 0; i < this.m_polyNodes.ChildCount(); i++)
     {
-      var Len = this.pts.length,
-        botI = 0;
-      while (botI < Len && this.pts[botI].length == 0) botI++;
-      if (botI == Len)
+      var node = this.m_polyNodes.Childs()[i];
+      this.m_srcPoly = node.m_polygon;
+      var len = this.m_srcPoly.length;
+      if (len == 0 || (delta <= 0 && (len < 3 || node.m_endtype != ClipperLib.EndType.etClosedPolygon)))
+        continue;
+      this.m_destPoly = new Array();
+      if (len == 1)
       {
-        //solution.Value = new ClipperLib.Polygons();
-        return;
-      }
-      //botPt: used to find the lowermost (in inverted Y-axis) & leftmost point
-      //This point (on pts[botI]) must be on an outer polygon ring and if 
-      //its orientation is false (counterclockwise) then assume all polygons 
-      //need reversing ...
-      this.botPt = this.pts[botI][0]; // This is ported with different logic than other C# refs
-      // adding botPt to object's property it's accessible through object's
-      // methods
-      // => All other ref's are now ported using rather complex object.Value
-      // technique, which seems to work.
-      for (i = botI; i < Len; ++i)
-      {
-        if (this.UpdateBotPt(this.pts[i][0])) botI = i;
-        for (j = this.pts[i].length - 1; j > 0; j--)
+        if (node.m_jointype == ClipperLib.JoinType.jtRound)
         {
-          if (ClipperLib.ClipperBase.PointsEqual(this.pts[i][j], this.pts[i][j - 1]))
+          var X = 1,
+            Y = 0;
+          for (var j = 1; j <= steps; j++)
           {
-            this.pts[i].splice(j, 1);
+            this.m_destPoly.push(new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].x + X * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].y + Y * delta)));
+            var X2 = X;
+            X = X * this.m_cos - this.m_sin * Y;
+            Y = X2 * this.m_sin + Y * this.m_cos;
           }
-          else if (this.UpdateBotPt(this.pts[i][j])) botI = i;
         }
-      }
-      if (!ClipperLib.Clipper.Orientation(this.pts[botI])) ClipperLib.Clipper.ReversePolygons(this.pts);
-    }
-    if (MiterLimit <= 1) MiterLimit = 1;
-    var RMin = 2 / (MiterLimit * MiterLimit);
-    this.normals = [];
-    var deltaSq = delta * delta;
-    solution.Value = new ClipperLib.Polygons();
-    //ClipperLib.Clear(solution.Value);
-    var len;
-    for (this.m_i = 0; this.m_i < this.pts.length; this.m_i++)
-    {
-      len = this.pts[this.m_i].length;
-      if (len > 1 && this.pts[this.m_i][0].x == this.pts[this.m_i][len - 1].x && 
-      this.pts[this.m_i][0].y == this.pts[this.m_i][len - 1].y)
-      {
-        len--;
-      }
-      if (len == 0 || (len < 3 && delta <= 0))
-      {
-        continue;
-      }
-      else if (len == 1)
-      {
-        var arc;
-        arc = ClipperLib.Clipper.BuildArc(this.pts[this.m_i][len - 1], 0, ClipperLib.PI2, delta);
-        solution.Value.push(arc);
-        continue;
-      }
-      
-      //build normals ...
-      ClipperLib.Clear(this.normals);
-      for (j = 0; j < len - 1; ++j)
-      this.normals.push(ClipperLib.Clipper.GetUnitNormal(this.pts[this.m_i][j], this.pts[this.m_i][j + 1]));
-      this.normals.push(ClipperLib.Clipper.GetUnitNormal(this.pts[this.m_i][len - 1], this.pts[this.m_i][0]));
-
-      this.currentPoly = new ClipperLib.Polygon();
-      this.m_k = len - 1;
-      for (this.m_j = 0; this.m_j < len; ++this.m_j)
-      {
-        switch (jointype)
+        else
         {
-          case ClipperLib.JoinType.jtMiter:
-            this.m_R = 1 + (this.normals[this.m_j].x * this.normals[this.m_k].x + this.normals[this.m_j].y * this.normals[this.m_k].y);
-            if (this.m_R >= RMin) this.DoMiter();
-            else this.DoSquare(MiterLimit);
-            break;
-          case ClipperLib.JoinType.jtRound:
-            this.DoRound();
-            break;
-          case ClipperLib.JoinType.jtSquare:
-            this.DoSquare(1);
-            break;
+          var X = -1,
+            Y = -1;
+          for (var j = 0; j < 4; ++j)
+          {
+            this.m_destPoly.push(new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].x + X * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].y + Y * delta)));
+            if (X < 0)
+              X = 1;
+            else if (Y < 0)
+              Y = 1;
+            else
+              X = -1;
+          }
         }
-        this.m_k = this.m_j;
+        this.m_destPolys.push(this.m_destPoly);
+        continue;
       }
-      solution.Value.push(this.currentPoly);
-    }
-    
-    //finally, clean up untidy corners ...
-    var clpr = new ClipperLib.Clipper();
-    clpr.AddPolygons(solution.Value, ClipperLib.PolyType.ptSubject);
-    if (delta > 0)
-    {
-      clpr.Execute(ClipperLib.ClipType.ctUnion, solution.Value, ClipperLib.PolyFillType.pftPositive, ClipperLib.PolyFillType.pftPositive);
-    }
-    else
-    {
-      var r = clpr.GetBounds();
-      var outer = new ClipperLib.Polygon();
-      outer.push(new ClipperLib.IntPoint(r.left - 10, r.bottom + 10));
-      outer.push(new ClipperLib.IntPoint(r.right + 10, r.bottom + 10));
-      outer.push(new ClipperLib.IntPoint(r.right + 10, r.top - 10));
-      outer.push(new ClipperLib.IntPoint(r.left - 10, r.top - 10));
-      clpr.AddPolygon(outer, ClipperLib.PolyType.ptSubject);
-      clpr.Execute(ClipperLib.ClipType.ctUnion, solution.Value, ClipperLib.PolyFillType.pftNegative, ClipperLib.PolyFillType.pftNegative);
-      if (solution.Value.length > 0)
+      //build m_normals ...
+      this.m_normals.length = 0;
+      //this.m_normals.set_Capacity(len);
+      for (var j = 0; j < len - 1; j++)
+        this.m_normals.push(ClipperLib.ClipperOffset.GetUnitNormal(this.m_srcPoly[j], this.m_srcPoly[j + 1]));
+      if (node.m_endtype == ClipperLib.EndType.etClosedLine || node.m_endtype == ClipperLib.EndType.etClosedPolygon)
+        this.m_normals.push(ClipperLib.ClipperOffset.GetUnitNormal(this.m_srcPoly[len - 1], this.m_srcPoly[0]));
+      else
+        this.m_normals.push(new ClipperLib.DoublePoint(this.m_normals[len - 2]));
+      if (node.m_endtype == ClipperLib.EndType.etClosedPolygon)
       {
-        solution.Value.splice(0, 1);
-        for (i = 0; i < solution.Value.length; i++)
-        solution.Value[i].reverse();
+        var k = len - 1;
+        for (var j = 0; j < len; j++)
+          k = this.OffsetPoint(j, k, node.m_jointype);
+        this.m_destPolys.push(this.m_destPoly);
       }
-    }
-  };
-  //ClipperLib.Clipper.PolyOffsetBuilder.buffLength = 128;
-  ClipperLib.Clipper.PolyOffsetBuilder.prototype.UpdateBotPt = function (pt)
-  {
-    if (pt.y > this.botPt.y || (pt.y == this.botPt.y && pt.x < this.botPt.x))
-    {
-      this.botPt = pt;
-      return true;
-    }
-    else return false;
-  };
-  ClipperLib.Clipper.PolyOffsetBuilder.prototype.AddPoint = function (pt)
-  {
-    this.currentPoly.push(pt);
-  };
-  ClipperLib.Clipper.PolyOffsetBuilder.prototype.DoSquare = function (mul)
-  {
-    var pt1 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_k].x * this.delta)),
-    ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_k].y * this.delta)));
-    var pt2 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_j].x * this.delta)),
-    ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_j].y * this.delta)));
-    if ((this.normals[this.m_k].x * this.normals[this.m_j].y - this.normals[this.m_j].x * this.normals[this.m_k].y) * this.delta >= 0)
-    {
-      var a1 = Math.atan2(this.normals[this.m_k].y, this.normals[this.m_k].x);
-      var a2 = Math.atan2(-this.normals[this.m_j].y, -this.normals[this.m_j].x);
-      a1 = Math.abs(a2 - a1);
-      if (a1 > ClipperLib.PI) a1 = ClipperLib.PI2 - a1;
-      var dx = Math.tan((ClipperLib.PI - a1) / 4) * Math.abs(this.delta * mul);
-      pt1 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64((pt1.x - this.normals[this.m_k].y * dx)),
-      ClipperLib.Cast_Int64((pt1.y + this.normals[this.m_k].x * dx)));
-      this.AddPoint(pt1);
-      pt2 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64((pt2.x + this.normals[this.m_j].y * dx)),
-      ClipperLib.Cast_Int64((pt2.y - this.normals[this.m_j].x * dx)));
-      this.AddPoint(pt2);
-    }
-    else
-    {
-      this.AddPoint(pt1);
-      this.AddPoint(this.pts[this.m_i][this.m_j]);
-      this.AddPoint(pt2);
-    }
-  };
-  ClipperLib.Clipper.PolyOffsetBuilder.prototype.DoMiter = function ()
-  {
-    if ((this.normals[this.m_k].x * this.normals[this.m_j].y - this.normals[this.m_j].x * this.normals[this.m_k].y) * this.delta >= 0)
-    {
-      var q = this.delta / this.m_R;
-      this.AddPoint(new ClipperLib.IntPoint(
-      ClipperLib.Cast_Int64(
-      ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + (this.normals[this.m_k].x + this.normals[this.m_j].x) * q)),
-      ClipperLib.Cast_Int64(
-      ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + (this.normals[this.m_k].y + this.normals[this.m_j].y) * q))));
-    }
-    else
-    {
-      var pt1 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_k].x * this.delta)),
-      ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_k].y * this.delta)));
-      var pt2 = new ClipperLib.IntPoint(ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_j].x * this.delta)),
-      ClipperLib.Cast_Int64(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_j].y * this.delta)));
-      this.AddPoint(pt1);
-      this.AddPoint(this.pts[this.m_i][this.m_j]);
-      this.AddPoint(pt2);
-    }
-  };
-  ClipperLib.Clipper.PolyOffsetBuilder.prototype.DoRound = function ()
-  {
-    var pt1 = new ClipperLib.IntPoint(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_k].x * this.delta),
-    ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_k].y * this.delta));
-    var pt2 = new ClipperLib.IntPoint(ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].x + this.normals[this.m_j].x * this.delta),
-    ClipperLib.Clipper.Round(this.pts[this.m_i][this.m_j].y + this.normals[this.m_j].y * this.delta));
-    this.AddPoint(pt1);
-    //round off reflex angles (ie > 180 deg) unless almost flat (ie < 10deg).
-    //cross product normals < 0 . angle > 180 deg.
-    //dot product normals == 1 . no angle
-    if ((this.normals[this.m_k].x * this.normals[this.m_j].y - this.normals[this.m_j].x * this.normals[this.m_k].y) * this.delta >= 0)
-    {
-      if ((this.normals[this.m_j].x * this.normals[this.m_k].x + this.normals[this.m_j].y * this.normals[this.m_k].y) < 0.985)
+      else if (node.m_endtype == ClipperLib.EndType.etClosedLine)
       {
-        var a1 = Math.atan2(this.normals[this.m_k].y, this.normals[this.m_k].x);
-        var a2 = Math.atan2(this.normals[this.m_j].y, this.normals[this.m_j].x);
-        if (this.delta > 0 && a2 < a1) a2 += ClipperLib.PI2;
-        else if (this.delta < 0 && a2 > a1) a2 -= ClipperLib.PI2;
-        var arc = ClipperLib.Clipper.BuildArc(this.pts[this.m_i][this.m_j], a1, a2, this.delta);
-        for (var m = 0; m < arc.length; m++)
-        this.AddPoint(arc[m]);
+        var k = len - 1;
+        for (var j = 0; j < len; j++)
+          k = this.OffsetPoint(j, k, node.m_jointype);
+        this.m_destPolys.push(this.m_destPoly);
+        this.m_destPoly = new Array();
+        //re-build m_normals ...
+        var n = this.m_normals[len - 1];
+        for (var j = len - 1; j > 0; j--)
+          this.m_normals[j] = new ClipperLib.DoublePoint(-this.m_normals[j - 1].x, -this.m_normals[j - 1].y);
+        this.m_normals[0] = new ClipperLib.DoublePoint(-n.x, -n.y);
+        k = 0;
+        for (var j = len - 1; j >= 0; j--)
+          k = this.OffsetPoint(j, k, node.m_jointype);
+        this.m_destPolys.push(this.m_destPoly);
+      }
+      else
+      {
+        var k = 0;
+        for (var j = 1; j < len - 1; ++j)
+          k = this.OffsetPoint(j, k, node.m_jointype);
+        var pt1;
+        if (node.m_endtype == ClipperLib.EndType.etOpenButt)
+        {
+          var j = len - 1;
+          pt1 = new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_normals[j].x * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_normals[j].y * delta));
+          this.m_destPoly.push(pt1);
+          pt1 = new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x - this.m_normals[j].x * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y - this.m_normals[j].y * delta));
+          this.m_destPoly.push(pt1);
+        }
+        else
+        {
+          var j = len - 1;
+          k = len - 2;
+          this.m_sinA = 0;
+          this.m_normals[j] = new ClipperLib.DoublePoint(-this.m_normals[j].x, -this.m_normals[j].y);
+          if (node.m_endtype == ClipperLib.EndType.etOpenSquare)
+            this.DoSquare(j, k);
+          else
+            this.DoRound(j, k);
+        }
+        //re-build m_normals ...
+        for (var j = len - 1; j > 0; j--)
+          this.m_normals[j] = new ClipperLib.DoublePoint(-this.m_normals[j - 1].x, -this.m_normals[j - 1].y);
+        this.m_normals[0] = new ClipperLib.DoublePoint(-this.m_normals[1].x, -this.m_normals[1].y);
+        k = len - 1;
+        for (var j = k - 1; j > 0; --j)
+          k = this.OffsetPoint(j, k, node.m_jointype);
+        if (node.m_endtype == ClipperLib.EndType.etOpenButt)
+        {
+          pt1 = new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].x - this.m_normals[0].x * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].y - this.m_normals[0].y * delta));
+          this.m_destPoly.push(pt1);
+          pt1 = new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].x + this.m_normals[0].x * delta), ClipperLib.ClipperOffset.Round(this.m_srcPoly[0].y + this.m_normals[0].y * delta));
+          this.m_destPoly.push(pt1);
+        }
+        else
+        {
+          k = 1;
+          this.m_sinA = 0;
+          if (node.m_endtype == ClipperLib.EndType.etOpenSquare)
+            this.DoSquare(0, 1);
+          else
+            this.DoRound(0, 1);
+        }
+        this.m_destPolys.push(this.m_destPoly);
       }
     }
-    else this.AddPoint(this.pts[this.m_i][this.m_j]);
-    this.AddPoint(pt2);
   };
-  ClipperLib.Error = function(message)
+  ClipperLib.ClipperOffset.prototype.Execute = function ()
   {
-	  try {
+    var a = arguments,
+      ispolytree = a[0] instanceof ClipperLib.PolyTree;
+    if (!ispolytree) // function (solution, delta)
+    {
+      var solution = a[0],
+        delta = a[1];
+      ClipperLib.Clear(solution);
+      this.FixOrientations();
+      this.DoOffset(delta);
+      //now clean up 'corners' ...
+      var clpr = new ClipperLib.Clipper(0);
+      clpr.AddPaths(this.m_destPolys, ClipperLib.PolyType.ptSubject, true);
+      if (delta > 0)
+      {
+        clpr.Execute(ClipperLib.ClipType.ctUnion, solution, ClipperLib.PolyFillType.pftPositive, ClipperLib.PolyFillType.pftPositive);
+      }
+      else
+      {
+        var r = ClipperLib.Clipper.GetBounds(this.m_destPolys);
+        var outer = new ClipperLib.Path();
+        outer.push(new ClipperLib.IntPoint(r.left - 10, r.bottom + 10));
+        outer.push(new ClipperLib.IntPoint(r.right + 10, r.bottom + 10));
+        outer.push(new ClipperLib.IntPoint(r.right + 10, r.top - 10));
+        outer.push(new ClipperLib.IntPoint(r.left - 10, r.top - 10));
+        clpr.AddPath(outer, ClipperLib.PolyType.ptSubject, true);
+        clpr.ReverseSolution = true;
+        clpr.Execute(ClipperLib.ClipType.ctUnion, solution, ClipperLib.PolyFillType.pftNegative, ClipperLib.PolyFillType.pftNegative);
+        if (solution.length > 0)
+          solution.splice(0, 1);
+      }
+      //console.log(JSON.stringify(solution));
+    }
+    else // function (polytree, delta)
+    {
+      var solution = a[0],
+        delta = a[1];
+      solution.Clear();
+      this.FixOrientations();
+      this.DoOffset(delta);
+      //now clean up 'corners' ...
+      var clpr = new ClipperLib.Clipper(0);
+      clpr.AddPaths(this.m_destPolys, ClipperLib.PolyType.ptSubject, true);
+      if (delta > 0)
+      {
+        clpr.Execute(ClipperLib.ClipType.ctUnion, solution, ClipperLib.PolyFillType.pftPositive, ClipperLib.PolyFillType.pftPositive);
+      }
+      else
+      {
+        var r = ClipperLib.Clipper.GetBounds(this.m_destPolys);
+        var outer = new ClipperLib.Path();
+        outer.push(new ClipperLib.IntPoint(r.left - 10, r.bottom + 10));
+        outer.push(new ClipperLib.IntPoint(r.right + 10, r.bottom + 10));
+        outer.push(new ClipperLib.IntPoint(r.right + 10, r.top - 10));
+        outer.push(new ClipperLib.IntPoint(r.left - 10, r.top - 10));
+        clpr.AddPath(outer, ClipperLib.PolyType.ptSubject, true);
+        clpr.ReverseSolution = true;
+        clpr.Execute(ClipperLib.ClipType.ctUnion, solution, ClipperLib.PolyFillType.pftNegative, ClipperLib.PolyFillType.pftNegative);
+        //remove the outer PolyNode rectangle ...
+        if (solution.ChildCount() == 1 && solution.Childs()[0].ChildCount() > 0)
+        {
+          var outerNode = solution.Childs()[0];
+          //solution.Childs.set_Capacity(outerNode.ChildCount);
+          solution.Childs()[0] = outerNode.Childs()[0];
+          for (var i = 1; i < outerNode.ChildCount(); i++)
+            solution.AddChild(outerNode.Childs()[i]);
+        }
+        else
+          solution.Clear();
+      }
+    }
+  };
+  ClipperLib.ClipperOffset.prototype.OffsetPoint = function (j, k, jointype)
+  {
+    this.m_sinA = (this.m_normals[k].x * this.m_normals[j].y - this.m_normals[j].x * this.m_normals[k].y);
+    if (this.m_sinA < 0.00005 && this.m_sinA > -0.00005)
+      return k;
+    else if (this.m_sinA > 1)
+      this.m_sinA = 1.0;
+    else if (this.m_sinA < -1)
+      this.m_sinA = -1.0;
+    if (this.m_sinA * this.m_delta < 0)
+    {
+      this.m_destPoly.push(new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_normals[k].x * this.m_delta),
+        ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_normals[k].y * this.m_delta)));
+      this.m_destPoly.push(new ClipperLib.IntPoint(this.m_srcPoly[j]));
+      this.m_destPoly.push(new ClipperLib.IntPoint(ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_normals[j].x * this.m_delta),
+        ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_normals[j].y * this.m_delta)));
+    }
+    else
+      switch (jointype)
+      {
+      case ClipperLib.JoinType.jtMiter:
+        {
+          var r = 1 + (this.m_normals[j].x * this.m_normals[k].x + this.m_normals[j].y * this.m_normals[k].y);
+          if (r >= this.m_miterLim)
+            this.DoMiter(j, k, r);
+          else
+            this.DoSquare(j, k);
+          break;
+        }
+      case ClipperLib.JoinType.jtSquare:
+        this.DoSquare(j, k);
+        break;
+      case ClipperLib.JoinType.jtRound:
+        this.DoRound(j, k);
+        break;
+      }
+    k = j;
+    return k;
+  };
+  ClipperLib.ClipperOffset.prototype.DoSquare = function (j, k)
+  {
+    var dx = Math.tan(Math.atan2(this.m_sinA,
+      this.m_normals[k].x * this.m_normals[j].x + this.m_normals[k].y * this.m_normals[j].y) / 4);
+    this.m_destPoly.push(new ClipperLib.IntPoint(
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_delta * (this.m_normals[k].x - this.m_normals[k].y * dx)),
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_delta * (this.m_normals[k].y + this.m_normals[k].x * dx))));
+    this.m_destPoly.push(new ClipperLib.IntPoint(
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_delta * (this.m_normals[j].x + this.m_normals[j].y * dx)),
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_delta * (this.m_normals[j].y - this.m_normals[j].x * dx))));
+  };
+  ClipperLib.ClipperOffset.prototype.DoMiter = function (j, k, r)
+  {
+    var q = this.m_delta / r;
+    this.m_destPoly.push(new ClipperLib.IntPoint(
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + (this.m_normals[k].x + this.m_normals[j].x) * q),
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + (this.m_normals[k].y + this.m_normals[j].y) * q)));
+  };
+  ClipperLib.ClipperOffset.prototype.DoRound = function (j, k)
+  {
+    var a = Math.atan2(this.m_sinA,
+      this.m_normals[k].x * this.m_normals[j].x + this.m_normals[k].y * this.m_normals[j].y);
+    var steps = ClipperLib.Cast_Int32(ClipperLib.ClipperOffset.Round(this.m_StepsPerRad * Math.abs(a)));
+    var X = this.m_normals[k].x,
+      Y = this.m_normals[k].y,
+      X2;
+    for (var i = 0; i < steps; ++i)
+    {
+      this.m_destPoly.push(new ClipperLib.IntPoint(
+        ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + X * this.m_delta),
+        ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + Y * this.m_delta)));
+      X2 = X;
+      X = X * this.m_cos - this.m_sin * Y;
+      Y = X2 * this.m_sin + Y * this.m_cos;
+    }
+    this.m_destPoly.push(new ClipperLib.IntPoint(
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].x + this.m_normals[j].x * this.m_delta),
+      ClipperLib.ClipperOffset.Round(this.m_srcPoly[j].y + this.m_normals[j].y * this.m_delta)));
+  };
+  ClipperLib.Error = function (message)
+  {
+    try
+    {
       throw new Error(message);
     }
-    catch(err) {
+    catch (err)
+    {
       alert(err.message);
     }
   };
-  // Make deep copy of Polygons or Polygon
-  // so that also IntPoint objects are cloned and not only referenced
-  // This should be the fastest way
-  ClipperLib.Clone = function (polygon)
+  // ---------------------------------
+  // JS extension by Timo 2013
+  ClipperLib.JS = {};
+  ClipperLib.JS.AreaOfPolygon = function (poly, scale)
   {
-  	if (!(polygon instanceof Array)) return [];
-    if (polygon.length == 0) return [];
-    else if (polygon.length == 1 && polygon[0].length == 0) return [[]];
-  	var isPolygons = polygon[0] instanceof Array;
-    if (!isPolygons) polygon = [polygon];
-  	var len = polygon.length, plen, i, j, result;
-  	var results = [];
-    for(i = 0; i < len; i++)
-    {
-      plen = polygon[i].length;
-      result = [];
-      for(j = 0; j < plen; j++)
-      {
-        result.push({x: polygon[i][j].x, y: polygon[i][j].y});
-      }
-      results.push(result);
-    }
-    if (!isPolygons) results = results[0];
-    return results;
+    if (!scale) scale = 1;
+    return ClipperLib.Clipper.Area(poly) / (scale * scale);
   };
-  
+  ClipperLib.JS.AreaOfPolygons = function (poly, scale)
+  {
+    if (!scale) scale = 1;
+    var area = 0;
+    for (var i = 0; i < poly.length; i++)
+    {
+      area += ClipperLib.Clipper.Area(poly[i]);
+    }
+    return area / (scale * scale);
+  };
+  ClipperLib.JS.BoundsOfPath = function (path, scale)
+  {
+    return ClipperLib.JS.BoundsOfPaths([path], scale);
+  };
+  ClipperLib.JS.BoundsOfPaths = function (paths, scale)
+  {
+    if (!scale) scale = 1;
+    var bounds = ClipperLib.Clipper.GetBounds(paths);
+    bounds.left /= scale;
+    bounds.bottom /= scale;
+    bounds.right /= scale;
+    bounds.top /= scale;
+    return bounds;
+  };
   // Clean() joins vertices that are too near each other
   // and causes distortion to offsetted polygons without cleaning
-  ClipperLib.Clean = function (polygon, delta)
+  ClipperLib.JS.Clean = function (polygon, delta)
   {
     if (!(polygon instanceof Array)) return [];
     var isPolygons = polygon[0] instanceof Array;
-    var polygon = ClipperLib.Clone(polygon);
-    if (typeof delta != "number" || delta === null) 
+    var polygon = ClipperLib.JS.Clone(polygon);
+    if (typeof delta != "number" || delta === null)
     {
       ClipperLib.Error("Delta is not a number in Clean().");
       return polygon;
     }
-    if (polygon.length == 0 || (polygon.length == 1 && polygon[0].length == 0) || delta < 0) return polygon;
+    if (polygon.length === 0 || (polygon.length == 1 && polygon[0].length === 0) || delta < 0) return polygon;
     if (!isPolygons) polygon = [polygon];
     var k_length = polygon.length;
     var len, poly, result, d, p, j, i;
     var results = [];
-    for(var k = 0; k < k_length; k++)
+    for (var k = 0; k < k_length; k++)
     {
       poly = polygon[k];
       len = poly.length;
-      if (len == 0) continue;
-      else if (len < 3) {
+      if (len === 0) continue;
+      else if (len < 3)
+      {
         result = poly;
         results.push(result);
         continue;
@@ -7741,7 +9823,7 @@ module.exports = Triangle;
       for (i = 1; i < len; i++)
       {
         if ((poly[i].x - p.x) * (poly[i].x - p.x) +
-            (poly[i].y - p.y) * (poly[i].y - p.y) <= d)
+          (poly[i].y - p.y) * (poly[i].y - p.y) <= d)
           continue;
         result[j] = poly[i];
         p = poly[i];
@@ -7749,106 +9831,314 @@ module.exports = Triangle;
       }
       p = poly[j - 1];
       if ((poly[0].x - p.x) * (poly[0].x - p.x) +
-          (poly[0].y - p.y) * (poly[0].y - p.y) <= d)
+        (poly[0].y - p.y) * (poly[0].y - p.y) <= d)
         j--;
       if (j < len)
-            result.splice(j, len - j);
+        result.splice(j, len - j);
       if (result.length) results.push(result);
     }
     if (!isPolygons && results.length) results = results[0];
-    else if (!isPolygons && results.length == 0) results = [];
-    else if (isPolygons && results.length ==0) results = [[]];
+    else if (!isPolygons && results.length === 0) results = [];
+    else if (isPolygons && results.length === 0) results = [
+      []
+    ];
     return results;
   }
-
-  // Removes points that doesn't affect much to the visual appearance.
-  // If middle point is at or under certain distance (tolerance) of the line between 
-  // start and end point, the middle point is removed.
-  ClipperLib.Lighten = function (polygon, tolerance)
+  // Make deep copy of Polygons or Polygon
+  // so that also IntPoint objects are cloned and not only referenced
+  // This should be the fastest way
+  ClipperLib.JS.Clone = function (polygon)
   {
     if (!(polygon instanceof Array)) return [];
-    
+    if (polygon.length === 0) return [];
+    else if (polygon.length == 1 && polygon[0].length === 0) return [[]];
+    var isPolygons = polygon[0] instanceof Array;
+    if (!isPolygons) polygon = [polygon];
+    var len = polygon.length,
+      plen, i, j, result;
+    var results = new Array(len);
+    for (i = 0; i < len; i++)
+    {
+      plen = polygon[i].length;
+      result = new Array(plen);
+      for (j = 0; j < plen; j++)
+      {
+        result[j] = {
+          x: polygon[i][j].x,
+          y: polygon[i][j].y
+        };
+      }
+      results[i] = result;
+    }
+    if (!isPolygons) results = results[0];
+    return results;
+  };
+  // Removes points that doesn't affect much to the visual appearance.
+  // If middle point is at or under certain distance (tolerance) of the line segment between 
+  // start and end point, the middle point is removed.
+  ClipperLib.JS.Lighten = function (polygon, tolerance)
+  {
+    if (!(polygon instanceof Array)) return [];
     if (typeof tolerance != "number" || tolerance === null)
     {
       ClipperLib.Error("Tolerance is not a number in Lighten().")
-      return ClipperLib.Clone(polygon);
+      return ClipperLib.JS.Clone(polygon);
     }
-    if (polygon.length === 0 || (polygon.length==1 && polygon[0].length === 0) || tolerance < 0)
+    if (polygon.length === 0 || (polygon.length == 1 && polygon[0].length === 0) || tolerance < 0)
     {
-      return ClipperLib.Clone(polygon);
+      return ClipperLib.JS.Clone(polygon);
     }
-
-	  if (!(polygon[0] instanceof Array)) polygon = [polygon];
-	  var i, j, poly, k, poly2, plen, A, B, P, d, rem, addlast;
-	  var bxax, byay, nL;
-	  var len = polygon.length;
-	  var results = [];
-	  for(i = 0; i < len; i++)
-	  {
-	    poly = polygon[i];
-	    for (k = 0; k < 1000000; k++) // could be forever loop, but wiser to restrict max repeat count
-	    {
-	    	poly2 = [];
-	      plen = poly.length;
-	      // the first have to added to the end, if first and last are not the same
-	      // this way we ensure that also the actual last point can be removed if needed
-	      if (poly[plen-1].x != poly[0].x || poly[plen-1].y != poly[0].y)
-	      {
-	        addlast = 1;
-	        poly.push({x:poly[0].x, y:poly[0].y});
-	        plen = poly.length;
-	      }
-	      else addlast = 0;
-	      rem = []; // Indexes of removed points
-	      for(j = 0; j < plen - 2; j++)
-	      {
-	        A = poly[j]; // Start point of line segment
-	        P = poly[j+1]; // Middle point. This is the one to be removed.
-	        B = poly[j+2]; // End point of line segment
-	        bxax = B.x - A.x;
-	        byay = B.y - A.y;
-	        d = 0;
-	        if (bxax !== 0 || byay !== 0) // To avoid Nan, when A==P && P==B. And to avoid peaks (A==B && A!=P), which have lenght, but not area.
-	        {
-	          nL = Math.sqrt(bxax * bxax + byay * byay);
-	          // d is the perpendicular distance from P to (infinite) line AB.
-	          d = Math.abs((P.x - A.x) * byay - (P.y - A.y) * bxax) / nL;
-	        }
-	        if (d <= tolerance)
-	        {
-	          rem[j+1] = 1;
-	          j++; // when removed, transfer the pointer to the next one
-	        }
-	      }
-	      // add all unremoved points to poly2
-	      poly2.push({x:poly[0].x, y:poly[0].y});
-	      for(j = 1; j < plen-1; j++)
-	        if (!rem[j]) poly2.push({x:poly[j].x,y:poly[j].y});
-	      poly2.push({x:poly[plen-1].x,y:poly[plen-1].y});
-	      // if the first point was added to the end, remove it
-	      if (addlast) poly.pop();
-	      // break, if there was not anymore removed points
-	      if (!rem.length) break;
-	      // else continue looping using poly2, to check if there are points to remove
-	      else poly = poly2;
-	    }
-	    plen = poly2.length;
-	    // remove duplicate from end, if needed
-	    if (poly2[plen-1].x == poly2[0].x && poly2[plen-1].y == poly2[0].y)
-	    {
-	      poly2.pop();
-	    }
-	    if (poly2.length > 2) // to avoid two-point-polygons
-	    results.push(poly2);
+    if (!(polygon[0] instanceof Array)) polygon = [polygon];
+    var i, j, poly, k, poly2, plen, A, B, P, d, rem, addlast;
+    var bxax, byay, l, ax, ay;
+    var len = polygon.length;
+    var toleranceSq = tolerance * tolerance;
+    var results = [];
+    for (i = 0; i < len; i++)
+    {
+      poly = polygon[i];
+      plen = poly.length;
+      if (plen == 0) continue;
+      for (k = 0; k < 1000000; k++) // could be forever loop, but wiser to restrict max repeat count
+      {
+        poly2 = [];
+        plen = poly.length;
+        // the first have to added to the end, if first and last are not the same
+        // this way we ensure that also the actual last point can be removed if needed
+        if (poly[plen - 1].x != poly[0].x || poly[plen - 1].y != poly[0].y)
+        {
+          addlast = 1;
+          poly.push(
+          {
+            x: poly[0].x,
+            y: poly[0].y
+          });
+          plen = poly.length;
+        }
+        else addlast = 0;
+        rem = []; // Indexes of removed points
+        for (j = 0; j < plen - 2; j++)
+        {
+          A = poly[j]; // Start point of line segment
+          P = poly[j + 1]; // Middle point. This is the one to be removed.
+          B = poly[j + 2]; // End point of line segment
+          ax = A.x; 
+          ay = A.y; 
+          bxax = B.x - ax;
+          byay = B.y - ay;
+          if (bxax !== 0 || byay !== 0) // To avoid Nan, when A==P && P==B. And to avoid peaks (A==B && A!=P), which have lenght, but not area.
+          {
+            l = ((P.x - ax) * bxax + (P.y - ay) * byay) / (bxax * bxax + byay * byay);
+            if (l > 1)
+            {
+              ax = B.x; 
+              ay = B.y; 
+            }
+            else if (l > 0)
+            {
+              ax += bxax * l;
+              ay += byay * l;
+            }
+          }
+          bxax = P.x - ax;
+          byay = P.y - ay;
+          d = bxax * bxax + byay * byay;
+          if (d <= toleranceSq)
+          {
+            rem[j + 1] = 1;
+            j++; // when removed, transfer the pointer to the next one
+          }
+        }
+        // add all unremoved points to poly2
+        poly2.push(
+        {
+          x: poly[0].x,
+          y: poly[0].y
+        });
+        for (j = 1; j < plen - 1; j++)
+          if (!rem[j]) poly2.push(
+          {
+            x: poly[j].x,
+            y: poly[j].y
+          });
+        poly2.push(
+        {
+          x: poly[plen - 1].x,
+          y: poly[plen - 1].y
+        });
+        // if the first point was added to the end, remove it
+        if (addlast) poly.pop();
+        // break, if there was not anymore removed points
+        if (!rem.length) break;
+        // else continue looping using poly2, to check if there are points to remove
+        else poly = poly2;
+      }
+      plen = poly2.length;
+      // remove duplicate from end, if needed
+      if (poly2[plen - 1].x == poly2[0].x && poly2[plen - 1].y == poly2[0].y)
+      {
+        poly2.pop();
+      }
+      if (poly2.length > 2) // to avoid two-point-polygons
+        results.push(poly2);
     }
     if (!polygon[0] instanceof Array) results = results[0];
-    if (typeof (results) == "undefined") results = [[]];
+    if (typeof (results) == "undefined") results = [
+      []
+    ];
     return results;
   }
-  if (typeof(document) !== "undefined") window.ClipperLib = ClipperLib;
-  else self['ClipperLib'] = ClipperLib;
-})();
-/******************************************************************************
+  ClipperLib.JS.PerimeterOfPath = function (path, closed, scale)
+  {
+    if (typeof (path) == "undefined") return 0;
+    var sqrt = Math.sqrt;
+    var perimeter = 0.0;
+    var p1, p2, p1x = 0.0,
+      p1y = 0.0,
+      p2x = 0.0,
+      p2y = 0.0;
+    var j = path.length;
+    if (j < 2) return 0;
+    if (closed)
+    {
+      path[j] = path[0];
+      j++;
+    }
+    while (--j)
+    {
+      p1 = path[j];
+      p1x = p1.x; 
+      p1y = p1.y; 
+      p2 = path[j - 1];
+      p2x = p2.x; 
+      p2y = p2.y; 
+      perimeter += sqrt((p1x - p2x) * (p1x - p2x) + (p1y - p2y) * (p1y - p2y));
+    }
+    if (closed) path.pop();
+    return perimeter / scale;
+  };
+  ClipperLib.JS.PerimeterOfPaths = function (paths, closed, scale)
+  {
+    if (!scale) scale = 1;
+    var perimeter = 0;
+    for (var i = 0; i < paths.length; i++)
+    {
+      perimeter += ClipperLib.JS.PerimeterOfPath(paths[i], closed, scale);
+    }
+    return perimeter;
+  };
+  ClipperLib.JS.ScaleDownPath = function (path, scale)
+  {
+    var i, p;
+    if (!scale) scale = 1;
+    i = path.length;
+    while (i--)
+    {
+      p = path[i];
+      p.x = p.x / scale;
+      p.y = p.y / scale;
+    }
+  };
+  ClipperLib.JS.ScaleDownPaths = function (paths, scale)
+  {
+    var i, j, p, round = Math.round;
+    if (!scale) scale = 1;
+    i = paths.length;
+    while (i--)
+    {
+      j = paths[i].length;
+      while (j--)
+      {
+        p = paths[i][j];
+        p.x = p.x / scale;
+        p.y = p.y / scale;
+      }
+    }
+  };
+  ClipperLib.JS.ScaleUpPath = function (path, scale)
+  {
+    var i, p, round = Math.round;
+    if (!scale) scale = 1;
+    i = path.length;
+    while (i--)
+    {
+      p = path[i];
+      p.x = round(p.x * scale);
+      p.y = round(p.y * scale);
+    }
+  };
+  ClipperLib.JS.ScaleUpPaths = function (paths, scale)
+  {
+    var i, j, p, round = Math.round;
+    if (!scale) scale = 1;
+    i = paths.length;
+    while (i--)
+    {
+      j = paths[i].length;
+      while (j--)
+      {
+        p = paths[i][j];
+        p.x = round(p.x * scale);
+        p.y = round(p.y * scale);
+      }
+    }
+  };
+  ClipperLib.ExPolygons = function ()
+  {
+    return [];
+  }
+  ClipperLib.ExPolygon = function ()
+  {
+    this.outer = null;
+    this.holes = null;
+  };
+  ClipperLib.JS.AddOuterPolyNodeToExPolygons = function (polynode, expolygons)
+  {
+    var ep = new ClipperLib.ExPolygon();
+    ep.outer = polynode.Contour();
+    var childs = polynode.Childs();
+    var ilen = childs.length;
+    ep.holes = new Array(ilen);
+    var node, n, i, j, childs2, jlen;
+    for (i = 0; i < ilen; i++)
+    {
+      node = childs[i];
+      ep.holes[i] = node.Contour();
+      //Add outer polygons contained by (nested within) holes ...
+      for (j = 0, childs2 = node.Childs(), jlen = childs2.length; j < jlen; j++)
+      {
+        n = childs2[j];
+        ClipperLib.JS.AddOuterPolyNodeToExPolygons(n, expolygons);
+      }
+    }
+    expolygons.push(ep);
+  };
+  ClipperLib.JS.ExPolygonsToPaths = function (expolygons)
+  {
+    var a, i, alen, ilen;
+    var paths = new ClipperLib.Paths();
+    for (a = 0, alen = expolygons.length; a < alen; a++)
+    {
+      paths.push(expolygons[a].outer);
+      for (i = 0, ilen = expolygons[a].holes.length; i < ilen; i++)
+      {
+        paths.push(expolygons[a].holes[i]);
+      }
+    }
+    return paths;
+  }
+  ClipperLib.JS.PolyTreeToExPolygons = function (polytree)
+  {
+    var expolygons = new ClipperLib.ExPolygons();
+    var node, i, childs, ilen;
+    for (i = 0, childs = polytree.Childs(), ilen = childs.length; i < ilen; i++)
+    {
+      node = childs[i];
+      ClipperLib.JS.AddOuterPolyNodeToExPolygons(node, expolygons);
+    }
+    return expolygons;
+  };
+})();/******************************************************************************
  * Spine Runtime Software License - Version 1.1
  * 
  * Copyright (c) 2013, Esoteric Software
@@ -27659,12 +29949,29 @@ CG.B2DEntity.extend('B2DTerrain', {
                     clip_polygons.push(this.terrainPoly[part].holes[i])
                 }
             }
-            var cpr = new ClipperLib.Clipper()
-            cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
-            cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
 
-            var solution_polygons = new ClipperLib.ExPolygons()
-            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+//            var cpr = new ClipperLib.Clipper()
+//            cpr.AddPolygons(subj_polygons, ClipperLib.PolyType.ptSubject)
+//            cpr.AddPolygons(clip_polygons, ClipperLib.PolyType.ptClip)
+//
+//            var solution_polygons = new ClipperLib.ExPolygons()
+//            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+
+
+
+            var cpr = new ClipperLib.Clipper()
+            cpr.PreserveCollinear = true
+            cpr.StrictlySimple = true
+            var polytree = new ClipperLib.PolyTree()
+            cpr.AddPaths(subj_polygons, ClipperLib.PolyType.ptSubject, true)
+            cpr.AddPaths(clip_polygons, ClipperLib.PolyType.ptClip, true)
+            cpr.Execute(ClipperLib.ClipType.ctDifference, polytree, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
+
+            var solution_polygons = ClipperLib.JS.PolyTreeToExPolygons(polytree);
+
+//            console.log('clipTerrain:', subj_polygons, clip_polygons)
+//            console.log('solution_polygons:', solution_polygons)
+
             if (solution_polygons.length > 0) {
                 for (var spoly = 0, slen = solution_polygons.length; spoly < slen; spoly++) {
                     tempPolys.push(solution_polygons[spoly])
@@ -27687,11 +29994,11 @@ CG.B2DEntity.extend('B2DTerrain', {
         var tolerance = 0.02
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
+            var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
+                    var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
@@ -27706,11 +30013,11 @@ CG.B2DEntity.extend('B2DTerrain', {
         var cleandelta = 0.1
 
         for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
+            var temp = ClipperLib.JS.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
             this.terrainPoly[part].outer = temp[0]
             if (this.terrainPoly[part].holes.length > 0) {
                 for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
+                    var temp = ClipperLib.JS.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
                     this.terrainPoly[part].holes[i] = temp[0]
                 }
             }
