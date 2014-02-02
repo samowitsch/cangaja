@@ -64,8 +64,7 @@ Game = (function () {
             //Asset preloading font files
             Game.asset.addFont('media/font/small.txt', 'small', 'small')
                 .addFont('media/font/abadi_ez.txt', 'abadi')
-                .addImage('media/img/back3.jpg', 'cover')
-                .addImage('media/img/back2.jpg', 'back')
+                .addImage('media/img/star-contour-test.png', 'star-contour-test')
                 .addImage('media/img/crosshair.png', 'crosshair')
 
                 .startPreLoad()
@@ -83,32 +82,20 @@ Game = (function () {
             //add screen to Director
             Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
-            //sprite for the background
-            back = new CG.Sprite(Game.asset.getImageByName('back'), new CG.Point(Game.width2, Game.height2))
-            back.name = 'back'
-            mainlayer.addElement(back)
-
             //a bitmap that hides the background sprite
             bitmap = new CG.Bitmap(Game.width, Game.height)
-            bitmap.loadImage(Game.asset.getImageByName('cover'))
+            bitmap.loadImage(Game.asset.getImageByName('star-contour-test'))
+
+            bitmap.drawContour(bitmap.traceContour())
+
             mainlayer.addElement(bitmap)
-
-            //do something with the bitmap
-            //bitmap.clearCircle(100, 150, 50)
-            bitmap.clearRect(480, 120, 100, 100)
-
-            //a crosshair that follows the mouse pointer
-            crosshair = new CG.Sprite(Game.asset.getImageByName('crosshair'), new CG.Point(Game.width2, Game.height2))
-            crosshair.name = 'crosshair'
-            mainlayer.addElement(crosshair)
-
 
             renderStats = new Stats()
             document.body.appendChild(renderStats.domElement)
 
 
             //initialize hammer ;o)
-            Game.touchinit()
+            //Game.touchinit()
 
             Game.loop()
         },
@@ -125,9 +112,6 @@ Game = (function () {
         update:function () {
             //update here what ever you want
 
-            crosshair.position.x = mousex
-            crosshair.position.y = mousey
-
             Game.director.update()
         },
         draw:function () {
@@ -138,9 +122,6 @@ Game = (function () {
             Game.director.draw()
 
             abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
-            small.drawText('Bitmap class example. Feel free to click ;o)', xpos, ypos + 50)
-            small.drawText('Bitmap.clearCircle()', 30, 210)
-            small.drawText('Bitmap.clearRect()', 480, 100)
 
             Game.ctx.drawImage(Game.b_canvas, 0, 0)
             Game.b_ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
@@ -153,7 +134,7 @@ Game = (function () {
                 mousedown = true
                 mousex = ev.gesture.center.pageX - canvas.offsetLeft //correct ontap value x
                 mousey = ev.gesture.center.pageY - canvas.offsetTop  //correct ontap value y
-                clicked()
+//                clicked()
             })
             hammer.on('dragstart', function (ev) {
             })
