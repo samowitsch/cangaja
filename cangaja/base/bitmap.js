@@ -10,6 +10,8 @@
 
 //@TODO add surface normal function (http://gamedev.tutsplus.com/tutorials/implementation/coding-destructible-pixel-terrain/, http://en.wikipedia.org/wiki/Surface_normal)
 //@TODO add a raycast function ?
+//@TODO using Clipper lighten to reduce points of traceContour method
+//@TODO add feature to triangulate the reduced with poly2tri for use in box2d
 
 CG.Entity.extend('Bitmap', {
     /**
