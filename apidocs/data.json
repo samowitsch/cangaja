@@ -1687,7 +1687,7 @@
             "line": 169,
             "itemtype": "method",
             "name": "traceContour",
-            "description": "trace the outer contour of an bitmap body\nhttp://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)",
+            "description": "trace the outer contour of an bitmap body clockwise (CW)\nhttp://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)",
             "return": {
                 "description": "",
                 "type": "Array"
@@ -1716,7 +1716,7 @@
             "line": 328,
             "itemtype": "method",
             "name": "lightenContour",
-            "description": "removes points that doesn't affect much to the visual appearance",
+            "description": "removes points that doesn't affect much to the visual appearance. the order after ClipperLib.JS.Lighten is counter clockwise (CCW)",
             "params": [
                 {
                     "name": "vertices",

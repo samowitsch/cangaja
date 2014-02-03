@@ -346,7 +346,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @method traceContour
      *
      * @description
-     * trace the outer contour of an bitmap body
+     * trace the outer contour of an bitmap body clockwise (CW)
      * http:&#x2F;&#x2F;www.emanueleferonato.com&#x2F;2013&#x2F;03&#x2F;01&#x2F;using-marching-squares-algorithm-to-trace-the-contour-of-an-image&#x2F;)
      *
      * @returns {Array}
@@ -503,7 +503,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     },
     &#x2F;**
      * @method lightenContour
-     * @description removes points that doesn&#x27;t affect much to the visual appearance
+     * @description removes points that doesn&#x27;t affect much to the visual appearance. the order after ClipperLib.JS.Lighten is counter clockwise (CCW)
      * @param vertices
      * @param tolerance
      * @returns {Array}
