@@ -184,7 +184,6 @@
  *
  *&#x2F;
 
-&#x2F;&#x2F;@TODO add margin squares function for contour finding =&gt; also for polygon path? (http:&#x2F;&#x2F;www.emanueleferonato.com&#x2F;2013&#x2F;03&#x2F;01&#x2F;using-marching-squares-algorithm-to-trace-the-contour-of-an-image&#x2F;)
 &#x2F;&#x2F;@TODO add surface normal function (http:&#x2F;&#x2F;gamedev.tutsplus.com&#x2F;tutorials&#x2F;implementation&#x2F;coding-destructible-pixel-terrain&#x2F;, http:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Surface_normal)
 &#x2F;&#x2F;@TODO add a raycast function ?
 
@@ -196,7 +195,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @param height {Number} height the height for the buffer
      * @return {*}
      *&#x2F;
-    init:function (width, height) {
+    init: function (width, height) {
         this.instanceOf = &#x27;Bitmap&#x27;
         &#x2F;**
          @property x {Number}
@@ -206,6 +205,11 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
          @property y {Number}
          *&#x2F;
         this.y = 0
+        &#x2F;**
+         @description tolerance for the getSquareValues method
+         @property tolerance {Number}
+         *&#x2F;
+        this.tolerance = 128
         &#x2F;**
          @property bitmap_canvas {Object}
          *&#x2F;
@@ -237,17 +241,17 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      *
      * @param {string, image, atlasimage} imgpath, image object or atlasimage object to use
      *&#x2F;
-    loadImage:function (image) {
+    loadImage: function (image) {
         this.setImage(image)
         this.drawImageToBuffer()
         return this
     },
 
 
-    update:function () {
+    update: function () {
     },
 
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this)
 
@@ -257,7 +261,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     &#x2F;**
      * @method clearBuffer
      *&#x2F;
-    clearBuffer:function () {
+    clearBuffer: function () {
         this.bitmap_ctx.clearRect(0, 0, this.bitmap_canvas.width, this.bitmap_canvas.height)
         return this
     },
@@ -265,7 +269,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
     &#x2F;**
      * @method drawImageToBuffer
      *&#x2F;
-    drawImageToBuffer:function () {
+    drawImageToBuffer: function () {
         if (this.image) {
             this.bitmap_ctx.drawImage(this.image, 0, 0)
         }
@@ -281,7 +285,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @param {Number} width the width for clearRect
      * @param {Number} height the height for clearRect
      *&#x2F;
-    clearRect:function (x, y, width, height) {
+    clearRect: function (x, y, width, height) {
         this.bitmap_ctx.save()
         this.bitmap_ctx.globalCompositeOperation = &#x27;destination-out&#x27;
         this.bitmap_ctx.clearRect(x, y, width, height)
@@ -295,7 +299,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @param {Number} y the y position for clearCircle
      * @param {Number} radius the radius for clearCircle
      *&#x2F;
-    clearCircle:function (x, y, radius) {
+    clearCircle: function (x, y, radius) {
         this.bitmap_ctx.save()
         this.bitmap_ctx.globalCompositeOperation = &#x27;destination-out&#x27;
         this.bitmap_ctx.beginPath()
@@ -312,7 +316,7 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @param {Number} y the y position for getPixel
      * @returns {imagedata} data from canvas
      *&#x2F;
-    getPixel:function (x, y) {
+    getPixel: function (x, y) {
         return this.bitmap_ctx.getImageData(x, y, 1, 1)
     },
 
@@ -325,8 +329,241 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
      * @param {Number} height for getPixels
      * @returns {imagedata} data from canvas
      *&#x2F;
-    getPixels:function (x, y, width, height) {
+    getPixels: function (x, y, width, height) {
         return this.bitmap_ctx.getImageData(x, y, width, height)
+    },
+    &#x2F;**
+     * @method getPixelAlpha
+     *
+     * @param x
+     * @param y
+     * @returns {*}
+     *&#x2F;
+    getPixelAlpha: function (x, y) {
+        return this.bitmap_ctx.getImageData(x, y, 1, 1).data[3]
+    },
+    &#x2F;**
+     * @method traceContour
+     *
+     * @description
+     * trace the outer contour of an bitmap body
+     * http:&#x2F;&#x2F;www.emanueleferonato.com&#x2F;2013&#x2F;03&#x2F;01&#x2F;using-marching-squares-algorithm-to-trace-the-contour-of-an-image&#x2F;)
+     *
+     * @returns {Array}
+     *&#x2F;
+    traceContour: function () {
+        var startPoint = this.getStartingPixel()
+        var contourVector = []
+        if (startPoint) {
+            var pX = startPoint.x,
+                pY = startPoint.y,
+                stepX,
+                stepY,
+                prevX,
+                prevY,
+                closedLoop = false
+
+            while (!closedLoop) {
+                var squareValue = this.getSquareValue(pX, pY)
+                switch (squareValue) {
+                    &#x2F;* going UP with these cases:
+
+                     +---+---+   +---+---+   +---+---+
+                     | 1 |   |   | 1 |   |   | 1 |   |
+                     +---+---+   +---+---+   +---+---+
+                     |   |   |   | 4 |   |   | 4 | 8 |
+                     +---+---+  	+---+---+  	+---+---+
+
+                     *&#x2F;
+                    case 1 :
+                    case 5 :
+                    case 13 :
+                        stepX = 0;
+                        stepY = -1;
+                        break;
+                    &#x2F;* going DOWN with these cases:
+
+                     +---+---+   +---+---+   +---+---+
+                     |   |   |   |   | 2 |   | 1 | 2 |
+                     +---+---+   +---+---+   +---+---+
+                     |   | 8 |   |   | 8 |   |   | 8 |
+                     +---+---+  	+---+---+  	+---+---+
+
+                     *&#x2F;
+                    case 8 :
+                    case 10 :
+                    case 11 :
+                        stepX = 0;
+                        stepY = 1;
+                        break;
+                    &#x2F;* going LEFT with these cases:
+
+                     +---+---+   +---+---+   +---+---+
+                     |   |   |   |   |   |   |   | 2 |
+                     +---+---+   +---+---+   +---+---+
+                     | 4 |   |   | 4 | 8 |   | 4 | 8 |
+                     +---+---+  	+---+---+  	+---+---+
+
+                     *&#x2F;
+                    case 4 :
+                    case 12 :
+                    case 14 :
+                        stepX = -1;
+                        stepY = 0;
+                        break;
+                    &#x2F;* going RIGHT with these cases:
+
+                     +---+---+   +---+---+   +---+---+
+                     |   | 2 |   | 1 | 2 |   | 1 | 2 |
+                     +---+---+   +---+---+   +---+---+
+                     |   |   |   |   |   |   | 4 |   |
+                     +---+---+  	+---+---+  	+---+---+
+
+                     *&#x2F;
+                    case 2 :
+                    case 3 :
+                    case 7 :
+                        stepX = 1;
+                        stepY = 0;
+                        break;
+                    case 6 :
+                        &#x2F;* special saddle point case 1:
+
+                         +---+---+
+                         |   | 2 |
+                         +---+---+
+                         | 4 |   |
+                         +---+---+
+
+                         going LEFT if coming from UP
+                         else going RIGHT
+
+                         *&#x2F;
+                        if (prevX == 0 &amp;&amp; prevY == -1) {
+                            stepX = -1;
+                            stepY = 0;
+                        }
+                        else {
+                            stepX = 1;
+                            stepY = 0;
+                        }
+                        break;
+                    case 9 :
+                        &#x2F;* special saddle point case 2:
+
+                         +---+---+
+                         | 1 |   |
+                         +---+---+
+                         |   | 8 |
+                         +---+---+
+
+                         going UP if coming from RIGHT
+                         else going DOWN
+
+                         *&#x2F;
+                        if (prevX == 1 &amp;&amp; prevY == 0) {
+                            stepX = 0;
+                            stepY = -1;
+                        }
+                        else {
+                            stepX = 0;
+                            stepY = 1;
+                        }
+                        break;
+                }
+                &#x2F;&#x2F; moving onto next point
+                pX += stepX;
+                pY += stepY;
+                &#x2F;&#x2F; saving contour point
+                contourVector.push({x: pX, y: pY});
+                prevX = stepX;
+                prevY = stepY;
+
+                &#x2F;&#x2F; if we returned to the first point visited, the loop has finished
+                if (pX == startPoint.x &amp;&amp; pY == startPoint.y) {
+                    closedLoop = true;
+                }
+            }
+
+        }
+        return contourVector
+    },
+    &#x2F;**
+     * @method drawContour
+     * @description draws the traced contour for debuging at the moment
+     * @param vertices {Array}
+     *&#x2F;
+    drawContour: function (vertices) {
+        this.bitmap_ctx.save()
+        for (var i = 0; i &lt; vertices.length; i++) {
+            this.bitmap_ctx.fillStyle = &#x27;#f00&#x27;
+            this.bitmap_ctx.fillRect(vertices[i].x, vertices[i].y, 1, 1);
+        }
+        this.bitmap_ctx.restore()
+    },
+    &#x2F;**
+     * @method lightenContour
+     * @description removes points that doesn&#x27;t affect much to the visual appearance
+     * @param vertices
+     * @param tolerance
+     * @returns {Array}
+     *&#x2F;
+    lightenCountur: function (vertices, tolerance) {
+        var tolerance = tolerance || 1
+        return ClipperLib.JS.Lighten(vertices, tolerance)[0]
+    },
+    &#x2F;**
+     * @method triangulateContour
+     * @param vertices
+     * @returns {array.&lt;Triangle&gt;|*|Array}
+     *&#x2F;
+    triangulateContour: function (vertices) {
+        var swctx = new poly2tri.SweepContext(vertices, {cloneArrays: true})
+        swctx.triangulate();
+        return swctx.getTriangles() || []
+    },
+    &#x2F;**
+     * @method getStartingPixel
+     * @description scanline trace to get the first pixel
+     * @returns {Object|false}
+     *&#x2F;
+    getStartingPixel: function () {
+        for (var ys = 0; ys &lt; this.height; ys++) {
+            for (var xs = 0; xs &lt; this.width; xs++) {
+                if (this.getPixelAlpha(xs, ys) &gt;= this.tolerance) {
+                    return {x: xs, y: ys}
+                }
+            }
+        }
+        return false
+    },
+    &#x2F;**
+     * @method getSquareValue
+     * @description get four squared pixels to trace a contour
+     * @param x
+     * @param y
+     * @returns {number}
+     *&#x2F;
+    getSquareValue: function (x, y) {
+        var squareValue = 0
+
+        &#x2F;&#x2F; check upper left pixel
+        if (this.getPixelAlpha(x - 1, y - 1) &gt;= this.tolerance) {
+            squareValue += 1
+        }
+        &#x2F;&#x2F; check upper pixel
+        if (this.getPixelAlpha(x, y - 1) &gt;= this.tolerance) {
+            squareValue += 2
+        }
+        &#x2F;&#x2F; check left pixel
+        if (this.getPixelAlpha(x - 1, y) &gt;= this.tolerance) {
+            squareValue += 4
+        }
+        &#x2F;&#x2F; checking pixel itself
+        if (this.getPixelAlpha(x, y) &gt;= this.tolerance) {
+            squareValue += 8
+        }
+        return squareValue
     }
 })
 

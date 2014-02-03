@@ -1419,7 +1419,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 16,
+            "line": 15,
             "itemtype": "method",
             "name": "init",
             "is_constructor": 1,
@@ -1444,7 +1444,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 25,
+            "line": 24,
             "itemtype": "property",
             "name": "x",
             "type": "Number",
@@ -1453,7 +1453,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 29,
+            "line": 28,
             "itemtype": "property",
             "name": "y",
             "type": "Number",
@@ -1462,7 +1462,17 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 33,
+            "line": 32,
+            "description": "tolerance for the getSquareValues method",
+            "itemtype": "property",
+            "name": "tolerance",
+            "type": "Number",
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 37,
             "itemtype": "property",
             "name": "bitmap_canvas",
             "type": "Object",
@@ -1471,7 +1481,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 37,
+            "line": 41,
             "itemtype": "property",
             "name": "bitmap_canvas.width",
             "type": "Number",
@@ -1480,7 +1490,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 41,
+            "line": 45,
             "itemtype": "property",
             "name": "bitmap_canvas.height",
             "type": "Number",
@@ -1489,7 +1499,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 45,
+            "line": 49,
             "itemtype": "property",
             "name": "bitmap_ctx",
             "type": "Context",
@@ -1498,7 +1508,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 49,
+            "line": 53,
             "itemtype": "property",
             "name": "bitmap_ctx.fillStyle",
             "type": "String",
@@ -1507,7 +1517,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 55,
+            "line": 59,
             "description": "Loads an image and draws it to the buffer",
             "itemtype": "method",
             "name": "loadImage",
@@ -1523,7 +1533,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 81,
+            "line": 85,
             "itemtype": "method",
             "name": "clearBuffer",
             "class": "CG.Bitmap",
@@ -1531,7 +1541,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 89,
+            "line": 93,
             "itemtype": "method",
             "name": "drawImageToBuffer",
             "class": "CG.Bitmap",
@@ -1539,7 +1549,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 100,
+            "line": 104,
             "itemtype": "method",
             "name": "clearRect",
             "params": [
@@ -1569,7 +1579,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 115,
+            "line": 119,
             "itemtype": "method",
             "name": "clearCircle",
             "params": [
@@ -1594,7 +1604,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 132,
+            "line": 136,
             "itemtype": "method",
             "name": "getPixel",
             "params": [
@@ -1618,7 +1628,7 @@
         },
         {
             "file": "cangaja/base/bitmap.js",
-            "line": 143,
+            "line": 147,
             "itemtype": "method",
             "name": "getPixels",
             "params": [
@@ -1646,6 +1656,134 @@
             "return": {
                 "description": "data from canvas",
                 "type": "Imagedata"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 159,
+            "itemtype": "method",
+            "name": "getPixelAlpha",
+            "params": [
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 169,
+            "itemtype": "method",
+            "name": "traceContour",
+            "description": "trace the outer contour of an bitmap body\nhttp://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)",
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 315,
+            "itemtype": "method",
+            "name": "drawContour",
+            "description": "draws the traced contour for debuging at the moment",
+            "params": [
+                {
+                    "name": "vertices",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 328,
+            "itemtype": "method",
+            "name": "lightenContour",
+            "description": "removes points that doesn't affect much to the visual appearance",
+            "params": [
+                {
+                    "name": "vertices",
+                    "description": ""
+                },
+                {
+                    "name": "tolerance",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 339,
+            "itemtype": "method",
+            "name": "triangulateContour",
+            "params": [
+                {
+                    "name": "vertices",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "array.<Triangle>|*|Array"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 349,
+            "itemtype": "method",
+            "name": "getStartingPixel",
+            "description": "scanline trace to get the first pixel",
+            "return": {
+                "description": "",
+                "type": "Object|false"
+            },
+            "class": "CG.Bitmap",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/base/bitmap.js",
+            "line": 364,
+            "itemtype": "method",
+            "name": "getSquareValue",
+            "description": "get four squared pixels to trace a contour",
+            "params": [
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
             },
             "class": "CG.Bitmap",
             "module": "CG"
@@ -3789,7 +3927,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 214,
+            "line": 231,
             "description": "this method uses the Clipper Lighten method to reduce vertices for better triangulation",
             "itemtype": "method",
             "name": "lightenTerrain",
@@ -3798,7 +3936,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 233,
+            "line": 250,
             "description": "Experimental not working yet. Try to use the Clipperlib Clean method",
             "itemtype": "method",
             "name": "cleanTerrain",
@@ -3807,7 +3945,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 252,
+            "line": 269,
             "description": "extract the triangles out of poly2tri array",
             "itemtype": "method",
             "name": "getPolysFromJson",
@@ -3820,7 +3958,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-terrain.js",
-            "line": 266,
+            "line": 283,
             "description": "creates a ccw wise circle vertices array for clipping\n\nOptions:\npoints - number of points of circle,\nradius - radius for circle,\nx - x position for circle,\ny - y position for circle",
             "itemtype": "method",
             "name": "createCircle",
@@ -8825,15 +8963,39 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:132"
+            "line": " cangaja/base/bitmap.js:136"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/base/bitmap.js:143"
+            "line": " cangaja/base/bitmap.js:147"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " cangaja/box2d/b2d-terrain.js:266"
+            "line": " cangaja/base/bitmap.js:159"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/base/bitmap.js:169"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/base/bitmap.js:328"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/base/bitmap.js:339"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/base/bitmap.js:349"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/base/bitmap.js:364"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/box2d/b2d-terrain.js:283"
         },
         {
             "message": "unknown tag: xtend",
