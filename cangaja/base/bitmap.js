@@ -10,8 +10,6 @@
 
 //@TODO add surface normal function (http://gamedev.tutsplus.com/tutorials/implementation/coding-destructible-pixel-terrain/, http://en.wikipedia.org/wiki/Surface_normal)
 //@TODO add a raycast function ?
-//@TODO using Clipper lighten to reduce points of traceContour method
-//@TODO add feature to triangulate the reduced with poly2tri for use in box2d
 
 CG.Entity.extend('Bitmap', {
     /**
@@ -172,7 +170,7 @@ CG.Entity.extend('Bitmap', {
      * @method traceContour
      *
      * @description
-     * trace the contour of an simple bitmap body
+     * trace the outer contour of an bitmap body
      * http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)
      *
      * @returns {Array}
@@ -315,20 +313,43 @@ CG.Entity.extend('Bitmap', {
         return contourVector
     },
     /**
-     *
-     * @param vertices {array}
+     * @method drawContour
+     * @description draws the traced contour for debuging at the moment
+     * @param vertices {Array}
      */
     drawContour: function (vertices) {
         this.bitmap_ctx.save()
         for (var i = 0; i < vertices.length; i++) {
             this.bitmap_ctx.fillStyle = '#f00'
-            this.bitmap_ctx.fillRect(vertices[i].x,vertices[i].y,1,1);
+            this.bitmap_ctx.fillRect(vertices[i].x, vertices[i].y, 1, 1);
         }
         this.bitmap_ctx.restore()
     },
     /**
-     *
-     * @returns {*}
+     * @method lightenContour
+     * @description removes points that doesn't affect much to the visual appearance
+     * @param vertices
+     * @param tolerance
+     * @returns {Array}
+     */
+    lightenCountur: function (vertices, tolerance) {
+        var tolerance = tolerance || 1
+        return ClipperLib.JS.Lighten(vertices, tolerance)[0]
+    },
+    /**
+     * @method triangulateContour
+     * @param vertices
+     * @returns {array.<Triangle>|*|Array}
+     */
+    triangulateContour: function (vertices) {
+        var swctx = new poly2tri.SweepContext(vertices, {cloneArrays: true})
+        swctx.triangulate();
+        return swctx.getTriangles() || []
+    },
+    /**
+     * @method getStartingPixel
+     * @description scanline trace to get the first pixel
+     * @returns {Object|false}
      */
     getStartingPixel: function () {
         for (var ys = 0; ys < this.height; ys++) {
@@ -341,7 +362,8 @@ CG.Entity.extend('Bitmap', {
         return false
     },
     /**
-     *
+     * @method getSquareValue
+     * @description get four squared pixels to trace a contour
      * @param x
      * @param y
      * @returns {number}

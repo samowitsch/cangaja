@@ -86,7 +86,15 @@ Game = (function () {
             bitmap = new CG.Bitmap(Game.width, Game.height)
             bitmap.loadImage(Game.asset.getImageByName('star-contour-test'))
 
-            bitmap.drawContour(bitmap.traceContour())
+            var contour = bitmap.traceContour()
+            console.log(contour.length, 'Contour: ', contour)
+            var lightedContour = bitmap.lightenCountur(contour)
+            console.log(lightedContour.length, 'lighted Contour: ', lightedContour)
+            var triangulatedContour = bitmap.triangulateContour(lightedContour)
+            console.log(triangulatedContour.length, 'triangulated Contour: ', triangulatedContour)
+
+
+            bitmap.drawContour(contour)
 
             mainlayer.addElement(bitmap)
 
