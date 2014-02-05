@@ -44,6 +44,7 @@ CG.B2DEntity.extend('B2DPolygon', {
          */
         this.vecs = new Array()
         this.vecs = this.getPolysFromJson(jsonpoly) // build grouped b2vecs from physicseditor
+        //@TODO get alternative polys from bitmap contourTrace & triangulation?
 
         /**
          * @property bodyDef.type

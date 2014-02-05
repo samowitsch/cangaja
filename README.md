@@ -46,6 +46,22 @@ cangaja is a javascript canvas project that i have started to explore the html c
 
 ## Todo / wish list / bugs:
 
+* rewrite API for better readability if possible?
+```js
+// example for API rewrite
+CG.Entity.extend('Test',{
+	init: function(options){
+		CG._extend(this, options);
+	}
+});
+
+var hase = new CG.Test({
+        propX: 1,
+        propY: 2,
+        position: new CG.Point(10,10)
+    })
+```
+
 * add support for [FizzX] Box2D Editor, port [FizzX Importer] to javascript for cangaja?
 * Terrain destruction "bugs":
   - terrain destruction is very pragmatic. The terrain is deleted and replaced with another new generated terrain shape.
@@ -84,8 +100,10 @@ cangaja is a javascript canvas project that i have started to explore the html c
 * use the object group as bound as collision object
 * additional method in map class for collision check
 
-## Changelog:
+## Changelog (or see GitHub ;o):
 
+* 2014-02-02 [added] - traceContour and triangulation feature in CG.Bitmap class
+* 2014-01-29 [update] - updated ClipperLib and poly2tri lib
 * 2014-01-12 [bugfix] - fixed DebugDraw
              [change] - B2DPolygon origin is now midhandle
 * 2013-12-09 [added] - new class CG.Game

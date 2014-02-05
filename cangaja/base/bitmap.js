@@ -1,7 +1,7 @@
 /**
  * @description
  *
- * CG.Bitmap is a simple bitmap class with basic features for bitmap manipulation at the moment.
+ * CG.Bitmap is a simple bitmap class.
  *
  * @class CG.Bitmap
  * @extends CG.Entity
