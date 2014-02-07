@@ -220,6 +220,7 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
          *&#x2F;
         this.vecs = new Array()
         this.vecs = this.getPolysFromJson(jsonpoly) &#x2F;&#x2F; build grouped b2vecs from physicseditor
+        &#x2F;&#x2F;@TODO get alternative polys from bitmap contourTrace &amp; triangulation?
 
         &#x2F;**
          * @property bodyDef.type
@@ -275,6 +276,23 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
     &#x2F;**
      * @description extract the polygons out of the PhysicsEditor json file and collect them into an array
      *
+     * Physicseditor json example
+     @example
+     {
+
+         &quot;ballon&quot;: [
+
+                 {
+                     &quot;density&quot;: 0.05, &quot;friction&quot;: 0.5, &quot;bounce&quot;: 0,
+                     &quot;filter&quot;: { &quot;categoryBits&quot;: 1, &quot;maskBits&quot;: 65535 },
+                     &quot;shape&quot;: [   98.5, 210  ,  98.5, 212  ,  92, 215.5  ,  82.5, 205  ,  91.5, 206  ,  97, 207.5  ]
+                 }  ,
+                 {
+                     &quot;density&quot;: 0.05, &quot;friction&quot;: 0.5, &quot;bounce&quot;: 0,
+                     &quot;filter&quot;: { &quot;categoryBits&quot;: 1, &quot;maskBits&quot;: 65535 },
+                     &quot;shape&quot;: [   81.5, 213  ,  82.5, 205  ,  92, 215.5  ,  83, 215.5  ]
+                 }  ,
+
      * @method getPolysFromJson
      * @return {Array}
      *&#x2F;
@@ -289,6 +307,26 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
             }
             vecs.push(temp)
         }
+        return vecs
+    },
+    &#x2F;**
+     * @description use the CG.Bitmap traceContour method to get the shape of an bitmap. The result are &#x27;only&#x27; triangulated polygons. Better results with concave polygons are calculated with Physicseditor, see getPolysFromJson.
+     * @todo final implemenation
+     *
+     @example
+     &#x2F;&#x2F; example code from demo-bitmap-contour.js
+     bitmap = new CG.Bitmap(Game.width, Game.height)
+     bitmap.loadImage(Game.asset.getImageByName(&#x27;star-contour-test&#x27;))
+     var contour = bitmap.traceContour()
+     var lightedContour = bitmap.lightenCountur(contour)
+     var triangulatedContour = bitmap.triangulateContour(lightedContour)
+
+     * @method getPolysFromBitmapTrace
+     * @param image
+     * @returns {Array}
+     *&#x2F;
+    getPolysFromBitmapTrace: function (image) {
+        var vecs = []
         return vecs
     },
     &#x2F;**

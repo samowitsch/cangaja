@@ -61,6 +61,34 @@ var hase = new CG.Test({
         position: new CG.Point(10,10)
     })
 ```
+Quintus example => lib/quintus_sprite.js
+```js
+// Quintus example
+Q.Class.extend("SpriteSheet", {
+	init: function(name, asset, options) {
+		if (!Q.asset(asset)) {
+			throw "Invalid Asset:" + asset;
+		}
+		Q._extend(this, {
+			name: name,
+			asset: asset,
+			w: Q.asset(asset).width,
+			h: Q.asset(asset).height,
+			tileW: 64,
+			tileH: 64,
+			sx: 0,
+			sy: 0,
+			spacingX: 0,
+			spacingY: 0,
+			frameProperties: {}
+		});
+		if (options) {
+			Q._extend(this, options);
+		}
+		// end init method
+	}
+});
+```
 
 * add support for [FizzX] Box2D Editor, port [FizzX Importer] to javascript for cangaja?
 * Terrain destruction "bugs":

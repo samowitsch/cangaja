@@ -13729,7 +13729,7 @@ CG.Sprite.extend('Animation', {
 /**
  * @description
  *
- * CG.Bitmap is a simple bitmap class with basic features for bitmap manipulation at the moment.
+ * CG.Bitmap is a simple bitmap class.
  *
  * @class CG.Bitmap
  * @extends CG.Entity
@@ -13898,7 +13898,7 @@ CG.Entity.extend('Bitmap', {
      * @method traceContour
      *
      * @description
-     * trace the outer contour of an bitmap body
+     * trace the outer contour of an bitmap body clockwise (CW)
      * http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-trace-the-contour-of-an-image/)
      *
      * @returns {Array}
@@ -14055,7 +14055,7 @@ CG.Entity.extend('Bitmap', {
     },
     /**
      * @method lightenContour
-     * @description removes points that doesn't affect much to the visual appearance
+     * @description removes points that doesn't affect much to the visual appearance. the order after ClipperLib.JS.Lighten is counter clockwise (CCW)
      * @param vertices
      * @param tolerance
      * @returns {Array}
@@ -29903,6 +29903,7 @@ CG.B2DEntity.extend('B2DPolygon', {
          */
         this.vecs = new Array()
         this.vecs = this.getPolysFromJson(jsonpoly) // build grouped b2vecs from physicseditor
+        //@TODO get alternative polys from bitmap contourTrace & triangulation?
 
         /**
          * @property bodyDef.type
@@ -29958,6 +29959,23 @@ CG.B2DEntity.extend('B2DPolygon', {
     /**
      * @description extract the polygons out of the PhysicsEditor json file and collect them into an array
      *
+     * Physicseditor json example
+     @example
+     {
+
+         "ballon": [
+
+                 {
+                     "density": 0.05, "friction": 0.5, "bounce": 0,
+                     "filter": { "categoryBits": 1, "maskBits": 65535 },
+                     "shape": [   98.5, 210  ,  98.5, 212  ,  92, 215.5  ,  82.5, 205  ,  91.5, 206  ,  97, 207.5  ]
+                 }  ,
+                 {
+                     "density": 0.05, "friction": 0.5, "bounce": 0,
+                     "filter": { "categoryBits": 1, "maskBits": 65535 },
+                     "shape": [   81.5, 213  ,  82.5, 205  ,  92, 215.5  ,  83, 215.5  ]
+                 }  ,
+
      * @method getPolysFromJson
      * @return {Array}
      */
@@ -29972,6 +29990,26 @@ CG.B2DEntity.extend('B2DPolygon', {
             }
             vecs.push(temp)
         }
+        return vecs
+    },
+    /**
+     * @description use the CG.Bitmap traceContour method to get the shape of an bitmap. The result are 'only' triangulated polygons. Better results with concave polygons are calculated with Physicseditor, see getPolysFromJson.
+     * @todo final implemenation
+     *
+     @example
+     // example code from demo-bitmap-contour.js
+     bitmap = new CG.Bitmap(Game.width, Game.height)
+     bitmap.loadImage(Game.asset.getImageByName('star-contour-test'))
+     var contour = bitmap.traceContour()
+     var lightedContour = bitmap.lightenCountur(contour)
+     var triangulatedContour = bitmap.triangulateContour(lightedContour)
+
+     * @method getPolysFromBitmapTrace
+     * @param image
+     * @returns {Array}
+     */
+    getPolysFromBitmapTrace: function (image) {
+        var vecs = []
         return vecs
     },
     /**

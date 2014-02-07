@@ -535,7 +535,7 @@
             "namespace": "",
             "file": "cangaja/base/bitmap.js",
             "line": 1,
-            "description": "CG.Bitmap is a simple bitmap class with basic features for bitmap manipulation at the moment.",
+            "description": "CG.Bitmap is a simple bitmap class.",
             "extends": "CG.Entity"
         },
         "CG.Bound": {
@@ -3405,7 +3405,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 48,
+            "line": 49,
             "itemtype": "property",
             "name": "bodyDef.type",
             "type": "{box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}",
@@ -3414,7 +3414,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 54,
+            "line": 55,
             "itemtype": "property",
             "name": "bodyDef.position",
             "class": "CG.B2DPolygon",
@@ -3422,7 +3422,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 58,
+            "line": 59,
             "itemtype": "property",
             "name": "bodyDef.userData",
             "type": "{*}",
@@ -3431,7 +3431,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "property",
             "name": "bullet",
             "type": "{*}",
@@ -3440,7 +3440,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 68,
+            "line": 69,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{*}",
@@ -3449,7 +3449,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 78,
+            "line": 79,
             "itemtype": "property",
             "name": "body",
             "type": "{b2Body}",
@@ -3458,8 +3458,11 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 99,
-            "description": "extract the polygons out of the PhysicsEditor json file and collect them into an array",
+            "line": 100,
+            "description": "extract the polygons out of the PhysicsEditor json file and collect them into an array\n\nPhysicseditor json example",
+            "example": [
+                "\n    {\n\n        \"ballon\": [\n\n                {\n                    \"density\": 0.05, \"friction\": 0.5, \"bounce\": 0,\n                    \"filter\": { \"categoryBits\": 1, \"maskBits\": 65535 },\n                    \"shape\": [   98.5, 210  ,  98.5, 212  ,  92, 215.5  ,  82.5, 205  ,  91.5, 206  ,  97, 207.5  ]\n                }  ,\n                {\n                    \"density\": 0.05, \"friction\": 0.5, \"bounce\": 0,\n                    \"filter\": { \"categoryBits\": 1, \"maskBits\": 65535 },\n                    \"shape\": [   81.5, 213  ,  82.5, 205  ,  92, 215.5  ,  83, 215.5  ]\n                }  ,"
+            ],
             "itemtype": "method",
             "name": "getPolysFromJson",
             "return": {
@@ -3471,7 +3474,32 @@
         },
         {
             "file": "cangaja/box2d/b2d-polygon.js",
-            "line": 118,
+            "line": 136,
+            "description": "use the CG.Bitmap traceContour method to get the shape of an bitmap. The result are 'only' triangulated polygons. Better results with concave polygons are calculated with Physicseditor, see getPolysFromJson.",
+            "todo": [
+                "final implemenation"
+            ],
+            "example": [
+                "\n    // example code from demo-bitmap-contour.js\n    bitmap = new CG.Bitmap(Game.width, Game.height)\n    bitmap.loadImage(Game.asset.getImageByName('star-contour-test'))\n    var contour = bitmap.traceContour()\n    var lightedContour = bitmap.lightenCountur(contour)\n    var triangulatedContour = bitmap.triangulateContour(lightedContour)"
+            ],
+            "itemtype": "method",
+            "name": "getPolysFromBitmapTrace",
+            "params": [
+                {
+                    "name": "image",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "CG.B2DPolygon",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-polygon.js",
+            "line": 156,
             "description": "The origin of the vertices from physicseditor is top/left. This method makes the vecs centroid (centered origin) depending on image size.",
             "todo": [
                 "put this stuff into getPolysFromJson?"
@@ -8992,6 +9020,10 @@
         {
             "message": "replacing incorrect tag: returns with return",
             "line": " cangaja/base/bitmap.js:364"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " cangaja/box2d/b2d-polygon.js:136"
         },
         {
             "message": "replacing incorrect tag: returns with return",
