@@ -185,76 +185,84 @@
 
 CG.Class.extend(&#x27;Entity&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     * position {CG.Point}
+     *
+     @example
+        var e = new CG.Entity({
+           name: &#x27;player&#x27;,
+           position: new CG.Point(100,100)
+         })
+     *
      * @constructor
      * @method init
-     * @param name {string} the name of the Entity
-     * @param position {CG.Point} position
+     * @param options {Object} the name of the Entity
      *&#x2F;
-    init: function (name, position) {
-        &#x2F;**
-         @description name of the object
-         @property name {string}
-         *&#x2F;
-        this.name = (name) ? name : &#x27;&#x27;
-        &#x2F;**
-         @description visibility option
-         @property visible {boolean}
-         *&#x2F;
-        this.visible = true
-        &#x2F;**
-         @description Transform object for matrix transformation
-         @property transform {Transform}
-         *&#x2F;
-        this.transform = new Transform()
-        &#x2F;**
-         @property position {CG.Point}
-         *&#x2F;
-        this.position = (position) ? position : new CG.Point(0, 0)
-        &#x2F;**
-         @property width {Number}
-         *&#x2F;
-        this.width = 0
-        &#x2F;**
-         @property height {Number}
-         *&#x2F;
-        this.height = 0
-        &#x2F;**
-         @property dragable {boolean}
-         *&#x2F;
-        this.dragable = true
-        &#x2F;**
-         @property rotation {Number}
-         *&#x2F;
-        this.rotation = 0
-        &#x2F;**
-         @property xscale {Number}
-         *&#x2F;
-        this.xscale = 1
-        &#x2F;**
-         @property xhandle {Number}
-         *&#x2F;
-        this.xhandle = 0
-        &#x2F;**
-         @property yscale {Number}
-         *&#x2F;
-        this.yscale = 1
-        &#x2F;**
-         @property yhandle {Number}
-         *&#x2F;
-        this.yhandle = 0
-        &#x2F;**
-         @property hover {boolean}
-         *&#x2F;
-        this.hover = false
-        &#x2F;**
-         @property boundingradius {Number}
-         *&#x2F;
-        this.boundingradius = 0     &#x2F;&#x2F;radius for circular collision bounds
-        &#x2F;**
-         @property mapcollision {boolean}
-         *&#x2F;
-        this.mapcollision = false
+    init: function (options) {
 
+        CG._extend(this, {
+            name: &#x27;&#x27;,
+            position: new CG.Point(0, 0),
+            &#x2F;**
+             @description visibility option
+             @property visible {boolean}
+             *&#x2F;
+            visible: true,
+            &#x2F;**
+             @description Transform object for matrix transformation
+             @property transform {Transform}
+             *&#x2F;
+            transform: new Transform(),
+            &#x2F;**
+             @property width {Number}
+             *&#x2F;
+            width: 0,
+            &#x2F;**
+             @property height {Number}
+             *&#x2F;
+            height: 0,
+            &#x2F;**
+             @property dragable {boolean}
+             *&#x2F;
+            dragable: true,
+            &#x2F;**
+             @property rotation {Number}
+             *&#x2F;
+            rotation: 0,
+            &#x2F;**
+             @property xscale {Number}
+             *&#x2F;
+            xscale: 1,
+            &#x2F;**
+             @property xhandle {Number}
+             *&#x2F;
+            xhandle: 0,
+            &#x2F;**
+             @property yscale {Number}
+             *&#x2F;
+            yscale: 1,
+            &#x2F;**
+             @property yhandle {Number}
+             *&#x2F;
+            yhandle: 0,
+            &#x2F;**
+             @property hover {boolean}
+             *&#x2F;
+            hover: false,
+            &#x2F;**
+             @property boundingradius {Number}
+             *&#x2F;
+            boundingradius: 0,     &#x2F;&#x2F;radius for circular collision bounds
+            &#x2F;**
+             @property mapcollision {boolean}
+             *&#x2F;
+            mapcollision: false
+        })
+
+        if (option) {
+            CG._extend(this, options)
+        }
         return this
     },
     update: function () {

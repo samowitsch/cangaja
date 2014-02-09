@@ -2109,19 +2109,18 @@
         {
             "file": "cangaja/base/entity.js",
             "line": 11,
+            "description": "Options:\nname {string}\nposition {CG.Point}",
+            "example": [
+                "\n       var e = new CG.Entity({\n          name: 'player',\n          position: new CG.Point(100,100)\n        })"
+            ],
             "is_constructor": 1,
             "itemtype": "method",
             "name": "init",
             "params": [
                 {
-                    "name": "name",
+                    "name": "options",
                     "description": "the name of the Entity",
-                    "type": "String"
-                },
-                {
-                    "name": "position",
-                    "description": "position",
-                    "type": "CG.Point"
+                    "type": "Object"
                 }
             ],
             "class": "CG.Entity",
@@ -2129,17 +2128,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 18,
-            "description": "name of the object",
-            "itemtype": "property",
-            "name": "name",
-            "type": "String",
-            "class": "CG.Entity",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/entity.js",
-            "line": 23,
+            "line": 31,
             "description": "visibility option",
             "itemtype": "property",
             "name": "visible",
@@ -2149,7 +2138,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 28,
+            "line": 36,
             "description": "Transform object for matrix transformation",
             "itemtype": "property",
             "name": "transform",
@@ -2159,16 +2148,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 33,
-            "itemtype": "property",
-            "name": "position",
-            "type": "CG.Point",
-            "class": "CG.Entity",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/base/entity.js",
-            "line": 37,
+            "line": 41,
             "itemtype": "property",
             "name": "width",
             "type": "Number",
@@ -2177,7 +2157,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 41,
+            "line": 45,
             "itemtype": "property",
             "name": "height",
             "type": "Number",
@@ -2186,7 +2166,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 45,
+            "line": 49,
             "itemtype": "property",
             "name": "dragable",
             "type": "Boolean",
@@ -2195,7 +2175,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 49,
+            "line": 53,
             "itemtype": "property",
             "name": "rotation",
             "type": "Number",
@@ -2204,7 +2184,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 53,
+            "line": 57,
             "itemtype": "property",
             "name": "xscale",
             "type": "Number",
@@ -2213,7 +2193,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 57,
+            "line": 61,
             "itemtype": "property",
             "name": "xhandle",
             "type": "Number",
@@ -2222,7 +2202,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 61,
+            "line": 65,
             "itemtype": "property",
             "name": "yscale",
             "type": "Number",
@@ -2231,7 +2211,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 65,
+            "line": 69,
             "itemtype": "property",
             "name": "yhandle",
             "type": "Number",
@@ -2240,7 +2220,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 69,
+            "line": 73,
             "itemtype": "property",
             "name": "hover",
             "type": "Boolean",
@@ -2249,7 +2229,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 73,
+            "line": 77,
             "itemtype": "property",
             "name": "boundingradius",
             "type": "Number",
@@ -2258,7 +2238,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 77,
+            "line": 81,
             "itemtype": "property",
             "name": "mapcollision",
             "type": "Boolean",
@@ -2267,7 +2247,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 98,
+            "line": 106,
             "description": "initialize image for object. for now => sprite, particle, buffer, bitmap and button use it",
             "itemtype": "method",
             "name": "setImage",
@@ -2283,7 +2263,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 146,
+            "line": 154,
             "description": "returns the bounds of rotated rectangle",
             "itemtype": "method",
             "name": "AABB",
@@ -2296,7 +2276,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 164,
+            "line": 172,
             "description": "checks click inside of the rectangle, supports rotation",
             "itemtype": "method",
             "name": "ifClicked",
@@ -2309,7 +2289,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 190,
+            "line": 198,
             "description": "checks if the mouse/pointer is over the rectangle",
             "itemtype": "method",
             "name": "ifMouseOver",
@@ -2318,7 +2298,7 @@
         },
         {
             "file": "cangaja/base/entity.js",
-            "line": 212,
+            "line": 220,
             "description": "checks if there is a collision of the given objects to this object http://devmag.org.za/2009/04/13/basic-collision-detection-in-2d-part-1/",
             "itemtype": "method",
             "name": "checkCollision",

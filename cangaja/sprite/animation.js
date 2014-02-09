@@ -9,20 +9,37 @@
  */
 CG.Sprite.extend('Animation', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * startframe {number}
+     * endframe {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var s = new CG.Animation({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           startframe: 5,
+           endframe: 6,
+           width: 10,
+           height: 20
+         })
+     *
      * @constructor
      * @method init
-     * @param image {string, image} image imagepath or image object
-     * @param position {point} position object
-     * @param startframe {number} startframe of atlas image
-     * @param endframe {number} endframe endframe of atlas image
-     * @param framewidth {number} framewidth width of frame to cut
-     * @param frameheight {number} frameheight height of frame to cut
+     * @param options {object}
      * @return {*}
      */
-    init: function (image, position, startframe, endframe, framewidth, frameheight) {
-        this._super(image, position)
-
+    init: function (options) {
+        this._super()
         this.instanceOf = 'Animation'
+
+        if (options) {
+            CG._extend(this, options)
+//            this.setImage(this.image)
+        }
 
         /**
          @property loop {boolean}
@@ -43,19 +60,17 @@ CG.Sprite.extend('Animation', {
         /**
          @property startframe {Number}
          */
-        this.startframe = startframe - 1
+        this.startframe = this.startframe - 1
         /**
          @property endframe {Number}
          */
-        this.endframe = endframe - 1
+        this.endframe = this.endframe - 1
         /**
          @property width {Number}
          */
-        this.width = framewidth
         /**
          @property height {Number}
          */
-        this.height = frameheight
 
         if (this.startframe === undefined && this.endframe === undefined) {
             this.frames = 1

@@ -177,16 +177,29 @@ CG.Entity.extend('Font', {
     },
 
     /**
+     * Options:
+     * font {string} path or mediaasset object with data
+     *
+     @example
+     gill = new CG.Font().loadFont({
+        font: this.asset.getFontByName('gill')
+     })
+     *
      * @description loadFont - load and parse the given fontfile
      * @method loadFont
-     * @param {string/object} fontfile path or mediaasset object with data
+     * @param {object} options
      */
-    loadFont: function (fontfile) {
+    loadFont: function (options) {
         idnum = 0
-        if (typeof fontfile == 'string') {
-            this.fontFile = loadString(fontfile)
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        if (typeof this.font == 'string') {
+            this.fontFile = loadString(this.font)
         } else {
-            this.fontFile = fontfile.data
+            this.fontFile = this.font.data
         }
 
         var lines = this.fontFile.split('\n')

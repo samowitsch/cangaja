@@ -9,52 +9,70 @@
  */
 CG.Class.extend('Morph', {
     /**
+     * Options:
+     * mode {string}
+     * min {number}
+     * max {number}
+     * speed {number}
+     *
+     @example
+     var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+     *
      * @method init
      * @constructor
-     * @param mode {string} mode type of the morph object, at the moment only "sinus" possible ;o)
-     * @param min {Number} min min value
-     * @param max {Number} max max value
-     * @param speed {Number} speed speed value
+     * @param options {object}
      */
-    init:function (mode, min, max, speed) {
-        /**
-         * @property mode
-         * @type {String}
-         */
-        this.mode = mode
-        /**
-         * @property min
-         * @type {Number}
-         */
-        this.min = min
-        /**
-         * @property max
-         * @type {Number}
-         */
-        this.max = max
-        /**
-         * @property speed
-         * @type {Number}
-         */
-        this.speed = speed
-        /**
-         * @property angle
-         * @type {Number}
-         */
-        this.angle = 0
-        /**
-         * @property rad
-         * @type {Number}
-         */
-        this.rad = this.max - this.min
-        /**
-         * @property _val
-         * @type {Number}
-         * @protected
-         */
-        this._val = 0
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property mode
+             * @type {String}
+             */
+            mode: '',
+            /**
+             * @property min
+             * @type {Number}
+             */
+            min: 0,
+            /**
+             * @property max
+             * @type {Number}
+             */
+            max: 0,
+            /**
+             * @property speed
+             * @type {Number}
+             */
+            speed: 0,
+            /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
+             * @property rad
+             * @type {Number}
+             */
+            rad: 0,
+            /**
+             * @property _val
+             * @type {Number}
+             * @protected
+             */
+            _val: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.rad = this.max - this.min
+        }
+
+        return this
     },
-    update:function () {
+    update: function () {
         switch (this.mode) {
             case 'sinus':
                 var rad = this.angle * CG.Const_PI_180
@@ -71,7 +89,7 @@ CG.Class.extend('Morph', {
         }
         return this
     },
-    draw:function () {
+    draw: function () {
 
     },
     /**
@@ -79,7 +97,7 @@ CG.Class.extend('Morph', {
      *
      * @return {float}
      */
-    getVal:function () {
+    getVal: function () {
         return this._val
     }
 })

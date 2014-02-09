@@ -15,7 +15,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @method init
      * @return {*}
      */
-    init:function () {
+    init: function () {
         //ejecta and cocoonjs has no DOMParser!
         if (typeof ejecta === 'undefined' && !navigator.isCocoonJS) {
             this.xml = ''
@@ -50,7 +50,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @param {string/object} xmlfile path or mediaasset object with data of TexturePacker xml
      * @return {*}
      */
-    loadXml:function (xmlfile) {
+    loadXml: function (xmlfile) {
         //from asset
         if (typeof xmlfile == 'string') {
             this.xml = loadString(xmlfile)
@@ -66,13 +66,13 @@ CG.Class.extend('AtlasTexturePacker', {
 
         var sprites = this.xmlDoc.getElementsByTagName('sprite')
         for (var i = 0, l = sprites.length; i < l; i++) {
-            atlasimage = new CG.atlasimage(
-                sprites[i].getAttribute('n'),
-                parseInt(sprites[i].getAttribute('x')),
-                parseInt(sprites[i].getAttribute('y')),
-                parseInt(sprites[i].getAttribute('w')),
-                parseInt(sprites[i].getAttribute('h'))
-            )
+            var atlasimage = new CG.atlasimage({
+                image: sprites[i].getAttribute('n'),
+                xoffset: parseInt(sprites[i].getAttribute('x')),
+                yoffset: parseInt(sprites[i].getAttribute('y')),
+                width: parseInt(sprites[i].getAttribute('w')),
+                height: parseInt(sprites[i].getAttribute('h'))
+            })
             if (sprites[i].getAttribute('r') == 'y') {
                 atlasimage.rotation = 90
                 console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
@@ -92,7 +92,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @param {string/object} jsonfile path or mediaasset object with data of TexturePacker json
      * @return {*}
      */
-    loadJson:function (jsonfile) {
+    loadJson: function (jsonfile) {
         //from asset
         if (typeof jsonfile == 'string') {
             this.json = JSON.parse(loadString(jsonfile))
@@ -107,13 +107,13 @@ CG.Class.extend('AtlasTexturePacker', {
         //loop thru all images
         for (var i = 0, l = this.json.frames.length; i < l; i++) {
             var image = this.json.frames[i]
-            var atlasimage = new CG.AtlasImage(
-                image.filename,
-                image.frame.x,
-                image.frame.y,
-                image.frame.w,
-                image.frame.h
-            )
+            var atlasimage = new CG.AtlasImage({
+                image: image.filename,
+                xoffset: image.frame.x,
+                yoffset: image.frame.y,
+                width: image.frame.w,
+                height: image.frame.h
+            })
             if (image.rotated === true) {
                 atlasimage.rotation = 90
                 console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
@@ -132,7 +132,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @method getAtlasImages
      * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      */
-    getAtlasImages:function () {
+    getAtlasImages: function () {
         return this.atlasimages
     }
 })

@@ -24,18 +24,21 @@ CG.Game.extend('MyGame', {
             .startPreLoad()
     },
     create: function () {
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //sprite 1
-        spr1 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(50, 100))
+        spr1 = new CG.Sprite({
+            image: this.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 100)
+        })
         spr1.name = 'spr1'
         mainlayer.addElement(spr1)
 
@@ -44,20 +47,52 @@ CG.Game.extend('MyGame', {
         sequence = new CG.Sequence()
         sequence.loop = true
         sequence.addTranslation(
-                new CG.Translate().initBezier(mainlayer.getElementByName('spr1'), 200, new CG.Point(500, 450), new CG.Point(100, 100), new CG.Point(-600, 600), new CG.Point(1200, -300)))
-            .addTranslation(new CG.Translate().initTween(mainlayer.getElementByName('spr1'), 200, new CG.Point(100, 100), new CG.Point(550, 150)))
-            .addTranslation(new CG.Translate().initTween(mainlayer.getElementByName('spr1'), 150, new CG.Point(550, 150), new CG.Point(100, 400)))
-            .addTranslation(new CG.Translate().initTween(mainlayer.getElementByName('spr1'), 100, new CG.Point(100, 400), new CG.Point(550, 450))
+                new CG.Translate().initBezier({
+                    object: mainlayer.getElementByName('spr1'),
+                    steps: 200,
+                    startpoint: new CG.Point(500, 450),
+                    endpoint: new CG.Point(100, 100),
+                    control1: new CG.Point(-600, 600),
+                    control2: new CG.Point(1200, -300)}))
+            .addTranslation(
+                new CG.Translate().initTween({
+                    object: mainlayer.getElementByName('spr1'),
+                    steps: 200,
+                    startpoint: new CG.Point(100, 100),
+                    endpoint: new CG.Point(550, 150)
+                }))
+            .addTranslation(
+                new CG.Translate().initTween({
+                    object: mainlayer.getElementByName('spr1'),
+                    steps: 150,
+                    startpoint: new CG.Point(550, 150),
+                    endpoint: new CG.Point(100, 400)
+                }))
+            .addTranslation(
+                new CG.Translate().initTween({
+                    object: mainlayer.getElementByName('spr1'),
+                    steps: 100,
+                    startpoint: new CG.Point(100, 400),
+                    endpoint: new CG.Point(550, 450)
+                })
             )
         mainlayer.addElement(sequence)
 
         //sprite 2
-        spr2 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(50, 100))
+        spr2 = new CG.Sprite({
+            image: this.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 100)
+        })
         spr2.name = 'spr2'
         mainlayer.addElement(spr2)
 
         //translate fro sprite 2
-        translate = new CG.Translate().initTween(mainlayer.getElementByName('spr2'), 150, new CG.Point(550, 150), new CG.Point(100, 400))
+        translate = new CG.Translate().initTween({
+            object: mainlayer.getElementByName('spr2'),
+            steps: 150,
+            startpoint: new CG.Point(550, 150),
+            endpoint: new CG.Point(100, 400)
+        })
         mainlayer.addElement(translate)
 
         renderStats = new Stats()

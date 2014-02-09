@@ -37,7 +37,7 @@ Game = (function () {
         height: 480,
         width2: 640 / 2,
         height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        bound: new CG.Bound({x: 0, y: 0, width: 640, height: 480}).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -91,34 +91,46 @@ Game = (function () {
 
 
             //create font objects
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+            abadi = new CG.Font().loadFont({font: Game.asset.getFontByName('abadi')})
+            small = new CG.Font().loadFont({font: Game.asset.getFontByName('small')})
 
             //screens and layers
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+            mainscreen = new CG.Screen({name: 'mainscreen'})
+            mainlayer = new CG.Layer({name: 'mainlayer'})
 
-            gamescreen = new CG.Screen('gamescreen')
-            gamelayer = new CG.Layer('gamelayer')
+            gamescreen = new CG.Screen({name: 'gamescreen'})
+            gamelayer = new CG.Layer({name: 'gamelayer'})
 
-            settingsscreen = new CG.Screen('settingsscreen')
-            settingslayer = new CG.Layer('settingslayer')
+            settingsscreen = new CG.Screen({name: 'settingsscreen'})
+            settingslayer = new CG.Layer({name: 'settingslayer'})
 
             //assign backgrounds to the different layers
-            var back1 = new CG.Sprite(Game.asset.getImageByName('back1'), new CG.Point(Game.width2, Game.height2))
+            var back1 = new CG.Sprite({
+                image: Game.asset.getImageByName('back1'),
+                position: new CG.Point(Game.width2, Game.height2)
+            })
             back1.name = 'back1'
             mainlayer.addElement(back1)
 
-            var back2 = new CG.Sprite(Game.asset.getImageByName('back2'), new CG.Point(Game.width2, Game.height2))
+            var back2 = new CG.Sprite({
+                image: Game.asset.getImageByName('back2'),
+                position: new CG.Point(Game.width2, Game.height2)
+            })
             back2.name = 'back2'
             gamelayer.addElement(back2)
 
-            var back3 = new CG.Sprite(Game.asset.getImageByName('back3'), new CG.Point(Game.width2, Game.height2))
+            var back3 = new CG.Sprite({
+                image: Game.asset.getImageByName('back3'),
+                position: new CG.Point(Game.width2, Game.height2)
+            })
             back3.name = 'back3'
             settingslayer.addElement(back3)
 
             //sprite 1
-            var spr1 = new CG.Sprite(Game.asset.getImageByName('glowball-50'), new CG.Point(50, 100))
+            var spr1 = new CG.Sprite({
+                image: Game.asset.getImageByName('glowball-50'),
+                position: new CG.Point(50, 100)
+            })
             spr1.name = 'spr1'
             spr1.xspeed = 2
             spr1.yspeed = 2
@@ -127,7 +139,13 @@ Game = (function () {
 
 
             //Simple Button
-            var back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 400), 'BACK TO MAIN SCREEN', small, Callback.Back)
+            var back = new CG.Button({
+                image: Game.asset.getImageByName('btn-back-color'),
+                position: new CG.Point(Game.width2, 400),
+                text: 'BACK TO MAIN SCREEN',
+                font: small,
+                callback: Callback.Back
+            })
             back.name = 'back'
 
             gamelayer.addElement(back)
@@ -135,17 +153,35 @@ Game = (function () {
 
 
             //Buttons as Menu
-            var menu = new CG.Menu(Game.width2, 200, 10)
-            var button1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SCALE)', small, Callback.Scale)
+            var menu = new CG.Menu({x: Game.width2, y: 200, margin: 10})
+            var button1 = new CG.Button({
+                image: Game.asset.getImageByName('btn-back-color'),
+                position: new CG.Point(Game.width2, 100),
+                text: '(SCALE)',
+                font: small,
+                callback: Callback.Scale
+            })
             button1.name = '#mbutton 1#'
             menu.addButton(button1)
 
-            var button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(FADE)', small, Callback.Fade)
+            var button2 = new CG.Button({
+                image: Game.asset.getImageByName('btn-back-color'),
+                position: new CG.Point(Game.width2, 100),
+                text: '(FADE)',
+                font: small,
+                callback: Callback.Fade
+            })
             button2.name = '#mbutton 2#'
             menu.addButton(button2)
             mainlayer.addElement(menu)
 
-            var button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, 100), '(SLIDE)', small, Callback.Slide)
+            var button3 = new CG.Button({
+                image: Game.asset.getImageByName('btn-back-color'),
+                position: new CG.Point(Game.width2, 100),
+                text: '(SLIDE)',
+                font: small,
+                callback: Callback.Slide
+            })
             button3.name = '#mbutton 3#'
             menu.addButton(button3)
             mainlayer.addElement(menu)

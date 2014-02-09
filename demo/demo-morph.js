@@ -23,31 +23,47 @@ CG.Game.extend('MyGame', {
             .startPreLoad()
     },
     create: function () {
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font:this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font:this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name:'mainscreen'})
+        mainlayer = new CG.Layer({name:'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //some morph object
-        morph = new CG.Morph('sinus', 0.25, 1, 3)
+        morph = new CG.Morph({
+            mode:'sinus',
+            min:0.25,
+            max:1,
+            speed:3
+        })
         mainlayer.addElement(morph)
-        morph2 = new CG.Morph('sinus', 1, 1000, 1)
+        morph2 = new CG.Morph({
+            mode:'sinus',
+            min:1,
+            max:1000,
+            speed:1
+        })
         mainlayer.addElement(morph2)
 
         //sprite 1
-        spr1 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(100, 200))
+        spr1 = new CG.Sprite({
+            image: this.asset.getImageByName('glowball'),
+            position: new CG.Point(100, 200)
+        })
         spr1.name = 'spr1'
         spr1.xscale = 3
         spr1.yscale = 3
         mainlayer.addElement(spr1)
 
         //sprite 2
-        spr2 = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(400, 240))
+        spr2 = new CG.Sprite({
+            image:this.asset.getImageByName('glowball'),
+            position: new CG.Point(400, 240)
+        })
         spr2.name = 'spr2'
         spr2.xscale = 2
         spr2.yscale = 2

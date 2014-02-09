@@ -9,35 +9,52 @@
  */
 CG.Class.extend('Bound', {
     /**
+     * Options:
+     * x {number}
+     * y {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bound({
+           x: 0,
+           y: 0,
+           width: 120,
+           height: 120
+         })
+     *
      * @constructor
      * @method init
-     * @param x {number} x the x position
-     * @param y {number} y the y position
-     * @param width {number} width the width of bound
-     * @param height {number} height the height of bound
+     * @param options {object}
      * @return {*}
      */
-    init:function (x, y, width, height) {
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = x
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = y
-        /**
-         * @property width
-         * @type {Number}
-         */
-        this.width = width
-        /**
-         * @property height
-         * @type {Number}
-         */
-        this.height = height
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property width
+             * @type {Number}
+             */
+            width: 0,
+            /**
+             * @property height
+             * @type {Number}
+             */
+            height: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
 
@@ -46,7 +63,7 @@ CG.Class.extend('Bound', {
      * @param {string} name of the bounding box
      * @return {*}
      */
-    setName:function (name) {
+    setName: function (name) {
         this.name = name
         return this
     }

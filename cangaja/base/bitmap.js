@@ -13,47 +13,71 @@
 
 CG.Entity.extend('Bitmap', {
     /**
+     * Options:
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bitmap({
+           width: 100,
+           height: 100
+         })
+
+     *
      * @method init
      * @constructor
-     * @param width {Number} width the width for the buffer
-     * @param height {Number} height the height for the buffer
+     * @param options {object}
      * @return {*}
      */
-    init: function (width, height) {
+    init: function (options) {
         this.instanceOf = 'Bitmap'
-        /**
-         @property x {Number}
-         */
-        this.x = 0
-        /**
-         @property y {Number}
-         */
-        this.y = 0
-        /**
-         @description tolerance for the getSquareValues method
-         @property tolerance {Number}
-         */
-        this.tolerance = 128
-        /**
-         @property bitmap_canvas {Object}
-         */
-        this.bitmap_canvas = document.createElement('canvas')
-        /**
-         @property bitmap_canvas.width {Number}
-         */
-        this.bitmap_canvas.width = width
-        /**
-         @property bitmap_canvas.height {Number}
-         */
-        this.bitmap_canvas.height = height
+
+        CG._extend(this, {
+            /**
+             @property x {Number}
+             */
+            x: 0,
+            /**
+             @property y {Number}
+             */
+            y: 0,
+            /**
+             @description tolerance for the getSquareValues method
+             @property tolerance {Number}
+             */
+            tolerance: 128,
+            /**
+             @property bitmap_canvas {Object}
+             */
+            bitmap_canvas: document.createElement('canvas'),
+
+            /**
+             @property bitmap_ctx.fillStyle {String}
+             */
+            bitmap_ctx: {
+                fillStyle: '#000000'
+            }
+
+        })
+
         /**
          @property bitmap_ctx {Context}
          */
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
-        /**
-         @property bitmap_ctx.fillStyle {String}
-         */
-        this.bitmap_ctx.fillStyle = '#000000'
+
+        if (options) {
+            /**
+             @property bitmap_canvas.width {Number}
+             */
+            this.bitmap_canvas.width = options.width
+            /**
+             @property bitmap_canvas.height {Number}
+             */
+            this.bitmap_canvas.height = options.height
+
+        }
+
+
         return this
     },
     /**

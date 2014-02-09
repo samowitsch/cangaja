@@ -33,11 +33,11 @@ CG.Class.extend('Sequence', {
     /**
      * @description add a translation object to the sequence array
      * @method addTranslation
-     * @param translationobj {translation} the translation object to add
+     * @param translationObj {translation} the translation object to add
      * @return {*}
      */
-    addTranslation: function (translationobj) {
-        this.translations.push(translationobj)
+    addTranslation: function (translationObj) {
+        this.translations.push(translationObj)
         return this
     },
     /**

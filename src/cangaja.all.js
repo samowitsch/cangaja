@@ -301,7 +301,12 @@ CG.Class.extend('Game', {
         /**
          @property bound {CG.Bound}
          */
-        this.bound = new CG.Bound(0, 0, this.width, this.height)
+        this.bound = new CG.Bound({
+            x: 0,
+            y: 0,
+            width: this.width,
+            height: this.height
+        })
 
         this.preload()
     },
@@ -12389,76 +12394,84 @@ CG.Class.extend('Delta', {
 
 CG.Class.extend('Entity', {
     /**
+     * Options:
+     * name {string}
+     * position {CG.Point}
+     *
+     @example
+        var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+     *
      * @constructor
      * @method init
-     * @param name {string} the name of the Entity
-     * @param position {CG.Point} position
+     * @param options {Object} the name of the Entity
      */
-    init: function (name, position) {
-        /**
-         @description name of the object
-         @property name {string}
-         */
-        this.name = (name) ? name : ''
-        /**
-         @description visibility option
-         @property visible {boolean}
-         */
-        this.visible = true
-        /**
-         @description Transform object for matrix transformation
-         @property transform {Transform}
-         */
-        this.transform = new Transform()
-        /**
-         @property position {CG.Point}
-         */
-        this.position = (position) ? position : new CG.Point(0, 0)
-        /**
-         @property width {Number}
-         */
-        this.width = 0
-        /**
-         @property height {Number}
-         */
-        this.height = 0
-        /**
-         @property dragable {boolean}
-         */
-        this.dragable = true
-        /**
-         @property rotation {Number}
-         */
-        this.rotation = 0
-        /**
-         @property xscale {Number}
-         */
-        this.xscale = 1
-        /**
-         @property xhandle {Number}
-         */
-        this.xhandle = 0
-        /**
-         @property yscale {Number}
-         */
-        this.yscale = 1
-        /**
-         @property yhandle {Number}
-         */
-        this.yhandle = 0
-        /**
-         @property hover {boolean}
-         */
-        this.hover = false
-        /**
-         @property boundingradius {Number}
-         */
-        this.boundingradius = 0     //radius for circular collision bounds
-        /**
-         @property mapcollision {boolean}
-         */
-        this.mapcollision = false
+    init: function (options) {
 
+        CG._extend(this, {
+            name: '',
+            position: new CG.Point(0, 0),
+            /**
+             @description visibility option
+             @property visible {boolean}
+             */
+            visible: true,
+            /**
+             @description Transform object for matrix transformation
+             @property transform {Transform}
+             */
+            transform: new Transform(),
+            /**
+             @property width {Number}
+             */
+            width: 0,
+            /**
+             @property height {Number}
+             */
+            height: 0,
+            /**
+             @property dragable {boolean}
+             */
+            dragable: true,
+            /**
+             @property rotation {Number}
+             */
+            rotation: 0,
+            /**
+             @property xscale {Number}
+             */
+            xscale: 1,
+            /**
+             @property xhandle {Number}
+             */
+            xhandle: 0,
+            /**
+             @property yscale {Number}
+             */
+            yscale: 1,
+            /**
+             @property yhandle {Number}
+             */
+            yhandle: 0,
+            /**
+             @property hover {boolean}
+             */
+            hover: false,
+            /**
+             @property boundingradius {Number}
+             */
+            boundingradius: 0,     //radius for circular collision bounds
+            /**
+             @property mapcollision {boolean}
+             */
+            mapcollision: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
     update: function () {
@@ -12770,35 +12783,52 @@ CG.Point.extend('Vector', {
  */
 CG.Class.extend('Bound', {
     /**
+     * Options:
+     * x {number}
+     * y {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bound({
+           x: 0,
+           y: 0,
+           width: 120,
+           height: 120
+         })
+     *
      * @constructor
      * @method init
-     * @param x {number} x the x position
-     * @param y {number} y the y position
-     * @param width {number} width the width of bound
-     * @param height {number} height the height of bound
+     * @param options {object}
      * @return {*}
      */
-    init:function (x, y, width, height) {
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = x
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = y
-        /**
-         * @property width
-         * @type {Number}
-         */
-        this.width = width
-        /**
-         * @property height
-         * @type {Number}
-         */
-        this.height = height
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property width
+             * @type {Number}
+             */
+            width: 0,
+            /**
+             * @property height
+             * @type {Number}
+             */
+            height: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
 
@@ -12807,7 +12837,7 @@ CG.Class.extend('Bound', {
      * @param {string} name of the bounding box
      * @return {*}
      */
-    setName:function (name) {
+    setName: function (name) {
         this.name = name
         return this
     }
@@ -12870,20 +12900,29 @@ CG.Class.extend('Buffer', {
  */
 CG.Entity.extend('Sprite', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position: {CG.Point}
+     *
+     @example
+     var s = new CG.Sprite({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200)
+         })
+     *
      * @method init
      * @constructor
-     * @param image {image}  imgpath, image object or atlasimage object to use
-     * @param position {CG.Point}  position object
+     * @param options {object}
      * @return {*}
      */
-    init:function (image, position) {
-        this._super('', position)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'Sprite'
 
-        /**
-         @property atlasimage {boolean}
-         */
-        this.setImage(image)
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         /**
          @property bound {CG.Bound}
@@ -13145,20 +13184,38 @@ CG.Entity.extend('Sprite', {
  */
 CG.Entity.extend('SpineAnimation', {
     /**
+     * Options:
+     * spinejson {string} Spine json animation file
+     * spineatlas {string} Spine atlas file (libGDX)
+     * position {CG.Point}
+     * scale {number}
+     * callback {function}
+     *
+     @example
+     var sa = new CG.SpineAnimation({
+           spinejson: this.asset.getJsonByName('spinosaurus-json'),
+           spineatlas: this.asset.getTextByName('spinosaurus-atlas'),
+           position: new CG.Point(10,10),
+           scale: 1,
+           callback: function (spineObject) {
+//              spineObject.skeleton.setSkinByName("goblingirl");
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "animation", true);
+            }
+         })
+     *
      * @constructor
      * @method init
-     * @param spinejson     Spine json animation file
-     * @param spineatlas    Spine atlas file (libGDX)
-     * @param position      initial position
-     * @param scale         scale animation experimental
-     * @param callback callback function
+     * @param options {object}
      */
-    init: function (spinejson, spineatlas, position, scale, callback) {
-        this._super('')
-
+    init: function (options) {
+        this._super()
+        this.instanceOf = 'SpineAnimation'
         self = this
 
-        this.instanceOf = 'SpineAnimation'
+        if (options){
+            CG._extend(this, options)
+        }
 
         this.lastTime = Date.now()
 
@@ -13167,7 +13224,7 @@ CG.Entity.extend('SpineAnimation', {
          * @property skeletonposition
          * @type {CG.Point}
          */
-        this.skeletonposition = position || new CG.Point(0, 0)
+        this.skeletonposition = this.position || new CG.Point(0, 0)
 
         /**
          * @description spine bone xscale
@@ -13187,7 +13244,7 @@ CG.Entity.extend('SpineAnimation', {
          * @property scale
          * @type {Number}
          */
-        this.scale = scale || 1
+        this.scale = this.scale || 1
 
         /**
          * @property vertices
@@ -13207,11 +13264,11 @@ CG.Entity.extend('SpineAnimation', {
          * @property spineAtlasData
          * @type {String}
          */
-        if (spineatlas.type == 'text') {
-            this.spineAtlasData = spineatlas.data   //text data from mediaasset object
+        if (this.spineatlas.type == 'text') {
+            this.spineAtlasData = this.spineatlas.data   //text data from mediaasset object
             console.log('spine atlas: text (libGDX) used')
-        } else if (spineatlas.type == 'json') {
-            this.spineAtlasData = spineatlas.src    //pure json text for spine atlas loader?
+        } else if (this.spineatlas.type == 'json') {
+            this.spineAtlasData = this.spineatlas.src    //pure json text for spine atlas loader?
             console.log('spine atlas: json')
             throw 'json format is not supported by spine-js runtime?'
         } else {
@@ -13223,14 +13280,14 @@ CG.Entity.extend('SpineAnimation', {
          * @property spineJsonData
          * @type {Object}
          */
-        this.spineJsonData = spinejson.data
+        this.spineJsonData = this.spinejson.data
 
         /**
          * @description this is used for a callback for custom spine initialization.
          * @property initCustom
          * @type {Object}
          */
-        this.initCustom = callback
+        this.initCustom = this.callback
 
         /**
          * @description this is used for a callback for custom animation configuration.
@@ -13410,65 +13467,86 @@ CG.Entity.extend('SpineAnimation', {
  */
 CG.Class.extend('AtlasImage', {
     /**
+     * Options:
+     * image {string}
+     * xoffset {number}
+     * yoffset {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var a = new CG.AtlasImage({
+           image: 'menuscreen',
+           xoffset: 0,
+           yoffset: 0,
+           width: 10,
+           height: 20
+         })
+     *
      * @method init
      * @constructor
-     * @param image {image} imgpath, image object or atlasimage object to use
-     * @param xoffset {Number} xoffset of image in atlas file
-     * @param yoffset {Number} yoffset of image in atlas file
-     * @param width {Number} width of image in atlas file
-     * @param height {Number} height of image in atlas file
+     * @param options {object}
      */
-    init:function (image, xoffset, yoffset, width, height) {
-        /**
-         * @property source
-         * @type {String}
-         */
-        this.source = ''
-        /**
-         * @property atlasimage
-         * @type {String}
-         */
-        this.atlasimage = ''
-        /**
-         * @property atlasname
-         * @type {String}
-         */
-        this.atlasname = ''
-        /**
-         * @property image
-         * @type {*}
-         */
-        this.image = image || ''    //imagepath
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = image.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
-        /**
-         * @property xoffset
-         * @type {Number}
-         */
-        this.xoffset = xoffset || 0
-        /**
-         * @property yoffset
-         * @type {*}
-         */
-        this.yoffset = yoffset || 0
-        /**
-         * @property width
-         * @type {Number}
-         */
-        this.width = width || 0
-        /**
-         * @property height
-         * @type {Number}
-         */
-        this.height = height || 0
-        /**
-         * @property rotation
-         * @type {Number}
-         */
-        this.rotation = 0
+    init: function (options) {
+        CG._extend(this, {
+
+            /**
+             * @property source
+             * @type {String}
+             */
+            source: '',
+            /**
+             * @property atlasimage
+             * @type {String}
+             */
+            atlasimage: '',
+            /**
+             * @property atlasname
+             * @type {String}
+             */
+            atlasname: '',
+            /**
+             * @property image
+             * @type {*}
+             */
+            image: '',    //imagepath
+
+            /**
+             * @property xoffset
+             * @type {Number}
+             */
+            xoffset: 0,
+            /**
+             * @property yoffset
+             * @type {*}
+             */
+            yoffset: 0,
+            /**
+             * @property width
+             * @type {Number}
+             */
+            width: 0,
+            /**
+             * @property height
+             * @type {Number}
+             */
+            height: 0,
+            /**
+             * @property rotation
+             * @type {Number}
+             */
+            rotation: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            /**
+             * @property name
+             * @type {String}
+             */
+            this.name = this.image.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
+        }
+
     }
 })/**
  *  @description
@@ -13487,7 +13565,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @method init
      * @return {*}
      */
-    init:function () {
+    init: function () {
         //ejecta and cocoonjs has no DOMParser!
         if (typeof ejecta === 'undefined' && !navigator.isCocoonJS) {
             this.xml = ''
@@ -13522,7 +13600,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @param {string/object} xmlfile path or mediaasset object with data of TexturePacker xml
      * @return {*}
      */
-    loadXml:function (xmlfile) {
+    loadXml: function (xmlfile) {
         //from asset
         if (typeof xmlfile == 'string') {
             this.xml = loadString(xmlfile)
@@ -13538,13 +13616,13 @@ CG.Class.extend('AtlasTexturePacker', {
 
         var sprites = this.xmlDoc.getElementsByTagName('sprite')
         for (var i = 0, l = sprites.length; i < l; i++) {
-            atlasimage = new CG.atlasimage(
-                sprites[i].getAttribute('n'),
-                parseInt(sprites[i].getAttribute('x')),
-                parseInt(sprites[i].getAttribute('y')),
-                parseInt(sprites[i].getAttribute('w')),
-                parseInt(sprites[i].getAttribute('h'))
-            )
+            var atlasimage = new CG.atlasimage({
+                image: sprites[i].getAttribute('n'),
+                xoffset: parseInt(sprites[i].getAttribute('x')),
+                yoffset: parseInt(sprites[i].getAttribute('y')),
+                width: parseInt(sprites[i].getAttribute('w')),
+                height: parseInt(sprites[i].getAttribute('h'))
+            })
             if (sprites[i].getAttribute('r') == 'y') {
                 atlasimage.rotation = 90
                 console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
@@ -13564,7 +13642,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @param {string/object} jsonfile path or mediaasset object with data of TexturePacker json
      * @return {*}
      */
-    loadJson:function (jsonfile) {
+    loadJson: function (jsonfile) {
         //from asset
         if (typeof jsonfile == 'string') {
             this.json = JSON.parse(loadString(jsonfile))
@@ -13579,13 +13657,13 @@ CG.Class.extend('AtlasTexturePacker', {
         //loop thru all images
         for (var i = 0, l = this.json.frames.length; i < l; i++) {
             var image = this.json.frames[i]
-            var atlasimage = new CG.AtlasImage(
-                image.filename,
-                image.frame.x,
-                image.frame.y,
-                image.frame.w,
-                image.frame.h
-            )
+            var atlasimage = new CG.AtlasImage({
+                image: image.filename,
+                xoffset: image.frame.x,
+                yoffset: image.frame.y,
+                width: image.frame.w,
+                height: image.frame.h
+            })
             if (image.rotated === true) {
                 atlasimage.rotation = 90
                 console.log('!!! support for rotated images in atlas files would be dropped in future versions !!!')
@@ -13604,7 +13682,7 @@ CG.Class.extend('AtlasTexturePacker', {
      * @method getAtlasImages
      * @return {array} returns all atlasimages of TexturePacker file to use with Game.asset
      */
-    getAtlasImages:function () {
+    getAtlasImages: function () {
         return this.atlasimages
     }
 })
@@ -13621,20 +13699,37 @@ CG.Class.extend('AtlasTexturePacker', {
  */
 CG.Sprite.extend('Animation', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * startframe {number}
+     * endframe {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var s = new CG.Animation({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           startframe: 5,
+           endframe: 6,
+           width: 10,
+           height: 20
+         })
+     *
      * @constructor
      * @method init
-     * @param image {string, image} image imagepath or image object
-     * @param position {point} position object
-     * @param startframe {number} startframe of atlas image
-     * @param endframe {number} endframe endframe of atlas image
-     * @param framewidth {number} framewidth width of frame to cut
-     * @param frameheight {number} frameheight height of frame to cut
+     * @param options {object}
      * @return {*}
      */
-    init: function (image, position, startframe, endframe, framewidth, frameheight) {
-        this._super(image, position)
-
+    init: function (options) {
+        this._super()
         this.instanceOf = 'Animation'
+
+        if (options) {
+            CG._extend(this, options)
+//            this.setImage(this.image)
+        }
 
         /**
          @property loop {boolean}
@@ -13655,19 +13750,17 @@ CG.Sprite.extend('Animation', {
         /**
          @property startframe {Number}
          */
-        this.startframe = startframe - 1
+        this.startframe = this.startframe - 1
         /**
          @property endframe {Number}
          */
-        this.endframe = endframe - 1
+        this.endframe = this.endframe - 1
         /**
          @property width {Number}
          */
-        this.width = framewidth
         /**
          @property height {Number}
          */
-        this.height = frameheight
 
         if (this.startframe === undefined && this.endframe === undefined) {
             this.frames = 1
@@ -13741,47 +13834,71 @@ CG.Sprite.extend('Animation', {
 
 CG.Entity.extend('Bitmap', {
     /**
+     * Options:
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bitmap({
+           width: 100,
+           height: 100
+         })
+
+     *
      * @method init
      * @constructor
-     * @param width {Number} width the width for the buffer
-     * @param height {Number} height the height for the buffer
+     * @param options {object}
      * @return {*}
      */
-    init: function (width, height) {
+    init: function (options) {
         this.instanceOf = 'Bitmap'
-        /**
-         @property x {Number}
-         */
-        this.x = 0
-        /**
-         @property y {Number}
-         */
-        this.y = 0
-        /**
-         @description tolerance for the getSquareValues method
-         @property tolerance {Number}
-         */
-        this.tolerance = 128
-        /**
-         @property bitmap_canvas {Object}
-         */
-        this.bitmap_canvas = document.createElement('canvas')
-        /**
-         @property bitmap_canvas.width {Number}
-         */
-        this.bitmap_canvas.width = width
-        /**
-         @property bitmap_canvas.height {Number}
-         */
-        this.bitmap_canvas.height = height
+
+        CG._extend(this, {
+            /**
+             @property x {Number}
+             */
+            x: 0,
+            /**
+             @property y {Number}
+             */
+            y: 0,
+            /**
+             @description tolerance for the getSquareValues method
+             @property tolerance {Number}
+             */
+            tolerance: 128,
+            /**
+             @property bitmap_canvas {Object}
+             */
+            bitmap_canvas: document.createElement('canvas'),
+
+            /**
+             @property bitmap_ctx.fillStyle {String}
+             */
+            bitmap_ctx: {
+                fillStyle: '#000000'
+            }
+
+        })
+
         /**
          @property bitmap_ctx {Context}
          */
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
-        /**
-         @property bitmap_ctx.fillStyle {String}
-         */
-        this.bitmap_ctx.fillStyle = '#000000'
+
+        if (options) {
+            /**
+             @property bitmap_canvas.width {Number}
+             */
+            this.bitmap_canvas.width = options.width
+            /**
+             @property bitmap_canvas.height {Number}
+             */
+            this.bitmap_canvas.height = options.height
+
+        }
+
+
         return this
     },
     /**
@@ -14131,32 +14248,46 @@ CG.Entity.extend('Bitmap', {
  */
 CG.Sprite.extend('Button', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * text {string}
+     * font {CG.Font}
+     * callback {function}
+     *
+     @example
+     var s = new CG.Button({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           text: 'MyButton',
+           font: heiti,
+           callback: callbackFunction
+         })
+     *
+     *
      * @method init
      * @constructor
-     * @param image {image} image image path, image or atlasimage
-     * @param position {CG.Point} position point
-     * @param text {string} the button text
-     * @param font {CG.Font} a CG.Font object for text rendering
-     * @param clickedCallback {callback} callback function for click handling
+     * @param options {object}
      * @return {*}
      */
-    init: function (image, position, text, font, clickedCallback) {
-        this._super(image, position)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'Button'
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         /**
          @property font {CG.Font}
          */
-        this.font = font
         /**
          @property text {string}
          */
-        this.text = text
-
         /**
-         @property clickedCallback {callback}
+         @property callback {callback}
          */
-        this.clickedCallback = clickedCallback
         /**
          @property clickable {boolean}
          */
@@ -14176,9 +14307,9 @@ CG.Sprite.extend('Button', {
         this.yhandle = (this.height * this.yscale / 2)
 
         if (this.clicked) {
-            if (this.clickedCallback) {
+            if (this.callback) {
                 this.clicked = false
-                this.clickedCallback(this)
+                this.callback(this)
             }
         }
         this.updateDiff()
@@ -14208,39 +14339,57 @@ CG.Sprite.extend('Button', {
  */
 CG.Class.extend('Menu', {
     /**
+     * Options:
+     * x {number}
+     * y {number}
+     * margin {number}
+     *
+     @example
+     var m = new CG.Menu({
+           x: 100,
+           y: 100,
+           margin: 10
+         })
+     *
+     *
      * @method init
      * @constructor
-     * @param x {Number} x the x position
-     * @param y {Number} y the y position
-     * @param margin {Number} margin the margin between the menu buttons
+     * @param options {object}
      * @return {*}
      */
-    init:function (x, y, margin) {
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = x
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = y
-        /**
-         * @property margin
-         * @type {Number}
-         */
-        this.margin = margin
-        /**
-         * @property step
-         * @type {*}
-         */
-        this.step = this.y
-        /**
-         * @property buttons
-         * @type {Array}
-         */
-        this.buttons = []
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property margin
+             * @type {Number}
+             */
+            margin: 0,
+            /**
+             * @property step
+             * @type {*}
+             */
+            step: 0,
+            /**
+             * @property buttons
+             * @type {Array}
+             */
+            buttons: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.step = this.y
+        }
         return this
     },
     /**
@@ -14248,13 +14397,13 @@ CG.Class.extend('Menu', {
      *
      * @param {button} button
      */
-    addButton:function (button) {
+    addButton: function (button) {
         this.buttons.push(button)
     },
     /**
      * @method update
      */
-    update:function () {
+    update: function () {
         this.buttons.forEach(function (button) {
             button.update()
         })
@@ -14262,7 +14411,7 @@ CG.Class.extend('Menu', {
     /**
      * @method draw
      */
-    draw:function () {
+    draw: function () {
         this.buttons.forEach(function (button) {
             button.position.x = this.x
             button.position.y = this.step
@@ -14847,16 +14996,29 @@ CG.Entity.extend('Font', {
     },
 
     /**
+     * Options:
+     * font {string} path or mediaasset object with data
+     *
+     @example
+     gill = new CG.Font().loadFont({
+        font: this.asset.getFontByName('gill')
+     })
+     *
      * @description loadFont - load and parse the given fontfile
      * @method loadFont
-     * @param {string/object} fontfile path or mediaasset object with data
+     * @param {object} options
      */
-    loadFont: function (fontfile) {
+    loadFont: function (options) {
         idnum = 0
-        if (typeof fontfile == 'string') {
-            this.fontFile = loadString(fontfile)
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        if (typeof this.font == 'string') {
+            this.fontFile = loadString(this.font)
         } else {
-            this.fontFile = fontfile.data
+            this.fontFile = this.font.data
         }
 
         var lines = this.fontFile.split('\n')
@@ -14979,18 +15141,30 @@ CG.Entity.extend('Font', {
  */
 CG.Entity.extend('Text', {
     /**
+     * Options:
+     * font {object}
+     *
+     @example
+     var t = new CG.Text({
+           font: abdi // the font object (CG.Font) to use
+         })
+     *
      * @method init
-     * @param font the font object (CG.Font) to use
+     * @param options
      * @constructor
      * @return {*}
      */
 
-    init: function (font) {
+    init: function (options) {
+        this.instanceOf = 'Text'
+
+        if (options) {
+            CG._extend(this, options)
+        }
 
         /**
          @property font {CG.Font}
          */
-        this.font = font
 
         /**
          * @property text {string}
@@ -15094,56 +15268,58 @@ CG.Class.extend('Director', {
      * @return {*}
      */
     init: function () {
-        /**
-         * @property screens
-         * @type {Array}
-         */
-        this.screens = []
-        /**
-         * @property activescreen
-         * @type {Number}
-         */
-        this.activescreen = 0
-        /**
-         * @property nextscreen
-         * @type {Number}
-         */
-        this.nextscreen = 0
-        /**
-         * @property duration
-         * @type {Number}
-         */
-        this.duration = 20
-        /**
-         * @property stepx
-         * @type {number}
-         */
-        this.stepx = 40
-        /**
-         * @property stepy
-         * @type {number}
-         */
-        this.stepy = 30
-        /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 0
-        /**
-         * @property mode
-         * @type {String}
-         */
-        this.mode = 'fade'      //fade or scale
-        /**
-         * @property direction
-         * @type {String}
-         */
-        this.direction = CG.RIGHT      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
-        /**
-         * @property color
-         * @type {String}
-         */
-        this.color = 'rgb(0,0,0)'
+        CG._extend(this, {
+            /**
+             * @property screens
+             * @type {Array}
+             */
+            screens: [],
+            /**
+             * @property activescreen
+             * @type {Number}
+             */
+            activescreen: 0,
+            /**
+             * @property nextscreen
+             * @type {Number}
+             */
+            nextscreen: 0,
+            /**
+             * @property duration
+             * @type {Number}
+             */
+            duration: 20,
+            /**
+             * @property stepx
+             * @type {number}
+             */
+            stepx: 40,
+            /**
+             * @property stepy
+             * @type {number}
+             */
+            stepy: 30,
+            /**
+             * @property alpha
+             * @type {Number}
+             */
+            alpha: 0,
+            /**
+             * @property mode
+             * @type {String}
+             */
+            mode: 'fade',      //fade or scale
+            /**
+             * @property direction
+             * @type {String}
+             */
+            direction: CG.RIGHT,      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
+            /**
+             * @property color
+             * @type {String}
+             */
+            color: 'rgb(0,0,0)'
+        })
         return this
     },
     /**
@@ -15369,34 +15545,52 @@ CG.Class.extend('Director', {
  */
 CG.Class.extend('Screen', {
     /**
+     * Options:
+     * name {string}
+     *
+     @example
+     var s = new CG.Screen({
+           name: 'menuscreen'
+         })
+     *
      * @constructor
      * @method init
-     * @param screenname
+     * @param options
      * @return {*}
      */
-    init: function (screenname) {
-        this.name = (screenname) ? screenname : ''
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property name
+             * @type {string}
+             */
+            name: '',
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property xscale
+             * @type {Number}
+             */
+            xscale: 1,
+            /**
+             * @property yscale
+             * @type {Number}
+             */
+            yscale: 1,
+            /**
+             * @property layers
+             * @type {Array}
+             */
+            layers: []
+        })
 
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(0, 0)
-        /**
-         * @property xscale
-         * @type {Number}
-         */
-        this.xscale = 1
-        /**
-         * @property yscale
-         * @type {Number}
-         */
-        this.yscale = 1
-        /**
-         * @property layers
-         * @type {Array}
-         */
-        this.layers = []
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     create: function () {
@@ -15465,33 +15659,48 @@ CG.Class.extend('Screen', {
  */
 CG.Class.extend('Layer', {
     /**
+     * Options:
+     * name {string}
+     *
+     @example
+     var l = new CG.Layer({
+           name: 'layerback'
+         })
+     *
      * @constructor
      * @method init
-     * @param layername {string} the name of the layer
+     * @param options {object}
      * @return {*}
      */
-    init: function (layername) {
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = (layername) ? layername : ''
-        /**
-         * @property visible
-         * @type {Boolean}
-         */
-        this.visible = true
-        /**
-         * @property elements
-         * @type {Array}
-         */
-        this.elements = []
-        /**
-         * @property elementsToDelete
-         * @type {Array}
-         * @protected
-         */
-        this.elementsToDelete = []
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property name
+             * @type {String}
+             */
+            name: '',
+            /**
+             * @property visible
+             * @type {Boolean}
+             */
+            visible: true,
+            /**
+             * @property elements
+             * @type {Array}
+             */
+            elements: [],
+            /**
+             * @property elementsToDelete
+             * @type {Array}
+             * @protected
+             */
+            elementsToDelete: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     /**
@@ -16770,11 +16979,11 @@ CG.Class.extend('Sequence', {
     /**
      * @description add a translation object to the sequence array
      * @method addTranslation
-     * @param translationobj {translation} the translation object to add
+     * @param translationObj {translation} the translation object to add
      * @return {*}
      */
-    addTranslation: function (translationobj) {
-        this.translations.push(translationobj)
+    addTranslation: function (translationObj) {
+        this.translations.push(translationObj)
         return this
     },
     /**
@@ -16875,10 +17084,10 @@ CG.Class.extend('Translate', {
          */
         this.by = 0 //bézier y
         /**
-         * @property theobj
+         * @property object
          * @type {Object}
          */
-        this.theobj = {}
+        this.object = {}
         /**
          * @property r1
          * @type {Number}
@@ -16927,22 +17136,38 @@ CG.Class.extend('Translate', {
         return this
     },
     /**
+     * Options:
+     * object {object}
+     * steps {number}
+     * startpoint {CG.Point}
+     * endpoint {CG.Point}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initTween({
+        object: Sprite,
+        steps: 10,
+        startpoint: new CG.Point(10, 10),
+        endpoint: new CG.Point(320, 160)
+     })
+     *
+     * 
      * @method initTween
      *
-     * @param obj {Object} object to move
-     * @param steps {Number} steps of tween
-     * @param startpoint {point} startpoint of tween
-     * @param endpoint {point} endpoint of tween
+     * @param options {Object}
      * @return {this}
      */
-    initTween: function (obj, steps, startpoint, endpoint) {
+    initTween: function (options) {
         this.type = 'tween'
-        this.theobj = obj
-        this.steps = steps
-        this.x1 = startpoint.x
-        this.y1 = startpoint.y
-        this.x2 = endpoint.x
-        this.y2 = endpoint.y
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.x1 = this.startpoint.x
+        this.y1 = this.startpoint.y
+        this.x2 = this.endpoint.x
+        this.y2 = this.endpoint.y
 
         var xstep = (this.x2 - this.x1) / this.steps
         var ystep = (this.y2 - this.y1) / this.steps
@@ -16958,55 +17183,89 @@ CG.Class.extend('Translate', {
     },
 
     /**
+     * Options:
+     * object {object}
+     * centerpoint {CG.Point}
+     * radius1 {number}
+     * radius {number}
+     * startangle {number}
+     * rotation {number}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initOval({
+        object: spr1,
+        centerpoint: new CG.Point(320, 160),
+        radius1: 50,
+        radius2: 50,
+        startangle: 90,
+        rotation: 5
+     })
+     * 
      * @method initOval
-     * @param obj {Object} obj object to move
-     * @param centerpoint {point} centerpoint
-     * @param radius1 {Number} radius1
-     * @param radius2 {Number} radius2
-     * @param startangle {Number} startangle
-     * @param rotation {Number} rotation
+     * @param options {Object}
      * @return {this}
      */
-    initOval: function (obj, centerpoint, radius1, radius2, startangle, rotation) {
+    initOval: function (options) {
         this.type = 'oval'
-        this.theobj = obj
-        this.x1 = centerpoint.x
-        this.y1 = centerpoint.y
-        this.r1 = radius1
-        this.r2 = radius2
-        this.startangle = startangle
-        this.speed = rotation
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.x1 = this.centerpoint.x
+        this.y1 = this.centerpoint.y
+        this.r1 = this.radius1
+        this.r2 = this.radius2
+        this.speed = this.rotation
 
         return this
     },
 
     /**
+     * Options:
+     * object {object}
+     * steps {number}
+     * startpoint {CG.Point}
+     * endpoint {CG.Point}
+     * control1 {CG.Point}
+     * control2 {CG.Point}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initBezier({
+        object: spr1,
+        steps: 10,
+        startpoint: new CG.Point(320, 160),
+        endpoint: new CG.Point(0, 10),
+        control1: new CG.Point(340, 180),
+        control2: new CG.Point(0, 0)
+     })
+     *
      * @description initBezier
      * http://13thparallel.com/archive/bezier-curves/
      *
      * @method initBezier
      *
-     * @param obj {Object} obj object to move
-     * @param steps {Number} steps of bézier curve
-     * @param startpoint {CG.Point} startpoint startpoint of bézier
-     * @param endpoint {CG.Point} endpoint endpoint of bézier
-     * @param control1 {CG.Point} control1 point for bézier calculation (optional)
-     * @param control2 {CG.Point} control2 point for bézier calculation (optional)
+     * @param options {Object}
      * @return {this}
      */
-    initBezier: function (obj, steps, startpoint, endpoint, control1, control2) {
+    initBezier: function (options) {
         this.type = 'bezier'
-        this.theobj = obj  //first argument is always the object to handle
-        this.steps = steps
-        this.start = endpoint
-        this.end = startpoint
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.start = this.endpoint
+        this.end = this.startpoint
 
         if (this.control2 == 'undefined' && this.control1 == 'undefined') {
             this.control2 = new CG.Point(this.start.x + 3 * (this.end.x - this.start.x) / 4, this.start.y + 3 * (this.end.y - this.start.y) / 4);
         } else {
-            this.control2 = control2 || control1
+            this.control2 = this.control2 || this.control1
         }
-        this.control1 = control1 || new CG.Point(this.start.x + (this.end.x - this.start.x) / 4, this.start.y + (this.end.y - this.start.y) / 4)
+        this.control1 = this.control1 || new CG.Point(this.start.x + (this.end.x - this.start.x) / 4, this.start.y + (this.end.y - this.start.y) / 4)
 
         b1 = function (t) {
             return (t * t * t)
@@ -17035,7 +17294,7 @@ CG.Class.extend('Translate', {
      * @method update
      */
     update: function () {
-        var obj = this.theobj
+        var obj = this.object
         switch (this.type) {
             case 'bezier':
             case 'tween':
@@ -17137,52 +17396,70 @@ CG.Class.extend('Translate', {
  */
 CG.Class.extend('Morph', {
     /**
+     * Options:
+     * mode {string}
+     * min {number}
+     * max {number}
+     * speed {number}
+     *
+     @example
+     var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+     *
      * @method init
      * @constructor
-     * @param mode {string} mode type of the morph object, at the moment only "sinus" possible ;o)
-     * @param min {Number} min min value
-     * @param max {Number} max max value
-     * @param speed {Number} speed speed value
+     * @param options {object}
      */
-    init:function (mode, min, max, speed) {
-        /**
-         * @property mode
-         * @type {String}
-         */
-        this.mode = mode
-        /**
-         * @property min
-         * @type {Number}
-         */
-        this.min = min
-        /**
-         * @property max
-         * @type {Number}
-         */
-        this.max = max
-        /**
-         * @property speed
-         * @type {Number}
-         */
-        this.speed = speed
-        /**
-         * @property angle
-         * @type {Number}
-         */
-        this.angle = 0
-        /**
-         * @property rad
-         * @type {Number}
-         */
-        this.rad = this.max - this.min
-        /**
-         * @property _val
-         * @type {Number}
-         * @protected
-         */
-        this._val = 0
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property mode
+             * @type {String}
+             */
+            mode: '',
+            /**
+             * @property min
+             * @type {Number}
+             */
+            min: 0,
+            /**
+             * @property max
+             * @type {Number}
+             */
+            max: 0,
+            /**
+             * @property speed
+             * @type {Number}
+             */
+            speed: 0,
+            /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
+             * @property rad
+             * @type {Number}
+             */
+            rad: 0,
+            /**
+             * @property _val
+             * @type {Number}
+             * @protected
+             */
+            _val: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.rad = this.max - this.min
+        }
+
+        return this
     },
-    update:function () {
+    update: function () {
         switch (this.mode) {
             case 'sinus':
                 var rad = this.angle * CG.Const_PI_180
@@ -17199,7 +17476,7 @@ CG.Class.extend('Morph', {
         }
         return this
     },
-    draw:function () {
+    draw: function () {
 
     },
     /**
@@ -17207,7 +17484,7 @@ CG.Class.extend('Morph', {
      *
      * @return {float}
      */
-    getVal:function () {
+    getVal: function () {
         return this._val
     }
 })
@@ -17226,13 +17503,32 @@ CG.Class.extend('Morph', {
 
 CG.Sprite.extend('Particle', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     *
+     @example
+     var s = new CG.Particle({
+           image: '../images/demo.png'
+         })
+     *
      * @constructor
      * @method init
      * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
      */
-    init: function (image) {
-        this._super(image, new CG.Point(0, 0))
+    init: function (options) {
+        this._super()
         this.instanceOf = 'Particle'
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
+        /**
+         * @property position
+         * @type {CG.Point}
+         */
+        this.position = new CG.Point(0,0)
         /**
          * @property lifetime
          * @type {Number}
@@ -17306,109 +17602,127 @@ CG.Sprite.extend('Particle', {
 CG.Entity.extend('Emitter', {
     /**
      * @method init
+     *
+     * Options:
+     * position {CG.Point}
+     *
+     @example
+     var e = new CG.Emitter({
+           position: new CG.Point(100,100)
+         })
+     *
      * @constructor
      * @param position {CG.Point}
      * @return {*}
      */
-    init:function (position) {
+    init: function (options) {
         this._super()
-        /**
-         * @property particle
-         * @type {Array}
-         */
-        this.particles = []     //Particle pool delegated by emitter
-        /**
-         * @property maxparticles
-         * @type {Number}
-         */
-        this.maxparticles = 50
-        /**
-         * @property creationtime
-         * @type {Number}
-         */
-        this.creationtime = 100 //time when next particle would be generated/reanimated
-        /**
-         * @property currenttime
-         * @type {Number}
-         */
-        this.currenttime = 0    //current counter
-        /**
-         * @property creationspeed
-         * @type {Number}
-         */
-        this.creationspeed = 50 //increase for currenttime
-        /**
-         * @property gravity
-         * @type {Number}
-         */
-        this.gravity = 0.05
-        /**
-         * @property image
-         * @type {null}
-         */
-        this.image = null       //Image of the particle
-        /**
-         * @property type
-         * @type {String}
-         */
-        this.type = ''          //point, corona, plate
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = position || new CG.Point(0, 0)
-        this.position._x = this.position.x
-        this.position._y = this.position.y
-        /**
-         * @property rotation
-         * @type {Number}
-         */
-        this.rotation = 0       //rotation of plate emitter
-        /**
-         * @property width
-         * @type {Number}
-         */
-        this.width = 200        //width of line and rectangle emitter
-        /**
-         * @property height
-         * @type {Number}
-         */
-        this.height = 200       //width of rectangle emitter
-        /**
-         * @property radius
-         * @type {Number}
-         */
-        this.radius = 0         //radius for corona emitter
-        /**
-         * @property pspeed
-         * @type {Number}
-         */
-        this.pspeed = 10        //particle speed
-        /**
-         * @property protation
-         * @type {Number}
-         */
-        this.protation = 0
-        /**
-         * @property pdirection
-         * @type {Number}
-         */
-        this.pdirection = 0     //particle direction UP, DOWN, CG.LEFT, RIGHT
-        /**
-         * @property plifetime
-         * @type {Number}
-         */
-        this.plifetime = 100    //particle lifetime
-        /**
-         * @property paging
-         * @type {Number}
-         */
-        this.paging = 1         //particle aging
-        /**
-         * @property pfadeout
-         * @type {Boolean}
-         */
-        this.pfadeout = false   //particle fadeout
+
+        CG._extend(this, {
+            /**
+             * @property particle
+             * @type {Array}
+             */
+            particles: [],     //Particle pool delegated by emitter
+            /**
+             * @property maxparticles
+             * @type {Number}
+             */
+            maxparticles: 50,
+            /**
+             * @property creationtime
+             * @type {Number}
+             */
+            creationtime: 100, //time when next particle would be generated/reanimated
+            /**
+             * @property currenttime
+             * @type {Number}
+             */
+            currenttime: 0,    //current counter
+            /**
+             * @property creationspeed
+             * @type {Number}
+             */
+            creationspeed: 50, //increase for currenttime
+            /**
+             * @property gravity
+             * @type {Number}
+             */
+            gravity: 0.05,
+            /**
+             * @property image
+             * @type {null}
+             */
+            image: null,       //Image of the particle
+            /**
+             * @property type
+             * @type {String}
+             */
+            type: '',          //point, corona, plate
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: {x: 0, y: 0, _x: 0, _y: 0},
+
+            /**
+             * @property rotation
+             * @type {Number}
+             */
+            rotation: 0,       //rotation of plate emitter
+            /**
+             * @property width
+             * @type {Number}
+             */
+            width: 200,        //width of line and rectangle emitter
+            /**
+             * @property height
+             * @type {Number}
+             */
+            height: 200,       //width of rectangle emitter
+            /**
+             * @property radius
+             * @type {Number}
+             */
+            radius: 0,         //radius for corona emitter
+            /**
+             * @property pspeed
+             * @type {Number}
+             */
+            pspeed: 10,        //particle speed
+            /**
+             * @property protation
+             * @type {Number}
+             */
+            protation: 0,
+            /**
+             * @property pdirection
+             * @type {Number}
+             */
+            pdirection: 0,     //particle direction UP, DOWN, CG.LEFT, RIGHT
+            /**
+             * @property plifetime
+             * @type {Number}
+             */
+            plifetime: 100,    //particle lifetime
+            /**
+             * @property paging
+             * @type {Number}
+             */
+            paging: 1,         //particle aging
+            /**
+             * @property pfadeout
+             * @type {Boolean}
+             */
+            pfadeout: false   //particle fadeout
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.position._x = this.position.x
+            this.position._y = this.position.y
+        }
+
         return this
     },
     /*
@@ -17420,7 +17734,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {mixed} image path, image or atlasimage to use for the particle
      */
-    initAsPoint:function (image) {
+    initAsPoint: function (image) {
         this.image = image
         this.type = 'point'
         return this
@@ -17434,7 +17748,7 @@ CG.Entity.extend('Emitter', {
      * @param {Number} min value for particle speed
      * @param {Number} max value for particle speed
      */
-    initAsExplosion:function (image, min, max) {
+    initAsExplosion: function (image, min, max) {
         this.image = image
         this.type = 'explosion'
         this.min = min
@@ -17448,7 +17762,7 @@ CG.Entity.extend('Emitter', {
      * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} radius of the corona emitter
      */
-    initAsCorona:function (image, radius) {
+    initAsCorona: function (image, radius) {
         this.image = image
         this.type = 'corona'
         this.radius = radius || 0
@@ -17462,7 +17776,7 @@ CG.Entity.extend('Emitter', {
      * @param {Number} width of the plate emitter
      * @param {Number} direction (defined constants) of the plate emitter
      */
-    initAsLine:function (image, width, direction) {
+    initAsLine: function (image, width, direction) {
         this.image = image
         this.width = width || 200
         this.pdirection = direction || CG.UP
@@ -17477,7 +17791,7 @@ CG.Entity.extend('Emitter', {
      * @param {Number} width of the plate emitter
      * @param {Number} height (defined constants) of the plate emitter
      */
-    initAsRectangle:function (image, width, height) {
+    initAsRectangle: function (image, width, height) {
         this.image = image
         this.width = width || 200
         this.height = height || 200
@@ -17488,8 +17802,8 @@ CG.Entity.extend('Emitter', {
      * @method createParticle
      * @return {*}
      */
-    createParticle:function () {
-        particle = new CG.Particle(this.image)
+    createParticle: function () {
+        particle = new CG.Particle({image: this.image})
         return particle
     },
 
@@ -17498,7 +17812,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {particle} particle particle object
      */
-    initParticle:function (particle) {
+    initParticle: function (particle) {
         if (this.pfadeout) {
             particle.fadeout = true
         }
@@ -17586,7 +17900,7 @@ CG.Entity.extend('Emitter', {
      * @method update
      */
 
-    update:function () {
+    update: function () {
         if (this.visible) {
             this.currenttime += this.creationspeed
             //particle lifetime
@@ -17615,7 +17929,7 @@ CG.Entity.extend('Emitter', {
     /**
      * @method draw
      */
-    draw:function () {
+    draw: function () {
         if (this.visible) {
             for (var i = 0, l = this.particles.length; i < l; i++) {
                 this.particles[i].draw()
@@ -17627,7 +17941,7 @@ CG.Entity.extend('Emitter', {
      * @description Each emitter has its own particle pool to prevent object deletion/creation. This method searches an inactive/invisible particle
      * @method searchInvisibleParticle
      */
-    searchInvisibleParticle:function () {
+    searchInvisibleParticle: function () {
         for (var i = 0, l = this.particles.length; i < l; i++) {
             if (this.particles[i].visible == false) {
                 return this.particles[i]
@@ -17641,7 +17955,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {CG.Point} position of the emitter
      */
-    setEmitterPosition:function (position) {
+    setEmitterPosition: function (position) {
         this.position = position
         return this
     },
@@ -17651,7 +17965,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {string} name of the object for search with layerobject.getElementByName(name)
      */
-    setName:function (name) {
+    setName: function (name) {
         this.name = name
         return this
     },
@@ -17661,7 +17975,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {Number} creationtime
      */
-    setCreationTime:function (creationtime) {
+    setCreationTime: function (creationtime) {
         this.creationtime = creationtime
         return this
     },
@@ -17670,7 +17984,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {Number} maxparticle
      */
-    setMaxParticles:function (maxparticle) {
+    setMaxParticles: function (maxparticle) {
         this.maxparticles = maxparticle
         return this
     },
@@ -17679,7 +17993,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {float} gravity for all emitter controlled particles
      */
-    setGravity:function (gravity) {
+    setGravity: function (gravity) {
         this.gravity = gravity
         return this
     },
@@ -17689,7 +18003,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {Number} speed set the speed of the particles
      */
-    setParticleSpeed:function (speed) {
+    setParticleSpeed: function (speed) {
         this.pspeed = speed
         return this
     },
@@ -17699,7 +18013,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {mixed} rotation set the rotation of the particles
      */
-    setProtation:function (rotation) {
+    setProtation: function (rotation) {
         this.protation = rotation
         return this
     },
@@ -17709,7 +18023,7 @@ CG.Entity.extend('Emitter', {
      *
      * @param {Number} plifetime set the lifetime of the particles
      */
-    setPLifetime:function (plifetime) {
+    setPLifetime: function (plifetime) {
         this.plifetime = plifetime
         return this
     },
@@ -17718,7 +18032,7 @@ CG.Entity.extend('Emitter', {
      * @method activateFadeout
      * @description Activate fadeout of the particles depending on lifetime
      */
-    activateFadeout:function () {
+    activateFadeout: function () {
         this.pfadeout = true
         return this
     },
@@ -17727,7 +18041,7 @@ CG.Entity.extend('Emitter', {
      * @method deactivateFadeout
      * @description Deactivate fadeout of the particles depending on lifetime
      */
-    deactivateFadeout:function () {
+    deactivateFadeout: function () {
         this.pfadeout = false
         return this
     },
@@ -17738,21 +18052,21 @@ CG.Entity.extend('Emitter', {
      * @param {mixed} min value for random number
      * @param {mixed} max value for random number
      */
-    getRandom:function (min, max) {
+    getRandom: function (min, max) {
         return Math.random() * (max - min + 1) + min >> 0
     },
 
     /**
      * @method getX
      */
-    getX:function () {
+    getX: function () {
         return this.position._x
     },
 
     /**
      * @method getY
      */
-    getY:function () {
+    getY: function () {
         return this.position._y
     }
 })

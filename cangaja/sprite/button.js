@@ -9,32 +9,46 @@
  */
 CG.Sprite.extend('Button', {
     /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * text {string}
+     * font {CG.Font}
+     * callback {function}
+     *
+     @example
+     var s = new CG.Button({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           text: 'MyButton',
+           font: heiti,
+           callback: callbackFunction
+         })
+     *
+     *
      * @method init
      * @constructor
-     * @param image {image} image image path, image or atlasimage
-     * @param position {CG.Point} position point
-     * @param text {string} the button text
-     * @param font {CG.Font} a CG.Font object for text rendering
-     * @param clickedCallback {callback} callback function for click handling
+     * @param options {object}
      * @return {*}
      */
-    init: function (image, position, text, font, clickedCallback) {
-        this._super(image, position)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'Button'
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         /**
          @property font {CG.Font}
          */
-        this.font = font
         /**
          @property text {string}
          */
-        this.text = text
-
         /**
-         @property clickedCallback {callback}
+         @property callback {callback}
          */
-        this.clickedCallback = clickedCallback
         /**
          @property clickable {boolean}
          */
@@ -54,9 +68,9 @@ CG.Sprite.extend('Button', {
         this.yhandle = (this.height * this.yscale / 2)
 
         if (this.clicked) {
-            if (this.clickedCallback) {
+            if (this.callback) {
                 this.clicked = false
-                this.clickedCallback(this)
+                this.callback(this)
             }
         }
         this.updateDiff()

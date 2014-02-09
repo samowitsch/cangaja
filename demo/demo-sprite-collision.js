@@ -1,4 +1,4 @@
-var renderStats,mainscreen, mainlayer, collisionlayer, collision, canvas,
+var renderStats, mainscreen, mainlayer, collisionlayer, collision, canvas,
     tp = new CG.AtlasTexturePacker(), ri = 0, spritecollisiontext, rocket, abadi, small, Game, xpos = 10, ypos = 10;
 
 window.onload = function () {
@@ -33,20 +33,23 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
-        collisionlayer = new CG.Layer('collisionlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
+        collisionlayer = new CG.Layer({name: 'collisionlayer'})
 
         //add screen to Director
         this.director
             .addScreen(mainscreen.addLayer(collisionlayer))
             .addScreen(mainscreen.addLayer(mainlayer))
 
-        rocket = new CG.Sprite(this.asset.getImageByName('rocket'), new CG.Point(this.width2, this.height2))
+        rocket = new CG.Sprite({
+            image: this.asset.getImageByName('rocket'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         rocket.name = 'rocket'
         rocket.boundingradius = 80
         rocket.xscale = 0.5
@@ -54,7 +57,10 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(rocket)
 
         //this sprite follows the rocket with a fixed speed
-        collision = new CG.Sprite(this.asset.getImageByName('gem'), new CG.Point(250, 200))
+        collision = new CG.Sprite({
+            image: this.asset.getImageByName('gem'),
+            position: new CG.Point(250, 200)
+        })
         collision.name = 'rockethunter-1'
         collision.boundingradius = 120
         collision.xscale = 1
@@ -62,7 +68,10 @@ CG.Game.extend('MyGame', {
         collisionlayer.addElement(collision)
 
         //this sprite follows the rocket with a fixed step rate
-        collision = new CG.Sprite(this.asset.getImageByName('gem'), new CG.Point(500, 400))
+        collision = new CG.Sprite({
+            image:this.asset.getImageByName('gem'),
+            position:new CG.Point(500, 400)
+        })
         collision.name = 'rockethunter-2'
         collision.boundingradius = 80
         collision.xscale = 0.5
@@ -70,7 +79,10 @@ CG.Game.extend('MyGame', {
         collisionlayer.addElement(collision)
 
         //this sprite follows the rocket with a fixed speed
-        collision = new CG.Sprite(this.asset.getImageByName('gem'), new CG.Point(500, 200))
+        collision = new CG.Sprite({
+            image: this.asset.getImageByName('gem'),
+            position: new CG.Point(500, 200)
+        })
         collision.name = 'rockethunter-1'
         collision.boundingradius = 80
         collision.xscale = 0.5
@@ -78,7 +90,10 @@ CG.Game.extend('MyGame', {
         collisionlayer.addElement(collision)
 
         //this sprite follows the rocket with a fixed step rate
-        collision = new CG.Sprite(this.asset.getImageByName('gem'), new CG.Point(250, 400))
+        collision = new CG.Sprite({
+            image:this.asset.getImageByName('gem'),
+            position:new CG.Point(250, 400)
+        })
         collision.name = 'rockethunter-2'
         collision.boundingradius = 80
         collision.xscale = 0.5

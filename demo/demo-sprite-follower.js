@@ -23,7 +23,7 @@ CG.Game.extend('MyGame', {
     preload: function () {
         this.asset.addFont('media/font/small.txt', 'small', 'small')
             .addFont('media/font/abadi_ez.txt', 'abadi')
-            .addImage('media/img/hunter.png', 'hunter')
+//            .addImage('media/img/hunter.png', 'hunter')
 
             //texturepacker
             .addImage('media/img/texturepacker.png', 'texturepacker')
@@ -37,20 +37,23 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
-        followerlayer = new CG.Layer('followerlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
+        followerlayer = new CG.Layer({name: 'followerlayer'})
 
         //add screen to Director
         this.director
             .addScreen(mainscreen.addLayer(mainlayer))
             .addScreen(mainscreen.addLayer(followerlayer))
 
-        rocket = new CG.Sprite(this.asset.getImageByName('rocket'), new CG.Point(this.width2, this.height2))
+        rocket = new CG.Sprite({
+            image: this.asset.getImageByName('rocket'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         rocket.name = 'rocket'
         rocket.boundingradius = 80
         rocket.xscale = 0.5
@@ -58,7 +61,10 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(rocket)
 
         //this sprite follows the rocket with a fixed speed
-        hunter1 = new CG.Sprite(this.asset.getImageByName('rocket2'), new CG.Point(this.width2, this.height2))
+        hunter1 = new CG.Sprite({
+            image: this.asset.getImageByName('rocket2'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         hunter1.name = 'rockethunter-1'
         hunter1.boundingradius = 80
         hunter1.xscale = 0.25
@@ -68,7 +74,10 @@ CG.Game.extend('MyGame', {
         followerlayer.addElement(hunter1)
 
         //this sprite follows the rocket with a fixed step rate
-        hunter2 = new CG.Sprite(this.asset.getImageByName('rocket2'), new CG.Point(this.width2, this.height2))
+        hunter2 = new CG.Sprite({
+            image: this.asset.getImageByName('rocket2'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         hunter2.name = 'rockethunter-2'
         hunter2.boundingradius = 80
         hunter2.xscale = 0.25

@@ -194,13 +194,13 @@ Q.Class.extend("SpriteSheet", {
 ## Class inheritance
 
 + Class
-  + Atlas-Image
+  + Atlas-Image (new API)
   + Atlas-TexturePacker
-  + Bound
+  + Bound (new API)
   + Buffer
-  + Director
-  + Emitter
-  + Entity
+  + Director (new API)
+  + Emitter (new API)
+  + Entity (new API)
     + B2DEntity
       + B2DCircle
       + B2DRectangle
@@ -209,29 +209,30 @@ Q.Class.extend("SpriteSheet", {
       + B2DBridge
       + B2DRope
       + B2DChainShape
-    + Bitmap
+    + Bitmap (new API)
     + Font
     + Map
-    + Sprite
-      + Animation
-      + Button
-      + Particle
-    + SpineAnimation
+    + Sprite (new API)
+      + Animation (new API)
+      + Button (new API)
+      + Particle (new API)
+    + SpineAnimation (new API)
+    + Text (new API)
   + Game
-  + Layer
+  + Layer (new API)
     + B2DWorld
   + MapPoints
   + MapAreas
   + MapTileLayer
   + MapTileProperties
   + MediaAsset
-  + Menu
-  + Morph
+  + Menu (new API)
+  + Morph (new API)
   + Point
     + Vector
-  + Screen
+  + Screen (new API)
   + Sequence
-  + Translate
+  + Translate (new API)
 
 ## Framework logic
 

@@ -8,64 +8,85 @@
  */
 CG.Class.extend('AtlasImage', {
     /**
+     * Options:
+     * image {string}
+     * xoffset {number}
+     * yoffset {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var a = new CG.AtlasImage({
+           image: 'menuscreen',
+           xoffset: 0,
+           yoffset: 0,
+           width: 10,
+           height: 20
+         })
+     *
      * @method init
      * @constructor
-     * @param image {image} imgpath, image object or atlasimage object to use
-     * @param xoffset {Number} xoffset of image in atlas file
-     * @param yoffset {Number} yoffset of image in atlas file
-     * @param width {Number} width of image in atlas file
-     * @param height {Number} height of image in atlas file
+     * @param options {object}
      */
-    init:function (image, xoffset, yoffset, width, height) {
-        /**
-         * @property source
-         * @type {String}
-         */
-        this.source = ''
-        /**
-         * @property atlasimage
-         * @type {String}
-         */
-        this.atlasimage = ''
-        /**
-         * @property atlasname
-         * @type {String}
-         */
-        this.atlasname = ''
-        /**
-         * @property image
-         * @type {*}
-         */
-        this.image = image || ''    //imagepath
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = image.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
-        /**
-         * @property xoffset
-         * @type {Number}
-         */
-        this.xoffset = xoffset || 0
-        /**
-         * @property yoffset
-         * @type {*}
-         */
-        this.yoffset = yoffset || 0
-        /**
-         * @property width
-         * @type {Number}
-         */
-        this.width = width || 0
-        /**
-         * @property height
-         * @type {Number}
-         */
-        this.height = height || 0
-        /**
-         * @property rotation
-         * @type {Number}
-         */
-        this.rotation = 0
+    init: function (options) {
+        CG._extend(this, {
+
+            /**
+             * @property source
+             * @type {String}
+             */
+            source: '',
+            /**
+             * @property atlasimage
+             * @type {String}
+             */
+            atlasimage: '',
+            /**
+             * @property atlasname
+             * @type {String}
+             */
+            atlasname: '',
+            /**
+             * @property image
+             * @type {*}
+             */
+            image: '',    //imagepath
+
+            /**
+             * @property xoffset
+             * @type {Number}
+             */
+            xoffset: 0,
+            /**
+             * @property yoffset
+             * @type {*}
+             */
+            yoffset: 0,
+            /**
+             * @property width
+             * @type {Number}
+             */
+            width: 0,
+            /**
+             * @property height
+             * @type {Number}
+             */
+            height: 0,
+            /**
+             * @property rotation
+             * @type {Number}
+             */
+            rotation: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            /**
+             * @property name
+             * @type {String}
+             */
+            this.name = this.image.split(/(\\|\/)/g).pop().split('.')[0] //image name only for name
+        }
+
     }
 })

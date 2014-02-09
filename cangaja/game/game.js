@@ -81,7 +81,12 @@ CG.Class.extend('Game', {
         /**
          @property bound {CG.Bound}
          */
-        this.bound = new CG.Bound(0, 0, this.width, this.height)
+        this.bound = new CG.Bound({
+            x: 0,
+            y: 0,
+            width: this.width,
+            height: this.height
+        })
 
         this.preload()
     },

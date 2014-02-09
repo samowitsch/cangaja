@@ -9,76 +9,84 @@
 
 CG.Class.extend('Entity', {
     /**
+     * Options:
+     * name {string}
+     * position {CG.Point}
+     *
+     @example
+        var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+     *
      * @constructor
      * @method init
-     * @param name {string} the name of the Entity
-     * @param position {CG.Point} position
+     * @param options {Object} the name of the Entity
      */
-    init: function (name, position) {
-        /**
-         @description name of the object
-         @property name {string}
-         */
-        this.name = (name) ? name : ''
-        /**
-         @description visibility option
-         @property visible {boolean}
-         */
-        this.visible = true
-        /**
-         @description Transform object for matrix transformation
-         @property transform {Transform}
-         */
-        this.transform = new Transform()
-        /**
-         @property position {CG.Point}
-         */
-        this.position = (position) ? position : new CG.Point(0, 0)
-        /**
-         @property width {Number}
-         */
-        this.width = 0
-        /**
-         @property height {Number}
-         */
-        this.height = 0
-        /**
-         @property dragable {boolean}
-         */
-        this.dragable = true
-        /**
-         @property rotation {Number}
-         */
-        this.rotation = 0
-        /**
-         @property xscale {Number}
-         */
-        this.xscale = 1
-        /**
-         @property xhandle {Number}
-         */
-        this.xhandle = 0
-        /**
-         @property yscale {Number}
-         */
-        this.yscale = 1
-        /**
-         @property yhandle {Number}
-         */
-        this.yhandle = 0
-        /**
-         @property hover {boolean}
-         */
-        this.hover = false
-        /**
-         @property boundingradius {Number}
-         */
-        this.boundingradius = 0     //radius for circular collision bounds
-        /**
-         @property mapcollision {boolean}
-         */
-        this.mapcollision = false
+    init: function (options) {
 
+        CG._extend(this, {
+            name: '',
+            position: new CG.Point(0, 0),
+            /**
+             @description visibility option
+             @property visible {boolean}
+             */
+            visible: true,
+            /**
+             @description Transform object for matrix transformation
+             @property transform {Transform}
+             */
+            transform: new Transform(),
+            /**
+             @property width {Number}
+             */
+            width: 0,
+            /**
+             @property height {Number}
+             */
+            height: 0,
+            /**
+             @property dragable {boolean}
+             */
+            dragable: true,
+            /**
+             @property rotation {Number}
+             */
+            rotation: 0,
+            /**
+             @property xscale {Number}
+             */
+            xscale: 1,
+            /**
+             @property xhandle {Number}
+             */
+            xhandle: 0,
+            /**
+             @property yscale {Number}
+             */
+            yscale: 1,
+            /**
+             @property yhandle {Number}
+             */
+            yhandle: 0,
+            /**
+             @property hover {boolean}
+             */
+            hover: false,
+            /**
+             @property boundingradius {Number}
+             */
+            boundingradius: 0,     //radius for circular collision bounds
+            /**
+             @property mapcollision {boolean}
+             */
+            mapcollision: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
     update: function () {

@@ -9,18 +9,30 @@
  */
 CG.Entity.extend('Text', {
     /**
+     * Options:
+     * font {object}
+     *
+     @example
+     var t = new CG.Text({
+           font: abdi // the font object (CG.Font) to use
+         })
+     *
      * @method init
-     * @param font the font object (CG.Font) to use
+     * @param options
      * @constructor
      * @return {*}
      */
 
-    init: function (font) {
+    init: function (options) {
+        this.instanceOf = 'Text'
+
+        if (options) {
+            CG._extend(this, options)
+        }
 
         /**
          @property font {CG.Font}
          */
-        this.font = font
 
         /**
          * @property text {string}

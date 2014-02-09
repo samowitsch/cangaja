@@ -59,10 +59,10 @@ CG.Class.extend('Translate', {
          */
         this.by = 0 //bézier y
         /**
-         * @property theobj
+         * @property object
          * @type {Object}
          */
-        this.theobj = {}
+        this.object = {}
         /**
          * @property r1
          * @type {Number}
@@ -111,22 +111,38 @@ CG.Class.extend('Translate', {
         return this
     },
     /**
+     * Options:
+     * object {object}
+     * steps {number}
+     * startpoint {CG.Point}
+     * endpoint {CG.Point}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initTween({
+        object: Sprite,
+        steps: 10,
+        startpoint: new CG.Point(10, 10),
+        endpoint: new CG.Point(320, 160)
+     })
+     *
+     * 
      * @method initTween
      *
-     * @param obj {Object} object to move
-     * @param steps {Number} steps of tween
-     * @param startpoint {point} startpoint of tween
-     * @param endpoint {point} endpoint of tween
+     * @param options {Object}
      * @return {this}
      */
-    initTween: function (obj, steps, startpoint, endpoint) {
+    initTween: function (options) {
         this.type = 'tween'
-        this.theobj = obj
-        this.steps = steps
-        this.x1 = startpoint.x
-        this.y1 = startpoint.y
-        this.x2 = endpoint.x
-        this.y2 = endpoint.y
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.x1 = this.startpoint.x
+        this.y1 = this.startpoint.y
+        this.x2 = this.endpoint.x
+        this.y2 = this.endpoint.y
 
         var xstep = (this.x2 - this.x1) / this.steps
         var ystep = (this.y2 - this.y1) / this.steps
@@ -142,55 +158,89 @@ CG.Class.extend('Translate', {
     },
 
     /**
+     * Options:
+     * object {object}
+     * centerpoint {CG.Point}
+     * radius1 {number}
+     * radius {number}
+     * startangle {number}
+     * rotation {number}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initOval({
+        object: spr1,
+        centerpoint: new CG.Point(320, 160),
+        radius1: 50,
+        radius2: 50,
+        startangle: 90,
+        rotation: 5
+     })
+     * 
      * @method initOval
-     * @param obj {Object} obj object to move
-     * @param centerpoint {point} centerpoint
-     * @param radius1 {Number} radius1
-     * @param radius2 {Number} radius2
-     * @param startangle {Number} startangle
-     * @param rotation {Number} rotation
+     * @param options {Object}
      * @return {this}
      */
-    initOval: function (obj, centerpoint, radius1, radius2, startangle, rotation) {
+    initOval: function (options) {
         this.type = 'oval'
-        this.theobj = obj
-        this.x1 = centerpoint.x
-        this.y1 = centerpoint.y
-        this.r1 = radius1
-        this.r2 = radius2
-        this.startangle = startangle
-        this.speed = rotation
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.x1 = this.centerpoint.x
+        this.y1 = this.centerpoint.y
+        this.r1 = this.radius1
+        this.r2 = this.radius2
+        this.speed = this.rotation
 
         return this
     },
 
     /**
+     * Options:
+     * object {object}
+     * steps {number}
+     * startpoint {CG.Point}
+     * endpoint {CG.Point}
+     * control1 {CG.Point}
+     * control2 {CG.Point}
+     *
+     @example
+     var t = new CG.Translate()
+     t.initBezier({
+        object: spr1,
+        steps: 10,
+        startpoint: new CG.Point(320, 160),
+        endpoint: new CG.Point(0, 10),
+        control1: new CG.Point(340, 180),
+        control2: new CG.Point(0, 0)
+     })
+     *
      * @description initBezier
      * http://13thparallel.com/archive/bezier-curves/
      *
      * @method initBezier
      *
-     * @param obj {Object} obj object to move
-     * @param steps {Number} steps of bézier curve
-     * @param startpoint {CG.Point} startpoint startpoint of bézier
-     * @param endpoint {CG.Point} endpoint endpoint of bézier
-     * @param control1 {CG.Point} control1 point for bézier calculation (optional)
-     * @param control2 {CG.Point} control2 point for bézier calculation (optional)
+     * @param options {Object}
      * @return {this}
      */
-    initBezier: function (obj, steps, startpoint, endpoint, control1, control2) {
+    initBezier: function (options) {
         this.type = 'bezier'
-        this.theobj = obj  //first argument is always the object to handle
-        this.steps = steps
-        this.start = endpoint
-        this.end = startpoint
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.start = this.endpoint
+        this.end = this.startpoint
 
         if (this.control2 == 'undefined' && this.control1 == 'undefined') {
             this.control2 = new CG.Point(this.start.x + 3 * (this.end.x - this.start.x) / 4, this.start.y + 3 * (this.end.y - this.start.y) / 4);
         } else {
-            this.control2 = control2 || control1
+            this.control2 = this.control2 || this.control1
         }
-        this.control1 = control1 || new CG.Point(this.start.x + (this.end.x - this.start.x) / 4, this.start.y + (this.end.y - this.start.y) / 4)
+        this.control1 = this.control1 || new CG.Point(this.start.x + (this.end.x - this.start.x) / 4, this.start.y + (this.end.y - this.start.y) / 4)
 
         b1 = function (t) {
             return (t * t * t)
@@ -219,7 +269,7 @@ CG.Class.extend('Translate', {
      * @method update
      */
     update: function () {
-        var obj = this.theobj
+        var obj = this.object
         switch (this.type) {
             case 'bezier':
             case 'tween':

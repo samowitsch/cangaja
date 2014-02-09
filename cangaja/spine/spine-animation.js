@@ -23,20 +23,38 @@
  */
 CG.Entity.extend('SpineAnimation', {
     /**
+     * Options:
+     * spinejson {string} Spine json animation file
+     * spineatlas {string} Spine atlas file (libGDX)
+     * position {CG.Point}
+     * scale {number}
+     * callback {function}
+     *
+     @example
+     var sa = new CG.SpineAnimation({
+           spinejson: this.asset.getJsonByName('spinosaurus-json'),
+           spineatlas: this.asset.getTextByName('spinosaurus-atlas'),
+           position: new CG.Point(10,10),
+           scale: 1,
+           callback: function (spineObject) {
+//              spineObject.skeleton.setSkinByName("goblingirl");
+                spineObject.skeleton.setSlotsToSetupPose();
+                spineObject.state.setAnimationByName(0, "animation", true);
+            }
+         })
+     *
      * @constructor
      * @method init
-     * @param spinejson     Spine json animation file
-     * @param spineatlas    Spine atlas file (libGDX)
-     * @param position      initial position
-     * @param scale         scale animation experimental
-     * @param callback callback function
+     * @param options {object}
      */
-    init: function (spinejson, spineatlas, position, scale, callback) {
-        this._super('')
-
+    init: function (options) {
+        this._super()
+        this.instanceOf = 'SpineAnimation'
         self = this
 
-        this.instanceOf = 'SpineAnimation'
+        if (options){
+            CG._extend(this, options)
+        }
 
         this.lastTime = Date.now()
 
@@ -45,7 +63,7 @@ CG.Entity.extend('SpineAnimation', {
          * @property skeletonposition
          * @type {CG.Point}
          */
-        this.skeletonposition = position || new CG.Point(0, 0)
+        this.skeletonposition = this.position || new CG.Point(0, 0)
 
         /**
          * @description spine bone xscale
@@ -65,7 +83,7 @@ CG.Entity.extend('SpineAnimation', {
          * @property scale
          * @type {Number}
          */
-        this.scale = scale || 1
+        this.scale = this.scale || 1
 
         /**
          * @property vertices
@@ -85,11 +103,11 @@ CG.Entity.extend('SpineAnimation', {
          * @property spineAtlasData
          * @type {String}
          */
-        if (spineatlas.type == 'text') {
-            this.spineAtlasData = spineatlas.data   //text data from mediaasset object
+        if (this.spineatlas.type == 'text') {
+            this.spineAtlasData = this.spineatlas.data   //text data from mediaasset object
             console.log('spine atlas: text (libGDX) used')
-        } else if (spineatlas.type == 'json') {
-            this.spineAtlasData = spineatlas.src    //pure json text for spine atlas loader?
+        } else if (this.spineatlas.type == 'json') {
+            this.spineAtlasData = this.spineatlas.src    //pure json text for spine atlas loader?
             console.log('spine atlas: json')
             throw 'json format is not supported by spine-js runtime?'
         } else {
@@ -101,14 +119,14 @@ CG.Entity.extend('SpineAnimation', {
          * @property spineJsonData
          * @type {Object}
          */
-        this.spineJsonData = spinejson.data
+        this.spineJsonData = this.spinejson.data
 
         /**
          * @description this is used for a callback for custom spine initialization.
          * @property initCustom
          * @type {Object}
          */
-        this.initCustom = callback
+        this.initCustom = this.callback
 
         /**
          * @description this is used for a callback for custom animation configuration.

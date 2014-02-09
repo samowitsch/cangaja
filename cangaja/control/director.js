@@ -32,56 +32,58 @@ CG.Class.extend('Director', {
      * @return {*}
      */
     init: function () {
-        /**
-         * @property screens
-         * @type {Array}
-         */
-        this.screens = []
-        /**
-         * @property activescreen
-         * @type {Number}
-         */
-        this.activescreen = 0
-        /**
-         * @property nextscreen
-         * @type {Number}
-         */
-        this.nextscreen = 0
-        /**
-         * @property duration
-         * @type {Number}
-         */
-        this.duration = 20
-        /**
-         * @property stepx
-         * @type {number}
-         */
-        this.stepx = 40
-        /**
-         * @property stepy
-         * @type {number}
-         */
-        this.stepy = 30
-        /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 0
-        /**
-         * @property mode
-         * @type {String}
-         */
-        this.mode = 'fade'      //fade or scale
-        /**
-         * @property direction
-         * @type {String}
-         */
-        this.direction = CG.RIGHT      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
-        /**
-         * @property color
-         * @type {String}
-         */
-        this.color = 'rgb(0,0,0)'
+        CG._extend(this, {
+            /**
+             * @property screens
+             * @type {Array}
+             */
+            screens: [],
+            /**
+             * @property activescreen
+             * @type {Number}
+             */
+            activescreen: 0,
+            /**
+             * @property nextscreen
+             * @type {Number}
+             */
+            nextscreen: 0,
+            /**
+             * @property duration
+             * @type {Number}
+             */
+            duration: 20,
+            /**
+             * @property stepx
+             * @type {number}
+             */
+            stepx: 40,
+            /**
+             * @property stepy
+             * @type {number}
+             */
+            stepy: 30,
+            /**
+             * @property alpha
+             * @type {Number}
+             */
+            alpha: 0,
+            /**
+             * @property mode
+             * @type {String}
+             */
+            mode: 'fade',      //fade or scale
+            /**
+             * @property direction
+             * @type {String}
+             */
+            direction: CG.RIGHT,      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
+            /**
+             * @property color
+             * @type {String}
+             */
+            color: 'rgb(0,0,0)'
+        })
         return this
     },
     /**

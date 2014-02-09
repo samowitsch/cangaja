@@ -35,21 +35,21 @@ window.onload = function () {
 Game = (function () {
     var Game = {
         path: '',
-        fps:60,
-        width:640,
-        height:480,
-        width2:640 / 2,
-        height2:480 / 2,
-        bound:new CG.Bound(0, 0, 640, 480).setName('game'),
+        fps: 60,
+        width: 640,
+        height: 480,
+        width2: 640 / 2,
+        height2: 480 / 2,
+        bound: new CG.Bound({x: 0, y: 0, width: 640, height: 480}).setName('game'),
         canvas: {},
         ctx: {},
-        b_canvas:{},
-        b_ctx:{},
-        asset:{}, //new CG.MediaAsset(Game), //initialize media asset with background image
-        director:new CG.Director(),
+        b_canvas: {},
+        b_ctx: {},
+        asset: {}, //new CG.MediaAsset(Game), //initialize media asset with background image
+        director: new CG.Director(),
         renderer: new CG.CanvasRenderer(),
-        delta:new CG.Delta(60),
-        preload:function () {
+        delta: new CG.Delta(60),
+        preload: function () {
             //canvas for ouput
             Game.canvas = document.getElementById("canvas")
             Game.ctx = Game.canvas.getContext("2d")
@@ -69,21 +69,21 @@ Game = (function () {
 
                 .startPreLoad()
         },
-        create:function () {
+        create: function () {
 
             // font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+            abadi = new CG.Font().loadFont({font: Game.asset.getFontByName('abadi')})
+            small = new CG.Font().loadFont({font: Game.asset.getFontByName('small')})
 
             //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+            mainscreen = new CG.Screen({name: 'mainscreen'})
+            mainlayer = new CG.Layer({name: 'mainlayer'})
 
             //add screen to Director
             Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
             //a bitmap that hides the background sprite
-            bitmap = new CG.Bitmap(Game.width, Game.height)
+            bitmap = new CG.Bitmap({width: Game.width, height: Game.height})
             bitmap.loadImage(Game.asset.getImageByName('star-contour-test'))
 
             var contour = bitmap.traceContour()
@@ -107,22 +107,22 @@ Game = (function () {
 
             Game.loop()
         },
-        loop:function () {
+        loop: function () {
             requestAnimationFrame(Game.loop);
             if (Game.asset.ready == true) {
                 Game.run();
             }
         },
-        run:function () {
+        run: function () {
             Game.update()
             Game.draw()
         },
-        update:function () {
+        update: function () {
             //update here what ever you want
 
             Game.director.update()
         },
-        draw:function () {
+        draw: function () {
             Game.ctx.clearRect(0, 0, Game.bound.width, Game.bound.height)
             var xpos = 10
             var ypos = 10
@@ -136,7 +136,7 @@ Game = (function () {
 
             renderStats.update();
         },
-        touchinit:function () {
+        touchinit: function () {
             hammer = new Hammer(canvas);
             hammer.on('tap', function (ev) {
                 mousedown = true
@@ -171,7 +171,7 @@ Game = (function () {
 
             })
         },
-        touchhandler:function () {
+        touchhandler: function () {
         }
     }
 

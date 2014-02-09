@@ -47,17 +47,17 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(this.width2, this.height2))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(this.width2, this.height2)})
             .setName('splashi')
             .setParticleSpeed(0)
             .setPLifetime(40)
@@ -69,7 +69,7 @@ CG.Game.extend('MyGame', {
             .activateFadeout()
         )
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(this.width2, this.height + 20))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(this.width2, this.height + 20)})
             .setName('sunny')
             .setParticleSpeed(2)
             .setMaxParticles(100)
@@ -79,7 +79,7 @@ CG.Game.extend('MyGame', {
             .activateFadeout()
         )
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(this.width2, -20))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(this.width2, -20)})
             .setName('rainy')
             .setParticleSpeed(2)
             .setMaxParticles(100)
@@ -89,7 +89,7 @@ CG.Game.extend('MyGame', {
             .activateFadeout()
         )
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(-25, this.height2))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(-25, this.height2)})
             .setName('glowy')
             .setGravity(0)
             .setParticleSpeed(2)
@@ -100,7 +100,7 @@ CG.Game.extend('MyGame', {
             .activateFadeout()
         )
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(this.width + 15, this.height2))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(this.width + 15, this.height2)})
             .setName('bally')
             .setParticleSpeed(2)
             .setMaxParticles(100)
@@ -111,7 +111,7 @@ CG.Game.extend('MyGame', {
             .activateFadeout()
         )
 
-        mainlayer.addElement(new CG.Emitter(new CG.Point(this.width2, this.height2))
+        mainlayer.addElement(new CG.Emitter({position: new CG.Point(this.width2, this.height2)})
             .setName('explodi-stars')
             .activateFadeout()
             .setMaxParticles(100)
@@ -120,7 +120,7 @@ CG.Game.extend('MyGame', {
             .initAsExplosion(this.asset.getImageByName('powerstar75'), -2, 2)
         )
 
-        smokey = new CG.Emitter(new CG.Point(this.width2, this.height2))
+        smokey = new CG.Emitter({position: new CG.Point(this.width2, this.height2)})
             .setName('smokey')
             .activateFadeout()
             .setMaxParticles(100)

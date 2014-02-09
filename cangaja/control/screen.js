@@ -10,34 +10,52 @@
  */
 CG.Class.extend('Screen', {
     /**
+     * Options:
+     * name {string}
+     *
+     @example
+     var s = new CG.Screen({
+           name: 'menuscreen'
+         })
+     *
      * @constructor
      * @method init
-     * @param screenname
+     * @param options
      * @return {*}
      */
-    init: function (screenname) {
-        this.name = (screenname) ? screenname : ''
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property name
+             * @type {string}
+             */
+            name: '',
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property xscale
+             * @type {Number}
+             */
+            xscale: 1,
+            /**
+             * @property yscale
+             * @type {Number}
+             */
+            yscale: 1,
+            /**
+             * @property layers
+             * @type {Array}
+             */
+            layers: []
+        })
 
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(0, 0)
-        /**
-         * @property xscale
-         * @type {Number}
-         */
-        this.xscale = 1
-        /**
-         * @property yscale
-         * @type {Number}
-         */
-        this.yscale = 1
-        /**
-         * @property layers
-         * @type {Array}
-         */
-        this.layers = []
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     create: function () {

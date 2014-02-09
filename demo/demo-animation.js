@@ -24,31 +24,52 @@ CG.Game.extend('MyGame', {
             .startPreLoad()
     },
     create: function () {
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //animation 1
-        anim1 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(50, 100), 8, 14, 56, 64)
+        anim1 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(50, 100),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim1.name = 'anim1'
         anim1.delay = 6
         mainlayer.addElement(anim1)
 
         //animation 2
-        anim2 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(200, 100), 8, 14, 56, 64)
+        anim2 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(200, 100),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim2.name = 'anim2'
         anim2.delay = 6
         anim2.rotationspeed = 1
         mainlayer.addElement(anim2)
 
         //animation 3
-        anim3 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(400, 100), 8, 14, 56, 64)
+        anim3 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(400, 100),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim3.name = 'anim3'
         anim3.delay = 6
         anim3.alpha = 0.5
@@ -57,7 +78,14 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(anim3)
 
         //animation 4
-        anim4 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(50, 200), 8, 14, 56, 64)
+        anim4 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(50, 200),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim4.name = 'anim3'
         anim4.delay = 6
         anim4.xspeed = -2
@@ -65,7 +93,14 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(anim4)
 
         //animation 5
-        anim5 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(50, 300), 8, 14, 56, 64)
+        anim5 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(50, 300),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim5.name = 'anim3'
         anim5.delay = 6
         anim5.xspeed = -2
@@ -73,13 +108,25 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(anim5)
 
         //animation 6
-        anim6 = new CG.Animation(this.asset.getImageByName('hunter'), new CG.Point(50, 300), 8, 14, 56, 64)
+        anim6 = new CG.Animation({
+            image: this.asset.getImageByName('hunter'),
+            position: new CG.Point(50, 300),
+            startframe: 8,
+            endframe: 14,
+            width: 56,
+            height: 64
+        })
         anim6.name = 'anim3'
         anim6.delay = 6
         anim6.xspeed = -1
         anim6.yspeed = 1
         anim6.boundsMode = "bounce"
-        anim6.bound = new CG.Bound(0, 300, 640, 180)
+        anim6.bound = new CG.Bound({
+            x: 0,
+            y: 300,
+            width: 640,
+            height: 180
+        })
         mainlayer.addElement(anim6)
 
         renderStats = new Stats()

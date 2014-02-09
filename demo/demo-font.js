@@ -27,19 +27,32 @@ CG.Game.extend('MyGame', {
             .startPreLoad()
     },
     create: function () {
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
-        gill = new CG.Font().loadFont(this.asset.getFontByName('gill'))
+        abadi = new CG.Font().loadFont({
+            font: this.asset.getFontByName('abadi')
+        })
+        small = new CG.Font().loadFont({
+            font: this.asset.getFontByName('small')
+        })
+        gill = new CG.Font().loadFont({
+            font: this.asset.getFontByName('gill')
+        })
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({
+            name: 'mainscreen'
+        })
+        mainlayer = new CG.Layer({
+            name: 'mainlayer'
+        })
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //sprite for the background
-        back = new CG.Sprite(this.asset.getImageByName('back1'), new CG.Point(this.width2, this.height2))
+        back = new CG.Sprite({
+            image: this.asset.getImageByName('back1'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         back.xscale = back.yscale = 1.3
         back.name = 'back'
         mainlayer.addElement(back)

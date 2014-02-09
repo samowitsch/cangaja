@@ -27,29 +27,38 @@ CG.Game.extend('MyGame', {
     },
     create: function () {
         //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-        abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: Game.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: Game.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         Game.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //sprite 1
-        spr1 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 100))
+        spr1 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 100)
+        })
         spr1.name = 'spr1'
         mainlayer.addElement(spr1)
 
         //sprite 2
-        spr2 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(200, 100))
+        spr2 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(200, 100)
+        })
         spr2.rotationspeed = 1
         spr2.name = 'spr2'
         mainlayer.addElement(spr2)
 
         //sprite 3
-        spr3 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(400, 100))
+        spr3 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(400, 100)
+        })
         spr3.alpha = 0.5
         spr3.xscale = 0.5
         spr3.yscale = 0.5
@@ -57,24 +66,38 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(spr3)
 
         //sprite 4
-        spr4 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 200))
+        spr4 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 200)
+        })
         spr4.xspeed = 2
         spr4.boundsMode = 'bounce'
         spr4.name = 'spr4'
         mainlayer.addElement(spr4)
 
         //sprite 5
-        spr5 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 300))
+        spr5 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 300)
+        })
         spr5.xspeed = 2
         spr5.boundsMode = 'slide'
         spr5.name = 'spr5'
         mainlayer.addElement(spr5)
 
         //sprite 6
-        spr6 = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(50, 300))
+        spr6 = new CG.Sprite({
+            image: Game.asset.getImageByName('glowball'),
+            position: new CG.Point(50, 300)
+        })
         spr6.xspeed = 1
         spr6.yspeed = 1
-        spr6.bound = new CG.Bound(0, 400, 640, 80)
+        spr6.bound = new CG.Bound({
+            x: 0,
+            y: 400,
+            width: 640,
+            height: 80
+        })
         spr6.boundsMode = 'bounce'
         spr6.name = 'spr6'
         mainlayer.addElement(spr6)

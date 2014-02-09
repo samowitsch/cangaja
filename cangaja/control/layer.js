@@ -8,33 +8,48 @@
  */
 CG.Class.extend('Layer', {
     /**
+     * Options:
+     * name {string}
+     *
+     @example
+     var l = new CG.Layer({
+           name: 'layerback'
+         })
+     *
      * @constructor
      * @method init
-     * @param layername {string} the name of the layer
+     * @param options {object}
      * @return {*}
      */
-    init: function (layername) {
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = (layername) ? layername : ''
-        /**
-         * @property visible
-         * @type {Boolean}
-         */
-        this.visible = true
-        /**
-         * @property elements
-         * @type {Array}
-         */
-        this.elements = []
-        /**
-         * @property elementsToDelete
-         * @type {Array}
-         * @protected
-         */
-        this.elementsToDelete = []
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property name
+             * @type {String}
+             */
+            name: '',
+            /**
+             * @property visible
+             * @type {Boolean}
+             */
+            visible: true,
+            /**
+             * @property elements
+             * @type {Array}
+             */
+            elements: [],
+            /**
+             * @property elementsToDelete
+             * @type {Array}
+             * @protected
+             */
+            elementsToDelete: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     /**
