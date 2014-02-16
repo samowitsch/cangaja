@@ -9,31 +9,56 @@
 
 CG.B2DEntity.extend('B2DCircle', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * radius {number}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     *
+     @example
+     var e = new CG.B2DCircle({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           radius: 20,
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param radius    {Number}     json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
+     * @param options     {Object}
      * @return {*}
      */
-    init:function (world, name, image, radius, x, y, scale, b2BodyType) {
-        this._super(name, image, world, x, y, scale)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'B2DCircle'
-        /**
-         * @property radius
-         * @type {Number}
-         */
-        this.radius = radius
+
+        CG._extend(this, {
+            /**
+             * @property radius
+             * @type {Number}
+             */
+            radius: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         /**
          * @property bodyDef.position.x

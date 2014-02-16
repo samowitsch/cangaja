@@ -9,40 +9,59 @@
 
 CG.B2DEntity.extend('B2DChainShape', {
     /**
+     * Options:
+     * name {string}
+     * points {array}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var e = new CG.B2DChainShape({
+           name: 'player',
+           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param vertices  {array}      vertices for chainshape CG.Point array
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
+     * @param options {Object}
      * @return {*}
      */
-    init:function (world, name, vertices, x, y, scale, b2BodyType) {
-        this._super(name, false, world, x, y, scale)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'B2DChainShape'
-        /**
-         * @property polys
-         * @type {Array}
-         */
-        this.vertices = this.convertRealWorldPointToBox2DVec2(vertices)
-        /**
-         * @property xhandle
-          * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
+
+        CG._extend(this, {
+
+            /**
+             * @property polys
+             * @type {Array}
+             */
+            vertices: [],
+            /**
+             * @property bodyType
+             * @type {box2d.b2BodyType}
+             */
+            bodyType: box2d.b2BodyType.b2_staticBody
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
+
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
         /**
          * @property bodyDef.position
          */
@@ -52,10 +71,6 @@ CG.B2DEntity.extend('B2DChainShape', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property body
-         * @type {b2Body}
-         */
         /**
          * @property fixDef.shape
          * @type {b2CircleShape}

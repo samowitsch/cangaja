@@ -95,23 +95,23 @@ CG.Game.extend('MyGame', {
     },
     create: function () {
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //create Box2D World
-        b2world = new CG.B2DTestbed('box2d-world')
+        b2world = new CG.B2DTestbed({name: 'box2d-world'})
         b2world.debug = 1
 
         //create circle element with image
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 510, -200, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 410, -300, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 210, -400, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 110, 0, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 510, y: -200})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 410, y: -300})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 310, y: -100})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 210, y: -400})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 110, y: 0})
 
         var terrainPolys =
             [
@@ -222,7 +222,12 @@ CG.Game.extend('MyGame', {
 
         ]
 
-        b2world.createTerrain('terrain', false, terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
+        b2world.createTerrain({
+            name: 'terrain',
+            terrainShape: terrainPolys,
+            x:0,
+            y:0
+        })
 
         b2world.addContactListener({
             BeginContact: function (idA, idB) {
@@ -261,7 +266,7 @@ CG.Game.extend('MyGame', {
             b2world.applyImpulse(body, 270, 25)
         }
         if (key.isPressed("b")) {
-            b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, this.mouse.x, this.mouse.y, false)
+            b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: this.mouse.x, y: this.mouse.y})
         }
         if (key.isPressed("c")) {
             b2world.elements[5].clipTerrain({points: 16, radius: 40, x: this.mouse.x, y: this.mouse.y})

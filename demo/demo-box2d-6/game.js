@@ -3,7 +3,7 @@ var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, cu
     terrainBody, clipPoints = 12, clipRadius = 20, b2world, terrainBody, myTerrain
 
 CG.B2DTerrain.extend('MyTerrain', {
-    init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
+    init: function (options) {
         //custom bodydef
         this.bodyDef = new b2BodyDef
         this.bodyDef.allowSleep = true
@@ -15,7 +15,7 @@ CG.B2DTerrain.extend('MyTerrain', {
         this.fixDef.friction = 1
         this.fixDef.restitution = 1
 
-        this._super(world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet)
+        this._super(options)
     }
 })
 
@@ -63,27 +63,30 @@ CG.Game.extend('MyGame', {
     },
     create: function () {
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //sprite for the background
-        var back = new CG.Sprite(this.asset.getImageByName('back'), new CG.Point(this.width2, this.height2))
+        var back = new CG.Sprite({
+            image: this.asset.getImageByName('back'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         back.name = 'back'
         mainlayer.addElement(back)
 
         //create Box2D World
-        b2world = new CG.B2DTestbed('box2d-world')
+        b2world = new CG.B2DTestbed({name: 'box2d-world'})
         b2world.debug = 0
 
         //dynamic basketball-25s:
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 340, -800, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 310, -100, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 320, -400, box2d.b2BodyType.b2_dynamicBody)
-        b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, 330, -600, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 340, y: -800})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 310, y: -100})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 320, y: -400})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 330, y: -600})
 
         var terrainPolys =
             [
@@ -102,7 +105,15 @@ CG.Game.extend('MyGame', {
 
 //        terrainBody = b2world.createTerrain('terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
 
-        myTerrain = new CG.MyTerrain(b2world.world, 'terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, 40, box2d.b2BodyType.b2_staticBody, false)
+        myTerrain = new CG.MyTerrain({
+            world: b2world.world,
+            name: 'terrain',
+            image: this.asset.getImageByName('testTerrain'),
+            terrainShape: terrainPolys,
+            x: 0,
+            y: 0,
+            scale: 40
+        })
         terrainBody = b2world.addCustom(myTerrain)
 
         b2world.addContactListener({
@@ -123,7 +134,14 @@ CG.Game.extend('MyGame', {
             var x = Math.random() * this.width
             var y = Math.random() * this.height
             if (y < 90) y += 90;
-            b2world.createCircle('rock', this.asset.getImageByName('colorwheel'), 8, x, y, box2d.b2BodyType.b2_staticBody)
+            b2world.createCircle({
+                name: 'rock',
+                image: this.asset.getImageByName('colorwheel'),
+                radius: 8,
+                x: x,
+                y: y,
+                bodyType: box2d.b2BodyType.b2_staticBody
+            })
         }
 
 
@@ -142,7 +160,13 @@ CG.Game.extend('MyGame', {
                 b2world.applyImpulse(body, 270, 10)
             }
             if (evt.keyCode == 66) { //b
-                b2world.createCircle('basketball-25', this.asset.getImageByName('basketball-25'), 12, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
+                b2world.createCircle({
+                    name: 'basketball-25',
+                    image: this.asset.getImageByName('basketball-25'),
+                    radius: 12,
+                    x: this.mouse.x,
+                    y: this.mouse.y
+                })
             }
             if (evt.keyCode == 67 || this.mousedown == true) { //c
                 terrainBody.clipTerrain({points: clipPoints, radius: clipRadius, x: this.mouse.x, y: this.mouse.y})

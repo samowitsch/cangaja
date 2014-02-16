@@ -110,39 +110,96 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
-        back3 = new CG.Sprite(Game.asset.getImageByName('back3'), new CG.Point(320, 240))
+        back3 = new CG.Sprite({
+            image: Game.asset.getImageByName('back3'),
+            position: new CG.Point(320, 240)
+        })
         back3.name = 'back3'
         mainlayer.addElement(back3)
 
         //create Box2D World
-        b2world = new CG.B2DTestbed('box2d-world')
-        b2world.debug = 1
+        b2world = new CG.B2DTestbed({
+            name: 'box2d-world',
+            debug: true
+        })
 
         //create circle element with image
-        b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, 310, -200, box2d.b2BodyType.b2_dynamicBody)
+        b2world.createCircle({
+            name: 'glowball',
+            image: this.asset.getImageByName('glowball'),
+            radius: 23,
+            x: 310,
+            y: -200
+        })
+        //create circle element with image
+        b2world.createCircle({
+            name: 'glowball',
+            image: this.asset.getImageByName('glowball'),
+            radius: 23,
+            x: 320,
+            y: -300
+        })
 
         //create box element with image
-        b2world.createBox('btn-back', this.asset.getImageByName('btn-back'), 420, -500, box2d.b2BodyType.b2_dynamicBody)
-
+        b2world.createBox({
+            name: 'btn-back',
+            image: this.asset.getImageByName('btn-back'),
+            x: 420,
+            y: -500
+        })
+//
         //create polybody with image
-        b2world.createPolyBody('ballon', this.asset.getImageByName('ballon'), this.asset.getJsonByName('ballon'), 350, -250, box2d.b2BodyType.b2_dynamicBody, false)
-        b2world.createPolyBody('rainbow_256', this.asset.getImageByName('rainbow_256'), this.asset.getJsonByName('rainbow_256'), 250, -400, box2d.b2BodyType.b2_dynamicBody, false)
-        b2world.createPolyBody('powerstar75', this.asset.getImageByName('powerstar75'), this.asset.getJsonByName('powerstar75'), 200, -150, box2d.b2BodyType.b2_dynamicBody, false)
+        b2world.createPolyBody({
+            name: 'ballon',
+            image: this.asset.getImageByName('ballon'),
+            texturepacker: this.asset.getJsonByName('ballon'),
+            x: 350,
+            y: -250
+        })
+        b2world.createPolyBody({
+            name: 'rainbow_256',
+            image: this.asset.getImageByName('rainbow_256'),
+            texturepacker: this.asset.getJsonByName('rainbow_256'),
+            x: 250,
+            y: -400
+        })
+        b2world.createPolyBody({
+            name: 'powerstar75',
+            image: this.asset.getImageByName('powerstar75'),
+            texturepacker: this.asset.getJsonByName('powerstar75'),
+            x: 200,
+            y: -150
+        })
 
         // bridge test
-        // name, image, x, y, length, segments, segmentHeight, scale
-        b2world.createBridge('chain', this.asset.getImageByName('chain'), 20, 280, 620, 27, 3)
+        b2world.createBridge({
+            name: 'chain',
+            image: this.asset.getImageByName('chain'),
+            x: 20,
+            y: 280,
+            length: 620,
+            segments: 27,
+            segmentHeight: 3
+        })
 
         // rope test
         // name, image, x, y, length, segments, segmentHeight, scale
-        b2world.createRope('chain-v', this.asset.getImageByName('chain-v'), 580, 0, 200, 8, 3)
+        b2world.createRope({
+            name: 'chain-v',
+            image: this.asset.getImageByName('chain-v'),
+            x: 580,
+            y: 0,
+            length: 200,
+            segments: 8,
+            segmentWidth: 3
+        })
 
         b2world.addContactListener({
             BeginContact: function (idA, idB) {
@@ -175,13 +232,32 @@ CG.Game.extend('MyGame', {
                 b2world.applyImpulse(body, 270, 25)
             }
             if (evt.keyCode == 82) { //r new rainbow
-                b2world.createPolyBody('rainbow_256', this.asset.getImageByName('rainbow_256'), this.asset.getJsonByName('rainbow_256'), this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody, false)
+                b2world.createPolyBody({
+                    name: 'rainbow_256',
+                    image: this.asset.getImageByName('rainbow_256'),
+                    texturepacker: this.asset.getJsonByName('rainbow_256'),
+                    x: this.mouse.x,
+                    y: this.mouse.y
+                })
             }
             if (evt.keyCode == 83) { //s new star
-                b2world.createPolyBody('powerstar75', this.asset.getImageByName('powerstar75'), this.asset.getJsonByName('powerstar75'), this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody, false)
+                b2world.createPolyBody({
+                    name: 'powerstar75',
+                    image: this.asset.getImageByName('powerstar75'),
+                    texturepacker: this.asset.getJsonByName('powerstar75'),
+                    x: this.mouse.x,
+                    y: this.mouse.y
+                })
             }
             if (evt.keyCode == 66) { //b new ball
-                b2world.createCircle('glowball', this.asset.getImageByName('glowball'), 22, this.mouse.x, this.mouse.y, box2d.b2BodyType.b2_dynamicBody)
+                b2world.createCircle({
+                    name: 'glowball',
+                    image: this.asset.getImageByName('glowball'),
+                    radius: 22,
+                    x: this.mouse.x,
+                    y: this.mouse.y,
+                    bodyType: box2d.b2BodyType.b2_dynamicBody
+                })
             }
             if (evt.keyCode == 68) { //d
                 body = b2world.deleteBodyAt(this.mouse.x, this.mouse.y)

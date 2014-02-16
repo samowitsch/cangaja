@@ -45,37 +45,34 @@ CG.Entity.extend('Bitmap', {
              @description tolerance for the getSquareValues method
              @property tolerance {Number}
              */
-            tolerance: 128,
-            /**
-             @property bitmap_canvas {Object}
-             */
-            bitmap_canvas: document.createElement('canvas'),
-
-            /**
-             @property bitmap_ctx.fillStyle {String}
-             */
-            bitmap_ctx: {
-                fillStyle: '#000000'
-            }
+            tolerance: 128
 
         })
 
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        /**
+         @property bitmap_canvas {Object}
+         */
+        this.bitmap_canvas = document.createElement('canvas')
         /**
          @property bitmap_ctx {Context}
          */
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
-
-        if (options) {
-            /**
-             @property bitmap_canvas.width {Number}
-             */
-            this.bitmap_canvas.width = options.width
-            /**
-             @property bitmap_canvas.height {Number}
-             */
-            this.bitmap_canvas.height = options.height
-
-        }
+        /**
+         @property bitmap_ctx.fillStyle {String}
+         */
+        this.bitmap_ctx.fillStyle = '#000000'
+        /**
+         @property bitmap_canvas.width {Number}
+         */
+        this.bitmap_canvas.width = this.width
+        /**
+         @property bitmap_canvas.height {Number}
+         */
+        this.bitmap_canvas.height = this.height
 
 
         return this

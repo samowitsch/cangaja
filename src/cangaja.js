@@ -13866,37 +13866,34 @@ CG.Entity.extend('Bitmap', {
              @description tolerance for the getSquareValues method
              @property tolerance {Number}
              */
-            tolerance: 128,
-            /**
-             @property bitmap_canvas {Object}
-             */
-            bitmap_canvas: document.createElement('canvas'),
-
-            /**
-             @property bitmap_ctx.fillStyle {String}
-             */
-            bitmap_ctx: {
-                fillStyle: '#000000'
-            }
+            tolerance: 128
 
         })
 
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        /**
+         @property bitmap_canvas {Object}
+         */
+        this.bitmap_canvas = document.createElement('canvas')
         /**
          @property bitmap_ctx {Context}
          */
         this.bitmap_ctx = this.bitmap_canvas.getContext('2d')
-
-        if (options) {
-            /**
-             @property bitmap_canvas.width {Number}
-             */
-            this.bitmap_canvas.width = options.width
-            /**
-             @property bitmap_canvas.height {Number}
-             */
-            this.bitmap_canvas.height = options.height
-
-        }
+        /**
+         @property bitmap_ctx.fillStyle {String}
+         */
+        this.bitmap_ctx.fillStyle = '#000000'
+        /**
+         @property bitmap_canvas.width {Number}
+         */
+        this.bitmap_canvas.width = this.width
+        /**
+         @property bitmap_canvas.height {Number}
+         */
+        this.bitmap_canvas.height = this.height
 
 
         return this
@@ -29762,56 +29759,101 @@ var b2AABB = box2d.b2AABB,
 
 CG.Entity.extend('B2DEntity', {
     /**
+     * Options:
+     * name {string} id or name to identify
+     * image {mixed} path to image, image or atlasimage from asset
+     * world {object} reference to world of B2DWorld
+     * x {number} the x position
+     * y {number} the y position
+     * scale {number} the world scale of B2DWorld
+     *
+     @example
+     var e = new CG.B2DEntity({
+           name: 'player',
+           image: new CG.Point(100,100),
+           world: b2world,
+           x: 10,
+           y: 20,
+           scale: 40
+         })
+     *
      * @method init
      * @constructor
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param world     {object}      reference to world of B2DWorld
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
+     * @param options {object}
      * @return {*}
      */
 
-    init: function (name, image, world, x, y, scale) {
+    init: function (options) {
         this._super()
         this.instanceOf = 'B2DEntity'
-        this.setImage(image)
-        /**
-         * @property body
-         * @type {b2Body}
-         */
-        this.body = {}
-        /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 1
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = x
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = y
-        /**
-         * @property scale
-         * @type {Number}
-         */
-        this.scale = scale
-        /**
-         * @property id
-         * @type {Object}
-         */
-        this.id = {name: name, uid: 0}
-        /**
-         * @property world
-         * @type {b2World}
-         */
-        this.world = world
+
+        CG._extend(this, {
+            /**
+             * @property body
+             * @type {b2Body}
+             */
+            body: {},
+            /**
+             * @property body
+             * @type {b2Body}
+             */
+            bodyType: box2d.b2BodyType.b2_dynamicBody,
+            /**
+             * @property bullet
+             * @type {b2Body}
+             */
+            bullet: false,
+            /**
+             * @property alpha
+             * @type {Number}
+             */
+            alpha: 1,
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property scale
+             * @type {Number}
+             */
+            scale: 40,
+            /**
+             * @property id
+             * @type {Object}
+             */
+            id: {name: '', uid: 0},
+            /**
+             * @property world
+             * @type {b2World}
+             */
+            world: {},
+            /**
+             * @property isHit
+             * @type {Boolean}
+             */
+            isHit: false,
+            /**
+             * @property strength
+             * @type {Number}
+             */
+            strength: 100,
+            /**
+             * @property dead
+             * @type {Boolean}
+             */
+            dead: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
 
         if (!this.bodyDef) {
             /**
@@ -29853,21 +29895,6 @@ CG.Entity.extend('B2DEntity', {
              */
             this.fixDef.restitution = 0.5
         }
-        /**
-         * @property isHit
-         * @type {Boolean}
-         */
-        this.isHit = false;
-        /**
-         * @property strength
-         * @type {Number}
-         */
-        this.strength = 100;
-        /**
-         * @property dead
-         * @type {Boolean}
-         */
-        this.dead = false;
 
         return this
     },
@@ -29964,31 +29991,56 @@ CG.Entity.extend('B2DEntity', {
 
 CG.B2DEntity.extend('B2DCircle', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * radius {number}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     *
+     @example
+     var e = new CG.B2DCircle({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           radius: 20,
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param radius    {Number}     json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
+     * @param options     {Object}
      * @return {*}
      */
-    init:function (world, name, image, radius, x, y, scale, b2BodyType) {
-        this._super(name, image, world, x, y, scale)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'B2DCircle'
-        /**
-         * @property radius
-         * @type {Number}
-         */
-        this.radius = radius
+
+        CG._extend(this, {
+            /**
+             * @property radius
+             * @type {Number}
+             */
+            radius: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         /**
          * @property bodyDef.position.x
@@ -30036,44 +30088,56 @@ CG.B2DEntity.extend('B2DCircle', {
 
 CG.B2DEntity.extend('B2DLine', {
     /**
+     * Options:
+     * name {string} id or name to identify
+     * startPoint {CG.Point}
+     * endPoint {CG.Point}
+     * world {object} reference to world of B2DWorld
+     * scale {number} the world scale of B2DWorld
+     *
+     @example
+     var e = new CG.B2DLine({
+       name: 'groundline',
+       startPoint: new CG.Point(10,10),
+       endPoint: new CG.Point(500,10),
+       world: b2world,
+       scale: 40
+     })
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param start     {b2Vec2}      start of line
-     * @param end       {b2Vec2}      end of line
-     * @param scale     {Number}     the world scale of B2DWorld
+     * @param options {Object}
      * @return {*}
      */
-    init:function (world, name, start, end, scale) {
-        this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DLine'
-        /**
-         * @property start
-         * @type {b2Vec2}
-         */
-        this.start = start
-        /**
-         * @property end
-         * @type {b2Vec2}
-         */
-        this.end = end
-        /**
-         * @property xhandle
-         * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
+
+        CG._extend(this, {
+            /**
+             * @property startPoint
+             * @type {b2Vec2}
+             */
+            startPoint: new b2Vec2(0, 0),
+            /**
+             * @property endPoint
+             * @type {b2Vec2}
+             */
+            endPoint: new b2Vec2(0, 0)
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.convertPoints()
+
         /**
          * @property fixDef.shape
          * @type {b2PolygonShape}
          */
         this.fixDef.shape = new b2EdgeShape()
-        this.fixDef.shape.Set(this.start, this.end)
+        this.fixDef.shape.Set(this.startPoint, this.endPoint)
         /**
          * @property bodyDef.type
          * @type {Number}
@@ -30097,10 +30161,16 @@ CG.B2DEntity.extend('B2DLine', {
 
         return this
     },
-    update:function () {
+    convertPoints: function () {
+        this.startPoint.x = this.startPoint.x / this.scale
+        this.startPoint.y = this.startPoint.y / this.scale
+        this.endPoint.x = this.endPoint.x / this.scale
+        this.endPoint.y = this.endPoint.y / this.scale
+    },
+    update: function () {
 
     },
-    draw:function () {
+    draw: function () {
 
     }
 })
@@ -30117,33 +30187,52 @@ CG.B2DEntity.extend('B2DLine', {
 
 CG.B2DEntity.extend('B2DRectangle', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     *
+     @example
+     var e = new CG.B2DRectangle({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody
+     })
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}     path to image, image or atlasimage from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
+     * @param options     {Object}
      * @return {*}
      */
-    init:function (world, name, image, x, y, scale, b2BodyType) {
-        this._super(name, image, world, x, y, scale)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'B2DRectangle'
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         /**
          * @property bodyDef.stat
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         /**
          * @property fixDef.shape
          * @type {b2PolygonShape}
          */
         this.fixDef.shape = new b2PolygonShape
-        this.fixDef.shape.SetAsBox(this.width / scale * 0.5, this.height / scale * 0.5)
+        this.fixDef.shape.SetAsBox(this.width / this.scale * 0.5, this.height / this.scale * 0.5)
         /**
          * @property bodyDef.position.x
          * @type {Number}
@@ -30184,46 +30273,76 @@ CG.B2DEntity.extend('B2DRectangle', {
 
 CG.B2DEntity.extend('B2DPolygon', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * texturepacker {string}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     * bullet {boolean}
+     *
+     @example
+     var e = new CG.B2DPolygon({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           texturepacker: this.asset.getJsonByName('powerstar75'),
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody,
+           bullet: false
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param jsonpoly  {string}      json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
-     * @param bullet    {Boolean}     bullet option
+     * @param options {Object}
      * @return {*}
      */
-    init: function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DPolygon'
-        /**
-         * @property polys
-         * @type {Array}
-         */
-        this.polys = new Array()
+        CG._extend(this, {
+            /**
+             * @property polys
+             * @type {Array}
+             */
+            polys: new Array(),
+            /**
+             * @property bullet
+             * @type {*}
+             */
+            bullet: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
         /**
          * @property jsondata
          * @type {*}
          */
 //        this.jsondata = jsonpoly.data[jsonpoly.name]
-        this.jsondata = jsonpoly.data[name]
+        this.jsondata = this.texturepacker.data[this.name]
         /**
          * @property vecs
          * @type {Array}
          */
         this.vecs = new Array()
-        this.vecs = this.getPolysFromJson(jsonpoly) // build grouped b2vecs from physicseditor
+        this.vecs = this.getPolysFromJson(this.texturepacker) // build grouped b2vecs from physicseditor
         //@TODO get alternative polys from bitmap contourTrace & triangulation?
 
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         /**
          * @property bodyDef.position
@@ -30234,11 +30353,6 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property bullet
-         * @type {*}
-         */
-        this.bullet = bullet || false
         /**
          * @property bodyDef.bullet
          * @type {*}
@@ -30363,71 +30477,110 @@ CG.B2DEntity.extend('B2DPolygon', {
  'poly2tri Invalid Triangle.index() call',
  '"null" is not an object (evaluating 'pb.y')',
  poly2tri Invalid Triangle.legalize() call
-*/
+ */
 
 CG.B2DEntity.extend('B2DTerrain', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * points {array}
+     * x {number}
+     * y {number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var terrainShapes =
+     [{
+        	outer: [{
+        		x: 0,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 768
+        	}, {
+        		x: 0,
+        		y: 768
+        	}],
+        	holes: []
+        }]
+
+     b2world.createTerrain({
+         name: 'terrain',
+         image: false
+         terrainShape: terrainShapes,
+         x:0,
+         y:0,
+         world: b2world,
+         scale: 40
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param terrainPoly  {array}      array of vertices to start terrain building
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
-     * @param bullet    {Boolean}     bullet option
+     * @param options {Object}
      * @return {*}
      */
-    init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DTerrain'
 
-        /**
-         * @description bitmap for terrain
-         * @property bitmap
-         * @type {CG.Bitmap}
-         */
-        this.bitmap = new CG.Bitmap(Game.width, Game.height)
-        this.bitmap.loadImage(image)
-        /**
-         * @property polys
-         * @type {Array}
-         */
-        this.polys = new Array()
-        /**
-         * @property terrainpoly
-         * @type {*}
-         */
-        this.terrainPoly = terrainPoly
-        /**
-         * @description the generated triangles generated thru clipper and poly2tri
-         * @property terrainTriangles
-         * @type {Array}
-         */
-        this.terrainTriangles = []
-        /**
-         * @property holes
-         * @type {Array}
-         */
-        this.holes = []
-        /**
-         * @property xhandle
-         * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
+        CG._extend(this, {
+            /**
+             * @description bitmap for terrain
+             * @property bitmap
+             * @type {CG.Bitmap}
+             */
+            bitmap: new CG.Bitmap({width: Game.width, height: Game.height}),
+            /**
+             * @property image
+             * @type {strng}
+             */
+            image: false,
+            /**
+             * @property polys
+             * @type {Array}
+             */
+            polys: new Array(),
+            /**
+             * @property terrainShape
+             * @type {*}
+             */
+            terrainShape: [],
+            /**
+             * @description the generated triangles generated thru clipper and poly2tri
+             * @property terrainTriangles
+             * @type {Array}
+             */
+            terrainTriangles: [],
+            /**
+             * @property holes
+             * @type {Array}
+             */
+            holes: [],
+            /**
+             * @property bodyType
+             * @type {box2d.b2BodyType}
+             */
+            bodyType: box2d.b2BodyType.b2_staticBody
+        })
+
+
+        if (options) {
+            CG._extend(this, options)
+            this.bitmap.loadImage(this.image)
+        }
+
 
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
         /**
          * @property bodyDef.position
          */
@@ -30437,11 +30590,6 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property bullet
-         * @type {*}
-         */
-        this.bullet = bullet || false
         /**
          * @property bodyDef.bullet
          * @type {*}
@@ -30460,17 +30608,17 @@ CG.B2DEntity.extend('B2DTerrain', {
         this.body = this.world.CreateBody(this.bodyDef)
 
         try {
-            for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
+            for (var part = 0, len = this.terrainShape.length; part < len; part++) {
 
-                var outer = this.terrainPoly[part].outer
+                var outer = this.terrainShape[part].outer
                 if (typeof outer === 'undefined')
                     continue
 
                 var swctx = new poly2tri.SweepContext(outer, {cloneArrays: true})
 
-                if (this.terrainPoly[part].holes.length > 0) {
-                    for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                        swctx.addHole(this.terrainPoly[part].holes[i])
+                if (this.terrainShape[part].holes.length > 0) {
+                    for (var i = 0, l = this.terrainShape[part].holes.length; i < l; i++) {
+                        swctx.addHole(this.terrainShape[part].holes[i])
                     }
                 }
 
@@ -30492,7 +30640,7 @@ CG.B2DEntity.extend('B2DTerrain', {
             console.log('error: createTerrain()', e)
             console.log(e.message)
             console.log(e.stack)
-            console.log(this.terrainPoly)
+            console.log(this.terrainShape)
             console.log(this.terrainTriangles)
         }
     },
@@ -30521,21 +30669,21 @@ CG.B2DEntity.extend('B2DTerrain', {
     clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
 
-        //add new hole to all contour terrainPolys
-        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            this.terrainPoly[part].holes.push(newhole)
+        //add new hole to all contour terrainShapes
+        for (var part = 0, len = this.terrainShape.length; part < len; part++) {
+            this.terrainShape[part].holes.push(newhole)
         }
 
-        //use clipper to calculate new terrainPolys
+        //use clipper to calculate new terrainShapes
         var tempPolys = []
         var subj_polygons = []
         var clip_polygons = []
-        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            subj_polygons = [this.terrainPoly[part].outer]
+        for (var part = 0, len = this.terrainShape.length; part < len; part++) {
+            subj_polygons = [this.terrainShape[part].outer]
             clip_polygons = []
-            if (this.terrainPoly[part].holes.length > 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    clip_polygons.push(this.terrainPoly[part].holes[i])
+            if (this.terrainShape[part].holes.length > 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i < l; i++) {
+                    clip_polygons.push(this.terrainShape[part].holes[i])
                 }
             }
 
@@ -30545,7 +30693,6 @@ CG.B2DEntity.extend('B2DTerrain', {
 //
 //            var solution_polygons = new ClipperLib.ExPolygons()
 //            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
-
 
 
             var cpr = new ClipperLib.Clipper()
@@ -30567,7 +30714,7 @@ CG.B2DEntity.extend('B2DTerrain', {
                 }
             }
         }
-        this.terrainPoly = tempPolys
+        this.terrainShape = tempPolys
         this.lightenTerrain()
 //        this.cleanTerrain()
         this.deleteTerrain()
@@ -30582,13 +30729,13 @@ CG.B2DEntity.extend('B2DTerrain', {
         //use clipper to eliminate to much vertices
         var tolerance = 0.02
 
-        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
-            this.terrainPoly[part].outer = temp[0]
-            if (this.terrainPoly[part].holes.length > 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
-                    this.terrainPoly[part].holes[i] = temp[0]
+        for (var part = 0, len = this.terrainShape.length; part < len; part++) {
+            var temp = ClipperLib.JS.Lighten(this.terrainShape[part].outer, tolerance * this.scale)
+            this.terrainShape[part].outer = temp[0]
+            if (this.terrainShape[part].holes.length > 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i < l; i++) {
+                    var temp = ClipperLib.JS.Lighten(this.terrainShape[part].holes[i], tolerance * this.scale)
+                    this.terrainShape[part].holes[i] = temp[0]
                 }
             }
         }
@@ -30601,13 +30748,13 @@ CG.B2DEntity.extend('B2DTerrain', {
         //use clipper to eliminate to much vertices
         var cleandelta = 0.1
 
-        for (var part = 0, len = this.terrainPoly.length; part < len; part++) {
-            var temp = ClipperLib.JS.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
-            this.terrainPoly[part].outer = temp[0]
-            if (this.terrainPoly[part].holes.length > 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i < l; i++) {
-                    var temp = ClipperLib.JS.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
-                    this.terrainPoly[part].holes[i] = temp[0]
+        for (var part = 0, len = this.terrainShape.length; part < len; part++) {
+            var temp = ClipperLib.JS.Clean(this.terrainShape[part].outer, cleandelta * this.scale)
+            this.terrainShape[part].outer = temp[0]
+            if (this.terrainShape[part].holes.length > 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i < l; i++) {
+                    var temp = ClipperLib.JS.Clean(this.terrainShape[part].holes[i], cleandelta * this.scale)
+                    this.terrainShape[part].holes[i] = temp[0]
                 }
             }
         }
@@ -30648,7 +30795,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         return circleArray.reverse()
     },
 
-    draw: function(){
+    draw: function () {
 
         Game.renderer.draw(this.bitmap)
 
@@ -30692,40 +30839,59 @@ CG.B2DEntity.extend('B2DTerrain', {
 
 CG.B2DEntity.extend('B2DChainShape', {
     /**
+     * Options:
+     * name {string}
+     * points {array}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var e = new CG.B2DChainShape({
+           name: 'player',
+           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param vertices  {array}      vertices for chainshape CG.Point array
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
+     * @param options {Object}
      * @return {*}
      */
-    init:function (world, name, vertices, x, y, scale, b2BodyType) {
-        this._super(name, false, world, x, y, scale)
+    init:function (options) {
+        this._super()
         this.instanceOf = 'B2DChainShape'
-        /**
-         * @property polys
-         * @type {Array}
-         */
-        this.vertices = this.convertRealWorldPointToBox2DVec2(vertices)
-        /**
-         * @property xhandle
-          * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
+
+        CG._extend(this, {
+
+            /**
+             * @property polys
+             * @type {Array}
+             */
+            vertices: [],
+            /**
+             * @property bodyType
+             * @type {box2d.b2BodyType}
+             */
+            bodyType: box2d.b2BodyType.b2_staticBody
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
+
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
         /**
          * @property bodyDef.position
          */
@@ -30735,10 +30901,6 @@ CG.B2DEntity.extend('B2DChainShape', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property body
-         * @type {b2Body}
-         */
         /**
          * @property fixDef.shape
          * @type {b2CircleShape}
@@ -30795,64 +30957,119 @@ CG.B2DEntity.extend('B2DChainShape', {
 
 CG.B2DEntity.extend('B2DRope', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * x {number}
+     * y (number}
+     * length {number}
+     * segments {number}
+     * segmentHeight {number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var e = new CG.B2DRope({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           x: 100,
+           y: 100,
+           length: 600,
+           segments: 20
+           segmentWidth: 4,
+           world: b2world,
+           scale: 40
+     })
+     *
      * @method init
      * @constructor
-     * @param world         {Object}      reference to world of B2DWorld
-     * @param name          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or atlasimage from asset
-     * @param x             {Number}     the x position
-     * @param y             {Number}     the y position
-     * @param length        {Number}     the length/width of the bridge
-     * @param segments      {Number}     segments of the bridge
-     * @param segmentWidth  {Number}     width of a segment
-     * @param scale         {Number}     the world scale of B2DWorld
+     * @param options {Object}
      * @return {*}
      */
-    init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DRope'
-        /**
-         * @property length
-         * @type {Number}
-         */
-        this.length = length
-        /**
-         * @property segments
-         * @type {Number}
-         */
-        this.segments = segments
-        /**
-         * @property segmentHeight
-         * @type {Number}
-         */
-        this.segmentHeight = ((this.length - this.y) / this.segments) / 2
-        /**
-         * @property segmentWidth
-         * @type {*}
-         */
-        this.segmentWidth = segmentWidth
-        /**
-         * @property anchor
-         * @type {b2Vec2}
-         */
-        this.anchor = new b2Vec2()
-        /**
-         * @property prevBody
-         * @type {Object}
-         */
-        this.prevBody = {}
-        /**
-         * @property bodyGroup
-         * @type {Array}
-         */
-        this.bodyGroup = []
-        /**
-         * @property bodyCount
-         * @type {Number}
-         */
-        this.bodyCount = 0
 
-        this.body = {}
+        CG._extend(this, {
+            /**
+             * @property length
+             * @type {Number}
+             */
+            length: 0,
+            /**
+             * @property segments
+             * @type {Number}
+             */
+            segments: 0,
+            /**
+             * @property segmentHeight
+             * @type {Number}
+             */
+            segmentHeight: 0,
+            /**
+             * @property segmentWidth
+             * @type {*}
+             */
+            segmentWidth: 0,
+            /**
+             * @property anchor
+             * @type {b2Vec2}
+             */
+            anchor: new b2Vec2(),
+            /**
+             * @property prevBody
+             * @type {Object}
+             */
+            prevBody: {},
+            /**
+             * @property bodyGroup
+             * @type {Array}
+             */
+            bodyGroup: [],
+            /**
+             * @property bodyCount
+             * @type {Number}
+             */
+            bodyCount: 0,
+            /**
+             * @property body
+             * @type {object}
+             */
+            body: {},
+            /**
+             * @property density
+             * @type {Number}
+             */
+            density: 1.0,
+            /**
+             * @property restitution
+             * @type {Number}
+             */
+            restitution: 0.2,
+            /**
+             * @property friction
+             * @type {Number}
+             */
+            friction: 0.2,
+            /**
+             * @property lowerAngle
+             * @type {Number}
+             */
+            lowerAngle: -25,
+            /**
+             * @property upperAngle
+             * @type {Number}
+             */
+            upperAngle: 25
+
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
+        this.segmentHeight = ((this.length - this.y) / this.segments) / 2
 
         // RopeStart
         this.fixtureDef = new b2FixtureDef()
@@ -30860,9 +31077,9 @@ CG.B2DEntity.extend('B2DRope', {
         this.bodyDef = new b2BodyDef()
         this.bodyDef.userData = this.id
         this.bodyShapeCircle.m_radius = this.segmentWidth / this.scale
-        this.fixtureDef.density = 1.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.fixtureDef.shape = this.bodyShapeCircle
         this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
@@ -30877,12 +31094,12 @@ CG.B2DEntity.extend('B2DRope', {
         this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
         this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         this.fixtureDef.shape = this.bodyShapePoly
-        this.fixtureDef.density = 20.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 / CG.Const_180_PI
-        this.jointDef.upperAngle = 25 / CG.Const_180_PI
+        this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
+        this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
         this.jointDef.enableLimit = true
 
 
@@ -30901,7 +31118,7 @@ CG.B2DEntity.extend('B2DRope', {
 
     },
 
-    draw:function () {
+    draw: function () {
         for (var i = 1; i <= this.bodyCount; i++) {
 
             this.body = this.bodyGroup[i]
@@ -30925,64 +31142,133 @@ CG.B2DEntity.extend('B2DRope', {
 
 CG.B2DEntity.extend('B2DBridge', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * x {number}
+     * y (number}
+     * length {number}
+     * segments {number}
+     * segmentHeight {number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var e = new CG.B2DBridge({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           x: 100,
+           y: 100,
+           length: 600,
+           segments: 20
+           segmentHeight: 4,
+           world: b2world,
+           scale: 40
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world         {Object}      reference to world of B2DWorld
-     * @param name          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or atlasimage from asset
-     * @param x             {Number}     the x position
-     * @param y             {Number}     the y position
-     * @param length        {Number}     the length/width of the bridge
-     * @param segments      {Number}     segments of the bridge
-     * @param segmentHeight {Number}     height of a segment
-     * @param scale         {Number}     the world scale of B2DWorld
+     * @param options {Object}
      * @return {*}
      */
-    init: function (world, name, image, x, y, length, segments, segmentHeight, scale) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DBridge'
-        /**
-         * @property length
-         * @type {Number}
-         */
-        this.length = length
-        /**
-         * @property segments
-         * @type {Number}
-         */
-        this.segments = segments
-        /**
-         * @property segmentHeight
-         * @type {Number}
-         */
-        this.segmentHeight = segmentHeight
+
+        CG._extend(this, {
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property length
+             * @type {Number}
+             */
+            length: 0,
+            /**
+             * @property segments
+             * @type {Number}
+             */
+            segments: 0,
+            /**
+             * @property segmentWidth
+             * @type {Number}
+             */
+            segmentWidth: 0,
+            /**
+             * @property segmentHeight
+             * @type {Number}
+             */
+            segmentHeight: 0,
+            /**
+             * @property anchor
+             * @type {b2Vec2}
+             */
+            anchor: new b2Vec2(),
+            /**
+             * @property prevBodf
+             * @type {Object}
+             */
+            prevBody: {},
+            /**
+             * @property bodyGroup
+             * @type {Array}
+             */
+            bodyGroup: [],
+            /**
+             * @property bodyCount
+             * @type {Number}
+             */
+            bodyCount: 0,
+            /**
+             * @property body
+             * @type {object}
+             */
+            body: {},
+            /**
+             * @property density
+             * @type {Number}
+             */
+            density: 20.0,
+            /**
+             * @property restitution
+             * @type {Number}
+             */
+            restitution: 0.2,
+            /**
+             * @property friction
+             * @type {Number}
+             */
+            friction: 0.2,
+            /**
+             * @property lowerAngle
+             * @type {Number}
+             */
+            lowerAngle: -25,
+            /**
+             * @property upperAngle
+             * @type {Number}
+             */
+            upperAngle: 25
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
         /**
          * @property segmentWidth
          * @type {Number}
          */
         this.segmentWidth = ((this.length - this.x) / this.segments) / 2
-        /**
-         * @property anchor
-         * @type {b2Vec2}
-         */
-        this.anchor = new b2Vec2()
-        /**
-         * @property prevBodf
-         * @type {Object}
-         */
-        this.prevBody = {}
-        /**
-         * @property bodyGroup
-         * @type {Array}
-         */
-        this.bodyGroup = []
-        /**
-         * @property bodyCount
-         * @type {Number}
-         */
-        this.bodyCount = 0
-
-        this.body = {}
 
 
         // BridgeStart
@@ -30992,9 +31278,9 @@ CG.B2DEntity.extend('B2DBridge', {
         this.bodyDef = new b2BodyDef()
         this.bodyDef.userData = this.id
         this.bodyShapeCircle.m_radius = this.segmentHeight / this.scale
-        this.fixtureDef.density = 20.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.fixtureDef.shape = this.bodyShapeCircle
         this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
@@ -31015,12 +31301,12 @@ CG.B2DEntity.extend('B2DBridge', {
         this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
         this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         this.fixtureDef.shape = this.bodyShapePoly
-        this.fixtureDef.density = 20.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 / CG.Const_180_PI
-        this.jointDef.upperAngle = 25 / CG.Const_180_PI
+        this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
+        this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
         this.jointDef.enableLimit = true
 
         for (var i = 0, l = this.segments; i < l; i++) {
@@ -31067,46 +31353,79 @@ CG.B2DEntity.extend('B2DBridge', {
 
 CG.Layer.extend('B2DWorld', {
     /**
+     * Options:
+     * name {string}
+     * sleep {boolean}
+     * scale {number}
+     * debug {boolean}
+     *
+     *
+     @example
+     var w = new CG.B2DWorld({
+         name: 'box2d-world',
+         scale: 40,
+         debug: true,
+         sleep: true
+     })
      * @method init
      * @constructor
-     * @param name {String} name of the b2dworld
-     * @param opt {object} additional options
+     * @param options {object}
      */
-    init: function (name, opt) {
+    init: function (options) {
 
-        this.framerate = 1 / 30
+        CG._extend(this, {
+            /**
+             * @property framerate
+             * @type {number}
+             */
+            framerate: 1 / 30,
 
-        /**
-         * @property opt
-         * @type {object}
-         */
-        this.opt = opt || {}
+            /**
+             * @property name
+             * @type {String}
+             */
+            name: '',
+            /**
+             * @property debug
+             * @type {Boolean}
+             */
+            debug: false,
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property elements
+             * @type {Array}
+             */
+            elements: [],
 
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = name || ''
-        /**
-         * @property debug
-         * @type {Boolean}
-         */
-        this.debug = false
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = 0
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = 0
-        /**
-         * @property elements
-         * @type {Array}
-         */
-        this.elements = []
+            /**
+             * @property uid
+             * @type {Number}
+             */
+            uid: 0, //uid counter for elements
+            /**
+             * @property scale
+             * @type {Number}
+             */
+            scale: 40,
+            /**
+             * @property sleep
+             * @type {Boolean}
+             */
+            sleep: true
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
 
         /**
          * @property world
@@ -31114,18 +31433,8 @@ CG.Layer.extend('B2DWorld', {
          */
         this.world = new b2World(
             new b2Vec2(0, 10), //gravity
-            this.opt.sleep || true        //allow sleep
+            this.sleep
         )
-        /**
-         * @property uid
-         * @type {Number}
-         */
-        this.uid = 0 //uid counter for elements
-        /**
-         * @property scale
-         * @type {Number}
-         */
-        this.scale = 40
 
         // add m_groundBody for use with b2MouseJoint
         this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
@@ -31196,7 +31505,7 @@ CG.Layer.extend('B2DWorld', {
         this.elements.push(obj)
         return obj
     },
-     /**
+    /**
      * @description
      *
      * Checks if a B2D body Exists
@@ -31217,65 +31526,125 @@ CG.Layer.extend('B2DWorld', {
         return false
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}  path to image, image or atlasimage from asset
+     * x {number}
+     * y {number}
+     * bodyType {number}
+     *
+     @example
+     b2world.createBox({
+        name: 'glowball',
+        image: this.asset.getImageByName('glowball'),
+        radius: 22,
+        x: this.mouse.x,
+        y: this.mouse.y,
+        bodyType: box2d.b2BodyType.b2_dynamicBody
+     })
      * @description
      *
      * createBox creates a basic Box2D rectangle with some default settings.
      *
      * @method createBox
-     * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or atlasimage from asset
-     * @param x       {Number}     the x position
-     * @param y       {Number}     the y position
-     * @param stat    {Boolean}     is the body static or dynamic
+     * @param options {object}
      * @return {CG.B2DRectangle}
      */
-    createBox: function (id, image, x, y, stat) {
+    createBox: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DRectangle(this.world, id, image, x, y, this.scale, stat)
+        var entity = new CG.B2DRectangle(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * startPoint {CG.Point}
+     * endPoint {CG.Point}
+     *
+     @example
+     b2world.createLine({
+        name:'testline2',
+        startPoint: new CG.Point(630, 200),
+        endPoint: new CG.Point(150, 250)
+     })
+     *
      * @description
      *
      * createLine creates a basic Box2D line with some default settings.
      *
      * @method createLine
-     * @param id      {String}    id or name to identify
-     * @param start   {CG.Point}  start o fline
-     * @param end     {CG.Point}  end of line
+     * @param options {object}
      * @return {CG.B2DLine}
      */
-    createLine: function (id, start, end) {
+    createLine: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DLine(this.world, id, new b2Vec2(start.x / this.scale, start.y / this.scale), new b2Vec2(end.x / this.scale, end.y / this.scale), this.scale)
+        var entity = new CG.B2DLine(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}  path to image, image or atlasimage from asset
+     * radius {number}
+     * x {number}
+     * y {number}
+     * bodyType {number}
+     *
+     @example
+     b2world.createCircle({
+        name: 'glowball',
+        image: this.asset.getImageByName('glowball'),
+        radius: 22,
+        x: this.mouse.x,
+        y: this.mouse.y,
+        bodyType: box2d.b2BodyType.b2_dynamicBody
+     })
      * @description
      *
      * createCircle creates a basic Box2D circle with some default settings
      *
      * @method createCircle
-     * @param id      {String}      id or name to identify
-     * @param image   {mixed}       path to image, image or atlasimage from asset
-     * @param radius  {Number}     the radius
-     * @param x       {Number}     the x position
-     * @param y       {Number}     the y position
-     * @param stat    {Boolean}     is the body static or dynamic
+     * @param options {object}
      * @return {CG.B2DCircle}
      */
-    createCircle: function (id, image, radius, x, y, stat) {
+    createCircle: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DCircle(this.world, id, image, radius, x, y, this.scale, stat)
+        var entity = new CG.B2DCircle(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}  path to image, image or atlasimage from asset
+     * texturepacker {String}
+     * x {number}
+     * y {number}
+     * bodyType {number}
+     * bullet {boolean}
+     *
+     @example
+     b2world.createPolyBody({
+        name: 'powerstar75',
+        image: this.asset.getImageByName('powerstar75'),
+        texturepacker: this.asset.getJsonByName('powerstar75'),
+        x: 200,
+        y: -150,
+        bodyType: box2d.b2BodyType.b2_dynamicBody,
+        bullet: false
+     })
+     *
      * @description
      *
      * createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
@@ -31283,103 +31652,186 @@ CG.Layer.extend('B2DWorld', {
      * taken from the json file at the moment.
      *
      * @method createPolyBody
-     * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param jsonpoly  {String}      json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param stat      {Boolean}     is the body static or dynamic
-     * @param bullet    {Boolean}     bullet option
+     * @param options {object}
      * @return {CG.B2DPolygon}
      */
-    createPolyBody: function (id, image, jsonpoly, x, y, stat, bullet) {
+    createPolyBody: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DPolygon(this.world, id, image, jsonpoly, x, y, this.scale, stat, bullet)
+        var entity = new CG.B2DPolygon(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * points {array}
+     * x {number}
+     * y {number}
+     *
+     @example
+     var terrainPolys =
+     [{
+        	outer: [{
+        		x: 0,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 768
+        	}, {
+        		x: 0,
+        		y: 768
+        	}],
+        	holes: []
+        }]
+
+     b2world.createTerrain({
+         name: 'terrain',
+         image: false
+         terrainShape: terrainPolys,
+         x:0,
+         y:0
+     })
+     *
+     *
      * @description
      *
      * createTerrain
      *
      * @method createPolyBody
-     * @param id        {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param terrainpoly  {Array}      array of vertices to start terrain building
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param stat      {Boolean}     is the body static or dynamic
-     * @param bullet    {Boolean}     bullet option
+     * @param options {String}
      * @return {CG.B2DTerrain}
      */
-    createTerrain: function (id, image, terrainpoly, x, y, stat, bullet) {
+    createTerrain: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DTerrain(this.world, id, image, terrainpoly, x, y, this.scale, stat, bullet)
+        var entity = new CG.B2DTerrain(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * points {array}
+     * x {number}
+     * y {number}
+     *
+     @example
+     chainArray = [
+         new CG.Point(0, 0),
+         new CG.Point(50, 10),
+         new CG.Point(100, 100),
+         new CG.Point(200, 100),
+         new CG.Point(250, 50),
+         new CG.Point(300, 70)
+     ]
+
+     b2world.createChainShape({
+         name: 'chaneshape',
+         points: chainArray,
+         x: 0,
+         y: 200
+     })
+     *
      * @description
      *
      * createChainShape
      *
      * @method createChainShape
-     * @param id        {String}      id or name to identify
-     * @param vertices  {array}      vertices for chainshape CG.Point array
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
+     * @param options {object}
      * @return {CG.B2DChainShape}
      */
-    createChainShape: function (id, vertices, x, y, stat) {
+    createChainShape: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DChainShape(this.world, id, vertices, x, y, this.scale, stat)
+        var entity = new CG.B2DChainShape(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}  path to image, image or atlasimage from asset
+     * x {number}
+     * y {number}
+     * length {number}
+     * segments {number}
+     * segmentHeight {number}
+     *
+     @example
+     b2world.createBridge({
+        name:'chain',
+        image:this.asset.getImageByName('chain'),
+        x: 20,
+        y: 280,
+        length: 620,
+        segments: 27,
+        segmentHeight: 3
+     })
+     *
+     *
      * @description
      *
      * This method creates a B2D bridge. Just play with the params to get a good result!
      *
      * @method createBridge
-     * @param id          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or atlasimage from asset
-     * @param x             {Number}     the x position
-     * @param y             {Number}     the y position
-     * @param length        {Number}     the length/width of the bridge
-     * @param segments      {Number}     segments of the bridge
-     * @param segmentHeight {Number}     height of a segment
+     * @param options {object}
      * @return {CG.B2DBridge}
      */
-    createBridge: function (id, image, x, y, length, segments, segmentHeight) {
+    createBridge: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DBridge(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
+        var entity = new CG.B2DBridge(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
     },
     /**
+     * Options:
+     * name {string}
+     * image {mixed}  path to image, image or atlasimage from asset
+     * x {number}
+     * y {number}
+     * length {number}
+     * segments {number}
+     * segmentWidth {number}
+     *
+     @example
+     b2world.createRope({
+        name: 'chain-v',
+        image: this.asset.getImageByName('chain-v'),
+        x: 580,
+        y: 0,
+        length: 200,
+        segments: 8,
+        segmentWidth: 3
+    })
+     *
+     *
      * @description
      *
      * This method creates a B2D rope. Just play with the params to get a good result!
      *
      * @method createRope
-     * @param id            {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or atlasimage from asset
-     * @param x             {Number}     the x position
-     * @param y             {Number}     the y position
-     * @param length        {Number}     the length/width of the bridge
-     * @param segments      {Number}     segments of the bridge
-     * @param segmentHeight {Number}     height of a segment
+     * @param options {object}
      * @return {CG.B2DRope}
      */
-    createRope: function (id, image, x, y, length, segments, segmentHeight) {
+    createRope: function (options) {
+        options.world = this.world
+        options.scale = this.scale
         this.uid = this.uid + 1
-        var entity = new CG.B2DRope(this.world, id, image, x, y, length, segments, segmentHeight, this.scale)
+        var entity = new CG.B2DRope(options)
         entity.id.uid = this.uid
         this.elements.push(entity)
         return entity
@@ -31496,7 +31948,7 @@ CG.Layer.extend('B2DWorld', {
     removeElementByUid: function (uid) {
         for (var i = 0, l = this.elements.length; i < l; i++) {
             if (typeof this.elements[i] === 'object' && typeof this.elements[i].id !== 'undefined') {
-                if(this.elements[i].id.uid === uid) {
+                if (this.elements[i].id.uid === uid) {
                     this.elements.splice(i, 1);
                 }
             }

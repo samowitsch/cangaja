@@ -1,6 +1,6 @@
 CG.B2DWorld.extend('B2DTestbed', {
-    init: function (name) {
-        this._super(name)
+    init: function (options) {
+        this._super(options)
 
         var fixDef = new b2FixtureDef
         fixDef.density = 1.0
@@ -43,7 +43,15 @@ CG.B2DWorld.extend('B2DTestbed', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        clonk = new CG.Clonk(this.world, 'spritetestphysics', Game.asset.getImageByName('spritetestphysics'), Game.asset.getJsonByName('spritetestphysics'), 350, 10, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        clonk = new CG.Clonk({
+            world: this.world,
+            name: 'spritetestphysics',
+            image: Game.asset.getImageByName('spritetestphysics'),
+            texturepacker: Game.asset.getJsonByName('spritetestphysics'),
+            x: 350,
+            y: 10,
+            scale: this.scale
+        })
 
         this.addCustom(clonk)
 
@@ -96,7 +104,7 @@ CG.B2DWorld.extend('B2DTestbed', {
      * @return {*}
      */
     getStaticBodyListAt: function (x, y, radius1, radius2) {
-        var node = b2world.world.GetBodyList();
+        var node = this.world.GetBodyList();
         while (node) {
             var body = node
             if (typeof body === 'object') {

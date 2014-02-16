@@ -10,56 +10,101 @@
 
 CG.Entity.extend('B2DEntity', {
     /**
+     * Options:
+     * name {string} id or name to identify
+     * image {mixed} path to image, image or atlasimage from asset
+     * world {object} reference to world of B2DWorld
+     * x {number} the x position
+     * y {number} the y position
+     * scale {number} the world scale of B2DWorld
+     *
+     @example
+     var e = new CG.B2DEntity({
+           name: 'player',
+           image: new CG.Point(100,100),
+           world: b2world,
+           x: 10,
+           y: 20,
+           scale: 40
+         })
+     *
      * @method init
      * @constructor
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param world     {object}      reference to world of B2DWorld
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
+     * @param options {object}
      * @return {*}
      */
 
-    init: function (name, image, world, x, y, scale) {
+    init: function (options) {
         this._super()
         this.instanceOf = 'B2DEntity'
-        this.setImage(image)
-        /**
-         * @property body
-         * @type {b2Body}
-         */
-        this.body = {}
-        /**
-         * @property alpha
-         * @type {Number}
-         */
-        this.alpha = 1
-        /**
-         * @property x
-         * @type {Number}
-         */
-        this.x = x
-        /**
-         * @property y
-         * @type {Number}
-         */
-        this.y = y
-        /**
-         * @property scale
-         * @type {Number}
-         */
-        this.scale = scale
-        /**
-         * @property id
-         * @type {Object}
-         */
-        this.id = {name: name, uid: 0}
-        /**
-         * @property world
-         * @type {b2World}
-         */
-        this.world = world
+
+        CG._extend(this, {
+            /**
+             * @property body
+             * @type {b2Body}
+             */
+            body: {},
+            /**
+             * @property body
+             * @type {b2Body}
+             */
+            bodyType: box2d.b2BodyType.b2_dynamicBody,
+            /**
+             * @property bullet
+             * @type {b2Body}
+             */
+            bullet: false,
+            /**
+             * @property alpha
+             * @type {Number}
+             */
+            alpha: 1,
+            /**
+             * @property x
+             * @type {Number}
+             */
+            x: 0,
+            /**
+             * @property y
+             * @type {Number}
+             */
+            y: 0,
+            /**
+             * @property scale
+             * @type {Number}
+             */
+            scale: 40,
+            /**
+             * @property id
+             * @type {Object}
+             */
+            id: {name: '', uid: 0},
+            /**
+             * @property world
+             * @type {b2World}
+             */
+            world: {},
+            /**
+             * @property isHit
+             * @type {Boolean}
+             */
+            isHit: false,
+            /**
+             * @property strength
+             * @type {Number}
+             */
+            strength: 100,
+            /**
+             * @property dead
+             * @type {Boolean}
+             */
+            dead: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
 
         if (!this.bodyDef) {
             /**
@@ -101,21 +146,6 @@ CG.Entity.extend('B2DEntity', {
              */
             this.fixDef.restitution = 0.5
         }
-        /**
-         * @property isHit
-         * @type {Boolean}
-         */
-        this.isHit = false;
-        /**
-         * @property strength
-         * @type {Number}
-         */
-        this.strength = 100;
-        /**
-         * @property dead
-         * @type {Boolean}
-         */
-        this.dead = false;
 
         return this
     },

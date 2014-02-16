@@ -11,46 +11,76 @@
 
 CG.B2DEntity.extend('B2DPolygon', {
     /**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * texturepacker {string}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     * bullet {boolean}
+     *
+     @example
+     var e = new CG.B2DPolygon({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           texturepacker: this.asset.getJsonByName('powerstar75'),
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody,
+           bullet: false
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param jsonpoly  {string}      json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
-     * @param bullet    {Boolean}     bullet option
+     * @param options {Object}
      * @return {*}
      */
-    init: function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DPolygon'
-        /**
-         * @property polys
-         * @type {Array}
-         */
-        this.polys = new Array()
+        CG._extend(this, {
+            /**
+             * @property polys
+             * @type {Array}
+             */
+            polys: new Array(),
+            /**
+             * @property bullet
+             * @type {*}
+             */
+            bullet: false
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
         /**
          * @property jsondata
          * @type {*}
          */
 //        this.jsondata = jsonpoly.data[jsonpoly.name]
-        this.jsondata = jsonpoly.data[name]
+        this.jsondata = this.texturepacker.data[this.name]
         /**
          * @property vecs
          * @type {Array}
          */
         this.vecs = new Array()
-        this.vecs = this.getPolysFromJson(jsonpoly) // build grouped b2vecs from physicseditor
+        this.vecs = this.getPolysFromJson(this.texturepacker) // build grouped b2vecs from physicseditor
         //@TODO get alternative polys from bitmap contourTrace & triangulation?
 
         /**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         /**
          * @property bodyDef.position
@@ -61,11 +91,6 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property bullet
-         * @type {*}
-         */
-        this.bullet = bullet || false
         /**
          * @property bodyDef.bullet
          * @type {*}

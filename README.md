@@ -202,13 +202,13 @@ Q.Class.extend("SpriteSheet", {
   + Emitter (new API)
   + Entity (new API)
     + B2DEntity
-      + B2DCircle
-      + B2DRectangle
-      + B2DPolygon
-      + B2DLine
-      + B2DBridge
-      + B2DRope
-      + B2DChainShape
+      + B2DCircle (new API)
+      + B2DRectangle (new API)
+      + B2DPolygon (new API)
+      + B2DLine (new API)
+      + B2DBridge (new API)
+      + B2DRope (new API)
+      + B2DChainShape (new API)
     + Bitmap (new API)
     + Font
     + Map
@@ -220,7 +220,7 @@ Q.Class.extend("SpriteSheet", {
     + Text (new API)
   + Game
   + Layer (new API)
-    + B2DWorld
+    + B2DWorld (new API: init, createCircle, createBox, createPoly, createBridge, createRope, createLine, createChainShape => Todo Rest ;o)
   + MapPoints
   + MapAreas
   + MapTileLayer

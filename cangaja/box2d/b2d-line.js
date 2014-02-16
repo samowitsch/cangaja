@@ -10,44 +10,56 @@
 
 CG.B2DEntity.extend('B2DLine', {
     /**
+     * Options:
+     * name {string} id or name to identify
+     * startPoint {CG.Point}
+     * endPoint {CG.Point}
+     * world {object} reference to world of B2DWorld
+     * scale {number} the world scale of B2DWorld
+     *
+     @example
+     var e = new CG.B2DLine({
+       name: 'groundline',
+       startPoint: new CG.Point(10,10),
+       endPoint: new CG.Point(500,10),
+       world: b2world,
+       scale: 40
+     })
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param start     {b2Vec2}      start of line
-     * @param end       {b2Vec2}      end of line
-     * @param scale     {Number}     the world scale of B2DWorld
+     * @param options {Object}
      * @return {*}
      */
-    init:function (world, name, start, end, scale) {
-        this._super(name, false, world, 0, 0, scale) //TODO clean arguments?
+    init: function (options) {
+        this._super()
         this.instanceOf = 'B2DLine'
-        /**
-         * @property start
-         * @type {b2Vec2}
-         */
-        this.start = start
-        /**
-         * @property end
-         * @type {b2Vec2}
-         */
-        this.end = end
-        /**
-         * @property xhandle
-         * @type {Number}
-         */
-        this.xhandle = 0
-        /**
-         * @property yhandle
-         * @type {Number}
-         */
-        this.yhandle = 0
+
+        CG._extend(this, {
+            /**
+             * @property startPoint
+             * @type {b2Vec2}
+             */
+            startPoint: new b2Vec2(0, 0),
+            /**
+             * @property endPoint
+             * @type {b2Vec2}
+             */
+            endPoint: new b2Vec2(0, 0)
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.convertPoints()
+
         /**
          * @property fixDef.shape
          * @type {b2PolygonShape}
          */
         this.fixDef.shape = new b2EdgeShape()
-        this.fixDef.shape.Set(this.start, this.end)
+        this.fixDef.shape.Set(this.startPoint, this.endPoint)
         /**
          * @property bodyDef.type
          * @type {Number}
@@ -71,10 +83,16 @@ CG.B2DEntity.extend('B2DLine', {
 
         return this
     },
-    update:function () {
+    convertPoints: function () {
+        this.startPoint.x = this.startPoint.x / this.scale
+        this.startPoint.y = this.startPoint.y / this.scale
+        this.endPoint.x = this.endPoint.x / this.scale
+        this.endPoint.y = this.endPoint.y / this.scale
+    },
+    update: function () {
 
     },
-    draw:function () {
+    draw: function () {
 
     }
 })

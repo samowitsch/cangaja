@@ -353,11 +353,11 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         back = new CG.Sprite(this.asset.getImageByName('blobby-back'), new CG.Point(400, 240))
         back.name = 'back'
