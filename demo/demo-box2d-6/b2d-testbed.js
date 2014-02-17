@@ -105,6 +105,7 @@ CG.B2DWorld.extend('B2DTestbed', {
      */
     getStaticBodyListAt: function (x, y, radius1, radius2) {
         var node = this.world.GetBodyList();
+        console.log(x,y,radius1,radius2,this,node)
         while (node) {
             var body = node
             if (typeof body === 'object') {

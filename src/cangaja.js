@@ -30033,6 +30033,7 @@ CG.B2DEntity.extend('B2DCircle', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 
@@ -30128,6 +30129,7 @@ CG.B2DEntity.extend('B2DLine', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
         }
 
         this.convertPoints()
@@ -30218,6 +30220,7 @@ CG.B2DEntity.extend('B2DRectangle', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 
@@ -30321,6 +30324,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 
@@ -30572,6 +30576,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.bitmap.loadImage(this.image)
         }
 
@@ -30883,6 +30888,7 @@ CG.B2DEntity.extend('B2DChainShape', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
         }
 
         this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
@@ -31066,6 +31072,7 @@ CG.B2DEntity.extend('B2DRope', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 
@@ -31261,6 +31268,7 @@ CG.B2DEntity.extend('B2DBridge', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 

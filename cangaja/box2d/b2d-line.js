@@ -50,6 +50,7 @@ CG.B2DEntity.extend('B2DLine', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
         }
 
         this.convertPoints()

@@ -51,6 +51,7 @@ CG.B2DEntity.extend('B2DCircle', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.setImage(this.image)
         }
 

@@ -112,6 +112,7 @@ CG.B2DEntity.extend('B2DTerrain', {
 
         if (options) {
             CG._extend(this, options)
+            this.id.name = options.name
             this.bitmap.loadImage(this.image)
         }
 
