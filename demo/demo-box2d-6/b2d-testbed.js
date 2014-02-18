@@ -43,12 +43,13 @@ CG.B2DWorld.extend('B2DTestbed', {
         fixDef.shape.SetAsBox(0.5 / 2, (Game.width / this.scale) / 2)
         this.world.CreateBody(bodyDef).CreateFixture(fixDef)
 
-        clonk = new CG.Clonk({
+        clonk = new CG.B2DPolygon({
             world: this.world,
             name: 'spritetestphysics',
             image: Game.asset.getImageByName('spritetestphysics'),
             texturepacker: Game.asset.getJsonByName('spritetestphysics'),
-            x: 350,
+            fixedRotation: true,
+            x: 480,
             y: 10,
             scale: this.scale
         })

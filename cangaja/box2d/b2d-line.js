@@ -32,10 +32,13 @@ CG.B2DEntity.extend('B2DLine', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DLine'
 
         CG._extend(this, {
+            /**
+             * @property body
+             * @type {}
+             */
+            body: {},
             /**
              * @property startPoint
              * @type {b2Vec2}
@@ -48,10 +51,8 @@ CG.B2DEntity.extend('B2DLine', {
             endPoint: new b2Vec2(0, 0)
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-        }
+        this._super(options)
+        this.instanceOf = 'B2DLine'
 
         this.convertPoints()
 

@@ -35,20 +35,10 @@ CG.B2DEntity.extend('B2DRectangle', {
      * @return {*}
      */
     init:function (options) {
-        this._super()
+        this._super(options)
         this.instanceOf = 'B2DRectangle'
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
-
-        /**
-         * @property bodyDef.stat
-         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
-         */
-        this.bodyDef.type = this.bodyType
+        this.setImage(this.image)
 
         /**
          * @property fixDef.shape

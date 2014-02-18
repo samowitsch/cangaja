@@ -185,20 +185,37 @@
  *&#x2F;
 CG.Sprite.extend(&#x27;Animation&#x27;, {
     &#x2F;**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * startframe {number}
+     * endframe {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var s = new CG.Animation({
+           image: &#x27;..&#x2F;images&#x2F;demo.png&#x27;,
+           position: new CG.Point(200,200),
+           startframe: 5,
+           endframe: 6,
+           width: 10,
+           height: 20
+         })
+     *
      * @constructor
      * @method init
-     * @param image {string, image} image imagepath or image object
-     * @param position {point} position object
-     * @param startframe {number} startframe of atlas image
-     * @param endframe {number} endframe endframe of atlas image
-     * @param framewidth {number} framewidth width of frame to cut
-     * @param frameheight {number} frameheight height of frame to cut
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init: function (image, position, startframe, endframe, framewidth, frameheight) {
-        this._super(image, position)
-
+    init: function (options) {
+        this._super()
         this.instanceOf = &#x27;Animation&#x27;
+
+        if (options) {
+            CG._extend(this, options)
+&#x2F;&#x2F;            this.setImage(this.image)
+        }
 
         &#x2F;**
          @property loop {boolean}
@@ -219,19 +236,17 @@ CG.Sprite.extend(&#x27;Animation&#x27;, {
         &#x2F;**
          @property startframe {Number}
          *&#x2F;
-        this.startframe = startframe - 1
+        this.startframe = this.startframe - 1
         &#x2F;**
          @property endframe {Number}
          *&#x2F;
-        this.endframe = endframe - 1
+        this.endframe = this.endframe - 1
         &#x2F;**
          @property width {Number}
          *&#x2F;
-        this.width = framewidth
         &#x2F;**
          @property height {Number}
          *&#x2F;
-        this.height = frameheight
 
         if (this.startframe === undefined &amp;&amp; this.endframe === undefined) {
             this.frames = 1

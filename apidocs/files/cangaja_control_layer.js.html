@@ -184,33 +184,48 @@
  *&#x2F;
 CG.Class.extend(&#x27;Layer&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     *
+     @example
+     var l = new CG.Layer({
+           name: &#x27;layerback&#x27;
+         })
+     *
      * @constructor
      * @method init
-     * @param layername {string} the name of the layer
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init: function (layername) {
-        &#x2F;**
-         * @property name
-         * @type {String}
-         *&#x2F;
-        this.name = (layername) ? layername : &#x27;&#x27;
-        &#x2F;**
-         * @property visible
-         * @type {Boolean}
-         *&#x2F;
-        this.visible = true
-        &#x2F;**
-         * @property elements
-         * @type {Array}
-         *&#x2F;
-        this.elements = []
-        &#x2F;**
-         * @property elementsToDelete
-         * @type {Array}
-         * @protected
-         *&#x2F;
-        this.elementsToDelete = []
+    init: function (options) {
+        CG._extend(this, {
+            &#x2F;**
+             * @property name
+             * @type {String}
+             *&#x2F;
+            name: &#x27;&#x27;,
+            &#x2F;**
+             * @property visible
+             * @type {Boolean}
+             *&#x2F;
+            visible: true,
+            &#x2F;**
+             * @property elements
+             * @type {Array}
+             *&#x2F;
+            elements: [],
+            &#x2F;**
+             * @property elementsToDelete
+             * @type {Array}
+             * @protected
+             *&#x2F;
+            elementsToDelete: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     &#x2F;**

@@ -184,20 +184,29 @@
  *&#x2F;
 CG.Entity.extend(&#x27;Sprite&#x27;, {
     &#x2F;**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position: {CG.Point}
+     *
+     @example
+     var s = new CG.Sprite({
+           image: &#x27;..&#x2F;images&#x2F;demo.png&#x27;,
+           position: new CG.Point(200,200)
+         })
+     *
      * @method init
      * @constructor
-     * @param image {image}  imgpath, image object or atlasimage object to use
-     * @param position {CG.Point}  position object
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init:function (image, position) {
-        this._super(&#x27;&#x27;, position)
+    init:function (options) {
+        this._super()
         this.instanceOf = &#x27;Sprite&#x27;
 
-        &#x2F;**
-         @property atlasimage {boolean}
-         *&#x2F;
-        this.setImage(image)
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         &#x2F;**
          @property bound {CG.Bound}

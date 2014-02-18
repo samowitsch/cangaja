@@ -208,56 +208,58 @@ CG.Class.extend(&#x27;Director&#x27;, {
      * @return {*}
      *&#x2F;
     init: function () {
-        &#x2F;**
-         * @property screens
-         * @type {Array}
-         *&#x2F;
-        this.screens = []
-        &#x2F;**
-         * @property activescreen
-         * @type {Number}
-         *&#x2F;
-        this.activescreen = 0
-        &#x2F;**
-         * @property nextscreen
-         * @type {Number}
-         *&#x2F;
-        this.nextscreen = 0
-        &#x2F;**
-         * @property duration
-         * @type {Number}
-         *&#x2F;
-        this.duration = 20
-        &#x2F;**
-         * @property stepx
-         * @type {number}
-         *&#x2F;
-        this.stepx = 40
-        &#x2F;**
-         * @property stepy
-         * @type {number}
-         *&#x2F;
-        this.stepy = 30
-        &#x2F;**
-         * @property alpha
-         * @type {Number}
-         *&#x2F;
-        this.alpha = 0
-        &#x2F;**
-         * @property mode
-         * @type {String}
-         *&#x2F;
-        this.mode = &#x27;fade&#x27;      &#x2F;&#x2F;fade or scale
-        &#x2F;**
-         * @property direction
-         * @type {String}
-         *&#x2F;
-        this.direction = CG.RIGHT      &#x2F;&#x2F;CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
-        &#x2F;**
-         * @property color
-         * @type {String}
-         *&#x2F;
-        this.color = &#x27;rgb(0,0,0)&#x27;
+        CG._extend(this, {
+            &#x2F;**
+             * @property screens
+             * @type {Array}
+             *&#x2F;
+            screens: [],
+            &#x2F;**
+             * @property activescreen
+             * @type {Number}
+             *&#x2F;
+            activescreen: 0,
+            &#x2F;**
+             * @property nextscreen
+             * @type {Number}
+             *&#x2F;
+            nextscreen: 0,
+            &#x2F;**
+             * @property duration
+             * @type {Number}
+             *&#x2F;
+            duration: 20,
+            &#x2F;**
+             * @property stepx
+             * @type {number}
+             *&#x2F;
+            stepx: 40,
+            &#x2F;**
+             * @property stepy
+             * @type {number}
+             *&#x2F;
+            stepy: 30,
+            &#x2F;**
+             * @property alpha
+             * @type {Number}
+             *&#x2F;
+            alpha: 0,
+            &#x2F;**
+             * @property mode
+             * @type {String}
+             *&#x2F;
+            mode: &#x27;fade&#x27;,      &#x2F;&#x2F;fade or scale
+            &#x2F;**
+             * @property direction
+             * @type {String}
+             *&#x2F;
+            direction: CG.RIGHT,      &#x2F;&#x2F;CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
+            &#x2F;**
+             * @property color
+             * @type {String}
+             *&#x2F;
+            color: &#x27;rgb(0,0,0)&#x27;
+        })
         return this
     },
     &#x2F;**

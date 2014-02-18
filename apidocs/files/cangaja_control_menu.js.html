@@ -185,39 +185,57 @@
  *&#x2F;
 CG.Class.extend(&#x27;Menu&#x27;, {
     &#x2F;**
+     * Options:
+     * x {number}
+     * y {number}
+     * margin {number}
+     *
+     @example
+     var m = new CG.Menu({
+           x: 100,
+           y: 100,
+           margin: 10
+         })
+     *
+     *
      * @method init
      * @constructor
-     * @param x {Number} x the x position
-     * @param y {Number} y the y position
-     * @param margin {Number} margin the margin between the menu buttons
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init:function (x, y, margin) {
-        &#x2F;**
-         * @property x
-         * @type {Number}
-         *&#x2F;
-        this.x = x
-        &#x2F;**
-         * @property y
-         * @type {Number}
-         *&#x2F;
-        this.y = y
-        &#x2F;**
-         * @property margin
-         * @type {Number}
-         *&#x2F;
-        this.margin = margin
-        &#x2F;**
-         * @property step
-         * @type {*}
-         *&#x2F;
-        this.step = this.y
-        &#x2F;**
-         * @property buttons
-         * @type {Array}
-         *&#x2F;
-        this.buttons = []
+    init: function (options) {
+        CG._extend(this, {
+            &#x2F;**
+             * @property x
+             * @type {Number}
+             *&#x2F;
+            x: 0,
+            &#x2F;**
+             * @property y
+             * @type {Number}
+             *&#x2F;
+            y: 0,
+            &#x2F;**
+             * @property margin
+             * @type {Number}
+             *&#x2F;
+            margin: 0,
+            &#x2F;**
+             * @property step
+             * @type {*}
+             *&#x2F;
+            step: 0,
+            &#x2F;**
+             * @property buttons
+             * @type {Array}
+             *&#x2F;
+            buttons: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.step = this.y
+        }
         return this
     },
     &#x2F;**
@@ -225,13 +243,13 @@ CG.Class.extend(&#x27;Menu&#x27;, {
      *
      * @param {button} button
      *&#x2F;
-    addButton:function (button) {
+    addButton: function (button) {
         this.buttons.push(button)
     },
     &#x2F;**
      * @method update
      *&#x2F;
-    update:function () {
+    update: function () {
         this.buttons.forEach(function (button) {
             button.update()
         })
@@ -239,7 +257,7 @@ CG.Class.extend(&#x27;Menu&#x27;, {
     &#x2F;**
      * @method draw
      *&#x2F;
-    draw:function () {
+    draw: function () {
         this.buttons.forEach(function (button) {
             button.position.x = this.x
             button.position.y = this.step

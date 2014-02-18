@@ -185,35 +185,52 @@
  *&#x2F;
 CG.Class.extend(&#x27;Bound&#x27;, {
     &#x2F;**
+     * Options:
+     * x {number}
+     * y {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bound({
+           x: 0,
+           y: 0,
+           width: 120,
+           height: 120
+         })
+     *
      * @constructor
      * @method init
-     * @param x {number} x the x position
-     * @param y {number} y the y position
-     * @param width {number} width the width of bound
-     * @param height {number} height the height of bound
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init:function (x, y, width, height) {
-        &#x2F;**
-         * @property x
-         * @type {Number}
-         *&#x2F;
-        this.x = x
-        &#x2F;**
-         * @property y
-         * @type {Number}
-         *&#x2F;
-        this.y = y
-        &#x2F;**
-         * @property width
-         * @type {Number}
-         *&#x2F;
-        this.width = width
-        &#x2F;**
-         * @property height
-         * @type {Number}
-         *&#x2F;
-        this.height = height
+    init: function (options) {
+        CG._extend(this, {
+            &#x2F;**
+             * @property x
+             * @type {Number}
+             *&#x2F;
+            x: 0,
+            &#x2F;**
+             * @property y
+             * @type {Number}
+             *&#x2F;
+            y: 0,
+            &#x2F;**
+             * @property width
+             * @type {Number}
+             *&#x2F;
+            width: 0,
+            &#x2F;**
+             * @property height
+             * @type {Number}
+             *&#x2F;
+            height: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
 
@@ -222,7 +239,7 @@ CG.Class.extend(&#x27;Bound&#x27;, {
      * @param {string} name of the bounding box
      * @return {*}
      *&#x2F;
-    setName:function (name) {
+    setName: function (name) {
         this.name = name
         return this
     }

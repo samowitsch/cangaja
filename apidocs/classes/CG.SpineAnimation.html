@@ -445,7 +445,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l212"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:212</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l230"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:230</code></a>
         
         </p>
 
@@ -476,31 +476,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
                 <li class="arg">
                     
-                        <code>spinejson</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>spineatlas</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>position</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>scale</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>callback</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -544,7 +520,12 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
     </div>
 
     <div class="description">
-        
+        <p>Options:
+spinejson {string} Spine json animation file
+spineatlas {string} Spine atlas file (libGDX)
+position {CG.Point}
+scale {number}
+callback {function}</p>
     </div>
 
     
@@ -555,74 +536,14 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
                 <li class="param">
                     
-                        <code class="param-name">spinejson</code>
+                        <code class="param-name">options</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Spine json animation file</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">spineatlas</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Spine atlas file (libGDX)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">position</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>initial position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">scale</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>scale animation experimental</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">callback</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>callback function</p>
+                         
                     </div>
 
                     
@@ -634,6 +555,26 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
 
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var sa = new CG.SpineAnimation({
+      spinejson: this.asset.getJsonByName('spinosaurus-json'),
+      spineatlas: this.asset.getTextByName('spinosaurus-atlas'),
+      position: new CG.Point(10,10),
+      scale: 1,
+      callback: function (spineObject) {
+</code></pre>
+
+<p>//              spineObject.skeleton.setSkinByName("goblingirl");
+               spineObject.skeleton.setSlotsToSetupPose();
+               spineObject.state.setAnimationByName(0, "animation", true);
+           }
+        })</p>
+            </div>
+        </div>
     
 </div>
 
@@ -670,7 +611,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l150"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:150</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l168"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:168</code></a>
         
         </p>
 
@@ -724,7 +665,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l201"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:201</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l219"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:219</code></a>
         
         </p>
 
@@ -778,7 +719,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l275"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:275</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l293"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:293</code></a>
         
         </p>
 
@@ -832,7 +773,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l140"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:140</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l158"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:158</code></a>
         
         </p>
 
@@ -885,7 +826,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l106"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:106</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l124"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:124</code></a>
         
         </p>
 
@@ -929,7 +870,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l64"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:64</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l82"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:82</code></a>
         
         </p>
 
@@ -973,7 +914,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l174"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:174</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l192"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:192</code></a>
         
         </p>
 
@@ -1017,7 +958,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l155"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:155</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l173"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:173</code></a>
         
         </p>
 
@@ -1061,7 +1002,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l43"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:43</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l61"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:61</code></a>
         
         </p>
 
@@ -1105,7 +1046,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l113"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:113</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l131"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:131</code></a>
         
         </p>
 
@@ -1149,7 +1090,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l83"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:83</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l101"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:101</code></a>
         
         </p>
 
@@ -1193,7 +1134,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l99"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:99</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l117"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:117</code></a>
         
         </p>
 
@@ -1237,7 +1178,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l162"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:162</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l180"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:180</code></a>
         
         </p>
 
@@ -1281,7 +1222,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l188"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:188</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l206"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:206</code></a>
         
         </p>
 
@@ -1325,7 +1266,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l183"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:183</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l201"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:201</code></a>
         
         </p>
 
@@ -1369,7 +1310,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l76"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:76</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l94"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:94</code></a>
         
         </p>
 
@@ -1413,7 +1354,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l70"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:70</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l88"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:88</code></a>
         
         </p>
 
@@ -1457,7 +1398,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l50"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:50</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l68"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:68</code></a>
         
         </p>
 
@@ -1501,7 +1442,7 @@ and is on early stages. There is a lot of stuff that could be implemented: bound
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l57"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:57</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_spine_spine-animation.js.html#l75"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:75</code></a>
         
         </p>
 

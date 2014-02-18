@@ -187,46 +187,74 @@
 
 CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * texturepacker {string}
+     * x {number}
+     * y (number}
+     * world {object}
+     * scale {number}
+     * bodyType {box2d.b2BodyType}
+     * bullet {boolean}
+     *
+     @example
+     var e = new CG.B2DPolygon({
+           name: &#x27;player&#x27;,
+           image: this.asset.getImageByName(&#x27;glowball&#x27;),
+           texturepacker: this.asset.getJsonByName(&#x27;powerstar75&#x27;),
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody,
+           bullet: false
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param jsonpoly  {string}      json file from PhysicsEditor from asset
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
-     * @param bullet    {Boolean}     bullet option
+     * @param options {Object}
      * @return {*}
      *&#x2F;
-    init: function (world, name, image, jsonpoly, x, y, scale, b2BodyType, bullet) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+
+        CG._extend(this, {
+            &#x2F;**
+             * @property polys
+             * @type {Array}
+             *&#x2F;
+            polys: new Array(),
+            &#x2F;**
+             * @property bullet
+             * @type {*}
+             *&#x2F;
+            bullet: false
+        })
+
+        this._super(options)
         this.instanceOf = &#x27;B2DPolygon&#x27;
-        &#x2F;**
-         * @property polys
-         * @type {Array}
-         *&#x2F;
-        this.polys = new Array()
+        this.setImage(this.image)
+
         &#x2F;**
          * @property jsondata
          * @type {*}
          *&#x2F;
 &#x2F;&#x2F;        this.jsondata = jsonpoly.data[jsonpoly.name]
-        this.jsondata = jsonpoly.data[name]
+        this.jsondata = this.texturepacker.data[this.name]
         &#x2F;**
          * @property vecs
          * @type {Array}
          *&#x2F;
         this.vecs = new Array()
-        this.vecs = this.getPolysFromJson(jsonpoly) &#x2F;&#x2F; build grouped b2vecs from physicseditor
+        this.vecs = this.getPolysFromJson(this.texturepacker) &#x2F;&#x2F; build grouped b2vecs from physicseditor
         &#x2F;&#x2F;@TODO get alternative polys from bitmap contourTrace &amp; triangulation?
 
         &#x2F;**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody&#x2F;box2d.b2BodyType.b2_dynamicBody&#x2F;box2d.b2BodyType.b2_kinematicBody&#x2F;box2d.b2BodyType.b2_bulletBody}
          *&#x2F;
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = this.bodyType
 
         &#x2F;**
          * @property bodyDef.position
@@ -238,19 +266,10 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
          *&#x2F;
         this.bodyDef.userData = this.id
         &#x2F;**
-         * @property bullet
-         * @type {*}
-         *&#x2F;
-        this.bullet = bullet || false
-        &#x2F;**
          * @property bodyDef.bullet
          * @type {*}
          *&#x2F;
         this.bodyDef.bullet = this.bullet
-
-        &#x2F;&#x2F;this.bodyDef.linearDamping = options.linearDamping
-        &#x2F;&#x2F;this.bodyDef.angularDamping = options.angularDamping
-        &#x2F;&#x2F;this.bodyDef.fixedRotation = true
 
         &#x2F;**
          * @property body

@@ -120,6 +120,8 @@ CG.Game.extend('MyGame', {
             name: 'glowball',
             image: this.asset.getImageByName('glowball'),
             radius: 23,
+            restitution: 0.8,
+            bullet: true,
             x: 310,
             y: -200
         })
@@ -127,6 +129,7 @@ CG.Game.extend('MyGame', {
             name: 'glowball',
             image: this.asset.getImageByName('glowball'),
             radius: 23,
+            restitution: 0.75,
             x: 210,
             y: -100
         })
@@ -134,6 +137,7 @@ CG.Game.extend('MyGame', {
             name: 'glowball',
             image: this.asset.getImageByName('glowball'),
             radius: 23,
+            restitution: 0.5,
             x: 110,
             y: 0
         })

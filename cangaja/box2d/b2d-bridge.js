@@ -41,8 +41,6 @@ CG.B2DEntity.extend('B2DBridge', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DBridge'
 
         CG._extend(this, {
             /**
@@ -96,26 +94,6 @@ CG.B2DEntity.extend('B2DBridge', {
              */
             bodyCount: 0,
             /**
-             * @property body
-             * @type {object}
-             */
-            body: {},
-            /**
-             * @property density
-             * @type {Number}
-             */
-            density: 20.0,
-            /**
-             * @property restitution
-             * @type {Number}
-             */
-            restitution: 0.2,
-            /**
-             * @property friction
-             * @type {Number}
-             */
-            friction: 0.2,
-            /**
              * @property lowerAngle
              * @type {Number}
              */
@@ -124,14 +102,18 @@ CG.B2DEntity.extend('B2DBridge', {
              * @property upperAngle
              * @type {Number}
              */
-            upperAngle: 25
+            upperAngle: 25,
+            /**
+             * @property enableLimit
+             * @type {boolean}
+             */
+            enableLimit: true
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DBridge'
+
+        this.setImage(this.image)
 
         /**
          * @property segmentWidth
@@ -176,7 +158,7 @@ CG.B2DEntity.extend('B2DBridge', {
         this.jointDef = new b2RevoluteJointDef()
         this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
         this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
-        this.jointDef.enableLimit = true
+        this.jointDef.enableLimit = this.enableLimit
 
         for (var i = 0, l = this.segments; i < l; i++) {
             this.bodyDef.position.SetXY(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)

@@ -743,7 +743,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l85"><code>cangaja&#x2F;base&#x2F;bitmap.js:85</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l106"><code>cangaja&#x2F;base&#x2F;bitmap.js:106</code></a>
         
         </p>
 
@@ -819,7 +819,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l119"><code>cangaja&#x2F;base&#x2F;bitmap.js:119</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l140"><code>cangaja&#x2F;base&#x2F;bitmap.js:140</code></a>
         
         </p>
 
@@ -954,7 +954,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l104"><code>cangaja&#x2F;base&#x2F;bitmap.js:104</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l125"><code>cangaja&#x2F;base&#x2F;bitmap.js:125</code></a>
         
         </p>
 
@@ -1086,7 +1086,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l315"><code>cangaja&#x2F;base&#x2F;bitmap.js:315</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l336"><code>cangaja&#x2F;base&#x2F;bitmap.js:336</code></a>
         
         </p>
 
@@ -1163,7 +1163,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l93"><code>cangaja&#x2F;base&#x2F;bitmap.js:93</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l114"><code>cangaja&#x2F;base&#x2F;bitmap.js:114</code></a>
         
         </p>
 
@@ -1237,7 +1237,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l136"><code>cangaja&#x2F;base&#x2F;bitmap.js:136</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l157"><code>cangaja&#x2F;base&#x2F;bitmap.js:157</code></a>
         
         </p>
 
@@ -1362,7 +1362,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l159"><code>cangaja&#x2F;base&#x2F;bitmap.js:159</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l180"><code>cangaja&#x2F;base&#x2F;bitmap.js:180</code></a>
         
         </p>
 
@@ -1498,7 +1498,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l147"><code>cangaja&#x2F;base&#x2F;bitmap.js:147</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l168"><code>cangaja&#x2F;base&#x2F;bitmap.js:168</code></a>
         
         </p>
 
@@ -1653,7 +1653,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l364"><code>cangaja&#x2F;base&#x2F;bitmap.js:364</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l385"><code>cangaja&#x2F;base&#x2F;bitmap.js:385</code></a>
         
         </p>
 
@@ -1761,7 +1761,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l349"><code>cangaja&#x2F;base&#x2F;bitmap.js:349</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l370"><code>cangaja&#x2F;base&#x2F;bitmap.js:370</code></a>
         
         </p>
 
@@ -1922,13 +1922,7 @@
             
                 <li class="arg">
                     
-                        <code>width</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>height</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1976,7 +1970,9 @@
     </div>
 
     <div class="description">
-        
+        <p>Options:
+width {number}
+height {number}</p>
     </div>
 
     
@@ -1987,29 +1983,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">width</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>width the width for the buffer</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">height</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height the height for the buffer</p>
+                         
                     </div>
 
                     
@@ -2033,6 +2014,18 @@
         </div>
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var b = new CG.Bitmap({
+      width: 100,
+      height: 100
+    })
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -2089,7 +2082,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l328"><code>cangaja&#x2F;base&#x2F;bitmap.js:328</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l349"><code>cangaja&#x2F;base&#x2F;bitmap.js:349</code></a>
         
         </p>
 
@@ -2203,7 +2196,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l59"><code>cangaja&#x2F;base&#x2F;bitmap.js:59</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l80"><code>cangaja&#x2F;base&#x2F;bitmap.js:80</code></a>
         
         </p>
 
@@ -2368,7 +2361,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l169"><code>cangaja&#x2F;base&#x2F;bitmap.js:169</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l190"><code>cangaja&#x2F;base&#x2F;bitmap.js:190</code></a>
         
         </p>
 
@@ -2449,7 +2442,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l339"><code>cangaja&#x2F;base&#x2F;bitmap.js:339</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l360"><code>cangaja&#x2F;base&#x2F;bitmap.js:360</code></a>
         
         </p>
 
@@ -2537,7 +2530,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l37"><code>cangaja&#x2F;base&#x2F;bitmap.js:37</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l56"><code>cangaja&#x2F;base&#x2F;bitmap.js:56</code></a>
         
         </p>
 
@@ -2581,7 +2574,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l45"><code>cangaja&#x2F;base&#x2F;bitmap.js:45</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l72"><code>cangaja&#x2F;base&#x2F;bitmap.js:72</code></a>
         
         </p>
 
@@ -2625,7 +2618,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l41"><code>cangaja&#x2F;base&#x2F;bitmap.js:41</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l68"><code>cangaja&#x2F;base&#x2F;bitmap.js:68</code></a>
         
         </p>
 
@@ -2669,7 +2662,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l49"><code>cangaja&#x2F;base&#x2F;bitmap.js:49</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l60"><code>cangaja&#x2F;base&#x2F;bitmap.js:60</code></a>
         
         </p>
 
@@ -2713,7 +2706,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l53"><code>cangaja&#x2F;base&#x2F;bitmap.js:53</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l64"><code>cangaja&#x2F;base&#x2F;bitmap.js:64</code></a>
         
         </p>
 
@@ -3003,7 +2996,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l32"><code>cangaja&#x2F;base&#x2F;bitmap.js:32</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l44"><code>cangaja&#x2F;base&#x2F;bitmap.js:44</code></a>
         
         </p>
 
@@ -3170,7 +3163,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l24"><code>cangaja&#x2F;base&#x2F;bitmap.js:24</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l36"><code>cangaja&#x2F;base&#x2F;bitmap.js:36</code></a>
         
         </p>
 
@@ -3296,7 +3289,7 @@ http://www.emanueleferonato.com/2013/03/01/using-marching-squares-algorithm-to-t
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l28"><code>cangaja&#x2F;base&#x2F;bitmap.js:28</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_base_bitmap.js.html#l40"><code>cangaja&#x2F;base&#x2F;bitmap.js:40</code></a>
         
         </p>
 

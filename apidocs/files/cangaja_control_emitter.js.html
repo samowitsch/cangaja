@@ -187,109 +187,127 @@
 CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method init
+     *
+     * Options:
+     * position {CG.Point}
+     *
+     @example
+     var e = new CG.Emitter({
+           position: new CG.Point(100,100)
+         })
+     *
      * @constructor
      * @param position {CG.Point}
      * @return {*}
      *&#x2F;
-    init:function (position) {
+    init: function (options) {
         this._super()
-        &#x2F;**
-         * @property particle
-         * @type {Array}
-         *&#x2F;
-        this.particles = []     &#x2F;&#x2F;Particle pool delegated by emitter
-        &#x2F;**
-         * @property maxparticles
-         * @type {Number}
-         *&#x2F;
-        this.maxparticles = 50
-        &#x2F;**
-         * @property creationtime
-         * @type {Number}
-         *&#x2F;
-        this.creationtime = 100 &#x2F;&#x2F;time when next particle would be generated&#x2F;reanimated
-        &#x2F;**
-         * @property currenttime
-         * @type {Number}
-         *&#x2F;
-        this.currenttime = 0    &#x2F;&#x2F;current counter
-        &#x2F;**
-         * @property creationspeed
-         * @type {Number}
-         *&#x2F;
-        this.creationspeed = 50 &#x2F;&#x2F;increase for currenttime
-        &#x2F;**
-         * @property gravity
-         * @type {Number}
-         *&#x2F;
-        this.gravity = 0.05
-        &#x2F;**
-         * @property image
-         * @type {null}
-         *&#x2F;
-        this.image = null       &#x2F;&#x2F;Image of the particle
-        &#x2F;**
-         * @property type
-         * @type {String}
-         *&#x2F;
-        this.type = &#x27;&#x27;          &#x2F;&#x2F;point, corona, plate
-        &#x2F;**
-         * @property position
-         * @type {CG.Point}
-         *&#x2F;
-        this.position = position || new CG.Point(0, 0)
-        this.position._x = this.position.x
-        this.position._y = this.position.y
-        &#x2F;**
-         * @property rotation
-         * @type {Number}
-         *&#x2F;
-        this.rotation = 0       &#x2F;&#x2F;rotation of plate emitter
-        &#x2F;**
-         * @property width
-         * @type {Number}
-         *&#x2F;
-        this.width = 200        &#x2F;&#x2F;width of line and rectangle emitter
-        &#x2F;**
-         * @property height
-         * @type {Number}
-         *&#x2F;
-        this.height = 200       &#x2F;&#x2F;width of rectangle emitter
-        &#x2F;**
-         * @property radius
-         * @type {Number}
-         *&#x2F;
-        this.radius = 0         &#x2F;&#x2F;radius for corona emitter
-        &#x2F;**
-         * @property pspeed
-         * @type {Number}
-         *&#x2F;
-        this.pspeed = 10        &#x2F;&#x2F;particle speed
-        &#x2F;**
-         * @property protation
-         * @type {Number}
-         *&#x2F;
-        this.protation = 0
-        &#x2F;**
-         * @property pdirection
-         * @type {Number}
-         *&#x2F;
-        this.pdirection = 0     &#x2F;&#x2F;particle direction UP, DOWN, CG.LEFT, RIGHT
-        &#x2F;**
-         * @property plifetime
-         * @type {Number}
-         *&#x2F;
-        this.plifetime = 100    &#x2F;&#x2F;particle lifetime
-        &#x2F;**
-         * @property paging
-         * @type {Number}
-         *&#x2F;
-        this.paging = 1         &#x2F;&#x2F;particle aging
-        &#x2F;**
-         * @property pfadeout
-         * @type {Boolean}
-         *&#x2F;
-        this.pfadeout = false   &#x2F;&#x2F;particle fadeout
+
+        CG._extend(this, {
+            &#x2F;**
+             * @property particle
+             * @type {Array}
+             *&#x2F;
+            particles: [],     &#x2F;&#x2F;Particle pool delegated by emitter
+            &#x2F;**
+             * @property maxparticles
+             * @type {Number}
+             *&#x2F;
+            maxparticles: 50,
+            &#x2F;**
+             * @property creationtime
+             * @type {Number}
+             *&#x2F;
+            creationtime: 100, &#x2F;&#x2F;time when next particle would be generated&#x2F;reanimated
+            &#x2F;**
+             * @property currenttime
+             * @type {Number}
+             *&#x2F;
+            currenttime: 0,    &#x2F;&#x2F;current counter
+            &#x2F;**
+             * @property creationspeed
+             * @type {Number}
+             *&#x2F;
+            creationspeed: 50, &#x2F;&#x2F;increase for currenttime
+            &#x2F;**
+             * @property gravity
+             * @type {Number}
+             *&#x2F;
+            gravity: 0.05,
+            &#x2F;**
+             * @property image
+             * @type {null}
+             *&#x2F;
+            image: null,       &#x2F;&#x2F;Image of the particle
+            &#x2F;**
+             * @property type
+             * @type {String}
+             *&#x2F;
+            type: &#x27;&#x27;,          &#x2F;&#x2F;point, corona, plate
+            &#x2F;**
+             * @property position
+             * @type {CG.Point}
+             *&#x2F;
+            position: {x: 0, y: 0, _x: 0, _y: 0},
+
+            &#x2F;**
+             * @property rotation
+             * @type {Number}
+             *&#x2F;
+            rotation: 0,       &#x2F;&#x2F;rotation of plate emitter
+            &#x2F;**
+             * @property width
+             * @type {Number}
+             *&#x2F;
+            width: 200,        &#x2F;&#x2F;width of line and rectangle emitter
+            &#x2F;**
+             * @property height
+             * @type {Number}
+             *&#x2F;
+            height: 200,       &#x2F;&#x2F;width of rectangle emitter
+            &#x2F;**
+             * @property radius
+             * @type {Number}
+             *&#x2F;
+            radius: 0,         &#x2F;&#x2F;radius for corona emitter
+            &#x2F;**
+             * @property pspeed
+             * @type {Number}
+             *&#x2F;
+            pspeed: 10,        &#x2F;&#x2F;particle speed
+            &#x2F;**
+             * @property protation
+             * @type {Number}
+             *&#x2F;
+            protation: 0,
+            &#x2F;**
+             * @property pdirection
+             * @type {Number}
+             *&#x2F;
+            pdirection: 0,     &#x2F;&#x2F;particle direction UP, DOWN, CG.LEFT, RIGHT
+            &#x2F;**
+             * @property plifetime
+             * @type {Number}
+             *&#x2F;
+            plifetime: 100,    &#x2F;&#x2F;particle lifetime
+            &#x2F;**
+             * @property paging
+             * @type {Number}
+             *&#x2F;
+            paging: 1,         &#x2F;&#x2F;particle aging
+            &#x2F;**
+             * @property pfadeout
+             * @type {Boolean}
+             *&#x2F;
+            pfadeout: false   &#x2F;&#x2F;particle fadeout
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.position._x = this.position.x
+            this.position._y = this.position.y
+        }
+
         return this
     },
     &#x2F;*
@@ -301,7 +319,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {mixed} image path, image or atlasimage to use for the particle
      *&#x2F;
-    initAsPoint:function (image) {
+    initAsPoint: function (image) {
         this.image = image
         this.type = &#x27;point&#x27;
         return this
@@ -315,7 +333,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @param {Number} min value for particle speed
      * @param {Number} max value for particle speed
      *&#x2F;
-    initAsExplosion:function (image, min, max) {
+    initAsExplosion: function (image, min, max) {
         this.image = image
         this.type = &#x27;explosion&#x27;
         this.min = min
@@ -329,7 +347,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @param {mixed} image path, image or atlasimage to use for the particle
      * @param {Number} radius of the corona emitter
      *&#x2F;
-    initAsCorona:function (image, radius) {
+    initAsCorona: function (image, radius) {
         this.image = image
         this.type = &#x27;corona&#x27;
         this.radius = radius || 0
@@ -343,7 +361,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @param {Number} width of the plate emitter
      * @param {Number} direction (defined constants) of the plate emitter
      *&#x2F;
-    initAsLine:function (image, width, direction) {
+    initAsLine: function (image, width, direction) {
         this.image = image
         this.width = width || 200
         this.pdirection = direction || CG.UP
@@ -358,7 +376,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @param {Number} width of the plate emitter
      * @param {Number} height (defined constants) of the plate emitter
      *&#x2F;
-    initAsRectangle:function (image, width, height) {
+    initAsRectangle: function (image, width, height) {
         this.image = image
         this.width = width || 200
         this.height = height || 200
@@ -369,8 +387,8 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @method createParticle
      * @return {*}
      *&#x2F;
-    createParticle:function () {
-        particle = new CG.Particle(this.image)
+    createParticle: function () {
+        particle = new CG.Particle({image: this.image})
         return particle
     },
 
@@ -379,7 +397,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {particle} particle particle object
      *&#x2F;
-    initParticle:function (particle) {
+    initParticle: function (particle) {
         if (this.pfadeout) {
             particle.fadeout = true
         }
@@ -467,7 +485,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @method update
      *&#x2F;
 
-    update:function () {
+    update: function () {
         if (this.visible) {
             this.currenttime += this.creationspeed
             &#x2F;&#x2F;particle lifetime
@@ -496,7 +514,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
     &#x2F;**
      * @method draw
      *&#x2F;
-    draw:function () {
+    draw: function () {
         if (this.visible) {
             for (var i = 0, l = this.particles.length; i &lt; l; i++) {
                 this.particles[i].draw()
@@ -508,7 +526,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @description Each emitter has its own particle pool to prevent object deletion&#x2F;creation. This method searches an inactive&#x2F;invisible particle
      * @method searchInvisibleParticle
      *&#x2F;
-    searchInvisibleParticle:function () {
+    searchInvisibleParticle: function () {
         for (var i = 0, l = this.particles.length; i &lt; l; i++) {
             if (this.particles[i].visible == false) {
                 return this.particles[i]
@@ -522,7 +540,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {CG.Point} position of the emitter
      *&#x2F;
-    setEmitterPosition:function (position) {
+    setEmitterPosition: function (position) {
         this.position = position
         return this
     },
@@ -532,7 +550,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {string} name of the object for search with layerobject.getElementByName(name)
      *&#x2F;
-    setName:function (name) {
+    setName: function (name) {
         this.name = name
         return this
     },
@@ -542,7 +560,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {Number} creationtime
      *&#x2F;
-    setCreationTime:function (creationtime) {
+    setCreationTime: function (creationtime) {
         this.creationtime = creationtime
         return this
     },
@@ -551,7 +569,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {Number} maxparticle
      *&#x2F;
-    setMaxParticles:function (maxparticle) {
+    setMaxParticles: function (maxparticle) {
         this.maxparticles = maxparticle
         return this
     },
@@ -560,7 +578,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {float} gravity for all emitter controlled particles
      *&#x2F;
-    setGravity:function (gravity) {
+    setGravity: function (gravity) {
         this.gravity = gravity
         return this
     },
@@ -570,7 +588,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {Number} speed set the speed of the particles
      *&#x2F;
-    setParticleSpeed:function (speed) {
+    setParticleSpeed: function (speed) {
         this.pspeed = speed
         return this
     },
@@ -580,7 +598,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {mixed} rotation set the rotation of the particles
      *&#x2F;
-    setProtation:function (rotation) {
+    setProtation: function (rotation) {
         this.protation = rotation
         return this
     },
@@ -590,7 +608,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      *
      * @param {Number} plifetime set the lifetime of the particles
      *&#x2F;
-    setPLifetime:function (plifetime) {
+    setPLifetime: function (plifetime) {
         this.plifetime = plifetime
         return this
     },
@@ -599,7 +617,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @method activateFadeout
      * @description Activate fadeout of the particles depending on lifetime
      *&#x2F;
-    activateFadeout:function () {
+    activateFadeout: function () {
         this.pfadeout = true
         return this
     },
@@ -608,7 +626,7 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @method deactivateFadeout
      * @description Deactivate fadeout of the particles depending on lifetime
      *&#x2F;
-    deactivateFadeout:function () {
+    deactivateFadeout: function () {
         this.pfadeout = false
         return this
     },
@@ -619,21 +637,21 @@ CG.Entity.extend(&#x27;Emitter&#x27;, {
      * @param {mixed} min value for random number
      * @param {mixed} max value for random number
      *&#x2F;
-    getRandom:function (min, max) {
+    getRandom: function (min, max) {
         return Math.random() * (max - min + 1) + min &gt;&gt; 0
     },
 
     &#x2F;**
      * @method getX
      *&#x2F;
-    getX:function () {
+    getX: function () {
         return this.position._x
     },
 
     &#x2F;**
      * @method getY
      *&#x2F;
-    getY:function () {
+    getY: function () {
         return this.position._y
     }
 })

@@ -40,8 +40,18 @@ CG.Entity.extend('B2DEntity', {
 
         CG._extend(this, {
             /**
+             * @property world
+             * @type {}
+             */
+            world: {},
+            /**
+             * @property scale
+             * @type {}
+             */
+            scale: {},
+            /**
              * @property body
-             * @type {b2Body}
+             * @type {}
              */
             body: {},
             /**
@@ -98,54 +108,89 @@ CG.Entity.extend('B2DEntity', {
              * @property dead
              * @type {Boolean}
              */
-            dead: false
-        })
-
-        if (options) {
-            CG._extend(this, options)
-        }
-
-
-        if (!this.bodyDef) {
+            dead: false,
+            /**
+             * @property density
+             * @type {Number}
+             */
+            density: 1.0,
+            /**
+             * @property restitution
+             * @type {Number}
+             */
+            restitution: 0.1,
+            /**
+             * @property friction
+             * @type {Number}
+             */
+            friction: 1,
+            /**
+             * @property allowSleep
+             * @type {boolean}
+             */
+            allowSleep: true,
+            /**
+             * @property awake
+             * @type {boolean}
+             */
+            awake: true,
+            /**
+             * @property fixedRotation
+             * @type {boolean}
+             */
+            fixedRotation: false,
             /**
              * @property bodyDef
              * @type {b2BodyDef}
              */
-            this.bodyDef = new b2BodyDef
-            /**
-             * @property bodyDef.alowSleep
-             * @type {Boolean}
-             */
-            this.bodyDef.allowSleep = true
-            /**
-             * @property bodyDef.awake
-             * @type {Boolean}
-             */
-            this.bodyDef.awake = true
-        }
-
-        if (!this.fixDef) {
+            bodyDef: new b2BodyDef,
             /**
              * @property fixDef
              * @type {b2FixtureDef}
              */
-            this.fixDef = new b2FixtureDef
-            /**
-             * @property fixDef.density
-             * @type {Number}
-             */
-            this.fixDef.density = 1.0
-            /**
-             * @property fixDef.friction
-             * @type {Number}
-             */
-            this.fixDef.friction = 0.5
-            /**
-             * @property fixDef.restitution
-             * @type {Number}
-             */
-            this.fixDef.restitution = 0.5
+            fixDef: new b2FixtureDef
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.id.name = options.name
         }
+
+        /**
+         * @property bodyDef.alowSleep
+         * @type {Boolean}
+         */
+        this.bodyDef.allowSleep = this.allowSleep
+        /**
+         * @property bodyDef.awake
+         * @type {Boolean}
+         */
+        this.bodyDef.awake = this.awake
+        /**
+         * @property bodyDef.bullet
+         * @type {Boolean}
+         */
+        this.bodyDef.bullet = this.bullet
+        /**
+         * @property bodyDef.fixedRotation
+         * @type {Boolean}
+         */
+        this.bodyDef.fixedRotation = this.fixedRotation
+        /**
+         * @property fixDef.density
+         * @type {Number}
+         */
+        this.fixDef.density = this.density
+        /**
+         * @property fixDef.friction
+         * @type {Number}
+         */
+        this.fixDef.friction = this.friction
+        /**
+         * @property fixDef.restitution
+         * @type {Number}
+         */
+        this.fixDef.restitution = this.restitution
 
         return this
     },

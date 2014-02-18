@@ -193,71 +193,104 @@
  &#x27;poly2tri Invalid Triangle.index() call&#x27;,
  &#x27;&quot;null&quot; is not an object (evaluating &#x27;pb.y&#x27;)&#x27;,
  poly2tri Invalid Triangle.legalize() call
-*&#x2F;
+ *&#x2F;
 
 CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * points {array}
+     * x {number}
+     * y {number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var terrainShapes =
+     [{
+        	outer: [{
+        		x: 0,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 100.5
+        	}, {
+        		x: 1024,
+        		y: 768
+        	}, {
+        		x: 0,
+        		y: 768
+        	}],
+        	holes: []
+        }]
+
+     b2world.createTerrain({
+         name: &#x27;terrain&#x27;,
+         image: false
+         terrainShape: terrainShapes,
+         x:0,
+         y:0,
+         world: b2world,
+         scale: 40
+     })
+     *
+     *
      * @method init
      * @constructor
-     * @param world     {Object}      reference to world of B2DWorld
-     * @param name      {String}      id or name to identify
-     * @param image     {mixed}       path to image, image or atlasimage from asset
-     * @param terrainPoly  {array}      array of vertices to start terrain building
-     * @param x         {Number}     the x position
-     * @param y         {Number}     the y position
-     * @param scale     {Number}     the world scale of B2DWorld
-     * @param b2BodyType      {box2d.b2BodyType}     Box2D bodytype constant
-     * @param bullet    {Boolean}     bullet option
+     * @param options {Object}
      * @return {*}
      *&#x2F;
-    init: function (world, name, image, terrainPoly, x, y, scale, b2BodyType, bullet) {
-        this._super(name, image, world, x, y, scale)
+    init: function (options) {
+
+        CG._extend(this, {
+            &#x2F;**
+             * @description bitmap for terrain
+             * @property bitmap
+             * @type {CG.Bitmap}
+             *&#x2F;
+            bitmap: new CG.Bitmap({width: Game.width, height: Game.height}),
+            &#x2F;**
+             * @property image
+             * @type {strng}
+             *&#x2F;
+            image: false,
+            &#x2F;**
+             * @property polys
+             * @type {Array}
+             *&#x2F;
+            polys: new Array(),
+            &#x2F;**
+             * @property terrainShape
+             * @type {*}
+             *&#x2F;
+            terrainShape: [],
+            &#x2F;**
+             * @description the generated triangles generated thru clipper and poly2tri
+             * @property terrainTriangles
+             * @type {Array}
+             *&#x2F;
+            terrainTriangles: [],
+            &#x2F;**
+             * @property holes
+             * @type {Array}
+             *&#x2F;
+            holes: []
+        })
+
+        this._super(options)
         this.instanceOf = &#x27;B2DTerrain&#x27;
 
-        &#x2F;**
-         * @description bitmap for terrain
-         * @property bitmap
-         * @type {CG.Bitmap}
-         *&#x2F;
-        this.bitmap = new CG.Bitmap(Game.width, Game.height)
-        this.bitmap.loadImage(image)
-        &#x2F;**
-         * @property polys
-         * @type {Array}
-         *&#x2F;
-        this.polys = new Array()
-        &#x2F;**
-         * @property terrainpoly
-         * @type {*}
-         *&#x2F;
-        this.terrainPoly = terrainPoly
-        &#x2F;**
-         * @description the generated triangles generated thru clipper and poly2tri
-         * @property terrainTriangles
-         * @type {Array}
-         *&#x2F;
-        this.terrainTriangles = []
-        &#x2F;**
-         * @property holes
-         * @type {Array}
-         *&#x2F;
-        this.holes = []
-        &#x2F;**
-         * @property xhandle
-         * @type {Number}
-         *&#x2F;
-        this.xhandle = 0
-        &#x2F;**
-         * @property yhandle
-         * @type {Number}
-         *&#x2F;
-        this.yhandle = 0
+        if (typeof this.image !== undefined) {
+            this.bitmap.loadImage(this.image)
+        }
+
 
         &#x2F;**
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody&#x2F;box2d.b2BodyType.b2_dynamicBody&#x2F;box2d.b2BodyType.b2_kinematicBody&#x2F;box2d.b2BodyType.b2_bulletBody}
          *&#x2F;
-        this.bodyDef.type = b2BodyType || box2d.b2BodyType.b2_staticBody
+        this.bodyDef.type = box2d.b2BodyType.b2_staticBody &#x2F;&#x2F;terrain is always static?
         &#x2F;**
          * @property bodyDef.position
          *&#x2F;
@@ -267,16 +300,6 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
          * @type {*}
          *&#x2F;
         this.bodyDef.userData = this.id
-        &#x2F;**
-         * @property bullet
-         * @type {*}
-         *&#x2F;
-        this.bullet = bullet || false
-        &#x2F;**
-         * @property bodyDef.bullet
-         * @type {*}
-         *&#x2F;
-        this.bodyDef.bullet = this.bullet
 
         this.createTerrain()
 
@@ -290,17 +313,17 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         this.body = this.world.CreateBody(this.bodyDef)
 
         try {
-            for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
+            for (var part = 0, len = this.terrainShape.length; part &lt; len; part++) {
 
-                var outer = this.terrainPoly[part].outer
+                var outer = this.terrainShape[part].outer
                 if (typeof outer === &#x27;undefined&#x27;)
                     continue
 
                 var swctx = new poly2tri.SweepContext(outer, {cloneArrays: true})
 
-                if (this.terrainPoly[part].holes.length &gt; 0) {
-                    for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
-                        swctx.addHole(this.terrainPoly[part].holes[i])
+                if (this.terrainShape[part].holes.length &gt; 0) {
+                    for (var i = 0, l = this.terrainShape[part].holes.length; i &lt; l; i++) {
+                        swctx.addHole(this.terrainShape[part].holes[i])
                     }
                 }
 
@@ -315,15 +338,18 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
                 this.bodyShapePoly.bounce = 0.5
                 this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
 
+                this.fixDef.density = this.density
+                this.fixDef.restitution = this.restitution
+                this.fixDef.friction = this.friction
                 this.fixDef.shape = this.bodyShapePoly
                 this.body.CreateFixture(this.fixDef)
             }
         } catch (e) {
-            console.log(&#x27;error: createTerrain()&#x27;, e)
-            console.log(e.message)
-            console.log(e.stack)
-            console.log(this.terrainPoly)
-            console.log(this.terrainTriangles)
+&#x2F;&#x2F;            console.log(&#x27;error: createTerrain()&#x27;, e)
+&#x2F;&#x2F;            console.log(e.message)
+&#x2F;&#x2F;            console.log(e.stack)
+&#x2F;&#x2F;            console.log(this.terrainShape)
+&#x2F;&#x2F;            console.log(this.terrainTriangles)
         }
     },
     &#x2F;**
@@ -351,21 +377,21 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
     clipTerrain: function (opt) {
         var newhole = this.createCircle(opt)
 
-        &#x2F;&#x2F;add new hole to all contour terrainPolys
-        for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            this.terrainPoly[part].holes.push(newhole)
+        &#x2F;&#x2F;add new hole to all contour terrainShapes
+        for (var part = 0, len = this.terrainShape.length; part &lt; len; part++) {
+            this.terrainShape[part].holes.push(newhole)
         }
 
-        &#x2F;&#x2F;use clipper to calculate new terrainPolys
+        &#x2F;&#x2F;use clipper to calculate new terrainShapes
         var tempPolys = []
         var subj_polygons = []
         var clip_polygons = []
-        for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            subj_polygons = [this.terrainPoly[part].outer]
+        for (var part = 0, len = this.terrainShape.length; part &lt; len; part++) {
+            subj_polygons = [this.terrainShape[part].outer]
             clip_polygons = []
-            if (this.terrainPoly[part].holes.length &gt; 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
-                    clip_polygons.push(this.terrainPoly[part].holes[i])
+            if (this.terrainShape[part].holes.length &gt; 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i &lt; l; i++) {
+                    clip_polygons.push(this.terrainShape[part].holes[i])
                 }
             }
 
@@ -375,7 +401,6 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
 &#x2F;&#x2F;
 &#x2F;&#x2F;            var solution_polygons = new ClipperLib.ExPolygons()
 &#x2F;&#x2F;            cpr.Execute(ClipperLib.ClipType.ctDifference, solution_polygons, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero)
-
 
 
             var cpr = new ClipperLib.Clipper()
@@ -397,7 +422,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
                 }
             }
         }
-        this.terrainPoly = tempPolys
+        this.terrainShape = tempPolys
         this.lightenTerrain()
 &#x2F;&#x2F;        this.cleanTerrain()
         this.deleteTerrain()
@@ -412,13 +437,13 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         &#x2F;&#x2F;use clipper to eliminate to much vertices
         var tolerance = 0.02
 
-        for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].outer, tolerance * this.scale)
-            this.terrainPoly[part].outer = temp[0]
-            if (this.terrainPoly[part].holes.length &gt; 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
-                    var temp = ClipperLib.JS.Lighten(this.terrainPoly[part].holes[i], tolerance * this.scale)
-                    this.terrainPoly[part].holes[i] = temp[0]
+        for (var part = 0, len = this.terrainShape.length; part &lt; len; part++) {
+            var temp = ClipperLib.JS.Lighten(this.terrainShape[part].outer, tolerance * this.scale)
+            this.terrainShape[part].outer = temp[0]
+            if (this.terrainShape[part].holes.length &gt; 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i &lt; l; i++) {
+                    var temp = ClipperLib.JS.Lighten(this.terrainShape[part].holes[i], tolerance * this.scale)
+                    this.terrainShape[part].holes[i] = temp[0]
                 }
             }
         }
@@ -431,13 +456,13 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         &#x2F;&#x2F;use clipper to eliminate to much vertices
         var cleandelta = 0.1
 
-        for (var part = 0, len = this.terrainPoly.length; part &lt; len; part++) {
-            var temp = ClipperLib.JS.Clean(this.terrainPoly[part].outer, cleandelta * this.scale)
-            this.terrainPoly[part].outer = temp[0]
-            if (this.terrainPoly[part].holes.length &gt; 0) {
-                for (var i = 0, l = this.terrainPoly[part].holes.length; i &lt; l; i++) {
-                    var temp = ClipperLib.JS.Clean(this.terrainPoly[part].holes[i], cleandelta * this.scale)
-                    this.terrainPoly[part].holes[i] = temp[0]
+        for (var part = 0, len = this.terrainShape.length; part &lt; len; part++) {
+            var temp = ClipperLib.JS.Clean(this.terrainShape[part].outer, cleandelta * this.scale)
+            this.terrainShape[part].outer = temp[0]
+            if (this.terrainShape[part].holes.length &gt; 0) {
+                for (var i = 0, l = this.terrainShape[part].holes.length; i &lt; l; i++) {
+                    var temp = ClipperLib.JS.Clean(this.terrainShape[part].holes[i], cleandelta * this.scale)
+                    this.terrainShape[part].holes[i] = temp[0]
                 }
             }
         }
@@ -478,7 +503,7 @@ CG.B2DEntity.extend(&#x27;B2DTerrain&#x27;, {
         return circleArray.reverse()
     },
 
-    draw: function(){
+    draw: function () {
 
         Game.renderer.draw(this.bitmap)
 

@@ -186,64 +186,102 @@
 
 CG.B2DEntity.extend(&#x27;B2DRope&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     * image {mixed}
+     * x {number}
+     * y (number}
+     * length {number}
+     * segments {number}
+     * segmentHeight {number}
+     * world {object}
+     * scale {number}
+     *
+     @example
+     var e = new CG.B2DRope({
+           name: &#x27;player&#x27;,
+           image: this.asset.getImageByName(&#x27;glowball&#x27;),
+           x: 100,
+           y: 100,
+           length: 600,
+           segments: 20
+           segmentWidth: 4,
+           world: b2world,
+           scale: 40
+     })
+     *
      * @method init
      * @constructor
-     * @param world         {Object}      reference to world of B2DWorld
-     * @param name          {String}      id or name to identify
-     * @param image         {mixed}       path to image, image or atlasimage from asset
-     * @param x             {Number}     the x position
-     * @param y             {Number}     the y position
-     * @param length        {Number}     the length&#x2F;width of the bridge
-     * @param segments      {Number}     segments of the bridge
-     * @param segmentWidth  {Number}     width of a segment
-     * @param scale         {Number}     the world scale of B2DWorld
+     * @param options {Object}
      * @return {*}
      *&#x2F;
-    init:function (world, name, image, x, y, length, segments, segmentWidth, scale) {
-        this._super(name, image, world, x, y, scale)
-        this.instanceOf = &#x27;B2DRope&#x27;
-        &#x2F;**
-         * @property length
-         * @type {Number}
-         *&#x2F;
-        this.length = length
-        &#x2F;**
-         * @property segments
-         * @type {Number}
-         *&#x2F;
-        this.segments = segments
-        &#x2F;**
-         * @property segmentHeight
-         * @type {Number}
-         *&#x2F;
-        this.segmentHeight = ((this.length - this.y) &#x2F; this.segments) &#x2F; 2
-        &#x2F;**
-         * @property segmentWidth
-         * @type {*}
-         *&#x2F;
-        this.segmentWidth = segmentWidth
-        &#x2F;**
-         * @property anchor
-         * @type {b2Vec2}
-         *&#x2F;
-        this.anchor = new b2Vec2()
-        &#x2F;**
-         * @property prevBody
-         * @type {Object}
-         *&#x2F;
-        this.prevBody = {}
-        &#x2F;**
-         * @property bodyGroup
-         * @type {Array}
-         *&#x2F;
-        this.bodyGroup = []
-        &#x2F;**
-         * @property bodyCount
-         * @type {Number}
-         *&#x2F;
-        this.bodyCount = 0
+    init: function (options) {
 
-        this.body = {}
+        CG._extend(this, {
+            &#x2F;**
+             * @property length
+             * @type {Number}
+             *&#x2F;
+            length: 0,
+            &#x2F;**
+             * @property segments
+             * @type {Number}
+             *&#x2F;
+            segments: 0,
+            &#x2F;**
+             * @property segmentHeight
+             * @type {Number}
+             *&#x2F;
+            segmentHeight: 0,
+            &#x2F;**
+             * @property segmentWidth
+             * @type {*}
+             *&#x2F;
+            segmentWidth: 0,
+            &#x2F;**
+             * @property anchor
+             * @type {b2Vec2}
+             *&#x2F;
+            anchor: new b2Vec2(),
+            &#x2F;**
+             * @property prevBody
+             * @type {Object}
+             *&#x2F;
+            prevBody: {},
+            &#x2F;**
+             * @property bodyGroup
+             * @type {Array}
+             *&#x2F;
+            bodyGroup: [],
+            &#x2F;**
+             * @property bodyCount
+             * @type {Number}
+             *&#x2F;
+            bodyCount: 0,
+            &#x2F;**
+             * @property lowerAngle
+             * @type {Number}
+             *&#x2F;
+            lowerAngle: -25,
+            &#x2F;**
+             * @property upperAngle
+             * @type {Number}
+             *&#x2F;
+            upperAngle: 25,
+            &#x2F;**
+             * @property enableLimit
+             * @type {boolean}
+             *&#x2F;
+            enableLimit: true
+
+        })
+
+        this._super(options)
+        this.instanceOf = &#x27;B2DRope&#x27;
+
+        this.setImage(this.image)
+
+        this.segmentHeight = ((this.length - this.y) &#x2F; this.segments) &#x2F; 2
 
         &#x2F;&#x2F; RopeStart
         this.fixtureDef = new b2FixtureDef()
@@ -251,9 +289,9 @@ CG.B2DEntity.extend(&#x27;B2DRope&#x27;, {
         this.bodyDef = new b2BodyDef()
         this.bodyDef.userData = this.id
         this.bodyShapeCircle.m_radius = this.segmentWidth &#x2F; this.scale
-        this.fixtureDef.density = 1.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.fixtureDef.shape = this.bodyShapeCircle
         this.bodyDef.position.SetXY(this.x &#x2F; this.scale, this.y &#x2F; this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
@@ -268,13 +306,13 @@ CG.B2DEntity.extend(&#x27;B2DRope&#x27;, {
         this.bodyShapePoly.SetAsBox(this.segmentWidth &#x2F; this.scale, this.segmentHeight &#x2F; this.scale)
         this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
         this.fixtureDef.shape = this.bodyShapePoly
-        this.fixtureDef.density = 20.0
-        this.fixtureDef.restitution = 0.2
-        this.fixtureDef.friction = 0.2
+        this.fixtureDef.density = this.density
+        this.fixtureDef.restitution = this.restitution
+        this.fixtureDef.friction = this.friction
         this.jointDef = new b2RevoluteJointDef()
-        this.jointDef.lowerAngle = -25 &#x2F; CG.Const_180_PI
-        this.jointDef.upperAngle = 25 &#x2F; CG.Const_180_PI
-        this.jointDef.enableLimit = true
+        this.jointDef.lowerAngle = this.lowerAngle &#x2F; CG.Const_180_PI
+        this.jointDef.upperAngle = this.upperAngle &#x2F; CG.Const_180_PI
+        this.jointDef.enableLimit = this.enableLimit
 
 
         for (var i = 0, l = this.segments; i &lt; l; i++) {
@@ -292,7 +330,7 @@ CG.B2DEntity.extend(&#x27;B2DRope&#x27;, {
 
     },
 
-    draw:function () {
+    draw: function () {
         for (var i = 1; i &lt;= this.bodyCount; i++) {
 
             this.body = this.bodyGroup[i]

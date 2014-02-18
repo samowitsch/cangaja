@@ -189,39 +189,50 @@
 
 CG.Entity.extend(&#x27;Bitmap&#x27;, {
     &#x2F;**
+     * Options:
+     * width {number}
+     * height {number}
+     *
+     @example
+     var b = new CG.Bitmap({
+           width: 100,
+           height: 100
+         })
+
+     *
      * @method init
      * @constructor
-     * @param width {Number} width the width for the buffer
-     * @param height {Number} height the height for the buffer
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init: function (width, height) {
+    init: function (options) {
         this.instanceOf = &#x27;Bitmap&#x27;
-        &#x2F;**
-         @property x {Number}
-         *&#x2F;
-        this.x = 0
-        &#x2F;**
-         @property y {Number}
-         *&#x2F;
-        this.y = 0
-        &#x2F;**
-         @description tolerance for the getSquareValues method
-         @property tolerance {Number}
-         *&#x2F;
-        this.tolerance = 128
+
+        CG._extend(this, {
+            &#x2F;**
+             @property x {Number}
+             *&#x2F;
+            x: 0,
+            &#x2F;**
+             @property y {Number}
+             *&#x2F;
+            y: 0,
+            &#x2F;**
+             @description tolerance for the getSquareValues method
+             @property tolerance {Number}
+             *&#x2F;
+            tolerance: 128
+
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         &#x2F;**
          @property bitmap_canvas {Object}
          *&#x2F;
         this.bitmap_canvas = document.createElement(&#x27;canvas&#x27;)
-        &#x2F;**
-         @property bitmap_canvas.width {Number}
-         *&#x2F;
-        this.bitmap_canvas.width = width
-        &#x2F;**
-         @property bitmap_canvas.height {Number}
-         *&#x2F;
-        this.bitmap_canvas.height = height
         &#x2F;**
          @property bitmap_ctx {Context}
          *&#x2F;
@@ -230,6 +241,16 @@ CG.Entity.extend(&#x27;Bitmap&#x27;, {
          @property bitmap_ctx.fillStyle {String}
          *&#x2F;
         this.bitmap_ctx.fillStyle = &#x27;#000000&#x27;
+        &#x2F;**
+         @property bitmap_canvas.width {Number}
+         *&#x2F;
+        this.bitmap_canvas.width = this.width
+        &#x2F;**
+         @property bitmap_canvas.height {Number}
+         *&#x2F;
+        this.bitmap_canvas.height = this.height
+
+
         return this
     },
     &#x2F;**

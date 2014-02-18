@@ -315,6 +315,13 @@
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_object">object</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_positions">positions</a>
 
                                 
@@ -358,13 +365,6 @@
                         
                             <li class="index-item property">
                                 <a href="#property_steps">steps</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_theobj">theobj</a>
 
                                 
                                 
@@ -465,7 +465,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l251"><code>cangaja&#x2F;control&#x2F;translate.js:251</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l301"><code>cangaja&#x2F;control&#x2F;translate.js:301</code></a>
         
         </p>
 
@@ -566,37 +566,7 @@
             
                 <li class="arg">
                     
-                        <code>obj</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>steps</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>startpoint</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>endpoint</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>control1</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>control2</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -633,7 +603,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l167"><code>cangaja&#x2F;control&#x2F;translate.js:167</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l200"><code>cangaja&#x2F;control&#x2F;translate.js:200</code></a>
         
         </p>
 
@@ -656,89 +626,14 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
+                        <code class="param-name">options</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>obj object to move</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">steps</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>steps of bézier curve</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">startpoint</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>startpoint startpoint of bézier</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">endpoint</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>endpoint endpoint of bézier</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">control1</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>control1 point for bézier calculation (optional)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">control2</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>control2 point for bézier calculation (optional)</p>
+                         
                     </div>
 
                     
@@ -763,6 +658,23 @@ http://13thparallel.com/archive/bezier-curves/</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var t = new CG.Translate()
+t.initBezier({
+   object: spr1,
+   steps: 10,
+   startpoint: new CG.Point(320, 160),
+   endpoint: new CG.Point(0, 10),
+   control1: new CG.Point(340, 180),
+   control2: new CG.Point(0, 0)
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -775,37 +687,7 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
                 <li class="arg">
                     
-                        <code>obj</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>centerpoint</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>radius1</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>radius2</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>startangle</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>rotation</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -842,7 +724,7 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l144"><code>cangaja&#x2F;control&#x2F;translate.js:144</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l160"><code>cangaja&#x2F;control&#x2F;translate.js:160</code></a>
         
         </p>
 
@@ -853,7 +735,13 @@ http://13thparallel.com/archive/bezier-curves/</p>
     </div>
 
     <div class="description">
-        
+        <p>Options:
+object {object}
+centerpoint {CG.Point}
+radius1 {number}
+radius {number}
+startangle {number}
+rotation {number}</p>
     </div>
 
     
@@ -864,89 +752,14 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
+                        <code class="param-name">options</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>obj object to move</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">centerpoint</code>
-                        <span class="type">Point</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>centerpoint</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">radius1</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>radius1</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">radius2</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>radius2</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">startangle</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>startangle</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">rotation</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>rotation</p>
+                         
                     </div>
 
                     
@@ -971,6 +784,23 @@ http://13thparallel.com/archive/bezier-curves/</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var t = new CG.Translate()
+t.initOval({
+   object: spr1,
+   centerpoint: new CG.Point(320, 160),
+   radius1: 50,
+   radius2: 50,
+   startangle: 90,
+   rotation: 5
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -983,25 +813,7 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
                 <li class="arg">
                     
-                        <code>obj</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>steps</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>startpoint</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>endpoint</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1049,7 +861,11 @@ http://13thparallel.com/archive/bezier-curves/</p>
     </div>
 
     <div class="description">
-        
+        <p>Options:
+object {object}
+steps {number}
+startpoint {CG.Point}
+endpoint {CG.Point}</p>
     </div>
 
     
@@ -1060,59 +876,14 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
+                        <code class="param-name">options</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>object to move</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">steps</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>steps of tween</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">startpoint</code>
-                        <span class="type">Point</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>startpoint of tween</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">endpoint</code>
-                        <span class="type">Point</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>endpoint of tween</p>
+                         
                     </div>
 
                     
@@ -1136,6 +907,21 @@ http://13thparallel.com/archive/bezier-curves/</p>
         </div>
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var t = new CG.Translate()
+t.initTween({
+   object: Sprite,
+   steps: 10,
+   startpoint: new CG.Point(10, 10),
+   endpoint: new CG.Point(320, 160)
+})
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -1172,7 +958,7 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l256"><code>cangaja&#x2F;control&#x2F;translate.js:256</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l306"><code>cangaja&#x2F;control&#x2F;translate.js:306</code></a>
         
         </p>
 
@@ -1226,7 +1012,7 @@ http://13thparallel.com/archive/bezier-curves/</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l218"><code>cangaja&#x2F;control&#x2F;translate.js:218</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l268"><code>cangaja&#x2F;control&#x2F;translate.js:268</code></a>
         
         </p>
 
@@ -1412,6 +1198,50 @@ http://13thparallel.com/archive/bezier-curves/</p>
         
         
         <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l106"><code>cangaja&#x2F;control&#x2F;translate.js:106</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_object" class="property item">
+    <h3 class="name"><code>object</code></h3>
+    <span class="type">Object</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l61"><code>cangaja&#x2F;control&#x2F;translate.js:61</code></a>
         
         </p>
 
@@ -1720,50 +1550,6 @@ http://13thparallel.com/archive/bezier-curves/</p>
         
         
         <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l91"><code>cangaja&#x2F;control&#x2F;translate.js:91</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_theobj" class="property item">
-    <h3 class="name"><code>theobj</code></h3>
-    <span class="type">Object</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_control_translate.js.html#l61"><code>cangaja&#x2F;control&#x2F;translate.js:61</code></a>
         
         </p>
 

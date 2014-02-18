@@ -42,8 +42,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DPolygon'
+
         CG._extend(this, {
             /**
              * @property polys
@@ -57,11 +56,9 @@ CG.B2DEntity.extend('B2DPolygon', {
             bullet: false
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DPolygon'
+        this.setImage(this.image)
 
         /**
          * @property jsondata
@@ -97,10 +94,6 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {*}
          */
         this.bodyDef.bullet = this.bullet
-
-        //this.bodyDef.linearDamping = options.linearDamping
-        //this.bodyDef.angularDamping = options.angularDamping
-        //this.bodyDef.fixedRotation = true
 
         /**
          * @property body

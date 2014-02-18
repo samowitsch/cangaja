@@ -1366,7 +1366,7 @@
             
                 <li class="arg">
                     
-                        <code>fontfile</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1421,14 +1421,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">fontfile</code>
-                        <span class="type">String/object</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>path or mediaasset object with data</p>
+                         
                     </div>
 
                     
@@ -1440,6 +1440,17 @@
 
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>gill = new CG.Font().loadFont({
+   font: this.asset.getFontByName('gill')
+})
+</code></pre>
+            </div>
+        </div>
     
 </div>
 

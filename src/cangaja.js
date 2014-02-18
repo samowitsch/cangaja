@@ -29789,8 +29789,18 @@ CG.Entity.extend('B2DEntity', {
 
         CG._extend(this, {
             /**
+             * @property world
+             * @type {}
+             */
+            world: {},
+            /**
+             * @property scale
+             * @type {}
+             */
+            scale: {},
+            /**
              * @property body
-             * @type {b2Body}
+             * @type {}
              */
             body: {},
             /**
@@ -29847,54 +29857,89 @@ CG.Entity.extend('B2DEntity', {
              * @property dead
              * @type {Boolean}
              */
-            dead: false
-        })
-
-        if (options) {
-            CG._extend(this, options)
-        }
-
-
-        if (!this.bodyDef) {
+            dead: false,
+            /**
+             * @property density
+             * @type {Number}
+             */
+            density: 1.0,
+            /**
+             * @property restitution
+             * @type {Number}
+             */
+            restitution: 0.1,
+            /**
+             * @property friction
+             * @type {Number}
+             */
+            friction: 1,
+            /**
+             * @property allowSleep
+             * @type {boolean}
+             */
+            allowSleep: true,
+            /**
+             * @property awake
+             * @type {boolean}
+             */
+            awake: true,
+            /**
+             * @property fixedRotation
+             * @type {boolean}
+             */
+            fixedRotation: false,
             /**
              * @property bodyDef
              * @type {b2BodyDef}
              */
-            this.bodyDef = new b2BodyDef
-            /**
-             * @property bodyDef.alowSleep
-             * @type {Boolean}
-             */
-            this.bodyDef.allowSleep = true
-            /**
-             * @property bodyDef.awake
-             * @type {Boolean}
-             */
-            this.bodyDef.awake = true
-        }
-
-        if (!this.fixDef) {
+            bodyDef: new b2BodyDef,
             /**
              * @property fixDef
              * @type {b2FixtureDef}
              */
-            this.fixDef = new b2FixtureDef
-            /**
-             * @property fixDef.density
-             * @type {Number}
-             */
-            this.fixDef.density = 1.0
-            /**
-             * @property fixDef.friction
-             * @type {Number}
-             */
-            this.fixDef.friction = 0.5
-            /**
-             * @property fixDef.restitution
-             * @type {Number}
-             */
-            this.fixDef.restitution = 0.5
+            fixDef: new b2FixtureDef
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            this.id.name = options.name
         }
+
+        /**
+         * @property bodyDef.alowSleep
+         * @type {Boolean}
+         */
+        this.bodyDef.allowSleep = this.allowSleep
+        /**
+         * @property bodyDef.awake
+         * @type {Boolean}
+         */
+        this.bodyDef.awake = this.awake
+        /**
+         * @property bodyDef.bullet
+         * @type {Boolean}
+         */
+        this.bodyDef.bullet = this.bullet
+        /**
+         * @property bodyDef.fixedRotation
+         * @type {Boolean}
+         */
+        this.bodyDef.fixedRotation = this.fixedRotation
+        /**
+         * @property fixDef.density
+         * @type {Number}
+         */
+        this.fixDef.density = this.density
+        /**
+         * @property fixDef.friction
+         * @type {Number}
+         */
+        this.fixDef.friction = this.friction
+        /**
+         * @property fixDef.restitution
+         * @type {Number}
+         */
+        this.fixDef.restitution = this.restitution
 
         return this
     },
@@ -30020,8 +30065,6 @@ CG.B2DEntity.extend('B2DCircle', {
      * @return {*}
      */
     init:function (options) {
-        this._super()
-        this.instanceOf = 'B2DCircle'
 
         CG._extend(this, {
             /**
@@ -30031,11 +30074,9 @@ CG.B2DEntity.extend('B2DCircle', {
             radius: 0
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DCircle'
+        this.setImage(this.image)
 
         /**
          * @property bodyDef.type
@@ -30111,10 +30152,13 @@ CG.B2DEntity.extend('B2DLine', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DLine'
 
         CG._extend(this, {
+            /**
+             * @property body
+             * @type {}
+             */
+            body: {},
             /**
              * @property startPoint
              * @type {b2Vec2}
@@ -30127,10 +30171,8 @@ CG.B2DEntity.extend('B2DLine', {
             endPoint: new b2Vec2(0, 0)
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-        }
+        this._super(options)
+        this.instanceOf = 'B2DLine'
 
         this.convertPoints()
 
@@ -30215,20 +30257,10 @@ CG.B2DEntity.extend('B2DRectangle', {
      * @return {*}
      */
     init:function (options) {
-        this._super()
+        this._super(options)
         this.instanceOf = 'B2DRectangle'
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
-
-        /**
-         * @property bodyDef.stat
-         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
-         */
-        this.bodyDef.type = this.bodyType
+        this.setImage(this.image)
 
         /**
          * @property fixDef.shape
@@ -30307,8 +30339,7 @@ CG.B2DEntity.extend('B2DPolygon', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DPolygon'
+
         CG._extend(this, {
             /**
              * @property polys
@@ -30322,11 +30353,9 @@ CG.B2DEntity.extend('B2DPolygon', {
             bullet: false
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DPolygon'
+        this.setImage(this.image)
 
         /**
          * @property jsondata
@@ -30362,10 +30391,6 @@ CG.B2DEntity.extend('B2DPolygon', {
          * @type {*}
          */
         this.bodyDef.bullet = this.bullet
-
-        //this.bodyDef.linearDamping = options.linearDamping
-        //this.bodyDef.angularDamping = options.angularDamping
-        //this.bodyDef.fixedRotation = true
 
         /**
          * @property body
@@ -30530,8 +30555,6 @@ CG.B2DEntity.extend('B2DTerrain', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DTerrain'
 
         CG._extend(this, {
             /**
@@ -30565,18 +30588,13 @@ CG.B2DEntity.extend('B2DTerrain', {
              * @property holes
              * @type {Array}
              */
-            holes: [],
-            /**
-             * @property bodyType
-             * @type {box2d.b2BodyType}
-             */
-            bodyType: box2d.b2BodyType.b2_staticBody
+            holes: []
         })
 
+        this._super(options)
+        this.instanceOf = 'B2DTerrain'
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
+        if (typeof this.image !== undefined) {
             this.bitmap.loadImage(this.image)
         }
 
@@ -30585,7 +30603,7 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = this.bodyType
+        this.bodyDef.type = box2d.b2BodyType.b2_staticBody //terrain is always static?
         /**
          * @property bodyDef.position
          */
@@ -30595,11 +30613,6 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property bodyDef.bullet
-         * @type {*}
-         */
-        this.bodyDef.bullet = this.bullet
 
         this.createTerrain()
 
@@ -30638,15 +30651,18 @@ CG.B2DEntity.extend('B2DTerrain', {
                 this.bodyShapePoly.bounce = 0.5
                 this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
 
+                this.fixDef.density = this.density
+                this.fixDef.restitution = this.restitution
+                this.fixDef.friction = this.friction
                 this.fixDef.shape = this.bodyShapePoly
                 this.body.CreateFixture(this.fixDef)
             }
         } catch (e) {
-            console.log('error: createTerrain()', e)
-            console.log(e.message)
-            console.log(e.stack)
-            console.log(this.terrainShape)
-            console.log(this.terrainTriangles)
+//            console.log('error: createTerrain()', e)
+//            console.log(e.message)
+//            console.log(e.stack)
+//            console.log(this.terrainShape)
+//            console.log(this.terrainTriangles)
         }
     },
     /**
@@ -30869,8 +30885,6 @@ CG.B2DEntity.extend('B2DChainShape', {
      * @return {*}
      */
     init:function (options) {
-        this._super()
-        this.instanceOf = 'B2DChainShape'
 
         CG._extend(this, {
 
@@ -30886,10 +30900,8 @@ CG.B2DEntity.extend('B2DChainShape', {
             bodyType: box2d.b2BodyType.b2_staticBody
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-        }
+        this._super(options)
+        this.instanceOf = 'B2DChainShape'
 
         this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
 
@@ -30993,8 +31005,6 @@ CG.B2DEntity.extend('B2DRope', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DRope'
 
         CG._extend(this, {
             /**
@@ -31038,26 +31048,6 @@ CG.B2DEntity.extend('B2DRope', {
              */
             bodyCount: 0,
             /**
-             * @property body
-             * @type {object}
-             */
-            body: {},
-            /**
-             * @property density
-             * @type {Number}
-             */
-            density: 1.0,
-            /**
-             * @property restitution
-             * @type {Number}
-             */
-            restitution: 0.2,
-            /**
-             * @property friction
-             * @type {Number}
-             */
-            friction: 0.2,
-            /**
              * @property lowerAngle
              * @type {Number}
              */
@@ -31066,15 +31056,19 @@ CG.B2DEntity.extend('B2DRope', {
              * @property upperAngle
              * @type {Number}
              */
-            upperAngle: 25
+            upperAngle: 25,
+            /**
+             * @property enableLimit
+             * @type {boolean}
+             */
+            enableLimit: true
 
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DRope'
+
+        this.setImage(this.image)
 
         this.segmentHeight = ((this.length - this.y) / this.segments) / 2
 
@@ -31107,7 +31101,7 @@ CG.B2DEntity.extend('B2DRope', {
         this.jointDef = new b2RevoluteJointDef()
         this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
         this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
-        this.jointDef.enableLimit = true
+        this.jointDef.enableLimit = this.enableLimit
 
 
         for (var i = 0, l = this.segments; i < l; i++) {
@@ -31180,8 +31174,6 @@ CG.B2DEntity.extend('B2DBridge', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DBridge'
 
         CG._extend(this, {
             /**
@@ -31235,26 +31227,6 @@ CG.B2DEntity.extend('B2DBridge', {
              */
             bodyCount: 0,
             /**
-             * @property body
-             * @type {object}
-             */
-            body: {},
-            /**
-             * @property density
-             * @type {Number}
-             */
-            density: 20.0,
-            /**
-             * @property restitution
-             * @type {Number}
-             */
-            restitution: 0.2,
-            /**
-             * @property friction
-             * @type {Number}
-             */
-            friction: 0.2,
-            /**
              * @property lowerAngle
              * @type {Number}
              */
@@ -31263,14 +31235,18 @@ CG.B2DEntity.extend('B2DBridge', {
              * @property upperAngle
              * @type {Number}
              */
-            upperAngle: 25
+            upperAngle: 25,
+            /**
+             * @property enableLimit
+             * @type {boolean}
+             */
+            enableLimit: true
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DBridge'
+
+        this.setImage(this.image)
 
         /**
          * @property segmentWidth
@@ -31315,7 +31291,7 @@ CG.B2DEntity.extend('B2DBridge', {
         this.jointDef = new b2RevoluteJointDef()
         this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
         this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
-        this.jointDef.enableLimit = true
+        this.jointDef.enableLimit = this.enableLimit
 
         for (var i = 0, l = this.segments; i < l; i++) {
             this.bodyDef.position.SetXY(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)

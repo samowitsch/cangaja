@@ -143,7 +143,7 @@ CG.Game.extend('MyGame', {
             name: 'glowball',
             image: this.asset.getImageByName('glowball'),
             radius: 23,
-            x: 320,
+            x: 120,
             y: -300
         })
 
@@ -174,8 +174,8 @@ CG.Game.extend('MyGame', {
             name: 'powerstar75',
             image: this.asset.getImageByName('powerstar75'),
             texturepacker: this.asset.getJsonByName('powerstar75'),
-            x: 200,
-            y: -150
+            x: 300,
+            y: -550
         })
 
         // bridge test
@@ -184,6 +184,8 @@ CG.Game.extend('MyGame', {
             image: this.asset.getImageByName('chain'),
             x: 20,
             y: 280,
+            density: 10,
+            friction: 0.1,
             length: 620,
             segments: 27,
             segmentHeight: 3
@@ -196,6 +198,7 @@ CG.Game.extend('MyGame', {
             image: this.asset.getImageByName('chain-v'),
             x: 580,
             y: 0,
+            density: 10,
             length: 200,
             segments: 8,
             segmentWidth: 3

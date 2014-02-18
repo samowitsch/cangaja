@@ -23,25 +23,60 @@ window.onload = function () {
  * extend B2DWorld and create own objects in the constructor.
  */
 CG.B2DWorld.extend('B2DTestbed', {
-    init: function (name, opt) {
-        this._super(name, opt)
+    init: function (options) {
+        this._super(options)
         this.debug = 0
 
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'L', new CG.Point(0, -500), new CG.Point(0, Game.height), this.scale))                                              //left "wall"
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'R', new CG.Point(Game.width, -500), new CG.Point(Game.width, Game.height), this.scale))                            //right "wall"
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'T', new CG.Point(0, -500), new CG.Point(Game.width, -500), this.scale))                                            //roof
-        this.addCustom(new CG.B2DBlobbyGround(this.world, 'G', new CG.Point(0, Game.height - 50), new CG.Point(Game.width, Game.height - 50), this.scale))                  //ground
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 - 10, Game.height2 - 43), new CG.Point(Game.width2 - 10, Game.height), this.scale))   //net part
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2, Game.height2 - 51), new CG.Point(Game.width2, Game.height), this.scale))             //net part
-        this.addCustom(new CG.B2DBlobbyWall(this.world, 'N', new CG.Point(Game.width2 + 10, Game.height2 - 43), new CG.Point(Game.width2 + 10, Game.height), this.scale))   //net part
+        this.createLine({name: 'L', startPoint: new CG.Point(0, -500), endPoint: new CG.Point(0, Game.height)})                                             //left "wall"
+        this.createLine({name: 'R', startPoint: new CG.Point(Game.width, -500), endPoint: new CG.Point(Game.width, Game.height)})                           //right "wall"
+        this.createLine({name: 'T', startPoint: new CG.Point(0, -500), endPoint: new CG.Point(Game.width, -500), scale: this.scale})                                           //roof
+        this.createLine({name: 'G', startPoint: new CG.Point(0, Game.height - 50), endPoint: new CG.Point(Game.width, Game.height - 50)})                  //ground
+        this.createLine({name: 'N', startPoint: new CG.Point(Game.width2 - 10, Game.height2 - 43), endPoint: new CG.Point(Game.width2 - 10, Game.height)})   //net part
+        this.createLine({name: 'N', startPoint: new CG.Point(Game.width2, Game.height2 - 51), endPoint: new CG.Point(Game.width2, Game.height)})             //net part
+        this.createLine({name: 'N', startPoint: new CG.Point(Game.width2 + 10, Game.height2 - 43), endPoint: new CG.Point(Game.width2 + 10, Game.height)})   //net part
 
-        ball = new CG.B2DBall(this.world, 'beachvolleyball', Game.asset.getImageByName('beachvolleyball'), 38, 310, -200, this.scale, box2d.b2BodyType.b2_staticBody)
+        ball = new CG.B2DBall({
+            world: this.world,
+            name: 'beachvolleyball',
+            image: Game.asset.getImageByName('beachvolleyball'),
+            radius: 38,
+            x: 310,
+            y: -200,
+            restitution: 0.5,
+            scale: this.scale,
+            bodyType: box2d.b2BodyType.b2_staticBody
+        })
         ball.body.SetPosition(new b2Vec2(16, 4.5))
         this.addCustom(ball)
 
-        rightplayer = new CG.B2DRightPlayer(this.world, 'blobby-egg-right', Game.asset.getImageByName('blobby-egg-right'), Game.asset.getJsonByName('blobbies'), Game.width - 115, 305, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+        rightplayer = new CG.B2DRightPlayer({
+            name: 'blobby-egg-right',
+            image: Game.asset.getImageByName('blobby-egg-right'),
+            texturepacker: Game.asset.getJsonByName('blobbies'),
+            x: Game.width - 115,
+            y: 305,
+            bullet: true,
+            allowSleep: false,
+            restitution: 0.05,
+            fixedRotation: true,
+            world: this.world,
+            scale: this.scale
+        })
         this.addCustom(rightplayer)
-        leftplayer = new CG.B2DLeftPlayer(this.world, 'blobby-egg-left', Game.asset.getImageByName('blobby-egg-left'), Game.asset.getJsonByName('blobbies'), 110, 305, this.scale, box2d.b2BodyType.b2_dynamicBody, false)
+
+        leftplayer = new CG.B2DLeftPlayer({
+            name: 'blobby-egg-left',
+            image: Game.asset.getImageByName('blobby-egg-left'),
+            texturepacker: Game.asset.getJsonByName('blobbies'),
+            x: 110,
+            y: 305,
+            bullet: true,
+            allowSleep: false,
+            restitution: 0.05,
+            fixedRotation: true,
+            world: this.world,
+            scale: this.scale
+        })
         this.addCustom(leftplayer)
 
         this.addContactListener({
@@ -113,56 +148,11 @@ CG.B2DWorld.extend('B2DTestbed', {
 })
 
 /**
- * extend B2DLine and define/overwrite custom bodyDef and fixDef in constructor
- */
-CG.B2DLine.extend('B2DBlobbyWall', {
-    init: function (world, name, start, end, scale) {
-        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = false
-
-        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 1.0
-        this.fixDef.friction = 0.5
-        this.fixDef.restitution = 0.5
-
-        this._super(world, name, new b2Vec2(start.x / scale, start.y / scale), new b2Vec2(end.x / scale, end.y / scale), scale)
-    }
-})
-
-/**
- * extend B2DLine and define/overwrite bodyDef and fixDef in constructor
- */
-CG.B2DLine.extend('B2DBlobbyGround', {
-    init: function (world, name, start, end, scale) {
-        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = false
-
-        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 1.0
-        this.fixDef.friction = 0.2
-        this.fixDef.restitution = 0.2
-
-        this._super(world, name, new b2Vec2(start.x / scale, start.y / scale), new b2Vec2(end.x / scale, end.y / scale), scale)
-    }
-})
-
-/**
  * extend B2DPolygon and define own bodyDef/fixDef and some additional properties/methods
  */
 CG.B2DPolygon.extend('B2DPlayer', {
-    init: function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
-
-        this.bodyDef = new b2BodyDef
-        this.bodyDef.fixedRotation = true
-        this.bodyDef.allowSleep = false
-        this.bodyDef.bullet = true
-
-        this.fixDef = new b2FixtureDef
-        this.fixDef.restitution = 0.1
-        this.linearDamping = 0
-        this.angularDamping = 0
+    init: function (options) {
+        this._super(options)
 
         this.jump = false
         this.max_hor_vel = 11
@@ -172,11 +162,10 @@ CG.B2DPolygon.extend('B2DPlayer', {
         this.offhor = 20
         this.offver = 20
 
-        this.font = new CG.Font().loadFont(Game.asset.getFontByName('blobby-points'))
+        this.font = new CG.Font().loadFont({font: Game.asset.getFontByName('blobby-points')})
 
         this.ballcontacts = 0
 
-        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
     }
 })
 
@@ -184,10 +173,10 @@ CG.B2DPolygon.extend('B2DPlayer', {
  * extend B2DPlayer with additional font drawing
  */
 CG.B2DPlayer.extend('B2DRightPlayer', {
-    init: function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
-        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+    init: function (options) {
+        this._super(options)
 
-        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50))
+        this.shadow = new CG.Sprite({image: Game.asset.getImageByName('beachvolleyball-shadow'), position: new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50)})
         this.shadow.xscale = 1.3
         this.shadow.name = 'beachvolleyball-shadow'
         mainlayer.addElement(this.shadow)
@@ -209,10 +198,10 @@ CG.B2DPlayer.extend('B2DRightPlayer', {
  * extend B2DPlayer with additional font drawing
  */
 CG.B2DPlayer.extend('B2DLeftPlayer', {
-    init: function (world, name, image, jsonpoly, x, y, scale, stat, bullet) {
-        this._super(world, name, image, jsonpoly, x, y, scale, stat, bullet)
+    init: function (options) {
+        this._super(options)
 
-        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50))
+        this.shadow = new CG.Sprite({image: Game.asset.getImageByName('beachvolleyball-shadow'), position: new CG.Point((this.body.GetPosition().x + 58) * this.scale, Game.height - 50)})
         this.shadow.xscale = 1.3
         this.shadow.name = 'beachvolleyball-shadow'
         mainlayer.addElement(this.shadow)
@@ -233,24 +222,24 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
  * extend B2DCircle adding custom bodyDef/fixDef and control arrow (sprite)
  */
 CG.B2DCircle.extend('B2DBall', {
-    init: function (world, name, image, radius, x, y, scale, stat) {
-        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = true
-        this.bodyDef.bullet = true
+    init: function (options) {
+//        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
+//        this.bodyDef.allowSleep = true
+//        this.bodyDef.awake = true
+//        this.bodyDef.bullet = true
 
-        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-        this.fixDef.density = 0.5
-        this.fixDef.friction = 0.1
-        this.fixDef.restitution = 0.55
+//        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
+//        this.fixDef.density = 0.5
+//        this.fixDef.friction = 0.1
+//        this.fixDef.restitution = 0.55
 
-        this._super(world, name, image, radius, x, y, scale, stat)
+        this._super(options)
 
 
-        this.arrow = new CG.Sprite(Game.asset.getImageByName('arrow'), new CG.Point(this.body.GetPosition().x * this.scale, 15))
+        this.arrow = new CG.Sprite({image: Game.asset.getImageByName('arrow'), position: new CG.Point(this.body.GetPosition().x * this.scale, 15)})
         this.arrow.name = 'arrow'
         mainlayer.addElement(this.arrow)
-        this.shadow = new CG.Sprite(Game.asset.getImageByName('beachvolleyball-shadow'), new CG.Point(this.body.GetPosition().x * this.scale, Game.height - 50))
+        this.shadow = new CG.Sprite({image: Game.asset.getImageByName('beachvolleyball-shadow'), position: new CG.Point(this.body.GetPosition().x * this.scale, Game.height - 50)})
         this.shadow.name = 'beachvolleyball-shadow'
         mainlayer.addElement(this.shadow)
 
@@ -359,21 +348,20 @@ CG.Game.extend('MyGame', {
         mainscreen = new CG.Screen({name: 'mainscreen'})
         mainlayer = new CG.Layer({name: 'mainlayer'})
 
-        back = new CG.Sprite(this.asset.getImageByName('blobby-back'), new CG.Point(400, 240))
+        back = new CG.Sprite({image: this.asset.getImageByName('blobby-back'), position: new CG.Point(400, 240)})
         back.name = 'back'
         mainlayer.addElement(back)
 
 
-        ctrlleft = new CG.Sprite(this.asset.getImageByName('ctrl-left'), new CG.Point(0 + 40, this.height - 30))
+        ctrlleft = new CG.Sprite({image: this.asset.getImageByName('ctrl-left'), position: new CG.Point(0 + 40, this.height - 30)})
         ctrlleft.name = 'ctrlleft'
         mainlayer.addElement(ctrlleft)
-        ctrlright = new CG.Sprite(this.asset.getImageByName('ctrl-right'), new CG.Point(this.width - 40, this.height - 30))
+        ctrlright = new CG.Sprite({image: this.asset.getImageByName('ctrl-right'), position: new CG.Point(this.width - 40, this.height - 30)})
         ctrlright.name = 'ctrlright'
         mainlayer.addElement(ctrlright)
 
-        var opt = {sleep: false}
         //create Box2D World
-        b2world = new CG.B2DTestbed('box2d-world', opt)
+        b2world = new CG.B2DTestbed({name: 'box2d-world', sleep: false})
 
         //add it to a CGLayer
         mainlayer.addElement(b2world)

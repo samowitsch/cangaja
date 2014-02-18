@@ -66,8 +66,6 @@ CG.B2DEntity.extend('B2DTerrain', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DTerrain'
 
         CG._extend(this, {
             /**
@@ -101,18 +99,13 @@ CG.B2DEntity.extend('B2DTerrain', {
              * @property holes
              * @type {Array}
              */
-            holes: [],
-            /**
-             * @property bodyType
-             * @type {box2d.b2BodyType}
-             */
-            bodyType: box2d.b2BodyType.b2_staticBody
+            holes: []
         })
 
+        this._super(options)
+        this.instanceOf = 'B2DTerrain'
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
+        if (typeof this.image !== undefined) {
             this.bitmap.loadImage(this.image)
         }
 
@@ -121,7 +114,7 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @property bodyDef.type
          * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
          */
-        this.bodyDef.type = this.bodyType
+        this.bodyDef.type = box2d.b2BodyType.b2_staticBody //terrain is always static?
         /**
          * @property bodyDef.position
          */
@@ -131,11 +124,6 @@ CG.B2DEntity.extend('B2DTerrain', {
          * @type {*}
          */
         this.bodyDef.userData = this.id
-        /**
-         * @property bodyDef.bullet
-         * @type {*}
-         */
-        this.bodyDef.bullet = this.bullet
 
         this.createTerrain()
 
@@ -174,15 +162,18 @@ CG.B2DEntity.extend('B2DTerrain', {
                 this.bodyShapePoly.bounce = 0.5
                 this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
 
+                this.fixDef.density = this.density
+                this.fixDef.restitution = this.restitution
+                this.fixDef.friction = this.friction
                 this.fixDef.shape = this.bodyShapePoly
                 this.body.CreateFixture(this.fixDef)
             }
         } catch (e) {
-            console.log('error: createTerrain()', e)
-            console.log(e.message)
-            console.log(e.stack)
-            console.log(this.terrainShape)
-            console.log(this.terrainTriangles)
+//            console.log('error: createTerrain()', e)
+//            console.log(e.message)
+//            console.log(e.stack)
+//            console.log(this.terrainShape)
+//            console.log(this.terrainTriangles)
         }
     },
     /**

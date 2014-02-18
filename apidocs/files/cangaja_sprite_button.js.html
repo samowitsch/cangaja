@@ -185,32 +185,46 @@
  *&#x2F;
 CG.Sprite.extend(&#x27;Button&#x27;, {
     &#x2F;**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * text {string}
+     * font {CG.Font}
+     * callback {function}
+     *
+     @example
+     var s = new CG.Button({
+           image: &#x27;..&#x2F;images&#x2F;demo.png&#x27;,
+           position: new CG.Point(200,200),
+           text: &#x27;MyButton&#x27;,
+           font: heiti,
+           callback: callbackFunction
+         })
+     *
+     *
      * @method init
      * @constructor
-     * @param image {image} image image path, image or atlasimage
-     * @param position {CG.Point} position point
-     * @param text {string} the button text
-     * @param font {CG.Font} a CG.Font object for text rendering
-     * @param clickedCallback {callback} callback function for click handling
+     * @param options {object}
      * @return {*}
      *&#x2F;
-    init: function (image, position, text, font, clickedCallback) {
-        this._super(image, position)
+    init: function (options) {
+        this._super()
         this.instanceOf = &#x27;Button&#x27;
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
 
         &#x2F;**
          @property font {CG.Font}
          *&#x2F;
-        this.font = font
         &#x2F;**
          @property text {string}
          *&#x2F;
-        this.text = text
-
         &#x2F;**
-         @property clickedCallback {callback}
+         @property callback {callback}
          *&#x2F;
-        this.clickedCallback = clickedCallback
         &#x2F;**
          @property clickable {boolean}
          *&#x2F;
@@ -230,9 +244,9 @@ CG.Sprite.extend(&#x27;Button&#x27;, {
         this.yhandle = (this.height * this.yscale &#x2F; 2)
 
         if (this.clicked) {
-            if (this.clickedCallback) {
+            if (this.callback) {
                 this.clicked = false
-                this.clickedCallback(this)
+                this.callback(this)
             }
         }
         this.updateDiff()

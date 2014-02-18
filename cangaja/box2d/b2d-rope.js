@@ -40,8 +40,6 @@ CG.B2DEntity.extend('B2DRope', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
-        this.instanceOf = 'B2DRope'
 
         CG._extend(this, {
             /**
@@ -85,26 +83,6 @@ CG.B2DEntity.extend('B2DRope', {
              */
             bodyCount: 0,
             /**
-             * @property body
-             * @type {object}
-             */
-            body: {},
-            /**
-             * @property density
-             * @type {Number}
-             */
-            density: 1.0,
-            /**
-             * @property restitution
-             * @type {Number}
-             */
-            restitution: 0.2,
-            /**
-             * @property friction
-             * @type {Number}
-             */
-            friction: 0.2,
-            /**
              * @property lowerAngle
              * @type {Number}
              */
@@ -113,15 +91,19 @@ CG.B2DEntity.extend('B2DRope', {
              * @property upperAngle
              * @type {Number}
              */
-            upperAngle: 25
+            upperAngle: 25,
+            /**
+             * @property enableLimit
+             * @type {boolean}
+             */
+            enableLimit: true
 
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DRope'
+
+        this.setImage(this.image)
 
         this.segmentHeight = ((this.length - this.y) / this.segments) / 2
 
@@ -154,7 +136,7 @@ CG.B2DEntity.extend('B2DRope', {
         this.jointDef = new b2RevoluteJointDef()
         this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
         this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
-        this.jointDef.enableLimit = true
+        this.jointDef.enableLimit = this.enableLimit
 
 
         for (var i = 0, l = this.segments; i < l; i++) {

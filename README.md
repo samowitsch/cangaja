@@ -202,13 +202,14 @@ Q.Class.extend("SpriteSheet", {
   + Emitter (new API)
   + Entity (new API)
     + B2DEntity
-      + B2DCircle (new API)
-      + B2DRectangle (new API)
-      + B2DPolygon (new API)
-      + B2DLine (new API)
       + B2DBridge (new API)
-      + B2DRope (new API)
       + B2DChainShape (new API)
+      + B2DCircle (new API)
+      + B2DLine (new API)
+      + B2DPolygon (new API)
+      + B2DRectangle (new API)
+      + B2DRope (new API)
+      + B2DTerrain (new API)
     + Bitmap (new API)
     + Font
     + Map

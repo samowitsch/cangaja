@@ -413,6 +413,13 @@ all physics and drawings.</p>
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_framerate">framerate</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_name">name</a>
 
                                 
@@ -420,14 +427,14 @@ all physics and drawings.</p>
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_opt">opt</a>
+                                <a href="#property_scale">scale</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_scale">scale</a>
+                                <a href="#property_sleep">sleep</a>
 
                                 
                                 
@@ -517,7 +524,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l464"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:464</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l630"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:630</code></a>
         
         </p>
 
@@ -608,7 +615,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l130"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:130</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l153"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:153</code></a>
         
         </p>
 
@@ -719,7 +726,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l451"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:451</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l617"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:617</code></a>
         
         </p>
 
@@ -803,31 +810,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>stat</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -864,7 +847,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l165"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:165</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l188"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:188</code></a>
         
         </p>
 
@@ -886,74 +869,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">stat</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>is the body static or dynamic</p>
+                         
                     </div>
 
                     
@@ -978,6 +901,22 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createBox({
+   name: 'glowball',
+   image: this.asset.getImageByName('glowball'),
+   radius: 22,
+   x: this.mouse.x,
+   y: this.mouse.y,
+   bodyType: box2d.b2BodyType.b2_dynamicBody
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -990,43 +929,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>length</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>segments</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>segmentHeight</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1063,7 +966,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l289"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:289</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l421"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:421</code></a>
         
         </p>
 
@@ -1085,104 +988,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">length</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the length/width of the bridge</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">segments</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>segments of the bridge</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">segmentHeight</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height of a segment</p>
+                         
                     </div>
 
                     
@@ -1207,6 +1020,23 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createBridge({
+   name:'chain',
+   image:this.asset.getImageByName('chain'),
+   x: 20,
+   y: 280,
+   length: 620,
+   segments: 27,
+   segmentHeight: 3
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -1219,25 +1049,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>vertices</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1274,7 +1086,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l270"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:270</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l380"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:380</code></a>
         
         </p>
 
@@ -1296,59 +1108,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">vertices</code>
-                        <span class="type">Array</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>vertices for chainshape CG.Point array</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
+                         
                     </div>
 
                     
@@ -1373,6 +1140,29 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>chainArray = [
+    new CG.Point(0, 0),
+    new CG.Point(50, 10),
+    new CG.Point(100, 100),
+    new CG.Point(200, 100),
+    new CG.Point(250, 50),
+    new CG.Point(300, 70)
+]
+
+b2world.createChainShape({
+    name: 'chaneshape',
+    points: chainArray,
+    x: 0,
+    y: 200
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -1385,37 +1175,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>radius</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>stat</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1452,7 +1212,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l203"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:203</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l252"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:252</code></a>
         
         </p>
 
@@ -1474,89 +1234,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">radius</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the radius</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">stat</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>is the body static or dynamic</p>
+                         
                     </div>
 
                     
@@ -1581,6 +1266,22 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createCircle({
+   name: 'glowball',
+   image: this.asset.getImageByName('glowball'),
+   radius: 22,
+   x: this.mouse.x,
+   y: this.mouse.y,
+   bodyType: box2d.b2BodyType.b2_dynamicBody
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -1593,19 +1294,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>start</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>end</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1642,7 +1331,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l185"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:185</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l222"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:222</code></a>
         
         </p>
 
@@ -1664,44 +1353,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">start</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>start o fline</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">end</code>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>end of line</p>
+                         
                     </div>
 
                     
@@ -1726,6 +1385,19 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createLine({
+   name:'testline2',
+   startPoint: new CG.Point(630, 200),
+   endPoint: new CG.Point(150, 250)
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -1738,43 +1410,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>terrainpoly</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>stat</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>bullet</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -1811,7 +1447,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l248"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:248</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l327"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:327</code></a>
         
         </p>
 
@@ -1833,104 +1469,14 @@ all physics and drawings.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
+                        <code class="param-name">options</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">terrainpoly</code>
-                        <span class="type">Array</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>array of vertices to start terrain building</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">stat</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>is the body static or dynamic</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">bullet</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>bullet option</p>
+                         
                     </div>
 
                     
@@ -1955,6 +1501,39 @@ all physics and drawings.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var terrainPolys =
+[{
+       outer: [{
+           x: 0,
+           y: 100.5
+       }, {
+           x: 1024,
+           y: 100.5
+       }, {
+           x: 1024,
+           y: 768
+       }, {
+           x: 0,
+           y: 768
+       }],
+       holes: []
+   }]
+
+b2world.createTerrain({
+    name: 'terrain',
+    image: false
+    terrainShape: terrainPolys,
+    x:0,
+    y:0
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -1967,43 +1546,7 @@ all physics and drawings.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>jsonpoly</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>stat</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>bullet</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -2040,7 +1583,7 @@ all physics and drawings.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l224"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:224</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l287"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:287</code></a>
         
         </p>
 
@@ -2064,104 +1607,14 @@ taken from the json file at the moment.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">jsonpoly</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>json file from PhysicsEditor from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">stat</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>is the body static or dynamic</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">bullet</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>bullet option</p>
+                         
                     </div>
 
                     
@@ -2186,6 +1639,23 @@ taken from the json file at the moment.</p>
     
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createPolyBody({
+   name: 'powerstar75',
+   image: this.asset.getImageByName('powerstar75'),
+   texturepacker: this.asset.getJsonByName('powerstar75'),
+   x: 200,
+   y: -150,
+   bodyType: box2d.b2BodyType.b2_dynamicBody,
+   bullet: false
+})
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
@@ -2198,43 +1668,7 @@ taken from the json file at the moment.</p>
             
                 <li class="arg">
                     
-                        <code>id</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>length</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>segments</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>segmentHeight</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -2271,7 +1705,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l311"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:311</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l460"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:460</code></a>
         
         </p>
 
@@ -2293,104 +1727,14 @@ taken from the json file at the moment.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
-                        <span class="type">String</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>id or name to identify</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">image</code>
-                        <span class="type">Mixed</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>path to image, image or atlasimage from asset</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the x position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the y position</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">length</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the length/width of the bridge</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">segments</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>segments of the bridge</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">segmentHeight</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height of a segment</p>
+                         
                     </div>
 
                     
@@ -2414,6 +1758,24 @@ taken from the json file at the moment.</p>
         </div>
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>b2world.createRope({
+   name: 'chain-v',
+   image: this.asset.getImageByName('chain-v'),
+   x: 580,
+   y: 0,
+   length: 200,
+   segments: 8,
+   segmentWidth: 3
+</code></pre>
+
+<p>})</p>
+            </div>
+        </div>
     
 </div>
 
@@ -2464,7 +1826,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l145"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:145</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l168"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:168</code></a>
         
         </p>
 
@@ -2573,7 +1935,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l400"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:400</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l566"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:566</code></a>
         
         </p>
 
@@ -2677,7 +2039,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l112"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:112</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l135"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:135</code></a>
         
         </p>
 
@@ -2751,7 +2113,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l367"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:367</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l533"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:533</code></a>
         
         </p>
 
@@ -2869,7 +2231,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l488"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:488</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l654"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:654</code></a>
         
         </p>
 
@@ -2935,13 +2297,7 @@ taken from the json file at the moment.</p>
             
                 <li class="arg">
                     
-                        <code>name</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>opt</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -2985,7 +2341,11 @@ taken from the json file at the moment.</p>
     </div>
 
     <div class="description">
-        
+        <p>Options:
+name {string}
+sleep {boolean}
+scale {number}
+debug {boolean}</p>
     </div>
 
     
@@ -2996,29 +2356,14 @@ taken from the json file at the moment.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">name</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>name of the b2dworld</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">opt</code>
+                        <code class="param-name">options</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>additional options</p>
+                         
                     </div>
 
                     
@@ -3030,6 +2375,20 @@ taken from the json file at the moment.</p>
 
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var w = new CG.B2DWorld({
+    name: 'box2d-world',
+    scale: 40,
+    debug: true,
+    sleep: true
+})
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -3070,7 +2429,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l424"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:424</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l590"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:590</code></a>
         
         </p>
 
@@ -3152,7 +2511,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l333"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:333</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l499"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:499</code></a>
         
         </p>
 
@@ -3244,7 +2603,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l360"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:360</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l526"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:526</code></a>
         
         </p>
 
@@ -3308,7 +2667,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l431"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:431</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l597"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:597</code></a>
         
         </p>
 
@@ -3395,7 +2754,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l438"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:438</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l604"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:604</code></a>
         
         </p>
 
@@ -3472,7 +2831,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l89"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:89</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l112"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:112</code></a>
         
         </p>
 
@@ -3525,7 +2884,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l36"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:36</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l48"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:48</code></a>
         
         </p>
 
@@ -3569,7 +2928,51 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l51"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:51</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l63"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:63</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_framerate" class="property item">
+    <h3 class="name"><code>framerate</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l37"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:37</code></a>
         
         </p>
 
@@ -3613,51 +3016,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l31"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:31</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_opt" class="property item">
-    <h3 class="name"><code>opt</code></h3>
-    <span class="type">Object</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l25"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:25</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l43"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:43</code></a>
         
         </p>
 
@@ -3701,7 +3060,51 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l70"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:70</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l74"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:74</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_sleep" class="property item">
+    <h3 class="name"><code>sleep</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l79"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:79</code></a>
         
         </p>
 
@@ -3745,7 +3148,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l65"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:65</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l69"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:69</code></a>
         
         </p>
 
@@ -3789,7 +3192,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l57"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:57</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l90"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:90</code></a>
         
         </p>
 
@@ -3833,7 +3236,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l41"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:41</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l53"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:53</code></a>
         
         </p>
 
@@ -3877,7 +3280,7 @@ taken from the json file at the moment.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l46"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:46</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_box2d_b2d-world.js.html#l58"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:58</code></a>
         
         </p>
 

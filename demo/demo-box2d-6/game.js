@@ -4,17 +4,6 @@ var renderStats, mainscreen, mainlayer, abadi, small, mousex = 0, mousey = 0, cu
 
 CG.B2DTerrain.extend('MyTerrain', {
     init: function (options) {
-        //custom bodydef
-        this.bodyDef = new b2BodyDef
-        this.bodyDef.allowSleep = true
-        this.bodyDef.awake = true
-
-        //custom fixture def
-        this.fixDef = new b2FixtureDef
-        this.fixDef.density = 2
-        this.fixDef.friction = 1
-        this.fixDef.restitution = 1
-
         this._super(options)
     }
 })
@@ -83,10 +72,10 @@ CG.Game.extend('MyGame', {
         b2world.debug = 0
 
         //dynamic basketball-25s:
-        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 340, y: -800})
-        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 310, y: -100})
-        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 320, y: -400})
-        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 330, y: -600})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 50, y: -100, restitution: 0.9})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 150, y: -100, restitution: 0.6})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 250, y: -100, restitution: 0.3})
+        b2world.createCircle({name: 'basketball-25', image: this.asset.getImageByName('basketball-25'), radius: 12, x: 330, y: -100, restitution: 0.15})
 
         var terrainPolys =
             [
@@ -103,8 +92,6 @@ CG.Game.extend('MyGame', {
                 }
             ]
 
-//        terrainBody = b2world.createTerrain('terrain', this.asset.getImageByName('testTerrain'), terrainPolys, 0, 0, box2d.b2BodyType.b2_staticBody, false)
-
         myTerrain = new CG.MyTerrain({
             world: b2world.world,
             name: 'terrain',
@@ -112,7 +99,9 @@ CG.Game.extend('MyGame', {
             terrainShape: terrainPolys,
             x: 0,
             y: 0,
-            scale: 40
+            scale: 40,
+            density: 100,
+            friction: 1
         })
         terrainBody = b2world.addCustom(myTerrain)
 
@@ -138,6 +127,9 @@ CG.Game.extend('MyGame', {
                 name: 'rock',
                 image: this.asset.getImageByName('colorwheel'),
                 radius: 8,
+                restitution: 0.001,
+                density: 1000,
+                bullet: true,
                 x: x,
                 y: y,
                 bodyType: box2d.b2BodyType.b2_staticBody

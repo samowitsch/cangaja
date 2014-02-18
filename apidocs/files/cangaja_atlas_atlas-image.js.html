@@ -184,65 +184,86 @@
  *&#x2F;
 CG.Class.extend(&#x27;AtlasImage&#x27;, {
     &#x2F;**
+     * Options:
+     * image {string}
+     * xoffset {number}
+     * yoffset {number}
+     * width {number}
+     * height {number}
+     *
+     @example
+     var a = new CG.AtlasImage({
+           image: &#x27;menuscreen&#x27;,
+           xoffset: 0,
+           yoffset: 0,
+           width: 10,
+           height: 20
+         })
+     *
      * @method init
      * @constructor
-     * @param image {image} imgpath, image object or atlasimage object to use
-     * @param xoffset {Number} xoffset of image in atlas file
-     * @param yoffset {Number} yoffset of image in atlas file
-     * @param width {Number} width of image in atlas file
-     * @param height {Number} height of image in atlas file
+     * @param options {object}
      *&#x2F;
-    init:function (image, xoffset, yoffset, width, height) {
-        &#x2F;**
-         * @property source
-         * @type {String}
-         *&#x2F;
-        this.source = &#x27;&#x27;
-        &#x2F;**
-         * @property atlasimage
-         * @type {String}
-         *&#x2F;
-        this.atlasimage = &#x27;&#x27;
-        &#x2F;**
-         * @property atlasname
-         * @type {String}
-         *&#x2F;
-        this.atlasname = &#x27;&#x27;
-        &#x2F;**
-         * @property image
-         * @type {*}
-         *&#x2F;
-        this.image = image || &#x27;&#x27;    &#x2F;&#x2F;imagepath
-        &#x2F;**
-         * @property name
-         * @type {String}
-         *&#x2F;
-        this.name = image.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
-        &#x2F;**
-         * @property xoffset
-         * @type {Number}
-         *&#x2F;
-        this.xoffset = xoffset || 0
-        &#x2F;**
-         * @property yoffset
-         * @type {*}
-         *&#x2F;
-        this.yoffset = yoffset || 0
-        &#x2F;**
-         * @property width
-         * @type {Number}
-         *&#x2F;
-        this.width = width || 0
-        &#x2F;**
-         * @property height
-         * @type {Number}
-         *&#x2F;
-        this.height = height || 0
-        &#x2F;**
-         * @property rotation
-         * @type {Number}
-         *&#x2F;
-        this.rotation = 0
+    init: function (options) {
+        CG._extend(this, {
+
+            &#x2F;**
+             * @property source
+             * @type {String}
+             *&#x2F;
+            source: &#x27;&#x27;,
+            &#x2F;**
+             * @property atlasimage
+             * @type {String}
+             *&#x2F;
+            atlasimage: &#x27;&#x27;,
+            &#x2F;**
+             * @property atlasname
+             * @type {String}
+             *&#x2F;
+            atlasname: &#x27;&#x27;,
+            &#x2F;**
+             * @property image
+             * @type {*}
+             *&#x2F;
+            image: &#x27;&#x27;,    &#x2F;&#x2F;imagepath
+
+            &#x2F;**
+             * @property xoffset
+             * @type {Number}
+             *&#x2F;
+            xoffset: 0,
+            &#x2F;**
+             * @property yoffset
+             * @type {*}
+             *&#x2F;
+            yoffset: 0,
+            &#x2F;**
+             * @property width
+             * @type {Number}
+             *&#x2F;
+            width: 0,
+            &#x2F;**
+             * @property height
+             * @type {Number}
+             *&#x2F;
+            height: 0,
+            &#x2F;**
+             * @property rotation
+             * @type {Number}
+             *&#x2F;
+            rotation: 0
+        })
+
+        if (options) {
+            CG._extend(this, options)
+            &#x2F;**
+             * @property name
+             * @type {String}
+             *&#x2F;
+            this.name = this.image.split(&#x2F;(\\|\&#x2F;)&#x2F;g).pop().split(&#x27;.&#x27;)[0] &#x2F;&#x2F;image name only for name
+        }
+
     }
 })
     </pre>

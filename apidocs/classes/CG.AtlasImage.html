@@ -337,31 +337,7 @@
             
                 <li class="arg">
                     
-                        <code>image</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>xoffset</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>yoffset</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>width</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>height</code>
+                        <code>options</code>
                     
                 </li>
             
@@ -405,7 +381,12 @@
     </div>
 
     <div class="description">
-        
+        <p>Options:
+image {string}
+xoffset {number}
+yoffset {number}
+width {number}
+height {number}</p>
     </div>
 
     
@@ -416,74 +397,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">image</code>
-                        <span class="type">Image</span>
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>imgpath, image object or atlasimage object to use</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">xoffset</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>xoffset of image in atlas file</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">yoffset</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>yoffset of image in atlas file</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">width</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>width of image in atlas file</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">height</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>height of image in atlas file</p>
+                         
                     </div>
 
                     
@@ -495,6 +416,21 @@
 
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var a = new CG.AtlasImage({
+      image: 'menuscreen',
+      xoffset: 0,
+      yoffset: 0,
+      width: 10,
+      height: 20
+    })
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -530,7 +466,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l25"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:25</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l39"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:39</code></a>
         
         </p>
 
@@ -574,7 +510,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l30"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:30</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l44"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:44</code></a>
         
         </p>
 
@@ -618,7 +554,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l60"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:60</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l70"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:70</code></a>
         
         </p>
 
@@ -662,7 +598,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l35"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:35</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l49"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:49</code></a>
         
         </p>
 
@@ -706,7 +642,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l40"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:40</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l84"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:84</code></a>
         
         </p>
 
@@ -750,7 +686,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l65"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:65</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l75"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:75</code></a>
         
         </p>
 
@@ -794,7 +730,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l20"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:20</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l34"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:34</code></a>
         
         </p>
 
@@ -838,7 +774,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l55"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:55</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l65"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:65</code></a>
         
         </p>
 
@@ -882,7 +818,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l45"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:45</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l55"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:55</code></a>
         
         </p>
 
@@ -926,7 +862,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l50"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:50</code></a>
+        <a href="..&#x2F;files&#x2F;cangaja_atlas_atlas-image.js.html#l60"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:60</code></a>
         
         </p>
 

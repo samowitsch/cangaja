@@ -38,8 +38,6 @@ CG.B2DEntity.extend('B2DCircle', {
      * @return {*}
      */
     init:function (options) {
-        this._super()
-        this.instanceOf = 'B2DCircle'
 
         CG._extend(this, {
             /**
@@ -49,11 +47,9 @@ CG.B2DEntity.extend('B2DCircle', {
             radius: 0
         })
 
-        if (options) {
-            CG._extend(this, options)
-            this.id.name = options.name
-            this.setImage(this.image)
-        }
+        this._super(options)
+        this.instanceOf = 'B2DCircle'
+        this.setImage(this.image)
 
         /**
          * @property bodyDef.type

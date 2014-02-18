@@ -186,34 +186,52 @@
  *&#x2F;
 CG.Class.extend(&#x27;Screen&#x27;, {
     &#x2F;**
+     * Options:
+     * name {string}
+     *
+     @example
+     var s = new CG.Screen({
+           name: &#x27;menuscreen&#x27;
+         })
+     *
      * @constructor
      * @method init
-     * @param screenname
+     * @param options
      * @return {*}
      *&#x2F;
-    init: function (screenname) {
-        this.name = (screenname) ? screenname : &#x27;&#x27;
+    init: function (options) {
+        CG._extend(this, {
+            &#x2F;**
+             * @property name
+             * @type {string}
+             *&#x2F;
+            name: &#x27;&#x27;,
+            &#x2F;**
+             * @property position
+             * @type {CG.Point}
+             *&#x2F;
+            position: new CG.Point(0, 0),
+            &#x2F;**
+             * @property xscale
+             * @type {Number}
+             *&#x2F;
+            xscale: 1,
+            &#x2F;**
+             * @property yscale
+             * @type {Number}
+             *&#x2F;
+            yscale: 1,
+            &#x2F;**
+             * @property layers
+             * @type {Array}
+             *&#x2F;
+            layers: []
+        })
 
-        &#x2F;**
-         * @property position
-         * @type {CG.Point}
-         *&#x2F;
-        this.position = new CG.Point(0, 0)
-        &#x2F;**
-         * @property xscale
-         * @type {Number}
-         *&#x2F;
-        this.xscale = 1
-        &#x2F;**
-         * @property yscale
-         * @type {Number}
-         *&#x2F;
-        this.yscale = 1
-        &#x2F;**
-         * @property layers
-         * @type {Array}
-         *&#x2F;
-        this.layers = []
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     create: function () {

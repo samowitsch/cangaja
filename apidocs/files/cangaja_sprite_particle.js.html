@@ -186,13 +186,32 @@
 
 CG.Sprite.extend(&#x27;Particle&#x27;, {
     &#x2F;**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     *
+     @example
+     var s = new CG.Particle({
+           image: &#x27;..&#x2F;images&#x2F;demo.png&#x27;
+         })
+     *
      * @constructor
      * @method init
      * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
      *&#x2F;
-    init: function (image) {
-        this._super(image, new CG.Point(0, 0))
+    init: function (options) {
+        this._super()
         this.instanceOf = &#x27;Particle&#x27;
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
+        &#x2F;**
+         * @property position
+         * @type {CG.Point}
+         *&#x2F;
+        this.position = new CG.Point(0,0)
         &#x2F;**
          * @property lifetime
          * @type {Number}

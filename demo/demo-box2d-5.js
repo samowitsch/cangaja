@@ -107,11 +107,11 @@ CG.Game.extend('MyGame', {
         b2world.debug = 1
 
         //create circle element with image
-        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 510, y: -200})
-        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 410, y: -300})
-        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 310, y: -100})
-        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 210, y: -400})
-        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 110, y: 0})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 510, y: -200, restitution: 0.65})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 410, y: -300, restitution: 0.6})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 310, y: -100, restitution: 0.5})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 210, y: -400, restitution: 0.4})
+        b2world.createCircle({name: 'glowball', image: this.asset.getImageByName('glowball'), radius: 23, x: 110, y: 0, restitution: 0.3})
 
         var terrainPolys =
             [
