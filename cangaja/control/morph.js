@@ -16,7 +16,7 @@ CG.Class.extend('Morph', {
      * speed {number}
      *
      @example
-     var e = new CG.Entity({
+     var e = new CG.Morph({
            name: 'player',
            position: new CG.Point(100,100)
          })

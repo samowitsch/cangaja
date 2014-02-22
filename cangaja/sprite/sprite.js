@@ -23,72 +23,75 @@ CG.Entity.extend('Sprite', {
      * @param options {object}
      * @return {*}
      */
-    init:function (options) {
+    init: function (options) {
         this._super()
         this.instanceOf = 'Sprite'
 
-        if (options) {
-            CG._extend(this, options)
-            this.setImage(this.image)
-        }
+        CG._extend(this, {
+            /**
+             @property bound {CG.Bound}
+             */
+            bound: Game.bound,    //global bounds of game
+            /**
+             @property xspeed {Number}
+             */
+            xspeed: 0, //xspeed of the sprite
+            /**
+             @property yspeed {Number}
+             */
+            yspeed: 0,
+            /**
+             @property boundsMode {false/string}
+             */
+            boundsMode: false, // false, bounce or slide
+            /**
+             @property rotationspeed {integer/float}
+             */
+            rotationspeed: 0,
+            /**
+             @property alpha {float}
+             */
+            alpha: 1,
+            /**
+             @property followobject {boolean/object}
+             */
+            followobject: false,   //object to follow
+            /**
+             @property followspeed {boolean/integer}
+             */
+            followspeed: false,    //followspeed for follower in pixel, has prio over followsteps
+            /**
+             @property followsteps {boolean/integer}
+             */
+            followsteps: false,    //followsteps between follower and target
+            /**
+             @property attachedobject {boolean}
+             */
+            attachedobject: false, //attached object
+            /**
+             @property offsetx {Number}
+             */
+            offsetx: 0,            //offset x for attached object
+            /**
+             @property offsety {Number}
+             */
+            offsety: 0            //offset y for attached object
 
-        /**
-         @property bound {CG.Bound}
-         */
-        this.bound = Game.bound     //global bounds of game
+
+        })
+
+        CG._extend(this, options)
+        this.setImage(this.image)
+
         /**
          @property diffpoint {CG.Point}
          */
         this.diffpoint = new CG.Point(this.bound.x, this.bound.y)  //store diffpoint if bound is moving
 
-        /**
-         @property xspeed {Number}
-         */
-        this.xspeed = 0 //xspeed of the sprite
-        /**
-         @property yspeed {Number}
-         */
-        this.yspeed = 0
-        /**
-         @property boundsMode {false/string}
-         */
-        this.boundsMode = false // false, bounce or slide
-        /**
-         @property rotationspeed {integer/float}
-         */
-        this.rotationspeed = 0
-        /**
-         @property alpha {float}
-         */
-        this.alpha = 1
-        /**
-         @property followobject {boolean/object}
-         */
-        this.followobject = false   //object to follow
-        /**
-         @property followspeed {boolean/integer}
-         */
-        this.followspeed = false    //followspeed for follower in pixel, has prio over followsteps
-        /**
-         @property followsteps {boolean/integer}
-         */
-        this.followsteps = false    //followsteps between follower and target
 
-        /**
-         @property attachedobject {boolean}
-         */
-        this.attachedobject = false //attached object
-        /**
-         @property offsetx {Number}
-         */
-        this.offsetx = 0            //offset x for attached object
-        /**
-         @property offsety {Number}
-         */
-        this.offsety = 0            //offset y for attached object
         return this
     },
-    update:function () {
+    update: function () {
         this.ifClicked()
         this.ifMouseOver()
         this.ifAttached()
@@ -109,7 +112,7 @@ CG.Entity.extend('Sprite', {
         this.updateDiff()
         this.updateMatrix()
     },
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this);
 
@@ -119,7 +122,7 @@ CG.Entity.extend('Sprite', {
      * @description Checks the bound if a boundMode (bounce or slide) is set
      * @method checkBound
      */
-    checkBound:function () {
+    checkBound: function () {
         switch (this.boundsMode) {
             case 'bounce':
                 if (this.position.x > ( this.bound.width - this.xhandle + this.bound.x )) {
@@ -162,7 +165,7 @@ CG.Entity.extend('Sprite', {
      * @description calculate offset if bound is moving
      * @method updateDiff
      */
-    updateDiff:function () {
+    updateDiff: function () {
         if (this.diffpoint.x !== this.bound.x) {
             this.position.x += this.bound.x - this.diffpoint.x
         }
@@ -176,7 +179,7 @@ CG.Entity.extend('Sprite', {
      * @description is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different
      * @method follow
      */
-    follow:function () {
+    follow: function () {
         if (this.followspeed) {
             //constant follow speed between objects
             angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * CG.Const_180_PI
@@ -211,7 +214,7 @@ CG.Entity.extend('Sprite', {
      * @method setBound
      * @param bound {CG.Bound} the bound
      */
-    setBound:function (bound) {
+    setBound: function (bound) {
         this.bound = bound
         return this
     },
@@ -221,7 +224,7 @@ CG.Entity.extend('Sprite', {
      * @description if there is a attached object get its position
      * @method ifAttached
      */
-    ifAttached:function () {
+    ifAttached: function () {
         if (this.attachedobject != false) {
             this.attachedobject.position._x = this.attachedobject.position.x = (this.position.x + this.offsetx)
             this.attachedobject.position._y = this.attachedobject.position.y = (this.position.y + this.offsety)
@@ -232,7 +235,7 @@ CG.Entity.extend('Sprite', {
      * @description attach a reference of the given object to this object
      * @method attachObject
      */
-    attachObject:function (obj) {
+    attachObject: function (obj) {
         this.attachedobject = obj
         return this
     },
@@ -241,7 +244,7 @@ CG.Entity.extend('Sprite', {
      * @description removes the attached object reference
      * @method removeAttachedObject
      */
-    removeAttachedObject:function () {
+    removeAttachedObject: function () {
         this.attachedobject = null
         return this
     },
@@ -250,7 +253,7 @@ CG.Entity.extend('Sprite', {
      * @description set the x offset of the attached object to this object
      * @method setAttachedOffsetX
      */
-    setAttachedOffsetX:function (offsetx) {
+    setAttachedOffsetX: function (offsetx) {
         this.offsetx = offsetx
         return this
     },
@@ -259,7 +262,7 @@ CG.Entity.extend('Sprite', {
      * @description set the y offset of the attached object to this object
      * @method setAttachedOffsetY
      */
-    setAttachedOffsetY:function (offsety) {
+    setAttachedOffsetY: function (offsety) {
         this.offsety = offsety
         return this
     }

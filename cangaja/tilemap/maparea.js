@@ -16,12 +16,17 @@ CG.Class.extend('MapArea', {
      * @param type {false/string} type (a property) of area for collision detection or what ever ;o)
      * @return {*}
      */
-    init:function (bound, mapoffset, name, type) {
+    init: function (bound, mapoffset, name, type) {
         /**
          * @property initbound
          * @type {CG.Bound}
          */
-        this.initbound = bound || new CG.Bound(0, 0, 0, 0)
+        this.initbound = bound || new CG.Bound({
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+        })
         /**
          * @property mapoffset
          * @type {CG.Point}
@@ -42,11 +47,16 @@ CG.Class.extend('MapArea', {
          * @property bound
          * @type {CG.Bound}
          */
-        this.bound = new CG.Bound(bound.x, bound.y, bound.width, bound.height)
+        this.bound = new CG.Bound({
+            x: bound.x,
+            y: bound.y,
+            width: bound.width,
+            height: bound.height
+        })
         return this
     },
 
-    update:function () {
+    update: function () {
         this.bound.x = this.initbound.x - this.mapoffset.x
         this.bound.y = this.initbound.y - this.mapoffset.y
     }

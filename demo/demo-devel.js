@@ -12,46 +12,46 @@ var loadjson = true,  //test json map loader
     ri = 0
 
 //screen 1 menu
-var screen = new CG.Screen('menuscreen')
-var layerfront = new CG.Layer('layerfront')
-var layermiddle = new CG.Layer('layermiddle')
+var screen = new CG.Screen({name: 'menuscreen'})
+var layerfront = new CG.Layer({name: 'layerfront'})
+var layermiddle = new CG.Layer({name: 'layermiddle'})
 
 //screen2 emitter demo
-var screen2 = new CG.Screen('emitter')
-var layeremitter = new CG.Layer('layeremitter')
+var screen2 = new CG.Screen({name: 'emitter'})
+var layeremitter = new CG.Layer({name: 'layeremitter'})
 
 //screen3 sprites demo
-var screen3 = new CG.Screen('sprites')
-var layersprites = new CG.Layer('layersprites')
+var screen3 = new CG.Screen({name: 'sprites'})
+var layersprites = new CG.Layer({name: 'layersprites'})
 
 //screen4 follower/collission/attach demo
-var screen4 = new CG.Screen('follower')
-var layerrunner = new CG.Layer('layerrunner')
-var layerfollower = new CG.Layer('layerfollower')
-var layerfollowersmoke = new CG.Layer('layerfollowersmoke')
+var screen4 = new CG.Screen({name: 'follower'})
+var layerrunner = new CG.Layer({name: 'layerrunner'})
+var layerfollower = new CG.Layer({name: 'layerfollower'})
+var layerfollowersmoke = new CG.Layer({name: 'layerfollowersmoke'})
 
 //screen5 animation/attach demo
-var screen5 = new CG.Screen('animation')
-var layeranimation = new CG.Layer('animation')
-var layeranimationsmoke = new CG.Layer('layeranimationsmoke')
+var screen5 = new CG.Screen({name: 'animation'})
+var layeranimation = new CG.Layer({name: 'animation'})
+var layeranimationsmoke = new CG.Layer({name: 'layeranimationsmoke'})
 
 //screen6 tilemap demo
-var screen6 = new CG.Screen('map')
-var layermap = new CG.Layer('map')
+var screen6 = new CG.Screen({name: 'map'})
+var layermap = new CG.Layer({name: 'map'})
 
 //screen7 menu & callback demo
-var screen7 = new CG.Screen('menu')
-var layermenu = new CG.Layer('menu')
+var screen7 = new CG.Screen({name: 'menu'})
+var layermenu = new CG.Layer({name: 'menu'})
 
 //screen8 bitmap demo
-var screen8 = new CG.Screen('bitmap')
-var layerbitmap = new CG.Layer('bitmap')
+var screen8 = new CG.Screen({name: 'bitmap'})
+var layerbitmap = new CG.Layer({name: 'bitmap'})
 
 
 var colmsg = ''
 
 var asset, circle, circlesmoke, tween, sequence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
-var morph = new CG.Morph('sinus', 0.25, 1, 1)
+var morph = new CG.Morph({mode: 'sinus', min: 0.25, max: 1, speed: 1})
 var map = new CG.Map(640, 480)
 var tp = new CG.AtlasTexturePacker()
 
@@ -85,7 +85,7 @@ var Game = (function () {
         height: 480,
         width2: 640 / 2,
         height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        bound: new CG.Bound({x: 0, y: 0, width: 640, height: 480}).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -177,8 +177,8 @@ var Game = (function () {
             console.log('create: sound')
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            font = new CG.Font().loadFont(Game.asset.getFontByName('heiti'))
-            font2 = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
+            font = new CG.Font().loadFont({font: Game.asset.getFontByName('heiti')})
+            font2 = new CG.Font().loadFont({font: Game.asset.getFontByName('abadi')})
             //font.loadFont(Game.asset.getFontByName('small'))
             //font.loadFont('media/font/small.txt')
             console.log('create: font')
@@ -227,19 +227,58 @@ var Game = (function () {
             createMapElements()
 
 
-            circle = new CG.Translate().initOval(layersprites.elements[layersprites.elements.length - 1], new CG.Point(320, 30), 15, 15, 0, 5)
-            circlesmoke = new CG.Translate().initOval(layeremitter.getElementByName('smokey'), new CG.Point(320, 240), 250, 0, 1, 1.5)
+            circle = new CG.Translate().initOval({
+                object: layersprites.elements[layersprites.elements.length - 1],
+                centerPoint: new CG.Point(320, 30),
+                radius1: 15,
+                radius2: 15,
+                startAngle: 0,
+                rotation: 5
+            })
+
+            circlesmoke = new CG.Translate().initOval({
+                object: layeremitter.getElementByName('smokey'),
+                centerPoint: new CG.Point(320, 240),
+                radius1: 250,
+                radius2: 0,
+                startAngle: 1,
+                rotation: 1.5
+            })
+
             console.log('create: circle translate')
 
 
             sequence = new CG.Sequence()
             sequence.loop = true
             sequence.addTranslation(
-                    new CG.Translate().initBezier(layersprites.elements[layersprites.elements.length - 2], 200, new CG.Point(500, 450), new CG.Point(100, 100), new CG.Point(-600, 600), new CG.Point(1200, -300)))
-                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 200, new CG.Point(100, 100), new CG.Point(550, 150)))
-                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 150, new CG.Point(550, 150), new CG.Point(100, 400)))
-                .addTranslation(new CG.Translate().initTween(layersprites.elements[layersprites.elements.length - 2], 100, new CG.Point(100, 400), new CG.Point(550, 450))
+                    new CG.Translate().initBezier({
+                            object: layersprites.elements[layersprites.elements.length - 2],
+                            steps: 200,
+                            startPoint: new CG.Point(500, 450),
+                            endPoint: new CG.Point(100, 100),
+                            control1: new CG.Point(-600, 600),
+                            control2: new CG.Point(1200, -300)}
+                    )
                 )
+                .addTranslation(new CG.Translate().initTween({
+                    object: layersprites.elements[layersprites.elements.length - 2],
+                    steps: 200,
+                    startPoint: new CG.Point(100, 100),
+                    endPoint: new CG.Point(550, 150)
+                }))
+                .addTranslation(new CG.Translate().initTween({
+                    object: layersprites.elements[layersprites.elements.length - 2],
+                    steps: 150,
+                    startPoint: new CG.Point(550, 150),
+                    endPoint: new CG.Point(100, 400)
+                }))
+                .addTranslation(new CG.Translate().initTween({
+                    object: layersprites.elements[layersprites.elements.length - 2],
+                    steps: 100,
+                    startPoint: new CG.Point(100, 400),
+                    endPoint: new CG.Point(550, 450)
+                }))
+
             console.log('create: sequence')
 
             Game.touchinit()
@@ -397,7 +436,7 @@ function createMapElements() {
     pointstest = map.getPointsByName('coin')
 
     for (var i = 0, l = pointstest.length; i < l; i++) {
-        diamond = new CG.Sprite(Game.asset.getImageByName('gem'), pointstest[i].position)
+        diamond = new CG.Sprite({image: Game.asset.getImageByName('gem'), position: pointstest[i].position})
         diamond.name = 'diamond'
         diamond.boundingradius = 80
         layerfollower.addElement(diamond)
@@ -406,7 +445,7 @@ function createMapElements() {
     // TEST 1
     areastest = map.getAreasByName('enemies-hor')[0]
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'slide'
     ballon.xspeed = -1
@@ -416,7 +455,7 @@ function createMapElements() {
     ballon.yscale = 0.4
     layerfollower.addElement(ballon)
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'slide'
     ballon.xspeed = 1
@@ -426,7 +465,7 @@ function createMapElements() {
     ballon.yscale = 0.4
     layerfollower.addElement(ballon)
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'slide'
     ballon.yspeed = -1
@@ -435,7 +474,7 @@ function createMapElements() {
     ballon.yscale = 0.2
     layerfollower.addElement(ballon)
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'slide'
     ballon.yspeed = 1
@@ -444,7 +483,7 @@ function createMapElements() {
     ballon.yscale = 0.2
     layerfollower.addElement(ballon)
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 0))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'bounce'
     ballon.xspeed = 1
@@ -455,7 +494,7 @@ function createMapElements() {
     layerfollower.addElement(ballon)
 
     areastest2 = map.getAreasByName('enemies-ver')[0]
-    sun = new CG.Sprite(Game.asset.getImageByName('sun'), new CG.Point(0, 0))
+    sun = new CG.Sprite({image: Game.asset.getImageByName('sun'), position: new CG.Point(0, 0)})
     sun.name = 'little'
     sun.boundsMode = 'bounce'
     sun.xspeed = 1
@@ -468,7 +507,7 @@ function createMapElements() {
 
     areastest3 = map.getAreasByName('anim-ver')[0]
 
-    run = new CG.Animation(Game.asset.getImageByName('hunter'), false, 8, 14, 56, 64)
+    run = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(0, 0), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run.boundsMode = 'bounce'
     run.xspeed = 2
     run.yspeed = 2
@@ -480,7 +519,7 @@ function createMapElements() {
     layerfollower.addElement(run)
 
     areastest3 = map.getAreasByName('anim-hor')[0]
-    run = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(0, 0), 8, 14, 56, 64)
+    run = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(0, 0), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run.boundsMode = 'slide'
     run.xspeed = 2
     run.name = 'runner2'
@@ -490,7 +529,7 @@ function createMapElements() {
     run.bound = areastest3.bound
     layerfollower.addElement(run)
 
-    run = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(0, 0), 8, 14, 56, 64)
+    run = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(0, 0), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run.boundsMode = 'slide'
     run.xspeed = -2
     run.name = 'runner3'
@@ -500,7 +539,7 @@ function createMapElements() {
     run.bound = areastest3.bound
     layerfollower.addElement(run)
 
-    run = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(0, 0), 8, 14, 56, 64)
+    run = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(0, 0), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run.boundsMode = 'slide'
     run.yspeed = 2
     run.name = 'runner4'
@@ -510,7 +549,7 @@ function createMapElements() {
     run.bound = areastest3.bound
     layerfollower.addElement(run)
 
-    run = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(0, 0), 8, 14, 56, 64)
+    run = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(0, 0), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run.boundsMode = 'slide'
     run.yspeed = -2
     run.name = 'runner5'
@@ -526,17 +565,17 @@ function createMapElements() {
 
 function createElements() {
 
-    bm = new CG.Bitmap(300, 300)
+    bm = new CG.Bitmap({width: 300, height: 300})
     bm.loadImage(Game.asset.getImageByName('texturepacker'))
     layerbitmap.addElement(bm)
     bm.clearCircle(50, 50, 50)
     bm.clearRect(120, 120, 50, 50)
 
-    crosshair = new CG.Sprite(Game.asset.getImageByName('crosshair'), new CG.Point(320, 240))
+    crosshair = new CG.Sprite({image: Game.asset.getImageByName('crosshair'), position: new CG.Point(320, 240)})
     crosshair.name = 'crosshair'
     layerbitmap.addElement(crosshair)
 
-    layeranimationsmoke.addElement(new CG.Emitter(new CG.Point(50, 50))
+    layeranimationsmoke.addElement(new CG.Emitter({position: new CG.Point(50, 50)})
         .setName('animationsmoke')
         .activateFadeout()
         .setGravity(-0.02)
@@ -544,7 +583,7 @@ function createElements() {
         //        .setEmitterPosition(new CG.Point(50, 50))
     )
 
-    run1 = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(280, Game.height2), 1, 7, 56, 64)
+    run1 = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(280, Game.height2), startFrame: 1, endFrame: 7, width: 56, height: 64})
     run1.name = 'runner1'
     run1.delay = 6
     run1.attachObject(layeranimationsmoke.getElementByName('animationsmoke'))
@@ -554,23 +593,23 @@ function createElements() {
 
     layeranimation.addElement(run1)
 
-    run2 = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(360, Game.height2), 8, 14, 56, 64)
+    run2 = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(360, Game.height2), startFrame: 8, endFrame: 14, width: 56, height: 64})
     run2.name = 'runner2'
     run2.delay = 6
     layeranimation.addElement(run2)
 
-    run3 = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(440, Game.height2), 16, 24, 56, 64)
+    run3 = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(440, Game.height2), startFrame: 16, endFrame: 24, width: 56, height: 64})
     run3.name = 'runner3'
     run3.delay = 6
     layeranimation.addElement(run3)
 
-    run4 = new CG.Animation(Game.asset.getImageByName('hunter'), new CG.Point(200, Game.height2), 31, 47, 56, 64)
+    run4 = new CG.Animation({image: Game.asset.getImageByName('hunter'), position: new CG.Point(200, Game.height2), startFrame: 31, endFrame: 47, width: 56, height: 64})
     run4.name = 'runner3'
     run4.delay = 6
     layeranimation.addElement(run4)
 
 
-    rocket = new CG.Sprite(Game.asset.getImageByName('rocket'), new CG.Point(Game.width2, Game.height2))
+    rocket = new CG.Sprite({image: Game.asset.getImageByName('rocket'), position: new CG.Point(Game.width2, Game.height2)})
     rocket.name = 'rocket'
     rocket.boundsMode = 'slide'
     rocket.boundingradius = 80
@@ -578,7 +617,7 @@ function createElements() {
     rocket.yscale = 0.5
 
 
-    layerfollowersmoke.addElement(new CG.Emitter(new CG.Point(50, 50))
+    layerfollowersmoke.addElement(new CG.Emitter({position: new CG.Point(50, 50)})
         .setName('smoke1')
         .setMaxParticles(10)
         .setCreationTime(500)
@@ -588,7 +627,7 @@ function createElements() {
         //        .setEmitterPosition(new CG.Point(50, 50))
     )
 
-    layerfollowersmoke.addElement(new CG.Emitter(new CG.Point(100, 50))
+    layerfollowersmoke.addElement(new CG.Emitter({position: new CG.Point(100, 50)})
         .setName('smoke2')
         .setMaxParticles(10)
         .setCreationTime(500)
@@ -599,7 +638,7 @@ function createElements() {
     )
 
 
-    hunter = new CG.Sprite(Game.asset.getImageByName('rocket2'), new CG.Point(Game.width2, Game.height2))
+    hunter = new CG.Sprite({image: Game.asset.getImageByName('rocket2'), position: new CG.Point(Game.width2, Game.height2)})
     hunter.name = 'rockethunter-1'
     hunter.boundsMode = 'slide'
     hunter.boundingradius = 80
@@ -610,7 +649,7 @@ function createElements() {
     hunter.attachedobject = layerfollowersmoke.getElementByName('smoke1')
     layerfollower.addElement(hunter)
 
-    hunter = new CG.Sprite(Game.asset.getImageByName('rocket2'), new CG.Point(Game.width2, Game.height2))
+    hunter = new CG.Sprite({image: Game.asset.getImageByName('rocket2'), position: new CG.Point(Game.width2, Game.height2)})
     hunter.name = 'rockethunter-2'
     hunter.boundsMode = 'slide'
     hunter.boundingradius = 80
@@ -625,7 +664,7 @@ function createElements() {
 
     //Test emitter
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width2, Game.height2)})
         .setName('splashi')
         .setParticleSpeed(0)
         .setPLifetime(15)
@@ -636,7 +675,7 @@ function createElements() {
         .activateFadeout()
     )
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height + 20))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width2, Game.height + 20)})
         .setName('sunny')
         .setParticleSpeed(2)
         .setGravity(0.02)
@@ -647,7 +686,7 @@ function createElements() {
     )
 
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, -20))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width2, -20)})
         .setName('rainy')
         .setParticleSpeed(2)
         .setGravity(0.03)
@@ -657,7 +696,7 @@ function createElements() {
     )
 
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(-25, Game.height2))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(-25, Game.height2)})
         .setName('glowy')
         .setGravity(0)
         .setParticleSpeed(2)
@@ -667,7 +706,7 @@ function createElements() {
         .activateFadeout()
     )
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width + 15, Game.height2))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width + 15, Game.height2)})
         .setName('bally')
         .setParticleSpeed(2)
         .setProtation(-1)
@@ -677,7 +716,7 @@ function createElements() {
         .activateFadeout()
     )
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width2, Game.height2)})
         .setName('explodi-stars')
         .activateFadeout()
         .setProtation(2)
@@ -686,7 +725,7 @@ function createElements() {
         //        .setEmitterPosition(new CG.Point(320, 240))
     )
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(Game.width2, Game.height2))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(Game.width2, Game.height2)})
         .setName('smokey')
         .activateFadeout()
         .setGravity(-0.05)
@@ -695,7 +734,7 @@ function createElements() {
     )
 
 
-    layeremitter.addElement(new CG.Emitter(new CG.Point(160, 120))
+    layeremitter.addElement(new CG.Emitter({position: new CG.Point(160, 120)})
         .setName('smokey')
         .setMaxParticles(100)
         .activateFadeout()
@@ -708,7 +747,7 @@ function createElements() {
         //        .setEmitterPosition(new CG.Point(160, 120))
     )
 
-    sun = new CG.Sprite(Game.asset.getImageByName('sun'), new CG.Point(480, 100))
+    sun = new CG.Sprite({image: Game.asset.getImageByName('sun'), position: new CG.Point(480, 100)})
     sun.name = 'sun'
     sun.boundingradius = 150
     sun.xspeed = 1
@@ -718,7 +757,7 @@ function createElements() {
     layerfollower.addElement(sun)
 
 
-    cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(150, 150))
+    cloud = new CG.Sprite({image: Game.asset.getImageByName('cloud'), position: new CG.Point(150, 150)})
     cloud.name = 'cloud'
     cloud.xscale = 0.75
     cloud.yscale = 0.75
@@ -728,7 +767,7 @@ function createElements() {
     layersprites.addElement(cloud)
 
 
-    cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(250, 200))
+    cloud = new CG.Sprite({image: Game.asset.getImageByName('cloud'), position: new CG.Point(250, 200)})
     cloud.name = 'cloud'
     cloud.xscale = 0.75
     cloud.yscale = 0.75
@@ -738,7 +777,7 @@ function createElements() {
     layersprites.addElement(cloud)
 
 
-    rainbow = new CG.Sprite(Game.asset.getImageByName('rainbow'), new CG.Point(125, 200))
+    rainbow = new CG.Sprite({image: Game.asset.getImageByName('rainbow'), position: new CG.Point(125, 200)})
     rainbow.name = 'rainbow'
     rainbow.xspeed = -0.1
     rainbow.boundsMode = 'slide'
@@ -746,7 +785,7 @@ function createElements() {
 
 
     for (i = 0; i < 10; i++) {
-        cloud = new CG.Sprite(Game.asset.getImageByName('cloud'), new CG.Point(300 + (10 * i), 200 + (5 * i)))
+        cloud = new CG.Sprite({image: Game.asset.getImageByName('cloud'), position: new CG.Point(300 + (10 * i), 200 + (5 * i))})
         cloud.name = 'cloud'
         cloud.alpha = 0.4
         cloud.xscale = 0.5
@@ -759,7 +798,7 @@ function createElements() {
     delete cloud
 
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(550, 240))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(550, 240)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'bounce'
     ballon.xspeed = 1.5
@@ -768,7 +807,7 @@ function createElements() {
     ballon.yscale = 0.25
     layersprites.addElement(ballon)
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(0, 450))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(0, 450)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'bounce'
     ballon.xspeed = -1
@@ -779,7 +818,7 @@ function createElements() {
     layersprites.addElement(ballon)
 
 
-    ballon = new CG.Sprite(Game.asset.getImageByName('ballon'), new CG.Point(320, 240))
+    ballon = new CG.Sprite({image: Game.asset.getImageByName('ballon'), position: new CG.Point(320, 240)})
     ballon.name = 'ballon'
     ballon.boundsMode = 'bounce'
     ballon.xspeed = -1
@@ -791,7 +830,7 @@ function createElements() {
     delete ballon
 
 
-    glow = new CG.Sprite(Game.asset.getImageByName('glowball'), new CG.Point(-150, -150))
+    glow = new CG.Sprite({image: Game.asset.getImageByName('glowball'), position: new CG.Point(-150, -150)})
     glow.name = 'glow'
     glow.boundsMode = 'bounce'
     glow.xspeed = 1.5
@@ -803,7 +842,7 @@ function createElements() {
     layersprites.addElement(glow)
     delete glow
 
-    basketball = new CG.Sprite(Game.asset.getImageByName('basketball'), new CG.Point(150, 330))
+    basketball = new CG.Sprite({image: Game.asset.getImageByName('basketball'), position: new CG.Point(150, 330)})
     basketball.name = 'basketball'
     basketball.boundsMode = 'bounce'
     basketball.xspeed = 0.5
@@ -812,43 +851,43 @@ function createElements() {
     basketball.xscale = 0.25
     basketball.yscale = 0.25
     basketball.alpha = 0.5
-    basketball.setBound(new CG.Bound(50, 50, 200, 200))  //setting the bound of the sprite
+    basketball.setBound(new CG.Bound({x: 50, y: 50, width: 200, height: 200}))  //setting the bound of the sprite
     layersprites.addElement(basketball)
     delete basketball
 
 
     ybutton = 100
-    button1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton), 'Emitter&Particle', font, cbToEmitterdemo)
+    button1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Emitter&Particle', font: font, callback: cbToEmitterdemo})
     button1.name = 'emitter'
     layerfront.addElement(button1)
 
-    button2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Sprite&Translation', font, cbToSpritedemo)
+    button2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sprite&Translation', font: font, callback: cbToSpritedemo})
     button2.name = 'sprite'
     layerfront.addElement(button2)
 
-    button3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Animation', font, cbToAnimationdemo)
+    button3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Animation', font: font, callback: cbToAnimationdemo})
     button3.name = 'animation'
     layerfront.addElement(button3)
 
 
-    button4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Follower&Coll.(Sprite&Map)', font, cbToFollowerdemo)
+    button4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Follower&Coll.(Sprite&Map)', font: font, callback: cbToFollowerdemo})
     button4.name = 'collision'
     layerfront.addElement(button4)
 
-    button5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Map Demo', font, cbToMapdemo)
+    button5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map Demo', font: font, callback: cbToMapdemo})
     button5.name = 'map'
     layerfront.addElement(button5)
 
-    button6 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Menu&Callback Demo', font, cbToMenudemo)
+    button6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Menu&Callback Demo', font: font, callback: cbToMenudemo})
     button6.name = 'menu'
     layerfront.addElement(button6)
 
-    button7 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Bitmap Demo', font, cbToBitmapdemo)
+    button7 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Bitmap Demo', font: font, callback: cbToBitmapdemo})
     button7.name = 'menu'
     layerfront.addElement(button7)
 
 
-    back = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, Game.height - 30), 'back to Main', font, cbBackToMain)
+    back = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, Game.height - 30), text: 'back to Main', font: font, callback: cbBackToMain})
     back.name = 'back'
 
     layeremitter.addElement(back)
@@ -861,41 +900,41 @@ function createElements() {
 
 
     ybutton = 100
-    mbutton1 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton), 'Map 1 mit Anim.', font, cbToMapChange)
+    mbutton1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Map 1 mit Anim.', font: font, callback: cbToMapChange})
     mbutton1.name = 'map1'
     layermap.addElement(mbutton1)
 
-    mbutton2 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Map 2 mit Anim.', font, cbToMapChange)
+    mbutton2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map 2 mit Anim.', font: font, callback: cbToMapChange})
     mbutton2.name = 'map2'
     layermap.addElement(mbutton2)
 
-    mbutton3 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Iso Demo', font, cbToMapChange)
+    mbutton3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Iso Demo', font: font, callback: cbToMapChange})
     mbutton3.name = 'iso'
     layermap.addElement(mbutton3)
 
-    mbutton4 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Sewers Demo', font, cbToMapChange)
+    mbutton4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sewers Demo', font: font, callback: cbToMapChange})
     mbutton4.name = 'sewers'
     layermap.addElement(mbutton4)
 
-    mbutton5 = new CG.Button(Game.asset.getImageByName('btn-back-color'), new CG.Point(Game.width2, ybutton += 50), 'Othermap ;o)', font, cbToMapChange)
+    mbutton5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Othermap ;o)', font: font, callback: cbToMapChange})
     mbutton5.name = 'othermap'
     layermap.addElement(mbutton5)
 
 
-    menu = new CG.Menu(320, 100, 10)
-    button = new CG.Button(Game.asset.getImageByName('button'), new CG.Point(Game.width2, 100), 'Menu Button 1', font, callbackTest)
+    menu = new CG.Menu({x: 320, y: 100, margin: 10})
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 1', font: font, callback: callbackTest})
     button.name = '#mbutton 1#'
     menu.addButton(button)
-    button = new CG.Button(Game.asset.getImageByName('button'), new CG.Point(Game.width2, 100), 'Menu Button 2', font, callbackTest)
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 2', font: font, callback: callbackTest})
     button.name = '#mbutton 2#'
     menu.addButton(button)
-    button = new CG.Button(Game.asset.getImageByName('button'), new CG.Point(Game.width2, 100), 'Menu Button 3', font, callbackTest)
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 3', font: font, callback: callbackTest})
     button.name = '#mbutton 3#'
     menu.addButton(button)
     layermenu.addElement(menu)
 
 
-    rotclick = new CG.Sprite('media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
+    rotclick = new CG.Sprite({image: 'media/img/rot-click.png', position: new CG.Point(Game.width2, Game.height2)})
     rotclick.name = 'transme'
     rotclick.clickable = true
     rotclick.xscale = 1
@@ -903,7 +942,7 @@ function createElements() {
     rotclick.rotationspeed = 1
     layersprites.addElement(rotclick)
 
-    rotclick = new CG.Sprite('media/img/rot-click.png', new CG.Point(Game.width2, Game.height2))
+    rotclick = new CG.Sprite({image: 'media/img/rot-click.png', position: new CG.Point(Game.width2, Game.height2)})
     rotclick.name = '### rotation click ;o) ###'
     rotclick.clickable = true
     rotclick.xscale = 0.5
@@ -975,14 +1014,14 @@ function clicked() {
         var expl
         myShoot.play()
         if (CG.mouse.x % 2) {
-            expl = new CG.Animation(Game.asset.getImageByName('exp' + (Math.floor((Math.random() * 5)) + 1)), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 16, 64, 64)
+            expl = new CG.Animation({image: Game.asset.getImageByName('exp' + (Math.floor((Math.random() * 5)) + 1)), position: new CG.Point(CG.mouse.x, CG.mouse.y), startFrame: 1, endFrame: 16, width: 64, height: 64})
             expl.yspeed = -2
             expl.delay = 5
         } else {
             if (CG.mouse.y % 2) {
-                expl = new CG.Animation(Game.asset.getImageByName('bigexplosion'), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 64, 256, 256)
+                expl = new CG.Animation({image: Game.asset.getImageByName('bigexplosion'), position: new CG.Point(CG.mouse.x, CG.mouse.y), startFrame: 1, endFrame: 64, width: 256, height: 256})
             } else {
-                expl = new CG.Animation(Game.asset.getImageByName('burst'), new CG.Point(CG.mouse.x, CG.mouse.y), 1, 256, 256, 256)
+                expl = new CG.Animation({image: Game.asset.getImageByName('burst'), position: new CG.Point(CG.mouse.x, CG.mouse.y), startFrame: 1, endFrame: 256, width: 256, height: 256})
             }
             expl.yspeed = -1
             expl.delay = 0.5

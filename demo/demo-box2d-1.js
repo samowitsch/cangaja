@@ -136,7 +136,7 @@ CG.Game.extend('MyGame', {
             image: this.asset.getImageByName('glowball'),
             radius: 23,
             x: 310,
-            y: -200
+            y: -800
         })
         //create circle element with image
         b2world.createCircle({
@@ -144,7 +144,7 @@ CG.Game.extend('MyGame', {
             image: this.asset.getImageByName('glowball'),
             radius: 23,
             x: 120,
-            y: -300
+            y: -800
         })
 
         //create box element with image
@@ -152,7 +152,7 @@ CG.Game.extend('MyGame', {
             name: 'btn-back',
             image: this.asset.getImageByName('btn-back'),
             x: 420,
-            y: -500
+            y: -400
         })
 //
         //create polybody with image
@@ -160,6 +160,7 @@ CG.Game.extend('MyGame', {
             name: 'ballon',
             image: this.asset.getImageByName('ballon'),
             texturepacker: this.asset.getJsonByName('ballon'),
+            angle: 90,
             x: 350,
             y: -250
         })
@@ -167,6 +168,7 @@ CG.Game.extend('MyGame', {
             name: 'rainbow_256',
             image: this.asset.getImageByName('rainbow_256'),
             texturepacker: this.asset.getJsonByName('rainbow_256'),
+            angle: -90,
             x: 250,
             y: -400
         })
@@ -201,7 +203,9 @@ CG.Game.extend('MyGame', {
             density: 10,
             length: 200,
             segments: 8,
-            segmentWidth: 3
+            segmentWidth: 3,
+            lowerAngle: -2,
+            upperAngle: 2
         })
 
         b2world.addContactListener({

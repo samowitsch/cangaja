@@ -38,12 +38,12 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
@@ -53,7 +53,10 @@ CG.Game.extend('MyGame', {
         map.loadMapJson(this.asset.getJsonByName('map1'))
 
         //assign sprite to group object b2 of tiled map
-        glowball = new CG.Sprite(this.asset.getImageByName('glowball'), new CG.Point(100, 450))
+        glowball = new CG.Sprite({
+            image: this.asset.getImageByName('glowball'),
+            position: new CG.Point(100, 450)
+        })
         glowball.name = 'ballon'
         glowball.boundsMode = 'bounce'
         glowball.xspeed = -1
@@ -64,7 +67,10 @@ CG.Game.extend('MyGame', {
         glowball.yscale = 0.5
         mainlayer.addElement(glowball)
 
-        ballon = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(100, 250))
+        ballon = new CG.Sprite({
+            image: this.asset.getImageByName('ballon'),
+            position: new CG.Point(100, 250)
+        })
         ballon.name = 'ballon'
         ballon.boundsMode = 'bounce'
         ballon.xspeed = 3

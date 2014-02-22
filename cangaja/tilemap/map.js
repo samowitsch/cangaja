@@ -28,7 +28,7 @@ CG.Entity.extend('Map', {
      * @param mapname {string} mapname
      * @return {*}
      */
-    init:function (width, height, mapname) {
+    init: function (width, height, mapname) {
         this._super(mapname)
         this.instanceOf = 'Map'
 
@@ -175,12 +175,12 @@ CG.Entity.extend('Map', {
          * @type {Object}
          */
         this.tileset = {
-            tilewidth:0,
-            tileheight:0,
-            offsetx:0,
-            offsety:0,
-            spacing:0,
-            margin:0
+            tilewidth: 0,
+            tileheight: 0,
+            offsetx: 0,
+            offsety: 0,
+            spacing: 0,
+            margin: 0
         }
         /**
          * @property xspeed
@@ -235,7 +235,7 @@ CG.Entity.extend('Map', {
      * @method loadMapXml
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
-    loadMapXml:function (xmlfile) {
+    loadMapXml: function (xmlfile) {
         this.changemap = ''
         this.animated = false
         this.layers = []
@@ -262,7 +262,7 @@ CG.Entity.extend('Map', {
 
         //tilemap.firstElementChild.nextElementSibling.nextElementSibling
         var element = tilemap.firstElementChild
-        for (i = 0; i < childcount; i++) {
+        for (var i = 0; i < childcount; i++) {
             console.log('>' + element.nodeName)
             switch (element.nodeName) {
                 case 'tileset':
@@ -336,7 +336,14 @@ CG.Entity.extend('Map', {
                                 this.points.push(
                                     new CG.MapPoint(
                                         new CG.Point(
-                                            parseInt(obj.getAttribute('x')), parseInt(obj.getAttribute('y'))), this.position, obj.getAttribute('name'), parseInt(obj.getAttribute('gid'))))
+                                            parseInt(obj.getAttribute('x')),
+                                            parseInt(obj.getAttribute('y'))
+                                        ),
+                                        this.position,
+                                        obj.getAttribute('name'),
+                                        parseInt(obj.getAttribute('gid'))
+                                    )
+                                )
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
                             } else if (obj.getAttribute('width')) {
@@ -352,8 +359,15 @@ CG.Entity.extend('Map', {
                                 //object group
                                 this.areas.push(
                                     new CG.MapArea(
-                                        new CG.Bound(
-                                            parseInt(obj.getAttribute('x')), parseInt(obj.getAttribute('y')), parseInt(obj.getAttribute('width')), parseInt(obj.getAttribute('height'))), this.position, obj.getAttribute('name'), type))
+                                        new CG.Bound({
+                                            x: parseInt(obj.getAttribute('x')),
+                                            y: parseInt(obj.getAttribute('y')),
+                                            width: parseInt(obj.getAttribute('width')),
+                                            height: parseInt(obj.getAttribute('height'))}),
+                                        this.position, obj.getAttribute('name'),
+                                        type
+                                    )
+                                )
                                 console.log('group object found: ' + name)
                                 console.log(obj)
                             } else if (obj.getElementsByTagName('polygon').length > 0) {
@@ -415,7 +429,7 @@ CG.Entity.extend('Map', {
      * @method loadMapJson
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
-    loadMapJson:function (jsonfile) {
+    loadMapJson: function (jsonfile) {
         this.changemap = ''
         this.animated = false
         this.layers = []
@@ -463,7 +477,14 @@ CG.Entity.extend('Map', {
                                 this.points.push(
                                     new CG.MapPoint(
                                         new CG.Point(
-                                            parseInt(obj.x), parseInt(obj.y)), this.position, obj.name, parseInt(obj.gid)))
+                                            parseInt(obj.x),
+                                            parseInt(obj.y)
+                                        ),
+                                        this.position,
+                                        obj.name,
+                                        parseInt(obj.gid)
+                                    )
+                                )
 
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
@@ -471,8 +492,17 @@ CG.Entity.extend('Map', {
                                 //object group
                                 this.areas.push(
                                     new CG.MapArea(
-                                        new CG.Bound(
-                                            parseInt(obj.x), parseInt(obj.y), parseInt(obj.width), parseInt(obj.height)), this.position, obj.name, obj.properties.type))
+                                        new CG.Bound({
+                                            x: parseInt(obj.x),
+                                            y: parseInt(obj.y),
+                                            width: parseInt(obj.width),
+                                            height: parseInt(obj.height)
+                                        }),
+                                        this.position,
+                                        obj.name,
+                                        obj.properties.type
+                                    )
+                                )
 
                                 console.log('group object found: ' + name)
                                 console.log(obj)
@@ -535,7 +565,7 @@ CG.Entity.extend('Map', {
      * @param bh {Number} bh height of bound in tilemap
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
-    drawMap:function (sx, sy, bx, by, bw, bh, callback) {
+    drawMap: function (sx, sy, bx, by, bw, bh, callback) {
         this.position.x = bx
         this.position.y = by
 
@@ -687,7 +717,7 @@ CG.Entity.extend('Map', {
      *
      * @method updatePointsAndAreas
      */
-    updatePointsAndAreas:function () {
+    updatePointsAndAreas: function () {
         this.points.forEach(function (point, index) {
             point.update()
         }, this)
@@ -707,7 +737,7 @@ CG.Entity.extend('Map', {
      * @param name {string} name of the points to return
      * @return {false/array} returns false or an array with point(s)
      */
-    getPointsByName:function (name) {
+    getPointsByName: function (name) {
         points = []
         for (var i = 0, l = this.points.length; i < l; i++) {
             if (this.points[i].name === name) {
@@ -730,7 +760,7 @@ CG.Entity.extend('Map', {
      * @param name {string} name of the area(s) to return
      * @return {false/array} returns false or an array with area(s)
      */
-    getAreasByName:function (name) {
+    getAreasByName: function (name) {
         areas = []
         for (var i = 0, l = this.areas.length; i < l; i++) {
             if (this.areas[i].name === name) {
@@ -753,7 +783,7 @@ CG.Entity.extend('Map', {
      *
      * @param mixed {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
      */
-    setLayerToRender:function (mixed) {
+    setLayerToRender: function (mixed) {
         this.renderlayer = mixed
         return this
     },
@@ -767,7 +797,7 @@ CG.Entity.extend('Map', {
      *
      * @method update
      */
-    update:function () {
+    update: function () {
         //TODO automatic movement of map or other stuff?
         this.bx += this.xspeed
         this.by += this.yspeed
@@ -787,7 +817,7 @@ CG.Entity.extend('Map', {
     },
 
     // just calls drawMap ;o)
-    draw:function () {
+    draw: function () {
         this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
         return this
     },
@@ -799,10 +829,10 @@ CG.Entity.extend('Map', {
      *
      * @method getBounds
      */
-    getBounds:function () {
+    getBounds: function () {
         return {
-            width:this.width * this.tilewidth,
-            height:this.height * this.tileheight
+            width: this.width * this.tilewidth,
+            height: this.height * this.tileheight
         }
     },
 
@@ -821,7 +851,7 @@ CG.Entity.extend('Map', {
      *
      * @method updateAnimation
      */
-    updateAnimation:function () {
+    updateAnimation: function () {
         // update if map is visible
         if (this.visible && this.animated) {
             if (this.layers.length > 0) {
@@ -867,7 +897,7 @@ CG.Entity.extend('Map', {
      *
      * @param {obj} element to to add to elements array
      */
-    addElement:function (element) {
+    addElement: function (element) {
         this.elements.push(element)
         return this
     },
@@ -884,7 +914,7 @@ CG.Entity.extend('Map', {
      *
      * @return {boolean} returns true or false
      */
-    checkMapCollision:function (element, rx, ry) {
+    checkMapCollision: function (element, rx, ry) {
         //TODO return detailed collision object or offsets instead of true?
         if (element.boundingradius > 0) {
             //circular collision
@@ -914,7 +944,7 @@ CG.Entity.extend('Map', {
      * @param {Array} objarray to check for a areas collision
      * @param {Callback} callback what should happen
      */
-    checkElementsToAreasCollision:function (objarray, callback) {
+    checkElementsToAreasCollision: function (objarray, callback) {
         for (var o = 0, ol = objarray.length; o < ol; o++) {
 
             obj = objarray[o].checkCollision(this.areas, callback)
@@ -925,7 +955,7 @@ CG.Entity.extend('Map', {
      * @description removes the json data of the map object
      * @method removeJsonData
      */
-    removeJsonData:function () {
+    removeJsonData: function () {
         this.json = {}
         return this
     },
@@ -933,7 +963,7 @@ CG.Entity.extend('Map', {
      * @description removes the xml data of the map object
      * @method removeXmlData
      */
-    removeXmlData:function () {
+    removeXmlData: function () {
         this.xml = ''
         //this.parser = new DOMParser()
         this.xmlDoc = ''

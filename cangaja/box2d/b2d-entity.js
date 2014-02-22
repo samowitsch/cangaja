@@ -110,6 +110,11 @@ CG.Entity.extend('B2DEntity', {
              */
             dead: false,
             /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
              * @property density
              * @type {Number}
              */
@@ -171,6 +176,11 @@ CG.Entity.extend('B2DEntity', {
          * @type {Boolean}
          */
         this.bodyDef.bullet = this.bullet
+        /**
+         * @property bodyDef.angle
+         * @type {number}
+         */
+        this.bodyDef.angle = this.angle
         /**
          * @property bodyDef.fixedRotation
          * @type {Boolean}

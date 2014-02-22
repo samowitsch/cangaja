@@ -37,12 +37,12 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
@@ -56,14 +56,14 @@ CG.Game.extend('MyGame', {
 
         //create for every point a sprite and add it to the mainlayer
         for (var i = 0, l = pointstest.length; i < l; i++) {
-            diamond = new CG.Sprite(this.asset.getImageByName('gem'), pointstest[i].position)
+            diamond = new CG.Sprite({image: this.asset.getImageByName('gem'), position: pointstest[i].position})
             diamond.name = 'diamond'
             diamond.boundingradius = 80
             mainlayer.addElement(diamond)
         }
 
         //assign sprite to group object b1 of tiled map
-        ballon1 = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(0, 0))
+        ballon1 = new CG.Sprite({image: this.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
         ballon1.name = 'ballon1'
         ballon1.boundsMode = 'bounce'
         ballon1.xspeed = 2
@@ -74,7 +74,7 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(ballon1)
 
         //assign sprite to group object b2 of tiled map
-        ballon2 = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(0, 0))
+        ballon2 = new CG.Sprite({image: this.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
         ballon2.name = 'ballon2'
         ballon2.boundsMode = 'bounce'
         ballon2.xspeed = 1
@@ -85,7 +85,7 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(ballon2)
 
         //assign sprite to group object b3 of tiled map
-        ballon3 = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(0, 0))
+        ballon3 = new CG.Sprite({image: this.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
         ballon3.name = 'ballon3'
         ballon3.boundsMode = 'bounce'
         ballon3.rotationspeed = 1
@@ -97,7 +97,7 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(ballon3)
 
         //assign sprite to group object b4 of tiled map
-        ballon4 = new CG.Sprite(this.asset.getImageByName('ballon'), new CG.Point(0, 0))
+        ballon4 = new CG.Sprite({image: this.asset.getImageByName('ballon'), position: new CG.Point(0, 0)})
         ballon4.name = 'ballon4'
         ballon4.boundsMode = 'bounce'
         ballon4.rotationspeed = 8
@@ -134,7 +134,7 @@ CG.Game.extend('MyGame', {
 
     },
     callbacks: {
-        callbackMapCollision: function(){
+        callbackMapCollision: function () {
 
         }
     }

@@ -122,8 +122,8 @@ CG.Class.extend('Translate', {
      t.initTween({
         object: Sprite,
         steps: 10,
-        startpoint: new CG.Point(10, 10),
-        endpoint: new CG.Point(320, 160)
+        startPoint: new CG.Point(10, 10),
+        endPoint: new CG.Point(320, 160)
      })
      *
      * 
@@ -139,10 +139,10 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.x1 = this.startpoint.x
-        this.y1 = this.startpoint.y
-        this.x2 = this.endpoint.x
-        this.y2 = this.endpoint.y
+        this.x1 = this.startPoint.x
+        this.y1 = this.startPoint.y
+        this.x2 = this.endPoint.x
+        this.y2 = this.endPoint.y
 
         var xstep = (this.x2 - this.x1) / this.steps
         var ystep = (this.y2 - this.y1) / this.steps
@@ -170,7 +170,7 @@ CG.Class.extend('Translate', {
      var t = new CG.Translate()
      t.initOval({
         object: spr1,
-        centerpoint: new CG.Point(320, 160),
+        centerPoint: new CG.Point(320, 160),
         radius1: 50,
         radius2: 50,
         startangle: 90,
@@ -188,8 +188,8 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.x1 = this.centerpoint.x
-        this.y1 = this.centerpoint.y
+        this.x1 = this.centerPoint.x
+        this.y1 = this.centerPoint.y
         this.r1 = this.radius1
         this.r2 = this.radius2
         this.speed = this.rotation
@@ -211,8 +211,8 @@ CG.Class.extend('Translate', {
      t.initBezier({
         object: spr1,
         steps: 10,
-        startpoint: new CG.Point(320, 160),
-        endpoint: new CG.Point(0, 10),
+        startPoint: new CG.Point(320, 160),
+        endPoint: new CG.Point(0, 10),
         control1: new CG.Point(340, 180),
         control2: new CG.Point(0, 0)
      })
@@ -232,8 +232,8 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.start = this.endpoint
-        this.end = this.startpoint
+        this.start = this.endPoint
+        this.end = this.startPoint
 
         if (this.control2 == 'undefined' && this.control1 == 'undefined') {
             this.control2 = new CG.Point(this.start.x + 3 * (this.end.x - this.start.x) / 4, this.start.y + 3 * (this.end.y - this.start.y) / 4);

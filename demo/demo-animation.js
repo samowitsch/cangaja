@@ -36,96 +36,96 @@ CG.Game.extend('MyGame', {
 
         //animation 1
         anim1 = new CG.Animation({
+            name: 'anim1',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(50, 100),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
+            height: 64,
+            delay: 6
         })
-        anim1.name = 'anim1'
-        anim1.delay = 6
         mainlayer.addElement(anim1)
 
         //animation 2
         anim2 = new CG.Animation({
+            name: 'anim2',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(200, 100),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
+            height: 64,
+            delay: 6,
+            rotationspeed: 1
         })
-        anim2.name = 'anim2'
-        anim2.delay = 6
-        anim2.rotationspeed = 1
         mainlayer.addElement(anim2)
 
         //animation 3
         anim3 = new CG.Animation({
+            name: 'anim3',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(400, 100),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
+            height: 64,
+            delay: 6,
+            alpha: 0.5,
+            xscale: 0.5,
+            yscale: 0.5
         })
-        anim3.name = 'anim3'
-        anim3.delay = 6
-        anim3.alpha = 0.5
-        anim3.xscale = 0.5
-        anim3.yscale = 0.5
         mainlayer.addElement(anim3)
 
         //animation 4
         anim4 = new CG.Animation({
+            name: 'anim4',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(50, 200),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
+            height: 64,
+            delay: 6,
+            xspeed: -2,
+            boundsMode: 'bounce'
         })
-        anim4.name = 'anim3'
-        anim4.delay = 6
-        anim4.xspeed = -2
-        anim4.boundsMode = "bounce"
         mainlayer.addElement(anim4)
 
         //animation 5
         anim5 = new CG.Animation({
+            name: 'anim5',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(50, 300),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
+            height: 64,
+            delay: 6,
+            xspeed: -2,
+            boundsMode: 'slide'
         })
-        anim5.name = 'anim3'
-        anim5.delay = 6
-        anim5.xspeed = -2
-        anim5.boundsMode = "slide"
         mainlayer.addElement(anim5)
 
         //animation 6
         anim6 = new CG.Animation({
+            name: 'anim6',
             image: this.asset.getImageByName('hunter'),
             position: new CG.Point(50, 300),
-            startframe: 8,
-            endframe: 14,
+            startFrame: 8,
+            endFrame: 14,
             width: 56,
-            height: 64
-        })
-        anim6.name = 'anim3'
-        anim6.delay = 6
-        anim6.xspeed = -1
-        anim6.yspeed = 1
-        anim6.boundsMode = "bounce"
-        anim6.bound = new CG.Bound({
-            x: 0,
-            y: 300,
-            width: 640,
-            height: 180
+            height: 64,
+            delay: 6,
+            xspeed: -1,
+            yspeed: 1,
+            boundsMode: 'bounce',
+            bound: new CG.Bound({
+                x: 0,
+                y: 300,
+                width: 640,
+                height: 180
+            })
         })
         mainlayer.addElement(anim6)
 

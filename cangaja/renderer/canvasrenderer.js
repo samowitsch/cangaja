@@ -70,12 +70,12 @@ CG.Class.extend('CanvasRenderer', {
                     Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
                 }
                 else {
-                    renderObject.fx = renderObject.currentframe * renderObject.width
+                    renderObject.fx = renderObject.currentFrame * renderObject.width
 
                     if ((renderObject.fx / renderObject.image.width) > 0) {
                         renderObject.fx = renderObject.fx % renderObject.image.width
                     }
-                    renderObject.fy = Math.floor(renderObject.width * renderObject.currentframe / renderObject.image.width) * renderObject.height
+                    renderObject.fy = Math.floor(renderObject.width * renderObject.currentFrame / renderObject.image.width) * renderObject.height
 
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
                     try {

@@ -12124,12 +12124,12 @@ CG.Class.extend('CanvasRenderer', {
                     Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
                 }
                 else {
-                    renderObject.fx = renderObject.currentframe * renderObject.width
+                    renderObject.fx = renderObject.currentFrame * renderObject.width
 
                     if ((renderObject.fx / renderObject.image.width) > 0) {
                         renderObject.fx = renderObject.fx % renderObject.image.width
                     }
-                    renderObject.fy = Math.floor(renderObject.width * renderObject.currentframe / renderObject.image.width) * renderObject.height
+                    renderObject.fy = Math.floor(renderObject.width * renderObject.currentFrame / renderObject.image.width) * renderObject.height
 
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
                     try {
@@ -12915,72 +12915,75 @@ CG.Entity.extend('Sprite', {
      * @param options {object}
      * @return {*}
      */
-    init:function (options) {
+    init: function (options) {
         this._super()
         this.instanceOf = 'Sprite'
 
-        if (options) {
-            CG._extend(this, options)
-            this.setImage(this.image)
-        }
+        CG._extend(this, {
+            /**
+             @property bound {CG.Bound}
+             */
+            bound: Game.bound,    //global bounds of game
+            /**
+             @property xspeed {Number}
+             */
+            xspeed: 0, //xspeed of the sprite
+            /**
+             @property yspeed {Number}
+             */
+            yspeed: 0,
+            /**
+             @property boundsMode {false/string}
+             */
+            boundsMode: false, // false, bounce or slide
+            /**
+             @property rotationspeed {integer/float}
+             */
+            rotationspeed: 0,
+            /**
+             @property alpha {float}
+             */
+            alpha: 1,
+            /**
+             @property followobject {boolean/object}
+             */
+            followobject: false,   //object to follow
+            /**
+             @property followspeed {boolean/integer}
+             */
+            followspeed: false,    //followspeed for follower in pixel, has prio over followsteps
+            /**
+             @property followsteps {boolean/integer}
+             */
+            followsteps: false,    //followsteps between follower and target
+            /**
+             @property attachedobject {boolean}
+             */
+            attachedobject: false, //attached object
+            /**
+             @property offsetx {Number}
+             */
+            offsetx: 0,            //offset x for attached object
+            /**
+             @property offsety {Number}
+             */
+            offsety: 0            //offset y for attached object
 
-        /**
-         @property bound {CG.Bound}
-         */
-        this.bound = Game.bound     //global bounds of game
+
+        })
+
+        CG._extend(this, options)
+        this.setImage(this.image)
+
         /**
          @property diffpoint {CG.Point}
          */
         this.diffpoint = new CG.Point(this.bound.x, this.bound.y)  //store diffpoint if bound is moving
 
-        /**
-         @property xspeed {Number}
-         */
-        this.xspeed = 0 //xspeed of the sprite
-        /**
-         @property yspeed {Number}
-         */
-        this.yspeed = 0
-        /**
-         @property boundsMode {false/string}
-         */
-        this.boundsMode = false // false, bounce or slide
-        /**
-         @property rotationspeed {integer/float}
-         */
-        this.rotationspeed = 0
-        /**
-         @property alpha {float}
-         */
-        this.alpha = 1
-        /**
-         @property followobject {boolean/object}
-         */
-        this.followobject = false   //object to follow
-        /**
-         @property followspeed {boolean/integer}
-         */
-        this.followspeed = false    //followspeed for follower in pixel, has prio over followsteps
-        /**
-         @property followsteps {boolean/integer}
-         */
-        this.followsteps = false    //followsteps between follower and target
 
-        /**
-         @property attachedobject {boolean}
-         */
-        this.attachedobject = false //attached object
-        /**
-         @property offsetx {Number}
-         */
-        this.offsetx = 0            //offset x for attached object
-        /**
-         @property offsety {Number}
-         */
-        this.offsety = 0            //offset y for attached object
         return this
     },
-    update:function () {
+    update: function () {
         this.ifClicked()
         this.ifMouseOver()
         this.ifAttached()
@@ -13001,7 +13004,7 @@ CG.Entity.extend('Sprite', {
         this.updateDiff()
         this.updateMatrix()
     },
-    draw:function () {
+    draw: function () {
 
         Game.renderer.draw(this);
 
@@ -13011,7 +13014,7 @@ CG.Entity.extend('Sprite', {
      * @description Checks the bound if a boundMode (bounce or slide) is set
      * @method checkBound
      */
-    checkBound:function () {
+    checkBound: function () {
         switch (this.boundsMode) {
             case 'bounce':
                 if (this.position.x > ( this.bound.width - this.xhandle + this.bound.x )) {
@@ -13054,7 +13057,7 @@ CG.Entity.extend('Sprite', {
      * @description calculate offset if bound is moving
      * @method updateDiff
      */
-    updateDiff:function () {
+    updateDiff: function () {
         if (this.diffpoint.x !== this.bound.x) {
             this.position.x += this.bound.x - this.diffpoint.x
         }
@@ -13068,7 +13071,7 @@ CG.Entity.extend('Sprite', {
      * @description is there an attached element, this sprite will follow it depending on followspeed or followsteps it follows different
      * @method follow
      */
-    follow:function () {
+    follow: function () {
         if (this.followspeed) {
             //constant follow speed between objects
             angl = Math.atan2(this.followobject.position.x - this.position.x, this.followobject.position.y - this.position.y) * CG.Const_180_PI
@@ -13103,7 +13106,7 @@ CG.Entity.extend('Sprite', {
      * @method setBound
      * @param bound {CG.Bound} the bound
      */
-    setBound:function (bound) {
+    setBound: function (bound) {
         this.bound = bound
         return this
     },
@@ -13113,7 +13116,7 @@ CG.Entity.extend('Sprite', {
      * @description if there is a attached object get its position
      * @method ifAttached
      */
-    ifAttached:function () {
+    ifAttached: function () {
         if (this.attachedobject != false) {
             this.attachedobject.position._x = this.attachedobject.position.x = (this.position.x + this.offsetx)
             this.attachedobject.position._y = this.attachedobject.position.y = (this.position.y + this.offsety)
@@ -13124,7 +13127,7 @@ CG.Entity.extend('Sprite', {
      * @description attach a reference of the given object to this object
      * @method attachObject
      */
-    attachObject:function (obj) {
+    attachObject: function (obj) {
         this.attachedobject = obj
         return this
     },
@@ -13133,7 +13136,7 @@ CG.Entity.extend('Sprite', {
      * @description removes the attached object reference
      * @method removeAttachedObject
      */
-    removeAttachedObject:function () {
+    removeAttachedObject: function () {
         this.attachedobject = null
         return this
     },
@@ -13142,7 +13145,7 @@ CG.Entity.extend('Sprite', {
      * @description set the x offset of the attached object to this object
      * @method setAttachedOffsetX
      */
-    setAttachedOffsetX:function (offsetx) {
+    setAttachedOffsetX: function (offsetx) {
         this.offsetx = offsetx
         return this
     },
@@ -13151,7 +13154,7 @@ CG.Entity.extend('Sprite', {
      * @description set the y offset of the attached object to this object
      * @method setAttachedOffsetY
      */
-    setAttachedOffsetY:function (offsety) {
+    setAttachedOffsetY: function (offsety) {
         this.offsety = offsety
         return this
     }
@@ -13702,8 +13705,8 @@ CG.Sprite.extend('Animation', {
      * Options:
      * image {string} imgpath, image object or atlasimage object to use
      * position {CG.Point}
-     * startframe {number}
-     * endframe {number}
+     * startFrame {number}
+     * endFrame {number}
      * width {number}
      * height {number}
      *
@@ -13711,8 +13714,8 @@ CG.Sprite.extend('Animation', {
      var s = new CG.Animation({
            image: '../images/demo.png',
            position: new CG.Point(200,200),
-           startframe: 5,
-           endframe: 6,
+           startFrame: 5,
+           endFrame: 6,
            width: 10,
            height: 20
          })
@@ -13723,71 +13726,70 @@ CG.Sprite.extend('Animation', {
      * @return {*}
      */
     init: function (options) {
-        this._super()
+        this._super(options)
         this.instanceOf = 'Animation'
+
+        CG._extend(this, {
+            /**
+             @property loop {boolean}
+             */
+            loop: true,
+            /**
+             @property status {Number}
+             */
+            status: 0,
+            /**
+             @property currentFrame {Number}
+             */
+            currentFrame: 0,
+            /**
+             @property frames {Number}
+             */
+            frames: 0,
+            /**
+             @property startFrame {Number}
+             */
+            startFrame: 1,
+            /**
+             @property endFrame {Number}
+             */
+            endFrame: 1,
+            /**
+             @property fx {Number}
+             */
+            fx: 0,
+            /**
+             @property fy {Number}
+             */
+            fy: 0,
+            /**
+             @property delay {Number}
+             */
+            delay: 0,
+            /**
+             @property tempdelay {Number}
+             */
+            tempdelay: 0
+        })
+
 
         if (options) {
             CG._extend(this, options)
 //            this.setImage(this.image)
         }
 
-        /**
-         @property loop {boolean}
-         */
-        this.loop = true
-        /**
-         @property status {Number}
-         */
-        this.status = 0
-        /**
-         @property currentframe {Number}
-         */
-        this.currentframe = 0
-        /**
-         @property frames {Number}
-         */
-        this.frames = 0
-        /**
-         @property startframe {Number}
-         */
-        this.startframe = this.startframe - 1
-        /**
-         @property endframe {Number}
-         */
-        this.endframe = this.endframe - 1
-        /**
-         @property width {Number}
-         */
-        /**
-         @property height {Number}
-         */
+        this.startFrame = this.startFrame - 1
+        this.endFrame = this.endFrame - 1
 
-        if (this.startframe === undefined && this.endframe === undefined) {
+        if (this.startFrame === undefined && this.endFrame === undefined) {
             this.frames = 1
-            this.startframe = 0
-            this.endframe = 0
+            this.startFrame = 0
+            this.endFrame = 0
         } else {
-            this.currentframe = this.startframe - 1
-            this.frames = this.endframe - this.startframe + 1
+            this.currentFrame = this.startFrame - 1
+            this.frames = this.endFrame - this.startFrame + 1
         }
 
-        /**
-         @property fx {Number}
-         */
-        this.fx = 0
-        /**
-         @property fy {Number}
-         */
-        this.fy = 0
-
-        /**
-         @property delay {Number}
-         */
-        this.delay = 0
-        /**
-         @property tempdelay {Number}
-         */
-        this.tempdelay = 0
 
         return this
     },
@@ -13798,12 +13800,12 @@ CG.Sprite.extend('Animation', {
             if (this.tempdelay >= this.delay) {
                 this.tempdelay = 0
                 if (this.frames > 1) {
-                    this.currentframe += 1
-                    if ((this.currentframe - this.startframe) >= this.frames) {
+                    this.currentFrame += 1
+                    if ((this.currentFrame - this.startFrame) >= this.frames) {
                         if (this.loop === false) {
                             this.status = 1 //time to say good by, elements would be deleted at the moment
                         } else {
-                            this.currentframe = this.startframe
+                            this.currentFrame = this.startFrame
                         }
                     }
                 }
@@ -15960,12 +15962,17 @@ CG.Class.extend('MapArea', {
      * @param type {false/string} type (a property) of area for collision detection or what ever ;o)
      * @return {*}
      */
-    init:function (bound, mapoffset, name, type) {
+    init: function (bound, mapoffset, name, type) {
         /**
          * @property initbound
          * @type {CG.Bound}
          */
-        this.initbound = bound || new CG.Bound(0, 0, 0, 0)
+        this.initbound = bound || new CG.Bound({
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+        })
         /**
          * @property mapoffset
          * @type {CG.Point}
@@ -15986,11 +15993,16 @@ CG.Class.extend('MapArea', {
          * @property bound
          * @type {CG.Bound}
          */
-        this.bound = new CG.Bound(bound.x, bound.y, bound.width, bound.height)
+        this.bound = new CG.Bound({
+            x: bound.x,
+            y: bound.y,
+            width: bound.width,
+            height: bound.height
+        })
         return this
     },
 
-    update:function () {
+    update: function () {
         this.bound.x = this.initbound.x - this.mapoffset.x
         this.bound.y = this.initbound.y - this.mapoffset.y
     }
@@ -16027,7 +16039,7 @@ CG.Entity.extend('Map', {
      * @param mapname {string} mapname
      * @return {*}
      */
-    init:function (width, height, mapname) {
+    init: function (width, height, mapname) {
         this._super(mapname)
         this.instanceOf = 'Map'
 
@@ -16174,12 +16186,12 @@ CG.Entity.extend('Map', {
          * @type {Object}
          */
         this.tileset = {
-            tilewidth:0,
-            tileheight:0,
-            offsetx:0,
-            offsety:0,
-            spacing:0,
-            margin:0
+            tilewidth: 0,
+            tileheight: 0,
+            offsetx: 0,
+            offsety: 0,
+            spacing: 0,
+            margin: 0
         }
         /**
          * @property xspeed
@@ -16234,7 +16246,7 @@ CG.Entity.extend('Map', {
      * @method loadMapXml
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
-    loadMapXml:function (xmlfile) {
+    loadMapXml: function (xmlfile) {
         this.changemap = ''
         this.animated = false
         this.layers = []
@@ -16261,7 +16273,7 @@ CG.Entity.extend('Map', {
 
         //tilemap.firstElementChild.nextElementSibling.nextElementSibling
         var element = tilemap.firstElementChild
-        for (i = 0; i < childcount; i++) {
+        for (var i = 0; i < childcount; i++) {
             console.log('>' + element.nodeName)
             switch (element.nodeName) {
                 case 'tileset':
@@ -16335,7 +16347,14 @@ CG.Entity.extend('Map', {
                                 this.points.push(
                                     new CG.MapPoint(
                                         new CG.Point(
-                                            parseInt(obj.getAttribute('x')), parseInt(obj.getAttribute('y'))), this.position, obj.getAttribute('name'), parseInt(obj.getAttribute('gid'))))
+                                            parseInt(obj.getAttribute('x')),
+                                            parseInt(obj.getAttribute('y'))
+                                        ),
+                                        this.position,
+                                        obj.getAttribute('name'),
+                                        parseInt(obj.getAttribute('gid'))
+                                    )
+                                )
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
                             } else if (obj.getAttribute('width')) {
@@ -16351,8 +16370,15 @@ CG.Entity.extend('Map', {
                                 //object group
                                 this.areas.push(
                                     new CG.MapArea(
-                                        new CG.Bound(
-                                            parseInt(obj.getAttribute('x')), parseInt(obj.getAttribute('y')), parseInt(obj.getAttribute('width')), parseInt(obj.getAttribute('height'))), this.position, obj.getAttribute('name'), type))
+                                        new CG.Bound({
+                                            x: parseInt(obj.getAttribute('x')),
+                                            y: parseInt(obj.getAttribute('y')),
+                                            width: parseInt(obj.getAttribute('width')),
+                                            height: parseInt(obj.getAttribute('height'))}),
+                                        this.position, obj.getAttribute('name'),
+                                        type
+                                    )
+                                )
                                 console.log('group object found: ' + name)
                                 console.log(obj)
                             } else if (obj.getElementsByTagName('polygon').length > 0) {
@@ -16414,7 +16440,7 @@ CG.Entity.extend('Map', {
      * @method loadMapJson
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
-    loadMapJson:function (jsonfile) {
+    loadMapJson: function (jsonfile) {
         this.changemap = ''
         this.animated = false
         this.layers = []
@@ -16462,7 +16488,14 @@ CG.Entity.extend('Map', {
                                 this.points.push(
                                     new CG.MapPoint(
                                         new CG.Point(
-                                            parseInt(obj.x), parseInt(obj.y)), this.position, obj.name, parseInt(obj.gid)))
+                                            parseInt(obj.x),
+                                            parseInt(obj.y)
+                                        ),
+                                        this.position,
+                                        obj.name,
+                                        parseInt(obj.gid)
+                                    )
+                                )
 
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
@@ -16470,8 +16503,17 @@ CG.Entity.extend('Map', {
                                 //object group
                                 this.areas.push(
                                     new CG.MapArea(
-                                        new CG.Bound(
-                                            parseInt(obj.x), parseInt(obj.y), parseInt(obj.width), parseInt(obj.height)), this.position, obj.name, obj.properties.type))
+                                        new CG.Bound({
+                                            x: parseInt(obj.x),
+                                            y: parseInt(obj.y),
+                                            width: parseInt(obj.width),
+                                            height: parseInt(obj.height)
+                                        }),
+                                        this.position,
+                                        obj.name,
+                                        obj.properties.type
+                                    )
+                                )
 
                                 console.log('group object found: ' + name)
                                 console.log(obj)
@@ -16534,7 +16576,7 @@ CG.Entity.extend('Map', {
      * @param bh {Number} bh height of bound in tilemap
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
-    drawMap:function (sx, sy, bx, by, bw, bh, callback) {
+    drawMap: function (sx, sy, bx, by, bw, bh, callback) {
         this.position.x = bx
         this.position.y = by
 
@@ -16686,7 +16728,7 @@ CG.Entity.extend('Map', {
      *
      * @method updatePointsAndAreas
      */
-    updatePointsAndAreas:function () {
+    updatePointsAndAreas: function () {
         this.points.forEach(function (point, index) {
             point.update()
         }, this)
@@ -16706,7 +16748,7 @@ CG.Entity.extend('Map', {
      * @param name {string} name of the points to return
      * @return {false/array} returns false or an array with point(s)
      */
-    getPointsByName:function (name) {
+    getPointsByName: function (name) {
         points = []
         for (var i = 0, l = this.points.length; i < l; i++) {
             if (this.points[i].name === name) {
@@ -16729,7 +16771,7 @@ CG.Entity.extend('Map', {
      * @param name {string} name of the area(s) to return
      * @return {false/array} returns false or an array with area(s)
      */
-    getAreasByName:function (name) {
+    getAreasByName: function (name) {
         areas = []
         for (var i = 0, l = this.areas.length; i < l; i++) {
             if (this.areas[i].name === name) {
@@ -16752,7 +16794,7 @@ CG.Entity.extend('Map', {
      *
      * @param mixed {mixed} mixed define the map layer(s) to render 'all' (string) for all layers, array index (integer) for layer to render or 'name' (string) of layer to render'
      */
-    setLayerToRender:function (mixed) {
+    setLayerToRender: function (mixed) {
         this.renderlayer = mixed
         return this
     },
@@ -16766,7 +16808,7 @@ CG.Entity.extend('Map', {
      *
      * @method update
      */
-    update:function () {
+    update: function () {
         //TODO automatic movement of map or other stuff?
         this.bx += this.xspeed
         this.by += this.yspeed
@@ -16786,7 +16828,7 @@ CG.Entity.extend('Map', {
     },
 
     // just calls drawMap ;o)
-    draw:function () {
+    draw: function () {
         this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
         return this
     },
@@ -16798,10 +16840,10 @@ CG.Entity.extend('Map', {
      *
      * @method getBounds
      */
-    getBounds:function () {
+    getBounds: function () {
         return {
-            width:this.width * this.tilewidth,
-            height:this.height * this.tileheight
+            width: this.width * this.tilewidth,
+            height: this.height * this.tileheight
         }
     },
 
@@ -16820,7 +16862,7 @@ CG.Entity.extend('Map', {
      *
      * @method updateAnimation
      */
-    updateAnimation:function () {
+    updateAnimation: function () {
         // update if map is visible
         if (this.visible && this.animated) {
             if (this.layers.length > 0) {
@@ -16866,7 +16908,7 @@ CG.Entity.extend('Map', {
      *
      * @param {obj} element to to add to elements array
      */
-    addElement:function (element) {
+    addElement: function (element) {
         this.elements.push(element)
         return this
     },
@@ -16883,7 +16925,7 @@ CG.Entity.extend('Map', {
      *
      * @return {boolean} returns true or false
      */
-    checkMapCollision:function (element, rx, ry) {
+    checkMapCollision: function (element, rx, ry) {
         //TODO return detailed collision object or offsets instead of true?
         if (element.boundingradius > 0) {
             //circular collision
@@ -16913,7 +16955,7 @@ CG.Entity.extend('Map', {
      * @param {Array} objarray to check for a areas collision
      * @param {Callback} callback what should happen
      */
-    checkElementsToAreasCollision:function (objarray, callback) {
+    checkElementsToAreasCollision: function (objarray, callback) {
         for (var o = 0, ol = objarray.length; o < ol; o++) {
 
             obj = objarray[o].checkCollision(this.areas, callback)
@@ -16924,7 +16966,7 @@ CG.Entity.extend('Map', {
      * @description removes the json data of the map object
      * @method removeJsonData
      */
-    removeJsonData:function () {
+    removeJsonData: function () {
         this.json = {}
         return this
     },
@@ -16932,7 +16974,7 @@ CG.Entity.extend('Map', {
      * @description removes the xml data of the map object
      * @method removeXmlData
      */
-    removeXmlData:function () {
+    removeXmlData: function () {
         this.xml = ''
         //this.parser = new DOMParser()
         this.xmlDoc = ''
@@ -17144,8 +17186,8 @@ CG.Class.extend('Translate', {
      t.initTween({
         object: Sprite,
         steps: 10,
-        startpoint: new CG.Point(10, 10),
-        endpoint: new CG.Point(320, 160)
+        startPoint: new CG.Point(10, 10),
+        endPoint: new CG.Point(320, 160)
      })
      *
      * 
@@ -17161,10 +17203,10 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.x1 = this.startpoint.x
-        this.y1 = this.startpoint.y
-        this.x2 = this.endpoint.x
-        this.y2 = this.endpoint.y
+        this.x1 = this.startPoint.x
+        this.y1 = this.startPoint.y
+        this.x2 = this.endPoint.x
+        this.y2 = this.endPoint.y
 
         var xstep = (this.x2 - this.x1) / this.steps
         var ystep = (this.y2 - this.y1) / this.steps
@@ -17192,7 +17234,7 @@ CG.Class.extend('Translate', {
      var t = new CG.Translate()
      t.initOval({
         object: spr1,
-        centerpoint: new CG.Point(320, 160),
+        centerPoint: new CG.Point(320, 160),
         radius1: 50,
         radius2: 50,
         startangle: 90,
@@ -17210,8 +17252,8 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.x1 = this.centerpoint.x
-        this.y1 = this.centerpoint.y
+        this.x1 = this.centerPoint.x
+        this.y1 = this.centerPoint.y
         this.r1 = this.radius1
         this.r2 = this.radius2
         this.speed = this.rotation
@@ -17233,8 +17275,8 @@ CG.Class.extend('Translate', {
      t.initBezier({
         object: spr1,
         steps: 10,
-        startpoint: new CG.Point(320, 160),
-        endpoint: new CG.Point(0, 10),
+        startPoint: new CG.Point(320, 160),
+        endPoint: new CG.Point(0, 10),
         control1: new CG.Point(340, 180),
         control2: new CG.Point(0, 0)
      })
@@ -17254,8 +17296,8 @@ CG.Class.extend('Translate', {
             CG._extend(this, options)
         }
 
-        this.start = this.endpoint
-        this.end = this.startpoint
+        this.start = this.endPoint
+        this.end = this.startPoint
 
         if (this.control2 == 'undefined' && this.control1 == 'undefined') {
             this.control2 = new CG.Point(this.start.x + 3 * (this.end.x - this.start.x) / 4, this.start.y + 3 * (this.end.y - this.start.y) / 4);
@@ -17400,7 +17442,7 @@ CG.Class.extend('Morph', {
      * speed {number}
      *
      @example
-     var e = new CG.Entity({
+     var e = new CG.Morph({
            name: 'player',
            position: new CG.Point(100,100)
          })
@@ -29859,6 +29901,11 @@ CG.Entity.extend('B2DEntity', {
              */
             dead: false,
             /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
              * @property density
              * @type {Number}
              */
@@ -29920,6 +29967,11 @@ CG.Entity.extend('B2DEntity', {
          * @type {Boolean}
          */
         this.bodyDef.bullet = this.bullet
+        /**
+         * @property bodyDef.angle
+         * @type {number}
+         */
+        this.bodyDef.angle = this.angle
         /**
          * @property bodyDef.fixedRotation
          * @type {Boolean}
@@ -30886,6 +30938,9 @@ CG.B2DEntity.extend('B2DChainShape', {
      */
     init:function (options) {
 
+        this._super(options)
+        this.instanceOf = 'B2DChainShape'
+
         CG._extend(this, {
 
             /**
@@ -30900,8 +30955,6 @@ CG.B2DEntity.extend('B2DChainShape', {
             bodyType: box2d.b2BodyType.b2_staticBody
         })
 
-        this._super(options)
-        this.instanceOf = 'B2DChainShape'
 
         this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
 

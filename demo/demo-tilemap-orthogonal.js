@@ -26,12 +26,12 @@ CG.Game.extend('MyGame', {
             .startPreLoad()
     },
     create: function () {
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
@@ -55,7 +55,7 @@ CG.Game.extend('MyGame', {
         small.drawText('Map class example. It uses a orthogonal tilemap with tileanimation.', xpos, ypos + 50)
     },
     callbacks: {
-        callbackMapCollision: function(){
+        callbackMapCollision: function () {
 
         }
     }

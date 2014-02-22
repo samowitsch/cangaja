@@ -36,17 +36,20 @@ CG.Game.extend('MyGame', {
         //put the texturepacker TPImages to the asset
         this.asset.images.push.apply(this.asset.images, tp.getAtlasImages())
 
-        abadi = new CG.Font().loadFont(this.asset.getFontByName('abadi'))
-        small = new CG.Font().loadFont(this.asset.getFontByName('small'))
+        abadi = new CG.Font().loadFont({font: this.asset.getFontByName('abadi')})
+        small = new CG.Font().loadFont({font: this.asset.getFontByName('small')})
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
 
         //add screen to Director
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
-        rocket = new CG.Sprite(this.asset.getImageByName('rocket'), new CG.Point(this.width2, this.height2))
+        rocket = new CG.Sprite({
+            image: this.asset.getImageByName('rocket'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         rocket.name = 'rocket'
         rocket.boundingradius = 80
         rocket.xscale = 0.5

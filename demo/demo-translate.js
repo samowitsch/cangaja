@@ -50,30 +50,30 @@ CG.Game.extend('MyGame', {
                 new CG.Translate().initBezier({
                     object: mainlayer.getElementByName('spr1'),
                     steps: 200,
-                    startpoint: new CG.Point(500, 450),
-                    endpoint: new CG.Point(100, 100),
+                    startPoint: new CG.Point(500, 450),
+                    endPoint: new CG.Point(100, 100),
                     control1: new CG.Point(-600, 600),
                     control2: new CG.Point(1200, -300)}))
             .addTranslation(
                 new CG.Translate().initTween({
                     object: mainlayer.getElementByName('spr1'),
                     steps: 200,
-                    startpoint: new CG.Point(100, 100),
-                    endpoint: new CG.Point(550, 150)
+                    startPoint: new CG.Point(100, 100),
+                    endPoint: new CG.Point(550, 150)
                 }))
             .addTranslation(
                 new CG.Translate().initTween({
                     object: mainlayer.getElementByName('spr1'),
                     steps: 150,
-                    startpoint: new CG.Point(550, 150),
-                    endpoint: new CG.Point(100, 400)
+                    startPoint: new CG.Point(550, 150),
+                    endPoint: new CG.Point(100, 400)
                 }))
             .addTranslation(
                 new CG.Translate().initTween({
                     object: mainlayer.getElementByName('spr1'),
                     steps: 100,
-                    startpoint: new CG.Point(100, 400),
-                    endpoint: new CG.Point(550, 450)
+                    startPoint: new CG.Point(100, 400),
+                    endPoint: new CG.Point(550, 450)
                 })
             )
         mainlayer.addElement(sequence)
@@ -90,8 +90,8 @@ CG.Game.extend('MyGame', {
         translate = new CG.Translate().initTween({
             object: mainlayer.getElementByName('spr2'),
             steps: 150,
-            startpoint: new CG.Point(550, 150),
-            endpoint: new CG.Point(100, 400)
+            startPoint: new CG.Point(550, 150),
+            endPoint: new CG.Point(100, 400)
         })
         mainlayer.addElement(translate)
 

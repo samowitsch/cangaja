@@ -35,6 +35,9 @@ CG.B2DEntity.extend('B2DChainShape', {
      */
     init:function (options) {
 
+        this._super(options)
+        this.instanceOf = 'B2DChainShape'
+
         CG._extend(this, {
 
             /**
@@ -49,8 +52,6 @@ CG.B2DEntity.extend('B2DChainShape', {
             bodyType: box2d.b2BodyType.b2_staticBody
         })
 
-        this._super(options)
-        this.instanceOf = 'B2DChainShape'
 
         this.vertices = this.convertRealWorldPointToBox2DVec2(this.points)
 
