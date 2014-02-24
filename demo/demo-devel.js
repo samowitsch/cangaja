@@ -52,7 +52,7 @@ var colmsg = ''
 
 var asset, circle, circlesmoke, tween, sequence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
 var morph = new CG.Morph({mode: 'sinus', min: 0.25, max: 1, speed: 1})
-var map = new CG.Map(640, 480)
+var map = new CG.Map()
 var tp = new CG.AtlasTexturePacker()
 
 

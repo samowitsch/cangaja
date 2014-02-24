@@ -8,57 +8,82 @@
  */
 CG.Class.extend('MapArea', {
     /**
+     * Options:
+     * name {string}
+     * bound {CG.Bound}
+     * mapOffset {CG.Point}
+     * type {mixed} false, inner or outer
+     *
+     @example
+     var ma = new CG.MapArea({
+            name: obj.name,
+            bound: new CG.Bound({
+                x: parseInt(obj.x),
+                y: parseInt(obj.y),
+                width: parseInt(obj.width),
+                height: parseInt(obj.height)
+            }),
+            mapOffset: this.position,
+            type: obj.properties.type
+        })
+     *
+     *
      * @constructor
      * @method init
-     * @param bound {CG.Bound} bound of area
-     * @param mapoffset {CG.Point} mapoffset reference to the current map position
-     * @param name {string} name of the group
-     * @param type {false/string} type (a property) of area for collision detection or what ever ;o)
+     * @param options {Object}
      * @return {*}
      */
-    init: function (bound, mapoffset, name, type) {
-        /**
-         * @property initbound
-         * @type {CG.Bound}
-         */
-        this.initbound = bound || new CG.Bound({
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0
-        })
-        /**
-         * @property mapoffset
-         * @type {CG.Point}
-         */
-        this.mapoffset = mapoffset || new CG.Point(0, 0)
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = name
-        /**
-         * @property type
-         * @type {String}
-         */
-        this.type = type || false       //false, inner or outer
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property initbound
+             * @type {CG.Bound}
+             */
+            initBound: new CG.Bound({
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0
+            }),
+            /**
+             * @property mapoffset
+             * @type {CG.Point}
+             */
+            mapOffset: new CG.Point(0, 0),
+            /**
+             * @property name
+             * @type {String}
+             */
+            name: '',
+            /**
+             * @property type
+             * @type {String}
+             */
+            type: false,      //false, inner or outer
 
-        /**
-         * @property bound
-         * @type {CG.Bound}
-         */
-        this.bound = new CG.Bound({
-            x: bound.x,
-            y: bound.y,
-            width: bound.width,
-            height: bound.height
+            /**
+             * @property bound
+             * @type {CG.Bound}
+             */
+            bound: new CG.Bound({
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0
+            })
         })
+
+
+        CG._extend(this, options)
+
+        this.initBound = this.bound
+
         return this
     },
 
     update: function () {
-        this.bound.x = this.initbound.x - this.mapoffset.x
-        this.bound.y = this.initbound.y - this.mapoffset.y
+        this.bound.x = this.initBound.x - this.mapOffset.x
+        this.bound.y = this.initBound.y - this.mapOffset.y
     }
 })
 

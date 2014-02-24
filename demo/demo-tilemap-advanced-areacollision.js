@@ -49,7 +49,7 @@ CG.Game.extend('MyGame', {
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //create tilemap
-        map = new CG.Map(640, 480)
+        map = new CG.Map()
         map.loadMapJson(this.asset.getJsonByName('map1'))
 
         //assign sprite to group object b2 of tiled map

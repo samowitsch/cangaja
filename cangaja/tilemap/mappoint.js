@@ -9,46 +9,65 @@
  */
 CG.Class.extend('MapPoint', {
     /**
+     * Options:
+     * name {string}
+     * position {CG.Point}
+     * mapOffset {CG.Point}
+     * gid {Number}
+     *
+     @example
+     var s = new CG.MapPoint({
+           name: '',                            // name of the tile
+           position: new CG.Point(200,200),     // position point
+           mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
+           gid: 10                              // gid number of tilemap editor
+         })
+     *
      * @method init
      * @constructor
-     * @param position {point} position point
-     * @param mapoffset {point} mapoffset reference to the current map position
-     * @param name {string} name of the tile
-     * @param gid {Number} gid number of tilemap editor
+     * @param options {object}
      * @return {*}
      */
-    init:function (position, mapoffset, name, gid) {
-        /**
-         * @property initposition
-         * @type {CG.Point}
-         */
-        this.initposition = position || new CG.Point(0, 0)
-        /**
-         * @property mapoffset
-         * @type {CG.Point}
-         */
-        this.mapoffset = mapoffset || new CG.Point(0, 0)
-        /**
-         * @property gid
-         * @type {Number}
-         */
-        this.gid = gid
-        /**
-         * @property name
-         * @type {*}
-         */
-        this.name = name
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(position.x, position.y) //for reference use
+    init: function (options) {
+
+        CG._extend(this, {
+            /**
+             * @property gid
+             * @type {Number}
+             */
+            gid: 0,
+            /**
+             * @property name
+             * @type {*}
+             */
+            name: '',
+            /**
+             * @property initPosition
+             * @type {CG.Point}
+             */
+            initPosition: new CG.Point(0, 0),
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property mapOffset
+             * @type {CG.Point}
+             */
+            mapOffset: new CG.Point(0, 0)
+        })
+
+        CG._extend(this, options)
+
+        this.initPosition = this.position
+
         return this
     },
 
-    update:function () {
-        this.position.x = this.initposition.x - this.mapoffset.x
-        this.position.y = this.initposition.y - this.mapoffset.y
+    update: function () {
+        this.position.x = this.initPosition.x - this.mapOffset.x
+        this.position.y = this.initPosition.y - this.mapOffset.y
     }
 })
 

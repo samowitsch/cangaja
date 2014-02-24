@@ -36,7 +36,7 @@ CG.Game.extend('MyGame', {
         this.director.addScreen(mainscreen.addLayer(mainlayer))
 
         //create tilemap
-        map = new CG.Map(640, 480)
+        map = new CG.Map()
         map.loadMapXml(this.asset.getXmlByName('map1'))
 
         renderStats = new Stats()

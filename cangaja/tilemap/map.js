@@ -7,7 +7,7 @@
  *
  * Supported types of the object layer are:
  * - object/group (rectangle?)
- * - tile element, reference point is bottom/CG.LEFT
+ * - tile element, reference point is bottom/left of the tile in the editor
  *
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
@@ -23,13 +23,10 @@ CG.Entity.extend('Map', {
     /**
      * @method init
      * @constructor
-     * @param width {Number} width of the map
-     * @param height {Number} height of the map
-     * @param mapname {string} mapname
      * @return {*}
      */
-    init: function (width, height, mapname) {
-        this._super(mapname)
+    init: function () {
+        this._super()
         this.instanceOf = 'Map'
 
         /**
@@ -224,6 +221,10 @@ CG.Entity.extend('Map', {
          * @type {Number}
          */
         this.layertocheck = 0 //as default use layer 0 for collision detection
+
+
+        CG._extend(this, options)
+
         return this
     },
     /**
@@ -334,15 +335,15 @@ CG.Entity.extend('Map', {
                             if (obj.getAttribute('gid')) {
                                 //tile as object/point
                                 this.points.push(
-                                    new CG.MapPoint(
-                                        new CG.Point(
+                                    new CG.MapPoint({
+                                        position: new CG.Point(
                                             parseInt(obj.getAttribute('x')),
                                             parseInt(obj.getAttribute('y'))
                                         ),
-                                        this.position,
-                                        obj.getAttribute('name'),
-                                        parseInt(obj.getAttribute('gid'))
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.getAttribute('name'),
+                                        gid: parseInt(obj.getAttribute('gid'))
+                                    })
                                 )
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
@@ -358,15 +359,16 @@ CG.Entity.extend('Map', {
 
                                 //object group
                                 this.areas.push(
-                                    new CG.MapArea(
-                                        new CG.Bound({
+                                    new CG.MapArea({
+                                        bound: new CG.Bound({
                                             x: parseInt(obj.getAttribute('x')),
                                             y: parseInt(obj.getAttribute('y')),
                                             width: parseInt(obj.getAttribute('width')),
                                             height: parseInt(obj.getAttribute('height'))}),
-                                        this.position, obj.getAttribute('name'),
-                                        type
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.getAttribute('name'),
+                                        type: type
+                                    })
                                 )
                                 console.log('group object found: ' + name)
                                 console.log(obj)
@@ -475,15 +477,15 @@ CG.Entity.extend('Map', {
                             if (obj.gid) {
                                 //tile as object/point
                                 this.points.push(
-                                    new CG.MapPoint(
-                                        new CG.Point(
+                                    new CG.MapPoint({
+                                        position: new CG.Point(
                                             parseInt(obj.x),
                                             parseInt(obj.y)
                                         ),
-                                        this.position,
-                                        obj.name,
-                                        parseInt(obj.gid)
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.name,
+                                        gid: parseInt(obj.gid)
+                                    })
                                 )
 
                                 console.log('tile as oject found: ' + name)
@@ -491,17 +493,17 @@ CG.Entity.extend('Map', {
                             } else if (obj.width) {
                                 //object group
                                 this.areas.push(
-                                    new CG.MapArea(
-                                        new CG.Bound({
+                                    new CG.MapArea({
+                                        bound: new CG.Bound({
                                             x: parseInt(obj.x),
                                             y: parseInt(obj.y),
                                             width: parseInt(obj.width),
                                             height: parseInt(obj.height)
                                         }),
-                                        this.position,
-                                        obj.name,
-                                        obj.properties.type
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.name,
+                                        type: obj.properties.type
+                                    })
                                 )
 
                                 console.log('group object found: ' + name)

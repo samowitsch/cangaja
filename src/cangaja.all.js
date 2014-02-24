@@ -15900,46 +15900,65 @@ CG.Class.extend('MapTileProperties', {
  */
 CG.Class.extend('MapPoint', {
     /**
+     * Options:
+     * name {string}
+     * position {CG.Point}
+     * mapOffset {CG.Point}
+     * gid {Number}
+     *
+     @example
+     var s = new CG.MapPoint({
+           name: '',                            // name of the tile
+           position: new CG.Point(200,200),     // position point
+           mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
+           gid: 10                              // gid number of tilemap editor
+         })
+     *
      * @method init
      * @constructor
-     * @param position {point} position point
-     * @param mapoffset {point} mapoffset reference to the current map position
-     * @param name {string} name of the tile
-     * @param gid {Number} gid number of tilemap editor
+     * @param options {object}
      * @return {*}
      */
-    init:function (position, mapoffset, name, gid) {
-        /**
-         * @property initposition
-         * @type {CG.Point}
-         */
-        this.initposition = position || new CG.Point(0, 0)
-        /**
-         * @property mapoffset
-         * @type {CG.Point}
-         */
-        this.mapoffset = mapoffset || new CG.Point(0, 0)
-        /**
-         * @property gid
-         * @type {Number}
-         */
-        this.gid = gid
-        /**
-         * @property name
-         * @type {*}
-         */
-        this.name = name
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(position.x, position.y) //for reference use
+    init: function (options) {
+
+        CG._extend(this, {
+            /**
+             * @property gid
+             * @type {Number}
+             */
+            gid: 0,
+            /**
+             * @property name
+             * @type {*}
+             */
+            name: '',
+            /**
+             * @property initPosition
+             * @type {CG.Point}
+             */
+            initPosition: new CG.Point(0, 0),
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property mapOffset
+             * @type {CG.Point}
+             */
+            mapOffset: new CG.Point(0, 0)
+        })
+
+        CG._extend(this, options)
+
+        this.initPosition = this.position
+
         return this
     },
 
-    update:function () {
-        this.position.x = this.initposition.x - this.mapoffset.x
-        this.position.y = this.initposition.y - this.mapoffset.y
+    update: function () {
+        this.position.x = this.initPosition.x - this.mapOffset.x
+        this.position.y = this.initPosition.y - this.mapOffset.y
     }
 })
 
@@ -15954,57 +15973,82 @@ CG.Class.extend('MapPoint', {
  */
 CG.Class.extend('MapArea', {
     /**
+     * Options:
+     * name {string}
+     * bound {CG.Bound}
+     * mapOffset {CG.Point}
+     * type {mixed} false, inner or outer
+     *
+     @example
+     var ma = new CG.MapArea({
+            name: obj.name,
+            bound: new CG.Bound({
+                x: parseInt(obj.x),
+                y: parseInt(obj.y),
+                width: parseInt(obj.width),
+                height: parseInt(obj.height)
+            }),
+            mapOffset: this.position,
+            type: obj.properties.type
+        })
+     *
+     *
      * @constructor
      * @method init
-     * @param bound {CG.Bound} bound of area
-     * @param mapoffset {CG.Point} mapoffset reference to the current map position
-     * @param name {string} name of the group
-     * @param type {false/string} type (a property) of area for collision detection or what ever ;o)
+     * @param options {Object}
      * @return {*}
      */
-    init: function (bound, mapoffset, name, type) {
-        /**
-         * @property initbound
-         * @type {CG.Bound}
-         */
-        this.initbound = bound || new CG.Bound({
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0
-        })
-        /**
-         * @property mapoffset
-         * @type {CG.Point}
-         */
-        this.mapoffset = mapoffset || new CG.Point(0, 0)
-        /**
-         * @property name
-         * @type {String}
-         */
-        this.name = name
-        /**
-         * @property type
-         * @type {String}
-         */
-        this.type = type || false       //false, inner or outer
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property initbound
+             * @type {CG.Bound}
+             */
+            initBound: new CG.Bound({
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0
+            }),
+            /**
+             * @property mapoffset
+             * @type {CG.Point}
+             */
+            mapOffset: new CG.Point(0, 0),
+            /**
+             * @property name
+             * @type {String}
+             */
+            name: '',
+            /**
+             * @property type
+             * @type {String}
+             */
+            type: false,      //false, inner or outer
 
-        /**
-         * @property bound
-         * @type {CG.Bound}
-         */
-        this.bound = new CG.Bound({
-            x: bound.x,
-            y: bound.y,
-            width: bound.width,
-            height: bound.height
+            /**
+             * @property bound
+             * @type {CG.Bound}
+             */
+            bound: new CG.Bound({
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0
+            })
         })
+
+
+        CG._extend(this, options)
+
+        this.initBound = this.bound
+
         return this
     },
 
     update: function () {
-        this.bound.x = this.initbound.x - this.mapoffset.x
-        this.bound.y = this.initbound.y - this.mapoffset.y
+        this.bound.x = this.initBound.x - this.mapOffset.x
+        this.bound.y = this.initBound.y - this.mapOffset.y
     }
 })
 
@@ -16018,7 +16062,7 @@ CG.Class.extend('MapArea', {
  *
  * Supported types of the object layer are:
  * - object/group (rectangle?)
- * - tile element, reference point is bottom/CG.LEFT
+ * - tile element, reference point is bottom/left of the tile in the editor
  *
  * These object layer types are used to generate Point and Bound objects and can be used to position sprites, what ever in the map.
  *
@@ -16034,13 +16078,10 @@ CG.Entity.extend('Map', {
     /**
      * @method init
      * @constructor
-     * @param width {Number} width of the map
-     * @param height {Number} height of the map
-     * @param mapname {string} mapname
      * @return {*}
      */
-    init: function (width, height, mapname) {
-        this._super(mapname)
+    init: function () {
+        this._super()
         this.instanceOf = 'Map'
 
         /**
@@ -16235,6 +16276,10 @@ CG.Entity.extend('Map', {
          * @type {Number}
          */
         this.layertocheck = 0 //as default use layer 0 for collision detection
+
+
+        CG._extend(this, options)
+
         return this
     },
     /**
@@ -16345,15 +16390,15 @@ CG.Entity.extend('Map', {
                             if (obj.getAttribute('gid')) {
                                 //tile as object/point
                                 this.points.push(
-                                    new CG.MapPoint(
-                                        new CG.Point(
+                                    new CG.MapPoint({
+                                        position: new CG.Point(
                                             parseInt(obj.getAttribute('x')),
                                             parseInt(obj.getAttribute('y'))
                                         ),
-                                        this.position,
-                                        obj.getAttribute('name'),
-                                        parseInt(obj.getAttribute('gid'))
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.getAttribute('name'),
+                                        gid: parseInt(obj.getAttribute('gid'))
+                                    })
                                 )
                                 console.log('tile as oject found: ' + name)
                                 console.log(obj)
@@ -16369,15 +16414,16 @@ CG.Entity.extend('Map', {
 
                                 //object group
                                 this.areas.push(
-                                    new CG.MapArea(
-                                        new CG.Bound({
+                                    new CG.MapArea({
+                                        bound: new CG.Bound({
                                             x: parseInt(obj.getAttribute('x')),
                                             y: parseInt(obj.getAttribute('y')),
                                             width: parseInt(obj.getAttribute('width')),
                                             height: parseInt(obj.getAttribute('height'))}),
-                                        this.position, obj.getAttribute('name'),
-                                        type
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.getAttribute('name'),
+                                        type: type
+                                    })
                                 )
                                 console.log('group object found: ' + name)
                                 console.log(obj)
@@ -16486,15 +16532,15 @@ CG.Entity.extend('Map', {
                             if (obj.gid) {
                                 //tile as object/point
                                 this.points.push(
-                                    new CG.MapPoint(
-                                        new CG.Point(
+                                    new CG.MapPoint({
+                                        position: new CG.Point(
                                             parseInt(obj.x),
                                             parseInt(obj.y)
                                         ),
-                                        this.position,
-                                        obj.name,
-                                        parseInt(obj.gid)
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.name,
+                                        gid: parseInt(obj.gid)
+                                    })
                                 )
 
                                 console.log('tile as oject found: ' + name)
@@ -16502,17 +16548,17 @@ CG.Entity.extend('Map', {
                             } else if (obj.width) {
                                 //object group
                                 this.areas.push(
-                                    new CG.MapArea(
-                                        new CG.Bound({
+                                    new CG.MapArea({
+                                        bound: new CG.Bound({
                                             x: parseInt(obj.x),
                                             y: parseInt(obj.y),
                                             width: parseInt(obj.width),
                                             height: parseInt(obj.height)
                                         }),
-                                        this.position,
-                                        obj.name,
-                                        obj.properties.type
-                                    )
+                                        mapOffset: this.position,
+                                        name: obj.name,
+                                        type: obj.properties.type
+                                    })
                                 )
 
                                 console.log('group object found: ' + name)
