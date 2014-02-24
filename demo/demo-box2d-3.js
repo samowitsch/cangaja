@@ -81,6 +81,13 @@ CG.B2DWorld.extend('B2DTestbed', {
 
         this.addContactListener({
             BeginContact: function (idA, idB) {
+                //players are landing on ground, set jump flag to false
+                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-left') {
+                    leftplayer.jump = false
+                }
+                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-right') {
+                    rightplayer.jump = false
+                }
             },
 
             PostSolve: function (idA, idB, impulse) {
@@ -102,14 +109,6 @@ CG.B2DWorld.extend('B2DTestbed', {
                 //ball hits net
                 if (idA.GetUserData().name == 'N' && idB.GetUserData().name == 'beachvolleyball') {
                     sfxNet.play()
-                }
-
-                //players are landing on ground, set jump flag to false
-                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-left') {
-                    leftplayer.jump = false
-                }
-                if (idA.GetUserData().name == 'G' && idB.GetUserData().name == 'blobby-egg-right') {
-                    rightplayer.jump = false
                 }
 
                 //players contact with beachvolleyball
@@ -223,15 +222,6 @@ CG.B2DPlayer.extend('B2DLeftPlayer', {
  */
 CG.B2DCircle.extend('B2DBall', {
     init: function (options) {
-//        this.bodyDef = new b2BodyDef //'overwrite' class bodyDef
-//        this.bodyDef.allowSleep = true
-//        this.bodyDef.awake = true
-//        this.bodyDef.bullet = true
-
-//        this.fixDef = new b2FixtureDef //'overwrite' class fixDef
-//        this.fixDef.density = 0.5
-//        this.fixDef.friction = 0.1
-//        this.fixDef.restitution = 0.55
 
         this._super(options)
 
@@ -389,8 +379,8 @@ CG.Game.extend('MyGame', {
             }
             if (keyCode == 87) { // w - up
                 if (leftplayer.jump == false) {
-                    leftplayer.addVelocity(new b2Vec2(0, -9))
                     leftplayer.jump = true
+                    leftplayer.addVelocity(new b2Vec2(0, -9))
                 }
             }
             if (keyCode == 68) { // d - right
@@ -403,8 +393,8 @@ CG.Game.extend('MyGame', {
             }
             if (keyCode == 38) { //up
                 if (rightplayer.jump == false) {
-                    rightplayer.addVelocity(new b2Vec2(0, -9))
                     rightplayer.jump = true
+                    rightplayer.addVelocity(new b2Vec2(0, -9))
                 }
             }
             if (keyCode == 39) { //right
