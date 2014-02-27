@@ -25,7 +25,7 @@ CG.Entity.extend('Map', {
      * @constructor
      * @return {*}
      */
-    init: function () {
+    init: function (options) {
         this._super()
         this.instanceOf = 'Map'
 
