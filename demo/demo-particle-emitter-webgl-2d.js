@@ -45,7 +45,7 @@ Game = (function () {
         height: 480,
         width2: 640 / 2,
         height2: 480 / 2,
-        bound: new CG.Bound(0, 0, 640, 480).setName('game'),
+        bound: new CG.Bound({x: 0, y: 0, width: 640, height: 480}),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -86,12 +86,12 @@ Game = (function () {
             Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
 
             //            font = new CG.Font().loadFont(Game.asset.getFontByName('small'))
-            abadi = new CG.Font().loadFont(Game.asset.getFontByName('abadi'))
-            small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
+            abadi = new CG.Font().loadFont({font: Game.asset.getFontByName('abadi')})
+            small = new CG.Font().loadFont({font: Game.asset.getFontByName('small')})
 
             //screen and layer
-            mainscreen = new CG.Screen('mainscreen')
-            mainlayer = new CG.Layer('mainlayer')
+            mainscreen = new CG.Screen({name: 'mainscreen'})
+            mainlayer = new CG.Layer({name: 'mainlayer'})
 
             //add screen to Director
             Game.director.addScreen(mainscreen.addLayer(mainlayer))
