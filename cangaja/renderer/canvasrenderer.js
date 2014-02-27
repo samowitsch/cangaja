@@ -43,7 +43,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Particle":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
@@ -57,7 +57,7 @@ CG.Class.extend('CanvasRenderer', {
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
 
-                Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
+                Game.b_ctx.setTransform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
 
                 Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
                 break;
@@ -65,7 +65,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Animation":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.frames == 1) {
                     Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
                 }
@@ -119,7 +119,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Map":
 
                 Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.rx, renderObject.ry)
+                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.rx, renderObject.ry)
 
                 if (renderObject.orientation == 'orthogonal') {
 
@@ -148,7 +148,7 @@ CG.Class.extend('CanvasRenderer', {
             case "B2DRope":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.transform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
+                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
