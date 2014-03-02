@@ -46,12 +46,14 @@ CG.Game.extend('MyGame', {
     create: function () {
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
         mainscreen.addLayer(mainlayer)
 
-        example = new CG.Sprite(Game.asset.getImageByName('example'), new CG.Point(Game.width2, Game.height2))
-        example.name = 'back'
+        example = new CG.Sprite({
+            image: Game.asset.getImageByName('example'),
+            position: new CG.Point(Game.width2, Game.height2)
+        })
         mainlayer.addElement(example)
 
         //add screen to Director

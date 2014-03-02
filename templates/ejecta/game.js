@@ -10,8 +10,8 @@ CG.Game.extend('MyGame', {
         //add needed eventlistener or use included hammer.js
         this.canvas.addEventListener('touchmove', function (evt) {
             CG.mouse = this.mouse = {
-                x: evt.touches[0].pageX - this.canvas.offsetLeft,
-                y: evt.touches[0].pageY - this.canvas.offsetTop
+                x: evt.touches[0].pageX,
+                y: evt.touches[0].pageY
             }
             console.log(JSON.stringify(this.mouse));
             evt.preventDefault();
@@ -54,12 +54,14 @@ CG.Game.extend('MyGame', {
     create: function () {
 
         //screen and layer
-        mainscreen = new CG.Screen('mainscreen')
-        mainlayer = new CG.Layer('mainlayer')
+        mainscreen = new CG.Screen({name: 'mainscreen'})
+        mainlayer = new CG.Layer({name: 'mainlayer'})
         mainscreen.addLayer(mainlayer)
 
-        example = new CG.Sprite(this.asset.getImageByName('example'), new CG.Point(this.width2, this.height2))
-        example.name = 'back'
+        example = new CG.Sprite({
+            image: this.asset.getImageByName('example'),
+            position: new CG.Point(this.width2, this.height2)
+        })
         mainlayer.addElement(example)
 
         //add screen to Director
