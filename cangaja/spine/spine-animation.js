@@ -237,6 +237,33 @@ CG.Entity.extend('SpineAnimation', {
             var slot = drawOrder[i]
             var attachment = slot.attachment
             var bone = slot.bone
+            /*
+
+            use precalculated values of the bones from spine-runtime?
+
+             bone Object
+             data: Object
+             m00: 1.0074619959561097
+             m01: 0.29158551292948764
+             m10: 0.32899671000771835
+             m11: -0.8929004877919172
+             parent: Object
+             rotation: -18.06921126880002
+             scaleX: 1.0598200358984402
+             scaleY: 0.9393047388624184
+             worldRotation: -18.08496285182334
+             worldScaleX: 1.0598200358984402
+             worldScaleY: 0.9393047388624184
+             worldX: 294.80437684378234
+             worldY: 126.4695789058789
+             x: 86.82
+             y: 7.12
+             __proto__: Object
+
+            */
+
+            //this.translate.m = [bone.data.m00, bone.data.m01, bone.data.m10, bone.data.m11, bone.data.x, bone.data.y]
+
             if (!(attachment instanceof spine.RegionAttachment)) continue
             attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, this.vertices)
 

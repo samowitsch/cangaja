@@ -129,7 +129,7 @@ CG.Game.extend('MyGame', {
         powerup = new CG.SpineAnimation({
                 spinejson: this.asset.getJsonByName('powerup-json'),
                 spineatlas: this.asset.getTextByName('powerup-atlas'),
-                position: new CG.Point(200, 300),
+                position: new CG.Point(300, 400),
                 scale: 1,  //experimental scale
                 callback: function (spineObject) {
 //                    spineObject.skeleton.setSkinByName("goblingirl");
@@ -139,6 +139,21 @@ CG.Game.extend('MyGame', {
             }
         )
         mainlayer.addElement(powerup)
+
+
+        goblins = new CG.SpineAnimation({
+                spinejson: this.asset.getJsonByName('goblins-json'),
+                spineatlas: this.asset.getTextByName('goblins-atlas'),
+                position: new CG.Point(this.width - 160, 550),
+                scale: 1,  //experimental scale
+                callback: function (spineObject) {
+                    spineObject.skeleton.setSkinByName("goblingirl");
+                    spineObject.skeleton.setSlotsToSetupPose();
+                    spineObject.state.setAnimationByName(0, "walk", true);
+                }
+            }
+        )
+        mainlayer.addElement(goblins)
 
         spineboy = new CG.SpineAnimation({
                 spinejson: this.asset.getJsonByName('spineboy-json'),
@@ -154,10 +169,25 @@ CG.Game.extend('MyGame', {
         )
         mainlayer.addElement(spineboy)
 
+
         goblins = new CG.SpineAnimation({
                 spinejson: this.asset.getJsonByName('goblins-json'),
                 spineatlas: this.asset.getTextByName('goblins-atlas'),
-                position: new CG.Point(this.width - 160, 550),
+                position: new CG.Point(this.width - 260, 550),
+                scale: 1,  //experimental scale
+                callback: function (spineObject) {
+                    spineObject.skeleton.setSkinByName("goblingirl");
+                    spineObject.skeleton.setSlotsToSetupPose();
+                    spineObject.state.setAnimationByName(0, "walk", true);
+                }
+            }
+        )
+        mainlayer.addElement(goblins)
+
+        goblins = new CG.SpineAnimation({
+                spinejson: this.asset.getJsonByName('goblins-json'),
+                spineatlas: this.asset.getTextByName('goblins-atlas'),
+                position: new CG.Point(this.width - 360, 550),
                 scale: 1,  //experimental scale
                 callback: function (spineObject) {
                     spineObject.skeleton.setSkinByName("goblingirl");
