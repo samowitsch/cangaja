@@ -75,8 +75,8 @@ java -jar yuicompressor-2.4.8.jar ../$path/cangaja.js -o ../$path/cangaja.min.js
 echo "> Minified standard version (yuicompressor)."
 echo ""
 
-#running closure compiler
-#java -jar compiler.jar --js=../$path/cangaja.js --js_output_file=../$path/cangaja-closure.min.js
+#running closure compiler (ECMASCRIPT5, ECMASCRIPT5_STRICT)
+#java -jar compiler.jar --js=../$path/cangaja.js --js_output_file=../$path/cangaja-closure.min.js --language_in=ECMASCRIPT5 --source_map_format=V3 --create_source_map ../$path/cangaja-closure.min.js.map
 #echo "> Minified standard version (closure compiler)."
 #echo ""
 
@@ -95,7 +95,7 @@ echo "> Minified lib version (yuicompressor)."
 echo ""
 
 #running closure compiler
-#java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/cangaja-closure.all.min.js
+#java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/cangaja-closure.all.min.js --source_map_format=V3 --create_source_map ../$path/cangaja-closure.all.min.js.map
 #echo "> Minified lib version (closure compiler)."
 #echo ""
 
