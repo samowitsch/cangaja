@@ -14958,7 +14958,7 @@ CG.Entity.extend('Font', {
             line = lines[l].trim()
 
             if (line.startsWith('info') || line == '') {
-                var infodata = line.split(' ')
+                var infodata = line.split(/([a-zA-Z]*=[" ,.\-_()0-9a-zA-Z]*(?= |\n))/)
                 for (i in infodata) {
                     var info = infodata[i]
                     if (info.startsWith('face=')) {
