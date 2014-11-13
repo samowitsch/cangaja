@@ -47,7 +47,6 @@ var layermenu = new CG.Layer({name: 'menu'})
 var screen8 = new CG.Screen({name: 'bitmap'})
 var layerbitmap = new CG.Layer({name: 'bitmap'})
 
-
 var colmsg = ''
 
 var asset, circle, circlesmoke, tween, sequence, button, font, font2, menu, mapcol = 0, mapcollisiontext = ''
