@@ -12,7 +12,7 @@ var loadjson = true,  //test json map loader
     ri = 0
 
 //screen 1 menu
-var screen = new CG.Screen({name: 'menuscreen'})
+var screen1 = new CG.Screen({name: 'menuscreen'})
 var layerfront = new CG.Layer({name: 'layerfront'})
 var layermiddle = new CG.Layer({name: 'layermiddle'})
 
@@ -198,7 +198,7 @@ var Game = (function () {
 
 
             Game.director
-                .addScreen(screen.addLayer(layermiddle).addLayer(layerfront))
+                .addScreen(screen1.addLayer(layermiddle).addLayer(layerfront))
                 .addScreen(screen2.addLayer(layeremitter))
                 .addScreen(screen3.addLayer(layersprites))
                 .addScreen(screen4.addLayer(layerfollowersmoke).addLayer(layerfollower).addLayer(layerrunner))
