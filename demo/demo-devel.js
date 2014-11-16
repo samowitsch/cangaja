@@ -59,8 +59,8 @@ window.onload = function () {
 
     //create canvas element programaticaly
     canvas = document.createElement('canvas')
-    canvas.width = 640
-    canvas.height = 480
+    canvas.width = 800
+    canvas.height = 600
     canvas.id = 'canvas'
     document.body.appendChild(canvas)
 
@@ -80,11 +80,11 @@ var Game = (function () {
         path: '',
         fps: 60,
         lastrun: new Date().getTime(),
-        width: 640,
-        height: 480,
-        width2: 640 / 2,
-        height2: 480 / 2,
-        bound: new CG.Bound({x: 0, y: 0, width: 640, height: 480}).setName('game'),
+        width: 800,
+        height: 600,
+        width2: 800 / 2,
+        height2: 600 / 2,
+        bound: new CG.Bound({x: 0, y: 0, width: 800, height: 600}).setName('game'),
         canvas: {},
         ctx: {},
         b_canvas: {},
@@ -137,6 +137,7 @@ var Game = (function () {
                 .addFont('media/font/abadi_ez.txt', 'abadi')
                 //tilemaps
                 .addXml('media/map/map-diddy-csv.tmx', 'map-diddy-csv')
+                .addXml('media/map/project-x.tmx', 'projectx')
                 .addXml('media/map/map.tmx', 'map1')
                 .addXml('media/map/map2.tmx', 'map2')
                 .addXml('media/map/othermap.tmx', 'othermap')
@@ -919,6 +920,10 @@ function createElements() {
     mbutton5.name = 'othermap'
     layermap.addElement(mbutton5)
 
+    mbutton6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Projec-x test', font: font, callback: cbToMapChange})
+    mbutton6.name = 'projectx'
+    layermap.addElement(mbutton6)
+
 
     menu = new CG.Menu({x: 320, y: 100, margin: 10})
     button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 1', font: font, callback: callbackTest})
@@ -998,9 +1003,9 @@ function callbackCollisionTest(obj1, obj2) {
 }
 function callbackMapCollision(sprite, tile) {
     mapcol += 1
-    if (tile instanceof MapTileProperties) {
-        mapcollisiontext = sprite.name + ' hits ' + tile.name
-    }
+    //if (tile instanceof MapTileProperties) {
+    //    mapcollisiontext = sprite.name + ' hits ' + tile.name
+    //}
 }
 
 
