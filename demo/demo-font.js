@@ -59,24 +59,39 @@ CG.Game.extend('MyGame', {
 
         renderStats = new rStats({
             values: {
-                frame: { caption: 'Total frame time (ms)' },
-                raf: { caption: 'Time since last rAF (ms)' },
-                fps: { caption: 'Framerate (FPS)' },
-                text1: { caption: 'Text header (ms)' },
-                text2: { caption: 'Text small (ms)' },
-                text3: { caption: 'Text big (ms)' },
-                render: { caption: 'Render (ms)' }
-            }
+                frame: {caption: 'Total frame time (ms)'},
+                raf: {caption: 'Time since last rAF (ms)'},
+                fps: {caption: 'Framerate (FPS)'},
+                loop: {caption: 'Main loop'},
+                text1: {caption: 'Text header (ms)'},
+                text2: {caption: 'Text small (ms)'},
+                text3: {caption: 'Text big (ms)'},
+                render: {caption: 'Render (ms)'}
+            },
+            groups: [
+                { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+                { caption: 'Frame Budget', values: [ 'frame', 'loop', 'text1', 'text2', 'text3', 'render' ] }
+            ]
         })
         //document.body.appendChild(renderStats.domElement)
 
         //after creation start game loop
         this.loop()
     },
+    loop: function () {
+        renderStats('frame').start()
+
+        renderStats('loop').start()
+        this._super()
+        renderStats('loop').end()
+
+        renderStats('frame').end()
+        renderStats().update();
+    },
+
     update: function () {
     },
     draw: function () {
-        renderStats('frame').start()
         renderStats('rAF').tick();
         renderStats('FPS').frame();
         renderStats('render').start();
@@ -98,7 +113,6 @@ CG.Game.extend('MyGame', {
         renderStats('text3').end()
 
         renderStats('render').end();
-        renderStats('frame').end()
-        renderStats().update();
+
     }
 })
