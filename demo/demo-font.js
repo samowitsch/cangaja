@@ -61,7 +61,7 @@ CG.Game.extend('MyGame', {
             values: {
                 frame: {caption: 'Total frame time (ms)'},
                 raf: {caption: 'Time since last rAF (ms)'},
-                fps: {caption: 'Framerate (FPS)'},
+                fps: {caption: 'Framerate (FPS)', below: 30},
                 loop: {caption: 'Main loop'},
                 text1: {caption: 'Text header (ms)'},
                 text2: {caption: 'Text small (ms)'},
@@ -71,7 +71,10 @@ CG.Game.extend('MyGame', {
             groups: [
                 { caption: 'Framerate', values: [ 'fps', 'raf' ] },
                 { caption: 'Frame Budget', values: [ 'frame', 'loop', 'text1', 'text2', 'text3', 'render' ] }
-            ]
+            ],
+            fractions: [
+            { base: 'frame', steps: [ 'text1', 'render' ] }
+        ]
         })
         //document.body.appendChild(renderStats.domElement)
 
