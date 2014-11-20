@@ -57,21 +57,62 @@ CG.Game.extend('MyGame', {
         back.name = 'back'
         mainlayer.addElement(back)
 
-        renderStats = new Stats()
-        document.body.appendChild(renderStats.domElement)
+        renderStats = new rStats({
+            values: {
+                frame: {caption: 'Total frame time (ms)'},
+                raf: {caption: 'Time since last rAF (ms)'},
+                fps: {caption: 'Framerate (FPS)'},
+                loop: {caption: 'Main loop'},
+                text1: {caption: 'Text header (ms)'},
+                text2: {caption: 'Text small (ms)'},
+                text3: {caption: 'Text big (ms)'},
+                render: {caption: 'Render (ms)'}
+            },
+            groups: [
+                { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+                { caption: 'Frame Budget', values: [ 'frame', 'loop', 'text1', 'text2', 'text3', 'render' ] }
+            ]
+        })
+        //document.body.appendChild(renderStats.domElement)
 
         //after creation start game loop
         this.loop()
     },
+    loop: function () {
+        renderStats('frame').start()
+
+        renderStats('loop').start()
+        this._super()
+        renderStats('loop').end()
+
+        renderStats('frame').end()
+        renderStats().update();
+    },
+
     update: function () {
-        renderStats.update();
     },
     draw: function () {
+        renderStats('rAF').tick();
+        renderStats('FPS').frame();
+        renderStats('render').start();
+
+        renderStats('text1').start()
         abadi.drawText('cangaja - Canvas Game JavaScript FW', xpos, ypos)
+        renderStats('text1').end()
+
+
+        renderStats('text2').start()
         small.drawText('This is a little font class demo!', xpos, ypos + 50)
         small.drawText('With different fonts generated with Glyphdesigner.', xpos, ypos + 120)
         small.drawText('It has only some basic features at the moment.', xpos, ypos + 120 + small.getLineHeight())
+        renderStats('text2').end()
+
+        renderStats('text3').start()
         gill.drawText('äöüß?áà', xpos, ypos + 180)
         gill.drawText('ÄÖÜ~§$%&', xpos, ypos + 180 + gill.getLineHeight())
+        renderStats('text3').end()
+
+        renderStats('render').end();
+
     }
 })
