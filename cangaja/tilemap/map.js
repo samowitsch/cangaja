@@ -822,7 +822,7 @@ CG.Entity.extend('Map', {
 
     // just calls drawMap ;o)
     draw: function () {
-        this.drawMap(this.position.x, this.position.y, this.mapOffset.x, this.mapOffset.y, this.sx, this.sy, this.callback)
+        this.drawMap(this.position.x, this.position.y, this.mapOffset.x, this.mapOffset.y, this.width, this.height, this.callback)
         return this
     },
 
