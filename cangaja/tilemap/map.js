@@ -54,6 +54,11 @@ CG.Entity.extend('Map', {
          */
         this.position = new CG.Point(0, 0) // needed as relative point for points and areas
         /**
+         * @property mapOffset
+         * @type {CG.Point}
+         */
+        this.mapOffset = new CG.Point(0, 0)
+        /**
          * @property changemap
          * @type {String}
          */
@@ -568,9 +573,6 @@ CG.Entity.extend('Map', {
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
     drawMap: function (sx, sy, bx, by, bw, bh, callback) {
-        this.position.x = bx
-        this.position.y = by
-
         this.bx = bx || this.bx || 0
         this.by = by || this.by || 0
         this.bw = bw || Game.bound.width
@@ -820,7 +822,7 @@ CG.Entity.extend('Map', {
 
     // just calls drawMap ;o)
     draw: function () {
-        this.drawMap(this.bx, this.by, this.bw, this.bh, this.sx, this.sy, this.callback)
+        this.drawMap(this.position.x, this.position.y, this.mapOffset.x, this.mapOffset.y, this.sx, this.sy, this.callback)
         return this
     },
 
