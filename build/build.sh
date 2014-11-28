@@ -24,6 +24,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/vector.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
+../cangaja/input/stick.js \
 ../cangaja/sprite/sprite.js \
 ../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \
@@ -108,8 +109,9 @@ echo ""
 #echo ""
 
 #copy also to the template folders
-#cp ../$path/cangaja.all.js ../templates/html5/cangaja.all.js
-#cp ../$path/cangaja.all.min.js ../templates/html5/cangaja.all.min.js
+echo "> copied cangaja lib to Project-x"
+cp ../$path/cangaja.all.js ../../projekt-x/project/js/libs/cangaja.all.js
+#cp ../$path/cangaja.all.min.js ../../projekt-x/project/js/libs/cangaja.all.min.js
 #cp ../$path/cangaja.all.js ../templates/ejecta/cangaja.all.js
 #cp ../$path/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
 
