@@ -74,14 +74,24 @@ CG.Class.extend('Screen', {
      */
     draw: function () {
         Game.b_ctx.save()
-        if (this.xscale !== 1 || this.yscale !== 1) {
-            Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
-            Game.b_ctx.scale(this.xscale, this.yscale)
-        } else {
-            Game.b_ctx.translate(this.position.x, this.position.y)
-        }
         for (var i = 0, l = this.layers.length; i < l; i++) {
-            this.layers[i].draw()
+            if (this.xscale !== 1 || this.yscale !== 1) {
+                Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
+                Game.b_ctx.scale(this.xscale, this.yscale)
+
+                this.layers[i].draw()
+
+            } else {
+                // if layers have a fixed position the layer stays always on top left
+                // this is usefull for tilemaps. they have its own mapoffset
+                // TODO: may find a better solution
+                if (this.layers[i].fixedPosition) {
+                    Game.b_ctx.translate(0, 0)
+                } else {
+                    Game.b_ctx.translate(this.position.x, this.position.y)
+                }
+                this.layers[i].draw()
+            }
         }
 
         Game.b_ctx.restore()

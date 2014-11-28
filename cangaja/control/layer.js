@@ -34,6 +34,11 @@ CG.Class.extend('Layer', {
              */
             visible: true,
             /**
+             * @property fixedPosition
+             * @type {Boolean}
+             */
+            fixedPosition: false,
+            /**
              * @property elements
              * @type {Array}
              */
