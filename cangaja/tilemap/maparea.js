@@ -45,11 +45,11 @@ CG.Class.extend('MapArea', {
                 width: 0,
                 height: 0
             }),
-            /**
-             * @property mapoffset
-             * @type {CG.Point}
-             */
-            mapOffset: new CG.Point(0, 0),
+            ///**
+            // * @property mapoffset
+            // * @type {CG.Point}
+            // */
+            //mapOffset: new CG.Point(0, 0),
             /**
              * @property name
              * @type {String}
@@ -81,9 +81,9 @@ CG.Class.extend('MapArea', {
         return this
     },
 
-    update: function () {
-        this.bound.x = this.initBound.x - this.mapOffset.x
-        this.bound.y = this.initBound.y - this.mapOffset.y
+    update: function (mapOffset) {
+        this.bound.x = this.initBound.x - mapOffset.x
+        this.bound.y = this.initBound.y - mapOffset.y
     }
 })
 

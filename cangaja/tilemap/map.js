@@ -163,6 +163,16 @@ CG.Entity.extend('Map', {
          */
         this.height = 0
         /**
+         * @property mapColumns
+         * @type {Number}
+         */
+        this.mapColumns = 0
+        /**
+         * @property mapRows
+         * @type {Number}
+         */
+        this.mapRows = 0
+        /**
          * @property tilewidth
          * @type {Number}
          */
@@ -259,8 +269,8 @@ CG.Entity.extend('Map', {
         //get map
         var tilemap = map.xmlDoc.getElementsByTagName('map')[0]
         this.orientation = tilemap.getAttribute('orientation')
-        this.width = parseInt(tilemap.getAttribute('width'))
-        this.height = parseInt(tilemap.getAttribute('height'))
+        this.mapColumns = parseInt(tilemap.getAttribute('width'))
+        this.mapRows = parseInt(tilemap.getAttribute('height'))
         this.tilewidth = parseInt(tilemap.getAttribute('tilewidth'))
         this.tileheight = parseInt(tilemap.getAttribute('tileheight'))
 
@@ -369,7 +379,8 @@ CG.Entity.extend('Map', {
                                             x: parseInt(obj.getAttribute('x')),
                                             y: parseInt(obj.getAttribute('y')),
                                             width: parseInt(obj.getAttribute('width')),
-                                            height: parseInt(obj.getAttribute('height'))}),
+                                            height: parseInt(obj.getAttribute('height'))
+                                        }),
                                         mapOffset: this.position,
                                         name: obj.getAttribute('name'),
                                         type: type
@@ -452,8 +463,8 @@ CG.Entity.extend('Map', {
 
         //get map
         this.orientation = this.json.orientation
-        this.width = this.json.width
-        this.height = this.json.height
+        this.mapColumns = this.json.width
+        this.mapRows = this.json.height
         this.tilewidth = this.json.tilewidth
         this.tileheight = this.json.tileheight
 
@@ -573,12 +584,12 @@ CG.Entity.extend('Map', {
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
     drawMap: function (sx, sy, bx, by, bw, bh, callback) {
-        this.bx = bx || this.bx || 0
-        this.by = by || this.by || 0
-        this.bw = bw || Game.bound.width
-        this.bh = bh || Game.bound.height
-        this.sx = sx || this.sx || 0
-        this.sy = sy || this.sy || 0
+        this.bx = bx
+        this.by = by
+        this.bw = bw
+        this.bh = bh
+        this.sx = sx
+        this.sy = sy
         this.callback = callback || false
 
         //for renderer
@@ -605,21 +616,22 @@ CG.Entity.extend('Map', {
                     if (this.renderlayer == tl.name || this.renderlayer == this.layer || this.renderlayer == 'all') {
                         // MAP ORTHOGONAL
                         if (this.orientation == 'orthogonal' && tl.visible == true) {
-                            modx = (this.bx * this.xscale) % this.tilewidth
-                            mody = (this.by * this.yscale) % this.tileheight
-                            y = this.by
-                            my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0
+                            var modx = (this.bx * this.xscale) % this.tilewidth,
+                                mody = (this.by * this.yscale) % this.tileheight,
+                                y = this.by,
+                                //my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0,
+                                my = Math.floor(this.by / this.tileheight),
+                                tmpy = (this.by + this.bh + this.tileheight)
 
-                            var tmpy = (this.by + this.bh + this.tileheight)
                             while (y < tmpy) {
-                                x = this.bx //- this.tilewidth
-                                mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0
-
-                                var tmpx = (this.bx + this.bw + this.tilewidth)
+                                var x = this.bx, //- this.tilewidth
+                                    //mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0,
+                                    mx = Math.floor(this.bx / this.tilewidth),
+                                    tmpx = (this.bx + this.bw + this.tilewidth)
                                 while (x < tmpx) {
                                     if ((this.wrapX || (mx >= 0 && mx < this.width)) && (this.wrapY || (my >= 0 && my < this.height))) {
-                                        mx2 = mx
-                                        my2 = my
+                                        var mx2 = mx,
+                                            my2 = my
 
                                         while (mx2 < 0) {
                                             mx2 += this.width
@@ -682,8 +694,8 @@ CG.Entity.extend('Map', {
                         else if (this.orientation == 'isometric') {
                             var t = tl.width + tl.height
                             for (var y = 0; y < t; y++) {
-                                var ry = y
-                                var rx = 0
+                                var ry = y,
+                                    rx = 0
                                 while (ry >= tl.height) {
                                     ry -= 1
                                     rx += 1
@@ -723,10 +735,10 @@ CG.Entity.extend('Map', {
      */
     updatePointsAndAreas: function () {
         this.points.forEach(function (point, index) {
-            point.update()
+            point.update(this.mapOffset)
         }, this)
         this.areas.forEach(function (area, index) {
-            area.update()
+            area.update(this.mapOffset)
         }, this)
     },
 
@@ -802,22 +814,22 @@ CG.Entity.extend('Map', {
      * @method update
      */
     update: function () {
-        //TODO automatic movement of map or other stuff?
-        this.bx += this.xspeed
-        this.by += this.yspeed
-        if (this.getBounds().width - Game.bound.width < this.bx) {
-            this.xspeed = this.xspeed * -1
-        }
-        if (this.bx < 0) {
-            this.xspeed = this.xspeed * -1
-        }
-        if (this.getBounds().height - Game.bound.height < this.by) {
-            this.yspeed = this.yspeed * -1
-        }
-        if (this.by < 0) {
-            this.yspeed = this.yspeed * -1
-        }
-        return this
+        ////TODO automatic movement of map or other stuff?
+        //this.bx += this.xspeed
+        //this.by += this.yspeed
+        //if (this.getBounds().width - Game.bound.width < this.mapOffset.x) {
+        //    this.xspeed = this.xspeed * -1
+        //}
+        //if (this.mapOffset.x < 0) {
+        //    this.xspeed = this.xspeed * -1
+        //}
+        //if (this.getBounds().height - Game.bound.height < this.mapOffset.y) {
+        //    this.yspeed = this.yspeed * -1
+        //}
+        //if (this.mapOffset.y < 0) {
+        //    this.yspeed = this.yspeed * -1
+        //}
+        //return this
     },
 
     // just calls drawMap ;o)

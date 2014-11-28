@@ -51,11 +51,11 @@ CG.Class.extend('MapPoint', {
              * @type {CG.Point}
              */
             position: new CG.Point(0, 0),
-            /**
-             * @property mapOffset
-             * @type {CG.Point}
-             */
-            mapOffset: new CG.Point(0, 0)
+            ///**
+            // * @property mapOffset
+            // * @type {CG.Point}
+            // */
+            //mapOffset: new CG.Point(0, 0)
         })
 
         CG._extend(this, options)
@@ -65,9 +65,9 @@ CG.Class.extend('MapPoint', {
         return this
     },
 
-    update: function () {
-        this.position.x = this.initPosition.x - this.mapOffset.x
-        this.position.y = this.initPosition.y - this.mapOffset.y
+    update: function (mapOffset) {
+        this.position.x = this.initPosition.x - mapOffset.x
+        this.position.y = this.initPosition.y - mapOffset.y
     }
 })
 
