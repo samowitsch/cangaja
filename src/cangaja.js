@@ -12003,7 +12003,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Particle":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.rotation - renderObject.imagerotation) * CG.Const_PI_180)
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
@@ -12017,7 +12017,7 @@ CG.Class.extend('CanvasRenderer', {
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
 
-                Game.b_ctx.setTransform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
+                Game.b_ctx.transform(renderObject.transform.m[0], renderObject.transform.m[1], renderObject.transform.m[2], renderObject.transform.m[3], renderObject.transform.m[4], renderObject.transform.m[5])
 
                 Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, renderObject.xpos, renderObject.ypos, renderObject.cutwidth * renderObject.xscale, renderObject.cutheight * renderObject.yscale)
                 break;
@@ -12025,7 +12025,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Animation":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.position.x, renderObject.position.y)
                 if (renderObject.frames == 1) {
                     Game.b_ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.image.width * renderObject.xscale, renderObject.image.height * renderObject.yscale)
                 }
@@ -12079,7 +12079,7 @@ CG.Class.extend('CanvasRenderer', {
             case "Map":
 
                 Game.b_ctx.globalAlpha = renderObject.layers[renderObject.layer].opacity
-                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.rx, renderObject.ry)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.rx, renderObject.ry)
 
                 if (renderObject.orientation == 'orthogonal') {
 
@@ -12108,7 +12108,7 @@ CG.Class.extend('CanvasRenderer', {
             case "B2DRope":
 
                 Game.b_ctx.globalAlpha = renderObject.alpha
-                Game.b_ctx.setTransform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
+                Game.b_ctx.transform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
                 if (renderObject.atlasimage) {
                     Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
@@ -12792,6 +12792,204 @@ CG.Class.extend('Buffer', {
          */
         this.b_ctx = this.b_canvas.getContext('2d')
         return this
+    }
+})
+
+
+/**
+ * @description
+ *
+ * CG.Stick
+ *
+ * @class CG.Stick
+ * @extends CG.Class
+ *
+ */
+CG.Class.extend('Stick', {
+    /**
+     * Options:
+     * x {number}
+     * y {number}
+     *
+     @example
+     var b = new CG.Stick({
+           maxLength: 0,
+           active: false
+         })
+     *
+     * @constructor
+     * @method init
+     * @param options {object}
+     * @return {*}
+     */
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property active
+             * @type {Boolean}
+             */
+            active: false,
+            /**
+             * @property atLimit
+             * @type {Boolean}
+             */
+            atLimit: false,
+            /**
+             * @property length
+             * @type {Number}
+             */
+            length: 1,
+            /**
+             * @property maxLength
+             * @type {Number}
+             */
+            maxLength: 0,
+            /**
+             * @property limit
+             * @type {Object}
+             */
+            limit: {x: 0, Y: 0},
+            /**
+             * @property input
+             * @type {Object}
+             */
+            input: {x: 0, Y: 0},
+            /**
+             * @property normal
+             * @type {Object}
+             */
+            normal: {x: 0, Y: 0}
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
+        this.addEventListener()
+
+        return this
+    },
+    addEventListener: function () {
+        Game.canvas.addEventListener("touchstart", function (e) {
+            e.preventDefault();
+
+            for (var i = 0; i < 1 /*e.touches.length*/; ++i) {
+                //var stick = sticks[i];
+                var touch = e.touches[i];
+
+                this.setLimitXY(touch.pageX, touch.pageY);
+                this.setInputXY(touch.pageX, touch.pageY);
+                this.active = true;
+            }
+        }.bind(this));
+
+        document.addEventListener("touchmove", function (e) {
+            e.preventDefault();
+
+            for (var i = 0; i < 1 /*e.touches.length*/; ++i) {
+                //var stick = sticks[i];
+                var touch = e.touches[i];
+
+                this.setInputXY(touch.pageX, touch.pageY);
+            }
+        }.bind(this));
+
+        document.addEventListener("touchend", function (e) {
+            var touches = e.changedTouches;
+            for (var i = 0; i < 1 /*touches.length*/; ++i) {
+                //var stick = sticks[i];
+                this.active = false
+            }
+        }.bind(this));
+    },
+    draw: function () {
+        if (!this.active) {
+            return
+        }
+
+        Game.b_ctx.save()
+
+        // limit
+        Game.b_ctx.beginPath()
+        Game.b_ctx.strokeStyle = 'rgb(200,200,200)'
+        Game.b_ctx.lineWidth = 3
+        Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
+        Game.b_ctx.stroke()
+
+        // base
+        Game.b_ctx.beginPath()
+        Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
+        Game.b_ctx.stroke()
+
+        // input
+        Game.b_ctx.beginPath();
+        Game.b_ctx.arc(this.input.x, this.input.y, this.maxLength / 1.5, 0, (Math.PI * 2), true)
+        Game.b_ctx.fillStyle = "rgb(0, 0, 200)"
+        Game.b_ctx.fill()
+
+        Game.b_ctx.restore()
+    },
+    update: function () {
+        var diff = this.subtractVectors(this.input, this.limit)
+        var length = this.getVectorLength(diff)
+
+        if (Math.round(length) >= this.maxLength) {
+            length = this.maxLength
+
+            var rads = this.getRadians(diff.x, diff.y)
+
+            this.atLimit = true;
+            this.input = this.getVectorFromRadians(rads, length)
+            this.input.x += this.limit.x
+            this.input.y += this.limit.y
+        } else {
+            this.atLimit = false;
+        }
+
+        this.length = length;
+        this.normal = this.getVectorNormal(diff)
+    },
+    getRadians: function (x, y) {
+        return Math.atan2(x, -y)
+    },
+    getVectorFromRadians: function (radians, length) {
+        var length = (Number(length) || 1)
+        return {
+            x: (Math.sin(radians) * length),
+            y: (-Math.cos(radians) * length)
+        }
+    },
+    getVectorLength: function (v) {
+        return Math.sqrt((v.x * v.x) + (v.y * v.y))
+    },
+    getVectorNormal: function (v) {
+        var len = this.getVectorLength(v)
+        if (len === 0) {
+            return v
+        } else {
+            return {
+                x: (v.x * (1 / len)),
+                y: (v.y * (1 / len))
+            }
+        }
+    },
+    setLimitXY: function (x, y) {
+        this.limit = {
+            x: x,
+            y: y
+        }
+    },
+    setInputXY: function (x, y) {
+        this.input = {
+            x: x,
+            y: y
+        }
+    },
+    subtractVectors: function (v1, v2) {
+        return {
+            x: (v1.x - v2.x),
+            y: (v1.y - v2.y)
+        }
     }
 })
 
@@ -15541,14 +15739,24 @@ CG.Class.extend('Screen', {
      */
     draw: function () {
         Game.b_ctx.save()
-        if (this.xscale !== 1 || this.yscale !== 1) {
-            Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
-            Game.b_ctx.scale(this.xscale, this.yscale)
-        } else {
-            Game.b_ctx.translate(this.position.x, this.position.y)
-        }
         for (var i = 0, l = this.layers.length; i < l; i++) {
-            this.layers[i].draw()
+            if (this.xscale !== 1 || this.yscale !== 1) {
+                Game.b_ctx.translate((Game.width - (Game.width * this.xscale)) / 2, (Game.height - (Game.height * this.yscale)) / 2)
+                Game.b_ctx.scale(this.xscale, this.yscale)
+
+                this.layers[i].draw()
+
+            } else {
+                // if layers have a fixed position the layer stays always on top left
+                // this is usefull for tilemaps. they have its own mapoffset
+                // TODO: may find a better solution
+                if (this.layers[i].fixedPosition) {
+                    Game.b_ctx.translate(0, 0)
+                } else {
+                    Game.b_ctx.translate(this.position.x, this.position.y)
+                }
+                this.layers[i].draw()
+            }
         }
 
         Game.b_ctx.restore()
@@ -15616,6 +15824,11 @@ CG.Class.extend('Layer', {
              * @type {Boolean}
              */
             visible: true,
+            /**
+             * @property fixedPosition
+             * @type {Boolean}
+             */
+            fixedPosition: false,
             /**
              * @property elements
              * @type {Array}
@@ -15875,11 +16088,11 @@ CG.Class.extend('MapPoint', {
              * @type {CG.Point}
              */
             position: new CG.Point(0, 0),
-            /**
-             * @property mapOffset
-             * @type {CG.Point}
-             */
-            mapOffset: new CG.Point(0, 0)
+            ///**
+            // * @property mapOffset
+            // * @type {CG.Point}
+            // */
+            //mapOffset: new CG.Point(0, 0)
         })
 
         CG._extend(this, options)
@@ -15889,9 +16102,9 @@ CG.Class.extend('MapPoint', {
         return this
     },
 
-    update: function () {
-        this.position.x = this.initPosition.x - this.mapOffset.x
-        this.position.y = this.initPosition.y - this.mapOffset.y
+    update: function (mapOffset) {
+        this.position.x = this.initPosition.x - mapOffset.x
+        this.position.y = this.initPosition.y - mapOffset.y
     }
 })
 
@@ -15943,11 +16156,11 @@ CG.Class.extend('MapArea', {
                 width: 0,
                 height: 0
             }),
-            /**
-             * @property mapoffset
-             * @type {CG.Point}
-             */
-            mapOffset: new CG.Point(0, 0),
+            ///**
+            // * @property mapoffset
+            // * @type {CG.Point}
+            // */
+            //mapOffset: new CG.Point(0, 0),
             /**
              * @property name
              * @type {String}
@@ -15979,9 +16192,9 @@ CG.Class.extend('MapArea', {
         return this
     },
 
-    update: function () {
-        this.bound.x = this.initBound.x - this.mapOffset.x
-        this.bound.y = this.initBound.y - this.mapOffset.y
+    update: function (mapOffset) {
+        this.bound.x = this.initBound.x - mapOffset.x
+        this.bound.y = this.initBound.y - mapOffset.y
     }
 })
 
@@ -16151,6 +16364,16 @@ CG.Entity.extend('Map', {
          */
         this.height = 0
         /**
+         * @property mapColumns
+         * @type {Number}
+         */
+        this.mapColumns = 0
+        /**
+         * @property mapRows
+         * @type {Number}
+         */
+        this.mapRows = 0
+        /**
          * @property tilewidth
          * @type {Number}
          */
@@ -16247,8 +16470,8 @@ CG.Entity.extend('Map', {
         //get map
         var tilemap = map.xmlDoc.getElementsByTagName('map')[0]
         this.orientation = tilemap.getAttribute('orientation')
-        this.width = parseInt(tilemap.getAttribute('width'))
-        this.height = parseInt(tilemap.getAttribute('height'))
+        this.mapColumns = parseInt(tilemap.getAttribute('width'))
+        this.mapRows = parseInt(tilemap.getAttribute('height'))
         this.tilewidth = parseInt(tilemap.getAttribute('tilewidth'))
         this.tileheight = parseInt(tilemap.getAttribute('tileheight'))
 
@@ -16357,7 +16580,8 @@ CG.Entity.extend('Map', {
                                             x: parseInt(obj.getAttribute('x')),
                                             y: parseInt(obj.getAttribute('y')),
                                             width: parseInt(obj.getAttribute('width')),
-                                            height: parseInt(obj.getAttribute('height'))}),
+                                            height: parseInt(obj.getAttribute('height'))
+                                        }),
                                         mapOffset: this.position,
                                         name: obj.getAttribute('name'),
                                         type: type
@@ -16440,8 +16664,8 @@ CG.Entity.extend('Map', {
 
         //get map
         this.orientation = this.json.orientation
-        this.width = this.json.width
-        this.height = this.json.height
+        this.mapColumns = this.json.width
+        this.mapRows = this.json.height
         this.tilewidth = this.json.tilewidth
         this.tileheight = this.json.tileheight
 
@@ -16561,12 +16785,12 @@ CG.Entity.extend('Map', {
      * @param callback {callback} callback for collision handling - callback(obj,maptileproperties)
      */
     drawMap: function (sx, sy, bx, by, bw, bh, callback) {
-        this.bx = bx || this.bx || 0
-        this.by = by || this.by || 0
-        this.bw = bw || Game.bound.width
-        this.bh = bh || Game.bound.height
-        this.sx = sx || this.sx || 0
-        this.sy = sy || this.sy || 0
+        this.bx = bx
+        this.by = by
+        this.bw = bw
+        this.bh = bh
+        this.sx = sx
+        this.sy = sy
         this.callback = callback || false
 
         //for renderer
@@ -16593,21 +16817,22 @@ CG.Entity.extend('Map', {
                     if (this.renderlayer == tl.name || this.renderlayer == this.layer || this.renderlayer == 'all') {
                         // MAP ORTHOGONAL
                         if (this.orientation == 'orthogonal' && tl.visible == true) {
-                            modx = (this.bx * this.xscale) % this.tilewidth
-                            mody = (this.by * this.yscale) % this.tileheight
-                            y = this.by
-                            my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0
+                            var modx = (this.bx * this.xscale) % this.tilewidth,
+                                mody = (this.by * this.yscale) % this.tileheight,
+                                y = this.by,
+                                //my = parseFloat(this.by) / parseFloat(this.tileheight) >> 0,
+                                my = Math.floor(this.by / this.tileheight),
+                                tmpy = (this.by + this.bh + this.tileheight)
 
-                            var tmpy = (this.by + this.bh + this.tileheight)
                             while (y < tmpy) {
-                                x = this.bx //- this.tilewidth
-                                mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0
-
-                                var tmpx = (this.bx + this.bw + this.tilewidth)
+                                var x = this.bx, //- this.tilewidth
+                                    //mx = parseFloat(this.bx) / parseFloat(this.tilewidth) >> 0,
+                                    mx = Math.floor(this.bx / this.tilewidth),
+                                    tmpx = (this.bx + this.bw + this.tilewidth)
                                 while (x < tmpx) {
                                     if ((this.wrapX || (mx >= 0 && mx < this.width)) && (this.wrapY || (my >= 0 && my < this.height))) {
-                                        mx2 = mx
-                                        my2 = my
+                                        var mx2 = mx,
+                                            my2 = my
 
                                         while (mx2 < 0) {
                                             mx2 += this.width
@@ -16670,8 +16895,8 @@ CG.Entity.extend('Map', {
                         else if (this.orientation == 'isometric') {
                             var t = tl.width + tl.height
                             for (var y = 0; y < t; y++) {
-                                var ry = y
-                                var rx = 0
+                                var ry = y,
+                                    rx = 0
                                 while (ry >= tl.height) {
                                     ry -= 1
                                     rx += 1
@@ -16711,10 +16936,10 @@ CG.Entity.extend('Map', {
      */
     updatePointsAndAreas: function () {
         this.points.forEach(function (point, index) {
-            point.update()
+            point.update(this.mapOffset)
         }, this)
         this.areas.forEach(function (area, index) {
-            area.update()
+            area.update(this.mapOffset)
         }, this)
     },
 
@@ -16790,22 +17015,22 @@ CG.Entity.extend('Map', {
      * @method update
      */
     update: function () {
-        //TODO automatic movement of map or other stuff?
-        this.bx += this.xspeed
-        this.by += this.yspeed
-        if (this.getBounds().width - Game.bound.width < this.bx) {
-            this.xspeed = this.xspeed * -1
-        }
-        if (this.bx < 0) {
-            this.xspeed = this.xspeed * -1
-        }
-        if (this.getBounds().height - Game.bound.height < this.by) {
-            this.yspeed = this.yspeed * -1
-        }
-        if (this.by < 0) {
-            this.yspeed = this.yspeed * -1
-        }
-        return this
+        ////TODO automatic movement of map or other stuff?
+        //this.bx += this.xspeed
+        //this.by += this.yspeed
+        //if (this.getBounds().width - Game.bound.width < this.mapOffset.x) {
+        //    this.xspeed = this.xspeed * -1
+        //}
+        //if (this.mapOffset.x < 0) {
+        //    this.xspeed = this.xspeed * -1
+        //}
+        //if (this.getBounds().height - Game.bound.height < this.mapOffset.y) {
+        //    this.yspeed = this.yspeed * -1
+        //}
+        //if (this.mapOffset.y < 0) {
+        //    this.yspeed = this.yspeed * -1
+        //}
+        //return this
     },
 
     // just calls drawMap ;o)
