@@ -57,7 +57,10 @@ CG.Game.extend('MyGame', {
         mainlayer.addElement(rocket)
 
         //create tilemap
-        map = new CG.Map()
+        map = new CG.Map({
+            width: 640,
+            height: 480
+        })
         map.loadMapXml(this.asset.getXmlByName('map1'))
             //add element to map object for collision detection, the collision check is called for every tile in the drawMap method
             .addElement(rocket)
