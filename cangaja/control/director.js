@@ -179,9 +179,11 @@ CG.Class.extend('Director', {
         //draw active screen
         this.screens[this.activescreen].draw()
 
-        //draw nextscreen for slide mode
-        if (this.screens[this.nextscreen].position.x != 0 || this.screens[this.nextscreen].position.y != 0) {
-            this.screens[this.nextscreen].draw()
+        ////draw nextscreen for slide mode
+        if (this.nextscreen != this.activescreen) {
+            if (this.screens[this.nextscreen].position.x != 0 || this.screens[this.nextscreen].position.y != 0) {
+                this.screens[this.nextscreen].draw()
+            }
         }
 
         //draw fading layer => why not use the screens itself with alpha without additional rect?
