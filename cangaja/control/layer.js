@@ -62,13 +62,6 @@ CG.Class.extend('Layer', {
      */
     update: function () {
         if (this.visible == true) {
-//            this.elements.forEach(function (element, index) {
-//                element.update()
-//                if (element.status == 1) {
-//                    this.elementsToDelete.push(index)
-//                }
-//            }, this)
-
             for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].update()
                 if (this.elements[i].status == 1) {
@@ -88,11 +81,6 @@ CG.Class.extend('Layer', {
         if (this.visible == true) {
 
             //TODO ? place for CanvasRenderer ?
-
-//            this.elements.forEach(function (element) {
-//                element.draw()
-//            }, this)
-
 
             for (var i = 0, l = this.elements.length; i < l; i++) {
                 this.elements[i].draw()
