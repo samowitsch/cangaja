@@ -610,10 +610,10 @@ CG.Entity.extend('Map', {
         if (this.visible) {
             this.updateAnimation()
             if (this.layers.length > 0) {
-                for (this.layer = 0, l = this.layers.length; this.layer < l; this.layer++) {
-                    var tl = this.layers[this.layer]
+                for (var layer = 0, l = this.layers.length; layer < l; layer++) {
+                    var tl = this.layers[layer]
                     //render control, render by name, layer number or 'all''
-                    if (this.renderlayer == tl.name || this.renderlayer == this.layer || this.renderlayer == 'all') {
+                    if (this.renderlayer === tl.name || this.renderlayer === layer || this.renderlayer === 'all') {
                         // MAP ORTHOGONAL
                         if (this.orientation == 'orthogonal' && tl.visible == true) {
                             var modx = (this.bx * this.xscale) % this.tilewidth,
@@ -649,34 +649,36 @@ CG.Entity.extend('Map', {
 
                                         gid = tl.tiles[mx2 + my2 * tl.width] - 1
 
-                                        if (modx < 0) {
-                                            modx += this.tilewidth
-                                        }
-                                        if (mody < 0) {
-                                            mody += this.tileheight
-                                        }
-                                        this.rx = x - modx - this.bx
-                                        this.ry = y - mody - this.by
+                                        if (gid >= 0) {
+                                            if (modx < 0) {
+                                                modx += this.tilewidth
+                                            }
+                                            if (mody < 0) {
+                                                mody += this.tileheight
+                                            }
+                                            this.rx = x - modx - this.bx
+                                            this.ry = y - mody - this.by
 
 
-                                        //time for collision detection?
-                                        //limit to specific tilemap layer?
-                                        //collision depending on bounds and direction (xspeed/yspeed)?
-                                        //include some layer functionality here and render some sprites between map layers?
-                                        if (this.elements.length > 0 && this.layertocheck == l) {
-                                            for (var o = 0, l = this.elements.length; o < l; o++) {
-                                                if (this.checkMapCollision(this.elements[0], this.rx, this.ry)) {
-                                                    this.callback(this.elements[o], this.tileproperties[gid])
+                                            //time for collision detection?
+                                            //limit to specific tilemap layer?
+                                            //collision depending on bounds and direction (xspeed/yspeed)?
+                                            //include some layer functionality here and render some sprites between map layers?
+                                            if (this.elements.length > 0 && this.layertocheck == l) {
+                                                for (var o = 0, l = this.elements.length; o < l; o++) {
+                                                    if (this.checkMapCollision(this.elements[0], this.rx, this.ry)) {
+                                                        this.callback(this.elements[o], this.tileproperties[gid])
+                                                    }
                                                 }
                                             }
+
+
+                                            //margin/spacing?
+                                            this.cx = (gid % (this.atlaswidth / this.tilewidth)) * this.tilewidth
+                                            this.cy = Math.floor(this.tilewidth * gid / this.atlaswidth) * this.tileheight
+
+                                            Game.renderer.draw(this)
                                         }
-
-
-                                        //margin/spacing?
-                                        this.cx = (gid % (this.atlaswidth / this.tilewidth)) * this.tilewidth
-                                        this.cy = Math.floor(this.tilewidth * gid / this.atlaswidth) * this.tileheight
-
-                                        Game.renderer.draw(this)
 
                                     }
                                     x = x + this.tilewidth
