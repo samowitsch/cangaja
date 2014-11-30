@@ -46,6 +46,13 @@ CG.B2DEntity.extend('B2DRectangle', {
          */
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsBox(this.width / this.scale * 0.5, this.height / this.scale * 0.5)
+
+        /**
+         * @property bodyDef.type
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         */
+        this.bodyDef.type = this.bodyType
+
         /**
          * @property bodyDef.position.x
          * @type {Number}
