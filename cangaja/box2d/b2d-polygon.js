@@ -103,7 +103,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         for (var i = 0, l = this.vecs.length; i < l; i++) {
             this.bodyShapePoly = new b2PolygonShape
-            this.bodyShapePoly.bounce = this.jsondata[i].restitution        //value from physics editor
+            this.bodyShapePoly.bounce = this.jsondata[i].bounce        //value from physics editor
             this.makeVecsCentroid(this.vecs[i])
             this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
