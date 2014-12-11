@@ -10760,7 +10760,7 @@ spine.Skeleton.prototype = {
 	setSlotsToSetupPose: function () {
 		var slots = this.slots;
 		for (var i = 0, n = slots.length; i < n; i++)
-			slots[i].setToSetupPose();
+			slots[i].setToSetupPose(i);
 	},
 	/** @return May return null. */
 	getRootBone: function () {
@@ -10827,7 +10827,7 @@ spine.Skeleton.prototype = {
 			if (slot.data.name == slotName) {
 				var attachment = null;
 				if (attachmentName) {
-                    attachment = this.getAttachmentBySlotIndex(i, attachmentName);
+					attachment = this.getAttachment(i, attachmentName);
 					if (!attachment) throw "Attachment not found: " + attachmentName + ", for slot: " + slotName;
 				}
 				slot.setAttachment(attachment);
@@ -11691,7 +11691,7 @@ spine.AtlasAttachmentLoader.prototype = {
 		case spine.AttachmentType.region:
 			var region = this.atlas.findRegion(name);
 			if (!region) throw "Region not found in atlas: " + name + " (" + type + ")";
-			var attachment = new spine.RegionAttachment();
+			var attachment = new spine.RegionAttachment(name);
 			attachment.rendererObject = region;
 			attachment.setUVs(region.u, region.v, region.u2, region.v2, region.rotate);
 			attachment.regionOffsetX = region.offsetX;
@@ -20354,6 +20354,13 @@ CG.B2DEntity.extend('B2DRectangle', {
          */
         this.fixDef.shape = new b2PolygonShape
         this.fixDef.shape.SetAsBox(this.width / this.scale * 0.5, this.height / this.scale * 0.5)
+
+        /**
+         * @property bodyDef.type
+         * @type {box2d.b2BodyType.b2_staticBody/box2d.b2BodyType.b2_dynamicBody/box2d.b2BodyType.b2_kinematicBody/box2d.b2BodyType.b2_bulletBody}
+         */
+        this.bodyDef.type = this.bodyType
+
         /**
          * @property bodyDef.position.x
          * @type {Number}
@@ -20486,7 +20493,7 @@ CG.B2DEntity.extend('B2DPolygon', {
 
         for (var i = 0, l = this.vecs.length; i < l; i++) {
             this.bodyShapePoly = new b2PolygonShape
-            this.bodyShapePoly.bounce = this.jsondata[i].restitution        //value from physics editor
+            this.bodyShapePoly.bounce = this.jsondata[i].bounce        //value from physics editor
             this.makeVecsCentroid(this.vecs[i])
             this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
