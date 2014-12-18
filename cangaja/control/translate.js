@@ -3,6 +3,7 @@
  *
  * CG.Translate moving a object
  *
+ *
  * @class CG.Translate
  * @extends CG.Class
  */
@@ -12,102 +13,110 @@ CG.Class.extend('Translate', {
      * @method init
      * @return {*}
      */
-    init: function () {
-        /**
-         * @property type
-         * @type {String}
-         */
-        this.type = ''
-        /**
-         * @property tx
-         * @type {Number}
-         */
-        this.tx = 0 //translated x value for the object
-        /**
-         * @property ty
-         * @type {Number}
-         */
-        this.ty = 0 //translated y value for the object
-        /**
-         * @property x1
-         * @type {Number}
-         */
-        this.x1 = 0
-        /**
-         * @property y1
-         * @type {Number}
-         */
-        this.y1 = 0
-        /**
-         * @property x2
-         * @type {Number}
-         */
-        this.x2 = 0
-        /**
-         * @property y2
-         * @type {Number}
-         */
-        this.y2 = 0
-        /**
-         * @property bx
-         * @type {Number}
-         */
-        this.bx = 0 //bézier x
-        /**
-         * @property by
-         * @type {Number}
-         */
-        this.by = 0 //bézier y
-        /**
-         * @property object
-         * @type {Object}
-         */
-        this.object = {}
-        /**
-         * @property r1
-         * @type {Number}
-         */
-        this.r1 = 0
-        /**
-         * @property r2
-         * @type {Number}
-         */
-        this.r2 = 0
-        /**
-         * @property startangle
-         * @type {Number}
-         */
-        this.startangle = 0
-        /**
-         * @property angle
-         * @type {Number}
-         */
-        this.angle = 0
-        /**
-         * @property speed
-         * @type {Number}
-         */
-        this.speed = 0
-        /**
-         * @property steps
-         * @type {Number}
-         */
-        this.steps = 0
-        /**
-         * @property step
-         * @type {Number}
-         */
-        this.step = 0
-        /**
-         * @property positions
-         * @type {Array}
-         */
-        this.positions = []
-        /**
-         * @property finished
-         * @type {Boolean}
-         */
-        this.finished = false
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property type
+             * @type {String}
+             */
+            type: '',
+            /**
+             * @property tx
+             * @type {Number}
+             */
+            tx: 0, //translated x value for the object
+            /**
+             * @property ty
+             * @type {Number}
+             */
+            ty: 0, //translated y value for the object
+            /**
+             * @property x1
+             * @type {Number}
+             */
+            x1: 0,
+            /**
+             * @property y1
+             * @type {Number}
+             */
+            y1: 0,
+            /**
+             * @property x2
+             * @type {Number}
+             */
+            x2: 0,
+            /**
+             * @property y2
+             * @type {Number}
+             */
+            y2: 0,
+            /**
+             * @property bx
+             * @type {Number}
+             */
+            bx: 0, //bézier x
+            /**
+             * @property by
+             * @type {Number}
+             */
+            by: 0, //bézier y
+            /**
+             * @property object
+             * @type {Object}
+             */
+            object: {},
+            /**
+             * @property r1
+             * @type {Number}
+             */
+            r1: 0,
+            /**
+             * @property r2
+             * @type {Number}
+             */
+            r2: 0,
+            /**
+             * @property startangle
+             * @type {Number}
+             */
+            startangle: 0,
+            /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
+             * @property speed
+             * @type {Number}
+             */
+            speed: 0,
+            /**
+             * @property steps
+             * @type {Number}
+             */
+            steps: 0,
+            /**
+             * @property step
+             * @type {Number}
+             */
+            step: 0,
+            /**
+             * @property positions
+             * @type {Array}
+             */
+            positions: [],
+            /**
+             * @property finished
+             * @type {Boolean}
+             */
+            finished: false
+
+        })
+
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
     /**
@@ -117,16 +126,7 @@ CG.Class.extend('Translate', {
      * startpoint {CG.Point}
      * endpoint {CG.Point}
      *
-     @example
-     var t = new CG.Translate()
-     t.initTween({
-        object: Sprite,
-        steps: 10,
-        startPoint: new CG.Point(10, 10),
-        endPoint: new CG.Point(320, 160)
-     })
      *
-     * 
      * @method initTween
      *
      * @param options {Object}
@@ -176,7 +176,7 @@ CG.Class.extend('Translate', {
         startangle: 90,
         rotation: 5
      })
-     * 
+     *
      * @method initOval
      * @param options {Object}
      * @return {this}

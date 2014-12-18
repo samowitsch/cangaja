@@ -3,6 +3,15 @@
  *
  * CG.Bitmap is a simple bitmap class.
  *
+ ```
+
+var b = new CG.Bitmap({
+   width: 100,
+   height: 100
+ })
+
+ ```
+ *
  * @class CG.Bitmap
  * @extends CG.Entity
  *
@@ -16,13 +25,6 @@ CG.Entity.extend('Bitmap', {
      * Options:
      * width {number}
      * height {number}
-     *
-     @example
-     var b = new CG.Bitmap({
-           width: 100,
-           height: 100
-         })
-
      *
      * @method init
      * @constructor

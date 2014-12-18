@@ -251,8 +251,10 @@ var Game = (function () {
             console.log('create: circle translate')
 
 
-            sequence = new CG.Sequence()
-            sequence.loop = true
+            sequence = new CG.Sequence({
+                loop: true
+            })
+
             sequence.addTranslation(
                     new CG.Translate().initBezier({
                             object: layersprites.elements[layersprites.elements.length - 2],
@@ -860,37 +862,37 @@ function createElements() {
 
 
     ybutton = 100
-    button1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Emitter&Particle', font: font, callback: cbToEmitterdemo})
+    button1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Emitter&Particle', font: font, callbacks: {clicked: cbToEmitterdemo}})
     button1.name = 'emitter'
     layerfront.addElement(button1)
 
-    button2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sprite&Translation', font: font, callback: cbToSpritedemo})
+    button2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sprite&Translation', font: font, callbacks: {clicked: cbToSpritedemo}})
     button2.name = 'sprite'
     layerfront.addElement(button2)
 
-    button3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Animation', font: font, callback: cbToAnimationdemo})
+    button3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Animation', font: font, callbacks: {clicked: cbToAnimationdemo}})
     button3.name = 'animation'
     layerfront.addElement(button3)
 
 
-    button4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Follower&Coll.(Sprite&Map)', font: font, callback: cbToFollowerdemo})
+    button4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Follower&Coll.(Sprite&Map)', font: font, callbacks: {clicked: cbToFollowerdemo}})
     button4.name = 'collision'
     layerfront.addElement(button4)
 
-    button5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map Demo', font: font, callback: cbToMapdemo})
+    button5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map Demo', font: font, callbacks: {clicked: cbToMapdemo}})
     button5.name = 'map'
     layerfront.addElement(button5)
 
-    button6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Menu&Callback Demo', font: font, callback: cbToMenudemo})
+    button6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Menu&Callback Demo', font: font, callbacks: {clicked: cbToMenudemo}})
     button6.name = 'menu'
     layerfront.addElement(button6)
 
-    button7 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Bitmap Demo', font: font, callback: cbToBitmapdemo})
+    button7 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Bitmap Demo', font: font, callbacks: {clicked: cbToBitmapdemo}})
     button7.name = 'menu'
     layerfront.addElement(button7)
 
 
-    back = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, Game.height - 30), text: 'back to Main', font: font, callback: cbBackToMain})
+    back = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, Game.height - 30), text: 'back to Main', font: font, callbacks: {clicked: cbBackToMain}})
     back.name = 'back'
 
     layeremitter.addElement(back)
@@ -903,39 +905,39 @@ function createElements() {
 
 
     ybutton = 100
-    mbutton1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Map 1 mit Anim.', font: font, callback: cbToMapChange})
+    mbutton1 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton), text: 'Map 1 mit Anim.', font: font, callbacks: {clicked: cbToMapChange}})
     mbutton1.name = 'map1'
     layermap.addElement(mbutton1)
 
-    mbutton2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map 2 mit Anim.', font: font, callback: cbToMapChange})
+    mbutton2 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Map 2 mit Anim.', font: font, callbacks: {clicked: cbToMapChange}})
     mbutton2.name = 'map2'
     layermap.addElement(mbutton2)
 
-    mbutton3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Iso Demo', font: font, callback: cbToMapChange})
+    mbutton3 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Iso Demo', font: font, callbacks: {clicked:cbToMapChange}})
     mbutton3.name = 'iso'
     layermap.addElement(mbutton3)
 
-    mbutton4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sewers Demo', font: font, callback: cbToMapChange})
+    mbutton4 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Sewers Demo', font: font, callbacks: {clicked:cbToMapChange}})
     mbutton4.name = 'sewers'
     layermap.addElement(mbutton4)
 
-    mbutton5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Othermap ;o)', font: font, callback: cbToMapChange})
+    mbutton5 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Othermap ;o)', font: font, callbacks: {clicked: cbToMapChange}})
     mbutton5.name = 'othermap'
     layermap.addElement(mbutton5)
 
-    mbutton6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Projec-x test', font: font, callback: cbToMapChange})
+    mbutton6 = new CG.Button({image: Game.asset.getImageByName('btn-back-color'), position: new CG.Point(Game.width2, ybutton += 50), text: 'Projec-x test', font: font, callbacks: {clicked: cbToMapChange}})
     mbutton6.name = 'projectx'
     layermap.addElement(mbutton6)
 
 
     menu = new CG.Menu({x: 320, y: 100, margin: 10})
-    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 1', font: font, callback: callbackTest})
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 1', font: font, callbacks: {clicked: callbackTest}})
     button.name = '#mbutton 1#'
     menu.addButton(button)
-    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 2', font: font, callback: callbackTest})
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 2', font: font, callbacks: {clicked: callbackTest}})
     button.name = '#mbutton 2#'
     menu.addButton(button)
-    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 3', font: font, callback: callbackTest})
+    button = new CG.Button({image: Game.asset.getImageByName('button'), position: new CG.Point(Game.width2, 100), text: 'Menu Button 3', font: font, callbacks: {clicked: callbackTest}})
     button.name = '#mbutton 3#'
     menu.addButton(button)
     layermenu.addElement(menu)

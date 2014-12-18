@@ -3,6 +3,17 @@
  *
  * CG.Bound is used at different places in the Cangaja FW.
  *
+ ```
+
+     var b = new CG.Bound({
+           x: 0,
+           y: 0,
+           width: 120,
+           height: 120
+         })
+
+ ```
+ *
  * @class CG.Bound
  * @extends CG.Class
  *
@@ -15,13 +26,6 @@ CG.Class.extend('Bound', {
      * width {number}
      * height {number}
      *
-     @example
-     var b = new CG.Bound({
-           x: 0,
-           y: 0,
-           width: 120,
-           height: 120
-         })
      *
      * @constructor
      * @method init

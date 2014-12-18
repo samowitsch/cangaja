@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Delta - Cangaja API</title>
+    <title>CG.Stick - Cangaja API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -120,15 +120,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Delta Class</h1>
+                        <h1>CG.Stick Class</h1>
                         <div class="box meta">
                         
                                 <div class="extends">
-                                    Extends Class
+                                    Extends CG.Class
                                 </div>
                         
                                 <div class="foundat">
-                                    Defined in: <a href="../files/cangaja_base_delta.js.html#l1"><code>cangaja&#x2F;base&#x2F;delta.js:1</code></a>
+                                    Defined in: <a href="../files/cangaja_input_stick.js.html#l1"><code>cangaja&#x2F;input&#x2F;stick.js:1</code></a>
                                 </div>
                         
                                     Module: <a href="../modules/CG.html">CG</a>
@@ -137,8 +137,13 @@
                         
                         
                         <div class="box intro">
-                            <p>CG.Delta not really used at the moment ;o)</p>
-                        
+                            <p>CG.Stick displays an analog stick and uses the first element of the touches</p>
+                        <pre class="code prettyprint"><code>
+                        var b = new CG.Stick({
+                              maxLength: 0,
+                              active: false
+                            })
+                        </code></pre>
                         </div>
                         
                         
@@ -170,31 +175,39 @@
                         
                                             <ul class="index-list properties extends">
                                                     <li class="index-item property">
-                                                        <a href="#property_currenttime">currenttime</a>
+                                                        <a href="#property_active">active</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_delta">delta</a>
+                                                        <a href="#property_atLimit">atLimit</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_elapsedtime">elapsedtime</a>
+                                                        <a href="#property_handle">handle</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_fps">fps</a>
+                                                        <a href="#property_identifier">identifier</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_frametime">frametime</a>
+                                                        <a href="#property_input">input</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_lasttime">lasttime</a>
+                                                        <a href="#property_length">length</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_targetfps">targetfps</a>
+                                                        <a href="#property_limit">limit</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_maxLength">maxLength</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_normal">normal</a>
                         
                                                     </li>
                                             </ul>
@@ -212,11 +225,14 @@
                                                     <div class="args">
                                                         <span class="paren">(</span><ul class="args-list inline commas">
                                                             <li class="arg">
-                                                                    <code>fps</code>
+                                                                    <code>options</code>
                                                             </li>
                                                         </ul><span class="paren">)</span>
                                                     </div>
                                             
+                                                    <span class="returns-inline">
+                                                        <span class="type"></span>
+                                                    </span>
                                             
                                             
                                             
@@ -227,7 +243,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l13"><code>cangaja&#x2F;base&#x2F;delta.js:13</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l20"><code>cangaja&#x2F;input&#x2F;stick.js:20</code></a>
                                                     </p>
                                             
                                             
@@ -235,7 +251,10 @@
                                                 </div>
                                             
                                                 <div class="description">
-                                                    
+                                                    <p>Options:
+                                            x {number}
+                                            y {number}</p>
+                                            
                                                 </div>
                                             
                                                     <div class="params">
@@ -243,8 +262,8 @@
                                             
                                                         <ul class="params-list">
                                                             <li class="param">
-                                                                    <code class="param-name">fps</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                                             
                                             
                                                                 <div class="param-description">
@@ -255,16 +274,30 @@
                                                         </ul>
                                                     </div>
                                             
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
                                             
+                                                        <div class="returns-description">
+                                                                    <span class="type"></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            
+                                                        </div>
+                                                    </div>
                                             </div>
                                     </div>
                         
                                     <div id="properties" class="api-class-tabpanel">
                                         <h2 class="off-left">Properties</h2>
                         
-                                            <div id="property_currenttime" class="property item">
-                                                <h3 class="name"><code>currenttime</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            <div id="property_active" class="property item">
+                                                <h3 class="name"><code>active</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
@@ -273,7 +306,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l24"><code>cangaja&#x2F;base&#x2F;delta.js:24</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l34"><code>cangaja&#x2F;input&#x2F;stick.js:34</code></a>
                                                     </p>
                                             
                                             
@@ -286,9 +319,9 @@
                                             
                                             
                                             </div>
-                                            <div id="property_delta" class="property item">
-                                                <h3 class="name"><code>delta</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            <div id="property_atLimit" class="property item">
+                                                <h3 class="name"><code>atLimit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
@@ -297,7 +330,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l44"><code>cangaja&#x2F;base&#x2F;delta.js:44</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l50"><code>cangaja&#x2F;input&#x2F;stick.js:50</code></a>
                                                     </p>
                                             
                                             
@@ -310,8 +343,8 @@
                                             
                                             
                                             </div>
-                                            <div id="property_elapsedtime" class="property item">
-                                                <h3 class="name"><code>elapsedtime</code></h3>
+                                            <div id="property_handle" class="property item">
+                                                <h3 class="name"><code>handle</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -321,7 +354,32 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l34"><code>cangaja&#x2F;base&#x2F;delta.js:34</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l44"><code>cangaja&#x2F;input&#x2F;stick.js:44</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                                    <p><strong>Default:</strong> CG.LEFT_HAND</p>
+                                            
+                                            
+                                            </div>
+                                            <div id="property_identifier" class="property item">
+                                                <h3 class="name"><code>identifier</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_input_stick.js.html#l39"><code>cangaja&#x2F;input&#x2F;stick.js:39</code></a>
                                                     </p>
                                             
                                             
@@ -334,9 +392,9 @@
                                             
                                             
                                             </div>
-                                            <div id="property_fps" class="property item">
-                                                <h3 class="name"><code>fps</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            <div id="property_input" class="property item">
+                                                <h3 class="name"><code>input</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                                             
                                             
                                             
@@ -345,7 +403,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l49"><code>cangaja&#x2F;base&#x2F;delta.js:49</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l70"><code>cangaja&#x2F;input&#x2F;stick.js:70</code></a>
                                                     </p>
                                             
                                             
@@ -358,8 +416,8 @@
                                             
                                             
                                             </div>
-                                            <div id="property_frametime" class="property item">
-                                                <h3 class="name"><code>frametime</code></h3>
+                                            <div id="property_length" class="property item">
+                                                <h3 class="name"><code>length</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -369,7 +427,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l39"><code>cangaja&#x2F;base&#x2F;delta.js:39</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l55"><code>cangaja&#x2F;input&#x2F;stick.js:55</code></a>
                                                     </p>
                                             
                                             
@@ -382,9 +440,9 @@
                                             
                                             
                                             </div>
-                                            <div id="property_lasttime" class="property item">
-                                                <h3 class="name"><code>lasttime</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            <div id="property_limit" class="property item">
+                                                <h3 class="name"><code>limit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                                             
                                             
                                             
@@ -393,7 +451,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l29"><code>cangaja&#x2F;base&#x2F;delta.js:29</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l65"><code>cangaja&#x2F;input&#x2F;stick.js:65</code></a>
                                                     </p>
                                             
                                             
@@ -406,8 +464,8 @@
                                             
                                             
                                             </div>
-                                            <div id="property_targetfps" class="property item">
-                                                <h3 class="name"><code>targetfps</code></h3>
+                                            <div id="property_maxLength" class="property item">
+                                                <h3 class="name"><code>maxLength</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -417,7 +475,31 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_base_delta.js.html#l19"><code>cangaja&#x2F;base&#x2F;delta.js:19</code></a>
+                                                    <a href="../files/cangaja_input_stick.js.html#l60"><code>cangaja&#x2F;input&#x2F;stick.js:60</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_normal" class="property item">
+                                                <h3 class="name"><code>normal</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_input_stick.js.html#l75"><code>cangaja&#x2F;input&#x2F;stick.js:75</code></a>
                                                     </p>
                                             
                                             

@@ -1,22 +1,37 @@
 /**
  * @description
  *
- * CG.Sprite
+ * CG.Sprite this is the basic object to get a image to the canvas.
+ * It must be added to a layer where update/draw of every object is called automatically.
+ * Otherwise it can be used stand alone in the Game object itself in the
+ * update and draw methods.
+ *
+ ```
+
+ // new sprite with image from filepath
+ var s = new CG.Sprite({
+   image: '../images/demo.png',
+   position: new CG.Point(200,200)
+ })
+
+ // new sprite with preloaded image from Game.asset
+ var s = new CG.Sprite({
+   image: Game.asset.getImageByName('player'),
+   position: new CG.Point(200,200)
+ })
+
+
+ ```
  *
  * @class CG.Sprite
  * @extends CG.Entity
  */
 CG.Entity.extend('Sprite', {
     /**
-     * Options:
+     * Opions:
      * image {string} imgpath, image object or atlasimage object to use
      * position: {CG.Point}
      *
-     @example
-     var s = new CG.Sprite({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200)
-         })
      *
      * @method init
      * @constructor

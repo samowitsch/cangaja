@@ -6,6 +6,34 @@
  *  AtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.
  *  These atlasimages are only handled within Sprite, Particle and Button class.
  *
+ *
+ *
+ ```
+
+ // Preloader
+ Game.asset.addImage('media/img/texturepacker.png', 'texturepacker') // image of texturepacker
+ .addXml('media/img/texturepacker.xml', 'texturepacker-xml') // xml version of texturepacker
+ .addJson('media/img/texturepacker.json', 'texturepacker-json') // json version of texturepacker
+ .startPreLoad()
+
+
+
+ // create texturepacker object
+ var tp = new CG.AtlasTexturePacker()
+
+ // load texturepacker json file
+ tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
+
+ // or load texturepacker xml file
+ //tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
+
+
+ // add images of texturepacker to Game.asset
+ Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
+
+ ```
+
+ *
  *  @class CG.AtlasTexturePacker
  *  @extends Class
  */

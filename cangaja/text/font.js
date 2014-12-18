@@ -3,12 +3,17 @@
  *
  * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
  * (Hiero works also but need some modifications of the exported files)
- @example
+
+ ```
+
  //create font object
  small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
  //draw text to canvas
  small.drawText('Foo bar!', xpos, ypos)
+
+ ```
+
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -19,93 +24,103 @@ CG.Entity.extend('Font', {
      * @constructor
      * @return {*}
      */
-    init: function () {
+    init: function (options) {
         this.instanceOf = 'Font'
-        /**
-         @property atlas {Image}
-         */
-        this.atlas = new Image()
-        /**
-         @property initText {string}
-         */
-        this.fontFile = ''
-        /**
-         @property chars {Array}
-         */
-        this.chars = new Array(256)
-        /**
-         @property x {Array}
-         */
-        this.x = new Array(256)
-        /**
-         @property y {Array}
-         */
-        this.y = new Array(256)
-        /**
-         @property width {Array}
-         */
-        this.width = new Array(256)
-        /**
-         @property height {Array}
-         */
-        this.height = new Array(256)
-        /**
-         @property xoff {Array}
-         */
-        this.xoff = new Array(256)
-        /**
-         @property yoff {Array}
-         */
-        this.yoff = new Array(256)
-        /**
-         @property xadv {Array}
-         */
-        this.xadv = new Array(256)
-        /**
-         @property lineHeight {Number}
-         */
-        this.lineHeight = 0
-        /**
-         @property face {string}
-         */
-        this.face = ''
-        /**
-         @property size {Number}
-         */
-        this.size = 0
-        /**
-         @property bold {Number}
-         */
-        this.bold = 0
-        /**
-         @property italic {Number}
-         */
-        this.italic = 0
 
-        /**
-         @property base {Number}
-         */
-        this.base = 0
-        /**
-         @property scaleW {Number}
-         */
-        this.scaleW = 0
-        /**
-         @property scaleH {Number}
-         */
-        this.scaleH = 0
-        /**
-         @property text {String}
-         */
-        this.text = ''
-        /**
-         @property currentX {Number}
-         */
-        this.currentX = 0
-        /**
-         @property currentY {Number}
-         */
-        this.currentY = 0
+        CG._extend(this, {
+
+            /**
+             @property atlas {Image}
+             */
+            atlas: new Image(),
+            /**
+             @property initText {string}
+             */
+            fontFile: '',
+            /**
+             @property chars {Array}
+             */
+            chars: new Array(256),
+            /**
+             @property x {Array}
+             */
+            x: new Array(256),
+            /**
+             @property y {Array}
+             */
+            y: new Array(256),
+            /**
+             @property width {Array}
+             */
+            width: new Array(256),
+            /**
+             @property height {Array}
+             */
+            height: new Array(256),
+            /**
+             @property xoff {Array}
+             */
+            xoff: new Array(256),
+            /**
+             @property yoff {Array}
+             */
+            yoff: new Array(256),
+            /**
+             @property xadv {Array}
+             */
+            xadv: new Array(256),
+            /**
+             @property lineHeight {Number}
+             */
+            lineHeight: 0,
+            /**
+             @property face {string}
+             */
+            face: '',
+            /**
+             @property size {Number}
+             */
+            size: 0,
+            /**
+             @property bold {Number}
+             */
+            bold: 0,
+            /**
+             @property italic {Number}
+             */
+            italic: 0,
+
+            /**
+             @property base {Number}
+             */
+            base: 0,
+            /**
+             @property scaleW {Number}
+             */
+            scaleW: 0,
+            /**
+             @property scaleH {Number}
+             */
+            scaleH: 0,
+            /**
+             @property text {String}
+             */
+            text: '',
+            /**
+             @property currentX {Number}
+             */
+            currentX: 0,
+            /**
+             @property currentY {Number}
+             */
+            currentY: 0
+        })
+
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     /**

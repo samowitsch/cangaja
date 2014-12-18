@@ -5,6 +5,24 @@
  * It uses PhysicsEditor json files, use export Lime + Corona (json).
  * Supported options for now are friction, density and bounce and would be set to B2DPolygon.
  *
+
+ ```
+
+ var e = new CG.B2DPolygon({
+    name: 'player',
+    image: this.asset.getImageByName('glowball'),
+    texturepacker: this.asset.getJsonByName('powerstar75'),
+    x: 100,
+    y: 100,
+    world: b2world,
+    scale: 40,
+    bodyType: box2d.b2BodyType.b2_staticBody,
+    bullet: false
+ })
+
+ ```
+
+ *
  * @class CG.B2DPolygon
  * @extends CG.B2DEntity
  */
@@ -21,20 +39,6 @@ CG.B2DEntity.extend('B2DPolygon', {
      * scale {number}
      * bodyType {box2d.b2BodyType}
      * bullet {boolean}
-     *
-     @example
-     var e = new CG.B2DPolygon({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           texturepacker: this.asset.getJsonByName('powerstar75'),
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40,
-           bodyType: box2d.b2BodyType.b2_staticBody,
-           bullet: false
-     })
-     *
      *
      * @method init
      * @constructor

@@ -1,7 +1,16 @@
 /**
  * @description
  *
- * CG.Stick
+ * CG.Stick displays an analog stick and uses the first element of the touches
+ *
+ ```
+
+ var b = new CG.Stick({
+       maxLength: 0,
+       active: false
+     })
+
+ ```
  *
  * @class CG.Stick
  * @extends CG.Class
@@ -14,10 +23,6 @@ CG.Class.extend('Stick', {
      * y {number}
      *
      @example
-     var b = new CG.Stick({
-           maxLength: 0,
-           active: false
-         })
      *
      * @constructor
      * @method init
@@ -39,6 +44,7 @@ CG.Class.extend('Stick', {
             /**
              * @property handle
              * @type {Number}
+             * @default CG.LEFT_HAND
              */
             handle: CG.LEFT_HAND,
             /**

@@ -7,6 +7,17 @@
  * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
  * all physics and drawings.
  *
+```
+
+ var w = new CG.B2DWorld({
+     name: 'box2d-world',
+     scale: 40,
+     debug: true,
+     sleep: true
+ })
+
+ ```
+ *
  * @class CG.B2DWorld
  * @xtend CG.Layer
  */
@@ -19,14 +30,6 @@ CG.Layer.extend('B2DWorld', {
      * scale {number}
      * debug {boolean}
      *
-     *
-     @example
-     var w = new CG.B2DWorld({
-         name: 'box2d-world',
-         scale: 40,
-         debug: true,
-         sleep: true
-     })
      * @method init
      * @constructor
      * @param options {object}

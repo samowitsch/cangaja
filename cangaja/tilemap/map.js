@@ -237,7 +237,6 @@ CG.Entity.extend('Map', {
          */
         this.layertocheck = 0 //as default use layer 0 for collision detection
 
-
         CG._extend(this, options)
 
         return this

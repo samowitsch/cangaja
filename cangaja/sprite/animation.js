@@ -4,6 +4,19 @@
  * CG.Animation extends CG.Sprite and add support for animations ;o) It needs atlas files with fixed framesizes and with following animation frames.
  * For example you can use Timeline FX generated graphics.
  *
+ ```
+
+     var s = new CG.Animation({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           startFrame: 5,
+           endFrame: 6,
+           width: 10,
+           height: 20
+         })
+
+ ```
+ *
  * @class CG.Animation
  * @extends CG.Sprite
  */
@@ -16,17 +29,7 @@ CG.Sprite.extend('Animation', {
      * endFrame {number}
      * width {number}
      * height {number}
-     *
-     @example
-     var s = new CG.Animation({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200),
-           startFrame: 5,
-           endFrame: 6,
-           width: 10,
-           height: 20
-         })
-     *
+     **
      * @constructor
      * @method init
      * @param options {object}

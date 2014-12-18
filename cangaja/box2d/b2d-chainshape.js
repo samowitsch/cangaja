@@ -3,6 +3,19 @@
  *
  * B2DChainShape
  *
+ ```
+
+     var e = new CG.B2DChainShape({
+           name: 'player',
+           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40
+     })
+
+ ```
+ *
  * @class CG.B2DChainShape
  * @extends CG.B2DEntity
  */
@@ -16,17 +29,6 @@ CG.B2DEntity.extend('B2DChainShape', {
      * y (number}
      * world {object}
      * scale {number}
-     *
-     @example
-     var e = new CG.B2DChainShape({
-           name: 'player',
-           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40
-     })
-     *
      *
      * @method init
      * @constructor

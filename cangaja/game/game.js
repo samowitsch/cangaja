@@ -2,6 +2,46 @@
  * @description
  *
  * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!
+ *
+ *
+ ```
+
+ CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        // call init from super class
+        this._super(canvas, options)
+        // add custom properties here or remove the init method
+    },
+    preload: function () {
+        // put preloading stuff here
+
+        // for example
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addImage('media/img/player-anim.png', 'player-anim')
+            .addJson('media/map/map1.json', 'map1')
+            .startPreLoad()
+    },
+    create: function () {
+
+        // put your create stuff here
+
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+
+        // additional update code not handled with in cangaja
+
+    },
+    draw: function () {
+        // additional draw code not handled with in cangaja
+    }})
+
+ // instantiate the Game class
+ Game = new CG.MyGame(canvas)
+
+ ```
+ *
  * @class CG.Game
  * @extends Class
  */

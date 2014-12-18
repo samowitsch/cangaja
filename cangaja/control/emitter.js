@@ -3,6 +3,14 @@
  *
  * CG.Emitter that handles . . . particles.
  *
+ ```
+
+ var e = new CG.Emitter({
+   position: new CG.Point(100,100)
+ })
+
+ ```
+ *
  * @class CG.Emitter
  * @extends CG.Entity
  *
@@ -14,11 +22,6 @@ CG.Entity.extend('Emitter', {
      *
      * Options:
      * position {CG.Point}
-     *
-     @example
-     var e = new CG.Emitter({
-           position: new CG.Point(100,100)
-         })
      *
      * @constructor
      * @param position {CG.Point}

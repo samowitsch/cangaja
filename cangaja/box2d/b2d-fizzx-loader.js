@@ -5,6 +5,7 @@
  *
  * @class CG.B2DFizzXLoader
  * @extends CG.Class
+ * @deprecated maybe it will removed in the future. FizzX editor development has stopped before it began ;-(
  */
 
 CG.Class.extend('B2DFizzXLoader', {

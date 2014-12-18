@@ -3,6 +3,38 @@
  *
  * B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.
  *
+ ```
+
+ var terrainShapes =
+ [{
+    outer: [{
+        x: 0,
+        y: 100.5
+    }, {
+        x: 1024,
+        y: 100.5
+    }, {
+        x: 1024,
+        y: 768
+    }, {
+        x: 0,
+        y: 768
+    }],
+    holes: []
+ }]
+
+ b2world.createTerrain({
+     name: 'terrain',
+     image: false
+     terrainShape: terrainShapes,
+     x:0,
+     y:0,
+     world: b2world,
+     scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DTerrain
  * @extends CG.B2DEntity
  */
@@ -30,34 +62,6 @@ CG.B2DEntity.extend('B2DTerrain', {
      * world {object}
      * scale {number}
      *
-     @example
-     var terrainShapes =
-     [{
-        	outer: [{
-        		x: 0,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 768
-        	}, {
-        		x: 0,
-        		y: 768
-        	}],
-        	holes: []
-        }]
-
-     b2world.createTerrain({
-         name: 'terrain',
-         image: false
-         terrainShape: terrainShapes,
-         x:0,
-         y:0,
-         world: b2world,
-         scale: 40
-     })
      *
      *
      * @method init

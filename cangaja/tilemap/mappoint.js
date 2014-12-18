@@ -3,6 +3,17 @@
  *
  * CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
+ ```
+
+ var s = new CG.MapPoint({
+   name: '',                            // name of the tile
+   position: new CG.Point(200,200),     // position point
+   mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
+   gid: 10                              // gid number of tilemap editor
+ })
+
+ ```
+ *
  * @class CG.MapPoint
  * @extends CG.Class
  *
@@ -14,14 +25,6 @@ CG.Class.extend('MapPoint', {
      * position {CG.Point}
      * mapOffset {CG.Point}
      * gid {Number}
-     *
-     @example
-     var s = new CG.MapPoint({
-           name: '',                            // name of the tile
-           position: new CG.Point(200,200),     // position point
-           mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
-           gid: 10                              // gid number of tilemap editor
-         })
      *
      * @method init
      * @constructor
@@ -50,7 +53,7 @@ CG.Class.extend('MapPoint', {
              * @property position
              * @type {CG.Point}
              */
-            position: new CG.Point(0, 0),
+            position: new CG.Point(0, 0)
             ///**
             // * @property mapOffset
             // * @type {CG.Point}

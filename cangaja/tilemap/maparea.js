@@ -3,6 +3,22 @@
  *
  * CG.MapArea. Support now for name and the bound values.
  *
+ ```
+
+ var ma = new CG.MapArea({
+    name: obj.name,
+    bound: new CG.Bound({
+        x: parseInt(obj.x),
+        y: parseInt(obj.y),
+        width: parseInt(obj.width),
+        height: parseInt(obj.height)
+    }),
+    mapOffset: this.position,
+    type: obj.properties.type
+})
+
+ ```
+ *
  * @class CG.MapArea
  * @extends CG.Class
  */
@@ -13,20 +29,6 @@ CG.Class.extend('MapArea', {
      * bound {CG.Bound}
      * mapOffset {CG.Point}
      * type {mixed} false, inner or outer
-     *
-     @example
-     var ma = new CG.MapArea({
-            name: obj.name,
-            bound: new CG.Bound({
-                x: parseInt(obj.x),
-                y: parseInt(obj.y),
-                width: parseInt(obj.width),
-                height: parseInt(obj.height)
-            }),
-            mapOffset: this.position,
-            type: obj.properties.type
-        })
-     *
      *
      * @constructor
      * @method init

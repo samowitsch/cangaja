@@ -3,6 +3,14 @@
  *
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
+ ```
+
+ var s = new CG.Screen({
+   name: 'menuscreen'
+ })
+
+ ```
+ *
  * @class CG.Screen
  * @extends CG.Class
  *
@@ -12,11 +20,6 @@ CG.Class.extend('Screen', {
     /**
      * Options:
      * name {string}
-     *
-     @example
-     var s = new CG.Screen({
-           name: 'menuscreen'
-         })
      *
      * @constructor
      * @method init

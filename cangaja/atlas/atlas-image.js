@@ -3,6 +3,19 @@
  *
  * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
  *
+
+ ```
+
+ var a = new CG.AtlasImage({
+   image: 'menuscreen',
+   xoffset: 0,
+   yoffset: 0,
+   width: 10,
+   height: 20
+ })
+
+ ```
+ *
  * @class CG.AtlasImage
  * @extends Class
  */
@@ -14,15 +27,6 @@ CG.Class.extend('AtlasImage', {
      * yoffset {number}
      * width {number}
      * height {number}
-     *
-     @example
-     var a = new CG.AtlasImage({
-           image: 'menuscreen',
-           xoffset: 0,
-           yoffset: 0,
-           width: 10,
-           height: 20
-         })
      *
      * @method init
      * @constructor

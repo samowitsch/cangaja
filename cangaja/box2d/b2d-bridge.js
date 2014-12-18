@@ -4,6 +4,23 @@
  * B2DBridge is a simple wrapper that creates a bridge with segments.
  * Just play with the params to get a good result.
  *
+
+ ```
+
+     var e = new CG.B2DBridge({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           x: 100,
+           y: 100,
+           length: 600,
+           segments: 20
+           segmentHeight: 4,
+           world: b2world,
+           scale: 40
+     })
+
+ ```
+ *
  * @class CG.B2DBridge
  * @extends CG.B2DEntity
  */
@@ -20,20 +37,6 @@ CG.B2DEntity.extend('B2DBridge', {
      * segmentHeight {number}
      * world {object}
      * scale {number}
-     *
-     @example
-     var e = new CG.B2DBridge({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           x: 100,
-           y: 100,
-           length: 600,
-           segments: 20
-           segmentHeight: 4,
-           world: b2world,
-           scale: 40
-     })
-     *
      *
      * @method init
      * @constructor

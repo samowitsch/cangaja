@@ -3,6 +3,21 @@
  *
  * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.
  *
+ ```
+
+     var e = new CG.B2DCircle({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           radius: 20,
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody
+     })
+
+ ```
+ *
  * @class CG.B2DCirlce
  * @extends CG.B2DEntity
  */
@@ -18,19 +33,6 @@ CG.B2DEntity.extend('B2DCircle', {
      * world {object}
      * scale {number}
      * bodyType {box2d.b2BodyType}
-     *
-     @example
-     var e = new CG.B2DCircle({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           radius: 20,
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40,
-           bodyType: box2d.b2BodyType.b2_staticBody
-     })
-     *
      *
      * @method init
      * @constructor

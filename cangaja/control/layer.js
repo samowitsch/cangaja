@@ -3,6 +3,14 @@
  *
  * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
+ ```
+
+ var l = new CG.Layer({
+   name: 'layerback'
+ })
+
+ ```
+ *
  * @class CG.Layer
  * @extends CG.Class
  */
@@ -10,11 +18,6 @@ CG.Class.extend('Layer', {
     /**
      * Options:
      * name {string}
-     *
-     @example
-     var l = new CG.Layer({
-           name: 'layerback'
-         })
      *
      * @constructor
      * @method init

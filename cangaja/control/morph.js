@@ -3,6 +3,15 @@
  *
  * CG.Morph to manipulate objects in size and so on.
  *
+ ```
+
+ var e = new CG.Morph({
+   name: 'player',
+   position: new CG.Point(100,100)
+ })
+
+ ```
+ *
  * @class CG.Morph
  * @extends CG.Class
  *
@@ -14,12 +23,6 @@ CG.Class.extend('Morph', {
      * min {number}
      * max {number}
      * speed {number}
-     *
-     @example
-     var e = new CG.Morph({
-           name: 'player',
-           position: new CG.Point(100,100)
-         })
      *
      * @method init
      * @constructor

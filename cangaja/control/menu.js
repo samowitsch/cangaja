@@ -1,7 +1,50 @@
 /**
  * @description
  *
- * CG.Menu
+ * CG.Menu collects buttons an displays them with the defined margin
+ *
+ ```
+
+ var menu = new CG.Menu({
+   x: 100,
+   y: 100,
+   margin: 10
+ })
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 1',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 1#'
+ menu.addButton(button)
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 2',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 2#'
+ menu.addButton(button)
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 3',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 3#'
+ menu.addButton(button)
+
+ // add the menu to the layer
+ layermenu.addElement(menu)
+
+ ```
  *
  * @class CG.Menu
  * @extends CG.Class
@@ -12,15 +55,7 @@ CG.Class.extend('Menu', {
      * Options:
      * x {number}
      * y {number}
-     * margin {number}
-     *
-     @example
-     var m = new CG.Menu({
-           x: 100,
-           y: 100,
-           margin: 10
-         })
-     *
+     * margin {number}*
      *
      * @method init
      * @constructor
@@ -63,6 +98,8 @@ CG.Class.extend('Menu', {
         return this
     },
     /**
+     * @description adds an CG.Button to the buttons array
+     *
      * @method addButton
      *
      * @param {button} button

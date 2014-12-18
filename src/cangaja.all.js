@@ -2,33 +2,38 @@
  * @description
  *
  * CG is the base class of the cangaja framework.
- * This file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig.
- @example
-     //Class example, how to start from scratch with simple inheritance
-     CG.Class.extend("Entity",{
-            init: function(){
-                this.myprop = 'set from constructor'
-            }
-         });
+ * This file includes a requestAnimationFrame polyfill.
+ * It uses the simple javascript inheritance from John Resig.
+ *
+ * Class example, how to start from scratch with simple inheritance
 
-     CG.Entity.extend("Point",{
-            init: function(x, y){
-                this._super()
-                this.x = x
-                this.y = y
-            }
-         });
+ ```
 
-     CG.Point.extend("Rectangle",{
-            init: function(x, y, w, h){
-                this._super(x, y)
-                this.w = w
-                this.h = h
-            },
-            move: function(){
+CG.Class.extend("Entity", {
+    init: function(){
+        this.myprop = 'set from constructor'
+    }
+ });
 
-            }
-     });
+CG.Entity.extend("Point",{
+    init: function(x, y){
+        this._super()
+        this.x = x
+        this.y = y
+    }
+ });
+
+CG.Point.extend("Rectangle",{
+    init: function(x, y, w, h){
+        this._super(x, y)
+        this.w = w
+        this.h = h
+    },
+    move: function(){
+    }
+});
+
+```
  * @module CG
  * @main CG
  */
@@ -39,13 +44,15 @@ var CG = CG || {
     canvas: {},
     ctx: {},
 
-    //constants
+    //constant
     Const_PI_180: Math.PI / 180,
     Const_180_PI: 180 / Math.PI,
     LEFT: 1,
     RIGHT: 2,
     UP: 3,
     DOWN: 4,
+    LEFT_HAND: 1,
+    RIGHT_HAND: 2,
 
     //input related
     mousedown: false,
@@ -222,6 +229,46 @@ CG._clone = function(obj) {
  * @description
  *
  * CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!
+ *
+ *
+ ```
+
+ CG.Game.extend('MyGame', {
+    init: function (canvas, options) {
+        // call init from super class
+        this._super(canvas, options)
+        // add custom properties here or remove the init method
+    },
+    preload: function () {
+        // put preloading stuff here
+
+        // for example
+        this.asset.addFont('media/font/small.txt', 'small', 'small')
+            .addImage('media/img/player-anim.png', 'player-anim')
+            .addJson('media/map/map1.json', 'map1')
+            .startPreLoad()
+    },
+    create: function () {
+
+        // put your create stuff here
+
+        //after creation start game loop
+        this.loop()
+    },
+    update: function () {
+
+        // additional update code not handled with in cangaja
+
+    },
+    draw: function () {
+        // additional draw code not handled with in cangaja
+    }})
+
+ // instantiate the Game class
+ Game = new CG.MyGame(canvas)
+
+ ```
+ *
  * @class CG.Game
  * @extends Class
  */
@@ -11964,6 +12011,7 @@ String.prototype.startsWith = function (str) {
  * A CanvasRenderer with WebGL and Canvas 2D fallback would be really nice ;o)
  * How to implement all the different classes....?
  *
+ * Or make it like Phaser and implement pixi.js?
  *
  * @class CG.CanvasRenderer
  * @extend CG.Class
@@ -12122,105 +12170,7 @@ CG.Class.extend('CanvasRenderer', {
 
         Game.b_ctx.restore()
     }
-})
-
-
-/*
-
- Pixi renderer
-
- context.setTransform(
-
- transform[0],
- transform[3],
- transform[1],
- transform[4],
- transform[2],
- transform[5]
-
- );
-
- context.drawImage(displayObject.texture.baseTexture.source,
- frame.x,
- frame.y,
- frame.width,
- frame.height,
- (displayObject.anchor.x) * -frame.width,
- (displayObject.anchor.y) * -frame.height,
- frame.width,
- frame.height);
-
-
-
-
-
-
- Pixi Displayobject
-
-
-
- *
- * Updates the object transform for rendering
- *
- * @method updateTransform
- * @private
- *
- PIXI.DisplayObject.prototype.updateTransform = function()
- {
- // TODO OPTIMIZE THIS!! with dirty
- if(this.rotation !== this.rotationCache)
- {
- this.rotationCache = this.rotation;
- this._sr =  Math.sin(this.rotation);
- this._cr =  Math.cos(this.rotation);
- }
-
- var localTransform = this.localTransform;
- var parentTransform = this.parent.worldTransform;
- var worldTransform = this.worldTransform;
- //console.log(localTransform)
- localTransform[0] = this._cr * this.scale.x;
- localTransform[1] = -this._sr * this.scale.y
- localTransform[3] = this._sr * this.scale.x;
- localTransform[4] = this._cr * this.scale.y;
-
- // TODO --> do we even need a local matrix???
-
- var px = this.pivot.x;
- var py = this.pivot.y;
-
- // Cache the matrix values (makes for huge speed increases!)
- var a00 = localTransform[0], a01 = localTransform[1], a02 = this.position.x - localTransform[0] * px - py * localTransform[1],
- a10 = localTransform[3], a11 = localTransform[4], a12 = this.position.y - localTransform[4] * py - px * localTransform[3],
-
- b00 = parentTransform[0], b01 = parentTransform[1], b02 = parentTransform[2],
- b10 = parentTransform[3], b11 = parentTransform[4], b12 = parentTransform[5];
-
- localTransform[2] = a02
- localTransform[5] = a12
-
- worldTransform[0] = b00 * a00 + b01 * a10;
- worldTransform[1] = b00 * a01 + b01 * a11;
- worldTransform[2] = b00 * a02 + b01 * a12 + b02;
-
- worldTransform[3] = b10 * a00 + b11 * a10;
- worldTransform[4] = b10 * a01 + b11 * a11;
- worldTransform[5] = b10 * a02 + b11 * a12 + b12;
-
- // because we are using affine transformation, we can optimise the matrix concatenation process.. wooo!
- // mat3.multiply(this.localTransform, this.parent.worldTransform, this.worldTransform);
- this.worldAlpha = this.alpha * this.parent.worldAlpha;
-
- this.vcount = PIXI.visibleCount;
-
- }
-
-
-
-
-
-
- *//**
+})/**
  * @description
  *
  * CG.Delta not really used at the moment ;o)
@@ -12294,6 +12244,15 @@ CG.Class.extend('Delta', {
  *
  * CG.Entity the base class of Cangaja
  *
+ *
+ ```
+
+        var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+
+ ```
  * @class CG.Entity
  * @extends CG.Class
  */
@@ -12303,12 +12262,6 @@ CG.Class.extend('Entity', {
      * Options:
      * name {string}
      * position {CG.Point}
-     *
-     @example
-        var e = new CG.Entity({
-           name: 'player',
-           position: new CG.Point(100,100)
-         })
      *
      * @constructor
      * @method init
@@ -12361,6 +12314,10 @@ CG.Class.extend('Entity', {
              @property yhandle {Number}
              */
             yhandle: 0,
+            /**
+             @property clicked {boolean}
+             */
+            clicked: false,
             /**
              @property hover {boolean}
              */
@@ -12481,6 +12438,7 @@ CG.Class.extend('Entity', {
                 y2 < 0.5 * (this.height * this.yscale)) {
                 this.clicked = true
                 CG.mousedown = false
+                return
             } else {
                 this.clicked = false
             }
@@ -12504,6 +12462,7 @@ CG.Class.extend('Entity', {
             y2 > -0.5 * (this.height * this.yscale) &&
             y2 < 0.5 * (this.height * this.yscale)) {
             this.hover = true
+            return
         } else {
             this.hover = false
         }
@@ -12622,7 +12581,10 @@ CG.Class.extend('Entity', {
     }
 })
 
-
+function EntityException(msg) {
+    this.msg = msg
+    console.log(this.msg)
+}
 /**
  * @description
  *
@@ -12683,6 +12645,17 @@ CG.Point.extend('Vector', {
  *
  * CG.Bound is used at different places in the Cangaja FW.
  *
+ ```
+
+     var b = new CG.Bound({
+           x: 0,
+           y: 0,
+           width: 120,
+           height: 120
+         })
+
+ ```
+ *
  * @class CG.Bound
  * @extends CG.Class
  *
@@ -12695,13 +12668,6 @@ CG.Class.extend('Bound', {
      * width {number}
      * height {number}
      *
-     @example
-     var b = new CG.Bound({
-           x: 0,
-           y: 0,
-           width: 120,
-           height: 120
-         })
      *
      * @constructor
      * @method init
@@ -12799,7 +12765,16 @@ CG.Class.extend('Buffer', {
 /**
  * @description
  *
- * CG.Stick
+ * CG.Stick displays an analog stick and uses the first element of the touches
+ *
+ ```
+
+ var b = new CG.Stick({
+       maxLength: 0,
+       active: false
+     })
+
+ ```
  *
  * @class CG.Stick
  * @extends CG.Class
@@ -12812,10 +12787,6 @@ CG.Class.extend('Stick', {
      * y {number}
      *
      @example
-     var b = new CG.Stick({
-           maxLength: 0,
-           active: false
-         })
      *
      * @constructor
      * @method init
@@ -12834,6 +12805,12 @@ CG.Class.extend('Stick', {
              * @type {Number}
              */
             identifier: -1,
+            /**
+             * @property handle
+             * @type {Number}
+             * @default CG.LEFT_HAND
+             */
+            handle: CG.LEFT_HAND,
             /**
              * @property atLimit
              * @type {Boolean}
@@ -12876,20 +12853,26 @@ CG.Class.extend('Stick', {
     },
     addEventListener: function () {
         Game.canvas.addEventListener("touchstart", function (e) {
+            e.preventDefault();
 
             if (this.active) {
                 return
             }
 
-            e.preventDefault();
-
             var touch = e.touches[0];
 
-            this.setLimitXY(touch.pageX, touch.pageY)
-            this.setInputXY(touch.pageX, touch.pageY)
-            this.active = true
-            this.identifier = touch.identifier
-            console.log(touch, this.identifier);
+            if (this.handle === CG.LEFT_HAND && touch.pageX < Game.width2) {
+                this.setLimitXY(touch.pageX, touch.pageY)
+                this.setInputXY(touch.pageX, touch.pageY)
+                this.active = true
+                this.identifier = touch.identifier
+            } else if (this.handle === CG.RIGHT_HAND && touch.pageX > Game.width2) {
+                this.setLimitXY(touch.pageX, touch.pageY)
+                this.setInputXY(touch.pageX, touch.pageY)
+                this.active = true
+                this.identifier = touch.identifier
+            }
+
 
         }.bind(this));
 
@@ -12908,8 +12891,6 @@ CG.Class.extend('Stick', {
             for (var i = 0; i < e.changedTouches.length; ++i) {
                 var touch = e.changedTouches[i];
                 if (touch.identifier === this.identifier) {
-                    console.log(touch, this.identifier);
-
                     this.active = false
                     this.identifier = -1
                 }
@@ -13015,22 +12996,37 @@ CG.Class.extend('Stick', {
 /**
  * @description
  *
- * CG.Sprite
+ * CG.Sprite this is the basic object to get a image to the canvas.
+ * It must be added to a layer where update/draw of every object is called automatically.
+ * Otherwise it can be used stand alone in the Game object itself in the
+ * update and draw methods.
+ *
+ ```
+
+ // new sprite with image from filepath
+ var s = new CG.Sprite({
+   image: '../images/demo.png',
+   position: new CG.Point(200,200)
+ })
+
+ // new sprite with preloaded image from Game.asset
+ var s = new CG.Sprite({
+   image: Game.asset.getImageByName('player'),
+   position: new CG.Point(200,200)
+ })
+
+
+ ```
  *
  * @class CG.Sprite
  * @extends CG.Entity
  */
 CG.Entity.extend('Sprite', {
     /**
-     * Options:
+     * Opions:
      * image {string} imgpath, image object or atlasimage object to use
      * position: {CG.Point}
      *
-     @example
-     var s = new CG.Sprite({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200)
-         })
      *
      * @method init
      * @constructor
@@ -13614,6 +13610,19 @@ CG.Entity.extend('SpineAnimation', {
  *
  * CG.AtlasImage class. It is needed when using TexturePacker atlas files.
  *
+
+ ```
+
+ var a = new CG.AtlasImage({
+   image: 'menuscreen',
+   xoffset: 0,
+   yoffset: 0,
+   width: 10,
+   height: 20
+ })
+
+ ```
+ *
  * @class CG.AtlasImage
  * @extends Class
  */
@@ -13625,15 +13634,6 @@ CG.Class.extend('AtlasImage', {
      * yoffset {number}
      * width {number}
      * height {number}
-     *
-     @example
-     var a = new CG.AtlasImage({
-           image: 'menuscreen',
-           xoffset: 0,
-           yoffset: 0,
-           width: 10,
-           height: 20
-         })
      *
      * @method init
      * @constructor
@@ -13707,6 +13707,34 @@ CG.Class.extend('AtlasImage', {
  *  will be dropped in future releases!
  *  AtlasTexturePacker parses xml/json and generates new CG.AtlasImage objects in the MediaAsset manager.
  *  These atlasimages are only handled within Sprite, Particle and Button class.
+ *
+ *
+ *
+ ```
+
+ // Preloader
+ Game.asset.addImage('media/img/texturepacker.png', 'texturepacker') // image of texturepacker
+ .addXml('media/img/texturepacker.xml', 'texturepacker-xml') // xml version of texturepacker
+ .addJson('media/img/texturepacker.json', 'texturepacker-json') // json version of texturepacker
+ .startPreLoad()
+
+
+
+ // create texturepacker object
+ var tp = new CG.AtlasTexturePacker()
+
+ // load texturepacker json file
+ tp.loadJson(Game.asset.getJsonByName('texturepacker-json'))
+
+ // or load texturepacker xml file
+ //tp.loadXml(Game.asset.getXmlByName('texturepacker-xml'))
+
+
+ // add images of texturepacker to Game.asset
+ Game.asset.images.push.apply(Game.asset.images, tp.getAtlasImages())
+
+ ```
+
  *
  *  @class CG.AtlasTexturePacker
  *  @extends Class
@@ -13846,6 +13874,19 @@ CG.Class.extend('AtlasTexturePacker', {
  * CG.Animation extends CG.Sprite and add support for animations ;o) It needs atlas files with fixed framesizes and with following animation frames.
  * For example you can use Timeline FX generated graphics.
  *
+ ```
+
+     var s = new CG.Animation({
+           image: '../images/demo.png',
+           position: new CG.Point(200,200),
+           startFrame: 5,
+           endFrame: 6,
+           width: 10,
+           height: 20
+         })
+
+ ```
+ *
  * @class CG.Animation
  * @extends CG.Sprite
  */
@@ -13858,17 +13899,7 @@ CG.Sprite.extend('Animation', {
      * endFrame {number}
      * width {number}
      * height {number}
-     *
-     @example
-     var s = new CG.Animation({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200),
-           startFrame: 5,
-           endFrame: 6,
-           width: 10,
-           height: 20
-         })
-     *
+     **
      * @constructor
      * @method init
      * @param options {object}
@@ -13975,6 +14006,15 @@ CG.Sprite.extend('Animation', {
  *
  * CG.Bitmap is a simple bitmap class.
  *
+ ```
+
+var b = new CG.Bitmap({
+   width: 100,
+   height: 100
+ })
+
+ ```
+ *
  * @class CG.Bitmap
  * @extends CG.Entity
  *
@@ -13988,13 +14028,6 @@ CG.Entity.extend('Bitmap', {
      * Options:
      * width {number}
      * height {number}
-     *
-     @example
-     var b = new CG.Bitmap({
-           width: 100,
-           height: 100
-         })
-
      *
      * @method init
      * @constructor
@@ -14388,7 +14421,21 @@ CG.Entity.extend('Bitmap', {
 /**
  * @description
  *
- * CG.Button represents a simple button class that can handle click, mouseover and callback functionality.
+ * CG.Button represents a simple button class that can handle click,
+ * mouseover and callback functionality.
+ *
+```
+
+var s = new CG.Button({
+   image: '../images/demo.png', // the image for the button
+   position: new CG.Point(200,200), // position of the button
+   text: 'MyButton',  // optional text
+   font: heiti,  // a font object when
+   callback: callbackFunction // a callback to execute when the button is clicked
+ })
+
+ ```
+ *
  *
  * @class CG.Button
  * @extends CG.Sprite
@@ -14403,14 +14450,6 @@ CG.Sprite.extend('Button', {
      * font {CG.Font}
      * callback {function}
      *
-     @example
-     var s = new CG.Button({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200),
-           text: 'MyButton',
-           font: heiti,
-           callback: callbackFunction
-         })
      *
      *
      * @method init
@@ -14455,9 +14494,15 @@ CG.Sprite.extend('Button', {
         this.yhandle = (this.height * this.yscale / 2)
 
         if (this.clicked) {
-            if (this.callback) {
+            if (this.callbacks.clicked) {
                 this.clicked = false
-                this.callback(this)
+                this.callbacks.clicked.apply(this)
+            }
+        }
+        if (this.hover) {
+            if (this.callbacks.hover) {
+                this.hover = false
+                this.callbacks.hover.apply(this)
             }
         }
         this.updateDiff()
@@ -14479,7 +14524,50 @@ CG.Sprite.extend('Button', {
 /**
  * @description
  *
- * CG.Menu
+ * CG.Menu collects buttons an displays them with the defined margin
+ *
+ ```
+
+ var menu = new CG.Menu({
+   x: 100,
+   y: 100,
+   margin: 10
+ })
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 1',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 1#'
+ menu.addButton(button)
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 2',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 2#'
+ menu.addButton(button)
+
+ button = new CG.Button({
+    image: Game.asset.getImageByName('button'),
+    position: new CG.Point(Game.width2, 100),
+    text: 'Menu Button 3',
+    font: font,
+    callback: callbackTest
+ })
+ button.name = '#mbutton 3#'
+ menu.addButton(button)
+
+ // add the menu to the layer
+ layermenu.addElement(menu)
+
+ ```
  *
  * @class CG.Menu
  * @extends CG.Class
@@ -14490,15 +14578,7 @@ CG.Class.extend('Menu', {
      * Options:
      * x {number}
      * y {number}
-     * margin {number}
-     *
-     @example
-     var m = new CG.Menu({
-           x: 100,
-           y: 100,
-           margin: 10
-         })
-     *
+     * margin {number}*
      *
      * @method init
      * @constructor
@@ -14541,6 +14621,8 @@ CG.Class.extend('Menu', {
         return this
     },
     /**
+     * @description adds an CG.Button to the buttons array
+     *
      * @method addButton
      *
      * @param {button} button
@@ -14575,12 +14657,14 @@ CG.Class.extend('Menu', {
 /**
  * @description
  *
- * CG.MediaAsset preloader.
+ * CG.MediaAsset preloader and asset handler.
  *
  * @class CG.MediaAsset
  * @extends Class
  *
  */
+
+// TODO add a function to define and load assets via json files
 
 CG.Class.extend('MediaAsset', {
     /**
@@ -14970,12 +15054,17 @@ function MediaAssetException(msg) {
  *
  * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
  * (Hiero works also but need some modifications of the exported files)
- @example
+
+ ```
+
  //create font object
  small = new CG.Font().loadFont(Game.asset.getFontByName('small'))
 
  //draw text to canvas
  small.drawText('Foo bar!', xpos, ypos)
+
+ ```
+
  *
  * @class CG.Font
  * @extends CG.Entity
@@ -14986,93 +15075,103 @@ CG.Entity.extend('Font', {
      * @constructor
      * @return {*}
      */
-    init: function () {
+    init: function (options) {
         this.instanceOf = 'Font'
-        /**
-         @property atlas {Image}
-         */
-        this.atlas = new Image()
-        /**
-         @property initText {string}
-         */
-        this.fontFile = ''
-        /**
-         @property chars {Array}
-         */
-        this.chars = new Array(256)
-        /**
-         @property x {Array}
-         */
-        this.x = new Array(256)
-        /**
-         @property y {Array}
-         */
-        this.y = new Array(256)
-        /**
-         @property width {Array}
-         */
-        this.width = new Array(256)
-        /**
-         @property height {Array}
-         */
-        this.height = new Array(256)
-        /**
-         @property xoff {Array}
-         */
-        this.xoff = new Array(256)
-        /**
-         @property yoff {Array}
-         */
-        this.yoff = new Array(256)
-        /**
-         @property xadv {Array}
-         */
-        this.xadv = new Array(256)
-        /**
-         @property lineHeight {Number}
-         */
-        this.lineHeight = 0
-        /**
-         @property face {string}
-         */
-        this.face = ''
-        /**
-         @property size {Number}
-         */
-        this.size = 0
-        /**
-         @property bold {Number}
-         */
-        this.bold = 0
-        /**
-         @property italic {Number}
-         */
-        this.italic = 0
 
-        /**
-         @property base {Number}
-         */
-        this.base = 0
-        /**
-         @property scaleW {Number}
-         */
-        this.scaleW = 0
-        /**
-         @property scaleH {Number}
-         */
-        this.scaleH = 0
-        /**
-         @property text {String}
-         */
-        this.text = ''
-        /**
-         @property currentX {Number}
-         */
-        this.currentX = 0
-        /**
-         @property currentY {Number}
-         */
-        this.currentY = 0
+        CG._extend(this, {
+
+            /**
+             @property atlas {Image}
+             */
+            atlas: new Image(),
+            /**
+             @property initText {string}
+             */
+            fontFile: '',
+            /**
+             @property chars {Array}
+             */
+            chars: new Array(256),
+            /**
+             @property x {Array}
+             */
+            x: new Array(256),
+            /**
+             @property y {Array}
+             */
+            y: new Array(256),
+            /**
+             @property width {Array}
+             */
+            width: new Array(256),
+            /**
+             @property height {Array}
+             */
+            height: new Array(256),
+            /**
+             @property xoff {Array}
+             */
+            xoff: new Array(256),
+            /**
+             @property yoff {Array}
+             */
+            yoff: new Array(256),
+            /**
+             @property xadv {Array}
+             */
+            xadv: new Array(256),
+            /**
+             @property lineHeight {Number}
+             */
+            lineHeight: 0,
+            /**
+             @property face {string}
+             */
+            face: '',
+            /**
+             @property size {Number}
+             */
+            size: 0,
+            /**
+             @property bold {Number}
+             */
+            bold: 0,
+            /**
+             @property italic {Number}
+             */
+            italic: 0,
+
+            /**
+             @property base {Number}
+             */
+            base: 0,
+            /**
+             @property scaleW {Number}
+             */
+            scaleW: 0,
+            /**
+             @property scaleH {Number}
+             */
+            scaleH: 0,
+            /**
+             @property text {String}
+             */
+            text: '',
+            /**
+             @property currentX {Number}
+             */
+            currentX: 0,
+            /**
+             @property currentY {Number}
+             */
+            currentY: 0
+        })
+
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     /**
@@ -15284,6 +15383,14 @@ CG.Entity.extend('Font', {
  * Future plans:
  * CG.Text => support for different text drawing modes like textblock, text alignment, text ticker or scroller.
  *
+ ```
+
+     var t = new CG.Text({
+           font: abdi // the font object (CG.Font) to use
+         })
+
+ ```
+ *
  * @class CG.Text
  * @extends CG.Entity
  */
@@ -15291,11 +15398,6 @@ CG.Entity.extend('Text', {
     /**
      * Options:
      * font {object}
-     *
-     @example
-     var t = new CG.Text({
-           font: abdi // the font object (CG.Font) to use
-         })
      *
      * @method init
      * @param options
@@ -15306,48 +15408,52 @@ CG.Entity.extend('Text', {
     init: function (options) {
         this.instanceOf = 'Text'
 
+        CG._extend(this, {
+
+            /**
+             @property font {CG.Font}
+             */
+
+            /**
+             * @property text {string}
+             */
+            text: '',
+
+            /**
+             * @property textcurrent {string}
+             */
+            textcurrent: '',
+
+            /**
+             * @property x {number} the x position
+             */
+            x: 0,
+
+            /**
+             * @property y {number} the y position
+             */
+            y: 0,
+
+            /**
+             * @property width {number} width of textbox
+             */
+            width: 0,
+
+            /**
+             * @property height {number} height of textbox
+             */
+            height: 0,
+
+            /**
+             * @property textAlign {string} alignment of text
+             */
+            textAlign: 'left' //left, right, centered
+        })
+
         if (options) {
             CG._extend(this, options)
         }
 
-        /**
-         @property font {CG.Font}
-         */
-
-        /**
-         * @property text {string}
-         */
-        this.text = ''
-
-        /**
-         * @property textcurrent {string}
-         */
-        this.textcurrent = ''
-
-        /**
-         * @property x {number} the x position
-         */
-        this.x = 0
-
-        /**
-         * @property y {number} the y position
-         */
-        this.y = 0
-
-        /**
-         * @property width {number} width of textbox
-         */
-        this.width = 0
-
-        /**
-         * @property height {number} height of textbox
-         */
-        this.height = 0
-
-        /**
-         * @property textAlign {string} alignment of text
-         */
-        this.textAlign = 'left' //left, right, centered
 
         return this
     },
@@ -15385,27 +15491,32 @@ CG.Entity.extend('Text', {
 })/**
  * @description
  *
- * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
+ * CG.Director the top instance for CG.Screens, CG.Layers CG.B2DWorld, CG.Sprites and so on in the control hierarchy.
  * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
- @example
- //create top level CG.Director object
- var director = new CG.Director()
 
- //create a CG.Screen
- var mainscreen = new CG.Screen('mainscreen')
+ ```
 
- //create a CG.Layer
- var mainlayer = new CG.Layer('mainlayer')
+//create top level CG.Director object
+var director = new CG.Director()
 
- //create a demo CG.Sprite
- var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
+//create a CG.Screen
+var mainscreen = new CG.Screen('mainscreen')
 
- //add/attach the demo sprite to the layer
- mainlayer.addElement(back)
+//create a CG.Layer
+var mainlayer = new CG.Layer('mainlayer')
 
- //add/attach mainscreen and mainlayer to the director
- director.addScreen(mainscreen.addLayer(mainlayer))
+//create a demo CG.Sprite
+var demosprite = new CG.Sprite(Game.asset.getImageByName('spritegfx'), new CG.Point(400, 240))
 
+//add/attach the demo sprite to the layer
+mainlayer.addElement(back)
+
+//add/attach mainscreen and mainlayer to the director
+director.addScreen(mainscreen.addLayer(mainlayer))
+
+ ```
+
+ *
  * @class CG.Director
  * @extends Class
  */
@@ -15688,6 +15799,14 @@ CG.Class.extend('Director', {
  *
  * CG.Screen is a child of CG.Director and a container to collect/group CG.Layers and/or CG.B2DWorld
  *
+ ```
+
+ var s = new CG.Screen({
+   name: 'menuscreen'
+ })
+
+ ```
+ *
  * @class CG.Screen
  * @extends CG.Class
  *
@@ -15697,11 +15816,6 @@ CG.Class.extend('Screen', {
     /**
      * Options:
      * name {string}
-     *
-     @example
-     var s = new CG.Screen({
-           name: 'menuscreen'
-         })
      *
      * @constructor
      * @method init
@@ -15814,6 +15928,14 @@ CG.Class.extend('Screen', {
  *
  * CG.Layer is a child of CG.Screen and a container to collect/group sprites, buttons, menus, emitters and animations
  *
+ ```
+
+ var l = new CG.Layer({
+   name: 'layerback'
+ })
+
+ ```
+ *
  * @class CG.Layer
  * @extends CG.Class
  */
@@ -15821,11 +15943,6 @@ CG.Class.extend('Layer', {
     /**
      * Options:
      * name {string}
-     *
-     @example
-     var l = new CG.Layer({
-           name: 'layerback'
-         })
      *
      * @constructor
      * @method init
@@ -16048,6 +16165,17 @@ CG.Class.extend('MapTileProperties', {
  *
  * CG.MapPoint. Support now for name, gid and x/y-position values. No tilemap properties at the moment.
  *
+ ```
+
+ var s = new CG.MapPoint({
+   name: '',                            // name of the tile
+   position: new CG.Point(200,200),     // position point
+   mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
+   gid: 10                              // gid number of tilemap editor
+ })
+
+ ```
+ *
  * @class CG.MapPoint
  * @extends CG.Class
  *
@@ -16059,14 +16187,6 @@ CG.Class.extend('MapPoint', {
      * position {CG.Point}
      * mapOffset {CG.Point}
      * gid {Number}
-     *
-     @example
-     var s = new CG.MapPoint({
-           name: '',                            // name of the tile
-           position: new CG.Point(200,200),     // position point
-           mapOffset: new CG.Point(100,100),    // mapoffset reference to the current map position
-           gid: 10                              // gid number of tilemap editor
-         })
      *
      * @method init
      * @constructor
@@ -16095,7 +16215,7 @@ CG.Class.extend('MapPoint', {
              * @property position
              * @type {CG.Point}
              */
-            position: new CG.Point(0, 0),
+            position: new CG.Point(0, 0)
             ///**
             // * @property mapOffset
             // * @type {CG.Point}
@@ -16122,6 +16242,22 @@ CG.Class.extend('MapPoint', {
  *
  * CG.MapArea. Support now for name and the bound values.
  *
+ ```
+
+ var ma = new CG.MapArea({
+    name: obj.name,
+    bound: new CG.Bound({
+        x: parseInt(obj.x),
+        y: parseInt(obj.y),
+        width: parseInt(obj.width),
+        height: parseInt(obj.height)
+    }),
+    mapOffset: this.position,
+    type: obj.properties.type
+})
+
+ ```
+ *
  * @class CG.MapArea
  * @extends CG.Class
  */
@@ -16132,20 +16268,6 @@ CG.Class.extend('MapArea', {
      * bound {CG.Bound}
      * mapOffset {CG.Point}
      * type {mixed} false, inner or outer
-     *
-     @example
-     var ma = new CG.MapArea({
-            name: obj.name,
-            bound: new CG.Bound({
-                x: parseInt(obj.x),
-                y: parseInt(obj.y),
-                width: parseInt(obj.width),
-                height: parseInt(obj.height)
-            }),
-            mapOffset: this.position,
-            type: obj.properties.type
-        })
-     *
      *
      * @constructor
      * @method init
@@ -16445,7 +16567,6 @@ CG.Entity.extend('Map', {
          * @type {Number}
          */
         this.layertocheck = 0 //as default use layer 0 for collision detection
-
 
         CG._extend(this, options)
 
@@ -17200,6 +17321,42 @@ CG.Entity.extend('Map', {
  *
  * CG.Sequence container to collect/group CG.Translation objects
  *
+ ```
+
+ sequence = new CG.Sequence({
+   loop: true
+ })
+
+ sequence.addTranslation(
+ new CG.Translate().initBezier({
+    object: layersprites.elements[layersprites.elements.length - 2],
+    steps: 200,
+    startPoint: new CG.Point(500, 450),
+    endPoint: new CG.Point(100, 100),
+    control1: new CG.Point(-600, 600),
+    control2: new CG.Point(1200, -300)
+    }))
+ .addTranslation(new CG.Translate().initTween({
+        object: layersprites.elements[layersprites.elements.length - 2],
+        steps: 200,
+        startPoint: new CG.Point(100, 100),
+        endPoint: new CG.Point(550, 150)
+    }))
+ .addTranslation(new CG.Translate().initTween({
+        object: layersprites.elements[layersprites.elements.length - 2],
+        steps: 150,
+        startPoint: new CG.Point(550, 150),
+        endPoint: new CG.Point(100, 400)
+    }))
+ .addTranslation(new CG.Translate().initTween({
+        object: layersprites.elements[layersprites.elements.length - 2],
+        steps: 100,
+        startPoint: new CG.Point(100, 400),
+        endPoint: new CG.Point(550, 450)
+    }))
+
+ ```
+ *
  * @class CG.Sequence
  * @extends Class
  */
@@ -17209,22 +17366,30 @@ CG.Class.extend('Sequence', {
      * @method init
      * @return {*}
      */
-    init: function () {
-        /**
-         * @property current
-         * @type {Number}
-         */
-        this.current = 0
-        /**
-         * @property loop
-         * @type {Boolean}
-         */
-        this.loop = false
-        /**
-         * @property translations
-         * @type {Array}
-         */
-        this.translations = []
+    init: function (options) {
+        CG._extend(this, {
+
+            /**
+             * @property current
+             * @type {Number}
+             */
+            current: 0,
+            /**
+             * @property loop
+             * @type {Boolean}
+             */
+            loop: false,
+            /**
+             * @property translations
+             * @type {Array}
+             */
+            translations: []
+        })
+
+        if (options) {
+            CG._extend(this, options)
+        }
+
         return this
     },
     /**
@@ -17279,6 +17444,7 @@ CG.Class.extend('Sequence', {
  *
  * CG.Translate moving a object
  *
+ *
  * @class CG.Translate
  * @extends CG.Class
  */
@@ -17288,102 +17454,110 @@ CG.Class.extend('Translate', {
      * @method init
      * @return {*}
      */
-    init: function () {
-        /**
-         * @property type
-         * @type {String}
-         */
-        this.type = ''
-        /**
-         * @property tx
-         * @type {Number}
-         */
-        this.tx = 0 //translated x value for the object
-        /**
-         * @property ty
-         * @type {Number}
-         */
-        this.ty = 0 //translated y value for the object
-        /**
-         * @property x1
-         * @type {Number}
-         */
-        this.x1 = 0
-        /**
-         * @property y1
-         * @type {Number}
-         */
-        this.y1 = 0
-        /**
-         * @property x2
-         * @type {Number}
-         */
-        this.x2 = 0
-        /**
-         * @property y2
-         * @type {Number}
-         */
-        this.y2 = 0
-        /**
-         * @property bx
-         * @type {Number}
-         */
-        this.bx = 0 //bézier x
-        /**
-         * @property by
-         * @type {Number}
-         */
-        this.by = 0 //bézier y
-        /**
-         * @property object
-         * @type {Object}
-         */
-        this.object = {}
-        /**
-         * @property r1
-         * @type {Number}
-         */
-        this.r1 = 0
-        /**
-         * @property r2
-         * @type {Number}
-         */
-        this.r2 = 0
-        /**
-         * @property startangle
-         * @type {Number}
-         */
-        this.startangle = 0
-        /**
-         * @property angle
-         * @type {Number}
-         */
-        this.angle = 0
-        /**
-         * @property speed
-         * @type {Number}
-         */
-        this.speed = 0
-        /**
-         * @property steps
-         * @type {Number}
-         */
-        this.steps = 0
-        /**
-         * @property step
-         * @type {Number}
-         */
-        this.step = 0
-        /**
-         * @property positions
-         * @type {Array}
-         */
-        this.positions = []
-        /**
-         * @property finished
-         * @type {Boolean}
-         */
-        this.finished = false
+    init: function (options) {
+        CG._extend(this, {
+            /**
+             * @property type
+             * @type {String}
+             */
+            type: '',
+            /**
+             * @property tx
+             * @type {Number}
+             */
+            tx: 0, //translated x value for the object
+            /**
+             * @property ty
+             * @type {Number}
+             */
+            ty: 0, //translated y value for the object
+            /**
+             * @property x1
+             * @type {Number}
+             */
+            x1: 0,
+            /**
+             * @property y1
+             * @type {Number}
+             */
+            y1: 0,
+            /**
+             * @property x2
+             * @type {Number}
+             */
+            x2: 0,
+            /**
+             * @property y2
+             * @type {Number}
+             */
+            y2: 0,
+            /**
+             * @property bx
+             * @type {Number}
+             */
+            bx: 0, //bézier x
+            /**
+             * @property by
+             * @type {Number}
+             */
+            by: 0, //bézier y
+            /**
+             * @property object
+             * @type {Object}
+             */
+            object: {},
+            /**
+             * @property r1
+             * @type {Number}
+             */
+            r1: 0,
+            /**
+             * @property r2
+             * @type {Number}
+             */
+            r2: 0,
+            /**
+             * @property startangle
+             * @type {Number}
+             */
+            startangle: 0,
+            /**
+             * @property angle
+             * @type {Number}
+             */
+            angle: 0,
+            /**
+             * @property speed
+             * @type {Number}
+             */
+            speed: 0,
+            /**
+             * @property steps
+             * @type {Number}
+             */
+            steps: 0,
+            /**
+             * @property step
+             * @type {Number}
+             */
+            step: 0,
+            /**
+             * @property positions
+             * @type {Array}
+             */
+            positions: [],
+            /**
+             * @property finished
+             * @type {Boolean}
+             */
+            finished: false
+
+        })
+
+
+        if (options) {
+            CG._extend(this, options)
+        }
         return this
     },
     /**
@@ -17393,16 +17567,7 @@ CG.Class.extend('Translate', {
      * startpoint {CG.Point}
      * endpoint {CG.Point}
      *
-     @example
-     var t = new CG.Translate()
-     t.initTween({
-        object: Sprite,
-        steps: 10,
-        startPoint: new CG.Point(10, 10),
-        endPoint: new CG.Point(320, 160)
-     })
      *
-     * 
      * @method initTween
      *
      * @param options {Object}
@@ -17452,7 +17617,7 @@ CG.Class.extend('Translate', {
         startangle: 90,
         rotation: 5
      })
-     * 
+     *
      * @method initOval
      * @param options {Object}
      * @return {this}
@@ -17641,6 +17806,15 @@ CG.Class.extend('Translate', {
  *
  * CG.Morph to manipulate objects in size and so on.
  *
+ ```
+
+ var e = new CG.Morph({
+   name: 'player',
+   position: new CG.Point(100,100)
+ })
+
+ ```
+ *
  * @class CG.Morph
  * @extends CG.Class
  *
@@ -17652,12 +17826,6 @@ CG.Class.extend('Morph', {
      * min {number}
      * max {number}
      * speed {number}
-     *
-     @example
-     var e = new CG.Morph({
-           name: 'player',
-           position: new CG.Point(100,100)
-         })
      *
      * @method init
      * @constructor
@@ -17747,6 +17915,14 @@ CG.Class.extend('Morph', {
  *
  * CG.Particle
  *
+ ```
+
+     var s = new CG.Particle({
+           image: '../images/demo.png'
+         })
+
+ ```
+ *
  * @class CG.Particle
  * @extends CG.Sprite
  *
@@ -17757,11 +17933,6 @@ CG.Sprite.extend('Particle', {
      * Options:
      * image {string} imgpath, image object or atlasimage object to use
      *
-     @example
-     var s = new CG.Particle({
-           image: '../images/demo.png'
-         })
-     *
      * @constructor
      * @method init
      * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
@@ -17770,41 +17941,45 @@ CG.Sprite.extend('Particle', {
         this._super()
         this.instanceOf = 'Particle'
 
+        CG._extend(this, {
+
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property lifetime
+             * @type {Number}
+             */
+            lifetime: 100,
+            /**
+             * @property currtime
+             * @type {Number}
+             */
+            currtime: this.lifetime,
+            /**
+             * @property aging
+             * @type {Number}
+             */
+            aging: 1,
+            /**
+             * @property fadeout
+             * @type {Boolean}
+             */
+            fadeout: false,
+            /**
+             * @property gravity
+             * @type {Number}
+             */
+            gravity: 0
+        })
+
         if (options) {
             CG._extend(this, options)
             this.setImage(this.image)
         }
 
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(0,0)
-        /**
-         * @property lifetime
-         * @type {Number}
-         */
-        this.lifetime = 100
-        /**
-         * @property currtime
-         * @type {Number}
-         */
-        this.currtime = this.lifetime
-        /**
-         * @property aging
-         * @type {Number}
-         */
-        this.aging = 1
-        /**
-         * @property fadeout
-         * @type {Boolean}
-         */
-        this.fadeout = false
-        /**
-         * @property gravity
-         * @type {Number}
-         */
-        this.gravity = 0
     },
     update: function () {
         if (this.visible) {
@@ -17845,6 +18020,14 @@ CG.Sprite.extend('Particle', {
  *
  * CG.Emitter that handles . . . particles.
  *
+ ```
+
+ var e = new CG.Emitter({
+   position: new CG.Point(100,100)
+ })
+
+ ```
+ *
  * @class CG.Emitter
  * @extends CG.Entity
  *
@@ -17856,11 +18039,6 @@ CG.Entity.extend('Emitter', {
      *
      * Options:
      * position {CG.Point}
-     *
-     @example
-     var e = new CG.Emitter({
-           position: new CG.Point(100,100)
-         })
      *
      * @constructor
      * @param position {CG.Point}
@@ -19847,6 +20025,19 @@ var b2AABB = box2d.b2AABB,
  * B2DEntity is the base class with properties for all B2D objects.
  * This class handles also the drawings for all classes.
  *
+ ```
+
+ var e = new CG.B2DEntity({
+   name: 'player',
+   image: new CG.Point(100,100),
+   world: b2world,
+   x: 10,
+   y: 20,
+   scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DEntity
  * @extends CG.Entity
  */
@@ -19860,16 +20051,6 @@ CG.Entity.extend('B2DEntity', {
      * x {number} the x position
      * y {number} the y position
      * scale {number} the world scale of B2DWorld
-     *
-     @example
-     var e = new CG.B2DEntity({
-           name: 'player',
-           image: new CG.Point(100,100),
-           world: b2world,
-           x: 10,
-           y: 20,
-           scale: 40
-         })
      *
      * @method init
      * @constructor
@@ -20134,6 +20315,21 @@ CG.Entity.extend('B2DEntity', {
  *
  * B2DCircle is a simple b2CircleShape wrapper element with basic physics properties.
  *
+ ```
+
+     var e = new CG.B2DCircle({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           radius: 20,
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40,
+           bodyType: box2d.b2BodyType.b2_staticBody
+     })
+
+ ```
+ *
  * @class CG.B2DCirlce
  * @extends CG.B2DEntity
  */
@@ -20149,19 +20345,6 @@ CG.B2DEntity.extend('B2DCircle', {
      * world {object}
      * scale {number}
      * bodyType {box2d.b2BodyType}
-     *
-     @example
-     var e = new CG.B2DCircle({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           radius: 20,
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40,
-           bodyType: box2d.b2BodyType.b2_staticBody
-     })
-     *
      *
      * @method init
      * @constructor
@@ -20228,6 +20411,18 @@ CG.B2DEntity.extend('B2DCircle', {
  * B2DLine is a simple b2PolygonShape wrapper. There is no visible drawing
  * now in the canvas for now. It can be used to build walls, ground,. ,.
  *
+ ```
+
+ var e = new CG.B2DLine({
+   name: 'groundline',
+   startPoint: new CG.Point(10,10),
+   endPoint: new CG.Point(500,10),
+   world: b2world,
+   scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DLine
  * @extends CG.B2DEntity
  */
@@ -20240,15 +20435,6 @@ CG.B2DEntity.extend('B2DLine', {
      * endPoint {CG.Point}
      * world {object} reference to world of B2DWorld
      * scale {number} the world scale of B2DWorld
-     *
-     @example
-     var e = new CG.B2DLine({
-       name: 'groundline',
-       startPoint: new CG.Point(10,10),
-       endPoint: new CG.Point(500,10),
-       world: b2world,
-       scale: 40
-     })
      *
      * @method init
      * @constructor
@@ -20329,6 +20515,20 @@ CG.B2DEntity.extend('B2DLine', {
  *
  * B2DRectangle is a simple b2PolygonShape wrapper element with basic physics properties.
  *
+ ```
+
+ var e = new CG.B2DRectangle({
+   name: 'player',
+   image: this.asset.getImageByName('glowball'),
+   x: 100,
+   y: 100,
+   world: b2world,
+   scale: 40,
+   bodyType: box2d.b2BodyType.b2_staticBody
+ })
+
+ ```
+ *
  * @class CG.B2DRectangle
  * @extends CG.B2DEntity
  */
@@ -20343,17 +20543,6 @@ CG.B2DEntity.extend('B2DRectangle', {
      * world {object}
      * scale {number}
      * bodyType {box2d.b2BodyType}
-     *
-     @example
-     var e = new CG.B2DRectangle({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40,
-           bodyType: box2d.b2BodyType.b2_staticBody
-     })
      *
      * @method init
      * @constructor
@@ -20413,6 +20602,24 @@ CG.B2DEntity.extend('B2DRectangle', {
  * It uses PhysicsEditor json files, use export Lime + Corona (json).
  * Supported options for now are friction, density and bounce and would be set to B2DPolygon.
  *
+
+ ```
+
+ var e = new CG.B2DPolygon({
+    name: 'player',
+    image: this.asset.getImageByName('glowball'),
+    texturepacker: this.asset.getJsonByName('powerstar75'),
+    x: 100,
+    y: 100,
+    world: b2world,
+    scale: 40,
+    bodyType: box2d.b2BodyType.b2_staticBody,
+    bullet: false
+ })
+
+ ```
+
+ *
  * @class CG.B2DPolygon
  * @extends CG.B2DEntity
  */
@@ -20429,20 +20636,6 @@ CG.B2DEntity.extend('B2DPolygon', {
      * scale {number}
      * bodyType {box2d.b2BodyType}
      * bullet {boolean}
-     *
-     @example
-     var e = new CG.B2DPolygon({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           texturepacker: this.asset.getJsonByName('powerstar75'),
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40,
-           bodyType: box2d.b2BodyType.b2_staticBody,
-           bullet: false
-     })
-     *
      *
      * @method init
      * @constructor
@@ -20603,6 +20796,38 @@ CG.B2DEntity.extend('B2DPolygon', {
  *
  * B2DTerrain looks similar to B2DPolygon but has more features for polygon manipulation like clipping and triangulation.
  *
+ ```
+
+ var terrainShapes =
+ [{
+    outer: [{
+        x: 0,
+        y: 100.5
+    }, {
+        x: 1024,
+        y: 100.5
+    }, {
+        x: 1024,
+        y: 768
+    }, {
+        x: 0,
+        y: 768
+    }],
+    holes: []
+ }]
+
+ b2world.createTerrain({
+     name: 'terrain',
+     image: false
+     terrainShape: terrainShapes,
+     x:0,
+     y:0,
+     world: b2world,
+     scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DTerrain
  * @extends CG.B2DEntity
  */
@@ -20630,34 +20855,6 @@ CG.B2DEntity.extend('B2DTerrain', {
      * world {object}
      * scale {number}
      *
-     @example
-     var terrainShapes =
-     [{
-        	outer: [{
-        		x: 0,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 768
-        	}, {
-        		x: 0,
-        		y: 768
-        	}],
-        	holes: []
-        }]
-
-     b2world.createTerrain({
-         name: 'terrain',
-         image: false
-         terrainShape: terrainShapes,
-         x:0,
-         y:0,
-         world: b2world,
-         scale: 40
-     })
      *
      *
      * @method init
@@ -20965,6 +21162,19 @@ CG.B2DEntity.extend('B2DTerrain', {
  *
  * B2DChainShape
  *
+ ```
+
+     var e = new CG.B2DChainShape({
+           name: 'player',
+           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
+           x: 100,
+           y: 100,
+           world: b2world,
+           scale: 40
+     })
+
+ ```
+ *
  * @class CG.B2DChainShape
  * @extends CG.B2DEntity
  */
@@ -20978,17 +21188,6 @@ CG.B2DEntity.extend('B2DChainShape', {
      * y (number}
      * world {object}
      * scale {number}
-     *
-     @example
-     var e = new CG.B2DChainShape({
-           name: 'player',
-           points: [new CG.Point(10,10), new CG.Point(300,50), new CG.Point(450,10)],
-           x: 100,
-           y: 100,
-           world: b2world,
-           scale: 40
-     })
-     *
      *
      * @method init
      * @constructor
@@ -21081,6 +21280,22 @@ CG.B2DEntity.extend('B2DChainShape', {
  * B2DRope is a simple wrapper that creates a rope with segments.
  * Just play with the params to get a good result.
  *
+ ```
+
+ var e = new CG.B2DRope({
+   name: 'player',
+   image: this.asset.getImageByName('glowball'),
+   x: 100,
+   y: 100,
+   length: 600,
+   segments: 20
+   segmentWidth: 4,
+   world: b2world,
+   scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DRope
  * @extends CG.B2DEntity
  */
@@ -21097,19 +21312,6 @@ CG.B2DEntity.extend('B2DRope', {
      * segmentHeight {number}
      * world {object}
      * scale {number}
-     *
-     @example
-     var e = new CG.B2DRope({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           x: 100,
-           y: 100,
-           length: 600,
-           segments: 20
-           segmentWidth: 4,
-           world: b2world,
-           scale: 40
-     })
      *
      * @method init
      * @constructor
@@ -21249,6 +21451,23 @@ CG.B2DEntity.extend('B2DRope', {
  * B2DBridge is a simple wrapper that creates a bridge with segments.
  * Just play with the params to get a good result.
  *
+
+ ```
+
+     var e = new CG.B2DBridge({
+           name: 'player',
+           image: this.asset.getImageByName('glowball'),
+           x: 100,
+           y: 100,
+           length: 600,
+           segments: 20
+           segmentHeight: 4,
+           world: b2world,
+           scale: 40
+     })
+
+ ```
+ *
  * @class CG.B2DBridge
  * @extends CG.B2DEntity
  */
@@ -21265,20 +21484,6 @@ CG.B2DEntity.extend('B2DBridge', {
      * segmentHeight {number}
      * world {object}
      * scale {number}
-     *
-     @example
-     var e = new CG.B2DBridge({
-           name: 'player',
-           image: this.asset.getImageByName('glowball'),
-           x: 100,
-           y: 100,
-           length: 600,
-           segments: 20
-           segmentHeight: 4,
-           world: b2world,
-           scale: 40
-     })
-     *
      *
      * @method init
      * @constructor
@@ -21443,6 +21648,17 @@ CG.B2DEntity.extend('B2DBridge', {
  * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
  * all physics and drawings.
  *
+```
+
+ var w = new CG.B2DWorld({
+     name: 'box2d-world',
+     scale: 40,
+     debug: true,
+     sleep: true
+ })
+
+ ```
+ *
  * @class CG.B2DWorld
  * @xtend CG.Layer
  */
@@ -21455,14 +21671,6 @@ CG.Layer.extend('B2DWorld', {
      * scale {number}
      * debug {boolean}
      *
-     *
-     @example
-     var w = new CG.B2DWorld({
-         name: 'box2d-world',
-         scale: 40,
-         debug: true,
-         sleep: true
-     })
      * @method init
      * @constructor
      * @param options {object}
@@ -22105,6 +22313,7 @@ CG.Layer.extend('B2DWorld', {
  *
  * @class CG.B2DFizzXLoader
  * @extends CG.Class
+ * @deprecated maybe it will removed in the future. FizzX editor development has stopped before it began ;-(
  */
 
 CG.Class.extend('B2DFizzXLoader', {

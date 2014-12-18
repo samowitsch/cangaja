@@ -2,21 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;box2d&#x2F;b2d-world.js - Cangaja API</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <title>cangaja/box2d/b2d-world.js - Cangaja API</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title="Cangaja API"></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -27,834 +25,788 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Bitmap.html">CG.Bitmap</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Buffer.html">CG.Buffer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Entity.html">CG.Entity</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Game.html">CG.Game</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapPoint.html">CG.MapPoint</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Menu.html">CG.Menu</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Morph.html">CG.Morph</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Cangaja.html">Cangaja</a></li>
+                                <li><a href="../classes/CG.Animation.html">CG.Animation</a></li>
+                                <li><a href="../classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+                                <li><a href="../classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+                                <li><a href="../classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
+                                <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
+                                <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
+                                <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
+                                <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
+                                <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
+                                <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
+                                <li><a href="../classes/CG.B2DRope.html">CG.B2DRope</a></li>
+                                <li><a href="../classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
+                                <li><a href="../classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
+                                <li><a href="../classes/CG.Bitmap.html">CG.Bitmap</a></li>
+                                <li><a href="../classes/CG.Bound.html">CG.Bound</a></li>
+                                <li><a href="../classes/CG.Buffer.html">CG.Buffer</a></li>
+                                <li><a href="../classes/CG.Button.html">CG.Button</a></li>
+                                <li><a href="../classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+                                <li><a href="../classes/CG.Delta.html">CG.Delta</a></li>
+                                <li><a href="../classes/CG.Director.html">CG.Director</a></li>
+                                <li><a href="../classes/CG.Emitter.html">CG.Emitter</a></li>
+                                <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
+                                <li><a href="../classes/CG.Font.html">CG.Font</a></li>
+                                <li><a href="../classes/CG.Game.html">CG.Game</a></li>
+                                <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
+                                <li><a href="../classes/CG.Map.html">CG.Map</a></li>
+                                <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
+                                <li><a href="../classes/CG.MapPoint.html">CG.MapPoint</a></li>
+                                <li><a href="../classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
+                                <li><a href="../classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
+                                <li><a href="../classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+                                <li><a href="../classes/CG.Menu.html">CG.Menu</a></li>
+                                <li><a href="../classes/CG.Morph.html">CG.Morph</a></li>
+                                <li><a href="../classes/CG.Particle.html">CG.Particle</a></li>
+                                <li><a href="../classes/CG.Point.html">CG.Point</a></li>
+                                <li><a href="../classes/CG.Screen.html">CG.Screen</a></li>
+                                <li><a href="../classes/CG.Sequence.html">CG.Sequence</a></li>
+                                <li><a href="../classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+                                <li><a href="../classes/CG.Sprite.html">CG.Sprite</a></li>
+                                <li><a href="../classes/CG.Stick.html">CG.Stick</a></li>
+                                <li><a href="../classes/CG.Text.html">CG.Text</a></li>
+                                <li><a href="../classes/CG.Translate.html">CG.Translate</a></li>
+                                <li><a href="../classes/CG.Vector.html">CG.Vector</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/CG.html">CG</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;box2d&#x2F;b2d-world.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
-&#x2F;**
- * @description
- *
- * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
- * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
- * one of the basic B2D objects can added to the B2DWorld with the addCustom method.
- * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
- * all physics and drawings.
- *
- * @class CG.B2DWorld
- * @xtend CG.Layer
- *&#x2F;
-
-CG.Layer.extend(&#x27;B2DWorld&#x27;, {
-    &#x2F;**
-     * Options:
-     * name {string}
-     * sleep {boolean}
-     * scale {number}
-     * debug {boolean}
-     *
-     *
-     @example
-     var w = new CG.B2DWorld({
-         name: &#x27;box2d-world&#x27;,
-         scale: 40,
-         debug: true,
-         sleep: true
-     })
-     * @method init
-     * @constructor
-     * @param options {object}
-     *&#x2F;
-    init: function (options) {
-
-        CG._extend(this, {
-            &#x2F;**
-             * @property framerate
-             * @type {number}
-             *&#x2F;
-            framerate: 1 &#x2F; 30,
-
-            &#x2F;**
-             * @property name
-             * @type {String}
-             *&#x2F;
-            name: &#x27;&#x27;,
-            &#x2F;**
-             * @property debug
-             * @type {Boolean}
-             *&#x2F;
-            debug: false,
-            &#x2F;**
-             * @property x
-             * @type {Number}
-             *&#x2F;
-            x: 0,
-            &#x2F;**
-             * @property y
-             * @type {Number}
-             *&#x2F;
-            y: 0,
-            &#x2F;**
-             * @property elements
-             * @type {Array}
-             *&#x2F;
-            elements: [],
-
-            &#x2F;**
-             * @property uid
-             * @type {Number}
-             *&#x2F;
-            uid: 0, &#x2F;&#x2F;uid counter for elements
-            &#x2F;**
-             * @property scale
-             * @type {Number}
-             *&#x2F;
-            scale: 40,
-            &#x2F;**
-             * @property sleep
-             * @type {Boolean}
-             *&#x2F;
-            sleep: true
-        })
-
-        if (options) {
-            CG._extend(this, options)
-        }
-
-        &#x2F;**
-         * @property world
-         * @type {b2World}
-         *&#x2F;
-        this.world = new b2World(
-            new b2Vec2(0, 10), &#x2F;&#x2F;gravity
-            this.sleep
-        )
-
-        &#x2F;&#x2F; add m_groundBody for use with b2MouseJoint
-        this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
-
-        &#x2F;&#x2F;setup debug draw
-        var debugDraw = new b2DebugDraw({
-            scale: this.scale,
-            canvas: Game.b_canvas,
-            ctx: Game.b_ctx,
-            flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit | box2d.b2DrawFlags.e_centerOfMassBit
-        })
-        this.world.SetDebugDraw(debugDraw)
-
-    },
-    &#x2F;**
-     * @method update
-     *&#x2F;
-    update: function () {
-
-        this.world.Step(
-            this.framerate   &#x2F;&#x2F;frame-rate
-            , 10       &#x2F;&#x2F;velocity iterations
-            , 10       &#x2F;&#x2F;position iterations
-        )
-
-        if (CG.mousedown) {
-            this.mouseDownAt(mousex, mousey);
-        } else if (this.isMouseDown()) {
-            this.mouseUp();
-        }
-
-        for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-            this.elements[i].update()
-        }
-
-
-    },
-    &#x2F;**
-     * @method draw
-     *&#x2F;
-    draw: function () {
-        Game.b_ctx.save()
-        Game.b_ctx.translate(this.x, this.y)
-
-        for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-            this.elements[i].draw()
-        }
-
-        if (this.debug) {
-            this.world.DrawDebugData()
-            this.world.ClearForces()
-        }
-
-        Game.b_ctx.restore()
-    },
-    &#x2F;**
-     * @description
-     *
-     * Custom extended objects can be added to the B2DWorld with this method.
-     *
-     * @method addCustom
-     * @param obj      object    custom B2D object
-     * @return {Object}
-     *&#x2F;
-    addCustom: function (obj) {
-        this.uid = this.uid + 1
-        obj.id.uid = this.uid
-        this.elements.push(obj)
-        return obj
-    },
-    &#x2F;**
-     * @description
-     *
-     * Checks if a B2D body Exists
-     *
-     * @method deleteBodyAt
-     * @param body {Object}
-     * @return {Boolean}
-     *&#x2F;
-    checkIfBodyExists: function (body) {
-        if (body) {
-            for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-                &#x2F;&#x2F;if b2entity found delete entity and b2body
-                if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
-                    return true
-                }
-            }
-        }
-        return false
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}  path to image, image or atlasimage from asset
-     * x {number}
-     * y {number}
-     * bodyType {number}
-     *
-     @example
-     b2world.createBox({
-        name: &#x27;glowball&#x27;,
-        image: this.asset.getImageByName(&#x27;glowball&#x27;),
-        radius: 22,
-        x: this.mouse.x,
-        y: this.mouse.y,
-        bodyType: box2d.b2BodyType.b2_dynamicBody
-     })
-     * @description
-     *
-     * createBox creates a basic Box2D rectangle with some default settings.
-     *
-     * @method createBox
-     * @param options {object}
-     * @return {CG.B2DRectangle}
-     *&#x2F;
-    createBox: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DRectangle(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * startPoint {CG.Point}
-     * endPoint {CG.Point}
-     *
-     @example
-     b2world.createLine({
-        name:&#x27;testline2&#x27;,
-        startPoint: new CG.Point(630, 200),
-        endPoint: new CG.Point(150, 250)
-     })
-     *
-     * @description
-     *
-     * createLine creates a basic Box2D line with some default settings.
-     *
-     * @method createLine
-     * @param options {object}
-     * @return {CG.B2DLine}
-     *&#x2F;
-    createLine: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DLine(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}  path to image, image or atlasimage from asset
-     * radius {number}
-     * x {number}
-     * y {number}
-     * bodyType {number}
-     *
-     @example
-     b2world.createCircle({
-        name: &#x27;glowball&#x27;,
-        image: this.asset.getImageByName(&#x27;glowball&#x27;),
-        radius: 22,
-        x: this.mouse.x,
-        y: this.mouse.y,
-        bodyType: box2d.b2BodyType.b2_dynamicBody
-     })
-     * @description
-     *
-     * createCircle creates a basic Box2D circle with some default settings
-     *
-     * @method createCircle
-     * @param options {object}
-     * @return {CG.B2DCircle}
-     *&#x2F;
-    createCircle: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DCircle(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}  path to image, image or atlasimage from asset
-     * texturepacker {String}
-     * x {number}
-     * y {number}
-     * bodyType {number}
-     * bullet {boolean}
-     *
-     @example
-     b2world.createPolyBody({
-        name: &#x27;powerstar75&#x27;,
-        image: this.asset.getImageByName(&#x27;powerstar75&#x27;),
-        texturepacker: this.asset.getJsonByName(&#x27;powerstar75&#x27;),
-        x: 200,
-        y: -150,
-        bodyType: box2d.b2BodyType.b2_dynamicBody,
-        bullet: false
-     })
-     *
-     * @description
-     *
-     * createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
-     * Box2D object. The polygonshape and some settings like density, bounce and friction are
-     * taken from the json file at the moment.
-     *
-     * @method createPolyBody
-     * @param options {object}
-     * @return {CG.B2DPolygon}
-     *&#x2F;
-    createPolyBody: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DPolygon(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}
-     * points {array}
-     * x {number}
-     * y {number}
-     *
-     @example
-     var terrainPolys =
-     [{
-        	outer: [{
-        		x: 0,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 100.5
-        	}, {
-        		x: 1024,
-        		y: 768
-        	}, {
-        		x: 0,
-        		y: 768
-        	}],
-        	holes: []
-        }]
-
-     b2world.createTerrain({
-         name: &#x27;terrain&#x27;,
-         image: false
-         terrainShape: terrainPolys,
-         x:0,
-         y:0
-     })
-     *
-     *
-     * @description
-     *
-     * createTerrain
-     *
-     * @method createPolyBody
-     * @param options {String}
-     * @return {CG.B2DTerrain}
-     *&#x2F;
-    createTerrain: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DTerrain(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * points {array}
-     * x {number}
-     * y {number}
-     *
-     @example
-     chainArray = [
-         new CG.Point(0, 0),
-         new CG.Point(50, 10),
-         new CG.Point(100, 100),
-         new CG.Point(200, 100),
-         new CG.Point(250, 50),
-         new CG.Point(300, 70)
-     ]
-
-     b2world.createChainShape({
-         name: &#x27;chaneshape&#x27;,
-         points: chainArray,
-         x: 0,
-         y: 200
-     })
-     *
-     * @description
-     *
-     * createChainShape
-     *
-     * @method createChainShape
-     * @param options {object}
-     * @return {CG.B2DChainShape}
-     *&#x2F;
-    createChainShape: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DChainShape(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}  path to image, image or atlasimage from asset
-     * x {number}
-     * y {number}
-     * length {number}
-     * segments {number}
-     * segmentHeight {number}
-     *
-     @example
-     b2world.createBridge({
-        name:&#x27;chain&#x27;,
-        image:this.asset.getImageByName(&#x27;chain&#x27;),
-        x: 20,
-        y: 280,
-        length: 620,
-        segments: 27,
-        segmentHeight: 3
-     })
-     *
-     *
-     * @description
-     *
-     * This method creates a B2D bridge. Just play with the params to get a good result!
-     *
-     * @method createBridge
-     * @param options {object}
-     * @return {CG.B2DBridge}
-     *&#x2F;
-    createBridge: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DBridge(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * Options:
-     * name {string}
-     * image {mixed}  path to image, image or atlasimage from asset
-     * x {number}
-     * y {number}
-     * length {number}
-     * segments {number}
-     * segmentWidth {number}
-     *
-     @example
-     b2world.createRope({
-        name: &#x27;chain-v&#x27;,
-        image: this.asset.getImageByName(&#x27;chain-v&#x27;),
-        x: 580,
-        y: 0,
-        length: 200,
-        segments: 8,
-        segmentWidth: 3
-    })
-     *
-     *
-     * @description
-     *
-     * This method creates a B2D rope. Just play with the params to get a good result!
-     *
-     * @method createRope
-     * @param options {object}
-     * @return {CG.B2DRope}
-     *&#x2F;
-    createRope: function (options) {
-        options.world = this.world
-        options.scale = this.scale
-        this.uid = this.uid + 1
-        var entity = new CG.B2DRope(options)
-        entity.id.uid = this.uid
-        this.elements.push(entity)
-        return entity
-    },
-    &#x2F;**
-     * @description
-     *
-     * Enables dragging B2D objects with the mouse.
-     *
-     * @method mouseDownAt
-     * @param x {Number}
-     * @param y {Number}
-     *&#x2F;
-    mouseDownAt: function (x, y) {
-        if (!this.mouseJoint) {
-            var body = this.getBodyAt(x, y)
-
-            if (body) {
-                var md = new b2MouseJointDef()
-                md.bodyA = this.world.m_groundBody
-                md.bodyB = body
-                md.target.SetXY((x - this.x) &#x2F; this.scale, (y - this.y) &#x2F; this.scale)
-                md.collideConnected = true
-                md.maxForce = 300.0 * body.GetMass()
-                this.mouseJoint = this.world.CreateJoint(md)
-                body.SetAwake(true);
-            }
-        } else {
-            this.mouseJoint.SetTarget(new b2Vec2((x - this.x) &#x2F; this.scale, (y - this.y) &#x2F; this.scale))
-        }
-    },
-    &#x2F;**
-     * @method mouseUp
-     *&#x2F;
-    mouseUp: function () {
-        this.world.DestroyJoint(this.mouseJoint);
-        this.mouseJoint = null;
-    },
-    &#x2F;**
-     * @description
-     *
-     * Get a B2D body at the give x, y position.
-     *
-     * @method getBodyAt
-     * @param x {Number}
-     * @param y {Number}
-     * @return {*}
-     *&#x2F;
-    getBodyAt: function (x, y) {
-        var worldx = (x - this.x) &#x2F; this.scale;
-        var worldy = (y - this.y) &#x2F; this.scale
-
-        var mousePVec = new b2Vec2(worldx, worldy)  &#x2F;&#x2F;b2world offset for x and y!!!
-        var aabb = new b2AABB()
-        aabb.lowerBound.SetXY(worldx - 0.001, worldy - 0.001)
-        aabb.upperBound.SetXY(worldx + 0.001, worldy + 0.001)
-
-        &#x2F;&#x2F; Query the world for overlapping shapes.
-
-        var selectedBody = null;
-        this.world.QueryAABB(function (fixture) {
-            if (fixture.GetBody().GetType() != b2Body.b2_staticBody) {
-                if (fixture.GetShape().TestPoint(fixture.GetBody().GetTransform(), mousePVec)) {
-                    selectedBody = fixture.GetBody();
-                    return false;
-                }
-            }
-            return true;
-        }, aabb);
-        return selectedBody;
-    },
-    &#x2F;**
-     * @description
-     *
-     * Deletes a B2D body at the given x, y position
-     *
-     * @method deleteBodyAt
-     * @param x {Number}
-     * @param y (Number)
-     * @return {Boolean}
-     *&#x2F;
-    deleteBodyAt: function (x, y) {
-        body = this.getBodyAt(x, y)
-        if (body) {
-            for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-                &#x2F;&#x2F;if b2entity found delete entity and b2body
-                if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
-                    this.removeElementByIndex(i)
-                    this.world.DestroyBody(body)
-                    return true
-                }
-            }
-        }
-        return false
-    },
-    &#x2F;**
-     * @method isMouseDown
-     * @return {Boolean}
-     *&#x2F;
-    isMouseDown: function () {
-        return (this.mouseJoint != null);
-    },
-    &#x2F;**
-     * @method removeElementByIndex
-     * @param index
-     *&#x2F;
-    removeElementByIndex: function (index) {
-        this.elements.splice(index, 1);
-    },
-    &#x2F;**
-     * @method removeElementByUid
-     * @param uid
-     *&#x2F;
-    removeElementByUid: function (uid) {
-        for (var i = 0, l = this.elements.length; i &lt; l; i++) {
-            if (typeof this.elements[i] === &#x27;object&#x27; &amp;&amp; typeof this.elements[i].id !== &#x27;undefined&#x27;) {
-                if (this.elements[i].id.uid === uid) {
-                    this.elements.splice(i, 1);
-                }
-            }
-        }
-    },
-    &#x2F;**
-     * @method applyImpulse
-     * @param body
-     * @param degrees
-     * @param power
-     *&#x2F;
-    applyImpulse: function (body, degrees, power) {
-        if (body) {
-            body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
-                Math.sin(degrees * CG.Const_PI_180) * power),
-                body.GetWorldCenter());
-        }
-    },
-    &#x2F;**
-     * @method addContactListener
-     * @param callbacks
-     *&#x2F;
-    addContactListener: function (callbacks) {
-        var listener = new box2d.b2ContactListener;
-        if (callbacks.BeginContact) listener.BeginContact = function (contact) {
-            callbacks.BeginContact(contact.GetFixtureA().GetBody(),
-                contact.GetFixtureB().GetBody());
-        }
-        if (callbacks.EndContact) listener.EndContact = function (contact) {
-            callbacks.EndContact(contact.GetFixtureA().GetBody(),
-                contact.GetFixtureB().GetBody());
-        }
-        if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
-            callbacks.PostSolve(contact.GetFixtureA().GetBody(),
-                contact.GetFixtureB().GetBody(),
-                impulse.normalImpulses[0]);
-        }
-        if (callbacks.PreSolve) listener.PreSolve = function (contact, oldManifold) {
-            callbacks.PreSolve(contact, oldManifold);
-        }
-        this.world.SetContactListener(listener);
-    },
-    &#x2F;**
-     * @method getBodySpec
-     * @param b
-     * @return {Object}
-     *&#x2F;
-    getBodySpec: function (b) {
-        return {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle(), c: {x: b.GetWorldCenter().x, y: b.GetWorldCenter().y}};
-    }
-})
-
-
-
-    </pre>
-</div>
-
+                        <h1 class="file-heading">File: cangaja/box2d/b2d-world.js</h1>
+                        
+                        <div class="file">
+                            <pre class="code prettyprint linenums">
+                        /**
+                         * @description
+                         *
+                         * B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
+                         * lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
+                         * one of the basic B2D objects can added to the B2DWorld with the addCustom method.
+                         * The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
+                         * all physics and drawings.
+                         *
+                        &#x60;&#x60;&#x60;
+                        
+                         var w = new CG.B2DWorld({
+                             name: &#x27;box2d-world&#x27;,
+                             scale: 40,
+                             debug: true,
+                             sleep: true
+                         })
+                        
+                         &#x60;&#x60;&#x60;
+                         *
+                         * @class CG.B2DWorld
+                         * @xtend CG.Layer
+                         */
+                        
+                        CG.Layer.extend(&#x27;B2DWorld&#x27;, {
+                            /**
+                             * Options:
+                             * name {string}
+                             * sleep {boolean}
+                             * scale {number}
+                             * debug {boolean}
+                             *
+                             * @method init
+                             * @constructor
+                             * @param options {object}
+                             */
+                            init: function (options) {
+                        
+                                CG._extend(this, {
+                                    /**
+                                     * @property framerate
+                                     * @type {number}
+                                     */
+                                    framerate: 1 / 30,
+                        
+                                    /**
+                                     * @property name
+                                     * @type {String}
+                                     */
+                                    name: &#x27;&#x27;,
+                                    /**
+                                     * @property debug
+                                     * @type {Boolean}
+                                     */
+                                    debug: false,
+                                    /**
+                                     * @property x
+                                     * @type {Number}
+                                     */
+                                    x: 0,
+                                    /**
+                                     * @property y
+                                     * @type {Number}
+                                     */
+                                    y: 0,
+                                    /**
+                                     * @property elements
+                                     * @type {Array}
+                                     */
+                                    elements: [],
+                        
+                                    /**
+                                     * @property uid
+                                     * @type {Number}
+                                     */
+                                    uid: 0, //uid counter for elements
+                                    /**
+                                     * @property scale
+                                     * @type {Number}
+                                     */
+                                    scale: 40,
+                                    /**
+                                     * @property sleep
+                                     * @type {Boolean}
+                                     */
+                                    sleep: true
+                                })
+                        
+                                if (options) {
+                                    CG._extend(this, options)
+                                }
+                        
+                                /**
+                                 * @property world
+                                 * @type {b2World}
+                                 */
+                                this.world = new b2World(
+                                    new b2Vec2(0, 10), //gravity
+                                    this.sleep
+                                )
+                        
+                                // add m_groundBody for use with b2MouseJoint
+                                this.world.m_groundBody = this.world.CreateBody(new b2BodyDef());
+                        
+                                //setup debug draw
+                                var debugDraw = new b2DebugDraw({
+                                    scale: this.scale,
+                                    canvas: Game.b_canvas,
+                                    ctx: Game.b_ctx,
+                                    flags: box2d.b2DrawFlags.e_shapeBit | box2d.b2DrawFlags.e_jointBit | box2d.b2DrawFlags.e_centerOfMassBit
+                                })
+                                this.world.SetDebugDraw(debugDraw)
+                        
+                            },
+                            /**
+                             * @method update
+                             */
+                            update: function () {
+                        
+                                this.world.Step(
+                                    this.framerate   //frame-rate
+                                    , 10       //velocity iterations
+                                    , 10       //position iterations
+                                )
+                        
+                                if (CG.mousedown) {
+                                    this.mouseDownAt(mousex, mousey);
+                                } else if (this.isMouseDown()) {
+                                    this.mouseUp();
+                                }
+                        
+                                for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+                                    this.elements[i].update()
+                                }
+                        
+                        
+                            },
+                            /**
+                             * @method draw
+                             */
+                            draw: function () {
+                                Game.b_ctx.save()
+                                Game.b_ctx.translate(this.x, this.y)
+                        
+                                for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+                                    this.elements[i].draw()
+                                }
+                        
+                                if (this.debug) {
+                                    this.world.DrawDebugData()
+                                    this.world.ClearForces()
+                                }
+                        
+                                Game.b_ctx.restore()
+                            },
+                            /**
+                             * @description
+                             *
+                             * Custom extended objects can be added to the B2DWorld with this method.
+                             *
+                             * @method addCustom
+                             * @param obj      object    custom B2D object
+                             * @return {Object}
+                             */
+                            addCustom: function (obj) {
+                                this.uid = this.uid + 1
+                                obj.id.uid = this.uid
+                                this.elements.push(obj)
+                                return obj
+                            },
+                            /**
+                             * @description
+                             *
+                             * Checks if a B2D body Exists
+                             *
+                             * @method deleteBodyAt
+                             * @param body {Object}
+                             * @return {Boolean}
+                             */
+                            checkIfBodyExists: function (body) {
+                                if (body) {
+                                    for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+                                        //if b2entity found delete entity and b2body
+                                        if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
+                                            return true
+                                        }
+                                    }
+                                }
+                                return false
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}  path to image, image or atlasimage from asset
+                             * x {number}
+                             * y {number}
+                             * bodyType {number}
+                             *
+                             @example
+                             b2world.createBox({
+                                name: &#x27;glowball&#x27;,
+                                image: this.asset.getImageByName(&#x27;glowball&#x27;),
+                                radius: 22,
+                                x: this.mouse.x,
+                                y: this.mouse.y,
+                                bodyType: box2d.b2BodyType.b2_dynamicBody
+                             })
+                             * @description
+                             *
+                             * createBox creates a basic Box2D rectangle with some default settings.
+                             *
+                             * @method createBox
+                             * @param options {object}
+                             * @return {CG.B2DRectangle}
+                             */
+                            createBox: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DRectangle(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * startPoint {CG.Point}
+                             * endPoint {CG.Point}
+                             *
+                             @example
+                             b2world.createLine({
+                                name:&#x27;testline2&#x27;,
+                                startPoint: new CG.Point(630, 200),
+                                endPoint: new CG.Point(150, 250)
+                             })
+                             *
+                             * @description
+                             *
+                             * createLine creates a basic Box2D line with some default settings.
+                             *
+                             * @method createLine
+                             * @param options {object}
+                             * @return {CG.B2DLine}
+                             */
+                            createLine: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DLine(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}  path to image, image or atlasimage from asset
+                             * radius {number}
+                             * x {number}
+                             * y {number}
+                             * bodyType {number}
+                             *
+                             @example
+                             b2world.createCircle({
+                                name: &#x27;glowball&#x27;,
+                                image: this.asset.getImageByName(&#x27;glowball&#x27;),
+                                radius: 22,
+                                x: this.mouse.x,
+                                y: this.mouse.y,
+                                bodyType: box2d.b2BodyType.b2_dynamicBody
+                             })
+                             * @description
+                             *
+                             * createCircle creates a basic Box2D circle with some default settings
+                             *
+                             * @method createCircle
+                             * @param options {object}
+                             * @return {CG.B2DCircle}
+                             */
+                            createCircle: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DCircle(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}  path to image, image or atlasimage from asset
+                             * texturepacker {String}
+                             * x {number}
+                             * y {number}
+                             * bodyType {number}
+                             * bullet {boolean}
+                             *
+                             @example
+                             b2world.createPolyBody({
+                                name: &#x27;powerstar75&#x27;,
+                                image: this.asset.getImageByName(&#x27;powerstar75&#x27;),
+                                texturepacker: this.asset.getJsonByName(&#x27;powerstar75&#x27;),
+                                x: 200,
+                                y: -150,
+                                bodyType: box2d.b2BodyType.b2_dynamicBody,
+                                bullet: false
+                             })
+                             *
+                             * @description
+                             *
+                             * createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
+                             * Box2D object. The polygonshape and some settings like density, bounce and friction are
+                             * taken from the json file at the moment.
+                             *
+                             * @method createPolyBody
+                             * @param options {object}
+                             * @return {CG.B2DPolygon}
+                             */
+                            createPolyBody: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DPolygon(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}
+                             * points {array}
+                             * x {number}
+                             * y {number}
+                             *
+                             @example
+                             var terrainPolys =
+                             [{
+                                    outer: [{
+                                        x: 0,
+                                        y: 100.5
+                                    }, {
+                                        x: 1024,
+                                        y: 100.5
+                                    }, {
+                                        x: 1024,
+                                        y: 768
+                                    }, {
+                                        x: 0,
+                                        y: 768
+                                    }],
+                                    holes: []
+                                }]
+                        
+                             b2world.createTerrain({
+                                 name: &#x27;terrain&#x27;,
+                                 image: false
+                                 terrainShape: terrainPolys,
+                                 x:0,
+                                 y:0
+                             })
+                             *
+                             *
+                             * @description
+                             *
+                             * createTerrain
+                             *
+                             * @method createPolyBody
+                             * @param options {String}
+                             * @return {CG.B2DTerrain}
+                             */
+                            createTerrain: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DTerrain(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * points {array}
+                             * x {number}
+                             * y {number}
+                             *
+                             @example
+                             chainArray = [
+                                 new CG.Point(0, 0),
+                                 new CG.Point(50, 10),
+                                 new CG.Point(100, 100),
+                                 new CG.Point(200, 100),
+                                 new CG.Point(250, 50),
+                                 new CG.Point(300, 70)
+                             ]
+                        
+                             b2world.createChainShape({
+                                 name: &#x27;chaneshape&#x27;,
+                                 points: chainArray,
+                                 x: 0,
+                                 y: 200
+                             })
+                             *
+                             * @description
+                             *
+                             * createChainShape
+                             *
+                             * @method createChainShape
+                             * @param options {object}
+                             * @return {CG.B2DChainShape}
+                             */
+                            createChainShape: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DChainShape(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}  path to image, image or atlasimage from asset
+                             * x {number}
+                             * y {number}
+                             * length {number}
+                             * segments {number}
+                             * segmentHeight {number}
+                             *
+                             @example
+                             b2world.createBridge({
+                                name:&#x27;chain&#x27;,
+                                image:this.asset.getImageByName(&#x27;chain&#x27;),
+                                x: 20,
+                                y: 280,
+                                length: 620,
+                                segments: 27,
+                                segmentHeight: 3
+                             })
+                             *
+                             *
+                             * @description
+                             *
+                             * This method creates a B2D bridge. Just play with the params to get a good result!
+                             *
+                             * @method createBridge
+                             * @param options {object}
+                             * @return {CG.B2DBridge}
+                             */
+                            createBridge: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DBridge(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * Options:
+                             * name {string}
+                             * image {mixed}  path to image, image or atlasimage from asset
+                             * x {number}
+                             * y {number}
+                             * length {number}
+                             * segments {number}
+                             * segmentWidth {number}
+                             *
+                             @example
+                             b2world.createRope({
+                                name: &#x27;chain-v&#x27;,
+                                image: this.asset.getImageByName(&#x27;chain-v&#x27;),
+                                x: 580,
+                                y: 0,
+                                length: 200,
+                                segments: 8,
+                                segmentWidth: 3
+                            })
+                             *
+                             *
+                             * @description
+                             *
+                             * This method creates a B2D rope. Just play with the params to get a good result!
+                             *
+                             * @method createRope
+                             * @param options {object}
+                             * @return {CG.B2DRope}
+                             */
+                            createRope: function (options) {
+                                options.world = this.world
+                                options.scale = this.scale
+                                this.uid = this.uid + 1
+                                var entity = new CG.B2DRope(options)
+                                entity.id.uid = this.uid
+                                this.elements.push(entity)
+                                return entity
+                            },
+                            /**
+                             * @description
+                             *
+                             * Enables dragging B2D objects with the mouse.
+                             *
+                             * @method mouseDownAt
+                             * @param x {Number}
+                             * @param y {Number}
+                             */
+                            mouseDownAt: function (x, y) {
+                                if (!this.mouseJoint) {
+                                    var body = this.getBodyAt(x, y)
+                        
+                                    if (body) {
+                                        var md = new b2MouseJointDef()
+                                        md.bodyA = this.world.m_groundBody
+                                        md.bodyB = body
+                                        md.target.SetXY((x - this.x) / this.scale, (y - this.y) / this.scale)
+                                        md.collideConnected = true
+                                        md.maxForce = 300.0 * body.GetMass()
+                                        this.mouseJoint = this.world.CreateJoint(md)
+                                        body.SetAwake(true);
+                                    }
+                                } else {
+                                    this.mouseJoint.SetTarget(new b2Vec2((x - this.x) / this.scale, (y - this.y) / this.scale))
+                                }
+                            },
+                            /**
+                             * @method mouseUp
+                             */
+                            mouseUp: function () {
+                                this.world.DestroyJoint(this.mouseJoint);
+                                this.mouseJoint = null;
+                            },
+                            /**
+                             * @description
+                             *
+                             * Get a B2D body at the give x, y position.
+                             *
+                             * @method getBodyAt
+                             * @param x {Number}
+                             * @param y {Number}
+                             * @return {*}
+                             */
+                            getBodyAt: function (x, y) {
+                                var worldx = (x - this.x) / this.scale;
+                                var worldy = (y - this.y) / this.scale
+                        
+                                var mousePVec = new b2Vec2(worldx, worldy)  //b2world offset for x and y!!!
+                                var aabb = new b2AABB()
+                                aabb.lowerBound.SetXY(worldx - 0.001, worldy - 0.001)
+                                aabb.upperBound.SetXY(worldx + 0.001, worldy + 0.001)
+                        
+                                // Query the world for overlapping shapes.
+                        
+                                var selectedBody = null;
+                                this.world.QueryAABB(function (fixture) {
+                                    if (fixture.GetBody().GetType() != b2Body.b2_staticBody) {
+                                        if (fixture.GetShape().TestPoint(fixture.GetBody().GetTransform(), mousePVec)) {
+                                            selectedBody = fixture.GetBody();
+                                            return false;
+                                        }
+                                    }
+                                    return true;
+                                }, aabb);
+                                return selectedBody;
+                            },
+                            /**
+                             * @description
+                             *
+                             * Deletes a B2D body at the given x, y position
+                             *
+                             * @method deleteBodyAt
+                             * @param x {Number}
+                             * @param y (Number)
+                             * @return {Boolean}
+                             */
+                            deleteBodyAt: function (x, y) {
+                                body = this.getBodyAt(x, y)
+                                if (body) {
+                                    for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+                                        //if b2entity found delete entity and b2body
+                                        if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
+                                            this.removeElementByIndex(i)
+                                            this.world.DestroyBody(body)
+                                            return true
+                                        }
+                                    }
+                                }
+                                return false
+                            },
+                            /**
+                             * @method isMouseDown
+                             * @return {Boolean}
+                             */
+                            isMouseDown: function () {
+                                return (this.mouseJoint != null);
+                            },
+                            /**
+                             * @method removeElementByIndex
+                             * @param index
+                             */
+                            removeElementByIndex: function (index) {
+                                this.elements.splice(index, 1);
+                            },
+                            /**
+                             * @method removeElementByUid
+                             * @param uid
+                             */
+                            removeElementByUid: function (uid) {
+                                for (var i = 0, l = this.elements.length; i &lt; l; i++) {
+                                    if (typeof this.elements[i] === &#x27;object&#x27; &amp;&amp; typeof this.elements[i].id !== &#x27;undefined&#x27;) {
+                                        if (this.elements[i].id.uid === uid) {
+                                            this.elements.splice(i, 1);
+                                        }
+                                    }
+                                }
+                            },
+                            /**
+                             * @method applyImpulse
+                             * @param body
+                             * @param degrees
+                             * @param power
+                             */
+                            applyImpulse: function (body, degrees, power) {
+                                if (body) {
+                                    body.ApplyLinearImpulse(new b2Vec2(Math.cos(degrees * CG.Const_PI_180) * power,
+                                        Math.sin(degrees * CG.Const_PI_180) * power),
+                                        body.GetWorldCenter());
+                                }
+                            },
+                            /**
+                             * @method addContactListener
+                             * @param callbacks
+                             */
+                            addContactListener: function (callbacks) {
+                                var listener = new box2d.b2ContactListener;
+                                if (callbacks.BeginContact) listener.BeginContact = function (contact) {
+                                    callbacks.BeginContact(contact.GetFixtureA().GetBody(),
+                                        contact.GetFixtureB().GetBody());
+                                }
+                                if (callbacks.EndContact) listener.EndContact = function (contact) {
+                                    callbacks.EndContact(contact.GetFixtureA().GetBody(),
+                                        contact.GetFixtureB().GetBody());
+                                }
+                                if (callbacks.PostSolve) listener.PostSolve = function (contact, impulse) {
+                                    callbacks.PostSolve(contact.GetFixtureA().GetBody(),
+                                        contact.GetFixtureB().GetBody(),
+                                        impulse.normalImpulses[0]);
+                                }
+                                if (callbacks.PreSolve) listener.PreSolve = function (contact, oldManifold) {
+                                    callbacks.PreSolve(contact, oldManifold);
+                                }
+                                this.world.SetContactListener(listener);
+                            },
+                            /**
+                             * @method getBodySpec
+                             * @param b
+                             * @return {Object}
+                             */
+                            getBodySpec: function (b) {
+                                return {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle(), c: {x: b.GetWorldCenter().x, y: b.GetWorldCenter().y}};
+                            }
+                        })
+                        
+                        
+                        
+                            </pre>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

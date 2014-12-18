@@ -41,6 +41,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Sequence",
         "CG.SpineAnimation",
         "CG.Sprite",
+        "CG.Stick",
         "CG.Text",
         "CG.Translate",
         "CG.Vector",
@@ -53,7 +54,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "CG",
             "name": "CG",
-            "description": "CG is the base class of the cangaja framework.\nThis file includes a requestAnimationFrame polyfill. It uses the simple javascript inheritance from John Resig."
+            "description": "CG is the base class of the cangaja framework.\nThis file includes a requestAnimationFrame polyfill.\nIt uses the simple javascript inheritance from John Resig.\n\nClass example, how to start from scratch with simple inheritance\n\n```\n\nCG.Class.extend(\"Entity\", {\n   init: function(){\n       this.myprop = 'set from constructor'\n   }\n});\n\nCG.Entity.extend(\"Point\",{\n   init: function(x, y){\n       this._super()\n       this.x = x\n       this.y = y\n   }\n});\n\nCG.Point.extend(\"Rectangle\",{\n   init: function(x, y, w, h){\n       this._super(x, y)\n       this.w = w\n       this.h = h\n   },\n   move: function(){\n   }\n});\n\n```"
         }
     ]
 } };

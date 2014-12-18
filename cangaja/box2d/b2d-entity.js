@@ -4,6 +4,19 @@
  * B2DEntity is the base class with properties for all B2D objects.
  * This class handles also the drawings for all classes.
  *
+ ```
+
+ var e = new CG.B2DEntity({
+   name: 'player',
+   image: new CG.Point(100,100),
+   world: b2world,
+   x: 10,
+   y: 20,
+   scale: 40
+ })
+
+ ```
+ *
  * @class CG.B2DEntity
  * @extends CG.Entity
  */
@@ -17,16 +30,6 @@ CG.Entity.extend('B2DEntity', {
      * x {number} the x position
      * y {number} the y position
      * scale {number} the world scale of B2DWorld
-     *
-     @example
-     var e = new CG.B2DEntity({
-           name: 'player',
-           image: new CG.Point(100,100),
-           world: b2world,
-           x: 10,
-           y: 20,
-           scale: 40
-         })
      *
      * @method init
      * @constructor

@@ -2,21 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja&#x2F;control&#x2F;director.js - Cangaja API</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <title>cangaja/control/director.js - Cangaja API</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title="Cangaja API"></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -27,469 +25,427 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/Cangaja.html">Cangaja</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Animation.html">CG.Animation</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DLine.html">CG.B2DLine</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DRope.html">CG.B2DRope</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Bitmap.html">CG.Bitmap</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Bound.html">CG.Bound</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Buffer.html">CG.Buffer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Button.html">CG.Button</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Delta.html">CG.Delta</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Director.html">CG.Director</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Emitter.html">CG.Emitter</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Entity.html">CG.Entity</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Font.html">CG.Font</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Game.html">CG.Game</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Layer.html">CG.Layer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Map.html">CG.Map</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapArea.html">CG.MapArea</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapPoint.html">CG.MapPoint</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Menu.html">CG.Menu</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Morph.html">CG.Morph</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Particle.html">CG.Particle</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Point.html">CG.Point</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Screen.html">CG.Screen</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Sequence.html">CG.Sequence</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Sprite.html">CG.Sprite</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Text.html">CG.Text</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Translate.html">CG.Translate</a></li>
-            
-                <li><a href="..&#x2F;classes/CG.Vector.html">CG.Vector</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/CG.html">CG</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Cangaja.html">Cangaja</a></li>
+                                <li><a href="../classes/CG.Animation.html">CG.Animation</a></li>
+                                <li><a href="../classes/CG.AtlasImage.html">CG.AtlasImage</a></li>
+                                <li><a href="../classes/CG.AtlasTexturePacker.html">CG.AtlasTexturePacker</a></li>
+                                <li><a href="../classes/CG.B2DBridge.html">CG.B2DBridge</a></li>
+                                <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
+                                <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
+                                <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
+                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
+                                <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
+                                <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
+                                <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
+                                <li><a href="../classes/CG.B2DRope.html">CG.B2DRope</a></li>
+                                <li><a href="../classes/CG.B2DTerrain.html">CG.B2DTerrain</a></li>
+                                <li><a href="../classes/CG.B2DWorld.html">CG.B2DWorld</a></li>
+                                <li><a href="../classes/CG.Bitmap.html">CG.Bitmap</a></li>
+                                <li><a href="../classes/CG.Bound.html">CG.Bound</a></li>
+                                <li><a href="../classes/CG.Buffer.html">CG.Buffer</a></li>
+                                <li><a href="../classes/CG.Button.html">CG.Button</a></li>
+                                <li><a href="../classes/CG.CanvasRenderer.html">CG.CanvasRenderer</a></li>
+                                <li><a href="../classes/CG.Delta.html">CG.Delta</a></li>
+                                <li><a href="../classes/CG.Director.html">CG.Director</a></li>
+                                <li><a href="../classes/CG.Emitter.html">CG.Emitter</a></li>
+                                <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
+                                <li><a href="../classes/CG.Font.html">CG.Font</a></li>
+                                <li><a href="../classes/CG.Game.html">CG.Game</a></li>
+                                <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
+                                <li><a href="../classes/CG.Map.html">CG.Map</a></li>
+                                <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
+                                <li><a href="../classes/CG.MapPoint.html">CG.MapPoint</a></li>
+                                <li><a href="../classes/CG.MapTileLayer.html">CG.MapTileLayer</a></li>
+                                <li><a href="../classes/CG.MapTileProperties.html">CG.MapTileProperties</a></li>
+                                <li><a href="../classes/CG.MediaAsset.html">CG.MediaAsset</a></li>
+                                <li><a href="../classes/CG.Menu.html">CG.Menu</a></li>
+                                <li><a href="../classes/CG.Morph.html">CG.Morph</a></li>
+                                <li><a href="../classes/CG.Particle.html">CG.Particle</a></li>
+                                <li><a href="../classes/CG.Point.html">CG.Point</a></li>
+                                <li><a href="../classes/CG.Screen.html">CG.Screen</a></li>
+                                <li><a href="../classes/CG.Sequence.html">CG.Sequence</a></li>
+                                <li><a href="../classes/CG.SpineAnimation.html">CG.SpineAnimation</a></li>
+                                <li><a href="../classes/CG.Sprite.html">CG.Sprite</a></li>
+                                <li><a href="../classes/CG.Stick.html">CG.Stick</a></li>
+                                <li><a href="../classes/CG.Text.html">CG.Text</a></li>
+                                <li><a href="../classes/CG.Translate.html">CG.Translate</a></li>
+                                <li><a href="../classes/CG.Vector.html">CG.Vector</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/CG.html">CG</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja&#x2F;control&#x2F;director.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
-&#x2F;**
- * @description
- *
- * CG.Director the top instance for CG.Screens, CG.Layers, CG.Sprites and so on in the control hierarchy.
- * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
- @example
- &#x2F;&#x2F;create top level CG.Director object
- var director = new CG.Director()
-
- &#x2F;&#x2F;create a CG.Screen
- var mainscreen = new CG.Screen(&#x27;mainscreen&#x27;)
-
- &#x2F;&#x2F;create a CG.Layer
- var mainlayer = new CG.Layer(&#x27;mainlayer&#x27;)
-
- &#x2F;&#x2F;create a demo CG.Sprite
- var demosprite = new CG.Sprite(Game.asset.getImageByName(&#x27;spritegfx&#x27;), new CG.Point(400, 240))
-
- &#x2F;&#x2F;add&#x2F;attach the demo sprite to the layer
- mainlayer.addElement(back)
-
- &#x2F;&#x2F;add&#x2F;attach mainscreen and mainlayer to the director
- director.addScreen(mainscreen.addLayer(mainlayer))
-
- * @class CG.Director
- * @extends Class
- *&#x2F;
-CG.Class.extend(&#x27;Director&#x27;, {
-    &#x2F;**
-     * @method init
-     * @constructor
-     * @return {*}
-     *&#x2F;
-    init: function () {
-        CG._extend(this, {
-            &#x2F;**
-             * @property screens
-             * @type {Array}
-             *&#x2F;
-            screens: [],
-            &#x2F;**
-             * @property activescreen
-             * @type {Number}
-             *&#x2F;
-            activescreen: 0,
-            &#x2F;**
-             * @property nextscreen
-             * @type {Number}
-             *&#x2F;
-            nextscreen: 0,
-            &#x2F;**
-             * @property duration
-             * @type {Number}
-             *&#x2F;
-            duration: 20,
-            &#x2F;**
-             * @property stepx
-             * @type {number}
-             *&#x2F;
-            stepx: 40,
-            &#x2F;**
-             * @property stepy
-             * @type {number}
-             *&#x2F;
-            stepy: 30,
-            &#x2F;**
-             * @property alpha
-             * @type {Number}
-             *&#x2F;
-            alpha: 0,
-            &#x2F;**
-             * @property mode
-             * @type {String}
-             *&#x2F;
-            mode: &#x27;fade&#x27;,      &#x2F;&#x2F;fade or scale
-            &#x2F;**
-             * @property direction
-             * @type {String}
-             *&#x2F;
-            direction: CG.RIGHT,      &#x2F;&#x2F;CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
-            &#x2F;**
-             * @property color
-             * @type {String}
-             *&#x2F;
-            color: &#x27;rgb(0,0,0)&#x27;
-        })
-        return this
-    },
-    &#x2F;**
-     * @method update
-     *&#x2F;
-    update: function () {
-        &#x2F;&#x2F;handle screen fading
-        switch (this.mode) {
-            case &#x27;scale&#x27;:
-                if (this.nextscreen != this.activescreen) {
-                    this.screens[this.activescreen].xscale -= 0.4 &#x2F; this.duration
-                    this.screens[this.activescreen].yscale -= 0.4 &#x2F; this.duration
-                } else if (this.nextscreen == this.activescreen) {
-                    this.screens[this.activescreen].xscale += 0.4 &#x2F; this.duration
-                    this.screens[this.activescreen].yscale += 0.4 &#x2F; this.duration
-                }
-
-                if (this.screens[this.activescreen].xscale &gt;= 1) {
-                    this.screens[this.activescreen].xscale = this.screens[this.activescreen].yscale = 1
-                    this.screens[this.nextscreen].xscale = this.screens[this.nextscreen].yscale = 1
-                }
-
-                if (this.screens[this.activescreen].xscale &lt;= 0) {
-                    this.screens[this.activescreen].xscale = this.screens[this.activescreen].yscale = 1
-                    this.screens[this.nextscreen].xscale = this.screens[this.nextscreen].yscale = 0
-                    this.activescreen = this.nextscreen
-                }
-                &#x2F;&#x2F;this.screens[this.nextscreen].update()
-                break
-
-            case &#x27;fade&#x27;:
-                &#x2F;&#x2F; the fade is bound to the alpha value in the draw method
-                if (this.nextscreen != this.activescreen &amp;&amp; this.alpha &lt; 1) {
-                    this.alpha += 1 &#x2F; this.duration
-                } else if (this.nextscreen == this.activescreen &amp;&amp; this.alpha != 0) {
-                    this.alpha -= 1 &#x2F; this.duration
-                }
-                if (this.alpha &gt;= 1) {
-                    this.activescreen = this.nextscreen
-                    this.alpha = 1
-                }
-                if (this.alpha &lt; 0) {
-                    this.alpha = 0
-                }
-                break
-
-            case &#x27;slide&#x27;:
-                if (this.nextscreen != this.activescreen) {
-                    switch (this.direction) {
-                        case CG.UP:
-                            this.screens[this.activescreen].position.y -= this.stepy
-                            this.screens[this.nextscreen].position.y -= this.stepy
-                            if (this.screens[this.nextscreen].position.y &lt; 0) {
-                                this.resetScreens()
-                                this.activescreen = this.nextscreen
+                        <h1 class="file-heading">File: cangaja/control/director.js</h1>
+                        
+                        <div class="file">
+                            <pre class="code prettyprint linenums">
+                        /**
+                         * @description
+                         *
+                         * CG.Director the top instance for CG.Screens, CG.Layers CG.B2DWorld, CG.Sprites and so on in the control hierarchy.
+                         * Its main purpose is to collect CG.Screens under its hood and support some basic screen fading features.
+                        
+                         &#x60;&#x60;&#x60;
+                        
+                        //create top level CG.Director object
+                        var director = new CG.Director()
+                        
+                        //create a CG.Screen
+                        var mainscreen = new CG.Screen(&#x27;mainscreen&#x27;)
+                        
+                        //create a CG.Layer
+                        var mainlayer = new CG.Layer(&#x27;mainlayer&#x27;)
+                        
+                        //create a demo CG.Sprite
+                        var demosprite = new CG.Sprite(Game.asset.getImageByName(&#x27;spritegfx&#x27;), new CG.Point(400, 240))
+                        
+                        //add/attach the demo sprite to the layer
+                        mainlayer.addElement(back)
+                        
+                        //add/attach mainscreen and mainlayer to the director
+                        director.addScreen(mainscreen.addLayer(mainlayer))
+                        
+                         &#x60;&#x60;&#x60;
+                        
+                         *
+                         * @class CG.Director
+                         * @extends Class
+                         */
+                        CG.Class.extend(&#x27;Director&#x27;, {
+                            /**
+                             * @method init
+                             * @constructor
+                             * @return {*}
+                             */
+                            init: function () {
+                                CG._extend(this, {
+                                    /**
+                                     * @property screens
+                                     * @type {Array}
+                                     */
+                                    screens: [],
+                                    /**
+                                     * @property activescreen
+                                     * @type {Number}
+                                     */
+                                    activescreen: 0,
+                                    /**
+                                     * @property nextscreen
+                                     * @type {Number}
+                                     */
+                                    nextscreen: 0,
+                                    /**
+                                     * @property duration
+                                     * @type {Number}
+                                     */
+                                    duration: 20,
+                                    /**
+                                     * @property stepx
+                                     * @type {number}
+                                     */
+                                    stepx: 40,
+                                    /**
+                                     * @property stepy
+                                     * @type {number}
+                                     */
+                                    stepy: 30,
+                                    /**
+                                     * @property alpha
+                                     * @type {Number}
+                                     */
+                                    alpha: 0,
+                                    /**
+                                     * @property mode
+                                     * @type {String}
+                                     */
+                                    mode: &#x27;fade&#x27;,      //fade or scale
+                                    /**
+                                     * @property direction
+                                     * @type {String}
+                                     */
+                                    direction: CG.RIGHT,      //CG.LEFT, CG.RIGHT, CG.UP, CG.DOWN
+                                    /**
+                                     * @property color
+                                     * @type {String}
+                                     */
+                                    color: &#x27;rgb(0,0,0)&#x27;
+                                })
+                                return this
+                            },
+                            /**
+                             * @method update
+                             */
+                            update: function () {
+                                //handle screen fading
+                                switch (this.mode) {
+                                    case &#x27;scale&#x27;:
+                                        if (this.nextscreen != this.activescreen) {
+                                            this.screens[this.activescreen].xscale -= 0.4 / this.duration
+                                            this.screens[this.activescreen].yscale -= 0.4 / this.duration
+                                        } else if (this.nextscreen == this.activescreen) {
+                                            this.screens[this.activescreen].xscale += 0.4 / this.duration
+                                            this.screens[this.activescreen].yscale += 0.4 / this.duration
+                                        }
+                        
+                                        if (this.screens[this.activescreen].xscale &gt;= 1) {
+                                            this.screens[this.activescreen].xscale = this.screens[this.activescreen].yscale = 1
+                                            this.screens[this.nextscreen].xscale = this.screens[this.nextscreen].yscale = 1
+                                        }
+                        
+                                        if (this.screens[this.activescreen].xscale &lt;= 0) {
+                                            this.screens[this.activescreen].xscale = this.screens[this.activescreen].yscale = 1
+                                            this.screens[this.nextscreen].xscale = this.screens[this.nextscreen].yscale = 0
+                                            this.activescreen = this.nextscreen
+                                        }
+                                        //this.screens[this.nextscreen].update()
+                                        break
+                        
+                                    case &#x27;fade&#x27;:
+                                        // the fade is bound to the alpha value in the draw method
+                                        if (this.nextscreen != this.activescreen &amp;&amp; this.alpha &lt; 1) {
+                                            this.alpha += 1 / this.duration
+                                        } else if (this.nextscreen == this.activescreen &amp;&amp; this.alpha != 0) {
+                                            this.alpha -= 1 / this.duration
+                                        }
+                                        if (this.alpha &gt;= 1) {
+                                            this.activescreen = this.nextscreen
+                                            this.alpha = 1
+                                        }
+                                        if (this.alpha &lt; 0) {
+                                            this.alpha = 0
+                                        }
+                                        break
+                        
+                                    case &#x27;slide&#x27;:
+                                        if (this.nextscreen != this.activescreen) {
+                                            switch (this.direction) {
+                                                case CG.UP:
+                                                    this.screens[this.activescreen].position.y -= this.stepy
+                                                    this.screens[this.nextscreen].position.y -= this.stepy
+                                                    if (this.screens[this.nextscreen].position.y &lt; 0) {
+                                                        this.resetScreens()
+                                                        this.activescreen = this.nextscreen
+                                                    }
+                                                    break
+                                                case CG.DOWN:
+                                                    this.screens[this.activescreen].position.y += this.stepy
+                                                    this.screens[this.nextscreen].position.y += this.stepy
+                                                    if (this.screens[this.nextscreen].position.y &gt; 0) {
+                                                        this.resetScreens()
+                                                        this.activescreen = this.nextscreen
+                                                    }
+                                                    break
+                                                case CG.LEFT:
+                                                    this.screens[this.activescreen].position.x -= this.stepx
+                                                    this.screens[this.nextscreen].position.x -= this.stepx
+                                                    if (this.screens[this.nextscreen].position.x &lt; 0) {
+                                                        this.resetScreens()
+                                                        this.activescreen = this.nextscreen
+                                                    }
+                                                    break
+                                                case CG.RIGHT:
+                                                    this.screens[this.activescreen].position.x += this.stepx
+                                                    this.screens[this.nextscreen].position.x += this.stepx
+                                                    if (this.screens[this.nextscreen].position.x &gt; 0) {
+                                                        this.resetScreens()
+                                                        this.activescreen = this.nextscreen
+                                                    }
+                                                    break
+                                            }
+                                            //this.screens[this.nextscreen].update()
+                                        }
+                                        break
+                                }
+                                this.screens[this.activescreen].update()
+                            },
+                            /**
+                             * @method draw
+                             */
+                            draw: function () {
+                                //draw active screen
+                                this.screens[this.activescreen].draw()
+                        
+                                ////draw nextscreen for slide mode
+                                if (this.nextscreen != this.activescreen) {
+                                    if (this.screens[this.nextscreen].position.x != 0 || this.screens[this.nextscreen].position.y != 0) {
+                                        this.screens[this.nextscreen].draw()
+                                    }
+                                }
+                        
+                                //draw fading layer =&gt; why not use the screens itself with alpha without additional rect?
+                                if (this.alpha &gt; 0) {
+                                    Game.b_ctx.save()
+                                    Game.b_ctx.globalAlpha = this.alpha
+                                    Game.b_ctx.fillStyle = this.color
+                                    Game.b_ctx.fillRect(0, 0, Game.bound.width, Game.bound.height)
+                                    Game.b_ctx.restore()
+                                }
+                            },
+                            /**
+                             * @method nextScreen
+                             @example
+                             //tell the director class to fade to next screen with scale mode
+                             Game.director.nextScreen(&#x27;gamescreen&#x27;, &#x27;scale&#x27;, 10);
+                        
+                             //tell the director class to fade to next screen
+                             Game.director.nextScreen(&#x27;settingsscreen&#x27;, &#x27;fade&#x27;, 10);
+                             *
+                             * @param {string} screenname to define nextscreen for fading
+                             * @param {string} mode mode for transition
+                             * @param {Number} duration the duration for fading
+                             */
+                            nextScreen: function (screenname, mode, duration) {
+                                var nextscreen = this.getIndexOfScreen(screenname)
+                        
+                                if (nextscreen != this.activescreen) {
+                                    this.resetScreens()
+                                    this.mode = mode
+                                    this.duration = duration
+                                    this.stepx = Game.canvas.width / this.duration &gt;&gt; 0
+                                    this.stepy = Game.canvas.height / this.duration &gt;&gt; 0
+                                    this.nextscreen = nextscreen
+                        
+                                    if (this.mode === &#x27;scale&#x27;) {
+                                        this.alpha = 0
+                                    } else if (this.mode === &#x27;fade&#x27;) {
+                                        // hmm ;o) ?
+                                    } else if (this.mode === &#x27;slide&#x27;) {
+                                        switch (this.direction) {
+                                            case CG.UP:
+                                                this.screens[this.nextscreen].position.y += CG.canvas.height
+                                                break
+                                            case CG.DOWN:
+                                                this.screens[this.nextscreen].position.y -= CG.canvas.height
+                                                break
+                                            case CG.LEFT:
+                                                this.screens[this.nextscreen].position.x += CG.canvas.width
+                                                break
+                                            case CG.RIGHT:
+                                            default:
+                                                this.screens[this.nextscreen].position.x -= CG.canvas.width
+                                                break
+                                        }
+                                    }
+                                }
+                                return this
+                            },
+                            resetScreens: function () {
+                                this.screens[this.activescreen].position = new CG.Point(0, 0)
+                                this.screens[this.nextscreen].position = new CG.Point(0, 0)
+                                return this
+                            },
+                            /**
+                             * @method addScreen
+                             *
+                             * @param {CG.Screen} screen to add to the screen list
+                             */
+                            addScreen: function (screen) {
+                                this.screens.push(screen)
+                                return this
+                            },
+                            /**
+                             * @method getScreenByName
+                             *
+                             * @param {string} screenname to find screen by name
+                             * @return {false/CG.Screen} returns false or the screen object
+                             */
+                            getScreenByName: function (screenname) {
+                                for (var i = 0, l = this.screens.length; i &lt; l; i++) {
+                                    if (this.screens[i].name == screenname) {
+                                        return this.screens[i]
+                                    }
+                                }
+                                return false
+                            },
+                        
+                            /**
+                             * @method getIndexOfScreen
+                             *
+                             * @param {string} screenname to find index of screen in screen array
+                             * @return {false/Number} return false or index number of the screen
+                             */
+                            getIndexOfScreen: function (screenname) {
+                                for (var i = 0, l = this.screens.length; i &lt; l; i++) {
+                                    if (this.screens[i].name == screenname) {
+                                        return i
+                                    }
+                                }
+                                return false
+                            },
+                        
+                            /**
+                             * @method getActiveScreenName
+                             *
+                             * @return {string} the name of the active screen
+                             */
+                            getActiveScreenName: function () {
+                                return this.screens[this.activescreen].name
+                            },
+                            setDirection: function (direction) {
+                                this.direction = direction
+                                return this
                             }
-                            break
-                        case CG.DOWN:
-                            this.screens[this.activescreen].position.y += this.stepy
-                            this.screens[this.nextscreen].position.y += this.stepy
-                            if (this.screens[this.nextscreen].position.y &gt; 0) {
-                                this.resetScreens()
-                                this.activescreen = this.nextscreen
-                            }
-                            break
-                        case CG.LEFT:
-                            this.screens[this.activescreen].position.x -= this.stepx
-                            this.screens[this.nextscreen].position.x -= this.stepx
-                            if (this.screens[this.nextscreen].position.x &lt; 0) {
-                                this.resetScreens()
-                                this.activescreen = this.nextscreen
-                            }
-                            break
-                        case CG.RIGHT:
-                            this.screens[this.activescreen].position.x += this.stepx
-                            this.screens[this.nextscreen].position.x += this.stepx
-                            if (this.screens[this.nextscreen].position.x &gt; 0) {
-                                this.resetScreens()
-                                this.activescreen = this.nextscreen
-                            }
-                            break
-                    }
-                    &#x2F;&#x2F;this.screens[this.nextscreen].update()
-                }
-                break
-        }
-        this.screens[this.activescreen].update()
-    },
-    &#x2F;**
-     * @method draw
-     *&#x2F;
-    draw: function () {
-        &#x2F;&#x2F;draw active screen
-        this.screens[this.activescreen].draw()
-
-        &#x2F;&#x2F;draw nextscreen for slide mode
-        if (this.screens[this.nextscreen].position.x != 0 || this.screens[this.nextscreen].position.y != 0) {
-            this.screens[this.nextscreen].draw()
-        }
-
-        &#x2F;&#x2F;draw fading layer =&gt; why not use the screens itself with alpha without additional rect?
-        if (this.alpha &gt; 0) {
-            Game.b_ctx.save()
-            Game.b_ctx.globalAlpha = this.alpha
-            Game.b_ctx.fillStyle = this.color
-            Game.b_ctx.fillRect(0, 0, Game.bound.width, Game.bound.height)
-            Game.b_ctx.restore()
-        }
-    },
-    &#x2F;**
-     * @method nextScreen
-     @example
-     &#x2F;&#x2F;tell the director class to fade to next screen with scale mode
-     Game.director.nextScreen(&#x27;gamescreen&#x27;, &#x27;scale&#x27;, 10);
-
-     &#x2F;&#x2F;tell the director class to fade to next screen
-     Game.director.nextScreen(&#x27;settingsscreen&#x27;, &#x27;fade&#x27;, 10);
-     *
-     * @param {string} screenname to define nextscreen for fading
-     * @param {string} mode mode for transition
-     * @param {Number} duration the duration for fading
-     *&#x2F;
-    nextScreen: function (screenname, mode, duration) {
-        var nextscreen = this.getIndexOfScreen(screenname)
-
-        if (nextscreen != this.activescreen) {
-            this.resetScreens()
-            this.mode = mode
-            this.duration = duration
-            this.stepx = Game.canvas.width &#x2F; this.duration &gt;&gt; 0
-            this.stepy = Game.canvas.height &#x2F; this.duration &gt;&gt; 0
-            this.nextscreen = nextscreen
-
-            if (this.mode === &#x27;scale&#x27;) {
-                this.alpha = 0
-            } else if (this.mode === &#x27;fade&#x27;) {
-                &#x2F;&#x2F; hmm ;o) ?
-            } else if (this.mode === &#x27;slide&#x27;) {
-                switch (this.direction) {
-                    case CG.UP:
-                        this.screens[this.nextscreen].position.y += CG.canvas.height
-                        break
-                    case CG.DOWN:
-                        this.screens[this.nextscreen].position.y -= CG.canvas.height
-                        break
-                    case CG.LEFT:
-                        this.screens[this.nextscreen].position.x += CG.canvas.width
-                        break
-                    case CG.RIGHT:
-                    default:
-                        this.screens[this.nextscreen].position.x -= CG.canvas.width
-                        break
-                }
-            }
-        }
-        return this
-    },
-    resetScreens: function () {
-        this.screens[this.activescreen].position = new CG.Point(0, 0)
-        this.screens[this.nextscreen].position = new CG.Point(0, 0)
-        return this
-    },
-    &#x2F;**
-     * @method addScreen
-     *
-     * @param {CG.Screen} screen to add to the screen list
-     *&#x2F;
-    addScreen: function (screen) {
-        this.screens.push(screen)
-        return this
-    },
-    &#x2F;**
-     * @method getScreenByName
-     *
-     * @param {string} screenname to find screen by name
-     * @return {false&#x2F;CG.Screen} returns false or the screen object
-     *&#x2F;
-    getScreenByName: function (screenname) {
-        for (var i = 0, l = this.screens.length; i &lt; l; i++) {
-            if (this.screens[i].name == screenname) {
-                return this.screens[i]
-            }
-        }
-        return false
-    },
-
-    &#x2F;**
-     * @method getIndexOfScreen
-     *
-     * @param {string} screenname to find index of screen in screen array
-     * @return {false&#x2F;Number} return false or index number of the screen
-     *&#x2F;
-    getIndexOfScreen: function (screenname) {
-        for (var i = 0, l = this.screens.length; i &lt; l; i++) {
-            if (this.screens[i].name == screenname) {
-                return i
-            }
-        }
-        return false
-    },
-
-    &#x2F;**
-     * @method getActiveScreenName
-     *
-     * @return {string} the name of the active screen
-     *&#x2F;
-    getActiveScreenName: function () {
-        return this.screens[this.activescreen].name
-    },
-    setDirection: function (direction) {
-        this.direction = direction
-        return this
-    }
-})
-    </pre>
-</div>
-
+                        })
+                            </pre>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

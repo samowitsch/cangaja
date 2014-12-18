@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja/box2d/b2d-bridge.js - Cangaja API</title>
+    <title>cangaja/input/stick.js - Cangaja API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -120,199 +120,236 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja/box2d/b2d-bridge.js</h1>
+                        <h1 class="file-heading">File: cangaja/input/stick.js</h1>
                         
                         <div class="file">
                             <pre class="code prettyprint linenums">
                         /**
                          * @description
                          *
-                         * B2DBridge is a simple wrapper that creates a bridge with segments.
-                         * Just play with the params to get a good result.
+                         * CG.Stick displays an analog stick and uses the first element of the touches
                          *
-                        
                          &#x60;&#x60;&#x60;
                         
-                             var e = new CG.B2DBridge({
-                                   name: &#x27;player&#x27;,
-                                   image: this.asset.getImageByName(&#x27;glowball&#x27;),
-                                   x: 100,
-                                   y: 100,
-                                   length: 600,
-                                   segments: 20
-                                   segmentHeight: 4,
-                                   world: b2world,
-                                   scale: 40
+                         var b = new CG.Stick({
+                               maxLength: 0,
+                               active: false
                              })
                         
                          &#x60;&#x60;&#x60;
                          *
-                         * @class CG.B2DBridge
-                         * @extends CG.B2DEntity
+                         * @class CG.Stick
+                         * @extends CG.Class
+                         *
                          */
-                        
-                        CG.B2DEntity.extend(&#x27;B2DBridge&#x27;, {
+                        CG.Class.extend(&#x27;Stick&#x27;, {
                             /**
                              * Options:
-                             * name {string}
-                             * image {mixed}
                              * x {number}
-                             * y (number}
-                             * length {number}
-                             * segments {number}
-                             * segmentHeight {number}
-                             * world {object}
-                             * scale {number}
+                             * y {number}
                              *
-                             * @method init
+                             @example
+                             *
                              * @constructor
-                             * @param options {Object}
+                             * @method init
+                             * @param options {object}
                              * @return {*}
                              */
                             init: function (options) {
-                        
                                 CG._extend(this, {
                                     /**
-                                     * @property x
-                                     * @type {Number}
+                                     * @property active
+                                     * @type {Boolean}
                                      */
-                                    x: 0,
+                                    active: false,
                                     /**
-                                     * @property y
+                                     * @property identifier
                                      * @type {Number}
                                      */
-                                    y: 0,
+                                    identifier: -1,
+                                    /**
+                                     * @property handle
+                                     * @type {Number}
+                                     * @default CG.LEFT_HAND
+                                     */
+                                    handle: CG.LEFT_HAND,
+                                    /**
+                                     * @property atLimit
+                                     * @type {Boolean}
+                                     */
+                                    atLimit: false,
                                     /**
                                      * @property length
                                      * @type {Number}
                                      */
-                                    length: 0,
+                                    length: 1,
                                     /**
-                                     * @property segments
+                                     * @property maxLength
                                      * @type {Number}
                                      */
-                                    segments: 0,
+                                    maxLength: 0,
                                     /**
-                                     * @property segmentWidth
-                                     * @type {Number}
-                                     */
-                                    segmentWidth: 0,
-                                    /**
-                                     * @property segmentHeight
-                                     * @type {Number}
-                                     */
-                                    segmentHeight: 0,
-                                    /**
-                                     * @property anchor
-                                     * @type {b2Vec2}
-                                     */
-                                    anchor: new b2Vec2(),
-                                    /**
-                                     * @property prevBodf
+                                     * @property limit
                                      * @type {Object}
                                      */
-                                    prevBody: {},
+                                    limit: {x: 0, Y: 0},
                                     /**
-                                     * @property bodyGroup
-                                     * @type {Array}
+                                     * @property input
+                                     * @type {Object}
                                      */
-                                    bodyGroup: [],
+                                    input: {x: 0, Y: 0},
                                     /**
-                                     * @property bodyCount
-                                     * @type {Number}
+                                     * @property normal
+                                     * @type {Object}
                                      */
-                                    bodyCount: 0,
-                                    /**
-                                     * @property lowerAngle
-                                     * @type {Number}
-                                     */
-                                    lowerAngle: -25,
-                                    /**
-                                     * @property upperAngle
-                                     * @type {Number}
-                                     */
-                                    upperAngle: 25,
-                                    /**
-                                     * @property enableLimit
-                                     * @type {boolean}
-                                     */
-                                    enableLimit: true
+                                    normal: {x: 0, Y: 0}
                                 })
                         
-                                this._super(options)
-                                this.instanceOf = &#x27;B2DBridge&#x27;
-                        
-                                this.setImage(this.image)
-                        
-                                /**
-                                 * @property segmentWidth
-                                 * @type {Number}
-                                 */
-                                this.segmentWidth = ((this.length - this.x) / this.segments) / 2
-                        
-                        
-                                // BridgeStart
-                        
-                                this.fixtureDef = new b2FixtureDef()
-                                this.bodyShapeCircle = new b2CircleShape()
-                                this.bodyDef = new b2BodyDef()
-                                this.bodyDef.userData = this.id
-                                this.bodyShapeCircle.m_radius = this.segmentHeight / this.scale
-                                this.fixtureDef.density = this.density
-                                this.fixtureDef.restitution = this.restitution
-                                this.fixtureDef.friction = this.friction
-                                this.fixtureDef.shape = this.bodyShapeCircle
-                                this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
-                                this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
-                                this.bodyGroup[0].CreateFixture(this.fixtureDef)
-                                this.prevBody = this.bodyGroup[0]
-                        
-                                // BridgeEnd
-                                this.bodyDef.position.SetXY(this.length / this.scale, this.y / this.scale)
-                                this.bodyDef.userData = this.id
-                                this.bodyGroup[1] = this.world.CreateBody(this.bodyDef)
-                                this.bodyGroup[1].CreateFixture(this.fixtureDef)
-                        
-                                // bridge elements
-                                this.fixtureDef = new b2FixtureDef()
-                                this.bodyShapePoly = new b2PolygonShape()
-                                this.bodyDef = new b2BodyDef()
-                                this.bodyDef.userData = this.id
-                                this.bodyShapePoly.SetAsBox(this.segmentWidth / this.scale, this.segmentHeight / this.scale)
-                                this.bodyDef.type = box2d.b2BodyType.b2_dynamicBody
-                                this.fixtureDef.shape = this.bodyShapePoly
-                                this.fixtureDef.density = this.density
-                                this.fixtureDef.restitution = this.restitution
-                                this.fixtureDef.friction = this.friction
-                                this.jointDef = new b2RevoluteJointDef()
-                                this.jointDef.lowerAngle = this.lowerAngle / CG.Const_180_PI
-                                this.jointDef.upperAngle = this.upperAngle / CG.Const_180_PI
-                                this.jointDef.enableLimit = this.enableLimit
-                        
-                                for (var i = 0, l = this.segments; i &lt; l; i++) {
-                                    this.bodyDef.position.SetXY(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
-                                    this.bodyGroup[i + 2] = this.world.CreateBody(this.bodyDef)
-                                    this.bodyGroup[i + 2].CreateFixture(this.fixtureDef)
-                                    this.anchor.SetXY((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
-                                    this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 2], this.anchor)
-                                    this.world.CreateJoint(this.jointDef)
-                                    this.prevBody = this.bodyGroup[i + 2]
-                                    this.bodyCount = i + 2
+                                if (options) {
+                                    CG._extend(this, options)
                                 }
                         
-                                this.anchor.SetXY((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
-                                this.jointDef.Initialize(this.prevBody, this.bodyGroup[1], this.anchor)
-                                this.world.CreateJoint(this.jointDef)
+                                this.addEventListener()
                         
                                 return this
                             },
+                            addEventListener: function () {
+                                Game.canvas.addEventListener(&quot;touchstart&quot;, function (e) {
+                                    e.preventDefault();
+                        
+                                    if (this.active) {
+                                        return
+                                    }
+                        
+                                    var touch = e.touches[0];
+                        
+                                    if (this.handle === CG.LEFT_HAND &amp;&amp; touch.pageX &lt; Game.width2) {
+                                        this.setLimitXY(touch.pageX, touch.pageY)
+                                        this.setInputXY(touch.pageX, touch.pageY)
+                                        this.active = true
+                                        this.identifier = touch.identifier
+                                    } else if (this.handle === CG.RIGHT_HAND &amp;&amp; touch.pageX &gt; Game.width2) {
+                                        this.setLimitXY(touch.pageX, touch.pageY)
+                                        this.setInputXY(touch.pageX, touch.pageY)
+                                        this.active = true
+                                        this.identifier = touch.identifier
+                                    }
+                        
+                        
+                                }.bind(this));
+                        
+                                document.addEventListener(&quot;touchmove&quot;, function (e) {
+                                    e.preventDefault();
+                        
+                                    for (var i = 0; i &lt; e.touches.length; ++i) {
+                                        var touch = e.touches[i];
+                                        if (touch.identifier === this.identifier) {
+                                            this.setInputXY(touch.pageX, touch.pageY);
+                                        }
+                                    }
+                                }.bind(this));
+                        
+                                document.addEventListener(&quot;touchend&quot;, function (e) {
+                                    for (var i = 0; i &lt; e.changedTouches.length; ++i) {
+                                        var touch = e.changedTouches[i];
+                                        if (touch.identifier === this.identifier) {
+                                            this.active = false
+                                            this.identifier = -1
+                                        }
+                                    }
+                                }.bind(this));
+                            },
                             draw: function () {
-                                for (var i = 2; i &lt;= this.bodyCount; i++) {
+                                if (!this.active) {
+                                    return
+                                }
                         
-                                    this.body = this.bodyGroup[i]
+                                Game.b_ctx.save()
                         
-                                    Game.renderer.draw(this)
+                                // limit
+                                Game.b_ctx.beginPath()
+                                Game.b_ctx.strokeStyle = &#x27;rgb(200,200,200)&#x27;
+                                Game.b_ctx.lineWidth = 3
+                                Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
+                                Game.b_ctx.stroke()
                         
+                                // base
+                                Game.b_ctx.beginPath()
+                                Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
+                                Game.b_ctx.stroke()
+                        
+                                // input
+                                Game.b_ctx.beginPath();
+                                Game.b_ctx.arc(this.input.x, this.input.y, this.maxLength / 1.5, 0, (Math.PI * 2), true)
+                                Game.b_ctx.fillStyle = &quot;rgb(0, 0, 200)&quot;
+                                Game.b_ctx.fill()
+                        
+                                Game.b_ctx.restore()
+                            },
+                            update: function () {
+                                if (!this.active) {
+                                    return
+                                }
+                        
+                                var diff = this.subtractVectors(this.input, this.limit)
+                                var length = this.getVectorLength(diff)
+                        
+                                if (Math.round(length) &gt;= this.maxLength) {
+                                    length = this.maxLength
+                        
+                                    var rads = this.getRadians(diff.x, diff.y)
+                        
+                                    this.atLimit = true;
+                                    this.input = this.getVectorFromRadians(rads, length)
+                                    this.input.x += this.limit.x
+                                    this.input.y += this.limit.y
+                                } else {
+                                    this.atLimit = false;
+                                }
+                        
+                                this.length = length;
+                                this.normal = this.getVectorNormal(diff)
+                            },
+                            getRadians: function (x, y) {
+                                return Math.atan2(x, -y)
+                            },
+                            getVectorFromRadians: function (radians, length) {
+                                var length = (Number(length) || 1)
+                                return {
+                                    x: (Math.sin(radians) * length),
+                                    y: (-Math.cos(radians) * length)
+                                }
+                            },
+                            getVectorLength: function (v) {
+                                return Math.sqrt((v.x * v.x) + (v.y * v.y))
+                            },
+                            getVectorNormal: function (v) {
+                                var len = this.getVectorLength(v)
+                                if (len === 0) {
+                                    return v
+                                } else {
+                                    return {
+                                        x: (v.x * (1 / len)),
+                                        y: (v.y * (1 / len))
+                                    }
+                                }
+                            },
+                            setLimitXY: function (x, y) {
+                                this.limit = {
+                                    x: x,
+                                    y: y
+                                }
+                            },
+                            setInputXY: function (x, y) {
+                                this.input = {
+                                    x: x,
+                                    y: y
+                                }
+                            },
+                            subtractVectors: function (v1, v2) {
+                                return {
+                                    x: (v1.x - v2.x),
+                                    y: (v1.y - v2.y)
                                 }
                             }
                         })

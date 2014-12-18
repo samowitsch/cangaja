@@ -3,6 +3,14 @@
  *
  * CG.Particle
  *
+ ```
+
+     var s = new CG.Particle({
+           image: '../images/demo.png'
+         })
+
+ ```
+ *
  * @class CG.Particle
  * @extends CG.Sprite
  *
@@ -13,11 +21,6 @@ CG.Sprite.extend('Particle', {
      * Options:
      * image {string} imgpath, image object or atlasimage object to use
      *
-     @example
-     var s = new CG.Particle({
-           image: '../images/demo.png'
-         })
-     *
      * @constructor
      * @method init
      * @param image {mixed} image imgpath, image object or atlasimage object to use for the particle
@@ -26,41 +29,45 @@ CG.Sprite.extend('Particle', {
         this._super()
         this.instanceOf = 'Particle'
 
+        CG._extend(this, {
+
+            /**
+             * @property position
+             * @type {CG.Point}
+             */
+            position: new CG.Point(0, 0),
+            /**
+             * @property lifetime
+             * @type {Number}
+             */
+            lifetime: 100,
+            /**
+             * @property currtime
+             * @type {Number}
+             */
+            currtime: this.lifetime,
+            /**
+             * @property aging
+             * @type {Number}
+             */
+            aging: 1,
+            /**
+             * @property fadeout
+             * @type {Boolean}
+             */
+            fadeout: false,
+            /**
+             * @property gravity
+             * @type {Number}
+             */
+            gravity: 0
+        })
+
         if (options) {
             CG._extend(this, options)
             this.setImage(this.image)
         }
 
-        /**
-         * @property position
-         * @type {CG.Point}
-         */
-        this.position = new CG.Point(0,0)
-        /**
-         * @property lifetime
-         * @type {Number}
-         */
-        this.lifetime = 100
-        /**
-         * @property currtime
-         * @type {Number}
-         */
-        this.currtime = this.lifetime
-        /**
-         * @property aging
-         * @type {Number}
-         */
-        this.aging = 1
-        /**
-         * @property fadeout
-         * @type {Boolean}
-         */
-        this.fadeout = false
-        /**
-         * @property gravity
-         * @type {Number}
-         */
-        this.gravity = 0
     },
     update: function () {
         if (this.visible) {

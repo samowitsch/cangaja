@@ -102,7 +102,10 @@ var Game = {
             position: new CG.Point(Game.width2, 100),
             text: 'Button',
             font: small,
-            callback: buttonCallback
+            callbacks: {
+                clicked: buttonCallback,
+                hover: buttonCallbackHover
+            }
         })
         button.name = 'button'
         mainlayer.addElement(button)
@@ -115,7 +118,7 @@ var Game = {
             position: new CG.Point(Game.width2, 100),
             text: 'Menu Button 1',
             font: small,
-            callback: buttonCallback
+            callbacks: {clicked: buttonCallback}
         })
         button.name = '#mbutton 1#'
         menu.addButton(button)
@@ -124,7 +127,7 @@ var Game = {
             position: new CG.Point(Game.width2, 100),
             text: 'Menu Button 2',
             font: small,
-            callback: buttonCallback
+            callbacks: {clicked: buttonCallback}
         })
         button.name = '#mbutton 2#'
         menu.addButton(button)
@@ -133,7 +136,7 @@ var Game = {
             position: new CG.Point(Game.width2, 100),
             text: 'Menu Button 3',
             font: small,
-            callback: buttonCallback
+            callbacks: {clicked: buttonCallback}
         })
         button.name = '#mbutton 3#'
         menu.addButton(button)
@@ -187,10 +190,12 @@ var Game = {
             CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
         })
         hammer.on('dragstart', function (ev) {
+            CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft; //correct ontap value x
+            CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
         })
         hammer.on('drag', function (ev) {
-            CG.mouse.x = ev.gesture.center.pageX;
-            CG.mouse.y = ev.gesture.center.pageY;
+            CG.mouse.x = ev.gesture.center.pageX - canvas.offsetLeft; //correct ontap value x
+            CG.mouse.y = ev.gesture.center.pageY - canvas.offsetTop;  //correct ontap value y
         })
         hammer.on('dragend', function (ev) {
         })
@@ -221,4 +226,8 @@ var Game = {
 
 function buttonCallback(obj) {
     console.log('clicked & execute callback', obj)
+}
+
+function buttonCallbackHover(obj) {
+    console.log('hover & executed', obj)
 }

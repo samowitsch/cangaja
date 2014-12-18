@@ -3,6 +3,15 @@
  *
  * CG.Entity the base class of Cangaja
  *
+ *
+ ```
+
+        var e = new CG.Entity({
+           name: 'player',
+           position: new CG.Point(100,100)
+         })
+
+ ```
  * @class CG.Entity
  * @extends CG.Class
  */
@@ -12,12 +21,6 @@ CG.Class.extend('Entity', {
      * Options:
      * name {string}
      * position {CG.Point}
-     *
-     @example
-        var e = new CG.Entity({
-           name: 'player',
-           position: new CG.Point(100,100)
-         })
      *
      * @constructor
      * @method init
@@ -70,6 +73,10 @@ CG.Class.extend('Entity', {
              @property yhandle {Number}
              */
             yhandle: 0,
+            /**
+             @property clicked {boolean}
+             */
+            clicked: false,
             /**
              @property hover {boolean}
              */
@@ -190,6 +197,7 @@ CG.Class.extend('Entity', {
                 y2 < 0.5 * (this.height * this.yscale)) {
                 this.clicked = true
                 CG.mousedown = false
+                return
             } else {
                 this.clicked = false
             }
@@ -213,6 +221,7 @@ CG.Class.extend('Entity', {
             y2 > -0.5 * (this.height * this.yscale) &&
             y2 < 0.5 * (this.height * this.yscale)) {
             this.hover = true
+            return
         } else {
             this.hover = false
         }
@@ -331,4 +340,7 @@ CG.Class.extend('Entity', {
     }
 })
 
-
+function EntityException(msg) {
+    this.msg = msg
+    console.log(this.msg)
+}

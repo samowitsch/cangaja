@@ -1,12 +1,14 @@
 /**
  * @description
  *
- * CG.MediaAsset preloader.
+ * CG.MediaAsset preloader and asset handler.
  *
  * @class CG.MediaAsset
  * @extends Class
  *
  */
+
+// TODO add a function to define and load assets via json files
 
 CG.Class.extend('MediaAsset', {
     /**

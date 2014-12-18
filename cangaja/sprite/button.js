@@ -1,7 +1,21 @@
 /**
  * @description
  *
- * CG.Button represents a simple button class that can handle click, mouseover and callback functionality.
+ * CG.Button represents a simple button class that can handle click,
+ * mouseover and callback functionality.
+ *
+```
+
+var s = new CG.Button({
+   image: '../images/demo.png', // the image for the button
+   position: new CG.Point(200,200), // position of the button
+   text: 'MyButton',  // optional text
+   font: heiti,  // a font object when
+   callback: callbackFunction // a callback to execute when the button is clicked
+ })
+
+ ```
+ *
  *
  * @class CG.Button
  * @extends CG.Sprite
@@ -16,14 +30,6 @@ CG.Sprite.extend('Button', {
      * font {CG.Font}
      * callback {function}
      *
-     @example
-     var s = new CG.Button({
-           image: '../images/demo.png',
-           position: new CG.Point(200,200),
-           text: 'MyButton',
-           font: heiti,
-           callback: callbackFunction
-         })
      *
      *
      * @method init
@@ -68,9 +74,15 @@ CG.Sprite.extend('Button', {
         this.yhandle = (this.height * this.yscale / 2)
 
         if (this.clicked) {
-            if (this.callback) {
+            if (this.callbacks.clicked) {
                 this.clicked = false
-                this.callback(this)
+                this.callbacks.clicked.apply(this)
+            }
+        }
+        if (this.hover) {
+            if (this.callbacks.hover) {
+                this.hover = false
+                this.callbacks.hover.apply(this)
             }
         }
         this.updateDiff()
