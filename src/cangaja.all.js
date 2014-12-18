@@ -14468,9 +14468,9 @@ CG.Sprite.extend('Button', {
 
             Game.renderer.draw(this)
 
-            this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) / 2 >> 0), this.position.y - ((this.font.getFontSize() / 2) >> 0))
-
-
+            if (this.text) {
+                this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) / 2 >> 0), this.position.y - ((this.font.getFontSize() / 2) >> 0))
+            }
         }
     }
 })
