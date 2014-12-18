@@ -2,10 +2,12 @@
     "name": "Cangaja API",
     "description": "Canvas Game JavaScript Framework",
     "version": "0.1.0",
-    "url": "http://example.com/",
+    "url": "http://www.motions-media.de/",
     "options": {
+        "linkNatives": "true",
         "outdir": "./apidocs",
         "exclude": "lib,lib-ext,demo,templates",
+        "tabtospace": 4,
 		"paths": [
 			"cangaja"
 		]
