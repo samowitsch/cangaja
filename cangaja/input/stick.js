@@ -32,6 +32,11 @@ CG.Class.extend('Stick', {
              */
             active: false,
             /**
+             * @property identifier
+             * @type {Number}
+             */
+            identifier: -1,
+            /**
              * @property atLimit
              * @type {Boolean}
              */
@@ -73,34 +78,43 @@ CG.Class.extend('Stick', {
     },
     addEventListener: function () {
         Game.canvas.addEventListener("touchstart", function (e) {
+
+            if (this.active) {
+                return
+            }
+
             e.preventDefault();
 
-            for (var i = 0; i < 1 /*e.touches.length*/; ++i) {
-                //var stick = sticks[i];
-                var touch = e.touches[i];
+            var touch = e.touches[0];
 
-                this.setLimitXY(touch.pageX, touch.pageY);
-                this.setInputXY(touch.pageX, touch.pageY);
-                this.active = true;
-            }
+            this.setLimitXY(touch.pageX, touch.pageY)
+            this.setInputXY(touch.pageX, touch.pageY)
+            this.active = true
+            this.identifier = touch.identifier
+            console.log(touch, this.identifier);
+
         }.bind(this));
 
         document.addEventListener("touchmove", function (e) {
             e.preventDefault();
 
-            for (var i = 0; i < 1 /*e.touches.length*/; ++i) {
-                //var stick = sticks[i];
+            for (var i = 0; i < e.touches.length; ++i) {
                 var touch = e.touches[i];
-
-                this.setInputXY(touch.pageX, touch.pageY);
+                if (touch.identifier === this.identifier) {
+                    this.setInputXY(touch.pageX, touch.pageY);
+                }
             }
         }.bind(this));
 
         document.addEventListener("touchend", function (e) {
-            var touches = e.changedTouches;
-            for (var i = 0; i < 1 /*touches.length*/; ++i) {
-                //var stick = sticks[i];
-                this.active = false
+            for (var i = 0; i < e.changedTouches.length; ++i) {
+                var touch = e.changedTouches[i];
+                if (touch.identifier === this.identifier) {
+                    console.log(touch, this.identifier);
+
+                    this.active = false
+                    this.identifier = -1
+                }
             }
         }.bind(this));
     },
@@ -132,6 +146,10 @@ CG.Class.extend('Stick', {
         Game.b_ctx.restore()
     },
     update: function () {
+        if (!this.active) {
+            return
+        }
+
         var diff = this.subtractVectors(this.input, this.limit)
         var length = this.getVectorLength(diff)
 
