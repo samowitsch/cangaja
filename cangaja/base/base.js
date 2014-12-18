@@ -46,6 +46,8 @@ var CG = CG || {
     RIGHT: 2,
     UP: 3,
     DOWN: 4,
+    LEFT_HAND: 1,
+    RIGHT_HAND: 2,
 
     //input related
     mousedown: false,

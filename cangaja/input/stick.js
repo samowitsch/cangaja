@@ -37,6 +37,11 @@ CG.Class.extend('Stick', {
              */
             identifier: -1,
             /**
+             * @property handle
+             * @type {Number}
+             */
+            handle: CG.LEFT_HAND,
+            /**
              * @property atLimit
              * @type {Boolean}
              */
@@ -78,20 +83,26 @@ CG.Class.extend('Stick', {
     },
     addEventListener: function () {
         Game.canvas.addEventListener("touchstart", function (e) {
+            e.preventDefault();
 
             if (this.active) {
                 return
             }
 
-            e.preventDefault();
-
             var touch = e.touches[0];
 
-            this.setLimitXY(touch.pageX, touch.pageY)
-            this.setInputXY(touch.pageX, touch.pageY)
-            this.active = true
-            this.identifier = touch.identifier
-            console.log(touch, this.identifier);
+            if (this.handle === CG.LEFT_HAND && touch.pageX < Game.width2) {
+                this.setLimitXY(touch.pageX, touch.pageY)
+                this.setInputXY(touch.pageX, touch.pageY)
+                this.active = true
+                this.identifier = touch.identifier
+            } else if (this.handle === CG.RIGHT_HAND && touch.pageX > Game.width2) {
+                this.setLimitXY(touch.pageX, touch.pageY)
+                this.setInputXY(touch.pageX, touch.pageY)
+                this.active = true
+                this.identifier = touch.identifier
+            }
+
 
         }.bind(this));
 
@@ -110,8 +121,6 @@ CG.Class.extend('Stick', {
             for (var i = 0; i < e.changedTouches.length; ++i) {
                 var touch = e.changedTouches[i];
                 if (touch.identifier === this.identifier) {
-                    console.log(touch, this.identifier);
-
                     this.active = false
                     this.identifier = -1
                 }
