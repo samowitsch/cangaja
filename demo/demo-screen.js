@@ -144,7 +144,7 @@ Game = (function () {
                 position: new CG.Point(Game.width2, 400),
                 text: 'BACK TO MAIN SCREEN',
                 font: small,
-                callback: Callback.Back
+                callbacks: {clicked:Callback.Back}
             })
             back.name = 'back'
 
@@ -159,7 +159,7 @@ Game = (function () {
                 position: new CG.Point(Game.width2, 100),
                 text: '(SCALE)',
                 font: small,
-                callback: Callback.Scale
+                callbacks: {clicked: Callback.Scale}
             })
             button1.name = '#mbutton 1#'
             menu.addButton(button1)
@@ -169,7 +169,7 @@ Game = (function () {
                 position: new CG.Point(Game.width2, 100),
                 text: '(FADE)',
                 font: small,
-                callback: Callback.Fade
+                callbacks: {clicked: Callback.Fade}
             })
             button2.name = '#mbutton 2#'
             menu.addButton(button2)
@@ -180,7 +180,7 @@ Game = (function () {
                 position: new CG.Point(Game.width2, 100),
                 text: '(SLIDE)',
                 font: small,
-                callback: Callback.Slide
+                callbacks: {clicked: Callback.Slide}
             })
             button3.name = '#mbutton 3#'
             menu.addButton(button3)
