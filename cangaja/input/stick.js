@@ -83,55 +83,7 @@ CG.Class.extend('Stick', {
             CG._extend(this, options)
         }
 
-        this.addEventListener()
-
         return this
-    },
-    addEventListener: function () {
-        Game.canvas.addEventListener("touchstart", function (e) {
-            e.preventDefault();
-
-            if (this.active) {
-                return
-            }
-
-            var touch = e.touches[0];
-
-            if (this.handle === CG.LEFT_HAND && touch.pageX < Game.width2) {
-                this.setLimitXY(touch.pageX, touch.pageY)
-                this.setInputXY(touch.pageX, touch.pageY)
-                this.active = true
-                this.identifier = touch.identifier
-            } else if (this.handle === CG.RIGHT_HAND && touch.pageX > Game.width2) {
-                this.setLimitXY(touch.pageX, touch.pageY)
-                this.setInputXY(touch.pageX, touch.pageY)
-                this.active = true
-                this.identifier = touch.identifier
-            }
-
-
-        }.bind(this));
-
-        document.addEventListener("touchmove", function (e) {
-            e.preventDefault();
-
-            for (var i = 0; i < e.touches.length; ++i) {
-                var touch = e.touches[i];
-                if (touch.identifier === this.identifier) {
-                    this.setInputXY(touch.pageX, touch.pageY);
-                }
-            }
-        }.bind(this));
-
-        document.addEventListener("touchend", function (e) {
-            for (var i = 0; i < e.changedTouches.length; ++i) {
-                var touch = e.changedTouches[i];
-                if (touch.identifier === this.identifier) {
-                    this.active = false
-                    this.identifier = -1
-                }
-            }
-        }.bind(this));
     },
     draw: function () {
         if (!this.active) {
@@ -141,9 +93,10 @@ CG.Class.extend('Stick', {
         Game.b_ctx.save()
 
         // limit
+        Game.b_ctx.globalAlpha = 0.6
         Game.b_ctx.beginPath()
-        Game.b_ctx.strokeStyle = 'rgb(200,200,200)'
-        Game.b_ctx.lineWidth = 3
+        Game.b_ctx.strokeStyle = 'rgb(100,100,100)'
+        Game.b_ctx.lineWidth = 1
         Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
         Game.b_ctx.stroke()
 
@@ -155,7 +108,7 @@ CG.Class.extend('Stick', {
         // input
         Game.b_ctx.beginPath();
         Game.b_ctx.arc(this.input.x, this.input.y, this.maxLength / 1.5, 0, (Math.PI * 2), true)
-        Game.b_ctx.fillStyle = "rgb(0, 0, 200)"
+        Game.b_ctx.fillStyle = "rgb(200, 200, 200)"
         Game.b_ctx.fill()
 
         Game.b_ctx.restore()

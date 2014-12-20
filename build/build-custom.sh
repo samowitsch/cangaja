@@ -25,6 +25,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/input/stick.js \
+../cangaja/input/gamecontroller.js \
 ../cangaja/sprite/sprite.js \
 ../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \
