@@ -1,0 +1,1 @@
+Put all image- and atlasfiles, and all generated texturepacker files in this folder.

@@ -1,0 +1,15 @@
+html {
+    background-color: #333;
+}
+
+canvas {
+    border: 1px solid #999;
+    margin: 0 auto;
+    display: block;
+}
+
+#stats {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

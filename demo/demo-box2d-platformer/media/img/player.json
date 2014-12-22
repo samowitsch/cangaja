@@ -1,0 +1,17 @@
+	{ 
+		
+		"player-down": [
+			
+				{
+					"density": 2, "friction": 2, "bounce": 2, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   27, 2  ,  27, 43  ,  26, 44  ,  13, 44  ,  12, 43  ,  12, 2  ]
+				}   ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   27, 43  ,  27, 45  ,  12, 45  ,  12, 43  ]
+				}  
+		]
+		
+	}
