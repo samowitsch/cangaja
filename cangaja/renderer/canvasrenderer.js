@@ -79,11 +79,8 @@ CG.Class.extend('CanvasRenderer', {
                     renderObject.fy = Math.floor(renderObject.width * renderObject.currentFrame / renderObject.image.width) * renderObject.height
 
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    try {
-                        Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
-                    } catch (e) {
 
-                    }
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
                 }
                 break;
 
@@ -91,21 +88,19 @@ CG.Class.extend('CanvasRenderer', {
 
                 for (var i = 0, l = renderObject.text.length; i < l; i++) {
                     var charCode = renderObject.text.charCodeAt(i)
-                    try {
-                        Game.b_ctx.drawImage(
-                            renderObject.atlas,
-                            renderObject.x[charCode],
-                            renderObject.y[charCode],
-                            renderObject.width[charCode],
-                            renderObject.height[charCode],
-                            renderObject.currentX,
-                            renderObject.currentY + renderObject.yoff[charCode],
-                            renderObject.width[charCode],
-                            renderObject.height[charCode]
-                        )
-                    } catch (e) {
-                        //console.log("drawText error: " + e)
-                    }
+
+                    Game.b_ctx.drawImage(
+                        renderObject.atlas,
+                        renderObject.x[charCode],
+                        renderObject.y[charCode],
+                        renderObject.width[charCode],
+                        renderObject.height[charCode],
+                        renderObject.currentX,
+                        renderObject.currentY + renderObject.yoff[charCode],
+                        renderObject.width[charCode],
+                        renderObject.height[charCode]
+                    )
+
                     renderObject.currentX += renderObject.xadv[charCode]
                 }
                 break;
@@ -124,18 +119,11 @@ CG.Class.extend('CanvasRenderer', {
 
                 if (renderObject.orientation == 'orthogonal') {
 
-                    try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
-                    } catch (e) {
-                    }
+                    Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
 
                 } else if (renderObject.orientation == 'isometric') {
 
-                    try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
-                    } catch (e) {
-
-                    }
+                    Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
 
                 }
 
