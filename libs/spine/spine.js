@@ -1588,7 +1588,7 @@ spine.AtlasRegion.prototype = {
 	index: 0,
 	rotate: false,
 	splits: null,
-	pads: null,
+	pads: null
 };
 
 spine.AtlasReader = function (text) {
