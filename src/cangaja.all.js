@@ -12222,7 +12222,7 @@ spine.AtlasRegion.prototype = {
 	index: 0,
 	rotate: false,
 	splits: null,
-	pads: null,
+	pads: null
 };
 
 spine.AtlasReader = function (text) {
@@ -12622,11 +12622,8 @@ CG.Class.extend('CanvasRenderer', {
                     renderObject.fy = Math.floor(renderObject.width * renderObject.currentFrame / renderObject.image.width) * renderObject.height
 
                     Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                    try {
-                        Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
-                    } catch (e) {
 
-                    }
+                    Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
                 }
                 break;
 
@@ -12634,21 +12631,19 @@ CG.Class.extend('CanvasRenderer', {
 
                 for (var i = 0, l = renderObject.text.length; i < l; i++) {
                     var charCode = renderObject.text.charCodeAt(i)
-                    try {
-                        Game.b_ctx.drawImage(
-                            renderObject.atlas,
-                            renderObject.x[charCode],
-                            renderObject.y[charCode],
-                            renderObject.width[charCode],
-                            renderObject.height[charCode],
-                            renderObject.currentX,
-                            renderObject.currentY + renderObject.yoff[charCode],
-                            renderObject.width[charCode],
-                            renderObject.height[charCode]
-                        )
-                    } catch (e) {
-                        //console.log("drawText error: " + e)
-                    }
+
+                    Game.b_ctx.drawImage(
+                        renderObject.atlas,
+                        renderObject.x[charCode],
+                        renderObject.y[charCode],
+                        renderObject.width[charCode],
+                        renderObject.height[charCode],
+                        renderObject.currentX,
+                        renderObject.currentY + renderObject.yoff[charCode],
+                        renderObject.width[charCode],
+                        renderObject.height[charCode]
+                    )
+
                     renderObject.currentX += renderObject.xadv[charCode]
                 }
                 break;
@@ -12667,18 +12662,11 @@ CG.Class.extend('CanvasRenderer', {
 
                 if (renderObject.orientation == 'orthogonal') {
 
-                    try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
-                    } catch (e) {
-                    }
+                    Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
 
                 } else if (renderObject.orientation == 'isometric') {
 
-                    try {
-                        Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
-                    } catch (e) {
-
-                    }
+                    Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
 
                 }
 
@@ -16751,11 +16739,11 @@ CG.Class.extend('MapTileProperties', {
      * @return {*}
      */
     init:function () {
-        /**
-         * @property animated
-         * @type {Boolean}
-         */
-        this.animated = false
+        ///**
+        // * @property animated
+        // * @type {Boolean}
+        // */
+        //this.animated = false
         /**
          * @property animDelay
          * @type {Number}
@@ -17011,16 +16999,6 @@ CG.Entity.extend('Map', {
          */
         this.mapOffset = new CG.Point(0, 0)
         /**
-         * @description
-         *
-         * If set to true the map is being updated with method updateAnimation.
-         * See also method description of updateAnimation!
-         *
-         * @property animated
-         * @type {Boolean}
-         */
-        this.animated = false //performance eater if true ;o(
-        /**
          * @property animDelayFactor
          * @type {Number}
          */
@@ -17198,7 +17176,6 @@ CG.Entity.extend('Map', {
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml: function (xmlfile) {
-        this.animated = false
         this.layers = []
 
         //from asset
@@ -17368,12 +17345,10 @@ CG.Entity.extend('Map', {
                         } else if (elem == 'anim_delay') {
                             tprop.animDelay = parseInt(value)
                             tprop.delayTimer = time
-                            this.animated = true
                         } else if (elem == 'anim_direction') {
                             tprop.animDirection = parseInt(value)
                         } else if (elem == 'anim_next') {
                             tprop.animNext = parseInt(value)
-                            tprop.animated = true
                         }
                     }
                 }
@@ -17393,7 +17368,6 @@ CG.Entity.extend('Map', {
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson: function (jsonfile) {
-        this.animated = false
         this.layers = []
 
         //from asset
@@ -17499,11 +17473,7 @@ CG.Entity.extend('Map', {
             tprop.name = tile.name
             tprop.animDelay = parseInt(tile.anim_delay)
             tprop.delayTimer = (tprop.animDelay > 0) ? time : 0
-            tprop.animated = (tprop.animDelay > 0) ? true : false
             tprop.animNext = parseInt(tile.anim_next)
-            if (tprop.animDelay > 0) {
-                this.animated = true
-            }
             tprop.animDirection = parseInt(tile.anim_direction)
             this.tileproperties[id] = tprop
 
@@ -17807,34 +17777,27 @@ CG.Entity.extend('Map', {
      * @method updateAnimation
      */
     updateAnimation: function () {
-        // update if map is visible
-        if (this.visible && this.animated) {
-            if (this.layers.length > 0) {
-                for (var layer = 0, l = this.layers.length; layer < l; layer++) {
-                    var newtime = new Date().getTime()
-                    for (t = 0; t < this.layers[layer].tiles.length; t++) {
-                        var tile = this.layers[layer].tiles[t]
-                        if (tile > 0) {
-                            try {
-                                var tprop = this.tileproperties[tile - 1]
-                                if (tprop.animated && tprop.animDirection != 0) {
-                                    if (newtime > (tprop.delayTimer + (tprop.animDelay / this.animDelayFactor))) {
-                                        switch (tprop.animDirection) {
-                                            case 1:
-                                                this.layers[layer].tiles[t] += tprop.animNext
-                                                this.tileproperties[tile - 1 + tprop.animNext].delayTimer = newtime
-                                                break
-                                            case -1:
-                                                this.layers[layer].tiles[t] -= tprop.animNext
-                                                this.tileproperties[tile - 1 - tprop.animNext].delayTimer = newtime
-                                                break
-                                            default:
-                                                break
-                                        }
-                                    }
+        if (this.layers.length > 0) {
+            for (var layer = 0, l = this.layers.length; layer < l; layer++) {
+                var newtime = new Date().getTime()
+                for (var t = 0, tl = this.layers[layer].tiles.length; t < tl; t++) {
+                    var tile = this.layers[layer].tiles[t]
+                    if (tile > 0) {
+                        var tprop = this.tileproperties[tile - 1]
+                        if (tprop) {
+                            if (newtime > (tprop.delayTimer + (tprop.animDelay / this.animDelayFactor))) {
+                                switch (tprop.animDirection) {
+                                    case 1:
+                                        this.layers[layer].tiles[t] += tprop.animNext
+                                        this.tileproperties[tile - 1 + tprop.animNext].delayTimer = newtime
+                                        break
+                                    case -1:
+                                        this.layers[layer].tiles[t] -= tprop.animNext
+                                        this.tileproperties[tile - 1 - tprop.animNext].delayTimer = newtime
+                                        break
+                                    default:
+                                        break
                                 }
-                            } catch (e) {
-
                             }
                         }
                     }
