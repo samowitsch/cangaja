@@ -64,6 +64,7 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
+                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -184,21 +185,6 @@
                                  * @type {CG.Point}
                                  */
                                 this.mapOffset = new CG.Point(0, 0)
-                                /**
-                                 * @property changemap
-                                 * @type {String}
-                                 */
-                                this.changemap = &#x27;&#x27;
-                                /**
-                                 * @description
-                                 *
-                                 * If set to true the map is being updated with method updateAnimation.
-                                 * See also method description of updateAnimation!
-                                 *
-                                 * @property animated
-                                 * @type {Boolean}
-                                 */
-                                this.animated = false //performance eater if true ;o(
                                 /**
                                  * @property animDelayFactor
                                  * @type {Number}
@@ -377,8 +363,6 @@
                              * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
                              */
                             loadMapXml: function (xmlfile) {
-                                this.changemap = &#x27;&#x27;
-                                this.animated = false
                                 this.layers = []
                         
                                 //from asset
@@ -548,12 +532,10 @@
                                                 } else if (elem == &#x27;anim_delay&#x27;) {
                                                     tprop.animDelay = parseInt(value)
                                                     tprop.delayTimer = time
-                                                    this.animated = true
                                                 } else if (elem == &#x27;anim_direction&#x27;) {
                                                     tprop.animDirection = parseInt(value)
                                                 } else if (elem == &#x27;anim_next&#x27;) {
                                                     tprop.animNext = parseInt(value)
-                                                    tprop.animated = true
                                                 }
                                             }
                                         }
@@ -573,8 +555,6 @@
                              * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
                              */
                             loadMapJson: function (jsonfile) {
-                                this.changemap = &#x27;&#x27;
-                                this.animated = false
                                 this.layers = []
                         
                                 //from asset
@@ -680,11 +660,7 @@
                                     tprop.name = tile.name
                                     tprop.animDelay = parseInt(tile.anim_delay)
                                     tprop.delayTimer = (tprop.animDelay &gt; 0) ? time : 0
-                                    tprop.animated = (tprop.animDelay &gt; 0) ? true : false
                                     tprop.animNext = parseInt(tile.anim_next)
-                                    if (tprop.animDelay &gt; 0) {
-                                        this.animated = true
-                                    }
                                     tprop.animDirection = parseInt(tile.anim_direction)
                                     this.tileproperties[id] = tprop
                         
@@ -729,9 +705,6 @@
                                 //update all points an areas
                                 this.updatePointsAndAreas()
                         
-                                if (this.changemap != &#x27;&#x27;) {
-                                    this.loadMap(this.changemap)
-                                }
                                 if (this.visible) {
                                     this.updateAnimation()
                                     if (this.layers.length &gt; 0) {
@@ -750,9 +723,9 @@
                                                     while (y &lt; tmpy) {
                                                         var x = this.bx, //- this.tilewidth
                                                             mx = Math.floor(this.bx / this.tilewidth),
-                                                            tmpx = (this.bx + this.bw + this.tilewidth)
+                                                            tmpx = this.bx + this.bw + this.tilewidth
                                                         while (x &lt; tmpx) {
-                                                            if ((this.wrapX || (mx &gt;= 0 &amp;&amp; mx &lt; this.width)) &amp;&amp; (this.wrapY || (my &gt;= 0 &amp;&amp; my &lt; this.height))) {
+                                                            if ((this.wrapX || (mx &gt;= 0 &amp;&amp; mx &lt; this.mapColumns)) &amp;&amp; (this.wrapY || (my &gt;= 0 &amp;&amp; my &lt; this.mapRows))) {
                                                                 var mx2 = mx,
                                                                     my2 = my
                         
@@ -991,34 +964,27 @@
                              * @method updateAnimation
                              */
                             updateAnimation: function () {
-                                // update if map is visible
-                                if (this.visible &amp;&amp; this.animated) {
-                                    if (this.layers.length &gt; 0) {
-                                        for (var layer = 0, l = this.layers.length; layer &lt; l; layer++) {
-                                            var newtime = new Date().getTime()
-                                            for (t = 0; t &lt; this.layers[layer].tiles.length; t++) {
-                                                var tile = this.layers[layer].tiles[t]
-                                                if (tile &gt; 0) {
-                                                    try {
-                                                        var tprop = this.tileproperties[tile - 1]
-                                                        if (tprop.animated &amp;&amp; tprop.animDirection != 0) {
-                                                            if (newtime &gt; (tprop.delayTimer + (tprop.animDelay / this.animDelayFactor))) {
-                                                                switch (tprop.animDirection) {
-                                                                    case 1:
-                                                                        this.layers[layer].tiles[t] += tprop.animNext
-                                                                        this.tileproperties[tile - 1 + tprop.animNext].delayTimer = newtime
-                                                                        break
-                                                                    case -1:
-                                                                        this.layers[layer].tiles[t] -= tprop.animNext
-                                                                        this.tileproperties[tile - 1 - tprop.animNext].delayTimer = newtime
-                                                                        break
-                                                                    default:
-                                                                        break
-                                                                }
-                                                            }
+                                if (this.layers.length &gt; 0) {
+                                    for (var layer = 0, l = this.layers.length; layer &lt; l; layer++) {
+                                        var newtime = new Date().getTime()
+                                        for (var t = 0, tl = this.layers[layer].tiles.length; t &lt; tl; t++) {
+                                            var tile = this.layers[layer].tiles[t]
+                                            if (tile &gt; 0) {
+                                                var tprop = this.tileproperties[tile - 1]
+                                                if (tprop) {
+                                                    if (newtime &gt; (tprop.delayTimer + (tprop.animDelay / this.animDelayFactor))) {
+                                                        switch (tprop.animDirection) {
+                                                            case 1:
+                                                                this.layers[layer].tiles[t] += tprop.animNext
+                                                                this.tileproperties[tile - 1 + tprop.animNext].delayTimer = newtime
+                                                                break
+                                                            case -1:
+                                                                this.layers[layer].tiles[t] -= tprop.animNext
+                                                                this.tileproperties[tile - 1 - tprop.animNext].delayTimer = newtime
+                                                                break
+                                                            default:
+                                                                break
                                                         }
-                                                    } catch (e) {
-                        
                                                     }
                                                 }
                                             }

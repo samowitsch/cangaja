@@ -301,6 +301,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "cangaja/input/gamecontroller.js": {
+            "name": "cangaja/input/gamecontroller.js",
+            "modules": {},
+            "classes": {
+                "CG.GameController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "cangaja/input/stick.js": {
             "name": "cangaja/input/stick.js",
             "modules": {},
@@ -464,6 +473,7 @@
                 "CG.Sequence": 1,
                 "CG.Translate": 1,
                 "CG.Game": 1,
+                "CG.GameController": 1,
                 "CG.Stick": 1,
                 "CG.CanvasRenderer": 1,
                 "CG.SpineAnimation": 1,
@@ -968,6 +978,21 @@
             "line": 1,
             "description": "CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!\n\n\n```\n\nCG.Game.extend('MyGame', {\n   init: function (canvas, options) {\n       // call init from super class\n       this._super(canvas, options)\n       // add custom properties here or remove the init method\n   },\n   preload: function () {\n       // put preloading stuff here\n\n       // for example\n       this.asset.addFont('media/font/small.txt', 'small', 'small')\n           .addImage('media/img/player-anim.png', 'player-anim')\n           .addJson('media/map/map1.json', 'map1')\n           .startPreLoad()\n   },\n   create: function () {\n\n       // put your create stuff here\n\n       //after creation start game loop\n       this.loop()\n   },\n   update: function () {\n\n       // additional update code not handled with in cangaja\n\n   },\n   draw: function () {\n       // additional draw code not handled with in cangaja\n   }})\n\n// instantiate the Game class\nGame = new CG.MyGame(canvas)\n\n```",
             "extends": "Class"
+        },
+        "CG.GameController": {
+            "name": "CG.GameController",
+            "shortname": "CG.GameController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "cangaja/input/gamecontroller.js",
+            "line": 1,
+            "description": "CG.GameController extends CG.Stick an represents an GameController with one Stick and\nmultiple buttons\n\n```\n\n```",
+            "extends": "CG.Stick"
         },
         "CG.Stick": {
             "name": "CG.Stick",
@@ -6530,6 +6555,48 @@
             "module": "CG"
         },
         {
+            "file": "cangaja/input/gamecontroller.js",
+            "line": 16,
+            "description": "Options:\nx {number}\ny {number}",
+            "example": [
+                ""
+            ],
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.GameController",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/input/gamecontroller.js",
+            "line": 32,
+            "itemtype": "property",
+            "name": "buttons",
+            "type": "{Array}",
+            "class": "CG.GameController",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/input/gamecontroller.js",
+            "line": 37,
+            "itemtype": "property",
+            "name": "visible",
+            "type": "{Boolean}",
+            "class": "CG.GameController",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/input/stick.js",
             "line": 20,
             "description": "Options:\nx {number}\ny {number}",
@@ -7840,25 +7907,6 @@
             "file": "cangaja/tilemap/map.js",
             "line": 61,
             "itemtype": "property",
-            "name": "changemap",
-            "type": "{String}",
-            "class": "CG.Map",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/tilemap/map.js",
-            "line": 66,
-            "description": "If set to true the map is being updated with method updateAnimation.\nSee also method description of updateAnimation!",
-            "itemtype": "property",
-            "name": "animated",
-            "type": "{Boolean}",
-            "class": "CG.Map",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/tilemap/map.js",
-            "line": 76,
-            "itemtype": "property",
             "name": "animDelayFactor",
             "type": "{Number}",
             "class": "CG.Map",
@@ -7866,7 +7914,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 81,
+            "line": 66,
             "itemtype": "property",
             "name": "atlas",
             "type": "{Image}",
@@ -7875,7 +7923,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 86,
+            "line": 71,
             "itemtype": "property",
             "name": "atlaswidth",
             "type": "{Number}",
@@ -7884,7 +7932,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 91,
+            "line": 76,
             "itemtype": "property",
             "name": "atlasheight",
             "type": "{Number}",
@@ -7893,7 +7941,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 96,
+            "line": 81,
             "itemtype": "property",
             "name": "atlastranscol",
             "type": "{String}",
@@ -7902,7 +7950,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 103,
+            "line": 88,
             "itemtype": "property",
             "name": "xml",
             "type": "{String}",
@@ -7911,7 +7959,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 108,
+            "line": 93,
             "itemtype": "property",
             "name": "parser",
             "type": "{DOMParser}",
@@ -7920,7 +7968,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 113,
+            "line": 98,
             "itemtype": "property",
             "name": "xmlDoc",
             "type": "{String}",
@@ -7929,7 +7977,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 119,
+            "line": 104,
             "itemtype": "property",
             "name": "json",
             "type": "{Object}",
@@ -7938,7 +7986,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 124,
+            "line": 109,
             "description": "The tiled layer are parsed into separate layers",
             "itemtype": "property",
             "name": "layers",
@@ -7948,7 +7996,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 133,
+            "line": 118,
             "description": "Defines the layer to draw:\nall - for all layers\nname - the name of layer to draw\nindex - array index of layer",
             "itemtype": "property",
             "name": "renderlayer",
@@ -7958,7 +8006,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 145,
+            "line": 130,
             "itemtype": "property",
             "name": "tileproperties",
             "type": "{Array}",
@@ -7967,7 +8015,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 150,
+            "line": 135,
             "itemtype": "property",
             "name": "orientation",
             "type": "{String}",
@@ -7976,7 +8024,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 155,
+            "line": 140,
             "itemtype": "property",
             "name": "width",
             "type": "{Number}",
@@ -7985,7 +8033,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 160,
+            "line": 145,
             "itemtype": "property",
             "name": "height",
             "type": "{Number}",
@@ -7994,7 +8042,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 165,
+            "line": 150,
             "itemtype": "property",
             "name": "mapColumns",
             "type": "{Number}",
@@ -8003,7 +8051,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 170,
+            "line": 155,
             "itemtype": "property",
             "name": "mapRows",
             "type": "{Number}",
@@ -8012,7 +8060,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 175,
+            "line": 160,
             "itemtype": "property",
             "name": "tilewidth",
             "type": "{Number}",
@@ -8021,7 +8069,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 180,
+            "line": 165,
             "itemtype": "property",
             "name": "tileheight",
             "type": "{Number}",
@@ -8030,7 +8078,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 185,
+            "line": 170,
             "itemtype": "property",
             "name": "tileset",
             "type": "{Object}",
@@ -8039,7 +8087,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 197,
+            "line": 182,
             "itemtype": "property",
             "name": "xspeed",
             "type": "{Number}",
@@ -8048,7 +8096,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 202,
+            "line": 187,
             "itemtype": "property",
             "name": "yspeed",
             "type": "{Number}",
@@ -8057,7 +8105,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 207,
+            "line": 192,
             "itemtype": "property",
             "name": "xscale",
             "type": "{Number}",
@@ -8066,7 +8114,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 212,
+            "line": 197,
             "itemtype": "property",
             "name": "yscale",
             "type": "{Number}",
@@ -8075,7 +8123,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 217,
+            "line": 202,
             "itemtype": "property",
             "name": "alpha",
             "type": "{Number}",
@@ -8084,7 +8132,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 222,
+            "line": 207,
             "itemtype": "property",
             "name": "wrapX",
             "deprecated": true,
@@ -8094,7 +8142,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 228,
+            "line": 213,
             "itemtype": "property",
             "name": "wrapY",
             "deprecated": true,
@@ -8104,7 +8152,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 234,
+            "line": 219,
             "itemtype": "property",
             "name": "layertocheck",
             "type": "{Number}",
@@ -8113,7 +8161,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 244,
+            "line": 229,
             "description": "Load and parse an xml tilemap file. It can handle the tiled XML and CSV format.\nAll other formats are not supported!",
             "itemtype": "method",
             "name": "loadMapXml",
@@ -8129,7 +8177,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 440,
+            "line": 421,
             "description": "Load and parse an tilemap json file. Use the tiled json export.\nHopefully the json format has the same functionality as the xml loader ;o)",
             "itemtype": "method",
             "name": "loadMapJson",
@@ -8145,7 +8193,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 570,
+            "line": 545,
             "description": "This is the main method for map drawing. Orthogonal maps works very well. Isometric maps are not well implemented yet.",
             "itemtype": "method",
             "name": "drawMap",
@@ -8191,7 +8239,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 726,
+            "line": 698,
             "description": "Update all areas and points elements.",
             "itemtype": "method",
             "name": "updatePointsAndAreas",
@@ -8200,7 +8248,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 743,
+            "line": 715,
             "description": "Get all point(s) with the given name in the points",
             "itemtype": "method",
             "name": "getPointsByName",
@@ -8220,7 +8268,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 766,
+            "line": 738,
             "description": "Get all areas with the given name",
             "itemtype": "method",
             "name": "getAreasByName",
@@ -8240,7 +8288,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 790,
+            "line": 762,
             "description": "Defines layer drawing, See property options",
             "itemtype": "method",
             "name": "setLayerToRender",
@@ -8256,7 +8304,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 804,
+            "line": 776,
             "description": "The update method is not complete yet and only experimental.\nAt the final stage the methods updateAnimation and updatePointsAndAreas have to be called from here!\nThen also a map class can be added to a layer as an element for auto update/draw from Game.director!",
             "itemtype": "method",
             "name": "update",
@@ -8265,7 +8313,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 838,
+            "line": 810,
             "description": "Get the bounds of the map",
             "itemtype": "method",
             "name": "getBounds",
@@ -8274,7 +8322,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 852,
+            "line": 824,
             "description": "Updates all tilemap properties of the map.\n\nSupported custom tiled map properties for now are (see also tilemap examples):\nanim_delay       => time to used to display an switch to next tile\nanim_direction   => direction for next tile 1 = jump forward, -1 = jump back\nanim_next        => defines the offset\n\nWith this tile properties it is possible to define tilemap animations.\nThese must be defined in the tilemap property window with key/value pairs",
             "itemtype": "method",
             "name": "updateAnimation",
@@ -8283,7 +8331,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 904,
+            "line": 869,
             "description": "Adds a object to the element array, used at the moment for collision detection to tilemap.",
             "itemtype": "method",
             "name": "addElement",
@@ -8299,7 +8347,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 918,
+            "line": 883,
             "description": "Checks if the attached element collides with an tile of the tilemap",
             "itemtype": "method",
             "name": "checkMapCollision",
@@ -8329,7 +8377,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 950,
+            "line": 915,
             "description": "Checks if a external object(s) collides with the areas of the tiled map.\nThis can be elements from an layer or the map itself.",
             "itemtype": "method",
             "name": "checkElementsToAreasCollision",
@@ -8350,7 +8398,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 967,
+            "line": 932,
             "description": "removes the json data of the map object",
             "itemtype": "method",
             "name": "removeJsonData",
@@ -8359,7 +8407,7 @@
         },
         {
             "file": "cangaja/tilemap/map.js",
-            "line": 975,
+            "line": 940,
             "description": "removes the xml data of the map object",
             "itemtype": "method",
             "name": "removeXmlData",
@@ -8548,15 +8596,6 @@
                 "description": "",
                 "type": "*"
             },
-            "class": "CG.MapTileProperties",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/tilemap/maptileproperties.js",
-            "line": 16,
-            "itemtype": "property",
-            "name": "animated",
-            "type": "{Boolean}",
             "class": "CG.MapTileProperties",
             "module": "CG"
         },

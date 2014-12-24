@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.Menu - Cangaja API</title>
+    <title>CG.GameController - Cangaja API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -121,15 +121,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.Menu Class</h1>
+                        <h1>CG.GameController Class</h1>
                         <div class="box meta">
                         
                                 <div class="extends">
-                                    Extends CG.Class
+                                    Extends <a href="../classes/CG.Stick.html" class="crosslink">CG.Stick</a>
                                 </div>
                         
                                 <div class="foundat">
-                                    Defined in: <a href="../files/cangaja_control_menu.js.html#l1"><code>cangaja&#x2F;control&#x2F;menu.js:1</code></a>
+                                    Defined in: <a href="../files/cangaja_input_gamecontroller.js.html#l1"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:1</code></a>
                                 </div>
                         
                                     Module: <a href="../modules/CG.html">CG</a>
@@ -138,46 +138,10 @@
                         
                         
                         <div class="box intro">
-                            <p>CG.Menu collects buttons an displays them with the defined margin</p>
+                            <p>CG.GameController extends CG.Stick an represents an GameController with one Stick and
+                        multiple buttons</p>
                         <pre class="code prettyprint"><code>
-                        var menu = new CG.Menu({
-                          x: 100,
-                          y: 100,
-                          margin: 10
-                        })
                         
-                        button = new CG.Button({
-                           image: Game.asset.getImageByName(&#39;button&#39;),
-                           position: new CG.Point(Game.width2, 100),
-                           text: &#39;Menu Button 1&#39;,
-                           font: font,
-                           callback: callbackTest
-                        })
-                        button.name = &#39;#mbutton 1#&#39;
-                        menu.addButton(button)
-                        
-                        button = new CG.Button({
-                           image: Game.asset.getImageByName(&#39;button&#39;),
-                           position: new CG.Point(Game.width2, 100),
-                           text: &#39;Menu Button 2&#39;,
-                           font: font,
-                           callback: callbackTest
-                        })
-                        button.name = &#39;#mbutton 2#&#39;
-                        menu.addButton(button)
-                        
-                        button = new CG.Button({
-                           image: Game.asset.getImageByName(&#39;button&#39;),
-                           position: new CG.Point(Game.width2, 100),
-                           text: &#39;Menu Button 3&#39;,
-                           font: font,
-                           callback: callbackTest
-                        })
-                        button.name = &#39;#mbutton 3#&#39;
-                        menu.addButton(button)
-                        
-                        // add the menu to the layer
-                        layermenu.addElement(menu)
                         </code></pre>
                         </div>
                         
@@ -198,20 +162,8 @@
                                             <h3>Methods</h3>
                         
                                             <ul class="index-list methods extends">
-                                                    <li class="index-item method">
-                                                        <a href="#method_addButton">addButton</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_draw">draw</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
+                                                    <li class="index-item method inherited">
                                                         <a href="#method_init">init</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_update">update</a>
                         
                                                     </li>
                                             </ul>
@@ -221,24 +173,48 @@
                                             <h3>Properties</h3>
                         
                                             <ul class="index-list properties extends">
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_active">active</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_atLimit">atLimit</a>
+                        
+                                                    </li>
                                                     <li class="index-item property">
                                                         <a href="#property_buttons">buttons</a>
                         
                                                     </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_margin">margin</a>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_handle">handle</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_identifier">identifier</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_input">input</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_length">length</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_limit">limit</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_maxLength">maxLength</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_normal">normal</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_step">step</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_x">x</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_y">y</a>
+                                                        <a href="#property_visible">visible</a>
                         
                                                     </li>
                                             </ul>
@@ -250,87 +226,6 @@
                                     <div id="methods" class="api-class-tabpanel">
                                         <h2 class="off-left">Methods</h2>
                         
-                                            <div id="method_addButton" class="method item">
-                                                <h3 class="name"><code>addButton</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>button</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l100"><code>cangaja&#x2F;control&#x2F;menu.js:100</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    <p>adds an CG.Button to the buttons array</p>
-                                            
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">button</code>
-                                                                    <span class="type">Button</span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                            
-                                            </div>
-                                            <div id="method_draw" class="method item">
-                                                <h3 class="name"><code>draw</code></h3>
-                                            
-                                                    <span class="paren">()</span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l118"><code>cangaja&#x2F;control&#x2F;menu.js:118</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
                                             <div id="method_init" class="method item">
                                                 <h3 class="name"><code>init</code></h3>
                                             
@@ -353,9 +248,12 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l54"><code>cangaja&#x2F;control&#x2F;menu.js:54</code></a>
+                                                        <p>Inherited from
+                                                        <a href="../classes/CG.Stick.html#method_init">
+                                                            CG.Stick
+                                                        </a>
+                                                        but overwritten in
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l16"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:16</code></a>
                                                     </p>
                                             
                                             
@@ -365,8 +263,7 @@
                                                 <div class="description">
                                                     <p>Options:
                                             x {number}
-                                            y {number}
-                                            margin {number}*</p>
+                                            y {number}</p>
                                             
                                                 </div>
                                             
@@ -395,25 +292,32 @@
                                                         </div>
                                                     </div>
                                             
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            
+                                                        </div>
+                                                    </div>
                                             </div>
-                                            <div id="method_update" class="method item">
-                                                <h3 class="name"><code>update</code></h3>
-                                            
-                                                    <span class="paren">()</span>
-                                            
-                                            
-                                            
+                                    </div>
+                        
+                                    <div id="properties" class="api-class-tabpanel">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property_active" class="property item inherited">
+                                                <h3 class="name"><code>active</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l110"><code>cangaja&#x2F;control&#x2F;menu.js:110</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_active">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l34"><code>cangaja&#x2F;input&#x2F;stick.js:34</code></a>
                                                     </p>
-                                            
                                             
                                             
                                                 </div>
@@ -425,11 +329,30 @@
                                             
                                             
                                             </div>
-                                    </div>
-                        
-                                    <div id="properties" class="api-class-tabpanel">
-                                        <h2 class="off-left">Properties</h2>
-                        
+                                            <div id="property_atLimit" class="property item inherited">
+                                                <h3 class="name"><code>atLimit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_atLimit">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l50"><code>cangaja&#x2F;input&#x2F;stick.js:50</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
                                             <div id="property_buttons" class="property item">
                                                 <h3 class="name"><code>buttons</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
@@ -441,7 +364,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l87"><code>cangaja&#x2F;control&#x2F;menu.js:87</code></a>
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l32"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:32</code></a>
                                                     </p>
                                             
                                             
@@ -454,8 +377,8 @@
                                             
                                             
                                             </div>
-                                            <div id="property_margin" class="property item">
-                                                <h3 class="name"><code>margin</code></h3>
+                                            <div id="property_handle" class="property item inherited">
+                                                <h3 class="name"><code>handle</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -463,9 +386,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l77"><code>cangaja&#x2F;control&#x2F;menu.js:77</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_handle">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l44"><code>cangaja&#x2F;input&#x2F;stick.js:44</code></a>
                                                     </p>
                                             
                                             
@@ -475,35 +398,12 @@
                                                     
                                                 </div>
                                             
+                                                    <p><strong>Default:</strong> CG.LEFT_HAND</p>
                                             
                                             
                                             </div>
-                                            <div id="property_step" class="property item">
-                                                <h3 class="name"><code>step</code></h3>
-                                                <span class="type"></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l82"><code>cangaja&#x2F;control&#x2F;menu.js:82</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_x" class="property item">
-                                                <h3 class="name"><code>x</code></h3>
+                                            <div id="property_identifier" class="property item inherited">
+                                                <h3 class="name"><code>identifier</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -511,9 +411,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l67"><code>cangaja&#x2F;control&#x2F;menu.js:67</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_identifier">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l39"><code>cangaja&#x2F;input&#x2F;stick.js:39</code></a>
                                                     </p>
                                             
                                             
@@ -526,9 +426,129 @@
                                             
                                             
                                             </div>
-                                            <div id="property_y" class="property item">
-                                                <h3 class="name"><code>y</code></h3>
+                                            <div id="property_input" class="property item inherited">
+                                                <h3 class="name"><code>input</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_input">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l70"><code>cangaja&#x2F;input&#x2F;stick.js:70</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_length" class="property item inherited">
+                                                <h3 class="name"><code>length</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_length">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l55"><code>cangaja&#x2F;input&#x2F;stick.js:55</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_limit" class="property item inherited">
+                                                <h3 class="name"><code>limit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_limit">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l65"><code>cangaja&#x2F;input&#x2F;stick.js:65</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_maxLength" class="property item inherited">
+                                                <h3 class="name"><code>maxLength</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_maxLength">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l60"><code>cangaja&#x2F;input&#x2F;stick.js:60</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_normal" class="property item inherited">
+                                                <h3 class="name"><code>normal</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_normal">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l75"><code>cangaja&#x2F;input&#x2F;stick.js:75</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_visible" class="property item">
+                                                <h3 class="name"><code>visible</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
@@ -537,7 +557,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_control_menu.js.html#l72"><code>cangaja&#x2F;control&#x2F;menu.js:72</code></a>
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l37"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:37</code></a>
                                                     </p>
                                             
                                             

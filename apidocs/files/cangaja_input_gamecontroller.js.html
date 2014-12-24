@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cangaja/base/bound.js - Cangaja API</title>
+    <title>cangaja/input/gamecontroller.js - Cangaja API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -121,38 +121,31 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja/base/bound.js</h1>
+                        <h1 class="file-heading">File: cangaja/input/gamecontroller.js</h1>
                         
                         <div class="file">
                             <pre class="code prettyprint linenums">
                         /**
                          * @description
                          *
-                         * CG.Bound is used at different places in the Cangaja FW.
+                         * CG.GameController extends CG.Stick an represents an GameController with one Stick and
+                         * multiple buttons
                          *
                          &#x60;&#x60;&#x60;
                         
-                             var b = new CG.Bound({
-                                   x: 0,
-                                   y: 0,
-                                   width: 120,
-                                   height: 120
-                                 })
-                        
                          &#x60;&#x60;&#x60;
                          *
-                         * @class CG.Bound
-                         * @extends CG.Class
+                         * @class CG.GameController
+                         * @extends CG.Stick
                          *
                          */
-                        CG.Class.extend(&#x27;Bound&#x27;, {
+                        CG.Stick.extend(&#x27;GameController&#x27;, {
                             /**
                              * Options:
                              * x {number}
                              * y {number}
-                             * width {number}
-                             * height {number}
                              *
+                             @example
                              *
                              * @constructor
                              * @method init
@@ -160,43 +153,106 @@
                              * @return {*}
                              */
                             init: function (options) {
+                                this._super(options)
+                        
                                 CG._extend(this, {
                                     /**
-                                     * @property x
-                                     * @type {Number}
+                                     * @property buttons
+                                     * @type {Array}
                                      */
-                                    x: 0,
+                                    buttons: [],
                                     /**
-                                     * @property y
-                                     * @type {Number}
+                                     * @property visible
+                                     * @type {Boolean}
                                      */
-                                    y: 0,
-                                    /**
-                                     * @property width
-                                     * @type {Number}
-                                     */
-                                    width: 0,
-                                    /**
-                                     * @property height
-                                     * @type {Number}
-                                     */
-                                    height: 0
+                                    visible: true
                                 })
                         
                                 if (options) {
                                     CG._extend(this, options)
                                 }
+                        
+                                this.addEventListener()
+                        
                                 return this
                             },
+                            addEventListener: function () {
+                                Game.canvas.addEventListener(&quot;touchstart&quot;, function (e) {
+                                    e.preventDefault();
                         
-                            /**
-                             * @method setName
-                             * @param {string} name of the bounding box
-                             * @return {*}
-                             */
-                            setName: function (name) {
-                                this.name = name
-                                return this
+                                    // TODO recognize left vs right touch
+                                    // TODO recognize count of touches
+                        
+                                    // analog stick
+                                    var touch = e.touches[0];
+                                    if (this.identifier === -1) {
+                                        if (this.handle === CG.LEFT_HAND &amp;&amp; touch.pageX &lt; Game.width2) {
+                                            this.setLimitXY(touch.pageX, touch.pageY)
+                                            this.setInputXY(touch.pageX, touch.pageY)
+                                            this.active = true
+                                            this.identifier = touch.identifier
+                                        } else if (this.handle === CG.RIGHT_HAND &amp;&amp; touch.pageX &gt; Game.width2) {
+                                            this.setLimitXY(touch.pageX, touch.pageY)
+                                            this.setInputXY(touch.pageX, touch.pageY)
+                                            this.active = true
+                                            this.identifier = touch.identifier
+                                        }
+                                    }
+                        
+                                    // &#x27;button&#x27; touches
+                                    if (e.touches.length &gt; 1 &amp;&amp; this.active) {
+                                        var touch = e.touches[1]
+                                        CG.mousedown = true
+                                        CG.mouse = {
+                                            x: touch.pageX,
+                                            y: touch.pageY
+                                        }
+                                    }
+                        
+                                }.bind(this));
+                        
+                                Game.canvas.addEventListener(&quot;touchmove&quot;, function (e) {
+                                    e.preventDefault();
+                        
+                                    for (var i = 0; i &lt; e.touches.length; ++i) {
+                                        var touch = e.touches[i];
+                                        if (touch.identifier === this.identifier) {
+                                            this.setInputXY(touch.pageX, touch.pageY);
+                                        }
+                                    }
+                                }.bind(this));
+                        
+                                Game.canvas.addEventListener(&quot;touchend&quot;, function (e) {
+                                    for (var i = 0; i &lt; e.changedTouches.length; ++i) {
+                                        var touch = e.changedTouches[i];
+                                        if (touch.identifier === this.identifier) {
+                                            this.active = false
+                                            this.identifier = -1
+                                        }
+                                    }
+                                }.bind(this));
+                            },
+                            draw: function () {
+                                if (!this.active) {
+                                    return
+                                }
+                        
+                                this._super()
+                        
+                                for (var i = 0, l = this.buttons.length; i &lt; l; i++) {
+                                    this.buttons[i].draw()
+                                }
+                            },
+                            update: function () {
+                                if (!this.active) {
+                                    return
+                                }
+                        
+                                this._super()
+                        
+                                for (var i = 0, l = this.buttons.length; i &lt; l; i++) {
+                                    this.buttons[i].update()
+                                }
                             }
                         })
                         

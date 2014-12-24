@@ -64,6 +64,7 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
+                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -205,11 +206,8 @@
                                             renderObject.fy = Math.floor(renderObject.width * renderObject.currentFrame / renderObject.image.width) * renderObject.height
                         
                                             Game.b_ctx.rotate(renderObject.rotation * CG.Const_PI_180)
-                                            try {
-                                                Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
-                                            } catch (e) {
                         
-                                            }
+                                            Game.b_ctx.drawImage(renderObject.image, renderObject.fx, renderObject.fy, renderObject.width, renderObject.height, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.width * renderObject.xscale, renderObject.height * renderObject.yscale)
                                         }
                                         break;
                         
@@ -217,21 +215,19 @@
                         
                                         for (var i = 0, l = renderObject.text.length; i &lt; l; i++) {
                                             var charCode = renderObject.text.charCodeAt(i)
-                                            try {
-                                                Game.b_ctx.drawImage(
-                                                    renderObject.atlas,
-                                                    renderObject.x[charCode],
-                                                    renderObject.y[charCode],
-                                                    renderObject.width[charCode],
-                                                    renderObject.height[charCode],
-                                                    renderObject.currentX,
-                                                    renderObject.currentY + renderObject.yoff[charCode],
-                                                    renderObject.width[charCode],
-                                                    renderObject.height[charCode]
-                                                )
-                                            } catch (e) {
-                                                //console.log(&quot;drawText error: &quot; + e)
-                                            }
+                        
+                                            Game.b_ctx.drawImage(
+                                                renderObject.atlas,
+                                                renderObject.x[charCode],
+                                                renderObject.y[charCode],
+                                                renderObject.width[charCode],
+                                                renderObject.height[charCode],
+                                                renderObject.currentX,
+                                                renderObject.currentY + renderObject.yoff[charCode],
+                                                renderObject.width[charCode],
+                                                renderObject.height[charCode]
+                                            )
+                        
                                             renderObject.currentX += renderObject.xadv[charCode]
                                         }
                                         break;
@@ -250,18 +246,11 @@
                         
                                         if (renderObject.orientation == &#x27;orthogonal&#x27;) {
                         
-                                            try {
-                                                Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
-                                            } catch (e) {
-                                            }
+                                            Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileheight * renderObject.yscale)
                         
                                         } else if (renderObject.orientation == &#x27;isometric&#x27;) {
                         
-                                            try {
-                                                Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
-                                            } catch (e) {
-                        
-                                            }
+                                            Game.b_ctx.drawImage(renderObject.atlas, renderObject.cx, renderObject.cy, renderObject.tilewidth, renderObject.tileset.tileheight, renderObject.sx, renderObject.sy, renderObject.tilewidth * renderObject.xscale, renderObject.tileset.tileheight * renderObject.yscale)
                         
                                         }
                         

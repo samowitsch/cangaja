@@ -64,6 +64,7 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
+                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -209,55 +210,7 @@
                                     CG._extend(this, options)
                                 }
                         
-                                this.addEventListener()
-                        
                                 return this
-                            },
-                            addEventListener: function () {
-                                Game.canvas.addEventListener(&quot;touchstart&quot;, function (e) {
-                                    e.preventDefault();
-                        
-                                    if (this.active) {
-                                        return
-                                    }
-                        
-                                    var touch = e.touches[0];
-                        
-                                    if (this.handle === CG.LEFT_HAND &amp;&amp; touch.pageX &lt; Game.width2) {
-                                        this.setLimitXY(touch.pageX, touch.pageY)
-                                        this.setInputXY(touch.pageX, touch.pageY)
-                                        this.active = true
-                                        this.identifier = touch.identifier
-                                    } else if (this.handle === CG.RIGHT_HAND &amp;&amp; touch.pageX &gt; Game.width2) {
-                                        this.setLimitXY(touch.pageX, touch.pageY)
-                                        this.setInputXY(touch.pageX, touch.pageY)
-                                        this.active = true
-                                        this.identifier = touch.identifier
-                                    }
-                        
-                        
-                                }.bind(this));
-                        
-                                document.addEventListener(&quot;touchmove&quot;, function (e) {
-                                    e.preventDefault();
-                        
-                                    for (var i = 0; i &lt; e.touches.length; ++i) {
-                                        var touch = e.touches[i];
-                                        if (touch.identifier === this.identifier) {
-                                            this.setInputXY(touch.pageX, touch.pageY);
-                                        }
-                                    }
-                                }.bind(this));
-                        
-                                document.addEventListener(&quot;touchend&quot;, function (e) {
-                                    for (var i = 0; i &lt; e.changedTouches.length; ++i) {
-                                        var touch = e.changedTouches[i];
-                                        if (touch.identifier === this.identifier) {
-                                            this.active = false
-                                            this.identifier = -1
-                                        }
-                                    }
-                                }.bind(this));
                             },
                             draw: function () {
                                 if (!this.active) {
@@ -267,9 +220,10 @@
                                 Game.b_ctx.save()
                         
                                 // limit
+                                Game.b_ctx.globalAlpha = 0.6
                                 Game.b_ctx.beginPath()
-                                Game.b_ctx.strokeStyle = &#x27;rgb(200,200,200)&#x27;
-                                Game.b_ctx.lineWidth = 3
+                                Game.b_ctx.strokeStyle = &#x27;rgb(100,100,100)&#x27;
+                                Game.b_ctx.lineWidth = 1
                                 Game.b_ctx.arc(this.limit.x, this.limit.y, this.maxLength, 0, (Math.PI * 2), true)
                                 Game.b_ctx.stroke()
                         
@@ -281,7 +235,7 @@
                                 // input
                                 Game.b_ctx.beginPath();
                                 Game.b_ctx.arc(this.input.x, this.input.y, this.maxLength / 1.5, 0, (Math.PI * 2), true)
-                                Game.b_ctx.fillStyle = &quot;rgb(0, 0, 200)&quot;
+                                Game.b_ctx.fillStyle = &quot;rgb(200, 200, 200)&quot;
                                 Game.b_ctx.fill()
                         
                                 Game.b_ctx.restore()
