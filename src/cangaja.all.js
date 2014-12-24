@@ -17011,11 +17011,6 @@ CG.Entity.extend('Map', {
          */
         this.mapOffset = new CG.Point(0, 0)
         /**
-         * @property changemap
-         * @type {String}
-         */
-        this.changemap = ''
-        /**
          * @description
          *
          * If set to true the map is being updated with method updateAnimation.
@@ -17203,7 +17198,6 @@ CG.Entity.extend('Map', {
      * @param xmlfile {string/object} xmlfile path or mediaasset object with data of tiled map xml
      */
     loadMapXml: function (xmlfile) {
-        this.changemap = ''
         this.animated = false
         this.layers = []
 
@@ -17399,7 +17393,6 @@ CG.Entity.extend('Map', {
      * @param jsonfile {string/object} jsonfile path or mediaasset object with data of tiled map xml
      */
     loadMapJson: function (jsonfile) {
-        this.changemap = ''
         this.animated = false
         this.layers = []
 
@@ -17555,9 +17548,6 @@ CG.Entity.extend('Map', {
         //update all points an areas
         this.updatePointsAndAreas()
 
-        if (this.changemap != '') {
-            this.loadMap(this.changemap)
-        }
         if (this.visible) {
             this.updateAnimation()
             if (this.layers.length > 0) {
@@ -17576,9 +17566,9 @@ CG.Entity.extend('Map', {
                             while (y < tmpy) {
                                 var x = this.bx, //- this.tilewidth
                                     mx = Math.floor(this.bx / this.tilewidth),
-                                    tmpx = (this.bx + this.bw + this.tilewidth)
+                                    tmpx = this.bx + this.bw + this.tilewidth
                                 while (x < tmpx) {
-                                    if ((this.wrapX || (mx >= 0 && mx < this.width)) && (this.wrapY || (my >= 0 && my < this.height))) {
+                                    if ((this.wrapX || (mx >= 0 && mx < this.mapColumns)) && (this.wrapY || (my >= 0 && my < this.mapRows))) {
                                         var mx2 = mx,
                                             my2 = my
 
