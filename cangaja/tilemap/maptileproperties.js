@@ -13,11 +13,11 @@ CG.Class.extend('MapTileProperties', {
      * @return {*}
      */
     init:function () {
-        /**
-         * @property animated
-         * @type {Boolean}
-         */
-        this.animated = false
+        ///**
+        // * @property animated
+        // * @type {Boolean}
+        // */
+        //this.animated = false
         /**
          * @property animDelay
          * @type {Number}
