@@ -37,6 +37,7 @@ CG.Class.extend('Layer', {
              */
             visible: true,
             /**
+             * @description layers normally follows the screen position, if fixedPosition is true the layer is fixed to top left
              * @property fixedPosition
              * @type {Boolean}
              */

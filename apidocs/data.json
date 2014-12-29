@@ -5158,6 +5158,7 @@
         {
             "file": "cangaja/control/layer.js",
             "line": 39,
+            "description": "layers normally follows the screen position, if fixedPosition is true the layer is fixed to top left",
             "itemtype": "property",
             "name": "fixedPosition",
             "type": "{Boolean}",
@@ -5166,7 +5167,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 44,
+            "line": 45,
             "itemtype": "property",
             "name": "elements",
             "type": "{Array}",
@@ -5175,7 +5176,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 49,
+            "line": 50,
             "itemtype": "property",
             "name": "elementsToDelete",
             "type": "{Array}",
@@ -5186,7 +5187,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 63,
+            "line": 64,
             "itemtype": "method",
             "name": "update",
             "class": "CG.Layer",
@@ -5194,7 +5195,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 80,
+            "line": 81,
             "itemtype": "method",
             "name": "draw",
             "class": "CG.Layer",
@@ -5202,7 +5203,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 104,
+            "line": 105,
             "description": "Add new element to the layer. This could be a CG.Sprite, CG.Animation, CG.Button and so on. Every thing that has a update and draw method ;o)",
             "itemtype": "method",
             "name": "addElement",
@@ -5218,7 +5219,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 114,
+            "line": 115,
             "description": "Find element by name (the first one)",
             "itemtype": "method",
             "name": "getElementByName",
@@ -5238,7 +5239,7 @@
         },
         {
             "file": "cangaja/control/layer.js",
-            "line": 129,
+            "line": 130,
             "description": "Find elements by name (if they have the same name ;o)",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -5946,7 +5947,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 103,
+            "line": 105,
             "description": "add a CG.Layer object to the layer array",
             "itemtype": "method",
             "name": "addLayer",
@@ -5962,7 +5963,7 @@
         },
         {
             "file": "cangaja/control/screen.js",
-            "line": 113,
+            "line": 115,
             "description": "find CG.Layer by name",
             "itemtype": "method",
             "name": "getLayerByName",
