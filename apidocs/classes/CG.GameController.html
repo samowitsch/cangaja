@@ -141,7 +141,33 @@
                             <p>CG.GameController extends CG.Stick an represents an GameController with one Stick and
                         multiple buttons</p>
                         <pre class="code prettyprint"><code>
+                        stick = new CG.GameController({
+                                   maxLength: 60,
+                                   buttons: [
+                                       new CG.Button({
+                                           //text: &#39;J&#39;,
+                                           //font: heiti,
+                                           image: Game.asset.getImageByName(&#39;jump&#39;),
+                                           position: new CG.Point(Game.width - 200, Game.height - 75),
+                                           callbacks: {
+                                               clicked: function () {
+                                                   b2world.player.startJump()
+                                               }
+                                           }
+                                       }),
+                                       new CG.Button({
+                                           //text: &#39;J&#39;,
+                                           //font: heiti,
+                                           image: Game.asset.getImageByName(&#39;shoot&#39;),
+                                           position: new CG.Point(Game.width - 100, Game.height - 175),
+                                           callbacks: {
+                                               clicked: function () {
                         
+                                               }
+                                           }
+                                       })
+                                   ]
+                               })
                         </code></pre>
                         </div>
                         
@@ -253,7 +279,7 @@
                                                             CG.Stick
                                                         </a>
                                                         but overwritten in
-                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l16"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:16</code></a>
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l44"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:44</code></a>
                                                     </p>
                                             
                                             
@@ -364,7 +390,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l32"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:32</code></a>
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l60"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:60</code></a>
                                                     </p>
                                             
                                             
@@ -557,7 +583,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l37"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:37</code></a>
+                                                    <a href="../files/cangaja_input_gamecontroller.js.html#l65"><code>cangaja&#x2F;input&#x2F;gamecontroller.js:65</code></a>
                                                     </p>
                                             
                                             

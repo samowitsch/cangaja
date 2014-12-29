@@ -991,7 +991,7 @@
             "namespace": "",
             "file": "cangaja/input/gamecontroller.js",
             "line": 1,
-            "description": "CG.GameController extends CG.Stick an represents an GameController with one Stick and\nmultiple buttons\n\n```\n\n```",
+            "description": "CG.GameController extends CG.Stick an represents an GameController with one Stick and\nmultiple buttons\n\n```\n\nstick = new CG.GameController({\n           maxLength: 60,\n           buttons: [\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('jump'),\n                   position: new CG.Point(Game.width - 200, Game.height - 75),\n                   callbacks: {\n                       clicked: function () {\n                           b2world.player.startJump()\n                       }\n                   }\n               }),\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('shoot'),\n                   position: new CG.Point(Game.width - 100, Game.height - 175),\n                   callbacks: {\n                       clicked: function () {\n\n                       }\n                   }\n               })\n           ]\n       })\n\n```",
             "extends": "CG.Stick"
         },
         "CG.Stick": {
@@ -6556,7 +6556,7 @@
         },
         {
             "file": "cangaja/input/gamecontroller.js",
-            "line": 16,
+            "line": 44,
             "description": "Options:\nx {number}\ny {number}",
             "example": [
                 ""
@@ -6580,7 +6580,7 @@
         },
         {
             "file": "cangaja/input/gamecontroller.js",
-            "line": 32,
+            "line": 60,
             "itemtype": "property",
             "name": "buttons",
             "type": "{Array}",
@@ -6589,7 +6589,7 @@
         },
         {
             "file": "cangaja/input/gamecontroller.js",
-            "line": 37,
+            "line": 65,
             "itemtype": "property",
             "name": "visible",
             "type": "{Boolean}",

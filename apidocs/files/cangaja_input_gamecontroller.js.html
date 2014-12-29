@@ -133,6 +133,34 @@
                          *
                          &#x60;&#x60;&#x60;
                         
+                         stick = new CG.GameController({
+                                    maxLength: 60,
+                                    buttons: [
+                                        new CG.Button({
+                                            //text: &#x27;J&#x27;,
+                                            //font: heiti,
+                                            image: Game.asset.getImageByName(&#x27;jump&#x27;),
+                                            position: new CG.Point(Game.width - 200, Game.height - 75),
+                                            callbacks: {
+                                                clicked: function () {
+                                                    b2world.player.startJump()
+                                                }
+                                            }
+                                        }),
+                                        new CG.Button({
+                                            //text: &#x27;J&#x27;,
+                                            //font: heiti,
+                                            image: Game.asset.getImageByName(&#x27;shoot&#x27;),
+                                            position: new CG.Point(Game.width - 100, Game.height - 175),
+                                            callbacks: {
+                                                clicked: function () {
+                        
+                                                }
+                                            }
+                                        })
+                                    ]
+                                })
+                        
                          &#x60;&#x60;&#x60;
                          *
                          * @class CG.GameController
