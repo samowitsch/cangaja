@@ -16601,6 +16601,7 @@ CG.Class.extend('Layer', {
              */
             visible: true,
             /**
+             * @description layers normally follows the screen position, if fixedPosition is true the layer is fixed to top left
              * @property fixedPosition
              * @type {Boolean}
              */
@@ -20716,7 +20717,11 @@ CG.Entity.extend('B2DEntity', {
              * @property id
              * @type {Object}
              */
-            id: {name: '', uid: 0},
+            id: {
+                name: '',
+                uid: 0,
+                cgObj: this
+            },
             /**
              * @property world
              * @type {b2World}

@@ -70,7 +70,7 @@ CG.B2DEntity.extend('B2DCircle', {
          */
         this.bodyDef.position.y = this.y / this.scale
         /**
-         * @property bdyDef.userData
+         * @property bodyDef.userData
          * @type {*}
          */
         this.bodyDef.userData = this.id

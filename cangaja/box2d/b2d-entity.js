@@ -91,7 +91,11 @@ CG.Entity.extend('B2DEntity', {
              * @property id
              * @type {Object}
              */
-            id: {name: '', uid: 0},
+            id: {
+                name: '',
+                uid: 0,
+                cgObj: this
+            },
             /**
              * @property world
              * @type {b2World}
