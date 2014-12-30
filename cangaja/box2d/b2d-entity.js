@@ -160,7 +160,23 @@ CG.Entity.extend('B2DEntity', {
              * @property fixDef
              * @type {b2FixtureDef}
              */
-            fixDef: new b2FixtureDef
+            fixDef: new b2FixtureDef,
+            /**
+             * @property categoryBits
+             * @type {Number}
+             */
+            categoryBits: 0x0001,
+            /**
+             * @property maskBits
+             * @type {Number}
+             */
+            maskBits: 0xffff,
+            /**
+             * @description if groupindex is 0 then use categoryBits and maskBits for collision detection
+             * @property groupIndex
+             * @type {Number}
+             */
+            groupIndex: 0
         })
 
         if (options) {
@@ -208,6 +224,21 @@ CG.Entity.extend('B2DEntity', {
          * @type {Number}
          */
         this.fixDef.restitution = this.restitution
+        /**
+         * @property fixDef.filter.categoryBits
+         * @type {Number}
+         */
+        this.fixDef.filter.categoryBits = this.categoryBits
+        /**
+         * @property fixDef.filter.maskBits
+         * @type {Number}
+         */
+        this.fixDef.filter.maskBits = this.maskBits
+        /**
+         * @property fixDef.filter.groupIndex
+         * @type {Number}
+         */
+        this.fixDef.filter.groupIndex = this.groupIndex
 
         return this
     },
