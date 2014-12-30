@@ -2721,7 +2721,7 @@
             "file": "cangaja/box2d/b2d-circle.js",
             "line": 72,
             "itemtype": "property",
-            "name": "bdyDef.userData",
+            "name": "bodyDef.userData",
             "type": "{*}",
             "class": "CG.B2DCirlce",
             "module": "CG"
@@ -2857,7 +2857,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 95,
+            "line": 99,
             "itemtype": "property",
             "name": "world",
             "type": "{b2World}",
@@ -2866,7 +2866,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 100,
+            "line": 104,
             "itemtype": "property",
             "name": "isHit",
             "type": "{Boolean}",
@@ -2875,7 +2875,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 105,
+            "line": 109,
             "itemtype": "property",
             "name": "strength",
             "type": "{Number}",
@@ -2884,7 +2884,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 110,
+            "line": 114,
             "itemtype": "property",
             "name": "dead",
             "type": "{Boolean}",
@@ -2893,7 +2893,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 115,
+            "line": 119,
             "itemtype": "property",
             "name": "angle",
             "type": "{Number}",
@@ -2902,7 +2902,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 120,
+            "line": 124,
             "itemtype": "property",
             "name": "density",
             "type": "{Number}",
@@ -2911,7 +2911,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 125,
+            "line": 129,
             "itemtype": "property",
             "name": "restitution",
             "type": "{Number}",
@@ -2920,7 +2920,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 130,
+            "line": 134,
             "itemtype": "property",
             "name": "friction",
             "type": "{Number}",
@@ -2929,7 +2929,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 135,
+            "line": 139,
             "itemtype": "property",
             "name": "allowSleep",
             "type": "{boolean}",
@@ -2938,7 +2938,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 140,
+            "line": 144,
             "itemtype": "property",
             "name": "awake",
             "type": "{boolean}",
@@ -2947,7 +2947,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 145,
+            "line": 149,
             "itemtype": "property",
             "name": "fixedRotation",
             "type": "{boolean}",
@@ -2956,7 +2956,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 150,
+            "line": 154,
             "itemtype": "property",
             "name": "bodyDef",
             "type": "{b2BodyDef}",
@@ -2965,7 +2965,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 155,
+            "line": 159,
             "itemtype": "property",
             "name": "fixDef",
             "type": "{b2FixtureDef}",
@@ -2974,7 +2974,35 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 167,
+            "line": 164,
+            "itemtype": "property",
+            "name": "categoryBits",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 169,
+            "itemtype": "property",
+            "name": "maskBits",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 174,
+            "description": "if groupindex is 0 then use categoryBits and maskBits for collision detection",
+            "itemtype": "property",
+            "name": "groupIndex",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 187,
             "itemtype": "property",
             "name": "bodyDef.alowSleep",
             "type": "{Boolean}",
@@ -2983,7 +3011,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 172,
+            "line": 192,
             "itemtype": "property",
             "name": "bodyDef.awake",
             "type": "{Boolean}",
@@ -2992,7 +3020,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 177,
+            "line": 197,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{Boolean}",
@@ -3001,7 +3029,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 182,
+            "line": 202,
             "itemtype": "property",
             "name": "bodyDef.angle",
             "type": "{number}",
@@ -3010,7 +3038,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 187,
+            "line": 207,
             "itemtype": "property",
             "name": "bodyDef.fixedRotation",
             "type": "{Boolean}",
@@ -3019,7 +3047,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 192,
+            "line": 212,
             "itemtype": "property",
             "name": "fixDef.density",
             "type": "{Number}",
@@ -3028,7 +3056,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 197,
+            "line": 217,
             "itemtype": "property",
             "name": "fixDef.friction",
             "type": "{Number}",
@@ -3037,7 +3065,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 202,
+            "line": 222,
             "itemtype": "property",
             "name": "fixDef.restitution",
             "type": "{Number}",
@@ -3046,7 +3074,34 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 210,
+            "line": 227,
+            "itemtype": "property",
+            "name": "fixDef.filter.categoryBits",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 232,
+            "itemtype": "property",
+            "name": "fixDef.filter.maskBits",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 237,
+            "itemtype": "property",
+            "name": "fixDef.filter.groupIndex",
+            "type": "{Number}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 245,
             "itemtype": "method",
             "name": "hit",
             "params": [
@@ -3064,7 +3119,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 231,
+            "line": 266,
             "itemtype": "method",
             "name": "addVelocity",
             "params": [
@@ -3078,7 +3133,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 256,
+            "line": 291,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -3096,7 +3151,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 268,
+            "line": 303,
             "itemtype": "method",
             "name": "setType",
             "params": [
@@ -3110,7 +3165,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 275,
+            "line": 310,
             "itemtype": "method",
             "name": "setPosition",
             "params": [
@@ -3124,7 +3179,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 282,
+            "line": 317,
             "itemtype": "method",
             "name": "getPosition",
             "class": "CG.B2DEntity",
