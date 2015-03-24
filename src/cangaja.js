@@ -22864,12 +22864,20 @@ CG.Layer.extend('B2DWorld', {
                 //if b2entity found delete entity and b2body
                 if (this.elements[i].body.m_userData.uid == body.m_userData.uid) {
                     this.removeElementByIndex(i)
-                    this.world.DestroyBody(body)
+                    this.deleteBody(body)
                     return true
                 }
             }
         }
         return false
+    },
+    /**
+     * delete box2d body
+     *
+     * @param body
+     */
+    deleteBody: function (body) {
+        this.world.DestroyBody(body)
     },
     /**
      * @method isMouseDown
@@ -22879,6 +22887,8 @@ CG.Layer.extend('B2DWorld', {
         return (this.mouseJoint != null);
     },
     /**
+     * delete cangaja element
+     *
      * @method removeElementByIndex
      * @param index
      */
@@ -22886,6 +22896,8 @@ CG.Layer.extend('B2DWorld', {
         this.elements.splice(index, 1);
     },
     /**
+     * delete cangaja element
+     *
      * @method removeElementByUid
      * @param uid
      */
