@@ -2958,6 +2958,15 @@
             "file": "cangaja/box2d/b2d-entity.js",
             "line": 154,
             "itemtype": "property",
+            "name": "isSensor",
+            "type": "{boolean}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 159,
+            "itemtype": "property",
             "name": "bodyDef",
             "type": "{b2BodyDef}",
             "class": "CG.B2DEntity",
@@ -2965,7 +2974,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 159,
+            "line": 164,
             "itemtype": "property",
             "name": "fixDef",
             "type": "{b2FixtureDef}",
@@ -2974,7 +2983,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 164,
+            "line": 169,
             "itemtype": "property",
             "name": "categoryBits",
             "type": "{Number}",
@@ -2983,7 +2992,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 169,
+            "line": 174,
             "itemtype": "property",
             "name": "maskBits",
             "type": "{Number}",
@@ -2992,7 +3001,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 174,
+            "line": 179,
             "description": "if groupindex is 0 then use categoryBits and maskBits for collision detection",
             "itemtype": "property",
             "name": "groupIndex",
@@ -3002,7 +3011,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 187,
+            "line": 192,
             "itemtype": "property",
             "name": "bodyDef.alowSleep",
             "type": "{Boolean}",
@@ -3011,7 +3020,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 192,
+            "line": 197,
             "itemtype": "property",
             "name": "bodyDef.awake",
             "type": "{Boolean}",
@@ -3020,7 +3029,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 197,
+            "line": 202,
             "itemtype": "property",
             "name": "bodyDef.bullet",
             "type": "{Boolean}",
@@ -3029,7 +3038,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 202,
+            "line": 207,
             "itemtype": "property",
             "name": "bodyDef.angle",
             "type": "{number}",
@@ -3038,7 +3047,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 207,
+            "line": 212,
             "itemtype": "property",
             "name": "bodyDef.fixedRotation",
             "type": "{Boolean}",
@@ -3047,7 +3056,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 212,
+            "line": 217,
             "itemtype": "property",
             "name": "fixDef.density",
             "type": "{Number}",
@@ -3056,7 +3065,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 217,
+            "line": 222,
             "itemtype": "property",
             "name": "fixDef.friction",
             "type": "{Number}",
@@ -3065,7 +3074,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 222,
+            "line": 227,
             "itemtype": "property",
             "name": "fixDef.restitution",
             "type": "{Number}",
@@ -3074,7 +3083,16 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 227,
+            "line": 232,
+            "itemtype": "property",
+            "name": "fixDef.isSensor",
+            "type": "{Boolean}",
+            "class": "CG.B2DEntity",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-entity.js",
+            "line": 237,
             "itemtype": "property",
             "name": "fixDef.filter.categoryBits",
             "type": "{Number}",
@@ -3083,7 +3101,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 232,
+            "line": 242,
             "itemtype": "property",
             "name": "fixDef.filter.maskBits",
             "type": "{Number}",
@@ -3092,7 +3110,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 237,
+            "line": 247,
             "itemtype": "property",
             "name": "fixDef.filter.groupIndex",
             "type": "{Number}",
@@ -3101,7 +3119,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 245,
+            "line": 255,
             "itemtype": "method",
             "name": "hit",
             "params": [
@@ -3119,7 +3137,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 266,
+            "line": 276,
             "itemtype": "method",
             "name": "addVelocity",
             "params": [
@@ -3133,7 +3151,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 291,
+            "line": 301,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -3151,7 +3169,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 303,
+            "line": 313,
             "itemtype": "method",
             "name": "setType",
             "params": [
@@ -3165,7 +3183,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 310,
+            "line": 320,
             "itemtype": "method",
             "name": "setPosition",
             "params": [
@@ -3179,7 +3197,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-entity.js",
-            "line": 317,
+            "line": 327,
             "itemtype": "method",
             "name": "getPosition",
             "class": "CG.B2DEntity",
@@ -4340,6 +4358,19 @@
         {
             "file": "cangaja/box2d/b2d-world.js",
             "line": 593,
+            "description": "delete box2d body",
+            "params": [
+                {
+                    "name": "body",
+                    "description": ""
+                }
+            ],
+            "class": "CG.B2DWorld",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/box2d/b2d-world.js",
+            "line": 601,
             "itemtype": "method",
             "name": "isMouseDown",
             "return": {
@@ -4351,7 +4382,8 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 600,
+            "line": 608,
+            "description": "delete cangaja element",
             "itemtype": "method",
             "name": "removeElementByIndex",
             "params": [
@@ -4365,7 +4397,8 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 607,
+            "line": 617,
+            "description": "delete cangaja element",
             "itemtype": "method",
             "name": "removeElementByUid",
             "params": [
@@ -4379,7 +4412,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 620,
+            "line": 632,
             "itemtype": "method",
             "name": "applyImpulse",
             "params": [
@@ -4401,7 +4434,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 633,
+            "line": 645,
             "itemtype": "method",
             "name": "addContactListener",
             "params": [
@@ -4415,7 +4448,7 @@
         },
         {
             "file": "cangaja/box2d/b2d-world.js",
-            "line": 657,
+            "line": 669,
             "itemtype": "method",
             "name": "getBodySpec",
             "params": [
@@ -8804,6 +8837,10 @@
         {
             "message": "Missing item type\n© 2013 by Christian Sonntag <info@motions-media.de>\nsimple experimental Canvas Game JavaScript Framework\n\nhttps://www.github.com/samowitsch/cangaja/\n\nIncludes:\nhammer.js\nbuzz.js\nBox2Html5.js\nclipper.js\npoly2tri.js\nspine.js",
             "line": " cangaja/base/intro.js:1"
+        },
+        {
+            "message": "Missing item type\ndelete box2d body",
+            "line": " cangaja/box2d/b2d-world.js:593"
         }
     ]
 }
