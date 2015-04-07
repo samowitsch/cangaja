@@ -20778,6 +20778,11 @@ CG.Entity.extend('B2DEntity', {
              */
             fixedRotation: false,
             /**
+             * @property isSensor
+             * @type {boolean}
+             */
+            isSensor: false,
+            /**
              * @property bodyDef
              * @type {b2BodyDef}
              */
@@ -20850,6 +20855,11 @@ CG.Entity.extend('B2DEntity', {
          * @type {Number}
          */
         this.fixDef.restitution = this.restitution
+        /**
+         * @property fixDef.isSensor
+         * @type {Boolean}
+         */
+        this.fixDef.isSensor = this.isSensor
         /**
          * @property fixDef.filter.categoryBits
          * @type {Number}
