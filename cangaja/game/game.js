@@ -68,6 +68,12 @@ CG.Class.extend('Game', {
                 throw 'no canvas element defined'
                 break
         }
+
+        // inject options
+        if (options) {
+            CG._extend(this, options)
+        }
+
         /**
          @property ctx {Object}
          */
