@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <link rel="icon" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -121,393 +121,393 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja/box2d/b2d-fizzx-loader.js</h1>
-                        
-                        <div class="file">
-                            <pre class="code prettyprint linenums">
-                        /**
-                         * @description
-                         *
-                         * CG.B2DFizzXLoader
-                         *
-                         * @class CG.B2DFizzXLoader
-                         * @extends CG.Class
-                         * @deprecated maybe it will removed in the future. FizzX editor development has stopped before it began ;-(
-                         */
-                        
-                        CG.Class.extend(&#x27;B2DFizzXLoader&#x27;, {
-                            /**
-                             * @constructor
-                             * @method init
-                             * @param json {string}
-                             * @param world {CG.B2DWorld}
-                             * @param offsetx {Number}
-                             * @param offsety {Number}
-                             */
-                            init: function (json, world, offsetx, offsety) {
-                                /**
-                                 @property json {string}
-                                 */
-                                this.json = JSON.parse(json, function (key, value) {
-                                    if (typeof value === &quot;string&quot;) {
-                                        if (value.match(/^[-+]?\d+$/)) {      //check for integer
-                                            return parseInt(value)
-                                        } else if (value.match(/^[-+]?\d+\.\d+$/)) {   //check for float
-                                            return parseFloat(value)
-                                        } else {      //strings
-                                            switch (value) {
-                                                case &quot;true&quot;:
-                                                    return true
-                                                    break
-                                                case &quot;false&quot;:
-                                                    return false
-                                                    break
-                                                case &quot;null&quot;:
-                                                    return null
-                                                    break
-                                            }
-                                        }
-                                    }
-                                    return value
-                                })
-                                /**
-                                 @property world {CG.B2DWorld}
-                                 */
-                                this.world = world
-                                /**
-                                 @property offsetx {Number}
-                                 */
-                                this.offsetx = offsetx
-                                /**
-                                 @property offsety {Number}
-                                 */
-                                this.offsety = offsety
-                        
-                                this.bodiesMap = []
-                                this.jointsMap = []
-                                this.imageMap = []
-                                this.atlasMap = []
-                        
-                                this.loadImages()
-                                this.loadBodies()
-                                this.loadJoints()
-                            },
-                            /**
-                             * @description
-                             * @method loadBodies
-                             */
-                            loadBodies: function () {
-                                console.log(&#x27;### start bodies&#x27;)
-                                for (var b = 0, lb = this.json.box2d.bodies.body.length; b &lt; lb; b++) {
-                                    var body = this.json.box2d.bodies.body[b]
-                                    console.log(&#x27;body:&#x27;, body.name, &#x27;image:&#x27;, body.image, body)
-                                    var fixtures = body.fixtures.fixture
-                                    console.log(&#x27;-- fixtures&#x27;, fixtures.length)
-                                    for (var f = 0, fl = fixtures.length; f &lt; fl; f++) {
-                                        console.log(&#x27;--- fixture #&#x27; + (f + 1), fixtures[f])
-                                    }
-                        
-                                }
-                        
-                            },
-                            /**
-                             * @description is this method needed? use MediaAsset loader instead or extend MediaAsset with in game &quot;preloading&quot;?
-                             * @method loadImages
-                             */
-                            loadImages: function () {
-                                console.log(&#x27;### start images&#x27;)
-                                for (var i = 0, li = this.json.box2d.images.image.length; i &lt; li; i++) {
-                                    var image = this.json.box2d.images.image[i]
-                                    console.log(&#x27;-- image #&#x27; + ( i + 1 ), image)
-                                }
-                            },
-                            /**
-                             * @description
-                             * @method loadJoints
-                             */
-                            loadJoints: function () {
-                                console.log(&#x27;### start joints&#x27;)
-                                for (var j = 0, lj = this.json.box2d.joints.joint.length; j &lt; lj; j++) {
-                                    var joint = this.json.box2d.joints.joint[j]
-                                    console.log(&#x27;-- joint #&#x27; + (j + 1), joint)
-                                }
-                            }
-                        })
-                        
-                        /*
-                        
-                        //Example is using LibGDX with the Artemis Entity System Framework
-                        public class FizzXLoader {
-                        
-                            public float BOX_WORLD_TO = 30f;
-                            HashMap bodiesMap;
-                            HashMap jointsMap;
-                            HashMap imageMap;
-                            HashMap atlasMap;
-                        
-                            public void load(String path, World world, float xOffset, float yOffset) {
-                                FileHandle fileHandle = Gdx.files.internal(path);
-                        
-                                JsonReader reader = new JsonReader();
-                                JsonValue map = reader.parse(fileHandle);
-                                bodiesMap = new HashMap();
-                                jointsMap = new HashMap();
-                                imageMap = new HashMap();
-                                atlasMap = new HashMap();
-                        
-                                JsonValue box2dEntry = map.getChild(&quot;box2D&quot;);
-                        
-                                for (JsonValue entry = box2dEntry; entry != null; entry = entry.next()) {
-                        
-                                    if (entry.name.equals(&quot;images&quot;)) {
-                        
-                                        JsonValue joints = entry.getChild(&quot;image&quot;);
-                                        for (JsonValue jointJsonValue = joints; jointJsonValue != null; jointJsonValue = jointJsonValue
-                                            .next()) {
-                                            JsonValue pathJsonValue = jointJsonValue.get(&quot;-path&quot;);
-                                            JsonValue nameJsonValue = jointJsonValue.get(&quot;-name&quot;);
-                                            JsonValue atlasJsonValue = jointJsonValue.get(&quot;-atlas&quot;);
-                                            String atlasString = atlasJsonValue.asString();
-                                            if (!atlasString.equals(&quot;null&quot;)) {
-                                                TextureAtlas textureAtlas = new TextureAtlas(
-                                                    Gdx.files.internal(&quot;data/&quot;
-                                                        + atlasJsonValue.asString() + &quot;.txt&quot;));
-                                                String[] splitName = pathJsonValue.asString().split(
-                                                    &quot;\\.&quot;);
-                                                atlasMap.put(splitName[0], textureAtlas);
-                                            }
-                        
-                                            imageMap.put(nameJsonValue.asString(),
-                                                pathJsonValue.asString());
-                                        }
-                                    }
-                        
-                                    else if (entry.name.equals(&quot;bodies&quot;)) {
-                                        JsonValue bodies = entry.getChild(&quot;body&quot;);
-                                        for (JsonValue bodyJsonValue = bodies; bodyJsonValue != null; bodyJsonValue = bodyJsonValue
-                                            .next()) {
-                                            Float xValue = bodyJsonValue.getFloat(&quot;-x&quot;);
-                                            Float yValue = bodyJsonValue.getFloat(&quot;-y&quot;);
-                                            String typeValue = bodyJsonValue.getString(&quot;-type&quot;);
-                                            boolean bulletValue = bodyJsonValue.getBoolean(&quot;-bullet&quot;);
-                                            String nameValue = bodyJsonValue.getString(&quot;-name&quot;);
-                                            String imagePath = bodyJsonValue.getString(&quot;-image&quot;);
-                        
-                                            imageMap.put(nameValue, imagePath);
-                                            JsonValue fixturesValue = bodyJsonValue
-                                                .getChild(&quot;fixtures&quot;);
-                        
-                                            BodyDef bodyDef = new BodyDef();
-                        
-                                            bodyDef.bullet = bulletValue;
-                                            bodyDef.position.x = xValue / BOX_WORLD_TO + xOffset;
-                                            bodyDef.position.y = yValue / BOX_WORLD_TO + yOffset;
-                        
-                                            if (typeValue.equals(&quot;kinematic&quot;)) {
-                                                bodyDef.type = BodyType.KinematicBody;
-                                            } else if (typeValue.equals(&quot;static&quot;)) {
-                                                bodyDef.type = BodyType.StaticBody;
-                                            } else if (typeValue.equals(&quot;dynamic&quot;)) {
-                                                bodyDef.type = BodyType.DynamicBody;
-                                            }
-                        
-                                            Entity entity = world.createEntity();
-                                            world.getManager(TagManager.class).register(nameValue,
-                                                entity);
-                                            SpatialComponent component = PhysicsFactory
-                                                .createBody(bodyDef);
-                        
-                                            entity.addComponent(component);
-                                            if (!imagePath.equals(&quot;null&quot;)) {
-                                                String[] splitName = imagePath.split(&quot;\\.&quot;);
-                        
-                                                if (atlasMap.containsKey(splitName[0])) {
-                                                    TextureComponent textureComponent = new TextureComponent(
-                                                        atlasMap.get(splitName[0]).findRegion(
-                                                            splitName[0]), new Vector2(0, 0));
-                                                    entity.addComponent(textureComponent);
-                                                }
-                                            }
-                        
-                                            entity.addToWorld();
-                                            component.name = nameValue;
-                                            bodiesMap.put(nameValue, component.body);
-                        
-                                            JsonValue fixtureEntry = fixturesValue.child();
-                        
-                                            for (JsonValue fixture = fixtureEntry; fixture != null; fixture = fixture
-                                                .next()) {
-                                                String fixtureName = fixture.getString(&quot;-name&quot;);
-                                                String shapeType = fixture.getString(&quot;-shapeType&quot;);
-                                                float friction = fixture.getFloat(&quot;-friction&quot;);
-                                                float restitution = fixture.getFloat(&quot;-restitution&quot;);
-                                                float density = fixture.getFloat(&quot;-density&quot;);
-                        
-                                                JsonValue vertexValue = fixture.getChild(&quot;vertex&quot;);
-                                                FixtureDef fixtureDef = new FixtureDef();
-                                                fixtureDef.density = density;
-                                                fixtureDef.restitution = restitution;
-                                                fixtureDef.friction = friction;
-                        
-                                                Shape shape = null;
-                                                if (shapeType.equals(&quot;polygonShape&quot;)) {
-                                                    ArrayList verticesList = new ArrayList();
-                        
-                                                    JsonValue vertexEntry = vertexValue;
-                        
-                                                    if (vertexEntry != null) {
-                        
-                                                        for (JsonValue vertex = vertexEntry; vertex != null; vertex = vertex
-                                                            .next()) {
-                        
-                                                            Float vertexX = vertex.getFloat(&quot;-x&quot;);
-                                                            Float vertexY = vertex.getFloat(&quot;-y&quot;);
-                        
-                                                            Vector2 vector2 = new Vector2();
-                                                            vector2.x = vertexX / BOX_WORLD_TO;
-                                                            vector2.y = vertexY / BOX_WORLD_TO;
-                        
-                                                            verticesList.add(vector2);
-                        
-                                                        }
-                                                    }
-                        
-                                                    shape = new PolygonShape();
-                        
-                                                    Vector2[] vertices = new Vector2[verticesList
-                                                        .size()];
-                                                    vertices = verticesList.toArray(vertices);
-                        
-                                                    float[] floatVertices = new float[vertices.length * 2];
-                        
-                                                    ((PolygonShape) shape).set(vertices);
-                        
-                                                    fixtureDef.isSensor = fixture
-                                                        .getBoolean(&quot;-isSensor&quot;);
-                        
-                                                } else if (shapeType.equals(&quot;edgeShape&quot;)) {
-                                                    shape = new ChainShape();
-                        
-                                                    ArrayList verticesList = new ArrayList();
-                        
-                                                    JsonValue vertexEntry = vertexValue;
-                        
-                                                    if (vertexEntry != null) {
-                        
-                                                        for (JsonValue vertex = vertexEntry; vertex != null; vertex = vertex
-                                                            .next()) {
-                                                            JsonValue vertexX = vertex.get(&quot;-x&quot;);
-                                                            JsonValue vertexY = vertex.get(&quot;-y&quot;);
-                        
-                                                            Vector2 vector2 = new Vector2();
-                                                            vector2.x = vertexX.asFloat()
-                                                                / BOX_WORLD_TO;
-                                                            vector2.y = vertexY.asFloat()
-                                                                / BOX_WORLD_TO;
-                        
-                                                            verticesList.add(vector2);
-                        
-                                                        }
-                                                    }
-                        
-                                                    Vector2[] vertices = new Vector2[verticesList
-                                                        .size()];
-                                                    vertices = verticesList.toArray(vertices);
-                        
-                                                    ((ChainShape) shape).createChain(vertices);
-                        
-                                                } else if (shapeType.equals(&quot;circleShape&quot;)) {
-                                                    shape = new CircleShape();
-                                                    JsonValue circleRadiusJsonValue = fixture
-                                                        .get(&quot;-circleRadius&quot;);
-                                                    ((CircleShape) shape)
-                                                .setRadius(circleRadiusJsonValue.asFloat()
-                                                        / BOX_WORLD_TO);
-                        
-                                                    float circleX = fixture.getFloat(&quot;-circleX&quot;);
-                                                    float circleY = fixture.getFloat(&quot;-circleY&quot;);
-                        
-                                                    ((CircleShape) shape).setPosition(new Vector2(
-                                                        circleX / BOX_WORLD_TO, circleY
-                                                            / BOX_WORLD_TO));
-                                                    fixtureDef.isSensor = fixture
-                                                        .getBoolean(&quot;-isSensor&quot;);
-                        
-                                                }
-                        
-                                                fixtureDef.shape = shape;
-                                                PhysicsFactory.createFixture(fixtureDef, component);
-                                            }
-                        
-                                        }
-                                    } else if (entry.name.equals(&quot;joints&quot;)) {
-                        
-                                        JsonValue joints = entry.getChild(&quot;joint&quot;);
-                                        for (JsonValue jointJsonValue = joints; jointJsonValue != null; jointJsonValue = jointJsonValue
-                                            .next()) {
-                                            JsonValue nameJsonValue = jointJsonValue.get(&quot;-name&quot;);
-                                            JsonValue typeJsonValue = jointJsonValue.get(&quot;-type&quot;);
-                                            JsonValue collideConnected = jointJsonValue
-                                                .get(&quot;-collideConnected&quot;);
-                                            JsonValue xJsonValue = jointJsonValue.get(&quot;-x&quot;);
-                                            JsonValue yJsonValue = jointJsonValue.get(&quot;-y&quot;);
-                                            JsonValue bodyAJsonValue = jointJsonValue.get(&quot;-bodyA&quot;);
-                                            JsonValue bodyBJsonValue = jointJsonValue.get(&quot;-bodyB&quot;);
-                        
-                                            JointDef jointDef = null;
-                                            if (typeJsonValue.asString().equals(&quot;RevoluteJoint&quot;)) {
-                                                jointDef = new RevoluteJointDef();
-                                                RevoluteJointDef revoluteJointDef = (RevoluteJointDef) jointDef;
-                        
-                                                Body bodyA = bodiesMap.get(bodyAJsonValue.asString());
-                                                Body bodyB = bodiesMap.get(bodyBJsonValue.asString());
-                        
-                                                JsonValue enableLimit = jointJsonValue
-                                                    .get(&quot;-enableLimit&quot;);
-                                                JsonValue lowerAngle = jointJsonValue
-                                                    .get(&quot;-lowerAngle&quot;);
-                                                JsonValue upperAngle = jointJsonValue
-                                                    .get(&quot;-upperAngle&quot;);
-                        
-                                                revoluteJointDef.enableLimit = enableLimit.asBoolean();
-                                                revoluteJointDef.lowerAngle = lowerAngle.asFloat();
-                                                revoluteJointDef.upperAngle = upperAngle.asFloat();
-                        
-                                                Vector2 anchor = new Vector2(xJsonValue.asFloat()
-                                                    / BOX_WORLD_TO, yJsonValue.asFloat()
-                                                    / BOX_WORLD_TO);
-                                                revoluteJointDef.initialize(bodyA, bodyB, anchor);
-                        
-                                            } else if (typeJsonValue.asString().equals(&quot;WeldJoint&quot;)) {
-                                                jointDef = new WeldJointDef();
-                                                WeldJointDef weldJointDef = (WeldJointDef) jointDef;
-                        
-                                                Body bodyA = bodiesMap.get(bodyAJsonValue.asString());
-                                                Body bodyB = bodiesMap.get(bodyBJsonValue.asString());
-                                                Vector2 anchor = new Vector2(xJsonValue.asFloat()
-                                                    / BOX_WORLD_TO, yJsonValue.asFloat()
-                                                    / BOX_WORLD_TO);
-                                                weldJointDef.initialize(bodyA, bodyB, anchor);
-                        
-                                            }
-                        
-                                            jointDef.collideConnected = collideConnected.asBoolean();
-                        
-                                            Joint joint = PhysicsFactory.createJoint(jointDef);
-                        
-                                            jointsMap.put(nameJsonValue.asString(), joint);
-                                        }
-                        
-                                    }
-                        
-                                }
-                            }
+<h1 class="file-heading">File: cangaja/box2d/b2d-fizzx-loader.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @description
+ *
+ * CG.B2DFizzXLoader
+ *
+ * @class CG.B2DFizzXLoader
+ * @extends CG.Class
+ * @deprecated maybe it will removed in the future. FizzX editor development has stopped before it began ;-(
+ */
+
+CG.Class.extend(&#x27;B2DFizzXLoader&#x27;, {
+    /**
+     * @constructor
+     * @method init
+     * @param json {string}
+     * @param world {CG.B2DWorld}
+     * @param offsetx {Number}
+     * @param offsety {Number}
+     */
+    init: function (json, world, offsetx, offsety) {
+        /**
+         @property json {string}
+         */
+        this.json = JSON.parse(json, function (key, value) {
+            if (typeof value === &quot;string&quot;) {
+                if (value.match(/^[-+]?\d+$/)) {      //check for integer
+                    return parseInt(value)
+                } else if (value.match(/^[-+]?\d+\.\d+$/)) {   //check for float
+                    return parseFloat(value)
+                } else {      //strings
+                    switch (value) {
+                        case &quot;true&quot;:
+                            return true
+                            break
+                        case &quot;false&quot;:
+                            return false
+                            break
+                        case &quot;null&quot;:
+                            return null
+                            break
+                    }
+                }
+            }
+            return value
+        })
+        /**
+         @property world {CG.B2DWorld}
+         */
+        this.world = world
+        /**
+         @property offsetx {Number}
+         */
+        this.offsetx = offsetx
+        /**
+         @property offsety {Number}
+         */
+        this.offsety = offsety
+
+        this.bodiesMap = []
+        this.jointsMap = []
+        this.imageMap = []
+        this.atlasMap = []
+
+        this.loadImages()
+        this.loadBodies()
+        this.loadJoints()
+    },
+    /**
+     * @description
+     * @method loadBodies
+     */
+    loadBodies: function () {
+        console.log(&#x27;### start bodies&#x27;)
+        for (var b = 0, lb = this.json.box2d.bodies.body.length; b &lt; lb; b++) {
+            var body = this.json.box2d.bodies.body[b]
+            console.log(&#x27;body:&#x27;, body.name, &#x27;image:&#x27;, body.image, body)
+            var fixtures = body.fixtures.fixture
+            console.log(&#x27;-- fixtures&#x27;, fixtures.length)
+            for (var f = 0, fl = fixtures.length; f &lt; fl; f++) {
+                console.log(&#x27;--- fixture #&#x27; + (f + 1), fixtures[f])
+            }
+
+        }
+
+    },
+    /**
+     * @description is this method needed? use MediaAsset loader instead or extend MediaAsset with in game &quot;preloading&quot;?
+     * @method loadImages
+     */
+    loadImages: function () {
+        console.log(&#x27;### start images&#x27;)
+        for (var i = 0, li = this.json.box2d.images.image.length; i &lt; li; i++) {
+            var image = this.json.box2d.images.image[i]
+            console.log(&#x27;-- image #&#x27; + ( i + 1 ), image)
+        }
+    },
+    /**
+     * @description
+     * @method loadJoints
+     */
+    loadJoints: function () {
+        console.log(&#x27;### start joints&#x27;)
+        for (var j = 0, lj = this.json.box2d.joints.joint.length; j &lt; lj; j++) {
+            var joint = this.json.box2d.joints.joint[j]
+            console.log(&#x27;-- joint #&#x27; + (j + 1), joint)
+        }
+    }
+})
+
+/*
+
+//Example is using LibGDX with the Artemis Entity System Framework
+public class FizzXLoader {
+
+    public float BOX_WORLD_TO = 30f;
+    HashMap bodiesMap;
+    HashMap jointsMap;
+    HashMap imageMap;
+    HashMap atlasMap;
+
+    public void load(String path, World world, float xOffset, float yOffset) {
+        FileHandle fileHandle = Gdx.files.internal(path);
+
+        JsonReader reader = new JsonReader();
+        JsonValue map = reader.parse(fileHandle);
+        bodiesMap = new HashMap();
+        jointsMap = new HashMap();
+        imageMap = new HashMap();
+        atlasMap = new HashMap();
+
+        JsonValue box2dEntry = map.getChild(&quot;box2D&quot;);
+
+        for (JsonValue entry = box2dEntry; entry != null; entry = entry.next()) {
+
+            if (entry.name.equals(&quot;images&quot;)) {
+
+                JsonValue joints = entry.getChild(&quot;image&quot;);
+                for (JsonValue jointJsonValue = joints; jointJsonValue != null; jointJsonValue = jointJsonValue
+                    .next()) {
+                    JsonValue pathJsonValue = jointJsonValue.get(&quot;-path&quot;);
+                    JsonValue nameJsonValue = jointJsonValue.get(&quot;-name&quot;);
+                    JsonValue atlasJsonValue = jointJsonValue.get(&quot;-atlas&quot;);
+                    String atlasString = atlasJsonValue.asString();
+                    if (!atlasString.equals(&quot;null&quot;)) {
+                        TextureAtlas textureAtlas = new TextureAtlas(
+                            Gdx.files.internal(&quot;data/&quot;
+                                + atlasJsonValue.asString() + &quot;.txt&quot;));
+                        String[] splitName = pathJsonValue.asString().split(
+                            &quot;\\.&quot;);
+                        atlasMap.put(splitName[0], textureAtlas);
+                    }
+
+                    imageMap.put(nameJsonValue.asString(),
+                        pathJsonValue.asString());
+                }
+            }
+
+            else if (entry.name.equals(&quot;bodies&quot;)) {
+                JsonValue bodies = entry.getChild(&quot;body&quot;);
+                for (JsonValue bodyJsonValue = bodies; bodyJsonValue != null; bodyJsonValue = bodyJsonValue
+                    .next()) {
+                    Float xValue = bodyJsonValue.getFloat(&quot;-x&quot;);
+                    Float yValue = bodyJsonValue.getFloat(&quot;-y&quot;);
+                    String typeValue = bodyJsonValue.getString(&quot;-type&quot;);
+                    boolean bulletValue = bodyJsonValue.getBoolean(&quot;-bullet&quot;);
+                    String nameValue = bodyJsonValue.getString(&quot;-name&quot;);
+                    String imagePath = bodyJsonValue.getString(&quot;-image&quot;);
+
+                    imageMap.put(nameValue, imagePath);
+                    JsonValue fixturesValue = bodyJsonValue
+                        .getChild(&quot;fixtures&quot;);
+
+                    BodyDef bodyDef = new BodyDef();
+
+                    bodyDef.bullet = bulletValue;
+                    bodyDef.position.x = xValue / BOX_WORLD_TO + xOffset;
+                    bodyDef.position.y = yValue / BOX_WORLD_TO + yOffset;
+
+                    if (typeValue.equals(&quot;kinematic&quot;)) {
+                        bodyDef.type = BodyType.KinematicBody;
+                    } else if (typeValue.equals(&quot;static&quot;)) {
+                        bodyDef.type = BodyType.StaticBody;
+                    } else if (typeValue.equals(&quot;dynamic&quot;)) {
+                        bodyDef.type = BodyType.DynamicBody;
+                    }
+
+                    Entity entity = world.createEntity();
+                    world.getManager(TagManager.class).register(nameValue,
+                        entity);
+                    SpatialComponent component = PhysicsFactory
+                        .createBody(bodyDef);
+
+                    entity.addComponent(component);
+                    if (!imagePath.equals(&quot;null&quot;)) {
+                        String[] splitName = imagePath.split(&quot;\\.&quot;);
+
+                        if (atlasMap.containsKey(splitName[0])) {
+                            TextureComponent textureComponent = new TextureComponent(
+                                atlasMap.get(splitName[0]).findRegion(
+                                    splitName[0]), new Vector2(0, 0));
+                            entity.addComponent(textureComponent);
                         }
-                        */
-                        
-                        
-                            </pre>
-                        </div>
+                    }
+
+                    entity.addToWorld();
+                    component.name = nameValue;
+                    bodiesMap.put(nameValue, component.body);
+
+                    JsonValue fixtureEntry = fixturesValue.child();
+
+                    for (JsonValue fixture = fixtureEntry; fixture != null; fixture = fixture
+                        .next()) {
+                        String fixtureName = fixture.getString(&quot;-name&quot;);
+                        String shapeType = fixture.getString(&quot;-shapeType&quot;);
+                        float friction = fixture.getFloat(&quot;-friction&quot;);
+                        float restitution = fixture.getFloat(&quot;-restitution&quot;);
+                        float density = fixture.getFloat(&quot;-density&quot;);
+
+                        JsonValue vertexValue = fixture.getChild(&quot;vertex&quot;);
+                        FixtureDef fixtureDef = new FixtureDef();
+                        fixtureDef.density = density;
+                        fixtureDef.restitution = restitution;
+                        fixtureDef.friction = friction;
+
+                        Shape shape = null;
+                        if (shapeType.equals(&quot;polygonShape&quot;)) {
+                            ArrayList verticesList = new ArrayList();
+
+                            JsonValue vertexEntry = vertexValue;
+
+                            if (vertexEntry != null) {
+
+                                for (JsonValue vertex = vertexEntry; vertex != null; vertex = vertex
+                                    .next()) {
+
+                                    Float vertexX = vertex.getFloat(&quot;-x&quot;);
+                                    Float vertexY = vertex.getFloat(&quot;-y&quot;);
+
+                                    Vector2 vector2 = new Vector2();
+                                    vector2.x = vertexX / BOX_WORLD_TO;
+                                    vector2.y = vertexY / BOX_WORLD_TO;
+
+                                    verticesList.add(vector2);
+
+                                }
+                            }
+
+                            shape = new PolygonShape();
+
+                            Vector2[] vertices = new Vector2[verticesList
+                                .size()];
+                            vertices = verticesList.toArray(vertices);
+
+                            float[] floatVertices = new float[vertices.length * 2];
+
+                            ((PolygonShape) shape).set(vertices);
+
+                            fixtureDef.isSensor = fixture
+                                .getBoolean(&quot;-isSensor&quot;);
+
+                        } else if (shapeType.equals(&quot;edgeShape&quot;)) {
+                            shape = new ChainShape();
+
+                            ArrayList verticesList = new ArrayList();
+
+                            JsonValue vertexEntry = vertexValue;
+
+                            if (vertexEntry != null) {
+
+                                for (JsonValue vertex = vertexEntry; vertex != null; vertex = vertex
+                                    .next()) {
+                                    JsonValue vertexX = vertex.get(&quot;-x&quot;);
+                                    JsonValue vertexY = vertex.get(&quot;-y&quot;);
+
+                                    Vector2 vector2 = new Vector2();
+                                    vector2.x = vertexX.asFloat()
+                                        / BOX_WORLD_TO;
+                                    vector2.y = vertexY.asFloat()
+                                        / BOX_WORLD_TO;
+
+                                    verticesList.add(vector2);
+
+                                }
+                            }
+
+                            Vector2[] vertices = new Vector2[verticesList
+                                .size()];
+                            vertices = verticesList.toArray(vertices);
+
+                            ((ChainShape) shape).createChain(vertices);
+
+                        } else if (shapeType.equals(&quot;circleShape&quot;)) {
+                            shape = new CircleShape();
+                            JsonValue circleRadiusJsonValue = fixture
+                                .get(&quot;-circleRadius&quot;);
+                            ((CircleShape) shape)
+                        .setRadius(circleRadiusJsonValue.asFloat()
+                                / BOX_WORLD_TO);
+
+                            float circleX = fixture.getFloat(&quot;-circleX&quot;);
+                            float circleY = fixture.getFloat(&quot;-circleY&quot;);
+
+                            ((CircleShape) shape).setPosition(new Vector2(
+                                circleX / BOX_WORLD_TO, circleY
+                                    / BOX_WORLD_TO));
+                            fixtureDef.isSensor = fixture
+                                .getBoolean(&quot;-isSensor&quot;);
+
+                        }
+
+                        fixtureDef.shape = shape;
+                        PhysicsFactory.createFixture(fixtureDef, component);
+                    }
+
+                }
+            } else if (entry.name.equals(&quot;joints&quot;)) {
+
+                JsonValue joints = entry.getChild(&quot;joint&quot;);
+                for (JsonValue jointJsonValue = joints; jointJsonValue != null; jointJsonValue = jointJsonValue
+                    .next()) {
+                    JsonValue nameJsonValue = jointJsonValue.get(&quot;-name&quot;);
+                    JsonValue typeJsonValue = jointJsonValue.get(&quot;-type&quot;);
+                    JsonValue collideConnected = jointJsonValue
+                        .get(&quot;-collideConnected&quot;);
+                    JsonValue xJsonValue = jointJsonValue.get(&quot;-x&quot;);
+                    JsonValue yJsonValue = jointJsonValue.get(&quot;-y&quot;);
+                    JsonValue bodyAJsonValue = jointJsonValue.get(&quot;-bodyA&quot;);
+                    JsonValue bodyBJsonValue = jointJsonValue.get(&quot;-bodyB&quot;);
+
+                    JointDef jointDef = null;
+                    if (typeJsonValue.asString().equals(&quot;RevoluteJoint&quot;)) {
+                        jointDef = new RevoluteJointDef();
+                        RevoluteJointDef revoluteJointDef = (RevoluteJointDef) jointDef;
+
+                        Body bodyA = bodiesMap.get(bodyAJsonValue.asString());
+                        Body bodyB = bodiesMap.get(bodyBJsonValue.asString());
+
+                        JsonValue enableLimit = jointJsonValue
+                            .get(&quot;-enableLimit&quot;);
+                        JsonValue lowerAngle = jointJsonValue
+                            .get(&quot;-lowerAngle&quot;);
+                        JsonValue upperAngle = jointJsonValue
+                            .get(&quot;-upperAngle&quot;);
+
+                        revoluteJointDef.enableLimit = enableLimit.asBoolean();
+                        revoluteJointDef.lowerAngle = lowerAngle.asFloat();
+                        revoluteJointDef.upperAngle = upperAngle.asFloat();
+
+                        Vector2 anchor = new Vector2(xJsonValue.asFloat()
+                            / BOX_WORLD_TO, yJsonValue.asFloat()
+                            / BOX_WORLD_TO);
+                        revoluteJointDef.initialize(bodyA, bodyB, anchor);
+
+                    } else if (typeJsonValue.asString().equals(&quot;WeldJoint&quot;)) {
+                        jointDef = new WeldJointDef();
+                        WeldJointDef weldJointDef = (WeldJointDef) jointDef;
+
+                        Body bodyA = bodiesMap.get(bodyAJsonValue.asString());
+                        Body bodyB = bodiesMap.get(bodyBJsonValue.asString());
+                        Vector2 anchor = new Vector2(xJsonValue.asFloat()
+                            / BOX_WORLD_TO, yJsonValue.asFloat()
+                            / BOX_WORLD_TO);
+                        weldJointDef.initialize(bodyA, bodyB, anchor);
+
+                    }
+
+                    jointDef.collideConnected = collideConnected.asBoolean();
+
+                    Joint joint = PhysicsFactory.createJoint(jointDef);
+
+                    jointsMap.put(nameJsonValue.asString(), joint);
+                }
+
+            }
+
+        }
+    }
+}
+*/
+
+
+    </pre>
+</div>
                     </div>
                 </div>
             </div>

@@ -1066,7 +1066,7 @@
             "namespace": "",
             "file": "cangaja/sprite/button.js",
             "line": 1,
-            "description": "CG.Button represents a simple button class that can handle click,\nmouseover and callback functionality.\n\n```\n\nvar s = new CG.Button({\n  image: '../images/demo.png', // the image for the button\n  position: new CG.Point(200,200), // position of the button\n  text: 'MyButton',  // optional text\n  font: heiti,  // a font object when\n  callback: callbackFunction // a callback to execute when the button is clicked\n})\n\n```",
+            "description": "CG.Button represents a simple button class that can handle click,\nmouseover and callback functionality.\n\n```\n\nvar s = new CG.Button({\n  image: '../images/demo.png', // the image for the button\n  position: new CG.Point(200,200), // position of the button\n  text: 'MyButton',  // optional text\n  font: heiti,  // a font object when\n  callbacks: {\n    clicked: function () {\n       // do something if the button is clicked\n    },\n    hover: function () {\n       // do something on hover\n    }\n  }\n})\n\n```",
             "extends": "CG.Sprite"
         },
         "CG.Particle": {
@@ -6457,7 +6457,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 71,
+            "line": 77,
             "itemtype": "property",
             "name": "ctx",
             "type": "Object",
@@ -6466,7 +6466,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 75,
+            "line": 81,
             "itemtype": "property",
             "name": "fps",
             "type": "Number",
@@ -6475,7 +6475,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 79,
+            "line": 85,
             "itemtype": "property",
             "name": "width",
             "type": "Number",
@@ -6484,7 +6484,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 83,
+            "line": 89,
             "itemtype": "property",
             "name": "height",
             "type": "Number",
@@ -6493,7 +6493,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 87,
+            "line": 93,
             "itemtype": "property",
             "name": "width2",
             "type": "Number",
@@ -6502,7 +6502,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 91,
+            "line": 97,
             "itemtype": "property",
             "name": "height2",
             "type": "Number",
@@ -6511,7 +6511,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 95,
+            "line": 101,
             "itemtype": "property",
             "name": "b_canvas",
             "type": "Object",
@@ -6520,7 +6520,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 101,
+            "line": 107,
             "itemtype": "property",
             "name": "b_ctx",
             "type": "Object",
@@ -6529,7 +6529,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 105,
+            "line": 111,
             "itemtype": "property",
             "name": "asset",
             "type": "CG.MediaAsset",
@@ -6538,7 +6538,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 109,
+            "line": 115,
             "itemtype": "property",
             "name": "director",
             "type": "CG.Director",
@@ -6547,7 +6547,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 113,
+            "line": 119,
             "itemtype": "property",
             "name": "renderer",
             "type": "CG.CanvasRenderer",
@@ -6556,7 +6556,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 117,
+            "line": 123,
             "itemtype": "property",
             "name": "delta",
             "type": "CG.Delta",
@@ -6565,7 +6565,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 121,
+            "line": 127,
             "itemtype": "property",
             "name": "bound",
             "type": "CG.Bound",
@@ -6574,7 +6574,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 133,
+            "line": 139,
             "description": "child classes that extends CG.Game defines here all needed stuff to preload with CG.MediaAsset.",
             "itemtype": "method",
             "name": "preload",
@@ -6583,7 +6583,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 139,
+            "line": 145,
             "description": "child classes that extends CG.Game could use this method to create all needed stuff.",
             "itemtype": "method",
             "name": "create",
@@ -6592,7 +6592,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 146,
+            "line": 152,
             "description": "this is the central (game) loop",
             "itemtype": "method",
             "name": "loop",
@@ -6601,7 +6601,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 158,
+            "line": 164,
             "description": "in this method all CG.Director elements are updated.",
             "itemtype": "method",
             "name": "beforeUpdate",
@@ -6610,7 +6610,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 165,
+            "line": 171,
             "itemtype": "method",
             "name": "update",
             "class": "CG.Game",
@@ -6618,7 +6618,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 170,
+            "line": 176,
             "description": "in this method all CG.Director elements are rendered to the canvas. after that the draw method is executed and some custom drawing is possible.",
             "itemtype": "method",
             "name": "beforeDraw",
@@ -6627,7 +6627,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 177,
+            "line": 183,
             "description": "",
             "itemtype": "method",
             "name": "draw",
@@ -6636,7 +6636,7 @@
         },
         {
             "file": "cangaja/game/game.js",
-            "line": 184,
+            "line": 190,
             "description": "this is the final draw method. it draws the b_canvas buffer to the canvas",
             "itemtype": "method",
             "name": "afterDraw",
@@ -7138,7 +7138,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 25,
+            "line": 32,
             "description": "Options:\nimage {string} imgpath, image object or atlasimage object to use\nposition {CG.Point}\ntext {string}\nfont {CG.Font}\ncallback {function}",
             "itemtype": "method",
             "name": "init",
@@ -7159,7 +7159,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 49,
+            "line": 56,
             "itemtype": "property",
             "name": "font",
             "type": "CG.Font",
@@ -7168,7 +7168,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 52,
+            "line": 59,
             "itemtype": "property",
             "name": "text",
             "type": "String",
@@ -7177,7 +7177,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 55,
+            "line": 62,
             "itemtype": "property",
             "name": "callback",
             "type": "Callback",
@@ -7186,7 +7186,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 58,
+            "line": 65,
             "itemtype": "property",
             "name": "clickable",
             "type": "Boolean",
@@ -7195,7 +7195,7 @@
         },
         {
             "file": "cangaja/sprite/button.js",
-            "line": 62,
+            "line": 69,
             "itemtype": "property",
             "name": "clicked",
             "type": "Boolean",

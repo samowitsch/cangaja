@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <link rel="icon" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -121,1478 +121,1492 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.MediaAsset Class</h1>
-                        <div class="box meta">
-                        
-                                <div class="extends">
-                                    Extends Class
-                                </div>
-                        
-                                <div class="foundat">
-                                    Defined in: <a href="../files/cangaja_control_mediaasset.js.html#l1"><code>cangaja&#x2F;control&#x2F;mediaasset.js:1</code></a>
-                                </div>
-                        
-                                    Module: <a href="../modules/CG.html">CG</a>
-                        
+<h1>CG.MediaAsset Class</h1>
+<div class="box meta">
+
+        <div class="extends">
+            Extends Class
+        </div>
+
+        <div class="foundat">
+            Defined in: <a href="../files/cangaja_control_mediaasset.js.html#l1"><code>cangaja&#x2F;control&#x2F;mediaasset.js:1</code></a>
+        </div>
+
+            Module: <a href="../modules/CG.html">CG</a>
+
+</div>
+
+
+<div class="box intro">
+    <p>CG.MediaAsset preloader and asset handler.</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods extends">
+                            <li class="index-item method">
+                                <a href="#method_addFont">addFont</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_addImage">addImage</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_addJson">addJson</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_addText">addText</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_addXml">addXml</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getFontByName">getFontByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getImageByName">getImageByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getImagesByName">getImagesByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getJsonByName">getJsonByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getTextByName">getTextByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getXmlByName">getXmlByName</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_progressScreen">progressScreen</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_startPreLoad">startPreLoad</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties extends">
+                            <li class="index-item property">
+                                <a href="#property_bordercolor">bordercolor</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_fonts">fonts</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_height">height</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_images">images</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_jsons">jsons</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_linewidth">linewidth</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_obj">obj</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_progress">progress</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_progresscolor">progresscolor</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_radius">radius</a>
+
+                            </li>
+                            <li class="index-item property protected">
+                                <a href="#property_ready">ready</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_shadowblur">shadowblur</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_shadowcolor">shadowcolor</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_shadowoffsetx">shadowoffsetx</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_shadowoffsety">shadowoffsety</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_texts">texts</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_width">width</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_xmls">xmls</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_addFont" class="method item">
+    <h3 class="name"><code>addFont</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l146"><code>cangaja&#x2F;control&#x2F;mediaasset.js:146</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_addImage" class="method item">
+    <h3 class="name"><code>addImage</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l130"><code>cangaja&#x2F;control&#x2F;mediaasset.js:130</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_addJson" class="method item">
+    <h3 class="name"><code>addJson</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l178"><code>cangaja&#x2F;control&#x2F;mediaasset.js:178</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_addText" class="method item">
+    <h3 class="name"><code>addText</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l195"><code>cangaja&#x2F;control&#x2F;mediaasset.js:195</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_addXml" class="method item">
+    <h3 class="name"><code>addXml</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l162"><code>cangaja&#x2F;control&#x2F;mediaasset.js:162</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getFontByName" class="method item">
+    <h3 class="name"><code>getFontByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l249"><code>cangaja&#x2F;control&#x2F;mediaasset.js:249</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getImageByName" class="method item">
+    <h3 class="name"><code>getImageByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l211"><code>cangaja&#x2F;control&#x2F;mediaasset.js:211</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getImagesByName" class="method item">
+    <h3 class="name"><code>getImagesByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l228"><code>cangaja&#x2F;control&#x2F;mediaasset.js:228</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getJsonByName" class="method item">
+    <h3 class="name"><code>getJsonByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l275"><code>cangaja&#x2F;control&#x2F;mediaasset.js:275</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getTextByName" class="method item">
+    <h3 class="name"><code>getTextByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l288"><code>cangaja&#x2F;control&#x2F;mediaasset.js:288</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getXmlByName" class="method item">
+    <h3 class="name"><code>getXmlByName</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>name</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l262"><code>cangaja&#x2F;control&#x2F;mediaasset.js:262</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+            </div>
+        </div>
+
+
+</div>
+<div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>obj</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l14"><code>cangaja&#x2F;control&#x2F;mediaasset.js:14</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">obj</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+
+                    <div class="param-description">
+                        <p>the game object CG.Game</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_progressScreen" class="method item">
+    <h3 class="name"><code>progressScreen</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l353"><code>cangaja&#x2F;control&#x2F;mediaasset.js:353</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>render a progress screen to the canvas</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_startPreLoad" class="method item">
+    <h3 class="name"><code>startPreLoad</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/cangaja_control_mediaasset.js.html#l301"><code>cangaja&#x2F;control&#x2F;mediaasset.js:301</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property_bordercolor" class="property item">
+                        <h3 class="name"><code>bordercolor</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l97"><code>cangaja&#x2F;control&#x2F;mediaasset.js:97</code></a>
+                            </p>
+                    
+                    
                         </div>
-                        
-                        
-                        <div class="box intro">
-                            <p>CG.MediaAsset preloader and asset handler.</p>
-                        
+                    
+                        <div class="description">
+                            
                         </div>
-                        
-                        
-                        <div id="classdocs" class="tabview">
-                            <ul class="api-class-tabs">
-                                <li class="api-class-tab index"><a href="#index">Index</a></li>
-                        
-                                    <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-                                    <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
-                            </ul>
-                        
-                            <div>
-                                <div id="index" class="api-class-tabpanel index">
-                                    <h2 class="off-left">Item Index</h2>
-                        
-                                        <div class="index-section methods">
-                                            <h3>Methods</h3>
-                        
-                                            <ul class="index-list methods extends">
-                                                    <li class="index-item method">
-                                                        <a href="#method_addFont">addFont</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_addImage">addImage</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_addJson">addJson</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_addText">addText</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_addXml">addXml</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getFontByName">getFontByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getImageByName">getImageByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getImagesByName">getImagesByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getJsonByName">getJsonByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getTextByName">getTextByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_getXmlByName">getXmlByName</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_init">init</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_progressScreen">progressScreen</a>
-                        
-                                                    </li>
-                                                    <li class="index-item method">
-                                                        <a href="#method_startPreLoad">startPreLoad</a>
-                        
-                                                    </li>
-                                            </ul>
-                                        </div>
-                        
-                                        <div class="index-section properties">
-                                            <h3>Properties</h3>
-                        
-                                            <ul class="index-list properties extends">
-                                                    <li class="index-item property">
-                                                        <a href="#property_bordercolor">bordercolor</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_fonts">fonts</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_height">height</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_images">images</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_jsons">jsons</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_linewidth">linewidth</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_obj">obj</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_progress">progress</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_progresscolor">progresscolor</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_radius">radius</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property protected">
-                                                        <a href="#property_ready">ready</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_shadowblur">shadowblur</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_shadowcolor">shadowcolor</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_shadowoffsetx">shadowoffsetx</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_shadowoffsety">shadowoffsety</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_texts">texts</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_width">width</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_xmls">xmls</a>
-                        
-                                                    </li>
-                                            </ul>
-                                        </div>
-                        
-                        
-                                </div>
-                        
-                                    <div id="methods" class="api-class-tabpanel">
-                                        <h2 class="off-left">Methods</h2>
-                        
-                                            <div id="method_addFont" class="method item">
-                                                <h3 class="name"><code>addFont</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>path</code>
-                                                            </li>
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l146"><code>cangaja&#x2F;control&#x2F;mediaasset.js:146</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">path</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_addImage" class="method item">
-                                                <h3 class="name"><code>addImage</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>path</code>
-                                                            </li>
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l130"><code>cangaja&#x2F;control&#x2F;mediaasset.js:130</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">path</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_addJson" class="method item">
-                                                <h3 class="name"><code>addJson</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>path</code>
-                                                            </li>
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l178"><code>cangaja&#x2F;control&#x2F;mediaasset.js:178</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">path</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_addText" class="method item">
-                                                <h3 class="name"><code>addText</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>path</code>
-                                                            </li>
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l195"><code>cangaja&#x2F;control&#x2F;mediaasset.js:195</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">path</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_addXml" class="method item">
-                                                <h3 class="name"><code>addXml</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>path</code>
-                                                            </li>
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l162"><code>cangaja&#x2F;control&#x2F;mediaasset.js:162</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">path</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getFontByName" class="method item">
-                                                <h3 class="name"><code>getFontByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l249"><code>cangaja&#x2F;control&#x2F;mediaasset.js:249</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getImageByName" class="method item">
-                                                <h3 class="name"><code>getImageByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l211"><code>cangaja&#x2F;control&#x2F;mediaasset.js:211</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getImagesByName" class="method item">
-                                                <h3 class="name"><code>getImagesByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l228"><code>cangaja&#x2F;control&#x2F;mediaasset.js:228</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getJsonByName" class="method item">
-                                                <h3 class="name"><code>getJsonByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l275"><code>cangaja&#x2F;control&#x2F;mediaasset.js:275</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getTextByName" class="method item">
-                                                <h3 class="name"><code>getTextByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l288"><code>cangaja&#x2F;control&#x2F;mediaasset.js:288</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_getXmlByName" class="method item">
-                                                <h3 class="name"><code>getXmlByName</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>name</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                                    <span class="returns-inline">
-                                                        <span class="type"></span>
-                                                    </span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l262"><code>cangaja&#x2F;control&#x2F;mediaasset.js:262</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">name</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                     
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                                    <div class="returns">
-                                                        <h4>Returns:</h4>
-                                            
-                                                        <div class="returns-description">
-                                                                    <span class="type"></span>:
-                                                        </div>
-                                                    </div>
-                                            
-                                            </div>
-                                            <div id="method_init" class="method item">
-                                                <h3 class="name"><code>init</code></h3>
-                                            
-                                                    <div class="args">
-                                                        <span class="paren">(</span><ul class="args-list inline commas">
-                                                            <li class="arg">
-                                                                    <code>obj</code>
-                                                            </li>
-                                                        </ul><span class="paren">)</span>
-                                                    </div>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l14"><code>cangaja&#x2F;control&#x2F;mediaasset.js:14</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                                    <div class="params">
-                                                        <h4>Parameters:</h4>
-                                            
-                                                        <ul class="params-list">
-                                                            <li class="param">
-                                                                    <code class="param-name">obj</code>
-                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                                            
-                                            
-                                                                <div class="param-description">
-                                                                    <p>the game object CG.Game</p>
-                                            
-                                                                </div>
-                                            
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                            
-                                            
-                                            </div>
-                                            <div id="method_progressScreen" class="method item">
-                                                <h3 class="name"><code>progressScreen</code></h3>
-                                            
-                                                    <span class="paren">()</span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l353"><code>cangaja&#x2F;control&#x2F;mediaasset.js:353</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    <p>render a progress screen to the canvas</p>
-                                            
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="method_startPreLoad" class="method item">
-                                                <h3 class="name"><code>startPreLoad</code></h3>
-                                            
-                                                    <span class="paren">()</span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l301"><code>cangaja&#x2F;control&#x2F;mediaasset.js:301</code></a>
-                                                    </p>
-                                            
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                    </div>
-                        
-                                    <div id="properties" class="api-class-tabpanel">
-                                        <h2 class="off-left">Properties</h2>
-                        
-                                            <div id="property_bordercolor" class="property item">
-                                                <h3 class="name"><code>bordercolor</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l97"><code>cangaja&#x2F;control&#x2F;mediaasset.js:97</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_fonts" class="property item">
-                                                <h3 class="name"><code>fonts</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l65"><code>cangaja&#x2F;control&#x2F;mediaasset.js:65</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_height" class="property item">
-                                                <h3 class="name"><code>height</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l81"><code>cangaja&#x2F;control&#x2F;mediaasset.js:81</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_images" class="property item">
-                                                <h3 class="name"><code>images</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l37"><code>cangaja&#x2F;control&#x2F;mediaasset.js:37</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_jsons" class="property item">
-                                                <h3 class="name"><code>jsons</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l51"><code>cangaja&#x2F;control&#x2F;mediaasset.js:51</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_linewidth" class="property item">
-                                                <h3 class="name"><code>linewidth</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l92"><code>cangaja&#x2F;control&#x2F;mediaasset.js:92</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_obj" class="property item">
-                                                <h3 class="name"><code>obj</code></h3>
-                                                <span class="type"><a href="../classes/CG.Game.html" class="crosslink">CG.Game</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l20"><code>cangaja&#x2F;control&#x2F;mediaasset.js:20</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_progress" class="property item">
-                                                <h3 class="name"><code>progress</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l31"><code>cangaja&#x2F;control&#x2F;mediaasset.js:31</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_progresscolor" class="property item">
-                                                <h3 class="name"><code>progresscolor</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l102"><code>cangaja&#x2F;control&#x2F;mediaasset.js:102</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_radius" class="property item">
-                                                <h3 class="name"><code>radius</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l86"><code>cangaja&#x2F;control&#x2F;mediaasset.js:86</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_ready" class="property item protected">
-                                                <h3 class="name"><code>ready</code></h3>
-                                                <span class="type"><a href="../classes/CG.Game.html" class="crosslink">CG.Game</a></span>
-                                            
-                                            
-                                                    <span class="flag protected">protected</span>
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l25"><code>cangaja&#x2F;control&#x2F;mediaasset.js:25</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_shadowblur" class="property item">
-                                                <h3 class="name"><code>shadowblur</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l112"><code>cangaja&#x2F;control&#x2F;mediaasset.js:112</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_shadowcolor" class="property item">
-                                                <h3 class="name"><code>shadowcolor</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l107"><code>cangaja&#x2F;control&#x2F;mediaasset.js:107</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_shadowoffsetx" class="property item">
-                                                <h3 class="name"><code>shadowoffsetx</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l117"><code>cangaja&#x2F;control&#x2F;mediaasset.js:117</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_shadowoffsety" class="property item">
-                                                <h3 class="name"><code>shadowoffsety</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l122"><code>cangaja&#x2F;control&#x2F;mediaasset.js:122</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_texts" class="property item">
-                                                <h3 class="name"><code>texts</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l58"><code>cangaja&#x2F;control&#x2F;mediaasset.js:58</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_width" class="property item">
-                                                <h3 class="name"><code>width</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l76"><code>cangaja&#x2F;control&#x2F;mediaasset.js:76</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_xmls" class="property item">
-                                                <h3 class="name"><code>xmls</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_control_mediaasset.js.html#l44"><code>cangaja&#x2F;control&#x2F;mediaasset.js:44</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                    </div>
-                        
-                        
-                            </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_fonts" class="property item">
+                        <h3 class="name"><code>fonts</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l65"><code>cangaja&#x2F;control&#x2F;mediaasset.js:65</code></a>
+                            </p>
+                    
+                    
                         </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_height" class="property item">
+                        <h3 class="name"><code>height</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l81"><code>cangaja&#x2F;control&#x2F;mediaasset.js:81</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_images" class="property item">
+                        <h3 class="name"><code>images</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l37"><code>cangaja&#x2F;control&#x2F;mediaasset.js:37</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_jsons" class="property item">
+                        <h3 class="name"><code>jsons</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l51"><code>cangaja&#x2F;control&#x2F;mediaasset.js:51</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_linewidth" class="property item">
+                        <h3 class="name"><code>linewidth</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l92"><code>cangaja&#x2F;control&#x2F;mediaasset.js:92</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_obj" class="property item">
+                        <h3 class="name"><code>obj</code></h3>
+                        <span class="type"><a href="../classes/CG.Game.html" class="crosslink">CG.Game</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l20"><code>cangaja&#x2F;control&#x2F;mediaasset.js:20</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_progress" class="property item">
+                        <h3 class="name"><code>progress</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l31"><code>cangaja&#x2F;control&#x2F;mediaasset.js:31</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_progresscolor" class="property item">
+                        <h3 class="name"><code>progresscolor</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l102"><code>cangaja&#x2F;control&#x2F;mediaasset.js:102</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_radius" class="property item">
+                        <h3 class="name"><code>radius</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l86"><code>cangaja&#x2F;control&#x2F;mediaasset.js:86</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_ready" class="property item protected">
+                        <h3 class="name"><code>ready</code></h3>
+                        <span class="type"><a href="../classes/CG.Game.html" class="crosslink">CG.Game</a></span>
+                    
+                    
+                            <span class="flag protected">protected</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l25"><code>cangaja&#x2F;control&#x2F;mediaasset.js:25</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_shadowblur" class="property item">
+                        <h3 class="name"><code>shadowblur</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l112"><code>cangaja&#x2F;control&#x2F;mediaasset.js:112</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_shadowcolor" class="property item">
+                        <h3 class="name"><code>shadowcolor</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l107"><code>cangaja&#x2F;control&#x2F;mediaasset.js:107</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_shadowoffsetx" class="property item">
+                        <h3 class="name"><code>shadowoffsetx</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l117"><code>cangaja&#x2F;control&#x2F;mediaasset.js:117</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_shadowoffsety" class="property item">
+                        <h3 class="name"><code>shadowoffsety</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l122"><code>cangaja&#x2F;control&#x2F;mediaasset.js:122</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_texts" class="property item">
+                        <h3 class="name"><code>texts</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l58"><code>cangaja&#x2F;control&#x2F;mediaasset.js:58</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_width" class="property item">
+                        <h3 class="name"><code>width</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l76"><code>cangaja&#x2F;control&#x2F;mediaasset.js:76</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_xmls" class="property item">
+                        <h3 class="name"><code>xmls</code></h3>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/cangaja_control_mediaasset.js.html#l44"><code>cangaja&#x2F;control&#x2F;mediaasset.js:44</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+
+    </div>
+</div>
                     </div>
                 </div>
             </div>

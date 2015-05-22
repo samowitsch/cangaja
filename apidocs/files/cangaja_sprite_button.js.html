@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <link rel="icon" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -121,116 +121,123 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: cangaja/sprite/button.js</h1>
-                        
-                        <div class="file">
-                            <pre class="code prettyprint linenums">
-                        /**
-                         * @description
-                         *
-                         * CG.Button represents a simple button class that can handle click,
-                         * mouseover and callback functionality.
-                         *
-                        &#x60;&#x60;&#x60;
-                        
-                        var s = new CG.Button({
-                           image: &#x27;../images/demo.png&#x27;, // the image for the button
-                           position: new CG.Point(200,200), // position of the button
-                           text: &#x27;MyButton&#x27;,  // optional text
-                           font: heiti,  // a font object when
-                           callback: callbackFunction // a callback to execute when the button is clicked
-                         })
-                        
-                         &#x60;&#x60;&#x60;
-                         *
-                         *
-                         * @class CG.Button
-                         * @extends CG.Sprite
-                         *
-                         */
-                        CG.Sprite.extend(&#x27;Button&#x27;, {
-                            /**
-                             * Options:
-                             * image {string} imgpath, image object or atlasimage object to use
-                             * position {CG.Point}
-                             * text {string}
-                             * font {CG.Font}
-                             * callback {function}
-                             *
-                             *
-                             *
-                             * @method init
-                             * @constructor
-                             * @param options {object}
-                             * @return {*}
-                             */
-                            init: function (options) {
-                                this._super()
-                                this.instanceOf = &#x27;Button&#x27;
-                        
-                                if (options) {
-                                    CG._extend(this, options)
-                                    this.setImage(this.image)
-                                }
-                        
-                                /**
-                                 @property font {CG.Font}
-                                 */
-                                /**
-                                 @property text {string}
-                                 */
-                                /**
-                                 @property callback {callback}
-                                 */
-                                /**
-                                 @property clickable {boolean}
-                                 */
-                                this.clickable = true
-                                /**
-                                 @property clicked {boolean}
-                                 */
-                                this.clicked = false
-                        
-                                return this
-                            },
-                            update: function () {
-                                this.ifClicked()
-                                this.ifMouseOver()
-                        
-                                this.xhandle = (this.width * this.xscale / 2)
-                                this.yhandle = (this.height * this.yscale / 2)
-                        
-                                if (this.clicked) {
-                                    if (this.callbacks.clicked) {
-                                        this.clicked = false
-                                        this.callbacks.clicked.apply(this)
-                                    }
-                                }
-                                if (this.hover) {
-                                    if (this.callbacks.hover) {
-                                        this.hover = false
-                                        this.callbacks.hover.apply(this)
-                                    }
-                                }
-                                this.updateDiff()
-                                this.updateMatrix()
-                            },
-                            draw: function () {
-                                if (this.visible == true) {
-                        
-                                    Game.renderer.draw(this)
-                        
-                                    if (this.text) {
-                                        this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) / 2 &gt;&gt; 0), this.position.y - ((this.font.getFontSize() / 2) &gt;&gt; 0))
-                                    }
-                                }
-                            }
-                        })
-                        
-                        
-                        
-                            </pre>
-                        </div>
+<h1 class="file-heading">File: cangaja/sprite/button.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @description
+ *
+ * CG.Button represents a simple button class that can handle click,
+ * mouseover and callback functionality.
+ *
+&#x60;&#x60;&#x60;
+
+var s = new CG.Button({
+   image: &#x27;../images/demo.png&#x27;, // the image for the button
+   position: new CG.Point(200,200), // position of the button
+   text: &#x27;MyButton&#x27;,  // optional text
+   font: heiti,  // a font object when
+   callbacks: {
+     clicked: function () {
+        // do something if the button is clicked
+     },
+     hover: function () {
+        // do something on hover
+     }
+   }
+ })
+
+ &#x60;&#x60;&#x60;
+ *
+ *
+ * @class CG.Button
+ * @extends CG.Sprite
+ *
+ */
+CG.Sprite.extend(&#x27;Button&#x27;, {
+    /**
+     * Options:
+     * image {string} imgpath, image object or atlasimage object to use
+     * position {CG.Point}
+     * text {string}
+     * font {CG.Font}
+     * callback {function}
+     *
+     *
+     *
+     * @method init
+     * @constructor
+     * @param options {object}
+     * @return {*}
+     */
+    init: function (options) {
+        this._super()
+        this.instanceOf = &#x27;Button&#x27;
+
+        if (options) {
+            CG._extend(this, options)
+            this.setImage(this.image)
+        }
+
+        /**
+         @property font {CG.Font}
+         */
+        /**
+         @property text {string}
+         */
+        /**
+         @property callback {callback}
+         */
+        /**
+         @property clickable {boolean}
+         */
+        this.clickable = true
+        /**
+         @property clicked {boolean}
+         */
+        this.clicked = false
+
+        return this
+    },
+    update: function () {
+        this.ifClicked()
+        this.ifMouseOver()
+
+        this.xhandle = (this.width * this.xscale / 2)
+        this.yhandle = (this.height * this.yscale / 2)
+
+        if (this.clicked) {
+            if (this.callbacks.clicked) {
+                this.clicked = false
+                this.callbacks.clicked.apply(this)
+            }
+        }
+        if (this.hover) {
+            if (this.callbacks.hover) {
+                this.hover = false
+                this.callbacks.hover.apply(this)
+            }
+        }
+        this.updateDiff()
+        this.updateMatrix()
+    },
+    draw: function () {
+        if (this.visible == true) {
+
+            Game.renderer.draw(this)
+
+            if (this.text) {
+                this.font.drawText(this.text, this.position.x - (this.font.getTextWidth(this.text) / 2 &gt;&gt; 0), this.position.y - ((this.font.getFontSize() / 2) &gt;&gt; 0))
+            }
+        }
+    }
+})
+
+
+
+    </pre>
+</div>
                     </div>
                 </div>
             </div>

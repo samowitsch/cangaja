@@ -11,7 +11,14 @@ var s = new CG.Button({
    position: new CG.Point(200,200), // position of the button
    text: 'MyButton',  // optional text
    font: heiti,  // a font object when
-   callback: callbackFunction // a callback to execute when the button is clicked
+   callbacks: {
+     clicked: function () {
+        // do something if the button is clicked
+     },
+     hover: function () {
+        // do something on hover
+     }
+   }
  })
 
  ```
