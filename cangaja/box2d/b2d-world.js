@@ -516,7 +516,7 @@ CG.Layer.extend('B2DWorld', {
                 var md = new b2MouseJointDef()
                 md.bodyA = this.world.m_groundBody
                 md.bodyB = body
-                md.target.SetXY((x - this.x) / this.scale, (y - this.y) / this.scale)
+                md.target.Set((x - this.x) / this.scale, (y - this.y) / this.scale)
                 md.collideConnected = true
                 md.maxForce = 300.0 * body.GetMass()
                 this.mouseJoint = this.world.CreateJoint(md)
@@ -549,8 +549,8 @@ CG.Layer.extend('B2DWorld', {
 
         var mousePVec = new b2Vec2(worldx, worldy)  //b2world offset for x and y!!!
         var aabb = new b2AABB()
-        aabb.lowerBound.SetXY(worldx - 0.001, worldy - 0.001)
-        aabb.upperBound.SetXY(worldx + 0.001, worldy + 0.001)
+        aabb.lowerBound.Set(worldx - 0.001, worldy - 0.001)
+        aabb.upperBound.Set(worldx + 0.001, worldy + 0.001)
 
         // Query the world for overlapping shapes.
 

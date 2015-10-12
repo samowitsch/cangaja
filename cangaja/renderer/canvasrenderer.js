@@ -139,10 +139,10 @@ CG.Class.extend('CanvasRenderer', {
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
                 if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
+                    Game.b_ctx.rotate((renderObject.body.GetAngle() - renderObject.imagerotation))
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
                 } else {
-                    Game.b_ctx.rotate(renderObject.body.GetAngleRadians())
+                    Game.b_ctx.rotate(renderObject.body.GetAngle())
                     Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
                 }
                 break;

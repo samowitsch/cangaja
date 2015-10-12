@@ -74,7 +74,7 @@ box2d.b2DebugDraw.prototype.PushTransform = function (xf)
 	ctx.save();
     ctx.globalAlpha = this.alpha
 	ctx.translate(xf.p.x * this.scale, xf.p.y * this.scale);
-	ctx.rotate(xf.q.GetAngleRadians());
+	ctx.rotate(xf.q.GetAngle());
 }
 
 /**

@@ -122,7 +122,7 @@ CG.B2DEntity.extend('B2DTerrain', {
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}
@@ -164,7 +164,7 @@ CG.B2DEntity.extend('B2DTerrain', {
             for (var i = 0, l = this.terrainTriangles.length; i < l; i++) {
                 this.bodyShapePoly = new b2PolygonShape
                 this.bodyShapePoly.bounce = 0.5
-                this.bodyShapePoly.SetAsArray(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
+                this.bodyShapePoly.Set(this.getPolysFromTriangulation(this.terrainTriangles[i].points_), this.terrainTriangles[i].points_.length)
 
                 this.fixDef.density = this.density
                 this.fixDef.restitution = this.restitution

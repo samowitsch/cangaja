@@ -65,7 +65,7 @@ CG.B2DEntity.extend('B2DChainShape', {
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}

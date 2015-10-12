@@ -73,7 +73,7 @@ CG.B2DEntity.extend('B2DLine', {
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.SetXY(0 / this.scale, 0 / this.scale)
+        this.bodyDef.position.Set(0 / this.scale, 0 / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}

@@ -120,7 +120,7 @@ CG.B2DEntity.extend('B2DRope', {
         this.fixtureDef.restitution = this.restitution
         this.fixtureDef.friction = this.friction
         this.fixtureDef.shape = this.bodyShapeCircle
-        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
         this.bodyGroup[0].CreateFixture(this.fixtureDef)
         this.prevBody = this.bodyGroup[0]
@@ -143,10 +143,10 @@ CG.B2DEntity.extend('B2DRope', {
 
 
         for (var i = 0, l = this.segments; i < l; i++) {
-            this.bodyDef.position.SetXY(this.x / this.scale, ((this.y + this.segmentHeight) + (this.segmentHeight * 2) * i) / this.scale)
+            this.bodyDef.position.Set(this.x / this.scale, ((this.y + this.segmentHeight) + (this.segmentHeight * 2) * i) / this.scale)
             this.bodyGroup[i + 1] = this.world.CreateBody(this.bodyDef)
             this.bodyGroup[i + 1].CreateFixture(this.fixtureDef)
-            this.anchor.SetXY(this.x / this.scale, (this.y + (this.segmentHeight * 2) * i) / this.scale)
+            this.anchor.Set(this.x / this.scale, (this.y + (this.segmentHeight * 2) * i) / this.scale)
             this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 1], this.anchor)
             this.world.CreateJoint(this.jointDef)
             this.prevBody = this.bodyGroup[i + 1]

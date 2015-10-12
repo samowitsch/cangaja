@@ -136,13 +136,13 @@ CG.B2DEntity.extend('B2DBridge', {
         this.fixtureDef.restitution = this.restitution
         this.fixtureDef.friction = this.friction
         this.fixtureDef.shape = this.bodyShapeCircle
-        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         this.body = this.bodyGroup[0] = this.world.CreateBody(this.bodyDef)
         this.bodyGroup[0].CreateFixture(this.fixtureDef)
         this.prevBody = this.bodyGroup[0]
 
         // BridgeEnd
-        this.bodyDef.position.SetXY(this.length / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.length / this.scale, this.y / this.scale)
         this.bodyDef.userData = this.id
         this.bodyGroup[1] = this.world.CreateBody(this.bodyDef)
         this.bodyGroup[1].CreateFixture(this.fixtureDef)
@@ -164,17 +164,17 @@ CG.B2DEntity.extend('B2DBridge', {
         this.jointDef.enableLimit = this.enableLimit
 
         for (var i = 0, l = this.segments; i < l; i++) {
-            this.bodyDef.position.SetXY(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.bodyDef.position.Set(((this.x + this.segmentWidth) + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
             this.bodyGroup[i + 2] = this.world.CreateBody(this.bodyDef)
             this.bodyGroup[i + 2].CreateFixture(this.fixtureDef)
-            this.anchor.SetXY((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
+            this.anchor.Set((this.x + (this.segmentWidth * 2) * i) / this.scale, this.y / this.scale)
             this.jointDef.Initialize(this.prevBody, this.bodyGroup[i + 2], this.anchor)
             this.world.CreateJoint(this.jointDef)
             this.prevBody = this.bodyGroup[i + 2]
             this.bodyCount = i + 2
         }
 
-        this.anchor.SetXY((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
+        this.anchor.Set((this.x + (this.segmentWidth * 2) * this.segments - 1) / this.scale, this.y / this.scale)
         this.jointDef.Initialize(this.prevBody, this.bodyGroup[1], this.anchor)
         this.world.CreateJoint(this.jointDef)
 

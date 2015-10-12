@@ -96,7 +96,7 @@ CG.B2DEntity.extend('B2DPlayer', {
         ]
 
         this.fixDef.shape = new b2PolygonShape
-        this.fixDef.shape.SetAsArray(
+        this.fixDef.shape.Set(
             collisionShape,
             collisionShape.length
         )
@@ -116,7 +116,7 @@ CG.B2DEntity.extend('B2DPlayer', {
         ]
         this.fixDef = new b2FixtureDef
         this.fixDef.shape = new b2PolygonShape
-        this.fixDef.shape.SetAsArray(
+        this.fixDef.shape.Set(
             sensorShape,
             sensorShape.length
         )
