@@ -14,7 +14,7 @@ cat ../cangaja/base/base.js \
 ../libs/input/keymaster.js \
 ../libs/math/poly2tri/poly2tri-1.3.5.js \
 ../libs/math/clipper/v6/clipper.js \
-../libs/spine/v1.1/spine.js \
+../libs/spine/v2.3/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
 ../cangaja/renderer/canvasrenderer.js \
