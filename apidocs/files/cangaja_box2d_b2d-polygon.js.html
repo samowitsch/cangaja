@@ -46,7 +46,6 @@
                                 <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
                                 <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
                                 <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
                                 <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
                                 <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
                                 <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
@@ -214,7 +213,7 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
         /**
          * @property bodyDef.position
          */
-        this.bodyDef.position.SetXY(this.x / this.scale, this.y / this.scale)
+        this.bodyDef.position.Set(this.x / this.scale, this.y / this.scale)
         /**
          * @property bodyDef.userData
          * @type {*}
@@ -236,7 +235,7 @@ CG.B2DEntity.extend(&#x27;B2DPolygon&#x27;, {
             this.bodyShapePoly = new b2PolygonShape
             this.bodyShapePoly.bounce = this.jsondata[i].bounce        //value from physics editor
             this.makeVecsCentroid(this.vecs[i])
-            this.bodyShapePoly.SetAsArray(this.vecs[i], this.vecs[i].length)
+            this.bodyShapePoly.Set(this.vecs[i], this.vecs[i].length)
             this.fixDef.density = this.jsondata[i].density                  //value from physics editor
             this.fixDef.friction = this.jsondata[i].friction                //value from physics editor
             //this.fixDef.restitution = 0

@@ -46,7 +46,6 @@
                                 <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
                                 <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
                                 <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
                                 <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
                                 <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
                                 <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
@@ -643,7 +642,7 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
                 var md = new b2MouseJointDef()
                 md.bodyA = this.world.m_groundBody
                 md.bodyB = body
-                md.target.SetXY((x - this.x) / this.scale, (y - this.y) / this.scale)
+                md.target.Set((x - this.x) / this.scale, (y - this.y) / this.scale)
                 md.collideConnected = true
                 md.maxForce = 300.0 * body.GetMass()
                 this.mouseJoint = this.world.CreateJoint(md)
@@ -676,8 +675,8 @@ CG.Layer.extend(&#x27;B2DWorld&#x27;, {
 
         var mousePVec = new b2Vec2(worldx, worldy)  //b2world offset for x and y!!!
         var aabb = new b2AABB()
-        aabb.lowerBound.SetXY(worldx - 0.001, worldy - 0.001)
-        aabb.upperBound.SetXY(worldx + 0.001, worldy + 0.001)
+        aabb.lowerBound.Set(worldx - 0.001, worldy - 0.001)
+        aabb.upperBound.Set(worldx + 0.001, worldy + 0.001)
 
         // Query the world for overlapping shapes.
 

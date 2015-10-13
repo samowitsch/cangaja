@@ -46,7 +46,6 @@
                                 <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
                                 <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
                                 <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
                                 <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
                                 <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
                                 <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
@@ -266,10 +265,10 @@ CG.Class.extend(&#x27;CanvasRenderer&#x27;, {
                 Game.b_ctx.globalAlpha = renderObject.alpha
                 Game.b_ctx.transform(1, 0, 0, 1, renderObject.body.GetPosition().x * renderObject.scale, renderObject.body.GetPosition().y * renderObject.scale)
                 if (renderObject.atlasimage) {
-                    Game.b_ctx.rotate((renderObject.body.GetAngleRadians() - renderObject.imagerotation))
+                    Game.b_ctx.rotate((renderObject.body.GetAngle() - renderObject.imagerotation))
                     Game.b_ctx.drawImage(renderObject.image, renderObject.xoffset, renderObject.yoffset, renderObject.cutwidth, renderObject.cutheight, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.cutwidth, renderObject.cutheight)
                 } else {
-                    Game.b_ctx.rotate(renderObject.body.GetAngleRadians())
+                    Game.b_ctx.rotate(renderObject.body.GetAngle())
                     Game.b_ctx.drawImage(renderObject.image, 0 - renderObject.xhandle, 0 - renderObject.yhandle, renderObject.image.width, renderObject.image.height)
                 }
                 break;

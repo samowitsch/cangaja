@@ -41,8 +41,6 @@ cangaja is a javascript canvas project that i have started to explore the html c
 [Ejecta]: http://impactjs.com/ejecta
 [Box2DHtml5]: https://code.google.com/p/box2d-html5/
 [Spine]: http://esotericsoftware.com
-[FizzX]: http://allanbishop.com/fizzx/index.html
-[FizzX Importer]: http://allanbishop.com/fizzx/importers.html
 
 ## Todo / wish list / bugs:
 

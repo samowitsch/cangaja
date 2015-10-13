@@ -50,7 +50,7 @@ CG.Entity.extend('SpineAnimation', {
     init: function (options) {
         this._super()
         this.instanceOf = 'SpineAnimation'
-        self = this
+        var self = this
 
         if (options){
             CG._extend(this, options)
