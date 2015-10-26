@@ -81,7 +81,7 @@ CG.Game.extend('MyGame', {
         alien = new CG.SpineAnimation({
                 spinejson: this.asset.getJsonByName('alien-json'),
                 spineatlas: this.asset.getTextByName('alien-atlas'),
-                position: new CG.Point(300, 400),
+                position: new CG.Point(400, 500),
                 scale: 1,  //experimental scale
                 callback: function (spineObject) {
 //                    spineObject.skeleton.setSkinByName("goblingirl");

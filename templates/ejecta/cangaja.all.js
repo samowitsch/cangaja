@@ -14755,6 +14755,9 @@ CG.Entity.extend('Sprite', {
 
 
 
+window.scale = 0.1;
+
+
 /**
  * @description
  *
@@ -14891,10 +14894,10 @@ CG.Entity.extend('SpineAnimation', {
          * @type {Object}
          */
         this.spineAtlas = new spine.Atlas(this.spineAtlasData, {
-            load: function (page, line, atlas) {
+            load: function (page, path, atlas) {
                 this.textureCount++
                 var image = new Image()
-                image.onload = function (page, path) {
+                image.onload = function () {
                     page.rendererObject = image
                     page.width = image.width
                     page.height = image.height
@@ -14977,8 +14980,9 @@ CG.Entity.extend('SpineAnimation', {
      * @method update
      */
     update: function () {
-        var dt = (Date.now() - this.lastTime) / 1000
-        this.lastTime = Date.now()
+        var now = Date.now()
+        var dt = (now - this.lastTime) / 1000
+        this.lastTime = now
 
         this.state.update(dt)    // delta
         this.state.apply(this.skeleton)
@@ -15066,9 +15070,13 @@ CG.Entity.extend('SpineAnimation', {
                 rotation = -(bone.worldRotation + attachment.rotation) * Math.PI / 180,
                 w = attachment.rendererObject.width * bone.worldScaleX,
                 h = attachment.rendererObject.height * bone.worldScaleY;
+            var w2 = w
+                h2 = h;
 
             if(attachment.rendererObject.rotate){
                 rotation += 90 * Math.PI / 180
+                w2=h
+                h2=w
             }
 
             this.alpha = slot.a //get alphe value from slot
@@ -15105,7 +15113,7 @@ CG.Entity.extend('SpineAnimation', {
             Game.b_ctx.globalAlpha = this.alpha
 
             try {
-                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, w, h, -w/2, -h/2, w, h)
+                Game.b_ctx.drawImage(this.image, this.xoffset, this.yoffset, w2, h2, (-w2 * scale)/2, (-h2 * scale)/2, w2 * scale, h2 * scale)
             } catch (e) {}
 
             Game.b_ctx.rotate(-rotation);
