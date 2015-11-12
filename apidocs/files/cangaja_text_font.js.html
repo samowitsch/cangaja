@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="icon" href="../assets/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -63,7 +63,6 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
-                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -81,6 +80,7 @@
                                 <li><a href="../classes/CG.Sprite.html">CG.Sprite</a></li>
                                 <li><a href="../classes/CG.Stick.html">CG.Stick</a></li>
                                 <li><a href="../classes/CG.Text.html">CG.Text</a></li>
+                                <li><a href="../classes/CG.TouchController.html">CG.TouchController</a></li>
                                 <li><a href="../classes/CG.Translate.html">CG.Translate</a></li>
                                 <li><a href="../classes/CG.Vector.html">CG.Vector</a></li>
                             </ul>
@@ -120,341 +120,341 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: cangaja/text/font.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
-/**
- * @description
- *
- * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
- * (Hiero works also but need some modifications of the exported files)
-
- &#x60;&#x60;&#x60;
-
- //create font object
- small = new CG.Font().loadFont(Game.asset.getFontByName(&#x27;small&#x27;))
-
- //draw text to canvas
- small.drawText(&#x27;Foo bar!&#x27;, xpos, ypos)
-
- &#x60;&#x60;&#x60;
-
- *
- * @class CG.Font
- * @extends CG.Entity
- */
-CG.Entity.extend(&#x27;Font&#x27;, {
-    /**
-     * @method init
-     * @constructor
-     * @return {*}
-     */
-    init: function (options) {
-        this.instanceOf = &#x27;Font&#x27;
-
-        CG._extend(this, {
-
-            /**
-             @property atlas {Image}
-             */
-            atlas: new Image(),
-            /**
-             @property initText {string}
-             */
-            fontFile: &#x27;&#x27;,
-            /**
-             @property chars {Array}
-             */
-            chars: new Array(256),
-            /**
-             @property x {Array}
-             */
-            x: new Array(256),
-            /**
-             @property y {Array}
-             */
-            y: new Array(256),
-            /**
-             @property width {Array}
-             */
-            width: new Array(256),
-            /**
-             @property height {Array}
-             */
-            height: new Array(256),
-            /**
-             @property xoff {Array}
-             */
-            xoff: new Array(256),
-            /**
-             @property yoff {Array}
-             */
-            yoff: new Array(256),
-            /**
-             @property xadv {Array}
-             */
-            xadv: new Array(256),
-            /**
-             @property lineHeight {Number}
-             */
-            lineHeight: 0,
-            /**
-             @property face {string}
-             */
-            face: &#x27;&#x27;,
-            /**
-             @property size {Number}
-             */
-            size: 0,
-            /**
-             @property bold {Number}
-             */
-            bold: 0,
-            /**
-             @property italic {Number}
-             */
-            italic: 0,
-
-            /**
-             @property base {Number}
-             */
-            base: 0,
-            /**
-             @property scaleW {Number}
-             */
-            scaleW: 0,
-            /**
-             @property scaleH {Number}
-             */
-            scaleH: 0,
-            /**
-             @property text {String}
-             */
-            text: &#x27;&#x27;,
-            /**
-             @property currentX {Number}
-             */
-            currentX: 0,
-            /**
-             @property currentY {Number}
-             */
-            currentY: 0
-        })
-
-
-        if (options) {
-            CG._extend(this, options)
-        }
-
-        return this
-    },
-    /**
-     * @method update
-     */
-    update: function () {
-        throw {
-            name: &#x27;Font Error&#x27;,
-            message: &#x27;TODO, not defined yet.&#x27;
-        }
-    },
-    /**
-     * @method draw
-     */
-    draw: function () {
-        throw {
-            name: &#x27;Font Error&#x27;,
-            message: &#x27;TODO, not defined yet.&#x27;
-        }
-    },
-    /**
-     * @description draw the given text to the canvas
-     * @method draw
-     * @param text {string} the text to draw
-     * @param xpos {Number} the x position
-     * @param ypos {Number} the y position
-     */
-    drawText: function (text, xpos, ypos) {
-
-        this.text = text
-        this.currentX = xpos
-        this.currentY = ypos
-
-        Game.renderer.draw(this)
-
-    },
-
-    /**
-     * @description get the line height of the current font
-     * @method getLineHeight
-     * @return lineheight {Number}
-     */
-    getLineHeight: function () {
-        return this.lineHeight
-    },
-
-    /**
-     * @description get the font size of the current font
-     * @method getFontSize
-     * @return size {Number} font size
-     */
-    getFontSize: function () {
-        return this.size
-    },
-
-    /**
-     * @description get the width of the given text
-     * @method getTextWidth
-     * @param text {string} the string to calculate the width
-     * @return textwidth {Number}
-     */
-    getTextWidth: function (text) {
-        var textwidth = 0
-        var c = 0
-        for (var i = 0, l = text.length; i &lt; l; i++) {
-            textwidth += this.xadv[text.charCodeAt(i)]
-        }
-        return textwidth
-    },
-
-    /**
-     * Options:
-     * font {string} path or mediaasset object with data
-     *
-     @example
-     gill = new CG.Font().loadFont({
-        font: this.asset.getFontByName(&#x27;gill&#x27;)
-     })
-     *
-     * @description loadFont - load and parse the given fontfile
-     * @method loadFont
-     * @param {object} options
-     */
-    loadFont: function (options) {
-        idnum = 0
-
-        if (options) {
-            CG._extend(this, options)
-        }
-
-        if (typeof this.font == &#x27;string&#x27;) {
-            this.fontFile = loadString(this.font)
-        } else {
-            this.fontFile = this.font.data
-        }
-
-        var lines = this.fontFile.split(&#x27;\n&#x27;)
-        for (l in lines) {
-            line = lines[l].trim()
-
-            if (line.startsWith(&#x27;info&#x27;) || line == &#x27;&#x27;) {
-                var infodata = line.split(/([a-zA-Z]*=[&quot; ,.\-_()0-9a-zA-Z]*(?= |\n))/)
-                for (i in infodata) {
-                    var info = infodata[i]
-                    if (info.startsWith(&#x27;face=&#x27;)) {
-                        var face = info.split(&quot;=&quot;)
-                        this.face = face[1].split(&#x27;&quot;&#x27;).join(&#x27;&#x27;)
-                    }
-                    if (info.startsWith(&#x27;size=&#x27;)) {
-                        var size = info.split(&quot;=&quot;)
-                        this.size = parseInt(size[1])
-                    }
-                    if (info.startsWith(&#x27;bold=&#x27;)) {
-                        var bold = info.split(&quot;=&quot;)
-                        this.bold = parseInt(bold[1])
-                    }
-                    if (info.startsWith(&#x27;italic=&#x27;)) {
-                        var italic = info.split(&quot;=&quot;)
-                        this.italic = parseInt(italic[1])
-                    }
-                }
-            }
-            if (line.startsWith(&#x27;padding&#x27;)) {
-                continue
-            }
-            if (line.startsWith(&#x27;common&#x27;)) {
-                var commondata = line.split(&#x27; &#x27;)
-                for (c in commondata) {
-                    var common = commondata[c]
-                    if (common.startsWith(&#x27;lineHeight=&#x27;)) {
-                        var lnh = common.split(&quot;=&quot;)
-                        this.lineHeight = parseInt(lnh[1])
-                    }
-                    if (common.startsWith(&#x27;base=&#x27;)) {
-                        var base = common.split(&quot;=&quot;)
-                        this.base = parseInt(base[1])
-                    }
-                    if (common.startsWith(&#x27;scaleW=&#x27;)) {
-                        var scaleW = common.split(&quot;=&quot;)
-                        this.scaleW = parseInt(scaleW[1])
-                    }
-                    if (common.startsWith(&#x27;scaleH=&#x27;)) {
-                        var scaleH = common.split(&quot;=&quot;)
-                        this.scaleH = parseInt(scaleH[1])
-                    }
-                }
-            }
-            if (line.startsWith(&#x27;page&#x27;)) {
-                var pagedata = line.split(&#x27; &#x27;)
-                for (p in pagedata) {
-                    data = pagedata[p]
-                    if (data.startsWith(&#x27;file=&#x27;)) {
-                        var fn = data.split(&#x27;=&#x27;)
-                        this.atlas.src = &#x27;media/font/&#x27; + fn[1].split(&#x27;&quot;&#x27;).join(&#x27;&#x27;)
-                    }
-
-                }
-            }
-            if (line.startsWith(&#x27;chars&#x27;)) {
-                continue
-            }
-            if (line.startsWith(&#x27;char&#x27;)) {
-                var linedata = line.split(&#x27; &#x27;)
-                for (l in linedata) {
-                    ld = linedata[l]
-                    if (ld.startsWith(&#x27;id=&#x27;)) {
-                        var idc = ld.split(&#x27;=&#x27;)
-                        idnum = parseInt(idc[1])
-                    }
-                    if (ld.startsWith(&#x27;x=&#x27;)) {
-                        var xc = ld.split(&#x27;=&#x27;)
-                        this.x[idnum] = parseInt(xc[1])
-                    }
-                    if (ld.startsWith(&#x27;y=&#x27;)) {
-                        var yc = ld.split(&#x27;=&#x27;)
-                        this.y[idnum] = parseInt(yc[1])
-                    }
-                    if (ld.startsWith(&#x27;width=&#x27;)) {
-                        var wc = ld.split(&#x27;=&#x27;)
-                        this.width[idnum] = parseInt(wc[1])
-                    }
-                    if (ld.startsWith(&#x27;height=&#x27;)) {
-                        var hc = ld.split(&#x27;=&#x27;)
-                        this.height[idnum] = parseInt(hc[1])
-                    }
-                    if (ld.startsWith(&#x27;xoffset=&#x27;)) {
-                        var xoc = ld.split(&#x27;=&#x27;)
-                        this.xoff[idnum] = parseInt(xoc[1])
-                    }
-                    if (ld.startsWith(&#x27;yoffset=&#x27;)) {
-                        var yoc = ld.split(&#x27;=&#x27;)
-                        this.yoff[idnum] = parseInt(yoc[1])
-                    }
-                    if (ld.startsWith(&#x27;xadvance=&#x27;)) {
-                        var advc = ld.split(&#x27;=&#x27;)
-                        this.xadv[idnum] = parseInt(advc[1])
-                    }
-                }
-            }
-        }
-        return this
-    }
-})
-
-
-
-    </pre>
-</div>
+                        <h1 class="file-heading">File: cangaja/text/font.js</h1>
+                        
+                        <div class="file">
+                            <pre class="code prettyprint linenums">
+                        /**
+                         * @description
+                         *
+                         * CG.Font supports loading and drawing font files (EZ GUI Text format) from Glyph Designer,
+                         * (Hiero works also but need some modifications of the exported files)
+                        
+                         &#x60;&#x60;&#x60;
+                        
+                         //create font object
+                         small = new CG.Font().loadFont(Game.asset.getFontByName(&#x27;small&#x27;))
+                        
+                         //draw text to canvas
+                         small.drawText(&#x27;Foo bar!&#x27;, xpos, ypos)
+                        
+                         &#x60;&#x60;&#x60;
+                        
+                         *
+                         * @class CG.Font
+                         * @extends CG.Entity
+                         */
+                        CG.Entity.extend(&#x27;Font&#x27;, {
+                            /**
+                             * @method init
+                             * @constructor
+                             * @return {*}
+                             */
+                            init: function (options) {
+                                this.instanceOf = &#x27;Font&#x27;
+                        
+                                CG._extend(this, {
+                        
+                                    /**
+                                     @property atlas {Image}
+                                     */
+                                    atlas: new Image(),
+                                    /**
+                                     @property initText {string}
+                                     */
+                                    fontFile: &#x27;&#x27;,
+                                    /**
+                                     @property chars {Array}
+                                     */
+                                    chars: new Array(256),
+                                    /**
+                                     @property x {Array}
+                                     */
+                                    x: new Array(256),
+                                    /**
+                                     @property y {Array}
+                                     */
+                                    y: new Array(256),
+                                    /**
+                                     @property width {Array}
+                                     */
+                                    width: new Array(256),
+                                    /**
+                                     @property height {Array}
+                                     */
+                                    height: new Array(256),
+                                    /**
+                                     @property xoff {Array}
+                                     */
+                                    xoff: new Array(256),
+                                    /**
+                                     @property yoff {Array}
+                                     */
+                                    yoff: new Array(256),
+                                    /**
+                                     @property xadv {Array}
+                                     */
+                                    xadv: new Array(256),
+                                    /**
+                                     @property lineHeight {Number}
+                                     */
+                                    lineHeight: 0,
+                                    /**
+                                     @property face {string}
+                                     */
+                                    face: &#x27;&#x27;,
+                                    /**
+                                     @property size {Number}
+                                     */
+                                    size: 0,
+                                    /**
+                                     @property bold {Number}
+                                     */
+                                    bold: 0,
+                                    /**
+                                     @property italic {Number}
+                                     */
+                                    italic: 0,
+                        
+                                    /**
+                                     @property base {Number}
+                                     */
+                                    base: 0,
+                                    /**
+                                     @property scaleW {Number}
+                                     */
+                                    scaleW: 0,
+                                    /**
+                                     @property scaleH {Number}
+                                     */
+                                    scaleH: 0,
+                                    /**
+                                     @property text {String}
+                                     */
+                                    text: &#x27;&#x27;,
+                                    /**
+                                     @property currentX {Number}
+                                     */
+                                    currentX: 0,
+                                    /**
+                                     @property currentY {Number}
+                                     */
+                                    currentY: 0
+                                })
+                        
+                        
+                                if (options) {
+                                    CG._extend(this, options)
+                                }
+                        
+                                return this
+                            },
+                            /**
+                             * @method update
+                             */
+                            update: function () {
+                                throw {
+                                    name: &#x27;Font Error&#x27;,
+                                    message: &#x27;TODO, not defined yet.&#x27;
+                                }
+                            },
+                            /**
+                             * @method draw
+                             */
+                            draw: function () {
+                                throw {
+                                    name: &#x27;Font Error&#x27;,
+                                    message: &#x27;TODO, not defined yet.&#x27;
+                                }
+                            },
+                            /**
+                             * @description draw the given text to the canvas
+                             * @method draw
+                             * @param text {string} the text to draw
+                             * @param xpos {Number} the x position
+                             * @param ypos {Number} the y position
+                             */
+                            drawText: function (text, xpos, ypos) {
+                        
+                                this.text = text
+                                this.currentX = xpos
+                                this.currentY = ypos
+                        
+                                Game.renderer.draw(this)
+                        
+                            },
+                        
+                            /**
+                             * @description get the line height of the current font
+                             * @method getLineHeight
+                             * @return lineheight {Number}
+                             */
+                            getLineHeight: function () {
+                                return this.lineHeight
+                            },
+                        
+                            /**
+                             * @description get the font size of the current font
+                             * @method getFontSize
+                             * @return size {Number} font size
+                             */
+                            getFontSize: function () {
+                                return this.size
+                            },
+                        
+                            /**
+                             * @description get the width of the given text
+                             * @method getTextWidth
+                             * @param text {string} the string to calculate the width
+                             * @return textwidth {Number}
+                             */
+                            getTextWidth: function (text) {
+                                var textwidth = 0
+                                var c = 0
+                                for (var i = 0, l = text.length; i &lt; l; i++) {
+                                    textwidth += this.xadv[text.charCodeAt(i)]
+                                }
+                                return textwidth
+                            },
+                        
+                            /**
+                             * Options:
+                             * font {string} path or mediaasset object with data
+                             *
+                             @example
+                             gill = new CG.Font().loadFont({
+                                font: this.asset.getFontByName(&#x27;gill&#x27;)
+                             })
+                             *
+                             * @description loadFont - load and parse the given fontfile
+                             * @method loadFont
+                             * @param {object} options
+                             */
+                            loadFont: function (options) {
+                                idnum = 0
+                        
+                                if (options) {
+                                    CG._extend(this, options)
+                                }
+                        
+                                if (typeof this.font == &#x27;string&#x27;) {
+                                    this.fontFile = loadString(this.font)
+                                } else {
+                                    this.fontFile = this.font.data
+                                }
+                        
+                                var lines = this.fontFile.split(&#x27;\n&#x27;)
+                                for (l in lines) {
+                                    line = lines[l].trim()
+                        
+                                    if (line.startsWith(&#x27;info&#x27;) || line == &#x27;&#x27;) {
+                                        var infodata = line.split(/([a-zA-Z]*=[&quot; ,.\-_()0-9a-zA-Z]*(?= |\n))/)
+                                        for (i in infodata) {
+                                            var info = infodata[i]
+                                            if (info.startsWith(&#x27;face=&#x27;)) {
+                                                var face = info.split(&quot;=&quot;)
+                                                this.face = face[1].split(&#x27;&quot;&#x27;).join(&#x27;&#x27;)
+                                            }
+                                            if (info.startsWith(&#x27;size=&#x27;)) {
+                                                var size = info.split(&quot;=&quot;)
+                                                this.size = parseInt(size[1])
+                                            }
+                                            if (info.startsWith(&#x27;bold=&#x27;)) {
+                                                var bold = info.split(&quot;=&quot;)
+                                                this.bold = parseInt(bold[1])
+                                            }
+                                            if (info.startsWith(&#x27;italic=&#x27;)) {
+                                                var italic = info.split(&quot;=&quot;)
+                                                this.italic = parseInt(italic[1])
+                                            }
+                                        }
+                                    }
+                                    if (line.startsWith(&#x27;padding&#x27;)) {
+                                        continue
+                                    }
+                                    if (line.startsWith(&#x27;common&#x27;)) {
+                                        var commondata = line.split(&#x27; &#x27;)
+                                        for (c in commondata) {
+                                            var common = commondata[c]
+                                            if (common.startsWith(&#x27;lineHeight=&#x27;)) {
+                                                var lnh = common.split(&quot;=&quot;)
+                                                this.lineHeight = parseInt(lnh[1])
+                                            }
+                                            if (common.startsWith(&#x27;base=&#x27;)) {
+                                                var base = common.split(&quot;=&quot;)
+                                                this.base = parseInt(base[1])
+                                            }
+                                            if (common.startsWith(&#x27;scaleW=&#x27;)) {
+                                                var scaleW = common.split(&quot;=&quot;)
+                                                this.scaleW = parseInt(scaleW[1])
+                                            }
+                                            if (common.startsWith(&#x27;scaleH=&#x27;)) {
+                                                var scaleH = common.split(&quot;=&quot;)
+                                                this.scaleH = parseInt(scaleH[1])
+                                            }
+                                        }
+                                    }
+                                    if (line.startsWith(&#x27;page&#x27;)) {
+                                        var pagedata = line.split(&#x27; &#x27;)
+                                        for (p in pagedata) {
+                                            data = pagedata[p]
+                                            if (data.startsWith(&#x27;file=&#x27;)) {
+                                                var fn = data.split(&#x27;=&#x27;)
+                                                this.atlas.src = &#x27;media/font/&#x27; + fn[1].split(&#x27;&quot;&#x27;).join(&#x27;&#x27;)
+                                            }
+                        
+                                        }
+                                    }
+                                    if (line.startsWith(&#x27;chars&#x27;)) {
+                                        continue
+                                    }
+                                    if (line.startsWith(&#x27;char&#x27;)) {
+                                        var linedata = line.split(&#x27; &#x27;)
+                                        for (l in linedata) {
+                                            ld = linedata[l]
+                                            if (ld.startsWith(&#x27;id=&#x27;)) {
+                                                var idc = ld.split(&#x27;=&#x27;)
+                                                idnum = parseInt(idc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;x=&#x27;)) {
+                                                var xc = ld.split(&#x27;=&#x27;)
+                                                this.x[idnum] = parseInt(xc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;y=&#x27;)) {
+                                                var yc = ld.split(&#x27;=&#x27;)
+                                                this.y[idnum] = parseInt(yc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;width=&#x27;)) {
+                                                var wc = ld.split(&#x27;=&#x27;)
+                                                this.width[idnum] = parseInt(wc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;height=&#x27;)) {
+                                                var hc = ld.split(&#x27;=&#x27;)
+                                                this.height[idnum] = parseInt(hc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;xoffset=&#x27;)) {
+                                                var xoc = ld.split(&#x27;=&#x27;)
+                                                this.xoff[idnum] = parseInt(xoc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;yoffset=&#x27;)) {
+                                                var yoc = ld.split(&#x27;=&#x27;)
+                                                this.yoff[idnum] = parseInt(yoc[1])
+                                            }
+                                            if (ld.startsWith(&#x27;xadvance=&#x27;)) {
+                                                var advc = ld.split(&#x27;=&#x27;)
+                                                this.xadv[idnum] = parseInt(advc[1])
+                                            }
+                                        }
+                                    }
+                                }
+                                return this
+                            }
+                        })
+                        
+                        
+                        
+                            </pre>
+                        </div>
                     </div>
                 </div>
             </div>

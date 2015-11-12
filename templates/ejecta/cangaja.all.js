@@ -14311,12 +14311,12 @@ CG.Class.extend('Stick', {
 /**
  * @description
  *
- * CG.GameController extends CG.Stick an represents an GameController with one Stick and
+ * CG.TouchController extends CG.Stick an represents an onscreen GameController with one Stick and
  * multiple buttons
  *
  ```
 
- stick = new CG.GameController({
+ stick = new CG.TouchController({
             maxLength: 60,
             buttons: [
                 new CG.Button({
@@ -14346,11 +14346,11 @@ CG.Class.extend('Stick', {
 
  ```
  *
- * @class CG.GameController
+ * @class CG.TouchController
  * @extends CG.Stick
  *
  */
-CG.Stick.extend('GameController', {
+CG.Stick.extend('TouchController', {
     /**
      * Options:
      * x {number}
@@ -14755,7 +14755,8 @@ CG.Entity.extend('Sprite', {
 
 
 
-window.scale = 0.1;
+// WTF !?
+window.scale = 1.7;
 
 
 /**

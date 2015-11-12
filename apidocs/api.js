@@ -25,7 +25,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Entity",
         "CG.Font",
         "CG.Game",
-        "CG.GameController",
         "CG.Layer",
         "CG.Map",
         "CG.MapArea",
@@ -43,6 +42,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Sprite",
         "CG.Stick",
         "CG.Text",
+        "CG.TouchController",
         "CG.Translate",
         "CG.Vector",
         "Cangaja"

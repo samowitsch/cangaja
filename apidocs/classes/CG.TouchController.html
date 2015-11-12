@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CG.AtlasImage - Cangaja API</title>
+    <title>CG.TouchController - Cangaja API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -120,15 +120,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>CG.AtlasImage Class</h1>
+                        <h1>CG.TouchController Class</h1>
                         <div class="box meta">
                         
                                 <div class="extends">
-                                    Extends Class
+                                    Extends <a href="../classes/CG.Stick.html" class="crosslink">CG.Stick</a>
                                 </div>
                         
                                 <div class="foundat">
-                                    Defined in: <a href="../files/cangaja_atlas_atlas-image.js.html#l1"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:1</code></a>
+                                    Defined in: <a href="../files/cangaja_input_touchcontroller.js.html#l1"><code>cangaja&#x2F;input&#x2F;touchcontroller.js:1</code></a>
                                 </div>
                         
                                     Module: <a href="../modules/CG.html">CG</a>
@@ -137,15 +137,36 @@
                         
                         
                         <div class="box intro">
-                            <p>CG.AtlasImage class. It is needed when using TexturePacker atlas files.</p>
+                            <p>CG.TouchController extends CG.Stick an represents an onscreen GameController with one Stick and
+                        multiple buttons</p>
                         <pre class="code prettyprint"><code>
-                        var a = new CG.AtlasImage({
-                          image: &#39;menuscreen&#39;,
-                          xoffset: 0,
-                          yoffset: 0,
-                          width: 10,
-                          height: 20
-                        })
+                        stick = new CG.TouchController({
+                                   maxLength: 60,
+                                   buttons: [
+                                       new CG.Button({
+                                           //text: &#39;J&#39;,
+                                           //font: heiti,
+                                           image: Game.asset.getImageByName(&#39;jump&#39;),
+                                           position: new CG.Point(Game.width - 200, Game.height - 75),
+                                           callbacks: {
+                                               clicked: function () {
+                                                   b2world.player.startJump()
+                                               }
+                                           }
+                                       }),
+                                       new CG.Button({
+                                           //text: &#39;J&#39;,
+                                           //font: heiti,
+                                           image: Game.asset.getImageByName(&#39;shoot&#39;),
+                                           position: new CG.Point(Game.width - 100, Game.height - 175),
+                                           callbacks: {
+                                               clicked: function () {
+                        
+                                               }
+                                           }
+                                       })
+                                   ]
+                               })
                         </code></pre>
                         </div>
                         
@@ -166,7 +187,7 @@
                                             <h3>Methods</h3>
                         
                                             <ul class="index-list methods extends">
-                                                    <li class="index-item method">
+                                                    <li class="index-item method inherited">
                                                         <a href="#method_init">init</a>
                         
                                                     </li>
@@ -177,44 +198,48 @@
                                             <h3>Properties</h3>
                         
                                             <ul class="index-list properties extends">
-                                                    <li class="index-item property">
-                                                        <a href="#property_atlasimage">atlasimage</a>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_active">active</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_atLimit">atLimit</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_atlasname">atlasname</a>
+                                                        <a href="#property_buttons">buttons</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_handle">handle</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_identifier">identifier</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_input">input</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_length">length</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_limit">limit</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_maxLength">maxLength</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property inherited">
+                                                        <a href="#property_normal">normal</a>
                         
                                                     </li>
                                                     <li class="index-item property">
-                                                        <a href="#property_height">height</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_image">image</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_name">name</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_rotation">rotation</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_source">source</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_width">width</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_xoffset">xoffset</a>
-                        
-                                                    </li>
-                                                    <li class="index-item property">
-                                                        <a href="#property_yoffset">yoffset</a>
+                                                        <a href="#property_visible">visible</a>
                         
                                                     </li>
                                             </ul>
@@ -237,6 +262,9 @@
                                                         </ul><span class="paren">)</span>
                                                     </div>
                                             
+                                                    <span class="returns-inline">
+                                                        <span class="type"></span>
+                                                    </span>
                                             
                                             
                                             
@@ -245,9 +273,12 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l23"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:23</code></a>
+                                                        <p>Inherited from
+                                                        <a href="../classes/CG.Stick.html#method_init">
+                                                            CG.Stick
+                                                        </a>
+                                                        but overwritten in
+                                                    <a href="../files/cangaja_input_touchcontroller.js.html#l44"><code>cangaja&#x2F;input&#x2F;touchcontroller.js:44</code></a>
                                                     </p>
                                             
                                             
@@ -256,11 +287,8 @@
                                             
                                                 <div class="description">
                                                     <p>Options:
-                                            image {string}
-                                            xoffset {number}
-                                            yoffset {number}
-                                            width {number}
-                                            height {number}</p>
+                                            x {number}
+                                            y {number}</p>
                                             
                                                 </div>
                                             
@@ -281,25 +309,39 @@
                                                         </ul>
                                                     </div>
                                             
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
                                             
+                                                        <div class="returns-description">
+                                                                    <span class="type"></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            
+                                                        </div>
+                                                    </div>
                                             </div>
                                     </div>
                         
                                     <div id="properties" class="api-class-tabpanel">
                                         <h2 class="off-left">Properties</h2>
                         
-                                            <div id="property_atlasimage" class="property item">
-                                                <h3 class="name"><code>atlasimage</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            <div id="property_active" class="property item inherited">
+                                                <h3 class="name"><code>active</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l43"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:43</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_active">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l34"><code>cangaja&#x2F;input&#x2F;stick.js:34</code></a>
                                                     </p>
                                             
                                             
@@ -312,18 +354,18 @@
                                             
                                             
                                             </div>
-                                            <div id="property_atlasname" class="property item">
-                                                <h3 class="name"><code>atlasname</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            <div id="property_atLimit" class="property item inherited">
+                                                <h3 class="name"><code>atLimit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l48"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:48</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_atLimit">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l50"><code>cangaja&#x2F;input&#x2F;stick.js:50</code></a>
                                                     </p>
                                             
                                             
@@ -336,8 +378,32 @@
                                             
                                             
                                             </div>
-                                            <div id="property_height" class="property item">
-                                                <h3 class="name"><code>height</code></h3>
+                                            <div id="property_buttons" class="property item">
+                                                <h3 class="name"><code>buttons</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_input_touchcontroller.js.html#l60"><code>cangaja&#x2F;input&#x2F;touchcontroller.js:60</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_handle" class="property item inherited">
+                                                <h3 class="name"><code>handle</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -345,9 +411,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l74"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:74</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_handle">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l44"><code>cangaja&#x2F;input&#x2F;stick.js:44</code></a>
                                                     </p>
                                             
                                             
@@ -357,59 +423,12 @@
                                                     
                                                 </div>
                                             
+                                                    <p><strong>Default:</strong> CG.LEFT_HAND</p>
                                             
                                             
                                             </div>
-                                            <div id="property_image" class="property item">
-                                                <h3 class="name"><code>image</code></h3>
-                                                <span class="type"></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l53"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:53</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_name" class="property item">
-                                                <h3 class="name"><code>name</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l88"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:88</code></a>
-                                                    </p>
-                                            
-                                            
-                                                </div>
-                                            
-                                                <div class="description">
-                                                    
-                                                </div>
-                                            
-                                            
-                                            
-                                            </div>
-                                            <div id="property_rotation" class="property item">
-                                                <h3 class="name"><code>rotation</code></h3>
+                                            <div id="property_identifier" class="property item inherited">
+                                                <h3 class="name"><code>identifier</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -417,9 +436,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l79"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:79</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_identifier">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l39"><code>cangaja&#x2F;input&#x2F;stick.js:39</code></a>
                                                     </p>
                                             
                                             
@@ -432,18 +451,18 @@
                                             
                                             
                                             </div>
-                                            <div id="property_source" class="property item">
-                                                <h3 class="name"><code>source</code></h3>
-                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            <div id="property_input" class="property item inherited">
+                                                <h3 class="name"><code>input</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                                             
                                             
                                             
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l38"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:38</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_input">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l70"><code>cangaja&#x2F;input&#x2F;stick.js:70</code></a>
                                                     </p>
                                             
                                             
@@ -456,8 +475,8 @@
                                             
                                             
                                             </div>
-                                            <div id="property_width" class="property item">
-                                                <h3 class="name"><code>width</code></h3>
+                                            <div id="property_length" class="property item inherited">
+                                                <h3 class="name"><code>length</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -465,9 +484,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l69"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:69</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_length">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l55"><code>cangaja&#x2F;input&#x2F;stick.js:55</code></a>
                                                     </p>
                                             
                                             
@@ -480,8 +499,32 @@
                                             
                                             
                                             </div>
-                                            <div id="property_xoffset" class="property item">
-                                                <h3 class="name"><code>xoffset</code></h3>
+                                            <div id="property_limit" class="property item inherited">
+                                                <h3 class="name"><code>limit</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_limit">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l65"><code>cangaja&#x2F;input&#x2F;stick.js:65</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_maxLength" class="property item inherited">
+                                                <h3 class="name"><code>maxLength</code></h3>
                                                 <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                                             
                                             
@@ -489,9 +532,9 @@
                                             
                                             
                                                 <div class="meta">
-                                                            <p>
-                                                            Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l59"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:59</code></a>
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_maxLength">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l60"><code>cangaja&#x2F;input&#x2F;stick.js:60</code></a>
                                                     </p>
                                             
                                             
@@ -504,9 +547,33 @@
                                             
                                             
                                             </div>
-                                            <div id="property_yoffset" class="property item">
-                                                <h3 class="name"><code>yoffset</code></h3>
-                                                <span class="type"></span>
+                                            <div id="property_normal" class="property item inherited">
+                                                <h3 class="name"><code>normal</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>Inherited from
+                                                            <a href="../classes/CG.Stick.html#property_normal">CG.Stick</a>:
+                                                    <a href="../files/cangaja_input_stick.js.html#l75"><code>cangaja&#x2F;input&#x2F;stick.js:75</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_visible" class="property item">
+                                                <h3 class="name"><code>visible</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                                             
                                             
                                             
@@ -515,7 +582,7 @@
                                                 <div class="meta">
                                                             <p>
                                                             Defined in
-                                                    <a href="../files/cangaja_atlas_atlas-image.js.html#l64"><code>cangaja&#x2F;atlas&#x2F;atlas-image.js:64</code></a>
+                                                    <a href="../files/cangaja_input_touchcontroller.js.html#l65"><code>cangaja&#x2F;input&#x2F;touchcontroller.js:65</code></a>
                                                     </p>
                                             
                                             

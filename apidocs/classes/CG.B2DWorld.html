@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="icon" href="../assets/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -63,7 +63,6 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
-                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -81,6 +80,7 @@
                                 <li><a href="../classes/CG.Sprite.html">CG.Sprite</a></li>
                                 <li><a href="../classes/CG.Stick.html">CG.Stick</a></li>
                                 <li><a href="../classes/CG.Text.html">CG.Text</a></li>
+                                <li><a href="../classes/CG.TouchController.html">CG.TouchController</a></li>
                                 <li><a href="../classes/CG.Translate.html">CG.Translate</a></li>
                                 <li><a href="../classes/CG.Vector.html">CG.Vector</a></li>
                             </ul>
@@ -120,1934 +120,1908 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>CG.B2DWorld Class</h1>
-<div class="box meta">
-
-
-        <div class="foundat">
-            Defined in: <a href="../files/cangaja_box2d_b2d-world.js.html#l1"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:1</code></a>
-        </div>
-
-            Module: <a href="../modules/CG.html">CG</a>
-
-</div>
-
-
-<div class="box intro">
-    <p>B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
-lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
-one of the basic B2D objects can added to the B2DWorld with the addCustom method.
-The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
-all physics and drawings.</p>
-<pre class="code prettyprint"><code>
-var w = new CG.B2DWorld({
-    name: 'box2d-world',
-    scale: 40,
-    debug: true,
-    sleep: true
-})
-
-</code></pre>
-
-</div>
-
-
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
-
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods">
-                            <li class="index-item method">
-                                <a href="#method_addContactListener">addContactListener</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_addCustom">addCustom</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_applyImpulse">applyImpulse</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createBox">createBox</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createBridge">createBridge</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createChainShape">createChainShape</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createCircle">createCircle</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createLine">createLine</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createPolyBody">createPolyBody</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createPolyBody">createPolyBody</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_createRope">createRope</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_deleteBodyAt">deleteBodyAt</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_deleteBodyAt">deleteBodyAt</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_draw">draw</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_getBodyAt">getBodyAt</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_getBodySpec">getBodySpec</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_init">init</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_isMouseDown">isMouseDown</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_mouseDownAt">mouseDownAt</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_mouseUp">mouseUp</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_removeElementByIndex">removeElementByIndex</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_removeElementByUid">removeElementByUid</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_update">update</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                            <li class="index-item property">
-                                <a href="#property_debug">debug</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_elements">elements</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_framerate">framerate</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_name">name</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_scale">scale</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_sleep">sleep</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_uid">uid</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_world">world</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_x">x</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_y">y</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-
-        </div>
-
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_addContactListener" class="method item">
-    <h3 class="name"><code>addContactListener</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>callbacks</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l645"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:645</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">callbacks</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_addCustom" class="method item">
-    <h3 class="name"><code>addCustom</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>obj</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l156"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:156</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Custom extended objects can be added to the B2DWorld with this method.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                        <p>object    custom B2D object</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_applyImpulse" class="method item">
-    <h3 class="name"><code>applyImpulse</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>body</code>
-                </li>
-                <li class="arg">
-                        <code>degrees</code>
-                </li>
-                <li class="arg">
-                        <code>power</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l632"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:632</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">body</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">degrees</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">power</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_createBox" class="method item">
-    <h3 class="name"><code>createBox</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DRectangle.html" class="crosslink">CG.B2DRectangle</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l191"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:191</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createBox creates a basic Box2D rectangle with some default settings.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DRectangle.html" class="crosslink">CG.B2DRectangle</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createBox({
-   name: 'glowball',
-   image: this.asset.getImageByName('glowball'),
-   radius: 22,
-   x: this.mouse.x,
-   y: this.mouse.y,
-   bodyType: box2d.b2BodyType.b2_dynamicBody
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createBridge" class="method item">
-    <h3 class="name"><code>createBridge</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DBridge.html" class="crosslink">CG.B2DBridge</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l424"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:424</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>This method creates a B2D bridge. Just play with the params to get a good result!</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DBridge.html" class="crosslink">CG.B2DBridge</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createBridge({
-   name:'chain',
-   image:this.asset.getImageByName('chain'),
-   x: 20,
-   y: 280,
-   length: 620,
-   segments: 27,
-   segmentHeight: 3
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createChainShape" class="method item">
-    <h3 class="name"><code>createChainShape</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DChainShape.html" class="crosslink">CG.B2DChainShape</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l383"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:383</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createChainShape</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DChainShape.html" class="crosslink">CG.B2DChainShape</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>chainArray = [
-    new CG.Point(0, 0),
-    new CG.Point(50, 10),
-    new CG.Point(100, 100),
-    new CG.Point(200, 100),
-    new CG.Point(250, 50),
-    new CG.Point(300, 70)
-]
-
-b2world.createChainShape({
-    name: 'chaneshape',
-    points: chainArray,
-    x: 0,
-    y: 200
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createCircle" class="method item">
-    <h3 class="name"><code>createCircle</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type">CG.B2DCircle</span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l255"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:255</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createCircle creates a basic Box2D circle with some default settings</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">CG.B2DCircle</span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createCircle({
-   name: 'glowball',
-   image: this.asset.getImageByName('glowball'),
-   radius: 22,
-   x: this.mouse.x,
-   y: this.mouse.y,
-   bodyType: box2d.b2BodyType.b2_dynamicBody
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createLine" class="method item">
-    <h3 class="name"><code>createLine</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DLine.html" class="crosslink">CG.B2DLine</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l225"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:225</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createLine creates a basic Box2D line with some default settings.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DLine.html" class="crosslink">CG.B2DLine</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createLine({
-   name:'testline2',
-   startPoint: new CG.Point(630, 200),
-   endPoint: new CG.Point(150, 250)
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createPolyBody" class="method item">
-    <h3 class="name"><code>createPolyBody</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DTerrain.html" class="crosslink">CG.B2DTerrain</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l330"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:330</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createTerrain</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DTerrain.html" class="crosslink">CG.B2DTerrain</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>var terrainPolys =
-[{
-    outer: [{
-        x: 0,
-        y: 100.5
-    }, {
-        x: 1024,
-        y: 100.5
-    }, {
-        x: 1024,
-        y: 768
-    }, {
-        x: 0,
-        y: 768
-    }],
-    holes: []
-   }]
-
-b2world.createTerrain({
-    name: 'terrain',
-    image: false
-    terrainShape: terrainPolys,
-    x:0,
-    y:0
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createPolyBody" class="method item">
-    <h3 class="name"><code>createPolyBody</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DPolygon.html" class="crosslink">CG.B2DPolygon</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l290"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:290</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
-Box2D object. The polygonshape and some settings like density, bounce and friction are
-taken from the json file at the moment.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DPolygon.html" class="crosslink">CG.B2DPolygon</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createPolyBody({
-   name: 'powerstar75',
-   image: this.asset.getImageByName('powerstar75'),
-   texturepacker: this.asset.getJsonByName('powerstar75'),
-   x: 200,
-   y: -150,
-   bodyType: box2d.b2BodyType.b2_dynamicBody,
-   bullet: false
-})</code></pre>
-
-            </div>
-        </div>
-</div>
-<div id="method_createRope" class="method item">
-    <h3 class="name"><code>createRope</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/CG.B2DRope.html" class="crosslink">CG.B2DRope</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l463"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:463</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>This method creates a B2D rope. Just play with the params to get a good result!</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="../classes/CG.B2DRope.html" class="crosslink">CG.B2DRope</a></span>:
-            </div>
-        </div>
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>b2world.createRope({
-   name: 'chain-v',
-   image: this.asset.getImageByName('chain-v'),
-   x: 580,
-   y: 0,
-   length: 200,
-   segments: 8,
-   segmentWidth: 3
-</code></pre>
-<p>})</p>
-
-            </div>
-        </div>
-</div>
-<div id="method_deleteBodyAt" class="method item">
-    <h3 class="name"><code>deleteBodyAt</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>body</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l171"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:171</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Checks if a B2D body Exists</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">body</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_deleteBodyAt" class="method item">
-    <h3 class="name"><code>deleteBodyAt</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>x</code>
-                </li>
-                <li class="arg">
-                        <code>y</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l569"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:569</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Deletes a B2D body at the given x, y position</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">x</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">y</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                        <p>(Number)</p>
-
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_draw" class="method item">
-    <h3 class="name"><code>draw</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l138"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:138</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-<div id="method_getBodyAt" class="method item">
-    <h3 class="name"><code>getBodyAt</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>x</code>
-                </li>
-                <li class="arg">
-                        <code>y</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l536"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:536</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Get a B2D body at the give x, y position.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">x</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">y</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_getBodySpec" class="method item">
-    <h3 class="name"><code>getBodySpec</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>b</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l669"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:669</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">b</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l26"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:26</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Options:
-name {string}
-sleep {boolean}
-scale {number}
-debug {boolean}</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_isMouseDown" class="method item">
-    <h3 class="name"><code>isMouseDown</code></h3>
-
-        <span class="paren">()</span>
-
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l601"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:601</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-            </div>
-        </div>
-
-
-</div>
-<div id="method_mouseDownAt" class="method item">
-    <h3 class="name"><code>mouseDownAt</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>x</code>
-                </li>
-                <li class="arg">
-                        <code>y</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l502"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:502</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Enables dragging B2D objects with the mouse.</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">x</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-                <li class="param">
-                        <code class="param-name">y</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_mouseUp" class="method item">
-    <h3 class="name"><code>mouseUp</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l529"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:529</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-<div id="method_removeElementByIndex" class="method item">
-    <h3 class="name"><code>removeElementByIndex</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>index</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l608"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:608</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>delete cangaja element</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">index</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_removeElementByUid" class="method item">
-    <h3 class="name"><code>removeElementByUid</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>uid</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l617"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:617</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>delete cangaja element</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">uid</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-</div>
-<div id="method_update" class="method item">
-    <h3 class="name"><code>update</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_box2d_b2d-world.js.html#l115"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:115</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-            </div>
-
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-                    <div id="property_debug" class="property item">
-                        <h3 class="name"><code>debug</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l51"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:51</code></a>
-                            </p>
-                    
-                    
+                        <h1>CG.B2DWorld Class</h1>
+                        <div class="box meta">
+                        
+                        
+                                <div class="foundat">
+                                    Defined in: <a href="../files/cangaja_box2d_b2d-world.js.html#l1"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:1</code></a>
+                                </div>
+                        
+                                    Module: <a href="../modules/CG.html">CG</a>
+                        
                         </div>
-                    
-                        <div class="description">
-                            
+                        
+                        
+                        <div class="box intro">
+                            <p>B2DWorld is a Box2dWeb wrapper with basic and easy methods for creating Box2d Objects like
+                        lines, circles, rectangles, polybodies, ropes and bridges. Custom B2D Objects that extends
+                        one of the basic B2D objects can added to the B2DWorld with the addCustom method.
+                        The CG.B2DWorld can attached to an CG.Screen object as layer. The B2DWorld will handle
+                        all physics and drawings.</p>
+                        <pre class="code prettyprint"><code>
+                        var w = new CG.B2DWorld({
+                            name: &#39;box2d-world&#39;,
+                            scale: 40,
+                            debug: true,
+                            sleep: true
+                        })
+                        </code></pre>
                         </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_elements" class="property item">
-                        <h3 class="name"><code>elements</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l66"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:66</code></a>
-                            </p>
-                    
-                    
+                        
+                        
+                        <div id="classdocs" class="tabview">
+                            <ul class="api-class-tabs">
+                                <li class="api-class-tab index"><a href="#index">Index</a></li>
+                        
+                                    <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+                                    <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+                            </ul>
+                        
+                            <div>
+                                <div id="index" class="api-class-tabpanel index">
+                                    <h2 class="off-left">Item Index</h2>
+                        
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
+                        
+                                            <ul class="index-list methods">
+                                                    <li class="index-item method">
+                                                        <a href="#method_addContactListener">addContactListener</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_addCustom">addCustom</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_applyImpulse">applyImpulse</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createBox">createBox</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createBridge">createBridge</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createChainShape">createChainShape</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createCircle">createCircle</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createLine">createLine</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createPolyBody">createPolyBody</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createPolyBody">createPolyBody</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_createRope">createRope</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_deleteBodyAt">deleteBodyAt</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_deleteBodyAt">deleteBodyAt</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_draw">draw</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_getBodyAt">getBodyAt</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_getBodySpec">getBodySpec</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_init">init</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_isMouseDown">isMouseDown</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_mouseDownAt">mouseDownAt</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_mouseUp">mouseUp</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_removeElementByIndex">removeElementByIndex</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_removeElementByUid">removeElementByUid</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_update">update</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties">
+                                                    <li class="index-item property">
+                                                        <a href="#property_debug">debug</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_elements">elements</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_framerate">framerate</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_name">name</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_scale">scale</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_sleep">sleep</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_uid">uid</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_world">world</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_x">x</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_y">y</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                        
+                                </div>
+                        
+                                    <div id="methods" class="api-class-tabpanel">
+                                        <h2 class="off-left">Methods</h2>
+                        
+                                            <div id="method_addContactListener" class="method item">
+                                                <h3 class="name"><code>addContactListener</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>callbacks</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l645"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:645</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">callbacks</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_addCustom" class="method item">
+                                                <h3 class="name"><code>addCustom</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>obj</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l156"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:156</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Custom extended objects can be added to the B2DWorld with this method.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">obj</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>object    custom B2D object</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_applyImpulse" class="method item">
+                                                <h3 class="name"><code>applyImpulse</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>body</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>degrees</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>power</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l632"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:632</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">body</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">degrees</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">power</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_createBox" class="method item">
+                                                <h3 class="name"><code>createBox</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DRectangle.html" class="crosslink">CG.B2DRectangle</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l191"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:191</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createBox creates a basic Box2D rectangle with some default settings.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DRectangle.html" class="crosslink">CG.B2DRectangle</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createBox({
+                                               name: &#39;glowball&#39;,
+                                               image: this.asset.getImageByName(&#39;glowball&#39;),
+                                               radius: 22,
+                                               x: this.mouse.x,
+                                               y: this.mouse.y,
+                                               bodyType: box2d.b2BodyType.b2_dynamicBody
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createBridge" class="method item">
+                                                <h3 class="name"><code>createBridge</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DBridge.html" class="crosslink">CG.B2DBridge</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l424"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:424</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>This method creates a B2D bridge. Just play with the params to get a good result!</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DBridge.html" class="crosslink">CG.B2DBridge</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createBridge({
+                                               name:&#39;chain&#39;,
+                                               image:this.asset.getImageByName(&#39;chain&#39;),
+                                               x: 20,
+                                               y: 280,
+                                               length: 620,
+                                               segments: 27,
+                                               segmentHeight: 3
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createChainShape" class="method item">
+                                                <h3 class="name"><code>createChainShape</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DChainShape.html" class="crosslink">CG.B2DChainShape</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l383"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:383</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createChainShape</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DChainShape.html" class="crosslink">CG.B2DChainShape</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>chainArray = [
+                                                new CG.Point(0, 0),
+                                                new CG.Point(50, 10),
+                                                new CG.Point(100, 100),
+                                                new CG.Point(200, 100),
+                                                new CG.Point(250, 50),
+                                                new CG.Point(300, 70)
+                                            ]
+                                            
+                                            b2world.createChainShape({
+                                                name: &#39;chaneshape&#39;,
+                                                points: chainArray,
+                                                x: 0,
+                                                y: 200
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createCircle" class="method item">
+                                                <h3 class="name"><code>createCircle</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type">CG.B2DCircle</span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l255"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:255</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createCircle creates a basic Box2D circle with some default settings</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type">CG.B2DCircle</span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createCircle({
+                                               name: &#39;glowball&#39;,
+                                               image: this.asset.getImageByName(&#39;glowball&#39;),
+                                               radius: 22,
+                                               x: this.mouse.x,
+                                               y: this.mouse.y,
+                                               bodyType: box2d.b2BodyType.b2_dynamicBody
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createLine" class="method item">
+                                                <h3 class="name"><code>createLine</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DLine.html" class="crosslink">CG.B2DLine</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l225"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:225</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createLine creates a basic Box2D line with some default settings.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DLine.html" class="crosslink">CG.B2DLine</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createLine({
+                                               name:&#39;testline2&#39;,
+                                               startPoint: new CG.Point(630, 200),
+                                               endPoint: new CG.Point(150, 250)
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createPolyBody" class="method item">
+                                                <h3 class="name"><code>createPolyBody</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DTerrain.html" class="crosslink">CG.B2DTerrain</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l330"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:330</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createTerrain</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DTerrain.html" class="crosslink">CG.B2DTerrain</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>var terrainPolys =
+                                            [{
+                                                   outer: [{
+                                                       x: 0,
+                                                       y: 100.5
+                                                   }, {
+                                                       x: 1024,
+                                                       y: 100.5
+                                                   }, {
+                                                       x: 1024,
+                                                       y: 768
+                                                   }, {
+                                                       x: 0,
+                                                       y: 768
+                                                   }],
+                                                   holes: []
+                                               }]
+                                            
+                                            b2world.createTerrain({
+                                                name: &#39;terrain&#39;,
+                                                image: false
+                                                terrainShape: terrainPolys,
+                                                x:0,
+                                                y:0
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createPolyBody" class="method item">
+                                                <h3 class="name"><code>createPolyBody</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DPolygon.html" class="crosslink">CG.B2DPolygon</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l290"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:290</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>createPolyBody creates a Box2D polybody. A PhysicsEditor json (Lime + Corona JSON Exporter) file is needed for this
+                                            Box2D object. The polygonshape and some settings like density, bounce and friction are
+                                            taken from the json file at the moment.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DPolygon.html" class="crosslink">CG.B2DPolygon</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createPolyBody({
+                                               name: &#39;powerstar75&#39;,
+                                               image: this.asset.getImageByName(&#39;powerstar75&#39;),
+                                               texturepacker: this.asset.getJsonByName(&#39;powerstar75&#39;),
+                                               x: 200,
+                                               y: -150,
+                                               bodyType: box2d.b2BodyType.b2_dynamicBody,
+                                               bullet: false
+                                            })
+                                            </code></pre>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_createRope" class="method item">
+                                                <h3 class="name"><code>createRope</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="../classes/CG.B2DRope.html" class="crosslink">CG.B2DRope</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l463"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:463</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>This method creates a B2D rope. Just play with the params to get a good result!</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="../classes/CG.B2DRope.html" class="crosslink">CG.B2DRope</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>b2world.createRope({
+                                               name: &#39;chain-v&#39;,
+                                               image: this.asset.getImageByName(&#39;chain-v&#39;),
+                                               x: 580,
+                                               y: 0,
+                                               length: 200,
+                                               segments: 8,
+                                               segmentWidth: 3
+                                            </code></pre><p>   })</p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_deleteBodyAt" class="method item">
+                                                <h3 class="name"><code>deleteBodyAt</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>body</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l171"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:171</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Checks if a B2D body Exists</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">body</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_deleteBodyAt" class="method item">
+                                                <h3 class="name"><code>deleteBodyAt</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>x</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>y</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l569"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:569</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Deletes a B2D body at the given x, y position</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">x</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">y</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                    <p>(Number)</p>
+                                            
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_draw" class="method item">
+                                                <h3 class="name"><code>draw</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l138"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:138</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_getBodyAt" class="method item">
+                                                <h3 class="name"><code>getBodyAt</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>x</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>y</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l536"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:536</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Get a B2D body at the give x, y position.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">x</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">y</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_getBodySpec" class="method item">
+                                                <h3 class="name"><code>getBodySpec</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>b</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l669"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:669</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">b</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_init" class="method item">
+                                                <h3 class="name"><code>init</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l26"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:26</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Options:
+                                            name {string}
+                                            sleep {boolean}
+                                            scale {number}
+                                            debug {boolean}</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_isMouseDown" class="method item">
+                                                <h3 class="name"><code>isMouseDown</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                                    <span class="returns-inline">
+                                                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                                    </span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l601"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:601</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                                    <div class="returns">
+                                                        <h4>Returns:</h4>
+                                            
+                                                        <div class="returns-description">
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                                                        </div>
+                                                    </div>
+                                            
+                                            </div>
+                                            <div id="method_mouseDownAt" class="method item">
+                                                <h3 class="name"><code>mouseDownAt</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>x</code>
+                                                            </li>
+                                                            <li class="arg">
+                                                                    <code>y</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l502"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:502</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Enables dragging B2D objects with the mouse.</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">x</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                            <li class="param">
+                                                                    <code class="param-name">y</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_mouseUp" class="method item">
+                                                <h3 class="name"><code>mouseUp</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l529"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:529</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_removeElementByIndex" class="method item">
+                                                <h3 class="name"><code>removeElementByIndex</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>index</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l608"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:608</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>delete cangaja element</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">index</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_removeElementByUid" class="method item">
+                                                <h3 class="name"><code>removeElementByUid</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>uid</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l617"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:617</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>delete cangaja element</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">uid</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                            </div>
+                                            <div id="method_update" class="method item">
+                                                <h3 class="name"><code>update</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l115"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:115</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="api-class-tabpanel">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property_debug" class="property item">
+                                                <h3 class="name"><code>debug</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l51"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:51</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_elements" class="property item">
+                                                <h3 class="name"><code>elements</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l66"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:66</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_framerate" class="property item">
+                                                <h3 class="name"><code>framerate</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l40"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:40</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_name" class="property item">
+                                                <h3 class="name"><code>name</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l46"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:46</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_scale" class="property item">
+                                                <h3 class="name"><code>scale</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l77"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:77</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_sleep" class="property item">
+                                                <h3 class="name"><code>sleep</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l82"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:82</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_uid" class="property item">
+                                                <h3 class="name"><code>uid</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l72"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:72</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_world" class="property item">
+                                                <h3 class="name"><code>world</code></h3>
+                                                <span class="type">B2World</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l93"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:93</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_x" class="property item">
+                                                <h3 class="name"><code>x</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l56"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:56</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_y" class="property item">
+                                                <h3 class="name"><code>y</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_box2d_b2d-world.js.html#l61"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:61</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                        
+                            </div>
                         </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_framerate" class="property item">
-                        <h3 class="name"><code>framerate</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l40"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:40</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_name" class="property item">
-                        <h3 class="name"><code>name</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l46"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:46</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_scale" class="property item">
-                        <h3 class="name"><code>scale</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l77"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:77</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_sleep" class="property item">
-                        <h3 class="name"><code>sleep</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l82"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:82</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_uid" class="property item">
-                        <h3 class="name"><code>uid</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l72"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:72</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_world" class="property item">
-                        <h3 class="name"><code>world</code></h3>
-                        <span class="type">B2World</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l93"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:93</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_x" class="property item">
-                        <h3 class="name"><code>x</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l56"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:56</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_y" class="property item">
-                        <h3 class="name"><code>y</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_box2d_b2d-world.js.html#l61"><code>cangaja&#x2F;box2d&#x2F;b2d-world.js:61</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-            </div>
-
-
-    </div>
-</div>
                     </div>
                 </div>
             </div>
