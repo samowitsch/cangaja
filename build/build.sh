@@ -111,8 +111,8 @@ java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/ca
 
 #copy also to the template folders
 echo "> copied cangaja lib to Project-x"
-cp ../$path/cangaja.all.js ../../projekt-x/project/js/libs/cangaja.all.js
-#cp ../$path/cangaja.all.min.js ../../projekt-x/project/js/libs/cangaja.all.min.js
+cp ../$path/cangaja.all.js ../../projekt-x/project/app/js/libs/cangaja.all.js
+#cp ../$path/cangaja.all.min.js ../../projekt-x/project/app/js/libs/cangaja.all.min.js
 cp ../$path/cangaja.all.js ../templates/ejecta/cangaja.all.js
 cp ../$path/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
 

@@ -30,7 +30,10 @@ CG.Class.extend('Stick', {
      * @return {*}
      */
     init: function (options) {
+
         CG._extend(this, {
+            instanceOf: 'Stick',
+
             /**
              * @property active
              * @type {Boolean}

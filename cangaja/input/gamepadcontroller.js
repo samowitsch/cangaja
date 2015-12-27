@@ -27,6 +27,7 @@ CG.Class.extend('GamepadController', {
      * @return {*}
      */
     init: function (options) {
+        this.instanceOf = 'GamepadController'
 
         // A number of typical buttons recognized by Gamepad API and mapped to
         // standard controls. Any extraneous buttons will have larger indexes.

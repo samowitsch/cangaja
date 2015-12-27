@@ -54,9 +54,12 @@ CG.Stick.extend('TouchController', {
      * @return {*}
      */
     init: function (options) {
+
         this._super(options)
 
         CG._extend(this, {
+            instanceOf: 'TouchController',
+
             /**
              * @property buttons
              * @type {Array}

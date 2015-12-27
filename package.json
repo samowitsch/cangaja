@@ -17,7 +17,7 @@
         "url": "http://www.example.com/licenses/gpl.html"
     }],
     "main": "index.html",
-    "icon": "./icon.png",
+    "icon": "./icon.icns",
     "window": {
         "title": "Cangaja FW",
         "toolbar": true,
@@ -28,7 +28,7 @@
         "position": "center",
         "resizeable": false,
         "always-on-top": true,
-        "fullscreen": true,
+        "fullscreen": false,
         "show_in_taskbar": true,
         "kiosk": false,
         "transparent": false
