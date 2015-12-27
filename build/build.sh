@@ -14,7 +14,7 @@ cat ../cangaja/base/base.js \
 ../libs/input/keymaster.js \
 ../libs/math/poly2tri/poly2tri-1.3.5.js \
 ../libs/math/clipper/v6/clipper.js \
-../libs/spine/v1.1/spine.js \
+../libs/spine/v2.3/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
 ../cangaja/renderer/canvasrenderer.js \
@@ -25,7 +25,8 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/input/stick.js \
-../cangaja/input/gamecontroller.js \
+../cangaja/input/touchcontroller.js \
+../cangaja/input/gamepadcontroller.js \
 ../cangaja/sprite/sprite.js \
 ../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \
@@ -62,8 +63,7 @@ cat ../cangaja/base/base.js \
 ../cangaja/box2d/b2d-chainshape.js \
 ../cangaja/box2d/b2d-rope.js \
 ../cangaja/box2d/b2d-bridge.js \
-../cangaja/box2d/b2d-world.js \
-../cangaja/box2d/b2d-fizzx-loader.js > ../$path/cangaja.js
+../cangaja/box2d/b2d-world.js > ../$path/cangaja.js
 
 
 echo "> Files merged."
@@ -78,7 +78,7 @@ echo "> Minified standard version (yuicompressor)."
 echo ""
 
 #running closure compiler (ECMASCRIPT5, ECMASCRIPT5_STRICT)
-#java -jar compiler.jar --js=../$path/cangaja.js --js_output_file=../$path/cangaja-closure.min.js --language_in=ECMASCRIPT5 --source_map_format=V3 --create_source_map ../$path/cangaja-closure.min.js.map
+java -jar compiler.jar --js=../$path/cangaja.js --js_output_file=../$path/cangaja-closure.min.js --language_in=ECMASCRIPT5 --source_map_format=V3 --create_source_map ../$path/cangaja-closure.min.js.map
 #echo "> Minified standard version (closure compiler)."
 #echo ""
 
@@ -97,7 +97,7 @@ echo "> Minified lib version (yuicompressor)."
 echo ""
 
 #running closure compiler
-#java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/cangaja-closure.all.min.js --source_map_format=V3 --create_source_map ../$path/cangaja-closure.all.min.js.map
+java -jar compiler.jar --js=../$path/cangaja.all.js --js_output_file=../$path/cangaja-closure.all.min.js --source_map_format=V3 --create_source_map ../$path/cangaja-closure.all.min.js.map
 #echo "> Minified lib version (closure compiler)."
 #echo ""
 
@@ -111,10 +111,10 @@ echo ""
 
 #copy also to the template folders
 echo "> copied cangaja lib to Project-x"
-cp ../$path/cangaja.all.js ../../projekt-x/project/js/libs/cangaja.all.js
-#cp ../$path/cangaja.all.min.js ../../projekt-x/project/js/libs/cangaja.all.min.js
-#cp ../$path/cangaja.all.js ../templates/ejecta/cangaja.all.js
-#cp ../$path/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
+cp ../$path/cangaja.all.js ../../projekt-x/project/app/js/libs/cangaja.all.js
+#cp ../$path/cangaja.all.min.js ../../projekt-x/project/app/js/libs/cangaja.all.min.js
+cp ../$path/cangaja.all.js ../templates/ejecta/cangaja.all.js
+cp ../$path/cangaja.all.min.js ../templates/ejecta/cangaja.all.min.js
 
 #echo "> copied cangaja lib to template folders (html5 & ejecta)"
 #echo ""

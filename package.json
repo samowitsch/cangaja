@@ -1,0 +1,39 @@
+{
+    "name": "cangaja",
+    "description": "Cangaja FW",
+    "version": "0.0.1",
+    "maintainers": [{
+        "name": "Christian Sonntag",
+        "email": "info@motions-media.de",
+        "web": "http://www.motions-media.de"
+    }],
+    "repositories": [{
+        "type": "git",
+        "url": "http://github.com/example.git",
+        "path": "packages/mypackage"
+    }],
+    "licenses": [{
+        "type": "GPLv2",
+        "url": "http://www.example.com/licenses/gpl.html"
+    }],
+    "main": "index.html",
+    "icon": "./icon.icns",
+    "window": {
+        "title": "Cangaja FW",
+        "toolbar": true,
+        "width": 800,
+        "height": 600,
+        "min_width": 800,
+        "min_height": 600,
+        "position": "center",
+        "resizeable": false,
+        "always-on-top": true,
+        "fullscreen": false,
+        "show_in_taskbar": true,
+        "kiosk": false,
+        "transparent": false
+    },
+    "webkit": {
+        "plugin": true
+    }
+}

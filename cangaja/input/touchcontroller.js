@@ -1,12 +1,12 @@
 /**
  * @description
  *
- * CG.GameController extends CG.Stick an represents an GameController with one Stick and
+ * CG.TouchController extends CG.Stick an represents an onscreen GameController with one Stick and
  * multiple buttons
  *
  ```
 
- stick = new CG.GameController({
+ stick = new CG.TouchController({
             maxLength: 60,
             buttons: [
                 new CG.Button({
@@ -36,11 +36,11 @@
 
  ```
  *
- * @class CG.GameController
+ * @class CG.TouchController
  * @extends CG.Stick
  *
  */
-CG.Stick.extend('GameController', {
+CG.Stick.extend('TouchController', {
     /**
      * Options:
      * x {number}
@@ -54,9 +54,12 @@ CG.Stick.extend('GameController', {
      * @return {*}
      */
     init: function (options) {
+
         this._super(options)
 
         CG._extend(this, {
+            instanceOf: 'TouchController',
+
             /**
              * @property buttons
              * @type {Array}

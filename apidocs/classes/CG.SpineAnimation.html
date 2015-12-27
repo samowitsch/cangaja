@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <link rel="icon" href="../assets/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -14,7 +14,7 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-                <h1><img src="../assets/css/logo.png" title="Cangaja API" width="117" height="52"></h1>
+                <h1><img src="../assets/css/logo.png" title="Cangaja API"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.1.0</em>
@@ -46,7 +46,6 @@
                                 <li><a href="../classes/CG.B2DChainShape.html">CG.B2DChainShape</a></li>
                                 <li><a href="../classes/CG.B2DCirlce.html">CG.B2DCirlce</a></li>
                                 <li><a href="../classes/CG.B2DEntity.html">CG.B2DEntity</a></li>
-                                <li><a href="../classes/CG.B2DFizzXLoader.html">CG.B2DFizzXLoader</a></li>
                                 <li><a href="../classes/CG.B2DLine.html">CG.B2DLine</a></li>
                                 <li><a href="../classes/CG.B2DPolygon.html">CG.B2DPolygon</a></li>
                                 <li><a href="../classes/CG.B2DRectangle.html">CG.B2DRectangle</a></li>
@@ -64,7 +63,6 @@
                                 <li><a href="../classes/CG.Entity.html">CG.Entity</a></li>
                                 <li><a href="../classes/CG.Font.html">CG.Font</a></li>
                                 <li><a href="../classes/CG.Game.html">CG.Game</a></li>
-                                <li><a href="../classes/CG.GameController.html">CG.GameController</a></li>
                                 <li><a href="../classes/CG.Layer.html">CG.Layer</a></li>
                                 <li><a href="../classes/CG.Map.html">CG.Map</a></li>
                                 <li><a href="../classes/CG.MapArea.html">CG.MapArea</a></li>
@@ -82,6 +80,7 @@
                                 <li><a href="../classes/CG.Sprite.html">CG.Sprite</a></li>
                                 <li><a href="../classes/CG.Stick.html">CG.Stick</a></li>
                                 <li><a href="../classes/CG.Text.html">CG.Text</a></li>
+                                <li><a href="../classes/CG.TouchController.html">CG.TouchController</a></li>
                                 <li><a href="../classes/CG.Translate.html">CG.Translate</a></li>
                                 <li><a href="../classes/CG.Vector.html">CG.Vector</a></li>
                             </ul>
@@ -121,766 +120,759 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>CG.SpineAnimation Class</h1>
-<div class="box meta">
-
-        <div class="extends">
-            Extends CG.Entity
-
-
-TODO
-Boundingbox collision see example here:
-https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java
-
-
-Eventhandler see example here:
-https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java
-
-
-Box2d support see example here:
-https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java
-http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691
-        </div>
-
-        <div class="foundat">
-            Defined in: <a href="../files/cangaja_spine_spine-animation.js.html#l1"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:1</code></a>
-        </div>
-
-            Module: <a href="../modules/CG.html">CG</a>
-
-</div>
-
-
-<div class="box intro">
-    <p>CG.SpineAnimation - this class is a little wrapper for spine animations (<a href="http://esotericsoftware.com">http://esotericsoftware.com</a>). The implementation is not perfect at the moment
-and is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support</p>
-
-</div>
-
-
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
-
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
-    </ul>
-
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
-
-                <div class="index-section methods">
-                    <h3>Methods</h3>
-
-                    <ul class="index-list methods extends">
-                            <li class="index-item method">
-                                <a href="#method_draw">draw</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_init">init</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_initSkeleton">initSkeleton</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_update">update</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_updateDiff">updateDiff</a>
-
-                            </li>
-                            <li class="index-item method">
-                                <a href="#method_waitForTextures">waitForTextures</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties extends">
-                            <li class="index-item property">
-                                <a href="#property_initCustom">initCustom</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_scale">scale</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_skeleton">skeleton</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_skeletonJson">skeletonJson</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_skeletonposition">skeletonposition</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_spineAtlas">spineAtlas</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_spineAtlasData">spineAtlasData</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_spineJsonData">spineJsonData</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_spineJsonData">spineJsonData</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_state">state</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_stateData">stateData</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_textureCount">textureCount</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_vertices">vertices</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_xscale">xscale</a>
-
-                            </li>
-                            <li class="index-item property">
-                                <a href="#property_yscale">yscale</a>
-
-                            </li>
-                    </ul>
-                </div>
-
-
-        </div>
-
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-<div id="method_draw" class="method item">
-    <h3 class="name"><code>draw</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l230"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:230</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_init" class="method item">
-    <h3 class="name"><code>init</code></h3>
-
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>options</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l25"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:25</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>Options:
-spinejson {string} Spine json animation file
-spineatlas {string} Spine atlas file (libGDX)
-position {CG.Point}
-scale {number}
-callback {function}</p>
-
-    </div>
-
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-                <li class="param">
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                </li>
-            </ul>
-        </div>
-
-
-
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>var sa = new CG.SpineAnimation({
-      spinejson: this.asset.getJsonByName('spinosaurus-json'),
-      spineatlas: this.asset.getTextByName('spinosaurus-atlas'),
-      position: new CG.Point(10,10),
-      scale: 1,
-      callback: function (spineObject) {
-</code></pre>
-<p>//              spineObject.skeleton.setSkinByName(&quot;goblingirl&quot;);
-spineObject.skeleton.setSlotsToSetupPose();
-spineObject.state.setAnimationByName(0, &quot;animation&quot;, true);
-}
-})</p>
-
-            </div>
-        </div>
-</div>
-<div id="method_initSkeleton" class="method item">
-    <h3 class="name"><code>initSkeleton</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l168"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:168</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        <p>initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).</p>
-
-    </div>
-
-
-
-
-</div>
-<div id="method_update" class="method item">
-    <h3 class="name"><code>update</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l219"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:219</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-<div id="method_updateDiff" class="method item">
-    <h3 class="name"><code>updateDiff</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l320"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:320</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-<div id="method_waitForTextures" class="method item">
-    <h3 class="name"><code>waitForTextures</code></h3>
-
-        <span class="paren">()</span>
-
-
-
-
-
-
-
-
-    <div class="meta">
-                <p>
-                Defined in
-        <a href="../files/cangaja_spine_spine-animation.js.html#l158"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:158</code></a>
-        </p>
-
-
-
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-
-
-
-</div>
-            </div>
-
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-                    <div id="property_initCustom" class="property item">
-                        <h3 class="name"><code>initCustom</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l124"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:124</code></a>
-                            </p>
-                    
-                    
+                        <h1>CG.SpineAnimation Class</h1>
+                        <div class="box meta">
+                        
+                                <div class="extends">
+                                    Extends CG.Entity
+                        
+                        
+                        TODO
+                        Boundingbox collision see example here:
+                        https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java
+                        
+                        
+                        Eventhandler see example here:
+                        https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java
+                        
+                        
+                        Box2d support see example here:
+                        https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java
+                        http://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691
+                                </div>
+                        
+                                <div class="foundat">
+                                    Defined in: <a href="../files/cangaja_spine_spine-animation.js.html#l5"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:5</code></a>
+                                </div>
+                        
+                                    Module: <a href="../modules/CG.html">CG</a>
+                        
                         </div>
-                    
-                        <div class="description">
-                            <p>this is used for a callback for custom spine initialization.</p>
-                    
+                        
+                        
+                        <div class="box intro">
+                            <p>CG.SpineAnimation - this class is a little wrapper for spine animations (<a href="http://esotericsoftware.com">http://esotericsoftware.com</a>). The implementation is not perfect at the moment
+                        and is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support</p>
+                        
                         </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_scale" class="property item">
-                        <h3 class="name"><code>scale</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l82"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:82</code></a>
-                            </p>
-                    
-                    
+                        
+                        
+                        <div id="classdocs" class="tabview">
+                            <ul class="api-class-tabs">
+                                <li class="api-class-tab index"><a href="#index">Index</a></li>
+                        
+                                    <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+                                    <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+                            </ul>
+                        
+                            <div>
+                                <div id="index" class="api-class-tabpanel index">
+                                    <h2 class="off-left">Item Index</h2>
+                        
+                                        <div class="index-section methods">
+                                            <h3>Methods</h3>
+                        
+                                            <ul class="index-list methods extends">
+                                                    <li class="index-item method">
+                                                        <a href="#method_draw">draw</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_init">init</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_initSkeleton">initSkeleton</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_update">update</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_updateDiff">updateDiff</a>
+                        
+                                                    </li>
+                                                    <li class="index-item method">
+                                                        <a href="#method_waitForTextures">waitForTextures</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                                        <div class="index-section properties">
+                                            <h3>Properties</h3>
+                        
+                                            <ul class="index-list properties extends">
+                                                    <li class="index-item property">
+                                                        <a href="#property_initCustom">initCustom</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_scale">scale</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_skeleton">skeleton</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_skeletonJson">skeletonJson</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_skeletonposition">skeletonposition</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_spineAtlas">spineAtlas</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_spineAtlasData">spineAtlasData</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_spineJsonData">spineJsonData</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_spineJsonData">spineJsonData</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_state">state</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_stateData">stateData</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_textureCount">textureCount</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_vertices">vertices</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_xscale">xscale</a>
+                        
+                                                    </li>
+                                                    <li class="index-item property">
+                                                        <a href="#property_yscale">yscale</a>
+                        
+                                                    </li>
+                                            </ul>
+                                        </div>
+                        
+                        
+                                </div>
+                        
+                                    <div id="methods" class="api-class-tabpanel">
+                                        <h2 class="off-left">Methods</h2>
+                        
+                                            <div id="method_draw" class="method item">
+                                                <h3 class="name"><code>draw</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l235"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:235</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_init" class="method item">
+                                                <h3 class="name"><code>init</code></h3>
+                                            
+                                                    <div class="args">
+                                                        <span class="paren">(</span><ul class="args-list inline commas">
+                                                            <li class="arg">
+                                                                    <code>options</code>
+                                                            </li>
+                                                        </ul><span class="paren">)</span>
+                                                    </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l29"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:29</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>Options:
+                                            spinejson {string} Spine json animation file
+                                            spineatlas {string} Spine atlas file (libGDX)
+                                            position {CG.Point}
+                                            scale {number}
+                                            callback {function}</p>
+                                            
+                                                </div>
+                                            
+                                                    <div class="params">
+                                                        <h4>Parameters:</h4>
+                                            
+                                                        <ul class="params-list">
+                                                            <li class="param">
+                                                                    <code class="param-name">options</code>
+                                                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                                                <div class="param-description">
+                                                                     
+                                                                </div>
+                                            
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                            
+                                            
+                                                    <div class="example">
+                                                        <h4>Example:</h4>
+                                            
+                                                        <div class="example-content">
+                                                            <pre class="code prettyprint"><code>var sa = new CG.SpineAnimation({
+                                                  spinejson: this.asset.getJsonByName(&#39;spinosaurus-json&#39;),
+                                                  spineatlas: this.asset.getTextByName(&#39;spinosaurus-atlas&#39;),
+                                                  position: new CG.Point(10,10),
+                                                  scale: 1,
+                                                  callback: function (spineObject) {
+                                            </code></pre><p>//              spineObject.skeleton.setSkinByName(&quot;goblingirl&quot;);
+                                                           spineObject.skeleton.setSlotsToSetupPose();
+                                                           spineObject.state.setAnimationByName(0, &quot;animation&quot;, true);
+                                                       }
+                                                    })</p>
+                                            
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="method_initSkeleton" class="method item">
+                                                <h3 class="name"><code>initSkeleton</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l172"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:172</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_update" class="method item">
+                                                <h3 class="name"><code>update</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l223"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:223</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_updateDiff" class="method item">
+                                                <h3 class="name"><code>updateDiff</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l369"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:369</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="method_waitForTextures" class="method item">
+                                                <h3 class="name"><code>waitForTextures</code></h3>
+                                            
+                                                    <span class="paren">()</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l162"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:162</code></a>
+                                                    </p>
+                                            
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                                    <div id="properties" class="api-class-tabpanel">
+                                        <h2 class="off-left">Properties</h2>
+                        
+                                            <div id="property_initCustom" class="property item">
+                                                <h3 class="name"><code>initCustom</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l128"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:128</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>this is used for a callback for custom spine initialization.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_scale" class="property item">
+                                                <h3 class="name"><code>scale</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l86"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:86</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_skeleton" class="property item">
+                                                <h3 class="name"><code>skeleton</code></h3>
+                                                <span class="type">spine.Skeleton</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l196"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:196</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_skeletonJson" class="property item">
+                                                <h3 class="name"><code>skeletonJson</code></h3>
+                                                <span class="type">spine.SkeletonJson</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l177"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:177</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_skeletonposition" class="property item">
+                                                <h3 class="name"><code>skeletonposition</code></h3>
+                                                <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l65"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:65</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_spineAtlas" class="property item">
+                                                <h3 class="name"><code>spineAtlas</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l135"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:135</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>this is used for a callback for custom animation configuration.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_spineAtlasData" class="property item">
+                                                <h3 class="name"><code>spineAtlasData</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l105"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:105</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_spineJsonData" class="property item">
+                                                <h3 class="name"><code>spineJsonData</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l121"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:121</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>spine animation json data loaded and parsed thru MediaAsset.</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_spineJsonData" class="property item">
+                                                <h3 class="name"><code>spineJsonData</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l184"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:184</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_state" class="property item">
+                                                <h3 class="name"><code>state</code></h3>
+                                                <span class="type">spine.AnimationState</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l210"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:210</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_stateData" class="property item">
+                                                <h3 class="name"><code>stateData</code></h3>
+                                                <span class="type">spine.AnimationStateData</span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l205"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:205</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_textureCount" class="property item">
+                                                <h3 class="name"><code>textureCount</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l98"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:98</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>counter for the spine image preloader</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_vertices" class="property item">
+                                                <h3 class="name"><code>vertices</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l92"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:92</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_xscale" class="property item">
+                                                <h3 class="name"><code>xscale</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l72"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:72</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>spine bone xscale</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                            <div id="property_yscale" class="property item">
+                                                <h3 class="name"><code>yscale</code></h3>
+                                                <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                <div class="meta">
+                                                            <p>
+                                                            Defined in
+                                                    <a href="../files/cangaja_spine_spine-animation.js.html#l79"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:79</code></a>
+                                                    </p>
+                                            
+                                            
+                                                </div>
+                                            
+                                                <div class="description">
+                                                    <p>spine bone yscale</p>
+                                            
+                                                </div>
+                                            
+                                            
+                                            
+                                            </div>
+                                    </div>
+                        
+                        
+                            </div>
                         </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_skeleton" class="property item">
-                        <h3 class="name"><code>skeleton</code></h3>
-                        <span class="type">spine.Skeleton</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l192"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:192</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_skeletonJson" class="property item">
-                        <h3 class="name"><code>skeletonJson</code></h3>
-                        <span class="type">spine.SkeletonJson</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l173"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:173</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_skeletonposition" class="property item">
-                        <h3 class="name"><code>skeletonposition</code></h3>
-                        <span class="type"><a href="../classes/CG.Point.html" class="crosslink">CG.Point</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l61"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:61</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_spineAtlas" class="property item">
-                        <h3 class="name"><code>spineAtlas</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l131"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:131</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>this is used for a callback for custom animation configuration.</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_spineAtlasData" class="property item">
-                        <h3 class="name"><code>spineAtlasData</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l101"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:101</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_spineJsonData" class="property item">
-                        <h3 class="name"><code>spineJsonData</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l117"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:117</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>spine animation json data loaded and parsed thru MediaAsset.</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_spineJsonData" class="property item">
-                        <h3 class="name"><code>spineJsonData</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l180"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:180</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_state" class="property item">
-                        <h3 class="name"><code>state</code></h3>
-                        <span class="type">spine.AnimationState</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l206"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:206</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_stateData" class="property item">
-                        <h3 class="name"><code>stateData</code></h3>
-                        <span class="type">spine.AnimationStateData</span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l201"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:201</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_textureCount" class="property item">
-                        <h3 class="name"><code>textureCount</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l94"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:94</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>counter for the spine image preloader</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_vertices" class="property item">
-                        <h3 class="name"><code>vertices</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l88"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:88</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_xscale" class="property item">
-                        <h3 class="name"><code>xscale</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l68"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:68</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>spine bone xscale</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-                    <div id="property_yscale" class="property item">
-                        <h3 class="name"><code>yscale</code></h3>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-                    
-                    
-                    
-                    
-                        <div class="meta">
-                                    <p>
-                                    Defined in
-                            <a href="../files/cangaja_spine_spine-animation.js.html#l75"><code>cangaja&#x2F;spine&#x2F;spine-animation.js:75</code></a>
-                            </p>
-                    
-                    
-                        </div>
-                    
-                        <div class="description">
-                            <p>spine bone yscale</p>
-                    
-                        </div>
-                    
-                    
-                    
-                    </div>
-            </div>
-
-
-    </div>
-</div>
                     </div>
                 </div>
             </div>

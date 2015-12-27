@@ -8,7 +8,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.B2DChainShape",
         "CG.B2DCirlce",
         "CG.B2DEntity",
-        "CG.B2DFizzXLoader",
         "CG.B2DLine",
         "CG.B2DPolygon",
         "CG.B2DRectangle",
@@ -26,7 +25,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Entity",
         "CG.Font",
         "CG.Game",
-        "CG.GameController",
         "CG.Layer",
         "CG.Map",
         "CG.MapArea",
@@ -44,6 +42,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CG.Sprite",
         "CG.Stick",
         "CG.Text",
+        "CG.TouchController",
         "CG.Translate",
         "CG.Vector",
         "Cangaja"

@@ -14,7 +14,7 @@ cat ../cangaja/base/base.js \
 ../libs/input/keymaster.js \
 ../libs/math/poly2tri/poly2tri-1.3.5.js \
 ../libs/math/clipper/v6/clipper.js \
-../libs/spine/spine.js \
+../libs/spine/v2.3/spine.js \
 ../cangaja/base/clock.js \
 ../cangaja/base/string.js \
 ../cangaja/renderer/canvasrenderer.js \
@@ -25,7 +25,8 @@ cat ../cangaja/base/base.js \
 ../cangaja/base/bound.js \
 ../cangaja/base/buffer.js \
 ../cangaja/input/stick.js \
-../cangaja/input/gamecontroller.js \
+../cangaja/input/touchcontroller.js \
+../cangaja/input/gamepadcontroller.js \
 ../cangaja/sprite/sprite.js \
 ../cangaja/spine/spine-animation.js \
 ../cangaja/atlas/atlas-image.js \

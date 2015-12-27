@@ -148,15 +148,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "cangaja/box2d/b2d-fizzx-loader.js": {
-            "name": "cangaja/box2d/b2d-fizzx-loader.js",
-            "modules": {},
-            "classes": {
-                "CG.B2DFizzXLoader": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "cangaja/box2d/b2d-line.js": {
             "name": "cangaja/box2d/b2d-line.js",
             "modules": {},
@@ -301,20 +292,20 @@
             "fors": {},
             "namespaces": {}
         },
-        "cangaja/input/gamecontroller.js": {
-            "name": "cangaja/input/gamecontroller.js",
-            "modules": {},
-            "classes": {
-                "CG.GameController": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "cangaja/input/stick.js": {
             "name": "cangaja/input/stick.js",
             "modules": {},
             "classes": {
                 "CG.Stick": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "cangaja/input/touchcontroller.js": {
+            "name": "cangaja/input/touchcontroller.js",
+            "modules": {},
+            "classes": {
+                "CG.TouchController": 1
             },
             "fors": {},
             "namespaces": {}
@@ -456,7 +447,6 @@
                 "CG.B2DChainShape": 1,
                 "CG.B2DCirlce": 1,
                 "CG.B2DEntity": 1,
-                "CG.B2DFizzXLoader": 1,
                 "CG.B2DLine": 1,
                 "CG.B2DPolygon": 1,
                 "CG.B2DRectangle": 1,
@@ -473,8 +463,8 @@
                 "CG.Sequence": 1,
                 "CG.Translate": 1,
                 "CG.Game": 1,
-                "CG.GameController": 1,
                 "CG.Stick": 1,
+                "CG.TouchController": 1,
                 "CG.CanvasRenderer": 1,
                 "CG.SpineAnimation": 1,
                 "CG.Animation": 1,
@@ -707,23 +697,6 @@
             "line": 1,
             "description": "B2DEntity is the base class with properties for all B2D objects.\nThis class handles also the drawings for all classes.\n\n```\n\nvar e = new CG.B2DEntity({\n  name: 'player',\n  image: new CG.Point(100,100),\n  world: b2world,\n  x: 10,\n  y: 20,\n  scale: 40\n})\n\n```",
             "extends": "CG.Entity"
-        },
-        "CG.B2DFizzXLoader": {
-            "name": "CG.B2DFizzXLoader",
-            "shortname": "CG.B2DFizzXLoader",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "CG",
-            "namespace": "",
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 1,
-            "description": "CG.B2DFizzXLoader",
-            "extends": "CG.Class",
-            "deprecated": true,
-            "deprecationMessage": "maybe it will removed in the future. FizzX editor development has stopped before it began ;-("
         },
         "CG.B2DLine": {
             "name": "CG.B2DLine",
@@ -979,21 +952,6 @@
             "description": "CG.Game - this class is the starting point for a cangaja game. The default object name of the instantiated object has to be 'Game'!\n\n\n```\n\nCG.Game.extend('MyGame', {\n   init: function (canvas, options) {\n       // call init from super class\n       this._super(canvas, options)\n       // add custom properties here or remove the init method\n   },\n   preload: function () {\n       // put preloading stuff here\n\n       // for example\n       this.asset.addFont('media/font/small.txt', 'small', 'small')\n           .addImage('media/img/player-anim.png', 'player-anim')\n           .addJson('media/map/map1.json', 'map1')\n           .startPreLoad()\n   },\n   create: function () {\n\n       // put your create stuff here\n\n       //after creation start game loop\n       this.loop()\n   },\n   update: function () {\n\n       // additional update code not handled with in cangaja\n\n   },\n   draw: function () {\n       // additional draw code not handled with in cangaja\n   }})\n\n// instantiate the Game class\nGame = new CG.MyGame(canvas)\n\n```",
             "extends": "Class"
         },
-        "CG.GameController": {
-            "name": "CG.GameController",
-            "shortname": "CG.GameController",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "CG",
-            "namespace": "",
-            "file": "cangaja/input/gamecontroller.js",
-            "line": 1,
-            "description": "CG.GameController extends CG.Stick an represents an GameController with one Stick and\nmultiple buttons\n\n```\n\nstick = new CG.GameController({\n           maxLength: 60,\n           buttons: [\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('jump'),\n                   position: new CG.Point(Game.width - 200, Game.height - 75),\n                   callbacks: {\n                       clicked: function () {\n                           b2world.player.startJump()\n                       }\n                   }\n               }),\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('shoot'),\n                   position: new CG.Point(Game.width - 100, Game.height - 175),\n                   callbacks: {\n                       clicked: function () {\n\n                       }\n                   }\n               })\n           ]\n       })\n\n```",
-            "extends": "CG.Stick"
-        },
         "CG.Stick": {
             "name": "CG.Stick",
             "shortname": "CG.Stick",
@@ -1008,6 +966,21 @@
             "line": 1,
             "description": "CG.Stick displays an analog stick and uses the first element of the touches\n\n```\n\nvar b = new CG.Stick({\n      maxLength: 0,\n      active: false\n    })\n\n```",
             "extends": "CG.Class"
+        },
+        "CG.TouchController": {
+            "name": "CG.TouchController",
+            "shortname": "CG.TouchController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "CG",
+            "namespace": "",
+            "file": "cangaja/input/touchcontroller.js",
+            "line": 1,
+            "description": "CG.TouchController extends CG.Stick an represents an onscreen GameController with one Stick and\nmultiple buttons\n\n```\n\nstick = new CG.TouchController({\n           maxLength: 60,\n           buttons: [\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('jump'),\n                   position: new CG.Point(Game.width - 200, Game.height - 75),\n                   callbacks: {\n                       clicked: function () {\n                           b2world.player.startJump()\n                       }\n                   }\n               }),\n               new CG.Button({\n                   //text: 'J',\n                   //font: heiti,\n                   image: Game.asset.getImageByName('shoot'),\n                   position: new CG.Point(Game.width - 100, Game.height - 175),\n                   callbacks: {\n                       clicked: function () {\n\n                       }\n                   }\n               })\n           ]\n       })\n\n```",
+            "extends": "CG.Stick"
         },
         "CG.CanvasRenderer": {
             "name": "CG.CanvasRenderer",
@@ -1035,7 +1008,7 @@
             "module": "CG",
             "namespace": "",
             "file": "cangaja/spine/spine-animation.js",
-            "line": 1,
+            "line": 5,
             "description": "CG.SpineAnimation - this class is a little wrapper for spine animations (http://esotericsoftware.com). The implementation is not perfect at the moment\nand is on early stages. There is a lot of stuff that could be implemented: boundingbox collision, eventhandling, box2d support",
             "extends": "CG.Entity\n\n\nTODO\nBoundingbox collision see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/AnimationStateTest.java\n\n\nEventhandler see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/SkeletonTest.java\n\n\nBox2d support see example here:\nhttps://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-libgdx/test/com/esotericsoftware/spine/Box2DExample.java\nhttp://www.esotericsoftware.com/forum/viewtopic.php?f=3&t=1394&p=6691&hilit=skeletonbounds#p6691"
         },
@@ -3201,100 +3174,6 @@
             "itemtype": "method",
             "name": "getPosition",
             "class": "CG.B2DEntity",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 12,
-            "is_constructor": 1,
-            "itemtype": "method",
-            "name": "init",
-            "params": [
-                {
-                    "name": "json",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "world",
-                    "description": "",
-                    "type": "CG.B2DWorld"
-                },
-                {
-                    "name": "offsetx",
-                    "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "offsety",
-                    "description": "",
-                    "type": "Number"
-                }
-            ],
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 21,
-            "itemtype": "property",
-            "name": "json",
-            "type": "String",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 46,
-            "itemtype": "property",
-            "name": "world",
-            "type": "CG.B2DWorld",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 50,
-            "itemtype": "property",
-            "name": "offsetx",
-            "type": "Number",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 54,
-            "itemtype": "property",
-            "name": "offsety",
-            "type": "Number",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 68,
-            "description": "",
-            "itemtype": "method",
-            "name": "loadBodies",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 86,
-            "description": "is this method needed? use MediaAsset loader instead or extend MediaAsset with in game \"preloading\"?",
-            "itemtype": "method",
-            "name": "loadImages",
-            "class": "CG.B2DFizzXLoader",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/box2d/b2d-fizzx-loader.js",
-            "line": 97,
-            "description": "",
-            "itemtype": "method",
-            "name": "loadJoints",
-            "class": "CG.B2DFizzXLoader",
             "module": "CG"
         },
         {
@@ -6644,48 +6523,6 @@
             "module": "CG"
         },
         {
-            "file": "cangaja/input/gamecontroller.js",
-            "line": 44,
-            "description": "Options:\nx {number}\ny {number}",
-            "example": [
-                ""
-            ],
-            "is_constructor": 1,
-            "itemtype": "method",
-            "name": "init",
-            "params": [
-                {
-                    "name": "options",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "*"
-            },
-            "class": "CG.GameController",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/input/gamecontroller.js",
-            "line": 60,
-            "itemtype": "property",
-            "name": "buttons",
-            "type": "{Array}",
-            "class": "CG.GameController",
-            "module": "CG"
-        },
-        {
-            "file": "cangaja/input/gamecontroller.js",
-            "line": 65,
-            "itemtype": "property",
-            "name": "visible",
-            "type": "{Boolean}",
-            "class": "CG.GameController",
-            "module": "CG"
-        },
-        {
             "file": "cangaja/input/stick.js",
             "line": 20,
             "description": "Options:\nx {number}\ny {number}",
@@ -6792,6 +6629,48 @@
             "module": "CG"
         },
         {
+            "file": "cangaja/input/touchcontroller.js",
+            "line": 44,
+            "description": "Options:\nx {number}\ny {number}",
+            "example": [
+                ""
+            ],
+            "is_constructor": 1,
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": "CG.TouchController",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/input/touchcontroller.js",
+            "line": 60,
+            "itemtype": "property",
+            "name": "buttons",
+            "type": "{Array}",
+            "class": "CG.TouchController",
+            "module": "CG"
+        },
+        {
+            "file": "cangaja/input/touchcontroller.js",
+            "line": 65,
+            "itemtype": "property",
+            "name": "visible",
+            "type": "{Boolean}",
+            "class": "CG.TouchController",
+            "module": "CG"
+        },
+        {
             "file": "cangaja/renderer/canvasrenderer.js",
             "line": 15,
             "itemtype": "method",
@@ -6822,7 +6701,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 25,
+            "line": 29,
             "description": "Options:\nspinejson {string} Spine json animation file\nspineatlas {string} Spine atlas file (libGDX)\nposition {CG.Point}\nscale {number}\ncallback {function}",
             "example": [
                 "\n    var sa = new CG.SpineAnimation({\n          spinejson: this.asset.getJsonByName('spinosaurus-json'),\n          spineatlas: this.asset.getTextByName('spinosaurus-atlas'),\n          position: new CG.Point(10,10),\n          scale: 1,\n          callback: function (spineObject) {\n//              spineObject.skeleton.setSkinByName(\"goblingirl\");\n               spineObject.skeleton.setSlotsToSetupPose();\n               spineObject.state.setAnimationByName(0, \"animation\", true);\n           }\n        })"
@@ -6842,7 +6721,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 61,
+            "line": 65,
             "description": "initial position for the animation. later position changes at the moment with: obj.skeleton.getRootBone().x and obj.skeleton.getRootBone().y. maybe a TODO for a method ;o)",
             "itemtype": "property",
             "name": "skeletonposition",
@@ -6852,7 +6731,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 68,
+            "line": 72,
             "description": "spine bone xscale",
             "itemtype": "property",
             "name": "xscale",
@@ -6862,7 +6741,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 75,
+            "line": 79,
             "description": "spine bone yscale",
             "itemtype": "property",
             "name": "yscale",
@@ -6872,7 +6751,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 82,
+            "line": 86,
             "itemtype": "property",
             "name": "scale",
             "type": "{Number}",
@@ -6881,7 +6760,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 88,
+            "line": 92,
             "itemtype": "property",
             "name": "vertices",
             "type": "{Array}",
@@ -6890,7 +6769,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 94,
+            "line": 98,
             "description": "counter for the spine image preloader",
             "itemtype": "property",
             "name": "textureCount",
@@ -6900,7 +6779,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 101,
+            "line": 105,
             "description": "data from generated atlas text file. at the moment only the libGDX Format is supported from the spine-js runtime.",
             "itemtype": "property",
             "name": "spineAtlasData",
@@ -6910,7 +6789,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 117,
+            "line": 121,
             "description": "spine animation json data loaded and parsed thru MediaAsset.",
             "itemtype": "property",
             "name": "spineJsonData",
@@ -6920,7 +6799,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 124,
+            "line": 128,
             "description": "this is used for a callback for custom spine initialization.",
             "itemtype": "property",
             "name": "initCustom",
@@ -6930,7 +6809,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 131,
+            "line": 135,
             "description": "this is used for a callback for custom animation configuration.",
             "itemtype": "property",
             "name": "spineAtlas",
@@ -6940,7 +6819,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 158,
+            "line": 162,
             "itemtype": "method",
             "name": "waitForTextures",
             "class": "CG.SpineAnimation",
@@ -6948,7 +6827,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 168,
+            "line": 172,
             "description": "initialises the animation (skeleton, stateData,. ,.) after preloading and calls the callback for custom animation configuration (.setSkinByName(), .setAnimationByName(),. ,.).",
             "itemtype": "method",
             "name": "initSkeleton",
@@ -6957,7 +6836,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 173,
+            "line": 177,
             "itemtype": "property",
             "name": "skeletonJson",
             "type": "{spine.SkeletonJson}",
@@ -6966,7 +6845,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 180,
+            "line": 184,
             "itemtype": "property",
             "name": "spineJsonData",
             "type": "{Object}",
@@ -6975,7 +6854,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 192,
+            "line": 196,
             "itemtype": "property",
             "name": "skeleton",
             "type": "{spine.Skeleton}",
@@ -6984,7 +6863,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 201,
+            "line": 205,
             "itemtype": "property",
             "name": "stateData",
             "type": "{spine.AnimationStateData}",
@@ -6993,7 +6872,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 206,
+            "line": 210,
             "itemtype": "property",
             "name": "state",
             "type": "{spine.AnimationState}",
@@ -7002,7 +6881,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 219,
+            "line": 223,
             "itemtype": "method",
             "name": "update",
             "class": "CG.SpineAnimation",
@@ -7010,7 +6889,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 230,
+            "line": 235,
             "description": "this method loops thru skeleton.drawOrder and renders all attachments of type spine.RegionAttachment.",
             "itemtype": "method",
             "name": "draw",
@@ -7019,7 +6898,7 @@
         },
         {
             "file": "cangaja/spine/spine-animation.js",
-            "line": 320,
+            "line": 369,
             "itemtype": "method",
             "name": "updateDiff",
             "class": "CG.SpineAnimation",
